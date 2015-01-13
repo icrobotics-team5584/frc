@@ -1,3 +1,6 @@
+README.TXT
+==========
+
 Murphy.Sydney = modified CRIO code for use with LabVIEW 2014 (work in progress, not yet working)
 
 Murphy.Sydney.backup.20150107.1258 = CRIO code for use with LabVIEW 2013
