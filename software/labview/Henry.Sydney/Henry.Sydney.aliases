@@ -1,5 +1,5 @@
 [My Computer]
-My Computer = "127.0.0.1"
+My Computer = "10.88.88.88"
 
 [RT cRIO Target]
 RT cRIO Target = "10.88.88.2"
