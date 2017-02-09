@@ -40,6 +40,8 @@ public:
 	static std::shared_ptr<CANTalon> subShooterTnxShooterBottom;
 	static std::shared_ptr<CANTalon> subIntakeTnxIntakeRollers;
 	static std::shared_ptr<CANTalon> subIntakeTnxIntakeSliders;
+	static std::shared_ptr<DigitalInput> subIntakeLswSliderIn;
+	static std::shared_ptr<DigitalInput> subIntakeLswSliderOut;
 	static std::shared_ptr<SpeedController> subFeederVspFeederWheels;
 	static std::shared_ptr<SpeedController> subFeederVspAgitatorPaddles;
 
