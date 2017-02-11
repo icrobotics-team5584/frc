@@ -126,6 +126,16 @@ Children:
           value: '3'
       Base: Servo
       Name: SrvFlap2
+    - Children: []
+      Properties:
+        Input Channel (Analog): !!robotbuilder.data.properties.ChoicesProperty
+          choices: ['0', '1', '2', '3', '4', '5', '6', '7']
+          default: '0'
+          name: Input Channel (Analog)
+          validators: [AnalogInput]
+          value: '1'
+      Base: Analog Input
+      Name: AngUltrasonicSensor
     Properties:
       Default command parameters: !!robotbuilder.data.properties.ParametersProperty
         default: []
@@ -743,10 +753,10 @@ Children:
       Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
         name: Requires, type: Subsystem, validators: null, value: SubFeeder}
       Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
-        default: &id020 []
+        default: []
         name: Parameter presets
         validators: null
-        value: *id020
+        value: []
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: true}
     Base: Command

@@ -26,6 +26,7 @@ std::shared_ptr<CANTalon> RobotMap::subDriveBaseTnxRearRight;
 std::shared_ptr<RobotDrive> RobotMap::subDriveBaseRobotDriveFour;
 std::shared_ptr<Servo> RobotMap::subGearCatcherSrvFlap1;
 std::shared_ptr<Servo> RobotMap::subGearCatcherSrvFlap2;
+std::shared_ptr<AnalogInput> RobotMap::subGearCatcherAngUltrasonicSensor;
 std::shared_ptr<SpeedController> RobotMap::subClimberSpkClimber;
 std::shared_ptr<CANTalon> RobotMap::subShooterTnxShooterTop;
 std::shared_ptr<CANTalon> RobotMap::subShooterTnxShooterBottom;
@@ -69,6 +70,9 @@ void RobotMap::init() {
     
     subGearCatcherSrvFlap2.reset(new Servo(3));
     lw->AddActuator("SubGearCatcher", "SrvFlap2", subGearCatcherSrvFlap2);
+    
+    subGearCatcherAngUltrasonicSensor.reset(new AnalogInput(1));
+    lw->AddSensor("SubGearCatcher", "AngUltrasonicSensor", subGearCatcherAngUltrasonicSensor);
     
     subClimberSpkClimber.reset(new Spark(4));
     lw->AddActuator("SubClimber", "SpkClimber", std::static_pointer_cast<Spark>(subClimberSpkClimber));

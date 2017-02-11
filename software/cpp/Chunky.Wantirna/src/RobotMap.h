@@ -35,6 +35,7 @@ public:
 	static std::shared_ptr<RobotDrive> subDriveBaseRobotDriveFour;
 	static std::shared_ptr<Servo> subGearCatcherSrvFlap1;
 	static std::shared_ptr<Servo> subGearCatcherSrvFlap2;
+	static std::shared_ptr<AnalogInput> subGearCatcherAngUltrasonicSensor;
 	static std::shared_ptr<SpeedController> subClimberSpkClimber;
 	static std::shared_ptr<CANTalon> subShooterTnxShooterTop;
 	static std::shared_ptr<CANTalon> subShooterTnxShooterBottom;
