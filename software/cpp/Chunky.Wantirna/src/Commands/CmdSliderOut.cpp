@@ -25,22 +25,21 @@ CmdSliderOut::CmdSliderOut(): Command() {
 
 // Called just before this Command runs the first time
 void CmdSliderOut::Initialize() {
-	Robot::subIntake->SliderOut();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdSliderOut::Execute() {
-
+	Robot::subIntake->SliderOut();
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdSliderOut::IsFinished() {
-    return false;
+    return Robot::subIntake->IsSliderOut();
 }
 
 // Called once after isFinished returns true
 void CmdSliderOut::End() {
-
+	Robot::subIntake->SliderOff();
 }
 
 // Called when another command which requires one or more of the same
