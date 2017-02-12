@@ -25,12 +25,11 @@ CmdIntakeRollerIn::CmdIntakeRollerIn(): Command() {
 
 // Called just before this Command runs the first time
 void CmdIntakeRollerIn::Initialize() {
-	Robot::subIntake->RollerIn();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdIntakeRollerIn::Execute() {
-
+	Robot::subIntake->RollerIn();
 }
 
 // Make this return true when this Command no longer needs to run execute()

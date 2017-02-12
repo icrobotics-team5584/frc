@@ -25,14 +25,11 @@ CmdClimb::CmdClimb(): Command() {
 
 // Called just before this Command runs the first time
 void CmdClimb::Initialize() {
-	Robot::subClimber->Run();
-	SmartDashboard::PutNumber("Gyro", Robot::subDriveBase->GetAngle());
-	// SmartDashboard::PutNumber("Gyro", 8);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdClimb::Execute() {
-
+	Robot::subClimber->Run();
 }
 
 // Make this return true when this Command no longer needs to run execute()
