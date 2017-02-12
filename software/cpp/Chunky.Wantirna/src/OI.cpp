@@ -15,6 +15,7 @@
 #include "SmartDashboard/SmartDashboard.h"
 #include "Commands/CmdAutoDrive.h"
 #include "Commands/CmdAutoMotorTest.h"
+#include "Commands/CmdAutoTurn.h"
 #include "Commands/CmdAutonomous.h"
 #include "Commands/CmdChunder.h"
 #include "Commands/CmdClimb.h"
@@ -46,6 +47,7 @@ OI::OI() {
     btnMoveServo->WhileHeld(new CmdMoveServo());
 
     // SmartDashboard Buttons
+    SmartDashboard::PutData("CmdAutoTurn", new CmdAutoTurn(0,0));
     SmartDashboard::PutData("CmdChunder", new CmdChunder());
     SmartDashboard::PutData("CmdFeedMe", new CmdFeedMe());
     SmartDashboard::PutData("CmdIntakeDeploy", new CmdIntakeDeploy());

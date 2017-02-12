@@ -761,6 +761,26 @@ Children:
         name: Button on SmartDashboard, validators: null, value: true}
     Base: Command
     Name: CmdChunder
+  - Children: []
+    Properties:
+      Parameters: !!robotbuilder.data.properties.ParametersProperty
+        default: []
+        name: Parameters
+        validators: null
+        value:
+        - !!robotbuilder.data.properties.ParameterDescriptor {name: Power, type: double}
+        - !!robotbuilder.data.properties.ParameterDescriptor {name: Angle, type: double}
+      Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
+        name: Requires, type: Subsystem, validators: null, value: SubDriveBase}
+      Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
+        default: &id020 []
+        name: Parameter presets
+        validators: null
+        value: *id020
+      Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
+        name: Button on SmartDashboard, validators: null, value: true}
+    Base: Command
+    Name: CmdAutoTurn
   Properties: {}
   Base: Commands
   Name: Commands
