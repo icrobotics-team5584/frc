@@ -40,4 +40,17 @@ void SubFeeder::InitDefaultCommand() {
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
+void SubFeeder::RunReverse() {
+	vspFeederWheels->Set(0.75);
+	vspAgitatorPaddles->Set(0.75);
+}
 
+void SubFeeder::RunForward() {
+	vspFeederWheels->Set(-0.25);
+	vspAgitatorPaddles->Set(-0.25);
+}
+
+void SubFeeder::Stop() {
+	vspFeederWheels->Set(0);
+	vspAgitatorPaddles->Set(0);
+}

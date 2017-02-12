@@ -25,12 +25,11 @@ CmdLaunchFuel::CmdLaunchFuel(): Command() {
 
 // Called just before this Command runs the first time
 void CmdLaunchFuel::Initialize() {
-	Robot::subShooter->Run();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdLaunchFuel::Execute() {
-
+	Robot::subShooter->Run();
 }
 
 // Make this return true when this Command no longer needs to run execute()
