@@ -77,3 +77,7 @@ double SubDriveBase::GetPegX() {
 double SubDriveBase::GetPegY() {
     return jetsonNetworkTable->GetNumber( "pegy", 0.0 );
 }
+
+double SubDriveBase::GetPegRange() {
+    return jetsonNetworkTable->GetNumber( "pegrange", 0.0 );
+}
