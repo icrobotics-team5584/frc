@@ -32,7 +32,12 @@ void CmdJoystickDrive::Initialize() {
 void CmdJoystickDrive::Execute() {
 	Robot::subDriveBase->TakeJoystickInputs( Robot::oi->getJoystick1() );
 	SmartDashboard::PutNumber("Gyro", Robot::subDriveBase->GetAngle());
-	//SmartDashboard::PutNumber("Gyro", 1.1);
+    // lets just display the values here to prove that they are actually being
+	// set as expected ... this is a pretty useless operation as these values are
+	// already available elsewhere in the network tables but it should give us
+	// some confidence that we can read from the network tables :)
+	SmartDashboard::PutNumber("PegX (extracted from JETSON via network table", Robot::subDriveBase->GetPegX());
+	SmartDashboard::PutNumber("PegY (extracted from JETSON via network table)", Robot::subDriveBase->GetPegY());
 }
 
 // Make this return true when this Command no longer needs to run execute()
