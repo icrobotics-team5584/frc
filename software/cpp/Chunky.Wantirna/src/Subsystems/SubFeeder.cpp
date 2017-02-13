@@ -46,8 +46,8 @@ void SubFeeder::RunReverse() {
 }
 
 void SubFeeder::RunForward() {
-	vspFeederWheels->Set(-0.25);
-	vspAgitatorPaddles->Set(-0.25);
+        vspFeederWheels->Set(-0.75);
+        vspAgitatorPaddles->Set(-0.75);
 }
 
 void SubFeeder::Stop() {
