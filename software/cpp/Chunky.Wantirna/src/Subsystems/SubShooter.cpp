@@ -43,8 +43,8 @@ void SubShooter::InitDefaultCommand() {
 // here. Call these from Commands.
 
 void SubShooter::Run() {
-    tnxShooterTop->Set(0.5);
-    tnxShooterBottom->Set(0.5);
+    tnxShooterTop->Set(0.6);
+    tnxShooterBottom->Set(-0.6);
 }
 
 void SubShooter::Stop() {

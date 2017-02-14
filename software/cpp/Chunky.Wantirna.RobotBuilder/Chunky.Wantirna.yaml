@@ -192,7 +192,7 @@ Children:
           default: '2'
           name: CAN ID
           validators: *id002
-          value: '8'
+          value: '5'
       Base: CAN Talon
       Name: TnxShooterTop
     - Children: []
@@ -202,7 +202,7 @@ Children:
           default: '2'
           name: CAN ID
           validators: *id002
-          value: '7'
+          value: '6'
       Base: CAN Talon
       Name: TnxShooterBottom
     Properties:
@@ -228,7 +228,7 @@ Children:
           default: '2'
           name: CAN ID
           validators: *id002
-          value: '5'
+          value: '7'
       Base: CAN Talon
       Name: TnxIntakeRollers
     - Children: []
@@ -238,7 +238,7 @@ Children:
           default: '2'
           name: CAN ID
           validators: *id002
-          value: '6'
+          value: '8'
       Base: CAN Talon
       Name: TnxIntakeSliders
     - Children: []
