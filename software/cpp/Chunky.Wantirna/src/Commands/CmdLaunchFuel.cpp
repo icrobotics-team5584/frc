@@ -29,7 +29,7 @@ void CmdLaunchFuel::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdLaunchFuel::Execute() {
-	Robot::subShooter->Run();
+	Robot::subFeeder->RunForward();
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -39,7 +39,7 @@ bool CmdLaunchFuel::IsFinished() {
 
 // Called once after isFinished returns true
 void CmdLaunchFuel::End() {
-	Robot::subShooter->Stop();
+	Robot::subFeeder->Stop();
 }
 
 // Called when another command which requires one or more of the same

@@ -30,21 +30,21 @@ void CmdIntakeSliderOut::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdIntakeSliderOut::Execute() {
-
+	Robot::subIntake->SliderOut();
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdIntakeSliderOut::IsFinished() {
-    return false;
+	return Robot::subIntake->IsSliderOut();
 }
 
 // Called once after isFinished returns true
 void CmdIntakeSliderOut::End() {
-
+	Robot::subIntake->SliderOff();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void CmdIntakeSliderOut::Interrupted() {
-
+	End();
 }
