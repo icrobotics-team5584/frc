@@ -56,11 +56,11 @@ void SubIntake::RollerOff() {
 }
 
 void SubIntake::SliderIn() {
-	tnxIntakeSliders->Set(1);
+	tnxIntakeSliders->Set(-1);
 }
 
 void SubIntake::SliderOut() {
-	tnxIntakeSliders->Set(-1);
+	tnxIntakeSliders->Set(1);
 }
 
 void SubIntake::SliderOff() {

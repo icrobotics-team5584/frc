@@ -38,6 +38,8 @@ void CmdJoystickDrive::Execute() {
 	// some confidence that we can read from the network tables :)
 	SmartDashboard::PutNumber("PegX (extracted from JETSON via network table", Robot::subDriveBase->GetPegX());
 	SmartDashboard::PutNumber("PegY (extracted from JETSON via network table)", Robot::subDriveBase->GetPegY());
+	SmartDashboard::PutNumber("Drive Left Encoder Position", Robot::subDriveBase->GetLeftEncoderPosition());
+	SmartDashboard::PutNumber("Drive Right Encoder Position", Robot::subDriveBase->GetRightEncoderPosition());
 }
 
 // Make this return true when this Command no longer needs to run execute()

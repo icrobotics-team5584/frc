@@ -36,7 +36,6 @@ void CmdAutoDrive::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void CmdAutoDrive::Execute() {
 
-
 	count += 1;
 	if (count >= 10){
 		angle = Robot::subDriveBase->GetAngle();
