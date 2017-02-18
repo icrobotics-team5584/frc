@@ -48,9 +48,11 @@ private:
     double d_constant;
 
     PIDController*  myController;
+    /*
     int count;
     double angle;
     double correction;
+    */
 };
 
 #endif

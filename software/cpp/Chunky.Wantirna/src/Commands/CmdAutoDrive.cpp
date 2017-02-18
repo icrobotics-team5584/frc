@@ -19,13 +19,22 @@ CmdAutoDrive::CmdAutoDrive(double Power, double Direction, double Duration): Com
     m_Power = Power;
     m_Direction = Direction;
     m_Duration = Duration;
-    p_constant = 5.0;
-    i_constant = 0.0;
-    d_constant = 10.0;
+    if( m_Power > 0 )
+    {
+        p_constant = +5.0;
+        i_constant = +0.0;
+        d_constant = +10.0;
+    }
+    else
+    {
+        p_constant = -5.0;
+        i_constant = -0.0;
+        d_constant = -10.0;
+    }
     myController = new PIDController(p_constant, i_constant, d_constant,static_cast<PIDSource*>( new GyroPIDSource()), new DrivePIDOutput(m_Power));
     myController->SetContinuous(true);
-    myController->SetInputRange(-180,180);
-    myController->SetOutputRange(-1,1);
+    myController->SetInputRange(-180,+180);
+    myController->SetOutputRange(-1,+1);
     myController->SetSetpoint(Direction);
         // Use requires() here to declare subsystem dependencies
     // eg. requires(Robot::chassis.get());
