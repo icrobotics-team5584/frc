@@ -25,6 +25,7 @@ GearFlapIn::GearFlapIn(): Command() {
 
 // Called just before this Command runs the first time
 void GearFlapIn::Initialize() {
+
 	Robot::subGearCatcher->ServosIn();
 }
 

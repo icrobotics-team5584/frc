@@ -77,7 +77,6 @@ void Robot::RobotInit() {
     //chooser.AddObject("Auto 3: Deploy Gear From Right", new CmdAuto3DeployGearFromRight());
     //chooser.AddObject("Auto 4: Deploy Gear From Left", new CmdAuto4DeployGearFromLeft());
     SmartDashboard::PutData("Autonomous modes", &chooser);
-
   }
 
 /**

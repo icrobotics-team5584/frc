@@ -30,16 +30,22 @@ void CmdAutoDriveToPeg::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdAutoDriveToPeg::Execute() {
-    double direction = Robot::subDriveBase->GetPegX();
+
+	//Set direction and power
+    double direction = Robot::subDriveBase->GetPegX() + 0.2; //Adding 0.2 to correct camera offset
     double power = 0.25;
-    // we are driving backwards so ...
+    //Invert for backwards driving
     power *= -1;
     direction *= -1;
+
+    //Drive
 	Robot::subDriveBase->Drive(power, direction);
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdAutoDriveToPeg::IsFinished() {
+
+	//Stop when we have been close to the peg for the last two iterations
     double range = Robot::subDriveBase->GetPegRange();
     if ( ( range == 0 ) && ( prevrange == 0 ) && ( prevprevrange == 0 ) )
         return true;
@@ -48,6 +54,7 @@ bool CmdAutoDriveToPeg::IsFinished() {
     prevprevrange = prevrange;
     prevrange = range;
     return false;
+
 }
 
 // Called once after isFinished returns true
