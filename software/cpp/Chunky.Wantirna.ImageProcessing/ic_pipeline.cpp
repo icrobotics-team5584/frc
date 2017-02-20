@@ -84,6 +84,8 @@ int main( int argc, char *argv[] )
     double peg_x = 0.0;
     double peg_y = 0.0;
     double peg_range = 0.0;
+    double bounding_rectangle_width = 0.0;
+    double bounding_rectangle_height = 0.0;
     for (std::vector<cv::Point> contour: *img_filtercontours)
     {
       Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
@@ -112,6 +114,10 @@ int main( int argc, char *argv[] )
       double y = ( min_y + max_y ) / 2;
       cout << "INFO: estimated peg position in image: (x,y)" << endl;
       cout << "(" << x << "," << y << ")" << endl;
+      bounding_rectangle_width = max_x - min_x;
+      bounding_rectangle_height = max_y - min_y;
+      cout << "INFO: bounding rectangle size: (width,height)" << endl;
+      cout << "(" << bounding_rectangle_width << "," << bounding_rectangle_height << ")" << endl;
       // calculate peg postion with image center (0,0) and bottom left (-1,-1) and top right (+1,+1)
       peg_x = ( x - ( img_width / 2 ) ) / ( img_width / 2 );
       peg_y = -1 * ( y - ( img_height / 2 ) ) / ( img_height / 2 );
@@ -135,6 +141,8 @@ int main( int argc, char *argv[] )
       peg_x =0.0; 
       peg_y = 0.0;
       peg_range = 0.0;
+      bounding_rectangle_width = 0.0;
+      bounding_rectangle_height = 0.0;
       cout << "INFO: unable to detect peg position" << endl;
     }
     double peg_hitrate = ( 100.0 * peg_hits ) / ( peg_misses + peg_hits );
@@ -162,6 +170,8 @@ int main( int argc, char *argv[] )
     nt->PutNumber( "pegx", peg_x );
     nt->PutNumber( "pegy", peg_y );
     nt->PutNumber( "pegrange", peg_range );
+    nt->PutNumber( "boundingrectangleheight", bounding_rectangle_height );
+    nt->PutNumber( "boundingrectanglewidth", bounding_rectangle_width );
     nt->PutNumber( "hitrate", peg_hitrate );
     nt->PutNumber( "elapsedsecs", elapsedsecs );
     nt->PutNumber( "fps", fps );
