@@ -41,7 +41,7 @@ void SubClimber::InitDefaultCommand() {
 // here. Call these from Commands.
 
 void SubClimber::Run() {
-	spkClimber->Set(1);
+	spkClimber->Set(-1);
 }
 
 void SubClimber::Stop() {

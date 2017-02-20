@@ -47,7 +47,7 @@ private:
     double i_constant;
     double d_constant;
 
-    PIDController*  myController;
+    PIDController*  DriveController;
     /*
     int count;
     double angle;

@@ -25,7 +25,7 @@ CmdMoveServo::CmdMoveServo(): Command() {
 
 // Called just before this Command runs the first time
 void CmdMoveServo::Initialize() {
-	Robot::subGearCatcher->SetServo(0.9);
+	Robot::subGearCatcher->ServosOut();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -40,7 +40,7 @@ bool CmdMoveServo::IsFinished() {
 
 // Called once after isFinished returns true
 void CmdMoveServo::End() {
-	Robot::subGearCatcher->SetServo(0);
+	Robot::subGearCatcher->ServosIn();
 }
 
 // Called when another command which requires one or more of the same

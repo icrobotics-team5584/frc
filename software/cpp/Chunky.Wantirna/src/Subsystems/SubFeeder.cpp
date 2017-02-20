@@ -42,12 +42,12 @@ void SubFeeder::InitDefaultCommand() {
 // here. Call these from Commands.
 void SubFeeder::RunReverse() {
 	vspFeederWheels->Set(1);
-	vspAgitatorPaddles->Set(1);
+	vspAgitatorPaddles->Set(0.3);
 }
 
 void SubFeeder::RunForward() {
         vspFeederWheels->Set(-1);
-        vspAgitatorPaddles->Set(-1);
+        vspAgitatorPaddles->Set(-0.3);
 }
 
 void SubFeeder::Stop() {
