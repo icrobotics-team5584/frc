@@ -10,7 +10,7 @@
 
 
 #include "CANTalon.h"
-
+#include "WPILib.h"
 
 #include "SubShooter.h"
 #include "../RobotMap.h"
@@ -55,8 +55,11 @@ void SubShooter::Run() {
     // if mode is kSpeed then the we use RPM values in the set commands ...
 	tnxShooterTop->SetControlMode(CANSpeedController::kSpeed);
 	tnxShooterBottom->SetControlMode(CANSpeedController::kSpeed);
-	tnxShooterTop->Set(6000);
-    tnxShooterBottom->Set(-1000);
+	// GOOD 1: tnxShooterTop->Set(3600);
+	// BAD 1: tnxShooterTop->Set(3000);
+	tnxShooterTop->Set(3600);
+    // GOOD 1: tnxShooterBottom->Set(-2000);
+    tnxShooterBottom->Set(-2000);
 }
 
 void SubShooter::Stop() {
