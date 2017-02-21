@@ -55,8 +55,8 @@ void SubShooter::Run() {
     // if mode is kSpeed then the we use RPM values in the set commands ...
 	tnxShooterTop->SetControlMode(CANSpeedController::kSpeed);
 	tnxShooterBottom->SetControlMode(CANSpeedController::kSpeed);
-	tnxShooterTop->Set(3000);
-    tnxShooterBottom->Set(3000);
+	tnxShooterTop->Set(6000);
+    tnxShooterBottom->Set(-1000);
 }
 
 void SubShooter::Stop() {
