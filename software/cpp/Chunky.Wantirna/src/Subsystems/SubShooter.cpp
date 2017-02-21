@@ -43,11 +43,33 @@ void SubShooter::InitDefaultCommand() {
 // here. Call these from Commands.
 
 void SubShooter::Run() {
-    tnxShooterTop->Set(0.67);
-    tnxShooterBottom->Set(-0.3);
+    // tnxShooterTop->Set(0.67);
+    // tnxShooterBottom->Set(-0.3);
+
+	// for PID setup we use power values in the set commands ...
+	//tnxShooterTop->SetControlMode(CANSpeedController::kPercentVbus);
+    //tnxShooterBottom->SetControlMode(CANSpeedController::kPercentVbus);
+	//tnxShooterTop->Set(1.0);
+    //tnxShooterBottom->Set(1.0);
+
+    // if mode is kSpeed then the we use RPM values in the set commands ...
+	tnxShooterTop->SetControlMode(CANSpeedController::kSpeed);
+	tnxShooterBottom->SetControlMode(CANSpeedController::kSpeed);
+	tnxShooterTop->Set(3000);
+    tnxShooterBottom->Set(3000);
 }
 
 void SubShooter::Stop() {
-    tnxShooterTop->Set(0);
+    tnxShooterTop->SetControlMode(CANSpeedController::kPercentVbus);
+    tnxShooterBottom->SetControlMode(CANSpeedController::kPercentVbus);
+	tnxShooterTop->Set(0);
     tnxShooterBottom->Set(0);
+}
+
+double SubShooter::GetTopEncoderSpeed() {
+    return tnxShooterTop->GetSpeed();
+}
+
+double SubShooter::GetBottomEncoderSpeed() {
+    return tnxShooterBottom->GetSpeed();
 }
