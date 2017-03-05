@@ -29,8 +29,10 @@ class Robot: public IterativeRobot
 {
 public:
 	/** The Talon we want to motion profile. */
-	CANTalon _talon;
-	CANTalon _talonSlave;
+	CANTalon _talonMasterA;
+	CANTalon _talonSlaveA;
+	CANTalon _talonMasterB;
+	CANTalon _talonSlaveB;
 
 	/** some example logic on how one can manage an MP */
 	MotionProfileExample _example;
@@ -43,14 +45,22 @@ public:
 	bool _btnsLast[10] = {false,false,false,false,false,false,false,false,false,false};
 
 
-	Robot() : _talon(1), _talonSlave(2), _example(_talon), _joy(0)
+	Robot() : _talonMasterA(1), _talonSlaveA(2), _talonMasterB(3), _talonSlaveB(4), _example(_talonMasterA, _talonMasterB), _joy(0)
 	{
-		_talon.SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative);
-		_talon.SetSensorDirection(true); /* keep sensor and motor in phase */
-		_talon.SelectProfileSlot(1);
-		_talon.SetF(0.187363);
-		_talonSlave.SetControlMode(CANSpeedController::kFollower);
-	    _talonSlave.Set(1);
+		double Fgain = 0.187363;
+		_talonMasterA.SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative);
+		_talonMasterA.SetSensorDirection(true); /* keep sensor and motor in phase */
+		_talonMasterA.SelectProfileSlot(1);
+		_talonMasterA.SetF(Fgain);
+		_talonSlaveA.SetControlMode(CANSpeedController::kFollower);
+	    _talonSlaveA.Set(1);
+
+	    _talonMasterB.SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative);
+		_talonMasterB.SetSensorDirection(true); /* keep sensor and motor in phase */
+		_talonMasterB.SelectProfileSlot(1);
+		_talonMasterB.SetF(Fgain);
+		_talonSlaveB.SetControlMode(CANSpeedController::kFollower);
+	    _talonSlaveB.Set(3);
 	}
 	/**  function is called periodically during operator control */
 	void TeleopPeriodic()
@@ -75,8 +85,10 @@ public:
 			 * The point is we want the switch in and out of MP Control mode.*/
 
 			/* button5 is off so straight drive */
-			_talon.SetControlMode(CANTalon::kVoltage);
-			_talon.Set(12.0 * leftYjoystick);
+			_talonMasterA.SetControlMode(CANTalon::kVoltage);
+			_talonMasterA.Set(12.0 * leftYjoystick);
+			_talonMasterB.SetControlMode(CANTalon::kVoltage);
+			_talonMasterB.Set(12.0 * leftYjoystick);
 
 			_example.reset();
 		} else {
@@ -84,11 +96,13 @@ public:
 			 * When we transition from no-press to press,
 			 * pass a "true" once to MotionProfileControl.
 			 */
-			_talon.SetControlMode(CANTalon::kMotionProfile);
+			_talonMasterA.SetControlMode(CANTalon::kMotionProfile);
+			_talonMasterB.SetControlMode(CANTalon::kMotionProfile);
 
 			CANTalon::SetValueMotionProfile setOutput = _example.getSetValue();
 
-			_talon.Set(setOutput);
+			_talonMasterA.Set(setOutput);
+			_talonMasterB.Set(setOutput);
 
 			/* if btn is pressed and was not pressed last time,
 			 * In other words we just detected the on-press event.
@@ -113,8 +127,10 @@ public:
 		 * into a known state when robot is disabled.  That way when you
 		 * enable the robot doesn't just continue doing what it was doing before.
 		 * BUT if that's what the application/testing requires than modify this accordingly */
-		_talon.SetControlMode(CANTalon::kPercentVbus);
-		_talon.Set( 0 );
+		_talonMasterA.SetControlMode(CANTalon::kPercentVbus);
+		_talonMasterA.Set( 0 );
+		_talonMasterB.SetControlMode(CANTalon::kPercentVbus);
+		_talonMasterB.Set( 0 );
 		/* clear our buffer and put everything into a known state */
 		_example.reset();
 	}

@@ -5,8 +5,8 @@ This sample downloaded from
 
 https://github.com/CrossTheRoadElec/FRC-Examples.git
 
-This was modified to operate one side of a drivebase that has two motors with two TalonSRXs and a single CTRE
-Magnetic Encoder on the driven wheel axle.
+This was modified to operate a drivebase that has a leaf and a right gearbox each with two TalonSRXs and a
+single CTRE Magnetic Encoder on the driven wheel axle.
 
 It is easiest to monitor what is going on by displaying the console output from the roborio - click on the cog
 on the driver station then select "View Console".
@@ -17,13 +17,13 @@ Some examples of the program working using buttons 5 and 6 ...
 
 2. Press and hold button 5 then press button 6 momentarily.
 
-3. Robot drive on one side will operate for just under 2 seconds based on the profile in the MotionProfile.h file.
+3. Robot drive will operate for just under 2 seconds based on the profile in the MotionProfile.h file.
 
 4. The world rises to it's feet and applauses at your greatness ... maybe not.
 
-If you are having trouble with this, it is worth checking that you have the sensor direction setting correct. This is
-a lot easier to do with the "CPP_PositionClosedLoop" sample code than this exapmple so get that working first then
-return to this example.
+If you are having trouble with this, it is worth checking that you have the direction of the senors set
+correctly. This is a lot easier to do with the "CPP_PositionClosedLoop" sample code than this exapmple so
+make sure you can get that working with each side of the drive base first then return to this example.
 
 You may also need to adjust the F-gain in Robot.cpp. We calculated this as described in the CTRE PDF ...
 

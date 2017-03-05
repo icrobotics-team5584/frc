@@ -36,14 +36,17 @@ public:
 	 * Instead of creating a new one every time we call getMotionProfileStatus,
 	 * keep one copy.
 	 */
-	CANTalon::MotionProfileStatus _status;
+	CANTalon::MotionProfileStatus _statusA;
+	CANTalon::MotionProfileStatus _statusB;
 	/**
 	 * reference to the talon we plan on manipulating. We will not changeMode()
 	 * or call set(), just get motion profile status and make decisions based on
 	 * motion profile.
 	 */
-	CANTalon & _talon;
-	CANTalon & _talonSlave;
+	CANTalon & _talonMasterA;
+	CANTalon & _talonSlaveA;
+	CANTalon & _talonMasterB;
+	CANTalon & _talonSlaveB;
 	/**
 	 * State machine to make sure we let enough of the motion profile stream to
 	 * talon before we fire it.
@@ -93,7 +96,8 @@ public:
 	void PeriodicTask()
 	{
 		/* keep Talons happy by moving the points from top-buffer to bottom-buffer */
-		_talon.ProcessMotionProfileBuffer();
+		_talonMasterA.ProcessMotionProfileBuffer();
+		_talonMasterB.ProcessMotionProfileBuffer();
 	}
 	/**
 	 * Lets create a periodic task to funnel our trajectory points into our talon.
@@ -102,13 +106,14 @@ public:
 	 */
 	Notifier _notifer;
 
-	MotionProfileExample(CANTalon & talon) : _talon(talon), _talonSlave(talon), _notifer(&MotionProfileExample::PeriodicTask, this)
+	MotionProfileExample(CANTalon & talon1, CANTalon & talon2) : _talonMasterA(talon1), _talonSlaveA(talon1), _talonMasterB(talon2), _talonSlaveB(talon2),_notifer(&MotionProfileExample::PeriodicTask, this)
 	{
 		/*
 		 * since our MP is 10ms per point, set the control frame rate and the
 		 * notifer to half that
 		 */
-		_talon.ChangeMotionControlFramePeriod(5);
+		_talonMasterA.ChangeMotionControlFramePeriod(5);
+		_talonMasterB.ChangeMotionControlFramePeriod(5);
 
 		/* start our tasking */
 		_notifer.StartPeriodic(0.005);
@@ -124,7 +129,8 @@ public:
 		 * middle of an MP, and now we have the second half of a profile just
 		 * sitting in memory.
 		 */
-		_talon.ClearMotionProfileTrajectories();
+		_talonMasterA.ClearMotionProfileTrajectories();
+		_talonMasterB.ClearMotionProfileTrajectories();
 		/* When we do re-enter motionProfile control mode, stay disabled. */
 		_setValue = CANTalon::SetValueMotionProfileDisable;
 		/* When we do start running our state machine start at the beginning. */
@@ -142,8 +148,12 @@ public:
 	 */
 	void control()
 	{
-		/* Get the motion profile status every loop */
-		_talon.GetMotionProfileStatus(_status);
+		/* Get the motion profile status every loop
+		 * In some cases we need to access the status of both masters, in others we use MasterA
+		 * As the lead and assume MasterB is in sync, this assumption may be unfounded!
+		 */
+		_talonMasterA.GetMotionProfileStatus(_statusA);
+		_talonMasterB.GetMotionProfileStatus(_statusB);
 
 		/*
 		 * track time, this is rudimentary but that's okay, we just want to make
@@ -165,7 +175,7 @@ public:
 		}
 
 		/* first check if we are in MP mode */
-		if(_talon.GetControlMode() != CANSpeedController::kMotionProfile){
+		if(_talonMasterA.GetControlMode() != CANSpeedController::kMotionProfile){
 			/*
 			 * we are not in MP mode. We are probably driving the robot around
 			 * using gamepads or some other mode.
@@ -196,7 +206,7 @@ public:
 						 * points
 						 */
 					/* do we have a minimum numberof points in Talon */
-					if (_status.btmBufferCnt > kMinPointsInTalon) {
+					if ((_statusA.btmBufferCnt > kMinPointsInTalon) && (_statusB.btmBufferCnt > kMinPointsInTalon)) {
 						/* start (once) the motion profile */
 						_setValue = CANTalon::SetValueMotionProfileEnable;
 						/* MP will start once the control frame gets scheduled */
@@ -210,7 +220,7 @@ public:
 					 * timeout. Really this is so that you can unplug your talon in
 					 * the middle of an MP and react to it.
 					 */
-					if (_status.isUnderrun == false) {
+					if ((_statusA.isUnderrun == false) && (_statusB.isUnderrun == false)){
 						_loopTimeout = kNumLoopsTimeout;
 					}
 					/*
@@ -218,7 +228,7 @@ public:
 					 * another. We will go into hold state so robot servo's
 					 * position.
 					 */
-					if (_status.activePointValid && _status.activePoint.isLastPoint) {
+					if (_statusA.activePointValid && _statusA.activePoint.isLastPoint) {
 						/*
 						 * because we set the last point's isLast to true, we will
 						 * get here when the MP is done
@@ -230,8 +240,9 @@ public:
 					break;
 			}
 		}
-		/* printfs and/or logging */
-		instrumentation::Process(_status);
+		/* printfs and/or logging ... we really need to process statuses better than this as they will appear jumbled in the console when we do it like this  */
+		instrumentation::Process(_statusA);
+		instrumentation::Process(_statusB);
 	}
 
 	/** Start filling the MPs to all of the involved Talons. */
@@ -247,7 +258,7 @@ public:
 		CANTalon::TrajectoryPoint point;
 
 		/* did we get an underrun condition since last time we checked ? */
-		if(_status.hasUnderrun){
+		if(_statusA.hasUnderrun ){
 			/* better log it so we know about it */
 			instrumentation::OnUnderrun();
 			/*
@@ -255,14 +266,26 @@ public:
 			 * "is underrun", because the former is cleared by the application.
 			 * That way, we never miss logging it.
 			 */
-			_talon.ClearMotionProfileHasUnderrun();
+			_talonMasterA.ClearMotionProfileHasUnderrun();
+		}
+
+		if(_statusB.hasUnderrun ){
+			/* better log it so we know about it */
+			instrumentation::OnUnderrun();
+			/*
+			 * clear the error. This is what seperates "has underrun" from
+			 * "is underrun", because the former is cleared by the application.
+			 * That way, we never miss logging it.
+			 */
+			_talonMasterB.ClearMotionProfileHasUnderrun();
 		}
 
 		/*
 		 * just in case we are interrupting another MP and there is still buffer
 		 * points in memory, clear it.
 		 */
-		_talon.ClearMotionProfileTrajectories();
+		_talonMasterA.ClearMotionProfileTrajectories();
+		_talonMasterB.ClearMotionProfileTrajectories();
 
 		/* This is fast since it's just into our TOP buffer */
 		for(int i=0;i<totalCnt;++i){
@@ -292,7 +315,12 @@ public:
 											 * set this to true on the last point
 											 */
 
-			_talon.PushMotionProfileTrajectory(point);
+			_talonMasterA.PushMotionProfileTrajectory(point);
+
+			/* For now, lets just reverse the points for the opposite side of drive base */
+			point.position *= -1.0;
+			point.velocity *= -1.0;
+			_talonMasterB.PushMotionProfileTrajectory(point);
 		}
 	}
 	
