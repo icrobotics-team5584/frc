@@ -48,10 +48,14 @@ public:
 	Robot() : _talonMasterA(1), _talonSlaveA(2), _talonMasterB(3), _talonSlaveB(4), _example(_talonMasterA, _talonMasterB), _joy(0)
 	{
 		double Fgain = 0.187363;
-		_talonMasterA.SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative);
+		// double Pgain = 0.0341;
+		// double Pgain = 0.0750;
+		double Pgain = 1.2000;
+			_talonMasterA.SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative);
 		_talonMasterA.SetSensorDirection(true); /* keep sensor and motor in phase */
 		_talonMasterA.SelectProfileSlot(1);
 		_talonMasterA.SetF(Fgain);
+		_talonMasterA.SetP(Pgain);
 		_talonSlaveA.SetControlMode(CANSpeedController::kFollower);
 	    _talonSlaveA.Set(1);
 
@@ -59,6 +63,7 @@ public:
 		_talonMasterB.SetSensorDirection(true); /* keep sensor and motor in phase */
 		_talonMasterB.SelectProfileSlot(1);
 		_talonMasterB.SetF(Fgain);
+		_talonMasterB.SetP(Pgain);
 		_talonSlaveB.SetControlMode(CANSpeedController::kFollower);
 	    _talonSlaveB.Set(3);
 	}

@@ -24,7 +24,8 @@
  * [2] Instead of setting the sensor position to zero at the start of each MP, the program could offset the MP's position based on current position. 
  */
 #include <Instrumentation.h>
-#include <MotionProfile.h>
+#include <MotionProfileA.h>
+#include <MotionProfileB.h>
 #include "WPILib.h"
 #include "CANTalon.h"
 
@@ -249,10 +250,11 @@ public:
 	void startFilling()
 	{
 		/* since this example only has one talon, just update that one */
-		startFilling(kMotionProfile, kMotionProfileSz);
+		startFillingA(kMotionProfileA, kMotionProfileSzA);
+		startFillingB(kMotionProfileB, kMotionProfileSzB);
 	}
 
-	void startFilling(const double profile[][3], int totalCnt)
+	void startFillingA(const double profile[][3], int totalCnt)
 	{
 		/* create an empty point */
 		CANTalon::TrajectoryPoint point;
@@ -269,23 +271,11 @@ public:
 			_talonMasterA.ClearMotionProfileHasUnderrun();
 		}
 
-		if(_statusB.hasUnderrun ){
-			/* better log it so we know about it */
-			instrumentation::OnUnderrun();
-			/*
-			 * clear the error. This is what seperates "has underrun" from
-			 * "is underrun", because the former is cleared by the application.
-			 * That way, we never miss logging it.
-			 */
-			_talonMasterB.ClearMotionProfileHasUnderrun();
-		}
-
 		/*
 		 * just in case we are interrupting another MP and there is still buffer
 		 * points in memory, clear it.
 		 */
 		_talonMasterA.ClearMotionProfileTrajectories();
-		_talonMasterB.ClearMotionProfileTrajectories();
 
 		/* This is fast since it's just into our TOP buffer */
 		for(int i=0;i<totalCnt;++i){
@@ -318,6 +308,64 @@ public:
 			_talonMasterA.PushMotionProfileTrajectory(point);
 
 			/* For now, lets just reverse the points for the opposite side of drive base */
+			point.position *= -1.0;
+			point.velocity *= -1.0;
+			_talonMasterB.PushMotionProfileTrajectory(point);
+		}
+	}
+
+	void startFillingB(const double profile[][3], int totalCnt)
+	{
+		/* create an empty point */
+		CANTalon::TrajectoryPoint point;
+
+		/* did we get an underrun condition since last time we checked ? */
+		if(_statusB.hasUnderrun ){
+			/* better log it so we know about it */
+			instrumentation::OnUnderrun();
+			/*
+			 * clear the error. This is what seperates "has underrun" from
+			 * "is underrun", because the former is cleared by the application.
+			 * That way, we never miss logging it.
+			 */
+			_talonMasterB.ClearMotionProfileHasUnderrun();
+		}
+
+		/*
+		 * just in case we are interrupting another MP and there is still buffer
+		 * points in memory, clear it.
+		 */
+		_talonMasterB.ClearMotionProfileTrajectories();
+
+		/* This is fast since it's just into our TOP buffer */
+		for(int i=0;i<totalCnt;++i){
+			/* for each point, fill our structure and pass it to API */
+			point.position = profile[i][0]; /*
+											 * copy the position, velocity, and
+											 * time from current row
+											 */
+			point.velocity = profile[i][1];
+			point.timeDurMs = (int) profile[i][2];
+			point.profileSlotSelect = 1; /*
+											 * which set of gains would you like to
+											 * use?
+											 */
+			point.velocityOnly = false; /*
+										 * set true to not do any position
+										 * servo, just velocity feedforward
+										 */
+
+			point.zeroPos = false;
+			if (i == 0)
+				point.zeroPos = true; /* set this to true on the first point */
+
+			point.isLastPoint = false;
+			if( (i + 1) == totalCnt )
+				point.isLastPoint = true; /*
+											 * set this to true on the last point
+											 */
+
+			/* we need to reverse the points for the opposite side of drive base */
 			point.position *= -1.0;
 			point.velocity *= -1.0;
 			_talonMasterB.PushMotionProfileTrajectory(point);
