@@ -1,6 +1,7 @@
 #include "CmdAutoMotionProfileToPeg.h"
 
-CmdAutoMotionProfileToPeg::CmdAutoMotionProfileToPeg() : _example( * RobotMap::subDriveBaseTnxLeftMaster, * RobotMap::subDriveBaseTnxRightMaster )
+CmdAutoMotionProfileToPeg::CmdAutoMotionProfileToPeg(int profile) :
+_example( * RobotMap::subDriveBaseTnxLeftMaster, * RobotMap::subDriveBaseTnxRightMaster, profile)
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());

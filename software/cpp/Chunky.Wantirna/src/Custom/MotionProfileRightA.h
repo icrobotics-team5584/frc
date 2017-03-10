@@ -1,6 +1,6 @@
-const int kMotionProfileSzB =406;
+const int kMotionProfileRightSzA =406;		
 		
-const double kMotionProfileB[][3] = {		
+const double kMotionProfileRightA[][3] = {		
 {0,	0	,10},
 {4.76190476190476E-05,	0.571428571	,10},
 {0.000214285714285714,	1.428571429	,10},

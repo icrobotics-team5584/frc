@@ -1,7 +1,6 @@
-#include "CmdAuto5MotionProfileToLeftPeg.h"
-#include "CmdAutoMotionProfileToPeg.h"
+#include "CmdAuto9DoNothing.h"
 
-CmdAuto5MotionProfileToLeftPeg::CmdAuto5MotionProfileToLeftPeg() {
+CmdAuto9DoNothing::CmdAuto9DoNothing() {
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
 	//      AddSequential(new Command2());
@@ -18,5 +17,4 @@ CmdAuto5MotionProfileToLeftPeg::CmdAuto5MotionProfileToLeftPeg() {
 	// e.g. if Command1 requires chassis, and Command2 requires arm,
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
-	AddSequential(new CmdAutoMotionProfileToPeg(0));
 }

@@ -7,7 +7,7 @@
 
 class CmdAutoMotionProfileToPeg : public Command {
 public:
-	CmdAutoMotionProfileToPeg();
+	CmdAutoMotionProfileToPeg(int profile);
 	virtual void Initialize();
 	virtual void Execute();
 	virtual bool IsFinished();

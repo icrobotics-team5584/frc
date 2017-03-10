@@ -23,9 +23,15 @@
  * [1] Calling pushMotionProfileTrajectory() continuously while the Talon executes the motion profile, thereby keeping it going indefinitely.
  * [2] Instead of setting the sensor position to zero at the start of each MP, the program could offset the MP's position based on current position. 
  */
+#include <Custom/MotionProfileLeftA.h>
+#include <Custom/MotionProfileLeftB.h>
+#include <Custom/MotionProfileRightA.h>
+#include <Custom/MotionProfileRightB.h>
+#include <Custom/MotionProfileMidA.h>
+#include <Custom/MotionProfileMidB.h>
+#include <Custom/MotionProfileBaselineA.h>
+#include <Custom/MotionProfileBaselineB.h>
 #include "Custom/Instrumentation.h"
-#include "Custom/MotionProfileA.h"
-#include "Custom/MotionProfileB.h"
 #include "WPILib.h"
 #include "CANTalon.h"
 
@@ -106,8 +112,13 @@ public:
 	 * profiler executer.
 	 */
 	Notifier _notifer;
+	int _Profile;
 
-	MotionProfileExample(CANTalon & talon1, CANTalon & talon2) : _talonMasterA(talon1), _talonMasterB(talon2),_notifer(&MotionProfileExample::PeriodicTask, this)
+	MotionProfileExample(CANTalon & talon1, CANTalon & talon2, int Profile) :
+		_talonMasterA(talon1),
+		_talonMasterB(talon2),
+		_notifer(&MotionProfileExample::PeriodicTask, this),
+		_Profile(Profile)
 		{
 		/*
 		 * since our MP is 10ms per point, set the control frame rate and the
@@ -252,8 +263,32 @@ public:
 	void startFilling()
 	{
 		/* since this example only has one talon, just update that one */
-		startFillingA(kMotionProfileA, kMotionProfileSzA);
-		startFillingB(kMotionProfileB, kMotionProfileSzB);
+		switch (_Profile) {
+
+		//To Left Peg
+		case (0):
+			startFillingA(kMotionProfileLeftA, kMotionProfileLeftSzA);
+			startFillingB(kMotionProfileLeftB, kMotionProfileLeftSzB);
+			break;
+
+		//To Right Peg
+		case (1):
+			startFillingA(kMotionProfileRightA, kMotionProfileRightSzA);
+			startFillingB(kMotionProfileRightB, kMotionProfileRightSzB);
+			break;
+
+		//To Mid Peg
+		case (2):
+			startFillingA(kMotionProfileMidA, kMotionProfileMidSzA);
+			startFillingB(kMotionProfileMidB, kMotionProfileMidSzB);
+			break;
+
+		//To Base Line
+		case (3):
+			startFillingA(kMotionProfileBaselineA, kMotionProfileBaselineSzA);
+			startFillingB(kMotionProfileBaselineB, kMotionProfileBaselineSzB);
+			break;
+		}
 	}
 
 	void startFillingA(const double profile[][3], int totalCnt)
