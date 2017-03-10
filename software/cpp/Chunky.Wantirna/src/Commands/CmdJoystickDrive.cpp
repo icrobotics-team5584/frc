@@ -31,7 +31,7 @@ void CmdJoystickDrive::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void CmdJoystickDrive::Execute() {
 	Robot::subDriveBase->TakeJoystickInputs( Robot::oi->getJoystick1() );
-	SmartDashboard::PutNumber("Gyro", Robot::subDriveBase->GetAngle());
+//	SmartDashboard::PutNumber("Gyro", Robot::subDriveBase->GetAngle());
     // lets just display the values here to prove that they are actually being
 	// set as expected ... this is a pretty useless operation as these values are
 	// already available elsewhere in the network tables but it should give us

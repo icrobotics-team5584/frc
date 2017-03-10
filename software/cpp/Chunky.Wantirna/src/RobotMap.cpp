@@ -103,18 +103,26 @@ void RobotMap::init() {
     subDriveBaseTnxLeftMaster->SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative);
     subDriveBaseTnxRightMaster->SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative);
     subDriveBaseTnxLeftMaster->SetSensorDirection(true);
-    subDriveBaseTnxRightMaster->SetSensorDirection(false);
-    subDriveBaseTnxLeftMaster->SetPosition(0);
-    subDriveBaseTnxRightMaster->SetPosition(0);
+    subDriveBaseTnxRightMaster->SetSensorDirection(true);
+//    subDriveBaseTnxLeftMaster->SetPosition(0);
+//    subDriveBaseTnxRightMaster->SetPosition(0);
 
-    // Make Rear drive motors followers
+    // Make Rear drive motors followers and configure FPID profile slot
     //
     subDriveBaseTnxLeftSlave.reset(new CANTalon(2));
     lw->AddActuator("SubDriveBase", "TnxLeftSlave", subDriveBaseTnxLeftSlave);
     subDriveBaseTnxRightSlave.reset(new CANTalon(4));
     lw->AddActuator("SubDriveBase", "TnxRightSlave", subDriveBaseTnxRightSlave);
+    double Fgain = 0.187363;
+    double Pgain = 1.2000;
+    subDriveBaseTnxLeftMaster->SelectProfileSlot(1);
+    subDriveBaseTnxLeftMaster->SetF(Fgain);
+    subDriveBaseTnxLeftMaster->SetP(Pgain);
     subDriveBaseTnxLeftSlave->SetControlMode(CANSpeedController::kFollower);
     subDriveBaseTnxLeftSlave->Set(1);
+    subDriveBaseTnxRightMaster->SelectProfileSlot(1);
+    subDriveBaseTnxRightMaster->SetF(Fgain);
+    subDriveBaseTnxRightMaster->SetP(Pgain);
     subDriveBaseTnxRightSlave->SetControlMode(CANSpeedController::kFollower);
     subDriveBaseTnxRightSlave->Set(3);
 
@@ -151,8 +159,8 @@ void RobotMap::init() {
 
     //Create and calibrate gyroscope
     //
-    subDriveBaseGyro.reset(new ADXRS450_Gyro);
-    lw->AddSensor("SubDriveBase", "Gyro", subDriveBaseGyro);
-    subDriveBaseGyro->Calibrate();
+//    subDriveBaseGyro.reset(new ADXRS450_Gyro);
+//    lw->AddSensor("SubDriveBase", "Gyro", subDriveBaseGyro);
+//    subDriveBaseGyro->Calibrate();
 
 }
