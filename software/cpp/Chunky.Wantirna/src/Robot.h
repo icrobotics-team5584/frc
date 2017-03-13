@@ -56,7 +56,7 @@ public:
 	virtual void TestPeriodic();
 
 private:
-	frc::SendableChooser<frc::Command*> chooser;
+//	frc::SendableChooser<frc::Command*> chooser;
 	// already declared above - - - std::unique_ptr<frc::Command> autonomousCommand;
 
 };

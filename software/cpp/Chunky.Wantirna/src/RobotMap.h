@@ -48,6 +48,12 @@ public:
 	static std::shared_ptr<CANTalon> subDriveBaseTnxLeftSlave;
 	static std::shared_ptr<CANTalon> subDriveBaseTnxRightSlave;
 	static std::shared_ptr<ADXRS450_Gyro> subDriveBaseGyro;
+
+	static::std::shared_ptr<DigitalInput> subDriveBaseDioChannel06;
+	static::std::shared_ptr<DigitalInput> subDriveBaseDioChannel07;
+	static::std::shared_ptr<DigitalInput> subDriveBaseDioChannel08;
+	static::std::shared_ptr<DigitalInput> subDriveBaseDioChannel09;
+
 	static void init();
 };
 #endif
