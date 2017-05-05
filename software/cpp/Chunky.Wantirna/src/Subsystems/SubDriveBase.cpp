@@ -34,11 +34,6 @@ SubDriveBase::SubDriveBase() : Subsystem("SubDriveBase") {
     jetsonNetworkTable = NetworkTable::GetTable("JETSON");
 
 //    gyro = RobotMap::subDriveBaseGyro;
-
-    dioChannel06 = RobotMap::subDriveBaseDioChannel06;
-    dioChannel07 = RobotMap::subDriveBaseDioChannel07;
-    dioChannel08 = RobotMap::subDriveBaseDioChannel08;
-    dioChannel09 = RobotMap::subDriveBaseDioChannel09;
 }
 
 void SubDriveBase::InitDefaultCommand() {
@@ -99,20 +94,4 @@ double SubDriveBase::GetPegWidth() {
 
 double SubDriveBase::GetPegRange() {
     return jetsonNetworkTable->GetNumber( "pegrange", 0.0 );
-}
-
-bool SubDriveBase::IsDIOChannel06on() {
-	return dioChannel06->Get();
-}
-
-bool SubDriveBase::IsDIOChannel07on() {
-	return dioChannel07->Get();
-}
-
-bool SubDriveBase::IsDIOChannel08on() {
-	return dioChannel08->Get();
-}
-
-bool SubDriveBase::IsDIOChannel09on() {
-	return dioChannel09->Get();
 }

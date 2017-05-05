@@ -81,15 +81,15 @@ void Robot::RobotInit() {
 
 	//Create autonomous selector
 	//chooser.AddObject("Auto 1: Deploy Gear", new CmdAutonomous());
-//	chooser.AddObject("Auto 2: Shoot Goals", new CmdAuto2ShootGoals);
+	chooser.AddObject("Auto 2: Shoot Goals", new CmdAuto2ShootGoals);
 	//chooser.AddObject("Auto 3: Deploy Gear From Right", new CmdAuto3DeployGearFromRight());
 	//chooser.AddObject("Auto 4: Deploy Gear From Left", new CmdAuto4DeployGearFromLeft());
-//	chooser.AddObject("Auto 5: Left Peg", new CmdAuto5MotionProfileToLeftPeg());
-//	chooser.AddObject("Auto 6: Right Peg", new CmdAuto6MotionProfileToRightPeg());
-//	chooser.AddDefault("Auto 7: Middle Peg", new CmdAuto7MotionProfileToMidPeg());
-//	chooser.AddObject("Auto 8: BaseLine", new CmdAuto8MotionProfileToBaseline());
-//	chooser.AddObject("Auto 9: Do Nothing", new CmdAuto9DoNothing());
-//	frc::SmartDashboard::PutData("Autonomous modes", &chooser);
+	chooser.AddObject("Auto 5: Left Peg", new CmdAuto5MotionProfileToLeftPeg());
+	chooser.AddObject("Auto 6: Right Peg", new CmdAuto6MotionProfileToRightPeg());
+	chooser.AddDefault("Auto 7: Middle Peg", new CmdAuto7MotionProfileToMidPeg());
+	chooser.AddObject("Auto 8: BaseLine", new CmdAuto8MotionProfileToBaseline());
+	chooser.AddObject("Auto 9: Do Nothing", new CmdAuto9DoNothing());
+	frc::SmartDashboard::PutData("Autonomous modes", &chooser);
 
 }
 
@@ -109,7 +109,7 @@ void Robot::AutonomousInit() {
     // turn off the safety as we know auo code is managing motor control and
 	// Robot Drive will be bleating if we do not attend to it often enough...
 	RobotMap::subDriveBaseRobotDriveTwo->SetExpiration(60);
-//	autonomousCommand.reset(chooser.GetSelected());
+	autonomousCommand.reset(chooser.GetSelected());
 	if (autonomousCommand.get() != nullptr) {
 		autonomousCommand->Start();
 	}
