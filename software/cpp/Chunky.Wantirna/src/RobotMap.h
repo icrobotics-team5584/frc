@@ -48,6 +48,7 @@ public:
 	static std::shared_ptr<CANTalon> subDriveBaseTnxLeftSlave;
 	static std::shared_ptr<CANTalon> subDriveBaseTnxRightSlave;
 	static std::shared_ptr<ADXRS450_Gyro> subDriveBaseGyro;
+	static std::shared_ptr<DoubleSolenoid> subGearCatcherPnuActuator;
 	static void init();
 };
 #endif
