@@ -84,19 +84,19 @@ Children:
           default: '0'
           name: Reverse PCM (Solenoid)
           validators: [Solenoid]
-          value: '2'
+          value: '0'
         Reverse Channel (Solenoid): !!robotbuilder.data.properties.ChoicesProperty
           choices: ['0', '1', '2', '3', '4', '5', '6', '7']
           default: '0'
           name: Reverse Channel (Solenoid)
           validators: [Solenoid]
-          value: '3'
+          value: '1'
         Forward Channel (Solenoid): !!robotbuilder.data.properties.ChoicesProperty
           choices: ['0', '1', '2', '3', '4', '5', '6', '7']
           default: '0'
           name: Forward Channel (Solenoid)
           validators: [Solenoid]
-          value: '1'
+          value: '0'
       Base: Double Solenoid
       Name: SlnGearPusher
     Properties:
@@ -204,7 +204,7 @@ Children:
   Name: Commands
 Properties:
   Eclipse Workspace: !!robotbuilder.data.properties.FileProperty {default: 'C:\Users\Robocamp\workspace',
-    extension: null, folder: true, name: Eclipse Workspace, validators: null, value: 'C:\JazzHub\icrobotics\frc\software\cpp\Morse'}
+    extension: null, folder: true, name: Eclipse Workspace, validators: null, value: 'C:\JazzHub\icrobotics\frc\software\cpp'}
   Export Commands: !!robotbuilder.data.properties.BooleanProperty {default: true,
     name: Export Commands, validators: null, value: true}
   Autonomous command parameters: !!robotbuilder.data.properties.ParametersProperty
