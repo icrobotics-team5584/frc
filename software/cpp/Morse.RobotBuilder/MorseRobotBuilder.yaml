@@ -142,6 +142,42 @@ Children:
         value: *id011
     Base: Subsystem
     Name: SubGearPusher
+  - Children:
+    - Children: []
+      Properties:
+        CAN ID: !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id001
+          default: '2'
+          name: CAN ID
+          validators: *id002
+          value: '5'
+      Base: CAN Talon
+      Name: CANTalonLeftClimb
+    - Children: []
+      Properties:
+        CAN ID: !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id001
+          default: '2'
+          name: CAN ID
+          validators: *id002
+          value: '6'
+      Base: CAN Talon
+      Name: CANTalonRightClimb
+    Properties:
+      Default command parameters: !!robotbuilder.data.properties.ParametersProperty
+        default: []
+        name: Default command parameters
+        validators: null
+        value: []
+      Default Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
+        name: Default Command, type: Command, validators: null, value: None}
+      Constants: !!robotbuilder.data.properties.ConstantsProperty
+        default: []
+        name: Constants
+        validators: null
+        value: []
+    Base: Subsystem
+    Name: SubClimber
   Properties: {}
   Base: Subsystems
   Name: Subsystems

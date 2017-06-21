@@ -24,7 +24,9 @@ CmdGearPusher::CmdGearPusher(): Command() {
 
 // Called just before this Command runs the first time
 void CmdGearPusher::Initialize() {
-	Robot::subGearPusher->freddiePusher();
+	if (Robot::subGearPusher->doorUp == true) {
+		Robot::subGearPusher->freddiePusher();
+	}
 }
 
 // Called repeatedly when this Command is scheduled to run

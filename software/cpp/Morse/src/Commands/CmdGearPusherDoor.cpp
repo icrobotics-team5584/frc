@@ -24,6 +24,7 @@ CmdGearPusherDoor::CmdGearPusherDoor(): Command() {
 
 // Called just before this Command runs the first time
 void CmdGearPusherDoor::Initialize() {
+
 	Robot::subGearPusher->openPodBay();
 }
 
@@ -39,7 +40,9 @@ bool CmdGearPusherDoor::IsFinished() {
 
 // Called once after isFinished returns true
 void CmdGearPusherDoor::End() {
-	Robot::subGearPusher->closePodBay();
+	if (Robot::subGearPusher->pusherOut == false) {
+		Robot::subGearPusher->closePodBay();
+	}
 }
 
 // Called when another command which requires one or more of the same
