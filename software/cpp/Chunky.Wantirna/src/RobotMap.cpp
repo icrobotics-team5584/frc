@@ -174,9 +174,9 @@ void RobotMap::init() {
 //    subDriveBaseGyro->Calibrate();
 
     //Create pnuematics solenoids
-    subGearCatcherPnuDoors.reset(new DoubleSolenoid(0,1));
-    subGearCatcherPnuDoors.reset(new DoubleSolenoid(2,3));
-    lw->AddSensor("SubGearCatcher", "PnuDoors", subGearCatcherPnuDoors);
+    subGearCatcherPnuPusher.reset(new DoubleSolenoid(0,2));
     lw->AddSensor("SubGearCatcher", "PnuPusher", subGearCatcherPnuPusher);
+    subGearCatcherPnuDoors.reset(new DoubleSolenoid(1,3));
+    lw->AddSensor("SubGearCatcher", "PnuDoors", subGearCatcherPnuDoors);
 
 }

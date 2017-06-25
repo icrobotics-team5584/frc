@@ -30,8 +30,10 @@ SubGearCatcher::SubGearCatcher() : Subsystem("SubGearCatcher") {
     pnuDoors = RobotMap::subGearCatcherPnuDoors;
     pnuPusher = RobotMap::subGearCatcherPnuPusher;
 
-    //Set servo to default position
+    //Set servos and actuators to default positions
     ServosIn();
+    PusherIn();
+    DoorsClose();
 }
 
 void SubGearCatcher::InitDefaultCommand() {
@@ -64,11 +66,11 @@ void SubGearCatcher::ServosIn() {
 }
 
 void SubGearCatcher::PusherOut() {
-	pnuPusher->Set(DoubleSolenoid::kForward);
+	pnuPusher->Set(DoubleSolenoid::kReverse);
 }
 
 void SubGearCatcher::PusherIn() {
-	pnuPusher->Set(DoubleSolenoid::kReverse);
+	pnuPusher->Set(DoubleSolenoid::kForward);
 }
 
 void SubGearCatcher::DoorsOpen() {
