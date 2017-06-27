@@ -73,6 +73,10 @@ public:
 	 * service it.
 	 */
 	bool _bStart = false;
+	/**
+	 * We use this variable to record whether the MP has been started.
+	 */
+	bool _bStarted = false;
 
 	/**
 	 * Since the CANTalon.set() routine is mode specific, deduce what we want
@@ -415,6 +419,21 @@ public:
 	 */
 	void start() {
 		_bStart = true;
+		_bStarted = true;
+	}
+
+	/**
+	 * Called by command object to establish whether MP is running.
+	 */
+	int getState() {
+		return _state;
+	}
+
+	/**
+	 * Called by command object to establish whether MP has been started.
+	 */
+	bool hasBeenStarted() {
+		return _bStarted;
 	}
 
 	/**

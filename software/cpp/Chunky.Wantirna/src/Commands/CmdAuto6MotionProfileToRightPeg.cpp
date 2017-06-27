@@ -1,5 +1,6 @@
 #include "CmdAuto6MotionProfileToRightPeg.h"
 #include "CmdAutoMotionProfileToPeg.h"
+#include "CmdLaunchGear.h"
 
 CmdAuto6MotionProfileToRightPeg::CmdAuto6MotionProfileToRightPeg() {
 	// Add Commands here:
@@ -19,4 +20,5 @@ CmdAuto6MotionProfileToRightPeg::CmdAuto6MotionProfileToRightPeg() {
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 	AddSequential(new CmdAutoMotionProfileToPeg(1));
+	AddSequential(new CmdLaunchGear());
 }

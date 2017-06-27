@@ -16,6 +16,7 @@ public:
 private:
 	MotionProfileExample _example;
 	bool firsttimearound = true;
+	int execounter = 0;
 };
 
 #endif  // CmdAutoMotionProfileToPeg_H

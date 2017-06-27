@@ -1,5 +1,6 @@
 #include "CmdAuto5MotionProfileToLeftPeg.h"
 #include "CmdAutoMotionProfileToPeg.h"
+#include "CmdLaunchGear.h"
 
 CmdAuto5MotionProfileToLeftPeg::CmdAuto5MotionProfileToLeftPeg() {
 	// Add Commands here:
@@ -19,4 +20,5 @@ CmdAuto5MotionProfileToLeftPeg::CmdAuto5MotionProfileToLeftPeg() {
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 	AddSequential(new CmdAutoMotionProfileToPeg(0));
+	AddSequential(new CmdLaunchGear());
 }

@@ -16,16 +16,28 @@ void CmdLaunchGear::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdLaunchGear::Execute() {
-	Robot::subGearCatcher->DoorsOpen();
-	if( execounter > 50 ) {
+
+	if( execounter >= 0 && execounter < 50 ) {
+		Robot::subGearCatcher->DoorsOpen();
+	}
+	if( execounter >= 50 && execounter < 100 ) {
 		Robot::subGearCatcher->PusherOut();
+	}
+	if( execounter >= 100 && execounter < 150 ) {
+		Robot::subGearCatcher->PusherIn();
+	}
+	if( execounter >= 150 && execounter < 200 ) {
+		Robot::subGearCatcher->DoorsClose();
 	}
 	execounter++;
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdLaunchGear::IsFinished() {
-	return false;
+	if( execounter < 250 ) {
+		return false;
+	}
+	return true;
 }
 
 // Called once after isFinished returns true

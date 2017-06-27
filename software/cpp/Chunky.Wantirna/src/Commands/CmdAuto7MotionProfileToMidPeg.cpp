@@ -1,5 +1,6 @@
 #include "CmdAuto7MotionProfileToMidPeg.h"
 #include "CmdAutoMotionProfileToPeg.h"
+#include "CmdLaunchGear.h"
 
 CmdAuto7MotionProfileToMidPeg::CmdAuto7MotionProfileToMidPeg() {
 	// Add Commands here:
@@ -19,4 +20,5 @@ CmdAuto7MotionProfileToMidPeg::CmdAuto7MotionProfileToMidPeg() {
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 	AddSequential(new CmdAutoMotionProfileToPeg(2));
+	AddSequential(new CmdLaunchGear());
 }
