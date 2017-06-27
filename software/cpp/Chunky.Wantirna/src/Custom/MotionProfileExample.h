@@ -267,26 +267,26 @@ public:
 
 		//To Left Peg
 		case (0):
-			startFillingA(kMotionProfileLeftA, kMotionProfileLeftSzA);
-			startFillingB(kMotionProfileLeftB, kMotionProfileLeftSzB);
+			startFillingA(kLeftA, kLeftASz);
+			startFillingB(kLeftB, kLeftBSz);
 			break;
 
 		//To Right Peg
 		case (1):
-			startFillingA(kMotionProfileRightA, kMotionProfileRightSzA);
-			startFillingB(kMotionProfileRightB, kMotionProfileRightSzB);
+			startFillingA(kRightA, kRightASz);
+			startFillingB(kRightB, kRightBSz);
 			break;
 
 		//To Mid Peg
 		case (2):
-			startFillingA(kMotionProfileMidA, kMotionProfileMidSzA);
-			startFillingB(kMotionProfileMidB, kMotionProfileMidSzB);
+			startFillingA(kMidA, kMidASz);
+			startFillingB(kMidB, kMidBSz);
 			break;
 
 		//To Base Line
 		case (3):
-			startFillingA(kMotionProfileBaselineA, kMotionProfileBaselineSzA);
-			startFillingB(kMotionProfileBaselineB, kMotionProfileBaselineSzB);
+			startFillingA(kBaselineA, kBaselineASz);
+			startFillingB(kBaselineB, kBaselineBSz);
 			break;
 		}
 	}
