@@ -116,23 +116,25 @@ void RobotMap::init() {
     lw->AddActuator("SubDriveBase", "TnxLeftSlave", subDriveBaseTnxLeftSlave);
     subDriveBaseTnxRightSlave.reset(new CANTalon(4));
     lw->AddActuator("SubDriveBase", "TnxRightSlave", subDriveBaseTnxRightSlave);
-    double Fgain = 0.187363;
-    // double Pgain = 1.2000;
-    double Pgain = 1.6000;
-    double Igain = 0.0;
-    double Dgain = 0.0;
+
+    double LeftFgain = 0.185683;    double RightFgain = 0.186462;
+    //double LeftPgain = 1.2000;    double RightPgain = 1.2000;
+    double LeftPgain = 1.0000;      double RightPgain = 1.0000;
+    double LeftIgain = 0.0;         double RightIgain = 0.0;
+    double LeftDgain = 0.0;         double RightDgain = 0.0;
+
     subDriveBaseTnxLeftMaster->SelectProfileSlot(1);
-    subDriveBaseTnxLeftMaster->SetF(Fgain);
-    subDriveBaseTnxLeftMaster->SetP(Pgain);
-    subDriveBaseTnxLeftMaster->SetI(Igain);
-    subDriveBaseTnxLeftMaster->SetD(Dgain);
+    subDriveBaseTnxLeftMaster->SetF(LeftFgain);
+    subDriveBaseTnxLeftMaster->SetP(LeftPgain);
+    subDriveBaseTnxLeftMaster->SetI(LeftIgain);
+    subDriveBaseTnxLeftMaster->SetD(LeftDgain);
     subDriveBaseTnxLeftSlave->SetControlMode(CANSpeedController::kFollower);
     subDriveBaseTnxLeftSlave->Set(1);
     subDriveBaseTnxRightMaster->SelectProfileSlot(1);
-    subDriveBaseTnxRightMaster->SetF(Fgain);
-    subDriveBaseTnxRightMaster->SetP(Pgain);
-    subDriveBaseTnxRightMaster->SetI(Igain);
-    subDriveBaseTnxRightMaster->SetD(Dgain);
+    subDriveBaseTnxRightMaster->SetF(RightFgain);
+    subDriveBaseTnxRightMaster->SetP(RightPgain);
+    subDriveBaseTnxRightMaster->SetI(RightIgain);
+    subDriveBaseTnxRightMaster->SetD(RightDgain);
     subDriveBaseTnxRightSlave->SetControlMode(CANSpeedController::kFollower);
     subDriveBaseTnxRightSlave->Set(3);
 
