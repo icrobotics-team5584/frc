@@ -48,10 +48,10 @@ void RobotMap::init() {
         subDrivebaseDRV->SetSensitivity(0.5);
         subDrivebaseDRV->SetMaxOutput(1.0);
 
-    subGearPusherSlnGearPusher.reset(new DoubleSolenoid(0, 0, 1));
+    subGearPusherSlnGearPusher.reset(new DoubleSolenoid(0, 1));
     lw->AddActuator("SubGearPusher", "SlnGearPusher", subGearPusherSlnGearPusher);
     
-    subGearPusherSlnGearPusherDoor.reset(new DoubleSolenoid(0, 2, 3));
+    subGearPusherSlnGearPusherDoor.reset(new DoubleSolenoid(2, 3));
     lw->AddActuator("SubGearPusher", "SlnGearPusherDoor", subGearPusherSlnGearPusherDoor);
     
     subClimberCANTalonLeftClimb.reset(new CANTalon(5));
