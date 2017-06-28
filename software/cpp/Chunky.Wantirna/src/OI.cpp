@@ -53,13 +53,13 @@ OI::OI() {
     btnIntakeSliderOut->WhileHeld(new CmdIntakeSliderOut());
     btnIntakeSliderIn.reset(new JoystickButton(joystick1.get(), 10));
     btnIntakeSliderIn->WhileHeld(new CmdIntakeSliderIn());
-    btnClimb.reset(new JoystickButton(joystick1.get(), 6));
+    btnClimb.reset(new JoystickButton(joystick1.get(), 2));
     btnClimb->WhileHeld(new CmdClimb());
     btnMoveServo.reset(new JoystickButton(joystick1.get(), 3));
     btnMoveServo->WhileHeld(new CmdMoveServo());
     btnFuelLaunch.reset(new JoystickButton(joystick1.get(), 8));
     btnFuelLaunch->WhileHeld(new CmdLaunchFuel());
-    btnFuelLaunchPrime.reset(new JoystickButton(joystick1.get(), 2));
+    btnFuelLaunchPrime.reset(new JoystickButton(joystick1.get(), 6));
     btnFuelLaunchPrime->WhileHeld(new CmdLaunchFuelPrime());
     btnIntakeDeployRollerToggle.reset(new JoystickButton(joystick1.get(), 4));
     btnIntakeDeployRollerToggle->WhileHeld(new CmdIntakeDeploy());
