@@ -1,44 +1,43 @@
-#include <Commands/CmdLaunchGear.h>
+#include <Commands/CmdAutoResetGear.h>
 
-CmdLaunchGear::CmdLaunchGear() {
+CmdAutoResetGear::CmdAutoResetGear() {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	Requires(Robot::subGearCatcher.get());
 	execounter = 0;
+	finished = false;
 }
 
 // Called just before this Command runs the first time
-void CmdLaunchGear::Initialize() {
+void CmdAutoResetGear::Initialize() {
 	Robot::subGearCatcher->PusherIn();
 	Robot::subGearCatcher->DoorsClose();
 	execounter = 0;
+	finished = false;
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdLaunchGear::Execute() {
-
-	if( execounter >= 0 && execounter < 50 ) {
-		Robot::subGearCatcher->DoorsOpen();
-	}
-	if( execounter >= 50 && execounter < 100 ) {
-		Robot::subGearCatcher->PusherOut();
+void CmdAutoResetGear::Execute() {
+	if( execounter >= 25 ) {
+		finished = true;
 	}
 	execounter++;
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdLaunchGear::IsFinished() {
+bool CmdAutoResetGear::IsFinished() {
+	if( finished ) {
+		return true;
+	}
 	return false;
 }
 
 // Called once after isFinished returns true
-void CmdLaunchGear::End() {
-	Robot::subGearCatcher->PusherIn();
-	Robot::subGearCatcher->DoorsClose();
+void CmdAutoResetGear::End() {
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdLaunchGear::Interrupted() {
+void CmdAutoResetGear::Interrupted() {
 	End();
 }

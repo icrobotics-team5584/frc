@@ -11,6 +11,8 @@ my $eclipseroot = "C:/JazzHub/icrobotics/frc/software/cpp";
 my $eclipseprojectname = "Chunky.Wantirna";
 my $eclipseprojectpath = "src/Custom";
 
+#####################################################################################
+
 print "INFO: creating profiles for baseline run\n";
 
 my $vprog = 2.00;
@@ -35,7 +37,7 @@ print "INFO: creating graphs for baseline run\n";
 runcmd( "perl motionprofile.graph.pl -ident BaselineA" );
 runcmd( "perl motionprofile.graph.pl -ident BaselineB" );
 
-
+#####################################################################################
 
 print "INFO: creating profiles for middle peg run\n";
 
@@ -61,7 +63,33 @@ print "INFO: creating graphs for middle peg run\n";
 runcmd( "perl motionprofile.graph.pl -ident MidA" );
 runcmd( "perl motionprofile.graph.pl -ident MidB" );
 
+#####################################################################################
 
+print "INFO: creating profiles for retreat run\n";
+
+my $vprog = -2.00;
+my $dist = -1.50;
+my $curve2dist = 0.00;
+my $curve2offset = 0;
+
+my $biasA = 1.01;
+my $biasB = 1.00;
+my $vprogA = $vprog * $biasA;
+my $vprogB = $vprog * $biasB;
+my $distA = $dist * $biasA;
+my $distB = $dist * $biasB;
+my $curve2distA = $curve2dist * $biasA;
+my $curve2distB = $curve2dist * $biasB;
+
+runcmd( "perl motionprofile.pl -ident RetreatA  -mode SIMPLE -t1 400 -t2 200 -itp 10 -vprog ${vprogA} -dist ${distA}" );
+runcmd( "perl motionprofile.pl -ident RetreatB  -mode SIMPLE -t1 400 -t2 200 -itp 10 -vprog ${vprogB} -dist ${distB}" );
+
+print "INFO: creating graphs for retreat run\n";
+
+runcmd( "perl motionprofile.graph.pl -ident RetreatA" );
+runcmd( "perl motionprofile.graph.pl -ident RetreatB" );
+
+#####################################################################################
 
 print "INFO: creating profiles for right peg run\n";
 
@@ -87,7 +115,7 @@ print "INFO: creating graphs for right peg run\n";
 runcmd( "perl motionprofile.graph.pl -ident RightA" );
 runcmd( "perl motionprofile.graph.pl -ident RightB" );
 
-
+#####################################################################################
 
 print "INFO: creating profiles for left peg run\n";
 
@@ -112,7 +140,7 @@ print "INFO: creating graphs for left peg run\n";
 runcmd( "perl motionprofile.graph.pl -ident LeftA" );
 runcmd( "perl motionprofile.graph.pl -ident LeftB" );
 
-
+#####################################################################################
 
 print "INFO: creating html document for all profiles\n";
 
