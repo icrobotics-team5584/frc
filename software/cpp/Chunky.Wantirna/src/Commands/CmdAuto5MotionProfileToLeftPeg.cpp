@@ -22,6 +22,6 @@ CmdAuto5MotionProfileToLeftPeg::CmdAuto5MotionProfileToLeftPeg() {
 	// arm.
 	AddSequential(new CmdAutoMotionProfileToPeg(0));
 	AddSequential(new CmdAutoLaunchGear());
-//	AddSequential(new CmdAutoMotionProfileToPeg(4));
-//	AddSequential(new CmdAutoResetGear());
+	AddSequential(new CmdAutoMotionProfileToPeg(4));
+	AddSequential(new CmdAutoResetGear());
 }

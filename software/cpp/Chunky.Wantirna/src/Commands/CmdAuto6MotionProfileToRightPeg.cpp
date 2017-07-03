@@ -22,6 +22,6 @@ CmdAuto6MotionProfileToRightPeg::CmdAuto6MotionProfileToRightPeg() {
 	// arm.
 	AddSequential(new CmdAutoMotionProfileToPeg(1));
 	AddSequential(new CmdAutoLaunchGear());
-//	AddSequential(new CmdAutoMotionProfileToPeg(4));
-//	AddSequential(new CmdAutoResetGear());
+	AddSequential(new CmdAutoMotionProfileToPeg(4));
+	AddSequential(new CmdAutoResetGear());
 }
