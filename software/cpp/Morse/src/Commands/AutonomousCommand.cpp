@@ -24,7 +24,8 @@ AutonomousCommand::AutonomousCommand(): Command() {
 
 // Called just before this Command runs the first time
 void AutonomousCommand::Initialize() {
-
+	SetTimeout(3000);
+	Robot::subDrivebase->Drive();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -34,7 +35,7 @@ void AutonomousCommand::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool AutonomousCommand::IsFinished() {
-    return false;
+	return IsTimedOut();
 }
 
 // Called once after isFinished returns true

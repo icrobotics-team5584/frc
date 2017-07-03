@@ -51,8 +51,13 @@ void SubDrivebase::InitDefaultCommand() {
 // here. Call these from Commands.
 
 void SubDrivebase::TakeJoystickInputs( std::shared_ptr<Joystick> joystick ) {
-	dRV->ArcadeDrive( joystick->GetY(), joystick->GetX() );
+	dRV->ArcadeDrive( joystick->GetY(), -joystick->GetX() );
 }
+
+void SubDrivebase::Drive(){
+	dRV->Drive(0.5, 0);
+}
+
 void SubDrivebase::Stop(){
 	dRV->Drive(0,0);
 }
