@@ -60,6 +60,7 @@ void Robot::DisabledPeriodic() {
 }
 
 void Robot::AutonomousInit() {
+	RobotMap::subDrivebaseDRV->SetExpiration(60);
 	if (autonomousCommand.get() != nullptr)
 		autonomousCommand->Start();
 }

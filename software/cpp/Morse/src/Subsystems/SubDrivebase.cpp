@@ -55,9 +55,9 @@ void SubDrivebase::TakeJoystickInputs( std::shared_ptr<Joystick> joystick ) {
 }
 
 void SubDrivebase::Drive(){
-	dRV->Drive(0.5, 0);
+	dRV->ArcadeDrive(-0.5, 0.147);
 }
 
 void SubDrivebase::Stop(){
-	dRV->Drive(0,0);
+	dRV->ArcadeDrive(0.0, 0.0);
 }
