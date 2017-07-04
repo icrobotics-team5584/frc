@@ -21,6 +21,7 @@
 std::shared_ptr<CANTalon> RobotMap::subDrivebaseCANTalonLeft;
 std::shared_ptr<CANTalon> RobotMap::subDrivebaseCANTalonRight;
 std::shared_ptr<RobotDrive> RobotMap::subDrivebaseDRV;
+std::shared_ptr<DigitalInput> RobotMap::subDrivebaseDiAutoSelector;
 std::shared_ptr<DoubleSolenoid> RobotMap::subGearPusherSlnGearPusher;
 std::shared_ptr<DoubleSolenoid> RobotMap::subGearPusherSlnGearPusherDoor;
 std::shared_ptr<CANTalon> RobotMap::subClimberCANTalonLeftClimb;
@@ -48,10 +49,13 @@ void RobotMap::init() {
         subDrivebaseDRV->SetSensitivity(0.5);
         subDrivebaseDRV->SetMaxOutput(1.0);
 
-    subGearPusherSlnGearPusher.reset(new DoubleSolenoid(0, 1));
+    subDrivebaseDiAutoSelector.reset(new DigitalInput(0));
+    lw->AddSensor("SubDrivebase", "DiAutoSelector", subDrivebaseDiAutoSelector);
+    
+    subGearPusherSlnGearPusher.reset(new DoubleSolenoid(0, 0, 1));
     lw->AddActuator("SubGearPusher", "SlnGearPusher", subGearPusherSlnGearPusher);
     
-    subGearPusherSlnGearPusherDoor.reset(new DoubleSolenoid(2, 3));
+    subGearPusherSlnGearPusherDoor.reset(new DoubleSolenoid(0, 2, 3));
     lw->AddActuator("SubGearPusher", "SlnGearPusherDoor", subGearPusherSlnGearPusherDoor);
     
     subClimberCANTalonLeftClimb.reset(new CANTalon(5));
