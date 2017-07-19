@@ -29,6 +29,8 @@
 #include <Custom/MotionProfileRightB.h>
 #include <Custom/MotionProfileMidA.h>
 #include <Custom/MotionProfileMidB.h>
+#include <Custom/MotionProfileRetreatA.h>
+#include <Custom/MotionProfileRetreatB.h>
 #include <Custom/MotionProfileBaselineA.h>
 #include <Custom/MotionProfileBaselineB.h>
 #include "Custom/Instrumentation.h"
@@ -291,6 +293,12 @@ public:
 		case (3):
 			startFillingA(kBaselineA, kBaselineASz);
 			startFillingB(kBaselineB, kBaselineBSz);
+			break;
+
+		//To Retreat
+		case (4):
+			startFillingA(kRetreatA, kRetreatASz);
+			startFillingB(kRetreatB, kRetreatBSz);
 			break;
 		}
 	}
