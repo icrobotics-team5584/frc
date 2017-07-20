@@ -74,7 +74,7 @@ void RobotMap::init() {
     subClimberSpkClimber01.reset(new Spark(4));
     lw->AddActuator("SubClimber", "SpkClimber01", std::static_pointer_cast<Spark>(subClimberSpkClimber01));
 
-    subClimberSpkClimber02.reset(new Spark(1));
+    subClimberSpkClimber02.reset(new Spark(5));
     lw->AddActuator("SubClimber", "SpkClimber02", std::static_pointer_cast<Spark>(subClimberSpkClimber02));
     
     subShooterTnxShooterTop.reset(new CANTalon(5));
@@ -95,10 +95,10 @@ void RobotMap::init() {
     subIntakeLswSliderOut.reset(new DigitalInput(1));
     lw->AddSensor("SubIntake", "LswSliderOut", subIntakeLswSliderOut);
     
-    subFeederVspFeederWheels.reset(new VictorSP(0));
+    subFeederVspFeederWheels.reset(new VictorSP(1));
     lw->AddActuator("SubFeeder", "VspFeederWheels", std::static_pointer_cast<VictorSP>(subFeederVspFeederWheels));
     
-    subFeederVspAgitatorPaddles.reset(new VictorSP(1));
+    subFeederVspAgitatorPaddles.reset(new VictorSP(0));
     lw->AddActuator("SubFeeder", "VspAgitatorPaddles", std::static_pointer_cast<VictorSP>(subFeederVspAgitatorPaddles));
     
 
