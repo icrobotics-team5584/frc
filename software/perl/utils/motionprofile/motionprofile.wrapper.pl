@@ -95,7 +95,8 @@ print "INFO: creating profiles for right peg run\n";
 
 my $vprog = 2.00;
 my $dist = 12.45;
-my $curve2dist = 2.50;
+# my $curve2dist = 2.50;
+my $curve2dist = 2.70;
 my $curve2offset = 235;
 
 my $biasA = 1.01;
@@ -121,7 +122,8 @@ print "INFO: creating profiles for left peg run\n";
 
 my $vprog = 2.00;
 my $dist = 12.9;
-my $curve2dist = 2.60;
+# my $curve2dist = 2.60;
+my $curve2dist = 2.80;
 my $curve2offset = 225;
 
 my $biasA = 1.01;
