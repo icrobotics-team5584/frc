@@ -30,6 +30,7 @@ public:
 	static std::shared_ptr<CANTalon> subDrivebaseCANTalonLeft;
 	static std::shared_ptr<CANTalon> subDrivebaseCANTalonRight;
 	static std::shared_ptr<RobotDrive> subDrivebaseDRV;
+	static std::shared_ptr<DigitalInput> subDrivebaseDiAutoSelector;
 	static std::shared_ptr<DoubleSolenoid> subGearPusherSlnGearPusher;
 	static std::shared_ptr<DoubleSolenoid> subGearPusherSlnGearPusherDoor;
 	static std::shared_ptr<CANTalon> subClimberCANTalonLeftClimb;

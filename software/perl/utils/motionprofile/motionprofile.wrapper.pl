@@ -7,7 +7,7 @@
 use strict;
 use File::Copy;
 
-my $eclipseroot = "C:/JazzHub/icrobotics/frc/software/cpp";
+my $eclipseroot = "c:/scm/icrobotics/frc/software/cpp";
 my $eclipseprojectname = "Chunky.Wantirna";
 my $eclipseprojectpath = "src/Custom";
 
