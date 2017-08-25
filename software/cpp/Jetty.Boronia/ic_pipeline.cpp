@@ -38,7 +38,7 @@ int main( int argc, char *argv[] )
   // setup network tables connection
   auto nt = NetworkTable::GetTable("JETSON");
   nt->SetClientMode();
-  nt->SetIPAddress("10.55.84.41\n");
+  nt->SetIPAddress("10.55.84.2\n");
   nt->Initialize();
   std::this_thread::sleep_for(std::chrono::seconds(5));
 
@@ -69,6 +69,8 @@ int main( int argc, char *argv[] )
 
     // STEP 5: construct image to display filetered contours, bounding rectangles and origins of rectangles
     cv::Mat img_contours = cv::Mat::zeros( img.size(), CV_8UC3 );
+    int img_width = img.size().width;
+    int img_height = img.size().height;
     for( size_t i = 0; i< img_filtercontours->size(); i++ )
      {
        Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
@@ -79,8 +81,9 @@ int main( int argc, char *argv[] )
     int max_x = 0;
     int min_y = 1000000;
     int max_y = 0;
-    int peg_x = -999999;
-    int peg_y = -999999;
+    double peg_x = 0.0;
+    double peg_y = 0.0;
+    double peg_range = 0.0;
     for (std::vector<cv::Point> contour: *img_filtercontours)
     {
       Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
@@ -105,22 +108,33 @@ int main( int argc, char *argv[] )
     {
       status = 0;
       peg_hits++;
-      peg_x = ( min_x + max_x ) / 2;
-      peg_y = ( min_y + max_y ) / 2;
-      cout << "INFO: estimated peg position: (x,y)" << endl;
+      double x = ( min_x + max_x ) / 2;
+      double y = ( min_y + max_y ) / 2;
+      cout << "INFO: estimated peg position in image: (x,y)" << endl;
+      cout << "(" << x << "," << y << ")" << endl;
+      // calculate peg postion with image center (0,0) and bottom left (-1,-1) and top right (+1,+1)
+      peg_x = ( x - ( img_width / 2 ) ) / ( img_width / 2 );
+      peg_y = -1 * ( y - ( img_height / 2 ) ) / ( img_height / 2 );
+      cout << "INFO: estimated peg position in field of view: (x,y)" << endl;
       cout << "(" << peg_x << "," << peg_y << ")" << endl;
+      // estimate range based on prior knowledge of camera vertical FOV and target height assume 45 degree (0.785 radian) vertical FOV and 200mm target height
+      peg_range = 200 / tan( 0.785 * ( max_y - min_y ) / img_height );
+      cout << "INFO: estimated peg range: (mm)" << endl;
+      cout << peg_range << "mm" << endl;
+      // display peg position at x, y on contours image ...
       Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
       Point peg;
-      peg.x = peg_x;
-      peg.y = peg_y;
+      peg.x = x;
+      peg.y = y;
       cv::circle( img_contours, peg, 10, color, 2, 8 );
     }
     else
     {
       status = 1;
       peg_misses++;
-      peg_x = -999999;
-      peg_y = -999999;
+      peg_x =0.0; 
+      peg_y = 0.0;
+      peg_range = 0.0;
       cout << "INFO: unable to detect peg position" << endl;
     }
     double peg_hitrate = ( 100.0 * peg_hits ) / ( peg_misses + peg_hits );
@@ -147,6 +161,7 @@ int main( int argc, char *argv[] )
     nt->PutNumber( "timestamp", (int)now );
     nt->PutNumber( "pegx", peg_x );
     nt->PutNumber( "pegy", peg_y );
+    nt->PutNumber( "pegrange", peg_range );
     nt->PutNumber( "hitrate", peg_hitrate );
     nt->PutNumber( "elapsedsecs", elapsedsecs );
     nt->PutNumber( "fps", fps );
