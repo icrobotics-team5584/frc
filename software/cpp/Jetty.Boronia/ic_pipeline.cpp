@@ -121,7 +121,7 @@ int main( int argc, char *argv[] )
       peg_misses++;
       peg_x = -999999;
       peg_y = -999999;
-      cout << "INFO: unable to detect peg positionn" << endl;
+      cout << "INFO: unable to detect peg position" << endl;
     }
     double peg_hitrate = ( 100.0 * peg_hits ) / ( peg_misses + peg_hits );
     cout << "INFO: peg position detections so far: " << peg_hits << " (" << peg_misses << ") (" << peg_hitrate << "% hitrate)" << endl;
