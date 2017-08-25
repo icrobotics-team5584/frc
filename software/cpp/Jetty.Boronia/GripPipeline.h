@@ -29,6 +29,7 @@ enum BlurType {
 */
 class GripPipeline {
 	private:
+		cv::Mat source0;
 		cv::Mat hsvThresholdOutput;
 		cv::Mat blurOutput;
 		std::vector<std::vector<cv::Point> > findContoursOutput;
@@ -40,6 +41,7 @@ class GripPipeline {
 
 	public:
 		GripPipeline();
+void setsource0(cv::Mat& source0);
 		void process(cv::Mat source0);
 		cv::Mat* gethsvThresholdOutput();
 		cv::Mat* getblurOutput();
@@ -49,5 +51,4 @@ class GripPipeline {
 
 
 } // end namespace grip
-
 

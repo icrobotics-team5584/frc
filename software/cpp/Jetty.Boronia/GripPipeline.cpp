@@ -17,14 +17,14 @@ void GripPipeline::process(cv::Mat source0){
 	//Step HSV_Threshold0:
 	//input
 	cv::Mat hsvThresholdInput = source0;
-	double hsvThresholdHue[] = {0.0, 180.0};
+	double hsvThresholdHue[] = {98.0, 140.0};
 	double hsvThresholdSaturation[] = {0.0, 255.0};
 	double hsvThresholdValue[] = {0.0, 255.0};
 	hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, this->hsvThresholdOutput);
 	//Step Blur0:
 	//input
 	cv::Mat blurInput = hsvThresholdOutput;
-	BlurType blurType = BlurType::GAUSSIAN;
+	BlurType blurType = GAUSSIAN;
 	double blurRadius = 2.7027027027027026;  // default Double
 	blur(blurInput, blurType, blurRadius, this->blurOutput);
 	//Step Find_Contours0:
