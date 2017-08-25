@@ -1,6 +1,19 @@
 README.TXT
 ==========
 
+These notes describe how to set up, build and use an image pipeline that was generated using the GRIP program. The target system in this case is an Nvidia Jetson TK1 development board.
+
+
+
+PREREQUISITES
+-------------
+
+Nvidia Jetson TK1 plus Microsoft HD3000 webcam.
+
+TK1 needs imaging, this is easiest achived using the Nvidia Jetpack, this is easiest achived using the Nvidia Jetpack - instructions for this task are out of scope for these notes.
+
+
+
 PREPARATION
 -----------
 
@@ -8,7 +21,7 @@ Unzip to a project folder e.g. /home/ubuntu/ic_pipeline
 
 If necessary, use GRIP to generate new GripPipeline.h and GripPipeline.cpp.
 
-If GripPipeline has nmore than parameter changes then you will need to mofify ic_pipeline.cpp to handle the changes.
+If GripPipeline has more than parameter changes then you will need to mofify ic_pipeline.cpp to handle the changes.
 
 Install cmake utils if ththey are not already in place ...
 
@@ -42,6 +55,37 @@ Run as follows ...
   cd /home/ubuntu/ic_pipeline
   cd build
   ./ic_pipeline
+
+
+
+AUTOMATED EXECUTION ON BOOT
+---------------------------
+
+Create a script at /home/ubuntu/9-ic-pipeline/ic_pipeline.sh
+
+With content:
+
+  #!/bin/bash
+  # setup camera
+  /usr/bin/v4l2-ctl --set-ctrl exposure_auto=1
+  /usr/bin/v4l2-ctl --set-ctrl exposure_absolute=5
+  # purge old log file
+  /bin/rm -f /tmp/ic_pipeline.log
+  # run application
+  cd /home/ubuntu/9-ic-pipeline/build
+  ./ic_pipeline >> /tmp/ic_pipeline.log 2>&1
+
+Add this line to the ubuntu user's crontab ...
+
+  @reboot /bin/sleep 60; /home/ubuntu/9-ic-pipeline/ic_pipeline.sh
+
+Restart the jetson and confirm that pipeline is operational:
+
+  - check for process running with "ps -ef | grep ic_pipeline"
+  - check for log file growing with "tail -f /tmp/ic_pipeline.txt"
+  - check for JETSON timestamp being updetaed in the roborio network
+    table using "online viewer" on driver station or PC connected to
+    the robot network
 
 
 

@@ -9,8 +9,14 @@
 
 
 
+# purge old log file
+
+/bin/rm -f /tmp/ic_pipeline.log
+
+
+
 # run application
 
 cd /home/ubuntu/9-ic-pipeline/build
-./ic_pipeline
+./ic_pipeline >> /tmp/ic_pipeline.log 2>&1
 
