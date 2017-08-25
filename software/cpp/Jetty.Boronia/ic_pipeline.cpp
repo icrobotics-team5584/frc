@@ -1,20 +1,33 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include "GripPipeline.h"
+#include <ctime>
+#include <iostream>
+#include <fstream>
 
 using namespace cv;
 using namespace std;
 
 RNG rng(12345);
+int peg_hits = 0;
+int peg_misses = 0;
+int debug = 0;
 
-int main()
+int main( int argc, char *argv[] )
 {
+
+  if( ( argc > 1 ) && ( strcmp( argv[1], "--debug" ) == 0 ) )
+  {
+    debug = 1;
+  }
 
   cv::Mat img;
 
   grip::GripPipeline ic_pipeline;
 
   cv::VideoCapture input(0);
+
+  clock_t start = clock();
 
   for (;;)
   {
@@ -34,14 +47,14 @@ int main()
     std::vector<std::vector<cv::Point> >* img_filtercontours = ic_pipeline.getfilterContoursOutput();
 
     // STEP 4: output contour x, y, width and height
-    printf( "INFO: BOUNDING RECTANGLES FOR EACH CONTOUR: (x,y):(width,height)\n" );
+    printf( "INFO: bounding rectangles for each contour: (x,y):(width,height)\n" );
     for (std::vector<cv::Point> contour: *img_filtercontours)
     {
       cv::Rect br = boundingRect(contour);
       printf( "(%d,%d):(%d,%d)\n", br.x, br.y, br.width, br.height );
     }
 
-    // STEP 5: construct image to display contours, bounding rectangles and origins of rectangles
+    // STEP 5: construct image to display filetered contours, bounding rectangles and origins of rectangles
     cv::Mat img_contours = cv::Mat::zeros( img.size(), CV_8UC3 );
     for( size_t i = 0; i< img_filtercontours->size(); i++ )
      {
@@ -74,9 +87,10 @@ int main()
     }
     if( contourcount == 2 )
     {
+      peg_hits++;
       int peg_x = ( min_x + max_x ) / 2;
       int peg_y = ( min_y + max_y ) / 2;
-      printf( "INFO: ESTIMATED PEG POSITION: (x,y)\n" );
+      printf( "INFO: estimated peg position: (x,y)\n" );
       printf( "(%d,%d)\n", peg_x, peg_y );
       Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
       Point peg;
@@ -86,18 +100,45 @@ int main()
     }
     else
     {
-      printf( "INFO: UNABLE TO ESTIMATE PEG POSITION\n" );
+      peg_misses++;
+      printf( "INFO: \n" );
     }
+    double peg_hitrate = ( 100.0 * peg_hits ) / ( peg_misses + peg_hits );
+    printf( "INFO: peg position detections so far: %d (%d misses) (%f%% hit rate)\n", peg_hits, peg_misses, peg_hitrate );
+    clock_t now = clock();
+    double elapsedsecs = ( now - start ) / (double) CLOCKS_PER_SEC;
+    double fps = (double) 1.0 / elapsedsecs;
+    start = now;
+    printf( "INFO: elapsed seconds since last frame: %f\n", elapsedsecs );
+    printf( "INFO: frames per second: %f\n", fps );
     printf( "---\n" );
     
 
     // STEP 6: display images
-    cv::imshow("img", img);
-    cv::imshow("hsv threshold", *img_hsvthreshold);
-    cv::imshow("blur", *img_blur);
-    cv::imshow( "img_contours", img_contours );
+    if( debug == 1 )
+    {
+      cv::imshow( "img", img );
+      cv::imshow( "hsv threshold", *img_hsvthreshold );
+      cv::imshow( "blur", *img_blur );
+      cv::imshow( "img_contours", img_contours );
+    }
 
-    // STEP 7: check for user request to terminate
+    // STEP 7: check for control file
+    string line;
+    ifstream ctlfile("ic_pipeline.stop");
+    int running = 1; 
+    if( ctlfile.is_open() )
+    {
+      running = 0;
+      ctlfile.close();
+    }
+    if( running == 0 )
+    {
+      cout << "INFO: detected control file (stop)" << endl;
+      break;
+    }
+
+    // STEP 8: check for user request to terminate
     char c = cv::waitKey(30);
     if ( c == ' ' )
       break;

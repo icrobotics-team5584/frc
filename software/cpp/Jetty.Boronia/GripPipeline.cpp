@@ -44,8 +44,8 @@ void GripPipeline::process(cv::Mat source0){
 	double filterContoursSolidity[] = {0, 100};
 	double filterContoursMaxVertices = 1000000;  // default Double
 	double filterContoursMinVertices = 0;  // default Double
-	double filterContoursMinRatio = 0;  // default Double
-	double filterContoursMaxRatio = 1000;  // default Double
+	double filterContoursMinRatio = 0.15;  // default Double
+	double filterContoursMaxRatio = 0.45;  // default Double
 	filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, this->filterContoursOutput);
 }
 
@@ -173,7 +173,7 @@ std::vector<std::vector<cv::Point> >* GripPipeline::getfilterContoursOutput(){
 			double solid = 100 * area / cv::contourArea(hull);
 			if (solid < solidity[0] || solid > solidity[1]) continue;
 			if (contour.size() < minVertexCount || contour.size() > maxVertexCount)	continue;
-			double ratio = bb.width / bb.height;
+			double ratio = (double) bb.width / bb.height;
 			if (ratio < minRatio || ratio > maxRatio) continue;
 			output.push_back(contour);
 		}
