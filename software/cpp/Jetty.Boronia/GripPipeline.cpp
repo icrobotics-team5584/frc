@@ -17,9 +17,9 @@ void GripPipeline::process(cv::Mat source0){
 	//Step HSV_Threshold0:
 	//input
 	cv::Mat hsvThresholdInput = source0;
-	double hsvThresholdHue[] = {98.0, 140.0};
+	double hsvThresholdHue[] = {42.086330935251794, 70.90909090909089};
 	double hsvThresholdSaturation[] = {0.0, 255.0};
-	double hsvThresholdValue[] = {0.0, 255.0};
+	double hsvThresholdValue[] = {25.22482014388489, 255.0};
 	hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, this->hsvThresholdOutput);
 	//Step Blur0:
 	//input
@@ -35,17 +35,17 @@ void GripPipeline::process(cv::Mat source0){
 	//Step Filter_Contours0:
 	//input
 	std::vector<std::vector<cv::Point> > filterContoursContours = findContoursOutput;
-	double filterContoursMinArea = 1.0;  // default Double
-	double filterContoursMinPerimeter = 2.0;  // default Double
-	double filterContoursMinWidth = 3.0;  // default Double
-	double filterContoursMaxWidth = 1000;  // default Double
-	double filterContoursMinHeight = 4.0;  // default Double
-	double filterContoursMaxHeight = 2000.0;  // default Double
-	double filterContoursSolidity[] = {19.784172661870503, 100};
+	double filterContoursMinArea = 2000.0;  // default Double
+	double filterContoursMinPerimeter = 0.0;  // default Double
+	double filterContoursMinWidth = 0.0;  // default Double
+	double filterContoursMaxWidth = 1000.0;  // default Double
+	double filterContoursMinHeight = 0;  // default Double
+	double filterContoursMaxHeight = 1000;  // default Double
+	double filterContoursSolidity[] = {0, 100};
 	double filterContoursMaxVertices = 1000000;  // default Double
-	double filterContoursMinVertices = 100.0;  // default Double
-	double filterContoursMinRatio = 50.0;  // default Double
-	double filterContoursMaxRatio = 500.0;  // default Double
+	double filterContoursMinVertices = 0;  // default Double
+	double filterContoursMinRatio = 0;  // default Double
+	double filterContoursMaxRatio = 1000;  // default Double
 	filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, this->filterContoursOutput);
 }
 

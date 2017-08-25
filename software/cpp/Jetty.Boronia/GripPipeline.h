@@ -41,7 +41,7 @@ class GripPipeline {
 
 	public:
 		GripPipeline();
-void setsource0(cv::Mat& source0);
+		void setsource0(cv::Mat& source0);
 		void process(cv::Mat source0);
 		cv::Mat* gethsvThresholdOutput();
 		cv::Mat* getblurOutput();
@@ -51,4 +51,5 @@ void setsource0(cv::Mat& source0);
 
 
 } // end namespace grip
+
 
