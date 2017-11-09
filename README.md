@@ -1,5 +1,4 @@
 # ICRobotics 
----
 
 **FIRST Robotics Team #5584 - student team from Melbourne Australia**
 
@@ -14,11 +13,11 @@ These are arranged in projects based on the technology used ...
 
 Specific projects ...
 
-* ls software/labview/Henry.Sydney - - - CRIO code for use with LabVIEW 2014 ( based on new project template from FRC 2015 updates - working)
-* ls software/labview/Desmondy.Sydney - - - roboRIO code for use with LabVIEW 2014 (based on new project template from FRC 2015 updates)
-* ls software/labview/Puffy.Sydney - - - roboRIO code for use with LabVIEW 2015 (based on new project template from FRC 2016 updates)
-* ls software/labview/Murphy.Sydney - - - modified CRIO code for use with LabVIEW 2014 (work in progress, not yet working)
-* ls software/labview/Murphy.Sydney.backup.20150107.1258 - - - CRIO code for use with LabVIEW 2013
+* software/labview/Henry.Sydney - - - CRIO code for use with LabVIEW 2014 ( based on new project template from FRC 2015 updates - working)
+* software/labview/Desmondy.Sydney - - - roboRIO code for use with LabVIEW 2014 (based on new project template from FRC 2015 updates)
+* software/labview/Puffy.Sydney - - - roboRIO code for use with LabVIEW 2015 (based on new project template from FRC 2016 updates)
+* software/labview/Murphy.Sydney - - - modified CRIO code for use with LabVIEW 2014 (work in progress, not yet working)
+* software/labview/Murphy.Sydney.backup.20150107.1258 - - - CRIO code for use with LabVIEW 2013
 
 * software/cpp/Chunky.Wantirna - - - main project our 2017 season, our first C++ season
 * software/cpp/Chunky.Wantirna.RobotBuilder - - - Robot Builder project for 2017 season
