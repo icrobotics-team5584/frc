@@ -2,7 +2,14 @@
 
 **FIRST Robotics Team #5584 - student team from Melbourne Australia**
 
-This repositoy contains all software artefacts for the the team for multiple FRC seasons.
+Team Sites:
+
+* Website: http://versiontree.com/icrobotics
+* Facebook: https://www.facebook.com/Team5584/ 
+* Twitter: https://twitter.com/IC_Robotics
+* YouTube: https://www.youtube.com/user/ICRoboticsHQ
+
+This repository contains all software artefacts for the the team for multiple FRC seasons.
 
 These are arranged in projects based on the technology used ...
 
