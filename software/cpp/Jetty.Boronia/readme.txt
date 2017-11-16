@@ -221,3 +221,60 @@ And regenerate all derived objects in the normal way ...
   cmake ..
   make
 
+
+
+
+==============================
+Other little coding notes
+==============================
+
+ctrl ^ z  		:stops running current program 
+fg  			:resumes programs 
+./   ./ic_blah --debug	:runs a program      
+TAB   			:fills the rest 
+sudo reboot     	:reboots the jetson  
+cd   	       	        :goes into the directory of which you type after cd 
+cd ..   		:goes back a directory 
+ps -e | grep "ic"       :finds things running with [ic] in it 
+touch ic_piepline.stop  :is our thing for stopping the ic pipeline 
+xeyes   		:tests xming 
+ifconfig -a   		:linux all adpaters 
+rm 			:to remove ######  <-- a file 
+vim 			:allows edditing of code   to get out  -->  holdShift :double tap (ZZ)
+pwd 		        :lists current directory
+
+
++++++++++++
+Networking 
++++++++++++
+sudo ifconfig eth0 192.168.0.1 netmask 255.255.255.0   :changes ip on linux      ip to change to 10.55.84.8  (for 5584)
+
+for changing the ip perm    goto   etc/network    use vim to eddit "interfaces" then change ips 
+
+access roboreo   roborio-5584-frc.local
+
+ 
+
+===============================
+scp :transmitting file remotly
+===============================
+
+
+scp 
+
+echo test >> test.txt   :puts "test" into new file called "test.txt"
+
+>			:add thing into file or something 
+
+>> 			:add it to the end of whatever is in file or something
+ 
+../downlaods 		:the dot , dot looks up an directory 
+
+
+scp test.txt ubuntu@10.55.84.8:/tmp    			:from your computer to the jetson 
+
+scp ubuntu@10.55.84.8:/tmp/test2.txt ../Downloads/      :from the jetson to your computer 
+
+
+
+
