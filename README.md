@@ -1,17 +1,41 @@
-This README.md file is displayed on your project page. You should edit this 
-file to describe your project, including instructions for building and 
-running the project, pointers to the license under which you are making the 
-project available, and anything else you think would be useful for others to
-know.
+# ICRobotics 
 
-We have created an empty license.txt file for you. Well, actually, it says,
-"<Replace this text with the license you've chosen for your project.>" We 
-recommend you edit this and include text for license terms under which you're
-making your code available. A good resource for open source licenses is the 
-[Open Source Initiative](http://opensource.org/).
+**FIRST Robotics Team #5584 - student team from Melbourne Australia**
 
-Be sure to update your project's profile with a short description and 
-eye-catching graphic.
+Team Sites:
 
-Finally, consider defining a timeline and work items on the "Current Work" tab 
-to give interested developers a sense of your cadence and upcoming enhancements.
+* Website: http://versiontree.com/icrobotics
+* Facebook: https://www.facebook.com/Team5584/ 
+* Twitter: https://twitter.com/IC_Robotics
+* YouTube: https://www.youtube.com/user/ICRoboticsHQ
+
+This repository contains all software artefacts for the the team for multiple FRC seasons.
+
+These are arranged in projects based on the technology used ...
+
+* software/cpp
+* software/java
+* software/labview
+* software/perl
+
+Specific projects ...
+
+* software/labview/Henry.Sydney - - - CRIO code for use with LabVIEW 2014 ( based on new project template from FRC 2015 updates - working)
+* software/labview/Desmondy.Sydney - - - roboRIO code for use with LabVIEW 2014 (based on new project template from FRC 2015 updates)
+* software/labview/Puffy.Sydney - - - roboRIO code for use with LabVIEW 2015 (based on new project template from FRC 2016 updates)
+* software/labview/Murphy.Sydney - - - modified CRIO code for use with LabVIEW 2014 (work in progress, not yet working)
+* software/labview/Murphy.Sydney.backup.20150107.1258 - - - CRIO code for use with LabVIEW 2013
+
+* software/cpp/Chunky.Wantirna - - - main project our 2017 season, our first C++ season
+* software/cpp/Chunky.Wantirna.RobotBuilder - - - Robot Builder project for 2017 season
+* software/cpp/Chunky.Wantirna.SmartDashboard - - - Dashboard project for 2017 season
+* software/cpp/Morse - - - main project for team 7111 for 2017 DDU
+* software/cpp/Morse.RobotBuilder - - - robot builder project for team 7111 for 2017 DDU
+
+* software/perl/utils/motionprofile - - - utility for generating and deploying motion profile header files
+
+Other sample code ...
+
+* software/cpp/Jetty.Boronia - - - our first project on the JETSON TK1 - integrates with network tables
+* software/cpp/CPP_MotionProfileExample - - - sample code from CTRE (see https://github.com/CrossTheRoadElec/FRC-Examples/tree/master)
+* software/cpp/CPP_PositionClosedLoop - - - sample code from CTRE (see https://github.com/CrossTheRoadElec/FRC-Examples/tree/master)
