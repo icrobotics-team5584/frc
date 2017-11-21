@@ -179,12 +179,14 @@ int main( int argc, char *argv[] )
 
     // STEP 8: check for control file
     string line;
-    ifstream ctlfile("ic_pipeline.stop");
+    ifstream ctlfile1("ic_pipeline.stop");
+    ifstream ctlfile2("/tmp/ic_pipeline.stop");
     int running = 1; 
-    if( ctlfile.is_open() )
+    if( ctlfile1.is_open() || ctlfile2.is_open() )
     {
       running = 0;
-      ctlfile.close();
+      ctlfile1.close();
+      ctlfile2.close();
     }
     if( running == 0 )
     {

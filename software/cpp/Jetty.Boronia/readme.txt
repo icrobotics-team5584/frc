@@ -230,13 +230,16 @@ Other little coding notes
 
 ctrl ^ z  		:stops running current program 
 fg  			:resumes programs 
-./   ./ic_blah --debug	:runs a program      
+./   ./ic_blah --debug	:runs a program  
+nohup ./     		: runs the program in shell on the jetson
+ctrl z			: interupts the current program   
+bg			: moves the program to the background    
 TAB   			:fills the rest 
 sudo reboot     	:reboots the jetson  
 cd   	       	        :goes into the directory of which you type after cd 
 cd ..   		:goes back a directory 
 ps -e | grep "ic"       :finds things running with [ic] in it 
-touch ic_piepline.stop  :is our thing for stopping the ic pipeline 
+touch ic_piepline.stop  :is our thing for stopping the ic pipeline this is in directory build.... note! if using (nohup) then add the ic,stop 													file in the ubuntu tmp directory!
 xeyes   		:tests xming 
 ifconfig -a   		:linux all adpaters 
 rm 			:to remove ######  <-- a file 
@@ -275,6 +278,10 @@ scp test.txt ubuntu@10.55.84.8:/tmp    			:from your computer to the jetson
 
 scp ubuntu@10.55.84.8:/tmp/test2.txt ../Downloads/      :from the jetson to your computer 
 
+
+scp ubuntu@10.55.84.8:/home/ubuntu/9-ic-pipeline/ic_pipeline.cpp c:/scm/
+
+scp ubuntu@10.55.84.8:/home/ubuntu/9-ic-pipeline/ic_pipeline.cpp ../Downloads/
 
 
 
