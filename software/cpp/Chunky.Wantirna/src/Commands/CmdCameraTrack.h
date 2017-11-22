@@ -7,11 +7,11 @@
 class CmdCameraTrack : public Command {
 public:
 	CmdCameraTrack();
-	void Initialize();
-	void Execute();
-	bool IsFinished();
-	void End();
-	void Interrupted();
+	virtual void Initialize();
+	virtual void Execute();
+	virtual bool IsFinished();
+	virtual void End();
+	virtual void Interrupted();
 };
 
 #endif  // CmdCameraTrack_H

@@ -1,5 +1,6 @@
 #include "SubCamera.h"
 #include "../RobotMap.h"
+#include "../Commands/CmdCameraTrack.h"
 #include "CANTalon.h"
 
 SubCamera::SubCamera() : Subsystem("ExampleSubsystem") {
