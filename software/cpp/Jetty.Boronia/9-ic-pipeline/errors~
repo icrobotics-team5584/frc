@@ -1,0 +1,23 @@
+[ 50%] Building CXX object CMakeFiles/ic_pipeline.dir/ic_pipeline.cpp.o
+[100%] Building CXX object CMakeFiles/ic_pipeline.dir/ICLightPipeline.cpp.o
+
+
+
+
+Linking CXX executable ic_pipeline
+
+
+CMakeFiles/ic_pipeline.dir/ic_pipeline.cpp.o: In function `main':
+
+
+ic_pipeline.cpp:(.text+0x202): undefined reference to `grip::ICLightPipeline::setsource0(cv::Mat)'
+
+
+
+
+
+
+collect2: error: ld returned 1 exit status
+make[2]: *** [ic_pipeline] Error 1
+make[1]: *** [CMakeFiles/ic_pipeline.dir/all] Error 2
+make: *** [all] Error 2
