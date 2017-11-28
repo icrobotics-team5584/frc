@@ -5,8 +5,8 @@
 
 SubCamera::SubCamera() : Subsystem("ExampleSubsystem") {
 	//Setup motors
-	TnxCameraHorizontal = RobotMap::subCameraHorizontal;
-	TnxCameraVirtical = RobotMap::subCameraVirtical;
+	SpkCameraHorizontal = RobotMap::subCameraHorizontal;
+	SpkCameraVirtical = RobotMap::subCameraVirtical;
 }
 
 void SubCamera::InitDefaultCommand() {
@@ -16,16 +16,16 @@ void SubCamera::InitDefaultCommand() {
 
 void SubCamera::Pan(double speed) {
 	//Run panning motor at set speed
-	TnxCameraHorizontal->Set(speed);
+	SpkCameraHorizontal->Set(speed);
 }
 
 void SubCamera::Tilt(double speed) {
 	//Run tilting motor at set speed
-	TnxCameraVirtical->Set(speed);
+	SpkCameraVirtical->Set(speed);
 }
 
 void SubCamera::Stop(){
 	//Stop both pan and tilt motors
-	TnxCameraVirtical->Set(0);
-	TnxCameraHorizontal->Set(0);
+	SpkCameraVirtical->Set(0);
+	SpkCameraHorizontal->Set(0);
 }

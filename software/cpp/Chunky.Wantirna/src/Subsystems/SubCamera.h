@@ -9,8 +9,8 @@ class SubCamera : public Subsystem {
 private:
 	// It's desirable that everything possible under private except
 	// for methods that implement subsystem capabilities
-	std::shared_ptr<CANTalon> TnxCameraHorizontal;
-	std::shared_ptr<CANTalon> TnxCameraVirtical;
+	std::shared_ptr<SpeedController> SpkCameraHorizontal;
+	std::shared_ptr<SpeedController> SpkCameraVirtical;
 
 public:
 	SubCamera();
