@@ -18,6 +18,7 @@ public:
 	void Pan(double);
 	void Tilt(double);
 	void Stop();
+	void PublishValues();
 };
 
 #endif  // SubCamera_H

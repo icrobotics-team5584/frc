@@ -1,8 +1,11 @@
 #include "CmdCameraTrack.h"
 #include "WPILib.h"
+#include "OI.h"
+
 
 CmdCameraTrack::CmdCameraTrack() {
 	Requires(Robot::subCamera.get());
+
 }
 
 // Called just before this Command runs the first time
@@ -24,7 +27,7 @@ bool CmdCameraTrack::IsFinished() {
 
 // Called once after isFinished returns true
 void CmdCameraTrack::End() {
-
+	Robot::subCamera->Stop();
 }
 
 // Called when another command which requires one or more of the same
