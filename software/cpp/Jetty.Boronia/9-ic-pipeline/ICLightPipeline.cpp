@@ -11,35 +11,44 @@ void ICLightPipeline::Process(cv::Mat& source0){
 	//Step HSV_Threshold0:
 	//input
 	cv::Mat hsvThresholdInput = source0;
-	double hsvThresholdHue[] = {0.0, 180.0};
-	double hsvThresholdSaturation[] = {0.0, 255.0};
-	double hsvThresholdValue[] = {48.156474820143885, 255.0};
+	double hsvThresholdHue[] = {0.0, 180};
+	double hsvThresholdSaturation[] = {0.0, 255};
+	double hsvThresholdValue[] = {48, 255.0};
 	hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, this->hsvThresholdOutput);
+	//Step Blur0:
+	//input
+	cv::Mat blurInput = hsvThresholdOutput;
+	BlurType blurType = GAUSSIAN;
+	double blurRadius = 2;  // default Double
+	blur(blurInput, blurType, blurRadius, this->blurOutput);
 	//Step Find_Contours0:
 	//input
-	cv::Mat findContoursInput = hsvThresholdOutput;
+	cv::Mat findContoursInput = blurOutput;
 	bool findContoursExternalOnly = false;  // default Boolean
 	findContours(findContoursInput, findContoursExternalOnly, this->findContoursOutput);
 	//Step Filter_Contours0:
 	//input
 	std::vector<std::vector<cv::Point> > filterContoursContours = findContoursOutput;
-	double filterContoursMinArea = 20.0;  // default Double
-	double filterContoursMinPerimeter = 20.0;  // default Double
-	double filterContoursMinWidth = 20.0;  // default Double
-	double filterContoursMaxWidth = 1000.0;  // default Double
-	double filterContoursMinHeight = 20.0;  // default Double
-	double filterContoursMaxHeight = 1000.0;  // default Double
-	double filterContoursSolidity[] = {0, 100};
-	double filterContoursMaxVertices = 1000000.0;  // default Double
-	double filterContoursMinVertices = 0.0;  // default Double
-	double filterContoursMinRatio = 0.0;  // default Double
-	double filterContoursMaxRatio = 1000.0;  // default Double
+	double filterContoursMinArea = 1000.0;  // default Double
+	double filterContoursMinPerimeter = 0;  // default Double
+	double filterContoursMinWidth = 35.0;  // default Double
+	double filterContoursMaxWidth = 100.0;  // default Double
+	double filterContoursMinHeight = 35.0;  // default Double
+	double filterContoursMaxHeight = 100.0;  // default Double
+	double filterContoursSolidity[] = {85.431654676259, 100.0};
+	double filterContoursMaxVertices = 100.0;  // default Double
+	double filterContoursMinVertices = 20.0;  // default Double
+	double filterContoursMinRatio = 1.0;  // default Double
+	double filterContoursMaxRatio = 2.0;  // default Double
 	filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, this->filterContoursOutput);
 }
+
 
 void ICLightPipeline::setsource0(cv::Mat &source0){
 	source0.copyTo(this->source0);
 }
+
+
 
 /**
  * This method is a generated getter for the output of a HSV_Threshold.
@@ -47,6 +56,13 @@ void ICLightPipeline::setsource0(cv::Mat &source0){
  */
 cv::Mat* ICLightPipeline::GetHsvThresholdOutput(){
 	return &(this->hsvThresholdOutput);
+}
+/**
+ * This method is a generated getter for the output of a Blur.
+ * @return Mat output from Blur.
+ */
+cv::Mat* ICLightPipeline::GetBlurOutput(){
+	return &(this->blurOutput);
 }
 /**
  * This method is a generated getter for the output of a Find_Contours.
@@ -76,6 +92,35 @@ std::vector<std::vector<cv::Point> >* ICLightPipeline::GetFilterContoursOutput()
 		cv::inRange(out,cv::Scalar(hue[0], sat[0], val[0]), cv::Scalar(hue[1], sat[1], val[1]), out);
 	}
 
+	/**
+	 * Softens an image using one of several filters.
+	 *
+	 * @param input The image on which to perform the blur.
+	 * @param type The blurType to perform.
+	 * @param doubleRadius The radius for the blur.
+	 * @param output The image in which to store the output.
+	 */
+	void ICLightPipeline::blur(cv::Mat &input, BlurType &type, double doubleRadius, cv::Mat &output) {
+		int radius = (int)(doubleRadius + 0.5);
+		int kernelSize;
+		switch(type) {
+			case BOX:
+				kernelSize = 2 * radius + 1;
+				cv::blur(input,output,cv::Size(kernelSize, kernelSize));
+				break;
+			case GAUSSIAN:
+				kernelSize = 6 * radius + 1;
+				cv::GaussianBlur(input, output, cv::Size(kernelSize, kernelSize), radius);
+				break;
+			case MEDIAN:
+				kernelSize = 2 * radius + 1;
+				cv::medianBlur(input, output, kernelSize);
+				break;
+			case BILATERAL:
+				cv::bilateralFilter(input, output, -1, radius, radius);
+				break;
+        }
+	}
 	/**
 	 * Finds contours in an image.
 	 *

@@ -285,3 +285,9 @@ scp ubuntu@10.55.84.8:/home/ubuntu/9-ic-pipeline/ic_pipeline.cpp ../Downloads/
 
 
 
+for an directory [scp -r ubuntu@.....]
+
+$ scp -r ubuntu@10.55.84.8:/home/ubuntu/9-ic-pipeline ../Downloads/
+
+
+

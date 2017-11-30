@@ -55,7 +55,7 @@ int main( int argc, char *argv[] )
 
     // STEP 3: obtain intermediate images and countour vectors
     cv::Mat* img_hsvthreshold = ic_pipeline.GetHsvThresholdOutput();
-    // cv::Mat* img_blur = ic_pipeline.getblurOutput();
+    cv::Mat* img_blur = ic_pipeline.GetBlurOutput();
     // std::vector<std::vector<cv::Point> >* img_findcontours = ic_pipeline.GetFindContoursOutput();
     std::vector<std::vector<cv::Point> >* img_filtercontours = ic_pipeline.GetFilterContoursOutput();
 
@@ -106,7 +106,8 @@ int main( int argc, char *argv[] )
       contourcount++;
     }
     int status;
-    if( contourcount == 2 )
+    cout << "INFO: number of contours detected: " << contourcount << endl;
+    if( contourcount == 1 )
     {
       status = 0;
       peg_hits++;
@@ -159,7 +160,7 @@ int main( int argc, char *argv[] )
     {
       cv::imshow( "img", img );
       cv::imshow( "hsv threshold", *img_hsvthreshold );
-      // cv::imshow( "blur", *img_blur );
+      cv::imshow( "blur", *img_blur );
       cv::imshow( "img_contours", img_contours );
     }
 
