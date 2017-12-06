@@ -53,6 +53,8 @@ public:
 	static std::shared_ptr<ADXRS450_Gyro> subDriveBaseGyro;
 	static std::shared_ptr<DoubleSolenoid> subGearCatcherPnuDoors;
 	static std::shared_ptr<DoubleSolenoid> subGearCatcherPnuPusher;
+	static std::shared_ptr<DoubleSolenoid> subGearPickupPnuScoop;
+	static std::shared_ptr<CANTalon> subGearPickupTnxSuck;
 	static void init();
 };
 #endif

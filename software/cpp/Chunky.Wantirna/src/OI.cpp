@@ -50,7 +50,7 @@ OI::OI() {
     btnGearFlapIn->WhileHeld(new GearFlapIn());
     btnRolllerIn.reset(new JoystickButton(joystick1.get(), 12));
     btnRolllerIn->WhileHeld(new CmdIntakeRollerIn());
-    btnIntakeSliderOut.reset(new JoystickButton(joystick1.get(), 9));
+    btnIntakeSliderOut.reset(new JoystickButton(joystick1.get(), 98));
     btnIntakeSliderOut->WhileHeld(new CmdIntakeSliderOut());
     btnIntakeSliderIn.reset(new JoystickButton(joystick1.get(), 99));
     btnIntakeSliderIn->WhileHeld(new CmdIntakeSliderIn());
@@ -68,6 +68,10 @@ OI::OI() {
     //Camera Buttons
     btnCameraManual.reset(new JoystickButton(joystick1.get(), 7));
     btnCameraManual->WhileHeld(new CmdCameraTrack());
+
+    //GearIntake Buttons
+    btnGearIntakeOut.reset(new JoystickButton(joystick1.get(), 9));
+    btnGearIntakeOut->WhileHeld(new CmdIntakeSliderOut());
 
     // SmartDashboard Buttons
     SmartDashboard::PutData("CmdAuto4DeployGearFromLeft", new CmdAuto4DeployGearFromLeft());

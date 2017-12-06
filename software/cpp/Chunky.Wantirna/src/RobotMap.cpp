@@ -191,5 +191,4 @@ void RobotMap::init() {
     lw->AddSensor("SubGearCatcher", "PnuPusher", subGearCatcherPnuPusher);
     subGearCatcherPnuDoors.reset(new DoubleSolenoid(1,3));
     lw->AddSensor("SubGearCatcher", "PnuDoors", subGearCatcherPnuDoors);
-
 }
