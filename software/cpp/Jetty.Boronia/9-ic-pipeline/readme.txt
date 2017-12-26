@@ -291,3 +291,11 @@ $ scp -r ubuntu@10.55.84.8:/home/ubuntu/9-ic-pipeline ../Downloads/
 
 
 
+
+========================================
+Editing shell files on the Jettson 
+========================================
+crontab -l	:this views contents of shell file 
+
+crontab -e 	:this eddits contents of shell file
+
