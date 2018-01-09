@@ -6,13 +6,13 @@
 
 class SubPnuematicOutput : public Subsystem {
 private:
-	static std::shared_ptr<DoubleSolenoid> solPusher;
+	//static std::shared_ptr<DoubleSolenoid> solPusher;
 
 public:
 	SubPnuematicOutput();
 	void InitDefaultCommand();
-	void SubPnuematicOutput::Out();
-	void SubPnuematicOutput::In();
+	void Out();
+	void In();
 };
 
 #endif  // SubPnuematicOutput_H
