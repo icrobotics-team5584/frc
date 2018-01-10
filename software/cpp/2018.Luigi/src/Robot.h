@@ -13,6 +13,7 @@
 //Include Commands
 #include <Commands/CmdPnuematicOutputOut.h>
 #include <Commands/MyAutoCommand.h>
+#include <Subsystems/SubDriveBase.h>
 
 class Robot : public frc::TimedRobot {
 public:
@@ -26,6 +27,7 @@ public:
 	virtual void TestPeriodic();
 
 	static std::shared_ptr<SubPnuematicOutput> subPnuematicOutput;
+	static std::shared_ptr<SubDriveBase> subDriveBase;
 
 	frc::SendableChooser<frc::Command*> AutoChooser;
 	std::shared_ptr<frc::Command> AutoCommand;

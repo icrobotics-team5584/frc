@@ -11,4 +11,7 @@
 
 OI::OI() {
 	// Process operator interface input here.
+
+	joystick1.reset(new Joystick(0));
+
 }

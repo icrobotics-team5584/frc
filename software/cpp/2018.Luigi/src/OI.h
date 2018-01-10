@@ -7,7 +7,16 @@
 
 #pragma once
 
+#include <WPILib.h>
+
 class OI {
+
+private:
+
+	std::shared_ptr<Joystick> joystick1;
+
 public:
+
+
 	OI();
 };

@@ -14,6 +14,7 @@
 #include <Robot.h>
 
 std::shared_ptr<SubPnuematicOutput> Robot::subPnuematicOutput;
+std::shared_ptr<SubDriveBase> Robot::subDriveBase;
 
 void Robot::RobotInit() {
 //	AutoChooser.AddObject("Default Auto", new MyAutoCommand());
