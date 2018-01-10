@@ -16,10 +16,10 @@
 std::shared_ptr<SubPnuematicOutput> Robot::subPnuematicOutput;
 
 void Robot::RobotInit() {
-	AutoChooser.AddObject("Default Auto", new MyAutoCommand());
-	AutoChooser.AddObject("Pnuematic", new CmdPnuematicOutputOut());
-	frc::SmartDashboard::PutData("Auto Modes", &AutoChooser);
-	subPnuematicOutput.reset(new SubPnuematicOutput());
+//	AutoChooser.AddObject("Default Auto", new MyAutoCommand());
+//	AutoChooser.AddObject("Pnuematic", new CmdPnuematicOutputOut());
+//	frc::SmartDashboard::PutData("Auto Modes", &AutoChooser);
+//	subPnuematicOutput.reset(new SubPnuematicOutput());
 }
 
 void Robot::DisabledInit() {
@@ -37,11 +37,11 @@ void Robot::AutonomousInit() {
 	}
 }
 
-void AutonomousPeriodic() {
+void Robot::AutonomousPeriodic() {
 	frc::Scheduler::GetInstance()->Run();
 }
 
-void TeleopInit() {
+void Robot::TeleopInit() {
 
 
 
@@ -52,11 +52,11 @@ void TeleopInit() {
 //	}
 }
 
-void TeleopPeriodic() {
+void Robot::TeleopPeriodic() {
 	frc::Scheduler::GetInstance()->Run();
 }
 
-void TestPeriodic() {
+void Robot::TestPeriodic() {
 
 }
 
