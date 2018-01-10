@@ -15,12 +15,23 @@
 
 std::shared_ptr<SubPnuematicOutput> Robot::subPnuematicOutput;
 std::shared_ptr<SubDriveBase> Robot::subDriveBase;
+std::shared_ptr<SubIntake> Robot::subIntake;
+
+std::unique_ptr<OI> Robot::oi;
 
 void Robot::RobotInit() {
-//	AutoChooser.AddObject("Default Auto", new MyAutoCommand());
-//	AutoChooser.AddObject("Pnuematic", new CmdPnuematicOutputOut());
-//	frc::SmartDashboard::PutData("Auto Modes", &AutoChooser);
-//	subPnuematicOutput.reset(new SubPnuematicOutput());
+	//Setup Autonomous Chooser
+	AutoChooser.AddObject("Default Auto", new MyAutoCommand());
+	AutoChooser.AddObject("Pnuematic", new CmdPnuematicOutputOut());
+	frc::SmartDashboard::PutData("Auto Modes", &AutoChooser);
+
+	//Initialise Subsystems
+	subPnuematicOutput.reset(new SubPnuematicOutput());
+	subDriveBase.reset(new SubDriveBase());
+	subIntake.reset(new SubIntake());
+
+	//Initialise Out/In
+	oi.reset(new OI());
 }
 
 void Robot::DisabledInit() {
@@ -43,14 +54,10 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
-
-
-
-
-//	if (Robot::m_autonomousCommand != nullptr) {
-//		Robot::m_autonomousCommand->Cancel();
-//		Robot::m_autonomousCommand = nullptr;
-//	}
+	if (AutoCommand.get() != nullptr) {
+		AutoCommand->Cancel();
+		AutoCommand = nullptr;
+	}
 }
 
 void Robot::TeleopPeriodic() {
@@ -60,7 +67,5 @@ void Robot::TeleopPeriodic() {
 void Robot::TestPeriodic() {
 
 }
-
-
 
 START_ROBOT_CLASS(Robot)

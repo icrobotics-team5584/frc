@@ -1,6 +1,7 @@
 #include "CmdPnuematicOutputOut.h"
 #include "Robot.h"
 #include "../Subsystems/SubPnuematicOutput.h"
+#include <WPILib.h>
 
 CmdPnuematicOutputOut::CmdPnuematicOutputOut() {
 	Requires(Robot::subPnuematicOutput.get());

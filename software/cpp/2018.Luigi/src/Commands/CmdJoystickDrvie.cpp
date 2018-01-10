@@ -2,7 +2,7 @@
 
 CmdJoystickDrvie::CmdJoystickDrvie() {
 	// Use Requires() here to declare subsystem dependencies
-	// eg. Requires(Robot::chassis.get());
+	Requires(Robot::subDriveBase.get());
 }
 
 // Called just before this Command runs the first time
@@ -12,7 +12,7 @@ void CmdJoystickDrvie::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdJoystickDrvie::Execute() {
-
+	Robot::subDriveBase->TakeJoystickInputs(Robot::oi->GetJoystick1() );
 }
 
 // Make this return true when this Command no longer needs to run execute()

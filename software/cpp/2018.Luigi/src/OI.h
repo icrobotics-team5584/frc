@@ -9,6 +9,8 @@
 
 #include <WPILib.h>
 
+#include <Commands/CmdJoystickDrvie.h>
+
 class OI {
 
 private:
@@ -17,6 +19,6 @@ private:
 
 public:
 
-
+	std::shared_ptr<Joystick> GetJoystick1();
 	OI();
 };

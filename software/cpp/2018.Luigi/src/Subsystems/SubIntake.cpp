@@ -1,11 +1,11 @@
-#include "SubDriveTrain.h"
+#include "SubIntake.h"
 #include "../RobotMap.h"
 
-SubDriveTrain::SubDriveTrain() : Subsystem("ExampleSubsystem") {
+SubIntake::SubIntake() : Subsystem("ExampleSubsystem") {
 
 }
 
-void SubDriveTrain::InitDefaultCommand() {
+void SubIntake::InitDefaultCommand() {
 	// Set the default command for a subsystem here.
 	// SetDefaultCommand(new MySpecialCommand());
 }

@@ -15,3 +15,7 @@ OI::OI() {
 	joystick1.reset(new Joystick(0));
 
 }
+
+std::shared_ptr<Joystick> OI::GetJoystick1() {
+	return joystick1;
+}

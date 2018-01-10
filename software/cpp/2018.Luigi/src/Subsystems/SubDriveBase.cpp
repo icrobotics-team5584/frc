@@ -1,14 +1,27 @@
 #include "SubDriveBase.h"
-#include "../RobotMap.h"
 
 SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
 
+	tnxLeftDriveMaster.reset(new WPI_TalonSRX(1));
+    tnxLeftDriveSlave.reset(new WPI_TalonSRX(2));
+    tnxRightDriveMaster.reset(new WPI_TalonSRX(3));
+    tnxRightDriveSlave.reset(new WPI_TalonSRX(4));
+
+    differentialDrive.reset(new DifferentialDrive(*tnxLeftDriveMaster, *tnxRightDriveMaster) );
 }
 
 void SubDriveBase::InitDefaultCommand() {
-	// Set the default command for a subsystem here.
-	// SetDefaultCommand(new MySpecialCommand());
+
 }
 
-// Put methods for controlling this subsystem
-// here. Call these from Commands.
+void SubDriveBase::TakeJoystickInputs(std::shared_ptr<Joystick> stick) {
+	differentialDrive->ArcadeDrive(stick->GetX(), stick->GetY());
+}
+
+void SubDriveBase::Drive(double power, double direction) {
+
+}
+
+void SubDriveBase::Stop() {
+
+}
