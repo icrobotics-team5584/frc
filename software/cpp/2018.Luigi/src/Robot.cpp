@@ -11,60 +11,55 @@
 #include <SmartDashboard/SendableChooser.h>
 #include <SmartDashboard/SmartDashboard.h>
 #include <TimedRobot.h>
+#include <Robot.h>
 
-//Include Commands
-#include <Commands/CmdPnuematicOutputOut.h>
-#include <Commands/MyAutoCommand.h>
+std::shared_ptr<SubPnuematicOutput> Robot::subPnuematicOutput;
 
-class Robot : public frc::TimedRobot {
-public:
-	void RobotInit() override {
-		m_chooser.AddObject("My Auto", &m_myAuto);
-		frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+void Robot::RobotInit() {
+	AutoChooser.AddObject("Default Auto", new MyAutoCommand());
+	AutoChooser.AddObject("Pnuematic", new CmdPnuematicOutputOut());
+	frc::SmartDashboard::PutData("Auto Modes", &AutoChooser);
+	subPnuematicOutput.reset(new SubPnuematicOutput());
+}
+
+void Robot::DisabledInit() {
+
+}
+
+void Robot::DisabledPeriodic() {
+	frc::Scheduler::GetInstance()->Run();
+}
+
+void Robot::AutonomousInit() {
+	AutoCommand.reset(AutoChooser.GetSelected());
+	if (AutoCommand.get() != nullptr) {
+		AutoCommand->Start();
 	}
+}
 
-	void DisabledInit() override {
+void AutonomousPeriodic() {
+	frc::Scheduler::GetInstance()->Run();
+}
 
-	}
+void TeleopInit() {
 
-	void DisabledPeriodic() override {
-		frc::Scheduler::GetInstance()->Run();
-	}
 
-	void AutonomousInit() override {
-		std::string autoSelected = frc::SmartDashboard::GetString("Auto Selector", "Default");
-		if (autoSelected == "My Auto") {
-			m_autonomousCommand = &m_myAuto;
-		}
-		m_autonomousCommand = m_chooser.GetSelected();
-		if (m_autonomousCommand != nullptr) {
-			m_autonomousCommand->Start();
-		}
-	}
 
-	void AutonomousPeriodic() override {
-		frc::Scheduler::GetInstance()->Run();
-	}
 
-	void TeleopInit() override {
-		if (m_autonomousCommand != nullptr) {
-			m_autonomousCommand->Cancel();
-			m_autonomousCommand = nullptr;
-		}
-	}
+//	if (Robot::m_autonomousCommand != nullptr) {
+//		Robot::m_autonomousCommand->Cancel();
+//		Robot::m_autonomousCommand = nullptr;
+//	}
+}
 
-	void TeleopPeriodic() override {
-		frc::Scheduler::GetInstance()->Run();
-	}
+void TeleopPeriodic() {
+	frc::Scheduler::GetInstance()->Run();
+}
 
-	void TestPeriodic() override {
+void TestPeriodic() {
 
-	}
+}
 
-private:
-	frc::Command* m_autonomousCommand = nullptr;
-	MyAutoCommand m_myAuto;
-	frc::SendableChooser<frc::Command*> m_chooser;
-};
+
 
 START_ROBOT_CLASS(Robot)

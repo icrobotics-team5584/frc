@@ -1,13 +1,14 @@
 #include "CmdPnuematicOutputOut.h"
+#include "Robot.h"
+#include "SubPnuematicOutput.h"
 
 CmdPnuematicOutputOut::CmdPnuematicOutputOut() {
-	// Use Requires() here to declare subsystem dependencies
-	// eg. Requires(Robot::chassis.get());
+	Requires(Robot::subPnuematicOutput.get());
 }
 
 // Called just before this Command runs the first time
 void CmdPnuematicOutputOut::Initialize() {
-
+	Robot::subPnuematicOutput->Out();
 }
 
 // Called repeatedly when this Command is scheduled to run

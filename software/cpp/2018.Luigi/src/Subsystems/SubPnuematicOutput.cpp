@@ -1,9 +1,7 @@
 #include "SubPnuematicOutput.h"
-#include "../RobotMap.h"
 
-SubPnuematicOutput::SubPnuematicOutput() : Subsystem("ExampleSubsystem") {
-	//std::shared_ptr<DoubleSolenoid> SubPnuematicOutput::solPusher;
-	subPnuematicOutputSolPusher.reset(new DoubleSolenoid(0,2));
+SubPnuematicOutput::SubPnuematicOutput() : Subsystem("SubPnuematicOutput") {
+	solPusher.reset(new DoubleSolenoid(0,2));
 }
 
 void SubPnuematicOutput::InitDefaultCommand() {
@@ -11,9 +9,9 @@ void SubPnuematicOutput::InitDefaultCommand() {
 }
 
 void SubPnuematicOutput::Out() {
-	subPnuematicOutputSolPusher->Set(DoubleSolenoid::kForward);
+	solPusher->Set(DoubleSolenoid::kForward);
 }
 
 void SubPnuematicOutput::In() {
-	subPnuematicOutputSolPusher->Set(DoubleSolenoid::kReverse);
+	solPusher->Set(DoubleSolenoid::kReverse);
 }
