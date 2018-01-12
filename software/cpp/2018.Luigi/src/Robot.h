@@ -19,6 +19,9 @@
 
 class Robot : public frc::TimedRobot {
 public:
+
+	std::string gameData;
+
 	frc::Command* autonomousCommand = nullptr;
 	static std::unique_ptr<OI> oi;
 	frc::LiveWindow *lw = frc::LiveWindow::GetInstance();
