@@ -5,14 +5,16 @@
 #include "Commands/CmdIntake.h"
 
 OI::OI() {
-    joystick0.reset(new frc::Joystick(0));
+    //Initiate Joystick
+	joystick0.reset(new frc::Joystick(0));
 
-    // SmartDashboard Buttons
-    frc::SmartDashboard::PutData("MyJoystickDrive", new MyJoystickDrive());
-    frc::SmartDashboard::PutData("Autonomous Command", new AutonomousCommand());
-
+    //Initiate Intake button
     btnIntake.reset(new JoystickButton(joystick0.get(), 1));
     btnIntake->WhileHeld(new CmdIntake());
+
+    //Initiate Output button
+    btnOutput.reset(new JoystickButton(joystick0.get(), 1));
+	btnOutput->WhileHeld(new CmdIntake());
 }
 
 
