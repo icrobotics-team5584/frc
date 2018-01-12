@@ -35,7 +35,7 @@ void Robot::AutonomousInit() {
 
 	gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
 
-	//Probably want to drag in each value, make a string or array for use in switch/case statment!!
+	//Probably want to drag in each value, make a string or array for use in switch/case statment!!  gameData is pionter to string array!!
 }
 
 void Robot::AutonomousPeriodic() {
