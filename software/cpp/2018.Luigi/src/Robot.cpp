@@ -14,9 +14,9 @@ void Robot::RobotInit() {
 	subIntake.reset(new SubIntake());
 	oi.reset(new OI());
 
-
-	chooser.AddDefault("Autonomous Command", new AutonomousCommand());
-
+	//Setup Auto Chooser
+	chooser.AddDefault("Forward", new CmdAutoForward());
+	chooser.AddObject("Backward", new CmdAutoBackward());
 	frc::SmartDashboard::PutData("Auto Modes", &chooser);
 }
 
@@ -48,4 +48,3 @@ void Robot::TeleopPeriodic() {
 }
 
 START_ROBOT_CLASS(Robot);
-

@@ -32,5 +32,5 @@ void RobotMap::init() {
 	//Intake Actuators
     subIntakeTnxLeft.reset(new WPI_TalonSRX(5));
     subIntakeTnxRight.reset(new WPI_TalonSRX(6));
-    subIntakeTnxBottom.reset(new WPI_TalonSRX(5));
+    subIntakeTnxBottom.reset(new WPI_TalonSRX(7));
 }
