@@ -1,27 +1,20 @@
-#ifndef SubDriveBase_H
-#define SubDriveBase_H
+#ifndef SUBDRIVEBASE_H
+#define SUBDRIVEBASE_H
+#include "Commands/Subsystem.h"
+#include "WPILib.h"
 
-#include <Commands/Subsystem.h>
-#include <ctre/Phoenix.h>
-#include <wpilib.h>
-
-std::shared_ptr<WPI_TalonSRX> tnxLeftDriveMaster;
-std::shared_ptr<WPI_TalonSRX> tnxLeftDriveSlave;
-std::shared_ptr<WPI_TalonSRX> tnxRightDriveMaster;
-std::shared_ptr<WPI_TalonSRX> tnxRightDriveSlave;
-
-std::shared_ptr<DifferentialDrive> differentialDrive;
-
-class SubDriveBase : public Subsystem {
+class SubDriveBase: public frc::Subsystem {
 private:
-
+	std::shared_ptr<WPI_TalonSRX> sRXleft;
+	std::shared_ptr<WPI_TalonSRX> sRXright;
+	std::shared_ptr<frc::DifferentialDrive> myFirstDifferentialDrive;
 
 public:
 	SubDriveBase();
-	void InitDefaultCommand();
+	void InitDefaultCommand() override;
+	void Periodic() override;
 	void TakeJoystickInputs(std::shared_ptr<Joystick>);
-	void Drive(double, double);
-	void Stop();
+
 };
 
-#endif  // SubDriveBase_H
+#endif

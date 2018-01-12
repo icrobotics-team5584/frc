@@ -6,9 +6,21 @@ SubIntake::SubIntake() : Subsystem("ExampleSubsystem") {
 }
 
 void SubIntake::InitDefaultCommand() {
-	// Set the default command for a subsystem here.
-	// SetDefaultCommand(new MySpecialCommand());
+	tnxRight = RobotMap::subIntakeTnxRight;
+	tnxLeft = RobotMap::subIntakeTnxLeft;
 }
 
-// Put methods for controlling this subsystem
-// here. Call these from Commands.
+void SubIntake::Out(){
+	tnxRight->Set(1);
+	tnxLeft->Set(-1);
+}
+
+void SubIntake::In(){
+	tnxRight->Set(-1);
+	tnxLeft->Set(1);
+}
+
+void SubIntake::Stop(){
+	tnxRight->Set(0);
+	tnxLeft->Set(0);
+}

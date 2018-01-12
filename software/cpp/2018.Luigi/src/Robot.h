@@ -1,52 +1,33 @@
-#ifndef SRC_ROBOT_H_
-#define SRC_ROBOT_H_
+#ifndef _ROBOT_H
+#define _ROBOT_H
 
-#include <WPILib.h>
-#include <Commands/Command.h>
-#include <LiveWindow/LiveWindow.h>
-#include <SmartDashboard/SendableChooser.h>
-#include <SmartDashboard/SmartDashboard.h>
+#include "WPILib.h"
+#include "Commands/Command.h"
+#include "RobotMap.h"
+#include "LiveWindow/LiveWindow.h"
 
-//Include Operator Interface
-#include "OI.h"
-
-//Include Subsystems
-#include "Subsystems/SubPnuematicOutput.h"
+#include "Commands/AutonomousCommand.h"
 #include "Subsystems/SubDriveBase.h"
 #include "Subsystems/SubIntake.h"
 
-//Include Commands
-#include "Commands/CmdPnuematicOutputOut.h"
-#include "Commands/CmdJoystickDrvie.h"
-#include "Commands/MyAutoCommand.h"
+#include "OI.h"
 
 class Robot : public frc::TimedRobot {
 public:
-
+	frc::Command* autonomousCommand = nullptr;
 	static std::unique_ptr<OI> oi;
+	frc::LiveWindow *lw = frc::LiveWindow::GetInstance();
+	frc::SendableChooser<frc::Command*> chooser;
 
-	virtual void RobotInit();
-	virtual void DisabledInit();
-	virtual void DisabledPeriodic();
-	virtual void AutonomousInit();
-	virtual void AutonomousPeriodic();
-	virtual void TeleopInit();
-	virtual void TeleopPeriodic();
-	virtual void TestPeriodic();
-
-	//Create Pointers to Subsystems
-	static std::shared_ptr<SubPnuematicOutput> subPnuematicOutput;
 	static std::shared_ptr<SubDriveBase> subDriveBase;
 	static std::shared_ptr<SubIntake> subIntake;
 
-	//Setup Autonomous Selection
-	frc::SendableChooser<frc::Command*> AutoChooser;
-	std::shared_ptr<frc::Command> AutoCommand;
-
-private:
-
+	void RobotInit() override;
+	void DisabledInit() override;
+	void DisabledPeriodic() override;
+	void AutonomousInit() override;
+	void AutonomousPeriodic() override;
+	void TeleopInit() override;
+	void TeleopPeriodic() override;
 };
-
-
-
-#endif /* SRC_ROBOT_H_ */
+#endif

@@ -1,21 +1,21 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 #include "OI.h"
-
-#include <WPILib.h>
+#include "SmartDashboard/SmartDashboard.h"
+#include "Commands/AutonomousCommand.h"
+#include "Commands/MyJoystickDrive.h"
+#include "Commands/CmdIntake.h"
 
 OI::OI() {
-	// Process operator interface input here.
+    joystick0.reset(new frc::Joystick(0));
 
-	joystick1.reset(new Joystick(0));
+    // SmartDashboard Buttons
+    frc::SmartDashboard::PutData("MyJoystickDrive", new MyJoystickDrive());
+    frc::SmartDashboard::PutData("Autonomous Command", new AutonomousCommand());
 
+    btnIntake.reset(new JoystickButton(joystick0.get(), 1));
+    btnIntake->WhileHeld(new CmdIntake());
 }
 
-std::shared_ptr<Joystick> OI::GetJoystick1() {
-	return joystick1;
+
+std::shared_ptr<frc::Joystick> OI::getJoystick0() {
+   return joystick0;
 }
