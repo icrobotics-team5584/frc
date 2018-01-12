@@ -32,6 +32,10 @@ void Robot::AutonomousInit() {
 	autonomousCommand = chooser.GetSelected();
 	if (autonomousCommand != nullptr)
 		autonomousCommand->Start();
+
+	gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
+
+	//Probably want to drag in each value, make a string or array for use in switch/case statment!!
 }
 
 void Robot::AutonomousPeriodic() {
