@@ -12,6 +12,7 @@
 #include <SmartDashboard/SmartDashboard.h>
 #include <TimedRobot.h>
 #include <Robot.h>
+#include <OI.h>
 
 std::shared_ptr<SubPnuematicOutput> Robot::subPnuematicOutput;
 std::shared_ptr<SubDriveBase> Robot::subDriveBase;
@@ -22,15 +23,14 @@ std::unique_ptr<OI> Robot::oi;
 void Robot::RobotInit() {
 	//Setup Autonomous Chooser
 	AutoChooser.AddObject("Default Auto", new MyAutoCommand());
-	AutoChooser.AddObject("Pnuematic", new CmdPnuematicOutputOut());
 	frc::SmartDashboard::PutData("Auto Modes", &AutoChooser);
 
-	//Initialise Subsystems
+	//Initialize Subsystems
 	subPnuematicOutput.reset(new SubPnuematicOutput());
 	subDriveBase.reset(new SubDriveBase());
 	subIntake.reset(new SubIntake());
 
-	//Initialise Out/In
+	//Initialize Out/In
 	oi.reset(new OI());
 }
 

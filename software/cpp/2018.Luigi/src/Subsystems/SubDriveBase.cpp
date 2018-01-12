@@ -1,4 +1,6 @@
 #include "SubDriveBase.h"
+#include <wpilib.h>
+#include "Commands/CmdJoystickDrvie.h"
 
 SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
 
@@ -8,10 +10,13 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
     tnxRightDriveSlave.reset(new WPI_TalonSRX(4));
 
     differentialDrive.reset(new DifferentialDrive(*tnxLeftDriveMaster, *tnxRightDriveMaster) );
+    differentialDrive->SetSafetyEnabled(true);
+	differentialDrive->SetExpiration(0.1);
+	differentialDrive->SetMaxOutput(1.0);
 }
 
 void SubDriveBase::InitDefaultCommand() {
-
+	SetDefaultCommand(new CmdPnuematicOutputOut());
 }
 
 void SubDriveBase::TakeJoystickInputs(std::shared_ptr<Joystick> stick) {

@@ -1,4 +1,5 @@
 #include "SubPnuematicOutput.h"
+#include "WPILib.h"
 
 SubPnuematicOutput::SubPnuematicOutput() : Subsystem("SubPnuematicOutput") {
 	solPusher.reset(new DoubleSolenoid(0,2));

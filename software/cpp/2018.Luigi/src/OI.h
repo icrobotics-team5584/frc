@@ -5,11 +5,12 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#pragma once
+//#pragma once
+
+#ifndef OI_H
+#define OI_H
 
 #include <WPILib.h>
-
-#include <Commands/CmdJoystickDrvie.h>
 
 class OI {
 
@@ -22,3 +23,5 @@ public:
 	std::shared_ptr<Joystick> GetJoystick1();
 	OI();
 };
+
+#endif

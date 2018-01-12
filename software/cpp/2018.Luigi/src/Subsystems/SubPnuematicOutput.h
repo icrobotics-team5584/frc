@@ -2,7 +2,7 @@
 #define SubPnuematicOutput_H
 
 #include <Commands/Subsystem.h>
-#include <WPILib.h>
+#include "WPILib.h"
 
 static std::shared_ptr<DoubleSolenoid> solPusher;
 
