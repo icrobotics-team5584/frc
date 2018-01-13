@@ -33,7 +33,8 @@ void SubIntake::Stop(){
 }
 
 bool SubIntake::GetSwitches(){
-	if (swtLeftLimit->Get() & swtRightLimit->Get() ){
+	//True if both buttons are pressed
+	if (not swtLeftLimit->Get() & not swtRightLimit->Get() ){	//Added nots because switches are normally closed
 		return true;
 	} else {
 		return false;
