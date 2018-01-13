@@ -13,6 +13,8 @@ std::shared_ptr<WPI_TalonSRX> RobotMap::subDriveBaseSRXrightSlave;
 std::shared_ptr<WPI_TalonSRX> RobotMap::subIntakeTnxRight;
 std::shared_ptr<WPI_TalonSRX> RobotMap::subIntakeTnxLeft;
 std::shared_ptr<WPI_TalonSRX> RobotMap::subIntakeTnxBottom;
+std::shared_ptr<WPI_TalonSRX> RobotMap::subArmLiftLeft;
+std::shared_ptr<WPI_TalonSRX> RobotMap::subArmLiftRight;
 
 
 void RobotMap::init() {
@@ -30,7 +32,9 @@ void RobotMap::init() {
 	subDriveBaseSRXrightSlave->Set( ctre::phoenix::motorcontrol::ControlMode::Follower, 3);
 
 	//Intake Actuators
-    subIntakeTnxLeft.reset(new WPI_TalonSRX(5));
-    subIntakeTnxRight.reset(new WPI_TalonSRX(6));
+    subIntakeTnxLeft.reset(new WPI_TalonSRX(7));
+    subIntakeTnxRight.reset(new WPI_TalonSRX(8));
     subIntakeTnxBottom.reset(new WPI_TalonSRX(7));
+    subArmLiftLeft.reset(new WPI_TalonSRX(6));
+    subArmLiftLeft.reset(new WPI_TalonSRX(5));
 }

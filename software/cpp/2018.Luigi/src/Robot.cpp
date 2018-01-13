@@ -3,6 +3,7 @@
 //Forward Define Subsystems
 std::shared_ptr<SubDriveBase> Robot::subDriveBase;
 std::shared_ptr<SubIntake> Robot::subIntake;
+std::shared_ptr<SubArmLift> Robot::subArmLift;
 std::unique_ptr<OI> Robot::oi;
 
 
@@ -12,6 +13,7 @@ void Robot::RobotInit() {
 	//Initiate Subsystems
 	subDriveBase.reset(new SubDriveBase());
 	subIntake.reset(new SubIntake());
+	subArmLift.reset(new SubArmLift());
 	oi.reset(new OI());
 
 	//Setup Auto Chooser

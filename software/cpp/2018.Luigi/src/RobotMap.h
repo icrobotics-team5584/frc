@@ -17,6 +17,8 @@ public:
 	static std::shared_ptr<WPI_TalonSRX> subIntakeTnxRight;
 	static std::shared_ptr<WPI_TalonSRX> subIntakeTnxLeft;
 	static std::shared_ptr<WPI_TalonSRX> subIntakeTnxBottom;
+	static std::shared_ptr<WPI_TalonSRX> subArmLiftLeft;
+	static std::shared_ptr<WPI_TalonSRX> subArmLiftRight;
 	static void init();
 };
 #endif
