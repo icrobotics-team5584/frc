@@ -8,13 +8,12 @@ CmdArmDown::CmdArmDown() {
 
 // Called just before this Command runs the first time
 void CmdArmDown::Initialize() {
-	Robot::subArmLift->Down();
 
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdArmDown::Execute() {
-
+	Robot::subArmLift->Down();
 }
 
 // Make this return true when this Command no longer needs to run execute()

@@ -3,6 +3,7 @@
 
 #include <Commands/Subsystem.h>
 #include <ctre/phoenix.h>
+#include <WPILib.h>
 
 class SubIntake : public Subsystem {
 private:
@@ -10,12 +11,16 @@ private:
 	std::shared_ptr<WPI_TalonSRX> tnxLeft;
 	std::shared_ptr<WPI_TalonSRX> tnxBottom;
 
+	std::shared_ptr<DigitalInput> swtLeftLimit;
+	std::shared_ptr<DigitalInput> swtRightLimit;
+
 public:
 	SubIntake();
 	void InitDefaultCommand();
 	void In();
 	void Out();
 	void Stop();
+	bool GetSwitches();
 };
 
 #endif  // SubIntake_H
