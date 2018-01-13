@@ -26,5 +26,7 @@ public:
 	//Define Lift Actuators and Sensors
 	static std::shared_ptr<WPI_TalonSRX> subArmLiftLeft;
 	static std::shared_ptr<WPI_TalonSRX> subArmLiftRight;
+	static std::shared_ptr<DigitalInput> subArmLiftTopLimit;
+	static std::shared_ptr<DigitalInput> subArmLiftBottomLimit;
 };
 #endif

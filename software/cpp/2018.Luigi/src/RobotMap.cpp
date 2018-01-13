@@ -19,6 +19,8 @@ std::shared_ptr<DigitalInput> RobotMap::subIntakeSwtLeftLimit;
 //Define Lift Actuators
 std::shared_ptr<WPI_TalonSRX> RobotMap::subArmLiftLeft;
 std::shared_ptr<WPI_TalonSRX> RobotMap::subArmLiftRight;
+std::shared_ptr<DigitalInput> RobotMap::subArmLiftTopLimit;
+std::shared_ptr<DigitalInput> RobotMap::subArmLiftBottomLimit;
 
 
 void RobotMap::init() {
@@ -38,11 +40,13 @@ void RobotMap::init() {
 	//Initiate Intake Actuators and Sensors
     subIntakeTnxLeft.reset(new WPI_TalonSRX(7));
     subIntakeTnxRight.reset(new WPI_TalonSRX(8));
-    subIntakeTnxBottom.reset(new WPI_TalonSRX(7));
+    subIntakeTnxBottom.reset(new WPI_TalonSRX(9));
     subIntakeSwtLeftLimit.reset(new DigitalInput(0));
     subIntakeSwtRightLimit.reset(new DigitalInput(1));
 
-    //Lift Actuators
+    //Lift Actuators and Sensors
     subArmLiftLeft.reset(new WPI_TalonSRX(6));
     subArmLiftLeft.reset(new WPI_TalonSRX(5));
+    subArmLiftTopLimit.reset(new DigitalInput(3));
+    subArmLiftTopLimit.reset(new DigitalInput(4));
 }

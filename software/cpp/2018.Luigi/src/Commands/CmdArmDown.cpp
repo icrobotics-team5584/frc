@@ -13,12 +13,18 @@ void CmdArmDown::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdArmDown::Execute() {
-	Robot::subArmLift->Down();
+	if (not Robot::subArmLift->GetBottomSwitch()) {
+		Robot::subArmLift->Down();
+	}
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdArmDown::IsFinished() {
-	return false;
+	if (Robot::subArmLift->GetBottomSwitch()) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 // Called once after isFinished returns true
@@ -30,5 +36,5 @@ void CmdArmDown::End() {
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void CmdArmDown::Interrupted() {
-
+	End();
 }

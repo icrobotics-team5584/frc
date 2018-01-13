@@ -24,5 +24,7 @@ void SubDriveBase::Stop(){
 }
 
 void SubDriveBase::TakeJoystickInputs(std::shared_ptr<Joystick> sticky ) {
-	differentialDrive->ArcadeDrive(sticky->GetY(),sticky->GetX());
+	double throttle;
+	throttle = (((sticky->GetThrottle() + 1 ) / 4 )*-1 ) +1;
+	differentialDrive->ArcadeDrive(sticky->GetY() * throttle, sticky->GetX() * throttle);
 }

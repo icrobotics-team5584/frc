@@ -17,10 +17,11 @@ OI::OI() {
 	btnOutput->WhileHeld(new CmdIntake());
 
 	//Initiate Arm Up button
-	btnArmUp.reset(new JoystickButton(joystick0.get(), 3));
+	btnArmUp.reset(new JoystickButton(joystick0.get(), 8));
 	btnArmUp->WhileHeld(new CmdIntake());
+
 	//Initiate Arm Down button
-	btnArmDown.reset(new JoystickButton(joystick0.get(), 4));
+	btnArmDown.reset(new JoystickButton(joystick0.get(), 7));
 	btnArmDown->WhileHeld(new CmdIntake());
 
 
