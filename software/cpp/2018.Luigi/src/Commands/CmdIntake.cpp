@@ -11,18 +11,18 @@ void CmdIntake::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdIntake::Execute() {
-	if (not Robot::subIntake->GetSwitches()) {
+//	if (not Robot::subIntake->GetSwitches()) {
 		Robot::subIntake->In();
-	}
+//	}
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdIntake::IsFinished() {
-	if (Robot::subIntake->GetSwitches()) {
-		return true;
-	} else {
+//	if (Robot::subIntake->GetSwitches()) {
+//		return true;
+//	} else {
 		return false;
-	}
+//	}
 }
 
 // Called once after isFinished returns true

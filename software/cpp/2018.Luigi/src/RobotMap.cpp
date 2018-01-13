@@ -26,27 +26,32 @@ std::shared_ptr<DigitalInput> RobotMap::subArmLiftBottomLimit;
 void RobotMap::init() {
 
 	//Initiate DriveBase Actuators
+		//Masters:
     subDriveBaseSRXleft.reset(new WPI_TalonSRX(1));
     subDriveBaseSRXright.reset(new WPI_TalonSRX(3));
-    subDriveBaseDifferentialDrive.reset(new frc::DifferentialDrive(*subDriveBaseSRXleft, *subDriveBaseSRXright));
-    subDriveBaseDifferentialDrive->SetSafetyEnabled(false);
-    subDriveBaseDifferentialDrive->SetExpiration(0.1);
-    subDriveBaseDifferentialDrive->SetMaxOutput(1.0);
-	subDriveBaseSRXleftSlave.reset(new WPI_TalonSRX(2));
-	subDriveBaseSRXleftSlave->Set( ctre::phoenix::motorcontrol::ControlMode::Follower, 1);
+		//Slaves:
+    subDriveBaseSRXleftSlave.reset(new WPI_TalonSRX(2));
+    subDriveBaseSRXleftSlave->Set( ctre::phoenix::motorcontrol::ControlMode::Follower, 1);
 	subDriveBaseSRXrightSlave.reset(new WPI_TalonSRX(4));
 	subDriveBaseSRXrightSlave->Set( ctre::phoenix::motorcontrol::ControlMode::Follower, 3);
+		//Differential Drive:
+	subDriveBaseDifferentialDrive.reset(new frc::DifferentialDrive(*subDriveBaseSRXleft, *subDriveBaseSRXright));
+	subDriveBaseDifferentialDrive->SetSafetyEnabled(false);
+	subDriveBaseDifferentialDrive->SetExpiration(0.1);
+	subDriveBaseDifferentialDrive->SetMaxOutput(1.0);
 
-	//Initiate Intake Actuators and Sensors
+	//Initiate Intake Actuators
     subIntakeTnxLeft.reset(new WPI_TalonSRX(7));
     subIntakeTnxRight.reset(new WPI_TalonSRX(8));
+    //Initiate Intake Sensors
     subIntakeTnxBottom.reset(new WPI_TalonSRX(9));
     subIntakeSwtLeftLimit.reset(new DigitalInput(0));
     subIntakeSwtRightLimit.reset(new DigitalInput(1));
 
-    //Lift Actuators and Sensors
+    //Initiate Lift Actuators
     subArmLiftLeft.reset(new WPI_TalonSRX(6));
-    subArmLiftLeft.reset(new WPI_TalonSRX(5));
+    subArmLiftRight.reset(new WPI_TalonSRX(5));
+    //Initiate Lift Sensors
+    subArmLiftTopLimit.reset(new DigitalInput(2));
     subArmLiftTopLimit.reset(new DigitalInput(3));
-    subArmLiftTopLimit.reset(new DigitalInput(4));
 }

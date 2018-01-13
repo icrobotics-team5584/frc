@@ -8,7 +8,7 @@ SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase") {
 }
 
 void SubDriveBase::InitDefaultCommand() {
-	//SetDefaultCommand(new MyJoystickDrive());
+	SetDefaultCommand(new MyJoystickDrive());
 }
 
 void SubDriveBase::Periodic() {
@@ -24,7 +24,6 @@ void SubDriveBase::Stop(){
 }
 
 void SubDriveBase::TakeJoystickInputs(std::shared_ptr<Joystick> sticky ) {
-	double throttle;
-	throttle = (((sticky->GetThrottle() + 1 ) / 4 )*-1 ) +1;
-	differentialDrive->ArcadeDrive(sticky->GetY() * throttle, sticky->GetX() * throttle);
+	double throttle = (((sticky->GetRawAxis(3) + 1 ) / 4 )*-1 ) +1;
+	differentialDrive->ArcadeDrive(-sticky->GetY() * throttle, sticky->GetX() * throttle);
 }

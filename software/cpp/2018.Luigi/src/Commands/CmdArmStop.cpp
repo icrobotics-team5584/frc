@@ -1,33 +1,32 @@
-#include "CmdArmDown.h"
+#include "CmdArmStop.h"
 
-CmdArmDown::CmdArmDown() {
+CmdArmStop::CmdArmStop() {
 	// Use Requires() here to declare subsystem dependencies
-	// eg. Requires(Robot::chassis.get());
 	Requires(Robot::subArmLift.get());
 }
 
 // Called just before this Command runs the first time
-void CmdArmDown::Initialize() {
-	Robot::subArmLift->Down();
+void CmdArmStop::Initialize() {
+	Robot::subArmLift->Stop();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdArmDown::Execute() {
-
+void CmdArmStop::Execute() {
+	Robot::subArmLift->Stop();
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdArmDown::IsFinished() {
+bool CmdArmStop::IsFinished() {
 	return false;
 }
 
 // Called once after isFinished returns true
-void CmdArmDown::End() {
+void CmdArmStop::End() {
 	Robot::subArmLift->Stop();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdArmDown::Interrupted() {
+void CmdArmStop::Interrupted() {
 	End();
 }

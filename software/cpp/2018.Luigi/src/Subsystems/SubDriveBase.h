@@ -4,6 +4,7 @@
 #include <ctre/Phoenix.h>
 #include <Commands/Subsystem.h>
 #include <WPILib.h>
+#include <SmartDashboard/SmartDashboard.h>
 
 #include "RobotMap.h"
 

@@ -1,5 +1,6 @@
 #include "SubArmLift.h"
 #include "../RobotMap.h"
+#include "Commands/CmdArmStop.h"
 
 SubArmLift::SubArmLift() : Subsystem("ExampleSubsystem") {
 	tnxLeft = RobotMap::subArmLiftLeft;
@@ -10,22 +11,22 @@ SubArmLift::SubArmLift() : Subsystem("ExampleSubsystem") {
 }
 
 void SubArmLift::InitDefaultCommand() {
-
+	SetDefaultCommand(new CmdArmStop());
 }
 
 void SubArmLift::Up(){
-	tnxRight->Set(1);
+	tnxRight->Set(-1);
 	tnxLeft->Set(1);
 }
 
 void SubArmLift::Down(){
 	tnxRight->Set(1);
-	tnxLeft->Set(1);
+	tnxLeft->Set(-1);
 }
 
 void SubArmLift::Stop(){
-	tnxRight->Set(0);
 	tnxLeft->Set(0);
+	tnxRight->Set(0);
 }
 
 bool SubArmLift::GetTopSwitch(){
