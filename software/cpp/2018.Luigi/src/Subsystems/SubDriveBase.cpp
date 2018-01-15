@@ -5,6 +5,11 @@ SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase") {
     sRXleft = RobotMap::subDriveBaseSRXleft;
     sRXright = RobotMap::subDriveBaseSRXright;
     differentialDrive = RobotMap::subDriveBaseDifferentialDrive;
+
+    ultrasonicInputFront = RobotMap::subDriveBaseUltrasonicInputFront;
+    ultrasonicInputRight = RobotMap::subDriveBaseUltrasonicInputRight;
+    ultrasonicInputBack = RobotMap::subDriveBaseUltrasonicInputBack;
+    ultrasonicInputLeft = RobotMap::subDriveBaseUltrasonicInputLeft;
 }
 
 void SubDriveBase::InitDefaultCommand() {

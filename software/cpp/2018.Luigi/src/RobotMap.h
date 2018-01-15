@@ -28,5 +28,14 @@ public:
 	static std::shared_ptr<WPI_TalonSRX> subArmLiftRight;
 	static std::shared_ptr<DigitalInput> subArmLiftTopLimit;
 	static std::shared_ptr<DigitalInput> subArmLiftBottomLimit;
+
+
+	//Define Ultrasonic sensors
+	static std::shared_ptr<frc::AnalogInput> subDriveBaseUltrasonicInputFront;
+	static std::shared_ptr<frc::AnalogInput> subDriveBaseUltrasonicInputRight;
+	static std::shared_ptr<frc::AnalogInput> subDriveBaseUltrasonicInputBack;
+	static std::shared_ptr<frc::AnalogInput> subDriveBaseUltrasonicInputLeft;
+
+
 };
 #endif

@@ -15,6 +15,11 @@ private:
 	std::shared_ptr<WPI_TalonSRX> sRXright;
 	std::shared_ptr<frc::DifferentialDrive> differentialDrive;
 
+	std::shared_ptr<frc::AnalogInput> ultrasonicInputFront;
+	std::shared_ptr<frc::AnalogInput> ultrasonicInputRight;
+	std::shared_ptr<frc::AnalogInput> ultrasonicInputBack;
+	std::shared_ptr<frc::AnalogInput> ultrasonicInputLeft;
+
 public:
 	SubDriveBase();
 	void InitDefaultCommand() override;

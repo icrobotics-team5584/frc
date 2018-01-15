@@ -1,6 +1,7 @@
 #include "RobotMap.h"
 #include "LiveWindow/LiveWindow.h"
 #include "ctre/Phoenix.h"
+#include "WPILib.h"
 
 //Define DriveBase Actuators
 std::shared_ptr<WPI_TalonSRX> RobotMap::subDriveBaseSRXleft;
@@ -21,6 +22,13 @@ std::shared_ptr<WPI_TalonSRX> RobotMap::subArmLiftLeft;
 std::shared_ptr<WPI_TalonSRX> RobotMap::subArmLiftRight;
 std::shared_ptr<DigitalInput> RobotMap::subArmLiftTopLimit;
 std::shared_ptr<DigitalInput> RobotMap::subArmLiftBottomLimit;
+
+//Define Ultrasonic sensors
+std::shared_ptr<frc::AnalogInput> RobotMap::subDriveBaseUltrasonicInputFront;
+std::shared_ptr<frc::AnalogInput> RobotMap::subDriveBaseUltrasonicInputRight;
+std::shared_ptr<frc::AnalogInput> RobotMap::subDriveBaseUltrasonicInputBack;
+std::shared_ptr<frc::AnalogInput> RobotMap::subDriveBaseUltrasonicInputLeft;
+
 
 
 void RobotMap::init() {
@@ -54,4 +62,15 @@ void RobotMap::init() {
     //Initiate Lift Sensors
     subArmLiftTopLimit.reset(new DigitalInput(2));
     subArmLiftTopLimit.reset(new DigitalInput(3));
+
+
+    //Initiate Ultrasonic sensors
+    subDriveBaseUltrasonicInputFront.reset(new frc::AnalogInput(0));
+    	//lw->AddSensor("SubUltrasonic", "UltrasonicInputFront",  subDriveBaseUltrasonicInputFront);
+    subDriveBaseUltrasonicInputRight.reset(new frc::AnalogInput(1));
+    	//lw->AddSensor("SubUltrasonic", "UltrasonicInputFront",  subDriveBaseUltrasonicInputRight);
+    subDriveBaseUltrasonicInputBack.reset(new frc::AnalogInput(2));
+    	//lw->AddSensor("SubUltrasonic", "UltrasonicInputFront",  subDriveBaseUltrasonicInputBack);
+    subDriveBaseUltrasonicInputLeft.reset(new frc::AnalogInput(3));
+    	//lw->AddSensor("SubUltrasonic", "UltrasonicInputFront",  subDriveBaseUltrasonicInputLeft);
 }
