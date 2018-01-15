@@ -20,6 +20,11 @@ private:
 	std::shared_ptr<frc::AnalogInput> ultrasonicInputBack;
 	std::shared_ptr<frc::AnalogInput> ultrasonicInputLeft;
 
+	double frontUValue;
+	double rightUValue;
+	double backUValue;
+	double leftUValue;
+
 public:
 	SubDriveBase();
 	void InitDefaultCommand() override;

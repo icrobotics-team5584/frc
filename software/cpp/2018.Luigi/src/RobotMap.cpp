@@ -60,8 +60,8 @@ void RobotMap::init() {
     subArmLiftLeft.reset(new WPI_TalonSRX(6));
     subArmLiftRight.reset(new WPI_TalonSRX(5));
     //Initiate Lift Sensors
-    subArmLiftTopLimit.reset(new DigitalInput(2));
     subArmLiftTopLimit.reset(new DigitalInput(3));
+    subArmLiftTopLimit.reset(new DigitalInput(4));
 
 
     //Initiate Ultrasonic sensors
