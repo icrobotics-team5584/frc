@@ -460,6 +460,15 @@ public class Gui2 {
 		panel.add(lblJH);
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	private void motionGraphBlue()
 	{
 		tabbedPane.insertTab("Blue Alliance", null, blueAllianceGraph, null, 0);
@@ -472,62 +481,105 @@ public class Gui2 {
 			
 					
 		//force graph to show field dimensions of 30ft x 27 feet
-		double fieldWidth = 27.0;
+		double fieldWidth = 30;
 		blueAllianceGraph.setXTic(0, 30, 1);
 		blueAllianceGraph.setYTic(0, fieldWidth, 1);
-					
+		
+		
+		//Top barrier 
+		double[][] TopBari = new double[][] {
+			{0,26.94833},{30,26.94833}
+		};
+		blueAllianceGraph.addData(TopBari, Color.black);
+		
+		//Top angle  
+		double[][] TopAngle = new double[][] {
+			{0,22.948333},{3,26.948333}
+		};
+		blueAllianceGraph.addData(TopAngle, Color.black);
+		
+		//Bottom Angle   
+		double[][] BottomAngle = new double[][] {
+			{0,4},{3,0}
+		};
+		blueAllianceGraph.addData(BottomAngle, Color.black);
+		
+		//Mid line 
+		double[][] MidLine = new double[][] {
+			{0,13.474},{30,13.474}
+		};
+		blueAllianceGraph.addData(MidLine, Color.black);
+	
 					
 		//lets add field markers to help visual
-		//Switch and Power Cube Zone
-		double[][] Switch = new double[][]{
-				{9,11},
-				{9,15},
-				{13,15},
-				{13,11},
-				{13,19.5},
-				{18.5,19.5},
-				{18.5,7},
-				{13,7},
-				{13,11},
-				{9,11}
+		//Power Cube Zone
+		double[][] PCZone = new double[][]{
+			{8.167,15.349},{11.667,15.349},{11.667,11.599},{8.167,11.599},{8.167,15.349}
 			};
-		blueAllianceGraph.addData(Switch, Color.black);						
+		blueAllianceGraph.addData(PCZone, Color.red);						
 		
 		//Platform Zone
 		double[][] PlatformZone = new double[][]{
-			{18.5,19},
-			{30,19},
-			{30,7.5},
-			{18.5,7.5},
-			{18.5,19}
+			
 		};
-		blueAllianceGraph.addData(PlatformZone, Color.blue);	
+		blueAllianceGraph.addData(PlatformZone, Color.blue);
+		
+		//Platform 
+		double[][] Platform = new double[][]{
+			{21.789,7.9375},{21.789,19.010833},{31.829,19.010833},{31.829,7.9375},{21.789,7.9375}
+		};
+		blueAllianceGraph.addData(Platform, Color.black);
+		
+		//AutoLine 
+		double[][] AutoLine = new double[][]{
+			{10,0},{10,26.949333}
+		};
+		blueAllianceGraph.addData(AutoLine, Color.black);
+		
+		//Scale
+		double[][] Scale = new double[][]{
+			{24.97,5.964},{24.97,20.964},{28.97,20.964},{28.97,5.964},{24.97,5.964}
+		};
+		blueAllianceGraph.addData(Scale, Color.black);
+		
+		//Switch 
+		double[][] Switch = new double[][]{
+			{11.6667,19.844},{16.3337,19.844},{16.3337,7.104},{11.6667,7.104},{11.6667,19.844}
+			};
+		blueAllianceGraph.addData(Switch, Color.black);
 		
 		//Exchange Zone
 		double[][] ExchangeZone = new double[][]{
-			{0,18},
-			{3,18},
-			{3,14},
-			{0,14},
-			{0,18}
+			{0,18.474},
+			{3,18.474},
+			{3,14.474},
+			{0,14.474},
 		};
 		blueAllianceGraph.addData(ExchangeZone, Color.red);	
 	
 		//NullTerritory1
 		double[][] NullTerritory1 = new double[][]{
-			{27,27},
-			{27,19}
+			
 		};
 		blueAllianceGraph.addData(NullTerritory1, Color.red);	
 	
 		//NullTerritory2
 		double[][] NullTerritory2 = new double[][]{
-			{27,7.5},
-			{27,0}
+			
 		};
 		blueAllianceGraph.addData(NullTerritory2, Color.red);	
 			
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	private void motionGraphRed()
 	{
