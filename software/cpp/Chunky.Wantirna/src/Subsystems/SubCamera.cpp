@@ -2,7 +2,7 @@
 #include "../RobotMap.h"
 #include "../Commands/CmdCameraTrack.h"
 #include "../Commands/CmdCameraManual.h"
-#include "CANTalon.h"
+#include "ctre/phoenix.h"
 
 SubCamera::SubCamera() : Subsystem("ExampleSubsystem") {
 	//Setup motors

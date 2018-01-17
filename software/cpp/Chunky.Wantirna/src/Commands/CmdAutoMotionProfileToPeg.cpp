@@ -11,8 +11,8 @@ _example( * RobotMap::subDriveBaseTnxLeftMaster, * RobotMap::subDriveBaseTnxRigh
 
 // Called just before this Command runs the first time
 void CmdAutoMotionProfileToPeg::Initialize() {
-	RobotMap::subDriveBaseTnxRightMaster->SetControlMode(CANTalon::kMotionProfile);
-	RobotMap::subDriveBaseTnxLeftMaster->SetControlMode(CANTalon::kMotionProfile);
+	RobotMap::subDriveBaseTnxRightMaster->Set(ControlMode::MotionProfile, 0);
+	RobotMap::subDriveBaseTnxLeftMaster->Set(ControlMode::MotionProfile, 0);
 	firsttimearound = true;
 	execounter = 0;
 }
@@ -20,9 +20,9 @@ void CmdAutoMotionProfileToPeg::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void CmdAutoMotionProfileToPeg::Execute() {
 	_example.control();
-	CANTalon::SetValueMotionProfile setOutput = _example.getSetValue();
-	RobotMap::subDriveBaseTnxRightMaster->Set(setOutput);
-	RobotMap::subDriveBaseTnxLeftMaster->Set(setOutput);
+	SetValueMotionProfile setOutput = _example.getSetValue();
+	RobotMap::subDriveBaseTnxRightMaster->Set(ControlMode::MotionProfile, setOutput);
+	RobotMap::subDriveBaseTnxLeftMaster->Set(ControlMode::MotionProfile, setOutput);
 	if( firsttimearound )
 	{
 		_example.start();
@@ -51,10 +51,8 @@ bool CmdAutoMotionProfileToPeg::IsFinished() {
 // Called once after isFinished returns true
 void CmdAutoMotionProfileToPeg::End() {
 	/* put motor controllers into a known state */
-	RobotMap::subDriveBaseTnxRightMaster->SetControlMode(CANTalon::kPercentVbus);
-	RobotMap::subDriveBaseTnxRightMaster->Set( 0 );
-	RobotMap::subDriveBaseTnxLeftMaster->SetControlMode(CANTalon::kPercentVbus);
-	RobotMap::subDriveBaseTnxLeftMaster->Set( 0 );
+	RobotMap::subDriveBaseTnxRightMaster->Set(ControlMode::PercentOutput, 0);
+	RobotMap::subDriveBaseTnxLeftMaster->Set(ControlMode::PercentOutput, 0);
 	/* clear our buffer and put everything into a known state */
 	_example.reset();
 }

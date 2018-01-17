@@ -13,7 +13,7 @@
 #include "WPILib.h"
 #include "Custom/Instrumentation.h"
 #include "Custom/MotionProfileExample.h"
-#include "CANTalon.h"
+#include "ctre/phoenix.h"
 #include "SmartDashboard/SendableChooser.h"
 #include "SmartDashboard/SmartDashboard.h"
 #include <CameraServer.h>
@@ -112,7 +112,7 @@ void Robot::DisabledPeriodic() {
 void Robot::AutonomousInit() {
     // turn off the safety as we know auo code is managing motor control and
 	// Robot Drive will be bleating if we do not attend to it often enough...
-	RobotMap::subDriveBaseRobotDriveTwo->SetExpiration(60);
+	RobotMap::subDriveBaseDifferentialDriveTwo->SetExpiration(60);
 	autonomousCommand.reset(chooser.GetSelected());
 	if (autonomousCommand.get() != nullptr) {
 		autonomousCommand->Start();
@@ -131,7 +131,7 @@ void Robot::TeleopInit() {
 	if (autonomousCommand.get() != nullptr)
 		autonomousCommand->Cancel();
 	// reset the safety for teleop mode as we are not using direct motor control from now on ...
-    RobotMap::subDriveBaseRobotDriveTwo->SetExpiration(0.2);
+    RobotMap::subDriveBaseDifferentialDriveTwo->SetExpiration(0.2);
 }
 
 void Robot::TeleopPeriodic() {
@@ -139,7 +139,7 @@ void Robot::TeleopPeriodic() {
 }
 
 void Robot::TestPeriodic() {
-	lw->Run();
+//	lw->Run();
 }
 
 START_ROBOT_CLASS(Robot);

@@ -35,7 +35,8 @@
 #include <Custom/MotionProfileBaselineB.h>
 #include "Custom/Instrumentation.h"
 #include "WPILib.h"
-#include "CANTalon.h"
+#include "Constants.h"
+#include "ctre/phoenix.h"
 
 class MotionProfileExample
 {
@@ -45,17 +46,21 @@ public:
 	 * Instead of creating a new one every time we call getMotionProfileStatus,
 	 * keep one copy.
 	 */
-	CANTalon::MotionProfileStatus _statusA;
-	CANTalon::MotionProfileStatus _statusB;
+	MotionProfileStatus _statusA;
+	MotionProfileStatus _statusB;
+
+	/** additional cache for holding the active trajectory point */
+	double _posA=0,_velA=0,_headingA=0;
+	double _posB=0,_velB=0,_headingB=0;
 	/**
 	 * reference to the talon we plan on manipulating. We will not changeMode()
 	 * or call set(), just get motion profile status and make decisions based on
 	 * motion profile.
 	 */
-	CANTalon & _talonMasterA;
-	// CANTalon & _talonSlaveA;
-	CANTalon & _talonMasterB;
-	// CANTalon & _talonSlaveB;
+	TalonSRX & _talonMasterA;
+	// TalonSRX & _talonSlaveA;
+	TalonSRX & _talonMasterB;
+	// TalonSRX & _talonSlaveB;
 	/**
 	 * State machine to make sure we let enough of the motion profile stream to
 	 * talon before we fire it.
@@ -85,7 +90,7 @@ public:
 	 * the set value to be and let the calling module apply it whenever we
 	 * decide to switch to MP mode.
 	 */
-	CANTalon::SetValueMotionProfile _setValue = CANTalon::SetValueMotionProfileDisable;
+	SetValueMotionProfile _setValue = SetValueMotionProfile::Disable;
 	/**
 	 * How many trajectory points do we wait for before firing the motion
 	 * profile.
@@ -120,7 +125,7 @@ public:
 	Notifier _notifer;
 	int _Profile;
 
-	MotionProfileExample(CANTalon & talon1, CANTalon & talon2, int Profile) :
+	MotionProfileExample(TalonSRX & talon1, TalonSRX & talon2, int Profile) :
 		_talonMasterA(talon1),
 		_talonMasterB(talon2),
 		_notifer(&MotionProfileExample::PeriodicTask, this),
@@ -152,7 +157,7 @@ public:
 		_talonMasterA.ClearMotionProfileTrajectories();
 		_talonMasterB.ClearMotionProfileTrajectories();
 		/* When we do re-enter motionProfile control mode, stay disabled. */
-		_setValue = CANTalon::SetValueMotionProfileDisable;
+		_setValue = SetValueMotionProfile::Disable;
 		/* When we do start running our state machine start at the beginning. */
 		_state = 0;
 		_loopTimeout = -1;
@@ -195,7 +200,7 @@ public:
 		}
 
 		/* first check if we are in MP mode */
-		if(_talonMasterA.GetControlMode() != CANSpeedController::kMotionProfile){
+		if(_talonMasterA.GetControlMode() != ControlMode::MotionProfile){
 			/*
 			 * we are not in MP mode. We are probably driving the robot around
 			 * using gamepads or some other mode.
@@ -212,7 +217,7 @@ public:
 					if (_bStart) {
 						_bStart = false;
 	
-						_setValue = CANTalon::SetValueMotionProfileDisable;
+						_setValue = SetValueMotionProfile::Disable;
 						startFilling();
 						/*
 						 * MP is being sent to CAN bus, wait a small amount of time
@@ -228,7 +233,7 @@ public:
 					/* do we have a minimum numberof points in Talon */
 					if ((_statusA.btmBufferCnt > kMinPointsInTalon) && (_statusB.btmBufferCnt > kMinPointsInTalon)) {
 						/* start (once) the motion profile */
-						_setValue = CANTalon::SetValueMotionProfileEnable;
+						_setValue = SetValueMotionProfile::Enable;
 						/* MP will start once the control frame gets scheduled */
 						_state = 2;
 						_loopTimeout = kNumLoopsTimeout;
@@ -248,23 +253,54 @@ public:
 					 * another. We will go into hold state so robot servo's
 					 * position.
 					 */
-					if (_statusA.activePointValid && _statusA.activePoint.isLastPoint) {
+					if (_statusA.activePointValid && _statusA.isLast) {
 						/*
 						 * because we set the last point's isLast to true, we will
 						 * get here when the MP is done
 						 */
-						_setValue = CANTalon::SetValueMotionProfileHold;
+						_setValue = SetValueMotionProfile::Hold;
 						_state = 0;
 						_loopTimeout = -1;
 					}
 					break;
 			}
 		}
-		/* printfs and/or logging ... we really need to process statuses better than this as they will appear jumbled in the console when we do it like this  */
-		instrumentation::Process(_statusA);
-		instrumentation::Process(_statusB);
-	}
 
+		/* Get the motion profile status every loop */
+		_talonMasterA.GetMotionProfileStatus(_statusA);
+		_talonMasterB.GetMotionProfileStatus(_statusB);
+		_headingA = _talonMasterA.GetActiveTrajectoryHeading();
+		_headingB = _talonMasterB.GetActiveTrajectoryHeading();
+		_posA = _talonMasterA.GetActiveTrajectoryPosition();
+		_posB = _talonMasterB.GetActiveTrajectoryPosition();
+		_velA = _talonMasterA.GetActiveTrajectoryVelocity();
+		_velB = _talonMasterB.GetActiveTrajectoryVelocity();
+
+		/* printfs and/or logging ... we really need to process statuses better than this as they will appear jumbled in the console when we do it like this  */
+		instrumentation::Process(_statusA, _posA, _velA, _headingA);
+		instrumentation::Process(_statusB, _posB, _velB, _headingB);
+	}
+	/**
+	 * Find enum value if supported.
+	 * @param durationMs
+	 * @return enum equivalent of durationMs
+	 */
+	TrajectoryDuration GetTrajectoryDuration(int durationMs)
+	{
+		/* lookup and return valid value */
+		switch (durationMs) {
+			case 0:		return TrajectoryDuration_0ms;
+			case 5:		return TrajectoryDuration_5ms;
+			case 10: 	return TrajectoryDuration_10ms;
+			case 20: 	return TrajectoryDuration_20ms;
+			case 30: 	return TrajectoryDuration_30ms;
+			case 40: 	return TrajectoryDuration_40ms;
+			case 50: 	return TrajectoryDuration_50ms;
+			case 100: 	return TrajectoryDuration_100ms;
+		}
+		printf("Trajectory Duration not supported - use configMotionProfileTrajectoryPeriod instead\n");
+		return TrajectoryDuration_100ms;
+	}
 	/** Start filling the MPs to all of the involved Talons. */
 	void startFilling()
 	{
@@ -306,7 +342,7 @@ public:
 	void startFillingA(const double profile[][3], int totalCnt)
 	{
 		/* create an empty point */
-		CANTalon::TrajectoryPoint point;
+		TrajectoryPoint point;
 
 		/* did we get an underrun condition since last time we checked ? */
 		if(_statusA.hasUnderrun ){
@@ -317,7 +353,7 @@ public:
 			 * "is underrun", because the former is cleared by the application.
 			 * That way, we never miss logging it.
 			 */
-			_talonMasterA.ClearMotionProfileHasUnderrun();
+			_talonMasterA.ClearMotionProfileHasUnderrun(Constants::kTimeoutMs);
 		}
 
 		/*
@@ -328,32 +364,23 @@ public:
 
 		/* This is fast since it's just into our TOP buffer */
 		for(int i=0;i<totalCnt;++i){
-			/* for each point, fill our structure and pass it to API */
-			point.position = profile[i][0]; /*
-											 * copy the position, velocity, and
-											 * time from current row
-											 */
-			point.velocity = profile[i][1];
-			point.timeDurMs = (int) profile[i][2];
-			point.profileSlotSelect = 1; /*
-											 * which set of gains would you like to
-											 * use?
-											 */
-			point.velocityOnly = false; /*
-										 * set true to not do any position
-										 * servo, just velocity feedforward
-										 */
+			double positionRot = profile[i][0];
+			double velocityRPM = profile[i][1];
 
+			/* for each point, fill our structure and pass it to API */
+			point.position = positionRot * Constants::kSensorUnitsPerRotation ;  //Convert Revolutions to Units
+			point.velocity = velocityRPM * Constants::kSensorUnitsPerRotation / 600.0; //Convert RPM to Units/100ms
+			point.headingDeg = 0; /* future feature - not used in this example*/
+			point.profileSlotSelect0 = 0; /* which set of gains would you like to use [0,3]? */
+			point.profileSlotSelect1 = 0; /* future feature  - not used in this example - cascaded PID [0,1], leave zero */
+			point.timeDur = GetTrajectoryDuration((int)profile[i][2]);
 			point.zeroPos = false;
 			if (i == 0)
 				point.zeroPos = true; /* set this to true on the first point */
 
 			point.isLastPoint = false;
-			if( (i + 1) == totalCnt )
-				point.isLastPoint = true; /*
-											 * set this to true on the last point
-											 */
-
+			if ((i + 1) == totalCnt)
+				point.isLastPoint = true; /* set this to true on the last point  */
 			_talonMasterA.PushMotionProfileTrajectory(point);
 
 			/* For now, lets just reverse the points for the opposite side of drive base */
@@ -366,7 +393,7 @@ public:
 	void startFillingB(const double profile[][3], int totalCnt)
 	{
 		/* create an empty point */
-		CANTalon::TrajectoryPoint point;
+		TrajectoryPoint point;
 
 		/* did we get an underrun condition since last time we checked ? */
 		if(_statusB.hasUnderrun ){
@@ -377,7 +404,7 @@ public:
 			 * "is underrun", because the former is cleared by the application.
 			 * That way, we never miss logging it.
 			 */
-			_talonMasterB.ClearMotionProfileHasUnderrun();
+			_talonMasterB.ClearMotionProfileHasUnderrun(Constants::kTimeoutMs);
 		}
 
 		/*
@@ -388,35 +415,24 @@ public:
 
 		/* This is fast since it's just into our TOP buffer */
 		for(int i=0;i<totalCnt;++i){
-			/* for each point, fill our structure and pass it to API */
-			point.position = profile[i][0]; /*
-											 * copy the position, velocity, and
-											 * time from current row
-											 */
-			point.velocity = profile[i][1];
-			point.timeDurMs = (int) profile[i][2];
-			point.profileSlotSelect = 1; /*
-											 * which set of gains would you like to
-											 * use?
-											 */
-			point.velocityOnly = false; /*
-										 * set true to not do any position
-										 * servo, just velocity feedforward
-										 */
+			double positionRot = profile[i][0];
+			double velocityRPM = profile[i][1];
 
+			/* for each point, fill our structure and pass it to API */
+			point.position = positionRot * Constants::kSensorUnitsPerRotation ;  //Convert Revolutions to Units
+			point.velocity = velocityRPM * Constants::kSensorUnitsPerRotation / 600.0; //Convert RPM to Units/100ms
+			point.headingDeg = 0; /* future feature - not used in this example*/
+			point.profileSlotSelect0 = 0; /* which set of gains would you like to use [0,3]? */
+			point.profileSlotSelect1 = 0; /* future feature  - not used in this example - cascaded PID [0,1], leave zero */
+			point.timeDur = GetTrajectoryDuration((int)profile[i][2]);
 			point.zeroPos = false;
 			if (i == 0)
 				point.zeroPos = true; /* set this to true on the first point */
 
 			point.isLastPoint = false;
-			if( (i + 1) == totalCnt )
-				point.isLastPoint = true; /*
-											 * set this to true on the last point
-											 */
+			if ((i + 1) == totalCnt)
+				point.isLastPoint = true; /* set this to true on the last point  */
 
-			/* we need to reverse the points for the opposite side of drive base */
-			point.position *= -1.0;
-			point.velocity *= -1.0;
 			_talonMasterB.PushMotionProfileTrajectory(point);
 		}
 	}
@@ -450,7 +466,7 @@ public:
 	 *         motion-profile output, 1 for enable motion-profile, 2 for hold
 	 *         current motion profile trajectory point.
 	 */
-	CANTalon::SetValueMotionProfile getSetValue() {
+	SetValueMotionProfile getSetValue() {
 		return _setValue;
 	}
 };

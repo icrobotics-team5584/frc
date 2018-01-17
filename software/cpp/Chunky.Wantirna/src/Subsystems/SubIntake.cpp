@@ -9,7 +9,7 @@
 // it from being updated in the future.
 
 
-#include "CANTalon.h"
+#include "ctre/phoenix.h"
 
 #include "SubIntake.h"
 #include "../RobotMap.h"
@@ -44,27 +44,27 @@ void SubIntake::InitDefaultCommand() {
 // here. Call these from Commands.
 
 void SubIntake::RollerIn() {
-	tnxIntakeRollers->Set(1);
+	tnxIntakeRollers->Set(ControlMode::PercentOutput, 1);
 }
 
 void SubIntake::RollerOut() {
-	tnxIntakeRollers->Set(-1);
+	tnxIntakeRollers->Set(ControlMode::PercentOutput, -1);
 }
 
 void SubIntake::RollerOff() {
-	tnxIntakeRollers->Set(0);
+	tnxIntakeRollers->Set(ControlMode::PercentOutput, 0);
 }
 
 void SubIntake::SliderIn() {
-	tnxIntakeSliders->Set(-1);
+	tnxIntakeSliders->Set(ControlMode::PercentOutput, -1);
 }
 
 void SubIntake::SliderOut() {
-	tnxIntakeSliders->Set(1);
+	tnxIntakeSliders->Set(ControlMode::PercentOutput, 1);
 }
 
 void SubIntake::SliderOff() {
-	tnxIntakeSliders->Set(0);
+	tnxIntakeSliders->Set(ControlMode::PercentOutput, 0);
 }
 
 bool SubIntake::IsSliderOut() {

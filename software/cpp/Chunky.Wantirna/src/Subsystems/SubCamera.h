@@ -3,7 +3,7 @@
 #include "NetworkTables/NetworkTable.h"
 #include <Commands/Subsystem.h>
 #include "WPILib.h"
-#include "CANTalon.h"
+#include "ctre/phoenix.h"
 
 class SubCamera : public Subsystem {
 private:

@@ -9,7 +9,7 @@
 // it from being updated in the future.
 
 
-#include "CANTalon.h"
+#include "ctre/phoenix.h"
 #include "WPILib.h"
 
 #include "SubShooter.h"
@@ -53,26 +53,26 @@ void SubShooter::Run() {
     //tnxShooterBottom->Set(1.0);
 
     // if mode is kSpeed then the we use RPM values in the set commands ...
-	tnxShooterTop->SetControlMode(CANSpeedController::kSpeed);
-	tnxShooterBottom->SetControlMode(CANSpeedController::kSpeed);
-	// GOOD 1: tnxShooterTop->Set(3600);
-	// BAD 1: tnxShooterTop->Set(3000);
-	tnxShooterTop->Set(3600);
-    // GOOD 1: tnxShooterBottom->Set(-2000);
-    tnxShooterBottom->Set(-2000);
+	// tnxShooterTop->Set(ControlMode::Velocity, 0);
+	// tnxShooterBottom->Set(ControlMode::Velocity, 0);
+	// GOOD 1: tnxShooterTop->Set(ControlMode::Velocity, 3600);
+	// BAD 1: tnxShooterTop->Set(ControlMode::Velocity, 3000);
+	tnxShooterTop->Set(ControlMode::Velocity, 3600);
+    // GOOD 1: tnxShooterBottom->Set(ControlMode::Velocity, -2000);
+    tnxShooterBottom->Set(ControlMode::Velocity, -2000);
 }
 
 void SubShooter::Stop() {
-    tnxShooterTop->SetControlMode(CANSpeedController::kPercentVbus);
-    tnxShooterBottom->SetControlMode(CANSpeedController::kPercentVbus);
-	tnxShooterTop->Set(0);
-    tnxShooterBottom->Set(0);
+    tnxShooterTop->Set(ControlMode::PercentOutput, 0);
+    tnxShooterBottom->Set(ControlMode::PercentOutput, 0);
 }
 
-double SubShooter::GetTopEncoderSpeed() {
-    return tnxShooterTop->GetSpeed();
+int SubShooter::GetTopEncoderSpeed() {
+    //  return tnxShooterTop->GetSelectedSensorVelocity(---TBA---);
+    return 999;
 }
 
-double SubShooter::GetBottomEncoderSpeed() {
-    return tnxShooterBottom->GetSpeed();
+int SubShooter::GetBottomEncoderSpeed() {
+    //  return tnxShooterBottom->GetSelectedSensorVelocity(___TBA---);
+    return 999;
 }

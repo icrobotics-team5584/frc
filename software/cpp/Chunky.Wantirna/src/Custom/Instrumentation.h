@@ -25,8 +25,9 @@
  * 
  */
 #include <iomanip> // using setw() for printing
+#include <iostream> // cout
 #include "WPILib.h" // CANTalon
-#include "CANTalon.h"
+#include "ctre/phoenix.h"
 class instrumentation {
 public:
 	static void OnNoProgress()
@@ -47,7 +48,8 @@ public:
 	/**
 	 * Prints and/or logging to watch the MP signals
 	 */
-	static void Process(CANTalon::MotionProfileStatus & status)
+	static void Process(MotionProfileStatus & status, double pos, double vel,
+			double heading)
 	{
 //		static double timeout = 0;
 		static int count = 0;
@@ -84,21 +86,18 @@ public:
 							<< endline;
 			}
 			/* every loop, print our values */
-			std::cout
-						<< std::setw(12)<< StrOutputEnable(status.outputEnable) << delim
-						<< std::setw(12)<< status.topBufferRem << delim
+			std::cout	<< std::setw(12)<< StrOutputEnable(status.outputEnable) << delim
 						<< std::setw(12)<< status.topBufferCnt << delim
+						<< std::setw(12)<< status.topBufferRem << delim
 						<< std::setw(12)<< status.btmBufferCnt << delim
-						<< std::setw(12)<< (status.activePointValid ? "1" : "") << delim
-						<< std::setw(12)<< (status.hasUnderrun ? "1" : "") << delim
-						<< std::setw(12)<< (status.isUnderrun ? "1" : "") << delim
-						<< std::setw(12)<< (status.activePoint.isLastPoint ? "1" : "") << delim
-						<< std::setw(12)<< (status.activePoint.velocityOnly ? "1" : "") << delim
-						<< std::setw(12)<< status.activePoint.position << delim
-						<< std::setw(12)<< status.activePoint.velocity << delim
-						<< std::setw(12)<< status.activePoint.profileSlotSelect << delim
-						<< std::setw(12)<< status.activePoint.timeDurMs << delim
-
+						<< std::setw(12)<< (status.activePointValid ? "1" : " ") << delim
+						<< std::setw(12)<< (status.hasUnderrun ? "1" : " ") << delim
+						<< std::setw(12)<< (status.isUnderrun ? "1" : " ") << delim
+						<< std::setw(12)<< (status.isLast ? "1" : " ") << delim
+						<< std::setw(12)<< pos << delim
+						<< std::setw(12)<< vel << delim
+						<< std::setw(12)<< status.profileSlotSelect0 << delim
+						<< std::setw(12)<< status.timeDurMs << delim
 						<< endline;
 		}
 	}
