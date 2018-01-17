@@ -5,6 +5,7 @@ std::shared_ptr<SubDriveBase> Robot::subDriveBase;
 std::shared_ptr<SubIntake> Robot::subIntake;
 std::shared_ptr<SubArmLift> Robot::subArmLift;
 std::unique_ptr<OI> Robot::oi;
+std::shared_ptr<SubEncodedArmLift> Robot::subEncodedArmLift;
 
 
 void Robot::RobotInit() {
@@ -14,6 +15,7 @@ void Robot::RobotInit() {
 	subDriveBase.reset(new SubDriveBase());
 	subIntake.reset(new SubIntake());
 	subArmLift.reset(new SubArmLift());
+	subEncodedArmLift.reset(new SubEncodedArmLift());
 	oi.reset(new OI());
 
 	//Setup Auto Chooser

@@ -36,6 +36,10 @@ public:
 	static std::shared_ptr<frc::AnalogInput> subDriveBaseUltrasonicInputBack;
 	static std::shared_ptr<frc::AnalogInput> subDriveBaseUltrasonicInputLeft;
 
+	//Define arm lift Actuators / Actuator
+	static std::shared_ptr<WPI_TalonSRX> subEncodedArmLiftSrxMaster;
+
+
 
 };
 #endif

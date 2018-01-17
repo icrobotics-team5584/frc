@@ -29,6 +29,9 @@ std::shared_ptr<frc::AnalogInput> RobotMap::subDriveBaseUltrasonicInputRight;
 std::shared_ptr<frc::AnalogInput> RobotMap::subDriveBaseUltrasonicInputBack;
 std::shared_ptr<frc::AnalogInput> RobotMap::subDriveBaseUltrasonicInputLeft;
 
+//Define arm lift Actuators / Actuator
+std::shared_ptr<WPI_TalonSRX> RobotMap::subEncodedArmLiftSrxMaster;
+
 
 
 void RobotMap::init() {
@@ -73,4 +76,12 @@ void RobotMap::init() {
     	//lw->AddSensor("SubUltrasonic", "UltrasonicInputFront",  subDriveBaseUltrasonicInputBack);
     subDriveBaseUltrasonicInputLeft.reset(new frc::AnalogInput(3));
     	//lw->AddSensor("SubUltrasonic", "UltrasonicInputFront",  subDriveBaseUltrasonicInputLeft);
+
+    //Initiate arm lift Actuators / Actuator
+    subEncodedArmLiftSrxMaster.reset(new WPI_TalonSRX(5));
+
+    //OTHER USED BUTTONS!!!!
+    	//IN: SubEncodedArmLift
+    		//button1 = _joy->GetRawButton(1);
+    		//button2 = _joy->GetRawButton(2);
 }
