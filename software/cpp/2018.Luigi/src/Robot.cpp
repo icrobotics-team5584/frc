@@ -21,6 +21,7 @@ void Robot::RobotInit() {
 	//Setup Auto Chooser
 	chooser.AddDefault("Forward", new CmdAutoForward());
 	chooser.AddObject("Backward", new CmdAutoBackward());
+	chooser.AddObject("MP", new CmdAutoMotionProfileTest());
 	frc::SmartDashboard::PutData("Auto Modes", &chooser);
 }
 

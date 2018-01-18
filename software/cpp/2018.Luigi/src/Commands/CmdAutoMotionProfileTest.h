@@ -8,6 +8,8 @@
 #include "MotionProfileControl.h"
 #include "MotionProfiles/MPL-test.h"
 #include "MotionProfiles/MPR-test.h"
+#include "MotionProfiles/MotionProfileBaselineA.h"
+#include "MotionProfiles/MotionProfileBaselineB.h"
 
 class CmdAutoMotionProfileTest : public Command {
 public:

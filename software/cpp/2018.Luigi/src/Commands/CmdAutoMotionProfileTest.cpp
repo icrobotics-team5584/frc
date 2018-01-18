@@ -1,7 +1,7 @@
 #include "CmdAutoMotionProfileTest.h"
 
 CmdAutoMotionProfileTest::CmdAutoMotionProfileTest()
-: MPControl(RobotMap::subDriveBaseSRXleft, RobotMap::subDriveBaseSRXright, MPLtest, MPRtest, kMotionProfileSz)
+: MPControl(RobotMap::subDriveBaseSRXleft, RobotMap::subDriveBaseSRXright, kBaselineA, kBaselineB, kMotionProfileSz)
 {
 	Requires(Robot::subDriveBase.get());
 }

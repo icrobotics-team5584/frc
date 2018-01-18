@@ -10,6 +10,7 @@
 #include "Commands/AutonomousCommand.h"
 #include "Commands/CmdAutoForward.h"
 #include "Commands/CmdAutoBackward.h"
+#include "Commands/CmdAutoMotionProfileTest.h"
 
 //Include Subsystems
 #include "Subsystems/SubDriveBase.h"
