@@ -66,7 +66,6 @@ void RobotMap::init() {
     subArmLiftTopLimit.reset(new DigitalInput(3));
     subArmLiftTopLimit.reset(new DigitalInput(4));
 
-
     //Initiate Ultrasonic sensors
     subDriveBaseUltrasonicInputFront.reset(new frc::AnalogInput(0));
     	//lw->AddSensor("SubUltrasonic", "UltrasonicInputFront",  subDriveBaseUltrasonicInputFront);
