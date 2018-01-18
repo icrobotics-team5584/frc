@@ -4,7 +4,7 @@
 SubEncodedArmLift::SubEncodedArmLift() : Subsystem("ExampleSubsystem") {
 
 	_talon = RobotMap::subEncodedArmLiftSrxMaster;
-
+	_prefs = Preferences::GetInstance();
 
 	/* lets grab the 360 degree position of the MagEncoder's absolute position */
 	absolutePosition = _talon->GetSelectedSensorPosition(0) & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */
@@ -29,50 +29,123 @@ SubEncodedArmLift::SubEncodedArmLift() : Subsystem("ExampleSubsystem") {
 
 }
 
-void SubEncodedArmLift::Periodic() {
+void SubEncodedArmLift::ArmToGroundPos() {
 
-	/* get gamepad axis */
-		leftYstick = _joy->GetY();
-		motorOutput = _talon->GetMotorOutputPercent();
-		button1 = _joy->GetRawButton(11);
-		button2 = _joy->GetRawButton(12);
+	_groundTarget = _prefs->GetDouble("Ground Position", 0.0);
+	targetPositionRotations = _groundTarget;
+	_talon->Set(ControlMode::Position, targetPositionRotations);
 
-
-		/* prepare line to print */
-				_sb.append("\tout:");
-				_sb.append(std::to_string(motorOutput));
-				_sb.append("\tpos:");
-				_sb.append(std::to_string(_talon->GetSelectedSensorPosition(kPIDLoopIdx)));
-				/* on button1 press enter closed-loop mode on target position */
-				if (!_lastButton1 && button1) {
-					/* Position mode - button just pressed */
-					targetPositionRotations = leftYstick * 10.0 * 4096; /* 50 Rotations in either direction */
-					_talon->Set(ControlMode::Position, targetPositionRotations); /* 50 rotations in either direction */
-
-				}
-				/* on button2 just straight drive */
-				if (button2) {
-					/* Percent voltage mode */
-					_talon->Set(ControlMode::PercentOutput, leftYstick);
-				}
-				/* if Talon is in position closed-loop, print some more info */
-				if (_talon->GetControlMode() == ControlMode::Position) {
-					/* append more signals to print when in speed mode. */
-					_sb.append("\terrNative:");
-					_sb.append(std::to_string(_talon->GetClosedLoopError(kPIDLoopIdx)));
-					_sb.append("\ttrg:");
-					_sb.append(std::to_string(targetPositionRotations));
-				}
-				/* print every ten loops, printing too much too fast is generally bad for performance */
-				if (++_loops >= 10) {
-					_loops = 0;
-					printf("%s\n",_sb.c_str());
-				}
-				_sb.clear();
-				/* save button state for on press detect */
-				_lastButton1 = button1;
+	/* if Talon is in position closed-loop, print some more info */
+		if (_talon->GetControlMode() == ControlMode::Position) {
+			/* append more signals to print when in speed mode. */
+			_sb.append("\terrNative:");
+			_sb.append(std::to_string(_talon->GetClosedLoopError(kPIDLoopIdx)));
+			_sb.append("\ttrg:");
+			_sb.append(std::to_string(targetPositionRotations));
+		}
+		/* print every ten loops, printing too much too fast is generally bad for performance */
+		if (++_loops >= 10) {
+			_loops = 0;
+			//printf("%s\n",_sb.c_str());
+			frc::SmartDashboard::PutString("EncodedArmLift", _sb);
+		}
+		_sb.clear();
 
 }
+
+void SubEncodedArmLift::ArmToSwitchPos() {
+
+	_switchTarget = _prefs->GetDouble("Switch Position", 0.0);
+	targetPositionRotations = _switchTarget;
+	_talon->Set(ControlMode::Position, targetPositionRotations);
+
+	/* if Talon is in position closed-loop, print some more info */
+		if (_talon->GetControlMode() == ControlMode::Position) {
+			/* append more signals to print when in speed mode. */
+			_sb.append("\terrNative:");
+			_sb.append(std::to_string(_talon->GetClosedLoopError(kPIDLoopIdx)));
+			_sb.append("\ttrg:");
+			_sb.append(std::to_string(targetPositionRotations));
+		}
+		/* print every ten loops, printing too much too fast is generally bad for performance */
+		if (++_loops >= 10) {
+			_loops = 0;
+			//printf("%s\n",_sb.c_str());
+			frc::SmartDashboard::PutString("EncodedArmLift", _sb);
+		}
+		_sb.clear();
+
+}
+
+void SubEncodedArmLift::ArmToScalePos() {
+
+	_scaleTarget = _prefs->GetDouble("Scale Position", 0.0);
+	targetPositionRotations = _scaleTarget;
+	_talon->Set(ControlMode::Position, targetPositionRotations);
+
+	/* if Talon is in position closed-loop, print some more info */
+		if (_talon->GetControlMode() == ControlMode::Position) {
+			/* append more signals to print when in speed mode. */
+			_sb.append("\terrNative:");
+			_sb.append(std::to_string(_talon->GetClosedLoopError(kPIDLoopIdx)));
+			_sb.append("\ttrg:");
+			_sb.append(std::to_string(targetPositionRotations));
+		}
+		/* print every ten loops, printing too much too fast is generally bad for performance */
+		if (++_loops >= 10) {
+			_loops = 0;
+			//printf("%s\n",_sb.c_str());
+			frc::SmartDashboard::PutString("EncodedArmLift", _sb);
+		}
+		_sb.clear();
+
+}
+
+void SubEncodedArmLift::Periodic() {
+
+//	/* get gamepad axis */
+//		leftYstick = _joy->GetY();
+//		motorOutput = _talon->GetMotorOutputPercent();
+//		button1 = _joy->GetRawButton(11);
+//		button2 = _joy->GetRawButton(12);
+//
+//
+//		/* prepare line to print */
+//				_sb.append("\tout:");
+//				_sb.append(std::to_string(motorOutput));
+//				_sb.append("\tpos:");
+//				_sb.append(std::to_string(_talon->GetSelectedSensorPosition(kPIDLoopIdx)));
+//				/* on button1 press enter closed-loop mode on target position */
+//				if (!_lastButton1 && button1) {
+//					/* Position mode - button just pressed */
+//					targetPositionRotations = leftYstick * 10.0 * 4096; /* 50 Rotations in either direction */
+//					_talon->Set(ControlMode::Position, targetPositionRotations); /* 50 rotations in either direction */
+//
+//				}
+//				/* on button2 just straight drive */
+//				if (button2) {
+//					/* Percent voltage mode */
+//					_talon->Set(ControlMode::PercentOutput, leftYstick);
+//				}
+//				/* if Talon is in position closed-loop, print some more info */
+//				if (_talon->GetControlMode() == ControlMode::Position) {
+//					/* append more signals to print when in speed mode. */
+//					_sb.append("\terrNative:");
+//					_sb.append(std::to_string(_talon->GetClosedLoopError(kPIDLoopIdx)));
+//					_sb.append("\ttrg:");
+//					_sb.append(std::to_string(targetPositionRotations));
+//				}
+//				/* print every ten loops, printing too much too fast is generally bad for performance */
+//				if (++_loops >= 10) {
+//					_loops = 0;
+//					printf("%s\n",_sb.c_str());
+//				}
+//				_sb.clear();
+//				/* save button state for on press detect */
+//				_lastButton1 = button1;
+
+}
+
 
 void SubEncodedArmLift::TakeJoystickInputs(std::shared_ptr<Joystick> _joyTemp ) {
 

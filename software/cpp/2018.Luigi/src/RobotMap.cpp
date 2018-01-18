@@ -80,8 +80,5 @@ void RobotMap::init() {
     //Initiate arm lift Actuators / Actuator
     subEncodedArmLiftSrxMaster.reset(new WPI_TalonSRX(5));
 
-    //OTHER USED BUTTONS!!!!
-    	//IN: SubEncodedArmLift
-    		//button1 = _joy->GetRawButton(1);
-    		//button2 = _joy->GetRawButton(2);
+
 }

@@ -5,6 +5,8 @@
 #include <WPILib.h>
 #include <ctre/Phoenix.h>
 #include "Constants.h"
+#include <SmartDashboard/SmartDashboard.h>
+
 
 class SubEncodedArmLift : public Subsystem {
 private:
@@ -12,7 +14,11 @@ private:
 	std::shared_ptr<WPI_TalonSRX> _talon;
 	std::shared_ptr<Joystick> _joy;
 	std::shared_ptr<Joystick> _joyTemp;
-	std::string _sb;  //no error here!
+	std::string _sb;
+	Preferences *_prefs;
+	double _groundTarget;
+	double _switchTarget;
+	double _scaleTarget;
 	int _loops = 0;
 	bool _lastButton1 = false;
 	double targetPositionRotations;
@@ -25,6 +31,9 @@ private:
 
 public:
 	SubEncodedArmLift();
+	void ArmToGroundPos();
+	void ArmToSwitchPos();
+	void ArmToScalePos();
 	void Periodic();
 	void InitDefaultCommand();
 	void TakeJoystickInputs(std::shared_ptr<Joystick>);

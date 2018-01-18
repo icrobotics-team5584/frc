@@ -12,6 +12,9 @@ private:
 	std::shared_ptr<JoystickButton> btnOutput;
 	std::shared_ptr<JoystickButton> btnArmUp;
 	std::shared_ptr<JoystickButton> btnArmDown;
+	std::shared_ptr<JoystickButton> btnArmToGround;
+	std::shared_ptr<JoystickButton> btnArmToSwitch;
+	std::shared_ptr<JoystickButton> btnArmToScale;
 
 
 public:
