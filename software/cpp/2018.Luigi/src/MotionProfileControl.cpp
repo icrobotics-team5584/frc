@@ -1,6 +1,6 @@
 #include "MotionProfileControl.h"
 
-MotionProfileControl::MotionProfileControl(std::shared_ptr<TalonSRX> LeftTalon, std::shared_ptr<TalonSRX> RightTalon, double LeftMP[][3], double RightMP[][3], int ArrLength)
+MotionProfileControl::MotionProfileControl(std::shared_ptr<TalonSRX> LeftTalon, std::shared_ptr<TalonSRX> RightTalon, const double LeftMP[][3], const double RightMP[][3], int ArrLength)
 : _notifier(&MotionProfileControl::PeriodicTask, this)
 {
 	for (int row = 0; row<=ArrLength; ++row) {

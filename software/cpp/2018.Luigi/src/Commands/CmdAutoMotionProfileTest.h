@@ -2,6 +2,7 @@
 #define CmdAutoMotionProfileTest_H
 
 #include <Commands/Command.h>
+#include <ctre/Phoenix.h>
 #include "Robot.h"
 #include "RobotMap.h"
 #include "MotionProfileControl.h"
@@ -16,10 +17,11 @@ public:
 	bool IsFinished();
 	void End();
 	void Interrupted();
+
+	MotionProfileControl MPControl;
+
 private:
-//	MotionProfileControl MPControl(	RobotMap::subDriveBaseSRXleft,
-//									RobotMap::subDriveBaseSRXright,
-//									MPLtest, MPRtest);
+
 };
 
 #endif  // CmdAutoMotionProfileTest_H
