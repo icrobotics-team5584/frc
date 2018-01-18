@@ -9,7 +9,7 @@ using namespace ctre::phoenix::motion;
 
 class MotionProfileControl {
 public:
-	MotionProfileControl(std::shared_ptr<TalonSRX>, std::shared_ptr<TalonSRX>, double[][3], double[][3]);
+	MotionProfileControl(std::shared_ptr<TalonSRX>, std::shared_ptr<TalonSRX>, double[][3], double[][3], int);
 	SetValueMotionProfile GetSetValue();
 	void control();
 	void startFilling(double[][3], double[][3], int);

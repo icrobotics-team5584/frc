@@ -1,12 +1,17 @@
 #include "MotionProfileControl.h"
 
-MotionProfileControl::MotionProfileControl(std::shared_ptr<TalonSRX> LeftTalon, std::shared_ptr<TalonSRX> RightTalon, double LeftMP[][3], double RightMP[][3])
+MotionProfileControl::MotionProfileControl(std::shared_ptr<TalonSRX> LeftTalon, std::shared_ptr<TalonSRX> RightTalon, double LeftMP[][3], double RightMP[][3], int ArrLength)
 : _notifier(&MotionProfileControl::PeriodicTask, this)
 {
+	for (int row = 0; row<=ArrLength; ++row) {
+		for (int col = 0; col<=2; ++col) {
+			_leftMP[row][col] = LeftMP[row][col];
+			_rightMP[row][col] = RightMP[row][col];
+		}
+	}
+
 	_leftTalon = LeftTalon;
 	_rightTalon = RightTalon;
-	_leftMP = LeftMP;
-	_rightMP = RightMP;
 	_state = 0;
 	_bStart = false;
 	_loopTimeout = -1;
