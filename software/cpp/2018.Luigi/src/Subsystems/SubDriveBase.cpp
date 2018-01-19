@@ -22,12 +22,12 @@ void SubDriveBase::Periodic() {
 
 	if (++_Ultraloops >= 30) {
 
-//	frontUValue = ((((ultrasonicInputFront->GetValue())/ (5.0 / 500.0))/1000.0)+5.0);
-//	rightUValue = ((((ultrasonicInputRight->GetValue())/ (5.0 / 500.0))/1000.0)+5.0);
-//	backUValue = ((((ultrasonicInputBack->GetValue())/ (5.0 / 500.0))/1000.0)+5.0);
-//	leftUValue = ((((ultrasonicInputLeft->GetValue())/ (5.0 / 500.0))/1000.0)+5.0);
-//	//frontUValue = ((ultrasonicInputFront->GetValue())/ 100000.0 );
-//	//frontUValue = ultrasonicInputFront->GetValue();
+	frontUValue = ((((ultrasonicInputFront->GetValue())/ (5.0 / 500.0))/1000.0)+5.0);
+	rightUValue = ((((ultrasonicInputRight->GetValue())/ (5.0 / 500.0))/1000.0)+5.0);
+	backUValue = ((((ultrasonicInputBack->GetValue())/ (5.0 / 500.0))/1000.0)+5.0);
+	leftUValue = ((((ultrasonicInputLeft->GetValue())/ (5.0 / 500.0))/1000.0)+5.0);
+	//frontUValue = ((ultrasonicInputFront->GetValue())/ 100000.0 );
+	//frontUValue = ultrasonicInputFront->GetValue();
 
 	//code for DIO echo ultrasonic sensors
 	ultrasonicInputFront->SetAutomaticMode(true);

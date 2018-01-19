@@ -1,13 +1,24 @@
 #include "SubEncodedArmLift.h"
 #include "../RobotMap.h"
 
+#include <WPILib.h>
+#include <ctre/Phoenix.h>
+#include "Constants.h"
+
 SubEncodedArmLift::SubEncodedArmLift() : Subsystem("ExampleSubsystem") {
+
+	TWO = 1;
+	THREE = 1;
+	FOUR = 1;
+
 	_talon = RobotMap::subEncodedArmLiftSrxMaster;
 	_prefs = Preferences::GetInstance();
 
+	targetPositionRotations = 0.0;
+
 	/* lets grab the 360 degree position of the MagEncoder's absolute position */
 	absolutePosition = _talon->GetSelectedSensorPosition(0) & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */
-	/* use the low level API to set the quad encoder signal */
+		/* use the low level API to set the quad encoder signal */
 	_talon->SetSelectedSensorPosition(absolutePosition, kPIDLoopIdx, kTimeoutMs);
 
 	/* choose the sensor and sensor direction */
@@ -28,133 +39,61 @@ SubEncodedArmLift::SubEncodedArmLift() : Subsystem("ExampleSubsystem") {
 
 }
 
-void SubEncodedArmLift::ArmToGroundPos() {
+void SubEncodedArmLift::ArmToGroundPos() {  //Button 10
 
-	_groundTarget = _prefs->GetDouble("Ground Position", 0.0);
-	targetPositionRotations = _groundTarget;
+	frc::SmartDashboard::PutNumber("Ground", TWO);
+    TWO++;
+
+	//targetPositionRotations = (_prefs->GetDouble("Ground Position", 0.0))*4096;
+	targetPositionRotations = 0.0;
 	_talon->Set(ControlMode::Position, targetPositionRotations);
 
-	/* if Talon is in position closed-loop, print some more info */
-		if (_talon->GetControlMode() == ControlMode::Position) {
-			/* append more signals to print when in speed mode. */
-			_sb.append("\terrNative:");
-			_sb.append(std::to_string(_talon->GetClosedLoopError(kPIDLoopIdx)));
-			_sb.append("\ttrg:");
-			_sb.append(std::to_string(targetPositionRotations));
-		}
-		/* print every ten loops, printing too much too fast is generally bad for performance */
-		if (++_loops >= 10) {
-			_loops = 0;
-			//printf("%s\n",_sb.c_str());
-			frc::SmartDashboard::PutString("EncodedArmLift", _sb);
-		}
-		_sb.clear();
 
 }
 
-void SubEncodedArmLift::ArmToSwitchPos() {
+void SubEncodedArmLift::ArmToSwitchPos() {  //Button 11
 
-	_switchTarget = _prefs->GetDouble("Switch Position", 0.0);
-	targetPositionRotations = _switchTarget;
+	frc::SmartDashboard::PutNumber("Switch", THREE);
+	THREE++;
+
+
+	//targetPositionRotations = (_prefs->GetDouble("Switch Position", 0.0))*4096;
+	targetPositionRotations = 0.0;
 	_talon->Set(ControlMode::Position, targetPositionRotations);
 
-	/* if Talon is in position closed-loop, print some more info */
-		if (_talon->GetControlMode() == ControlMode::Position) {
-			/* append more signals to print when in speed mode. */
-			_sb.append("\terrNative:");
-			_sb.append(std::to_string(_talon->GetClosedLoopError(kPIDLoopIdx)));
-			_sb.append("\ttrg:");
-			_sb.append(std::to_string(targetPositionRotations));
-		}
-		/* print every ten loops, printing too much too fast is generally bad for performance */
-		if (++_loops >= 10) {
-			_loops = 0;
-			//printf("%s\n",_sb.c_str());
-			frc::SmartDashboard::PutString("EncodedArmLift", _sb);
-		}
-		_sb.clear();
+
 
 }
 
-void SubEncodedArmLift::ArmToScalePos() {
+void SubEncodedArmLift::ArmToScalePos() {  //Button 12
 
-	_scaleTarget = _prefs->GetDouble("Scale Position", 0.0);
-	targetPositionRotations = _scaleTarget;
+	frc::SmartDashboard::PutNumber("Scale", FOUR);
+    FOUR++;
+
+	//targetPositionRotations = (_prefs->GetDouble("Scale Position", 0.0))*4096;
+	targetPositionRotations = 2.0 * 4096;
 	_talon->Set(ControlMode::Position, targetPositionRotations);
 
-	/* if Talon is in position closed-loop, print some more info */
-		if (_talon->GetControlMode() == ControlMode::Position) {
-			/* append more signals to print when in speed mode. */
-			_sb.append("\terrNative:");
-			_sb.append(std::to_string(_talon->GetClosedLoopError(kPIDLoopIdx)));
-			_sb.append("\ttrg:");
-			_sb.append(std::to_string(targetPositionRotations));
-		}
-		/* print every ten loops, printing too much too fast is generally bad for performance */
-		if (++_loops >= 10) {
-			_loops = 0;
-			//printf("%s\n",_sb.c_str());
-			frc::SmartDashboard::PutString("EncodedArmLift", _sb);
-		}
-		_sb.clear();
+
 
 }
 
 void SubEncodedArmLift::Periodic() {
 
-//	/* get gamepad axis */
-//		leftYstick = _joy->GetY();
-//		motorOutput = _talon->GetMotorOutputPercent();
-//		button1 = _joy->GetRawButton(11);
-//		button2 = _joy->GetRawButton(12);
-//
-//
-//		/* prepare line to print */
-//				_sb.append("\tout:");
-//				_sb.append(std::to_string(motorOutput));
-//				_sb.append("\tpos:");
-//				_sb.append(std::to_string(_talon->GetSelectedSensorPosition(kPIDLoopIdx)));
-//				/* on button1 press enter closed-loop mode on target position */
-//				if (!_lastButton1 && button1) {
-//					/* Position mode - button just pressed */
-//					targetPositionRotations = leftYstick * 10.0 * 4096; /* 50 Rotations in either direction */
-//					_talon->Set(ControlMode::Position, targetPositionRotations); /* 50 rotations in either direction */
-//
-//				}
-//				/* on button2 just straight drive */
-//				if (button2) {
-//					/* Percent voltage mode */
-//					_talon->Set(ControlMode::PercentOutput, leftYstick);
-//				}
-//				/* if Talon is in position closed-loop, print some more info */
-//				if (_talon->GetControlMode() == ControlMode::Position) {
-//					/* append more signals to print when in speed mode. */
-//					_sb.append("\terrNative:");
-//					_sb.append(std::to_string(_talon->GetClosedLoopError(kPIDLoopIdx)));
-//					_sb.append("\ttrg:");
-//					_sb.append(std::to_string(targetPositionRotations));
-//				}
-//				/* print every ten loops, printing too much too fast is generally bad for performance */
-//				if (++_loops >= 10) {
-//					_loops = 0;
-//					printf("%s\n",_sb.c_str());
-//				}
-//				_sb.clear();
-//				/* save button state for on press detect */
-//				_lastButton1 = button1;
+//	frc::SmartDashboard::PutNumber("_talon current /start position", 555);
+	absolutePosition = _talon->GetSelectedSensorPosition(0) & 0xFFF;
+	if (++_loops >= 40) {
+		frc::SmartDashboard::PutNumber("_talon current /start position", absolutePosition);
+		_loops = 0;
+	}
+
 
 }
 
 
-void SubEncodedArmLift::TakeJoystickInputs(std::shared_ptr<Joystick> _joyTemp ) {
 
-	_joy = _joyTemp;
-
-}
 
 void SubEncodedArmLift::InitDefaultCommand() {
-
-
 
 
 }
