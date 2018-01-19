@@ -9,12 +9,14 @@ CmdArmPosGround::CmdArmPosGround() {
 // Called just before this Command runs the first time
 void CmdArmPosGround::Initialize() {
 
-	Robot::subEncodedArmLift->ArmToGroundPos();
+
 
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdArmPosGround::Execute() {
+
+	Robot::subEncodedArmLift->ArmToGroundPos();
 
 }
 

@@ -11,23 +11,18 @@
 class SubEncodedArmLift : public Subsystem {
 private:
 
+
+	int TWO;
+	int THREE;
+	int FOUR;
+
 	std::shared_ptr<WPI_TalonSRX> _talon;
-	std::shared_ptr<Joystick> _joy;
-	std::shared_ptr<Joystick> _joyTemp;
 	std::string _sb;
 	Preferences *_prefs;
-	double _groundTarget;
-	double _switchTarget;
-	double _scaleTarget;
 	int _loops = 0;
-	bool _lastButton1 = false;
 	double targetPositionRotations;
 	int absolutePosition;
 
-	double leftYstick;
-	double motorOutput;
-	bool button1;
-	bool button2;
 
 public:
 	SubEncodedArmLift();
