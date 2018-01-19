@@ -25,7 +25,7 @@ SubEncodedArmLift::SubEncodedArmLift() : Subsystem("ExampleSubsystem") {
 
 	/* choose the sensor and sensor direction */
 	_talon->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, kPIDLoopIdx, kTimeoutMs);
-	_talon->SetSensorPhase(true);
+	_talon->SetSensorPhase(false);
 
 	/* set the peak and nominal outputs, 12V means full */
 	_talon->ConfigNominalOutputForward(0, kTimeoutMs);
