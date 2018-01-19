@@ -16,7 +16,14 @@ SubEncodedArmLift::SubEncodedArmLift() : Subsystem("ExampleSubsystem") {
 
 	targetPositionRotations = 0.0;
 
+	/* lets grab the 360 degree position of the MagEncoder's absolute position */
+	absolutePosition = _talon->GetSelectedSensorPosition(0) & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */
+		/* use the low level API to set the quad encoder signal */
+	_talon->SetSelectedSensorPosition(absolutePosition, kPIDLoopIdx, kTimeoutMs);
 
+	/* choose the sensor and sensor direction */
+	_talon->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, kPIDLoopIdx, kTimeoutMs);
+	_talon->SetSensorPhase(true);
 
 }
 
@@ -54,6 +61,7 @@ void SubEncodedArmLift::ArmToScalePos() {  //Button 12
 	//targetPositionRotations = (_prefs->GetDouble("Scale Position", 0.0))*4096;
 //	targetPositionRotations = 2.0 * 4096;
 	targetPositionRotations = 2048;
+
 	_talon->Set(ControlMode::Position, targetPositionRotations);
 
 
@@ -69,11 +77,7 @@ void SubEncodedArmLift::Periodic() {
 		_loops = 0;
 	}
 
-
 }
-
-
-
 
 void SubEncodedArmLift::InitDefaultCommand() {
 

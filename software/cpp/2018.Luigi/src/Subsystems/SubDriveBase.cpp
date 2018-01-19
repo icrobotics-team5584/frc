@@ -20,6 +20,7 @@ void SubDriveBase::InitDefaultCommand() {
 
 void SubDriveBase::Periodic() {
 
+
 	if (++_Ultraloops >= 30) {
 
 	frontUValue = ((((ultrasonicInputFront->GetValue())/ (5.0 / 500.0))/1000.0)+5.0);
@@ -44,6 +45,7 @@ void SubDriveBase::Periodic() {
 	frc::SmartDashboard::PutNumber("Ultra, back", backUValue);
 	frc::SmartDashboard::PutNumber("Ultra, left", leftUValue);
 	//frc::SmartDashboard::PutNumber("Ultra RAW, DIO:0", ultrasonicInputFront->GetValue());
+
 
 	_Ultraloops = 0;
 
