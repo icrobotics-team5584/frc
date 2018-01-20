@@ -1,7 +1,8 @@
+#include <iostream>
 #include "CmdArmPosGround.h"
 
 CmdArmPosGround::CmdArmPosGround() {
-
+	std::cout << "created CmdArmPosGround \n";
 	Requires(Robot::subEncodedArmLift.get());
 
 }
@@ -25,7 +26,7 @@ bool CmdArmPosGround::IsFinished() {
 
 // Called once after isFinished returns true
 void CmdArmPosGround::End() {
-
+	std::cout << "deleted CmdArmPosGround \n";
 }
 
 // Called when another command which requires one or more of the same

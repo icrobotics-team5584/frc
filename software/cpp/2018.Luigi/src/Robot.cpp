@@ -19,9 +19,8 @@ void Robot::RobotInit() {
 	oi.reset(new OI());
 
 	//Setup Auto Chooser
-	chooser.AddDefault("Forward", new CmdAutoForward());
-	chooser.AddObject("Backward", new CmdAutoBackward());
-	chooser.AddObject("MP", new CmdAutoMotionProfileTest());
+	std::cout << "setup auto chooser \n";
+	chooser.AddDefault("MP", new CmdAutoMotionProfileTest());
 	frc::SmartDashboard::PutData("Auto Modes", &chooser);
 }
 

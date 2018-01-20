@@ -9,11 +9,16 @@ using namespace ctre::phoenix::motion;
 
 class MotionProfileControl {
 public:
-	MotionProfileControl(std::shared_ptr<TalonSRX>, std::shared_ptr<TalonSRX>, const double[][3], const double[][3], int);
+	MotionProfileControl(	std::shared_ptr<TalonSRX>,
+							std::shared_ptr<TalonSRX>,
+							const double *,
+							const double *,
+							const int);
 	SetValueMotionProfile GetSetValue();
 	void control();
-	void startFilling(double[][3], double[][3], int);
+	void startFilling(double *, double *, int);
 	void start();
+	void stop();
 
 private:
 	MotionProfileStatus _status;
@@ -23,12 +28,16 @@ private:
 	std::shared_ptr<TalonSRX> _talons[2] = {_leftTalon, _rightTalon};
 	Notifier _notifier;
 
-	double _leftMP[][3];
-	double _rightMP[][3];
+	double * _leftMP;
+	double * _rightMP;
+	double arrL[][3];
+	double arrR[][3];
 
 	bool _bStart;
 	int _state;
 	int _loopTimeout;
+	int _loopCount;
+	int _arrLength;
 
 	const int kMinPointsInTalon = 5;
 	const int kNumLoopsTimeout = 10;

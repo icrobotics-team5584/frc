@@ -2,16 +2,16 @@
 #include "../RobotMap.h"
 
 SubIntake::SubIntake() : Subsystem("ExampleSubsystem") {
-
-}
-
-void SubIntake::InitDefaultCommand() {
 	tnxRight = RobotMap::subIntakeTnxRight;
 	tnxLeft = RobotMap::subIntakeTnxLeft;
 	tnxBottom = RobotMap::subIntakeTnxBottom;
 
 	swtLeftLimit = RobotMap::subIntakeSwtLeftLimit;
 	swtRightLimit = RobotMap::subIntakeSwtRightLimit;
+}
+
+void SubIntake::InitDefaultCommand() {
+
 }
 
 void SubIntake::Out(){

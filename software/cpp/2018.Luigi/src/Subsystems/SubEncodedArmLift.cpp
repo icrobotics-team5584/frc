@@ -2,7 +2,6 @@
 #include "../RobotMap.h"
 
 SubEncodedArmLift::SubEncodedArmLift() : Subsystem("ExampleSubsystem") {
-
 	_talon = RobotMap::subEncodedArmLiftSrxMaster;
 	_prefs = Preferences::GetInstance();
 

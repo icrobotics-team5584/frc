@@ -3,7 +3,7 @@
 
 
 SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase") {
-    sRXleft = RobotMap::subDriveBaseSRXleft;
+	sRXleft = RobotMap::subDriveBaseSRXleft;
     sRXright = RobotMap::subDriveBaseSRXright;
     differentialDrive = RobotMap::subDriveBaseDifferentialDrive;
 

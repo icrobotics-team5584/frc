@@ -15,7 +15,7 @@ private:
 	std::shared_ptr<JoystickButton> btnArmToGround;
 	std::shared_ptr<JoystickButton> btnArmToSwitch;
 	std::shared_ptr<JoystickButton> btnArmToScale;
-
+	std::shared_ptr<JoystickButton> btnMP;
 
 public:
 	OI();

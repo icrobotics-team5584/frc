@@ -1,6 +1,5 @@
 #include "OI.h"
 #include "SmartDashboard/SmartDashboard.h"
-#include "Commands/AutonomousCommand.h"
 #include "Commands/MyJoystickDrive.h"
 #include "Commands/CmdIntake.h"
 #include "Commands/CmdOutput.h"
@@ -9,6 +8,7 @@
 #include "Commands/CmdArmPosGround.h"
 #include "Commands/CmdArmPosScale.h"
 #include "Commands/CmdArmPosSwitch.h"
+#include "Commands/CmdAutoMotionProfileTest.h"
 
 
 OI::OI() {
@@ -39,6 +39,9 @@ OI::OI() {
 	btnArmToScale.reset(new JoystickButton(joystick0.get(), 12));
 	btnArmToScale->WhileHeld(new CmdArmPosScale());
 
+	//Motion Profile test
+	btnMP.reset(new JoystickButton(joystick0.get(), 4));
+	btnMP->ToggleWhenPressed(new CmdAutoMotionProfileTest());
 
 }
 

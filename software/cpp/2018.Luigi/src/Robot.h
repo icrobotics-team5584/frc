@@ -6,10 +6,7 @@
 #include "RobotMap.h"
 #include "LiveWindow/LiveWindow.h"
 
-//Include Commands
-#include "Commands/AutonomousCommand.h"
-#include "Commands/CmdAutoForward.h"
-#include "Commands/CmdAutoBackward.h"
+//Include Auto Commands
 #include "Commands/CmdAutoMotionProfileTest.h"
 
 //Include Subsystems
