@@ -41,7 +41,8 @@ OI::OI() {
 
 	//Motion Profile test
 	btnMP.reset(new JoystickButton(joystick0.get(), 4));
-	btnMP->ToggleWhenPressed(new CmdAutoMotionProfileTest());
+	// btnMP->ToggleWhenPressed(new CmdAutoMotionProfileTest());
+	btnMP->WhileHeld(new CmdAutoMotionProfileTest());
 
 }
 

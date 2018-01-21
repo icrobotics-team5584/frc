@@ -6,9 +6,6 @@
 #include "RobotMap.h"
 #include "LiveWindow/LiveWindow.h"
 
-//Include Auto Commands
-#include "Commands/CmdAutoMotionProfileTest.h"
-
 //Include Subsystems
 #include "Subsystems/SubDriveBase.h"
 #include "Subsystems/SubIntake.h"

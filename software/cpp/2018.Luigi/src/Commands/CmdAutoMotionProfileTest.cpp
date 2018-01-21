@@ -1,23 +1,19 @@
-#include <iostream>
 #include "CmdAutoMotionProfileTest.h"
 
 CmdAutoMotionProfileTest::CmdAutoMotionProfileTest()
-: MPControl(RobotMap::subDriveBaseSRXleft, RobotMap::subDriveBaseSRXright, &kBaselineA[0][0], &kBaselineB[0][0], kMotionProfileSz)
+: MPControl(RobotMap::subDriveBaseSRXleft, RobotMap::subDriveBaseSRXright, RobotMap::mpTest )
 {
-//	std::cout << "CmdMPTest() CmdMPTest \n";
 	Requires(Robot::subDriveBase.get());
 }
 
 // Called just before this Command runs the first time
 void CmdAutoMotionProfileTest::Initialize() {
-//	std::cout << "Initialize() CmdMPTest \n";
-	MPControl.start();
+	MPControl.initialise();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdAutoMotionProfileTest::Execute() {
-
-
+	MPControl.execute();
 }
 
 // Make this return true when this Command no longer needs to run execute()

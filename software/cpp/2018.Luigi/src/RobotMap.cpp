@@ -2,6 +2,10 @@
 #include "LiveWindow/LiveWindow.h"
 #include "ctre/Phoenix.h"
 #include "WPILib.h"
+#include "MotionProfiles/MotionProfileBaselineA.h"
+#include "MotionProfiles/MotionProfileBaselineB.h"
+#include "MotionProfiles/MPL-test.h"
+#include "MotionProfiles/MPR-test.h"
 
 //Define DriveBase Actuators
 std::shared_ptr<WPI_TalonSRX> RobotMap::subDriveBaseSRXleft;
@@ -32,7 +36,9 @@ std::shared_ptr<frc::AnalogInput> RobotMap::subDriveBaseUltrasonicInputLeft;
 //Define arm lift Actuators / Actuator
 std::shared_ptr<WPI_TalonSRX> RobotMap::subEncodedArmLiftSrxMaster;
 
-
+//Define Motion Profile Data
+std::shared_ptr<MotionProfileData> RobotMap::mpBaseline;
+std::shared_ptr<MotionProfileData> RobotMap::mpTest;
 
 void RobotMap::init() {
 
@@ -50,6 +56,30 @@ void RobotMap::init() {
 	subDriveBaseDifferentialDrive->SetSafetyEnabled(false);
 	subDriveBaseDifferentialDrive->SetExpiration(0.1);
 	subDriveBaseDifferentialDrive->SetMaxOutput(1.0);
+		// Setup encoders on master drive motors for position control:
+	subDriveBaseSRXleft->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
+	subDriveBaseSRXright->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
+	subDriveBaseSRXleft->ConfigNeutralDeadband(0.001, 10);
+	subDriveBaseSRXright->ConfigNeutralDeadband(0.001, 10);
+	subDriveBaseSRXleft->ConfigMotionProfileTrajectoryPeriod(0, 10);
+	subDriveBaseSRXright->ConfigMotionProfileTrajectoryPeriod(0, 10);
+	subDriveBaseSRXleft->SetSensorPhase(true);
+	subDriveBaseSRXright->SetSensorPhase(true);
+		// Setup FPID parameters for master drive motors:
+	double LeftFgain = 0.181434;    double RightFgain = 0.180678;
+	double LeftPgain = 2.0;      double RightPgain = 2.0;
+	double LeftIgain = 0.0;      double RightIgain = 0.0;
+	double LeftDgain = 20.0;     double RightDgain = 20.0;
+	subDriveBaseSRXleft->SelectProfileSlot(0, 0);
+	subDriveBaseSRXleft->Config_kF(0, LeftFgain, 10);
+	subDriveBaseSRXleft->Config_kP(0, LeftPgain, 10);
+	subDriveBaseSRXleft->Config_kI(0, LeftIgain, 10);
+	subDriveBaseSRXleft->Config_kD(0, LeftDgain, 10);
+	subDriveBaseSRXright->SelectProfileSlot(0, 0);
+	subDriveBaseSRXright->Config_kF(0, RightFgain, 10);
+	subDriveBaseSRXright->Config_kP(0, RightPgain, 10);
+	subDriveBaseSRXright->Config_kI(0, RightIgain, 10);
+	subDriveBaseSRXright->Config_kD(0, RightDgain, 10);
 
 	//Initiate Intake Actuators
     subIntakeTnxLeft.reset(new WPI_TalonSRX(7));
@@ -79,5 +109,8 @@ void RobotMap::init() {
     //Initiate arm lift Actuators / Actuator
     subEncodedArmLiftSrxMaster.reset(new WPI_TalonSRX(5));
 
+    //Construct Motion Profiles
+    mpBaseline.reset(new MotionProfileData(kBaselineA, kBaselineB, kBaselineASz));
+    mpTest.reset(new MotionProfileData(kMPLtest, kMPRtest, kMPLtestSz));
 
 }

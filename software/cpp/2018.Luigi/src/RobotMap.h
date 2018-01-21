@@ -3,7 +3,7 @@
 
 #include "WPILib.h"
 #include "ctre/Phoenix.h"
-
+#include "MotionProfileData.h"
 
 class RobotMap {
 public:
@@ -39,7 +39,9 @@ public:
 	//Define arm lift Actuators / Actuator
 	static std::shared_ptr<WPI_TalonSRX> subEncodedArmLiftSrxMaster;
 
-
+	//Define Motion Profile Data
+	static std::shared_ptr<MotionProfileData> mpBaseline;
+	static std::shared_ptr<MotionProfileData> mpTest;
 
 };
 #endif

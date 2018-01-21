@@ -4,6 +4,7 @@
 #include <ctre/Phoenix.h>
 #include <WPILib.h>
 #include <iostream>
+#include "MotionProfileData.h"
 
 using namespace ctre::phoenix::motion;
 
@@ -11,33 +12,32 @@ class MotionProfileControl {
 public:
 	MotionProfileControl(	std::shared_ptr<TalonSRX>,
 							std::shared_ptr<TalonSRX>,
-							const double *,
-							const double *,
-							const int);
+							std::shared_ptr<MotionProfileData>);
 	SetValueMotionProfile GetSetValue();
 	void control();
-	void startFilling(double *, double *, int);
+	void startFilling();
 	void start();
 	void stop();
+	void execute();
+	void initialise();
 
 private:
-	MotionProfileStatus _status;
+	MotionProfileStatus _statusA;
+	MotionProfileStatus _statusB;
+
+	double _posA=0,_velA=0,_headingA=0;
+	double _posB=0,_velB=0,_headingB=0;
+
 	SetValueMotionProfile _setValue;
 	std::shared_ptr<TalonSRX> _leftTalon;
 	std::shared_ptr<TalonSRX> _rightTalon;
-	std::shared_ptr<TalonSRX> _talons[2] = {_leftTalon, _rightTalon};
+	std::shared_ptr<MotionProfileData> _mp;
 	Notifier _notifier;
-
-	double * _leftMP;
-	double * _rightMP;
-	double arrL[][3];
-	double arrR[][3];
 
 	bool _bStart;
 	int _state;
 	int _loopTimeout;
 	int _loopCount;
-	int _arrLength;
 
 	const int kMinPointsInTalon = 5;
 	const int kNumLoopsTimeout = 10;
@@ -48,6 +48,10 @@ private:
 	void PushToTalon(double[3], std::shared_ptr<TalonSRX>, Pos);
 	void PeriodicTask();
 	void reset();
+
+	bool firsttimearound = true;
+	int execounter = 0;
+
 };
 
 #endif /* SRC_MOTIONPROFILECONTROL_H_ */

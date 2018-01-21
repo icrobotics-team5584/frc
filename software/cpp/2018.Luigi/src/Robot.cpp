@@ -1,4 +1,5 @@
 #include "Robot.h"
+#include "Commands/CmdAutoMotionProfileTest.h"
 
 //Forward Define Subsystems
 std::shared_ptr<SubDriveBase> Robot::subDriveBase;

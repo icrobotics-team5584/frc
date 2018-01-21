@@ -21,6 +21,8 @@ public:
 	void Interrupted();
 
 	MotionProfileControl MPControl;
+	bool firsttimearound = true;
+	int execounter = 0;
 
 private:
 

@@ -3,9 +3,8 @@
 //No need to copy the blank lines at the bottom.  		
 //This can be pasted into an array for direct use in C++/Java.		
 //       Position (rotations)	Velocity (RPM)	Duration (ms)
-const int kMotionProfileSz =185;
-		
-const double MPLtest[][3] = {
+const int kMPLtestSz =185;
+const double kMPLtest[][3] = {
 {0,	0	,10.0},
 {4.76190476190476E-05,	0.571428571	,10.0},
 {0.000214285714285714,	1.428571429	,10.0},
