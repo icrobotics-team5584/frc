@@ -7,6 +7,7 @@ SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase") {
     sRXright = RobotMap::subDriveBaseSRXright;
     differentialDrive = RobotMap::subDriveBaseDifferentialDrive;
 
+
     ultrasonicInputFront = RobotMap::subDriveBaseUltrasonicInputFront;
     ultrasonicInputRight = RobotMap::subDriveBaseUltrasonicInputRight;
     ultrasonicInputBack = RobotMap::subDriveBaseUltrasonicInputBack;
@@ -19,10 +20,12 @@ void SubDriveBase::InitDefaultCommand() {
 
 void SubDriveBase::Periodic() {
 
+	if (++_Ultraloops >= 30) {
+
 	frontUValue = ((((ultrasonicInputFront->GetValue())/ (5.0 / 500.0))/1000.0)+5.0);
-	rightUValue = ((((ultrasonicInputFront->GetValue())/ (5.0 / 500.0))/1000.0)+5.0);
-	backUValue = ((((ultrasonicInputFront->GetValue())/ (5.0 / 500.0))/1000.0)+5.0);
-	leftUValue = ((((ultrasonicInputFront->GetValue())/ (5.0 / 500.0))/1000.0)+5.0);
+	rightUValue = ((((ultrasonicInputRight->GetValue())/ (5.0 / 500.0))/1000.0)+5.0);
+	backUValue = ((((ultrasonicInputBack->GetValue())/ (5.0 / 500.0))/1000.0)+5.0);
+	leftUValue = ((((ultrasonicInputLeft->GetValue())/ (5.0 / 500.0))/1000.0)+5.0);
 	//frontUValue = ((ultrasonicInputFront->GetValue())/ 100000.0 );
 	//frontUValue = ultrasonicInputFront->GetValue();
 
@@ -32,6 +35,10 @@ void SubDriveBase::Periodic() {
 	frc::SmartDashboard::PutNumber("Ultra, back, DIO:0", backUValue);
 	frc::SmartDashboard::PutNumber("Ultra, left, DIO:0", leftUValue);
 	//frc::SmartDashboard::PutNumber("Ultra RAW, DIO:0", ultrasonicInputFront->GetValue());
+
+	_Ultraloops = 0;
+
+	}
 
 }
 

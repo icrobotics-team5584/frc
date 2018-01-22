@@ -29,6 +29,7 @@ private:
 	bool button1;
 	bool button2;
 
+
 public:
 	SubEncodedArmLift();
 	void ArmToGroundPos();
