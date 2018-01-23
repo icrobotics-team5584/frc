@@ -20,7 +20,7 @@ private:
 	std::shared_ptr<frc::AnalogInput> ultrasonicInputBack;
 	std::shared_ptr<frc::AnalogInput> ultrasonicInputLeft;
 
-	int _Ultraloops;
+	int _Ultraloops = 0;
 	double frontUValue;
 	double rightUValue;
 	double backUValue;

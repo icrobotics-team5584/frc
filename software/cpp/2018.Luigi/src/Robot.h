@@ -11,6 +11,7 @@
 #include "Subsystems/SubIntake.h"
 #include "Subsystems/SubArmLift.h"
 #include "Subsystems/SubEncodedArmLift.h"
+#include "Subsystems/SubCameras.h"
 
 #include "OI.h"
 
@@ -28,6 +29,7 @@ public:
 	static std::shared_ptr<SubIntake> subIntake;
 	static std::shared_ptr<SubArmLift> subArmLift;
 	static std::shared_ptr<SubEncodedArmLift> subEncodedArmLift;
+	static std::shared_ptr<SubCameras> subCameras;
 
 	void RobotInit() override;
 	void DisabledInit() override;

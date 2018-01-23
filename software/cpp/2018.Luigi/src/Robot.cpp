@@ -7,7 +7,7 @@ std::shared_ptr<SubIntake> Robot::subIntake;
 std::shared_ptr<SubArmLift> Robot::subArmLift;
 std::unique_ptr<OI> Robot::oi;
 std::shared_ptr<SubEncodedArmLift> Robot::subEncodedArmLift;
-
+std::shared_ptr<SubCameras> Robot::subCameras;
 
 void Robot::RobotInit() {
 	RobotMap::init();
@@ -17,7 +17,9 @@ void Robot::RobotInit() {
 	subIntake.reset(new SubIntake());
 	subArmLift.reset(new SubArmLift());
 	subEncodedArmLift.reset(new SubEncodedArmLift());
+	subCameras.reset(new SubCameras);
 	oi.reset(new OI());
+
 
 	//Setup Auto Chooser
 	std::cout << "setup auto chooser \n";
@@ -54,6 +56,7 @@ void Robot::TeleopInit() {
 
 void Robot::TeleopPeriodic() {
 	frc::Scheduler::GetInstance()->Run();
+
 }
 
 START_ROBOT_CLASS(Robot);
