@@ -2,10 +2,6 @@
 #include "LiveWindow/LiveWindow.h"
 #include "ctre/Phoenix.h"
 #include "WPILib.h"
-#include "MotionProfiles/MotionProfileBaselineA.h"
-#include "MotionProfiles/MotionProfileBaselineB.h"
-#include "MotionProfiles/MPL-test.h"
-#include "MotionProfiles/MPR-test.h"
 
 //Define DriveBase Actuators
 std::shared_ptr<WPI_TalonSRX> RobotMap::subDriveBaseSRXleft;

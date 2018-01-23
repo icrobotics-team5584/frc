@@ -22,7 +22,9 @@ public:
 	frc::Command* autonomousCommand = nullptr;
 	static std::unique_ptr<OI> oi;
 	frc::LiveWindow *lw = frc::LiveWindow::GetInstance();
-	frc::SendableChooser<frc::Command*> chooser;
+	frc::SendableChooser<frc::Command*> positionChooser;
+	enum task {Scale, Switch, Both, Nothing};
+	frc::SendableChooser<task> taskChooser;
 
 	static std::shared_ptr<SubDriveBase> subDriveBase;
 	static std::shared_ptr<SubIntake> subIntake;

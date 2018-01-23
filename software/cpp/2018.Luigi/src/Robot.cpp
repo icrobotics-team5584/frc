@@ -19,10 +19,18 @@ void Robot::RobotInit() {
 	subEncodedArmLift.reset(new SubEncodedArmLift());
 	oi.reset(new OI());
 
-	//Setup Auto Chooser
+	//Setup Auto Position Chooser
 	std::cout << "setup auto chooser \n";
-	chooser.AddDefault("MP", new CmdAutoMotionProfileTest());
-	frc::SmartDashboard::PutData("Auto Modes", &chooser);
+	positionChooser.AddDefault("Left Starting Position", new CmdAutoMotionProfileTest());
+	positionChooser.AddObject("Middle Starting Position", new CmdAutoMotionProfileTest());
+	positionChooser.AddObject("Right Starting Position", new CmdAutoMotionProfileTest());
+	frc::SmartDashboard::PutData("Auto Modes", &positionChooser);
+
+	//Setup Auto Task Chooser
+	taskChooser.AddDefault("Go for Switch", Switch);
+	taskChooser.AddObject("Get that Scale", Scale);
+	taskChooser.AddObject("ACHIEVE EVERYTHING!", Both);
+	taskChooser.AddObject("Don't. Move.", Nothing);
 }
 
 void Robot::DisabledInit(){
@@ -34,11 +42,13 @@ void Robot::DisabledPeriodic() {
 }
 
 void Robot::AutonomousInit() {
-	autonomousCommand = chooser.GetSelected();
+	gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
+
+	autonomousCommand = positionChooser.GetSelected();
 	if (autonomousCommand != nullptr)
 		autonomousCommand->Start();
 
-	gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
+
 
 	//Probably want to drag in each value, make a string or array for use in switch/case statment!!  gameData is pionter to string array!!
 }

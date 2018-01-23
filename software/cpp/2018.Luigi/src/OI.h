@@ -1,8 +1,8 @@
 #ifndef OI_H
 #define OI_H
 
-#include "WPILib.h"
-
+#include <WPILib.h>
+#include <SmartDashboard/SmartDashboard.h>
 
 
 class OI {
