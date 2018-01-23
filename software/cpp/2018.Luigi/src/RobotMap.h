@@ -4,6 +4,10 @@
 #include "WPILib.h"
 #include "ctre/Phoenix.h"
 #include "MotionProfileData.h"
+#include "MotionProfiles/MotionProfileBaselineA.h"
+#include "MotionProfiles/MotionProfileBaselineB.h"
+#include "MotionProfiles/MPL-test.h"
+#include "MotionProfiles/MPR-test.h"
 
 class RobotMap {
 public:

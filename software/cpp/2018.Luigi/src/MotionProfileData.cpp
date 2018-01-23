@@ -30,6 +30,16 @@ MotionProfileData::MotionProfileData( const double MP1[][3], const int Points) {
 
 }
 
+void MotionProfileData::ReadCSV(std::string fileName){
+	io::CSVReader<3> in("/home/admin/" + fileName);
+	double pos; double vel; double dur;
+
+	while(in.read_row(pos, vel, dur)){
+		std::cout << pos << ", " << vel << ", " << dur << std::endl;
+	}
+
+}
+
 int MotionProfileData::GetNumberOfPoints() {
 	return _points;
 }
