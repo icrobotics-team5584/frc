@@ -15,16 +15,23 @@ private:
 	std::shared_ptr<WPI_TalonSRX> sRXright;
 	std::shared_ptr<frc::DifferentialDrive> differentialDrive;
 
-	std::shared_ptr<frc::AnalogInput> ultrasonicInputFront;
-	std::shared_ptr<frc::AnalogInput> ultrasonicInputRight;
-	std::shared_ptr<frc::AnalogInput> ultrasonicInputBack;
-	std::shared_ptr<frc::AnalogInput> ultrasonicInputLeft;
+	//This is for anlouge ultras
+//	std::shared_ptr<frc::AnalogInput> ultrasonicInputFront;
+//	std::shared_ptr<frc::AnalogInput> ultrasonicInputRight;
+//	std::shared_ptr<frc::AnalogInput> ultrasonicInputBack;
+//	std::shared_ptr<frc::AnalogInput> ultrasonicInputLeft;
+
+	//this is for echo ultras
+	std::shared_ptr<frc::Ultrasonic> ultrasonicInputFront;
+	std::shared_ptr<frc::Ultrasonic> ultrasonicInputRight;
+	std::shared_ptr<frc::Ultrasonic> ultrasonicInputBack;
+	std::shared_ptr<frc::Ultrasonic> ultrasonicInputLeft;
 
 	int _Ultraloops = 0;
-	double frontUValue;
-	double rightUValue;
-	double backUValue;
-	double leftUValue;
+	int frontUValue;
+	int rightUValue;
+	int backUValue;
+	int leftUValue;
 
 public:
 	SubDriveBase();
