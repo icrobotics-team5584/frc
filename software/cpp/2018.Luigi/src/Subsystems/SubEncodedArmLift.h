@@ -21,7 +21,7 @@ private:
 	Preferences *_prefs;
 	int _loops = 0;
 	double targetPositionRotations;
-	int absolutePosition;
+	int absolutePosition = 0;
 
 
 public:

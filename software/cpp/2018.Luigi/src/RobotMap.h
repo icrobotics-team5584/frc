@@ -40,6 +40,5 @@ public:
 	static std::shared_ptr<WPI_TalonSRX> subEncodedArmLiftSrxMaster;
 
 
-
 };
 #endif
