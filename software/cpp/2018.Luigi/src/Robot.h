@@ -5,6 +5,7 @@
 #include "Commands/Command.h"
 #include "RobotMap.h"
 #include "LiveWindow/LiveWindow.h"
+#include "SmartDashboard/SmartDashboard.h"
 
 //Include Subsystems
 #include "Subsystems/SubDriveBase.h"
@@ -17,16 +18,14 @@
 
 class Robot : public frc::TimedRobot {
 public:
+	int intAutonomousTask = 0;
 
-	std::string gameData;
 
 	frc::Command* autonomousCommand = nullptr;
-	static std::unique_ptr<OI> oi;
 	frc::LiveWindow *lw = frc::LiveWindow::GetInstance();
 	frc::SendableChooser<frc::Command*> positionChooser;
-	enum task {Scale, Switch, Both, Nothing};
-	frc::SendableChooser<task> taskChooser;
 
+	static std::unique_ptr<OI> oi;
 	static std::shared_ptr<SubDriveBase> subDriveBase;
 	static std::shared_ptr<SubIntake> subIntake;
 	static std::shared_ptr<SubArmLift> subArmLift;
@@ -40,5 +39,6 @@ public:
 	void AutonomousPeriodic() override;
 	void TeleopInit() override;
 	void TeleopPeriodic() override;
+
 };
 #endif

@@ -130,8 +130,6 @@ void MotionProfileControl::control(){
 
 void MotionProfileControl::startFilling(){
 
-	std::cout << "startFilling() MPControl\n";
-
 	//Clear the buffer of previous Motion Profiles
 	_leftTalon->ClearMotionProfileTrajectories();
 	_rightTalon->ClearMotionProfileTrajectories();

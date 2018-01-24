@@ -27,13 +27,16 @@ void Robot::RobotInit() {
 	positionChooser.AddDefault("Left Starting Position", new CmdAutoMotionProfileTest());
 	positionChooser.AddObject("Middle Starting Position", new CmdAutoMotionProfileTest());
 	positionChooser.AddObject("Right Starting Position", new CmdAutoMotionProfileTest());
-	frc::SmartDashboard::PutData("Auto Modes", &positionChooser);
+	frc::SmartDashboard::PutData("Starting Position", &positionChooser);
 
-	//Setup Auto Task Chooser
-	taskChooser.AddDefault("Go for Switch", Switch);
-	taskChooser.AddObject("Get that Scale", Scale);
-	taskChooser.AddObject("ACHIEVE EVERYTHING!", Both);
-	taskChooser.AddObject("Don't. Move.", Nothing);
+	//Setup Auto Task Chooser - Removed and replaced with a number selection on dash
+//	taskChooser.AddDefault("Go for Switch", Switch);
+//	taskChooser.AddObject("Get that Scale", Scale);
+//	taskChooser.AddObject("ACHIEVE EVERYTHING!", Both);
+//	taskChooser.AddObject("Don't. Move.", Nothing);
+//	frc::SmartDashboard::PutData("Autonomous Tasks", &taskChooser);
+
+	SmartDashboard::PutNumber("intAutonomousTask", intAutonomousTask);
 }
 
 void Robot::DisabledInit(){
@@ -45,15 +48,26 @@ void Robot::DisabledPeriodic() {
 }
 
 void Robot::AutonomousInit() {
-	gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
-
+//	intAutonomousTask = SmartDashboard::GetNumber("intAutonomousTask", 0);
+//	autonomousTask.reset(new task);
+//	switch(intAutonomousTask){
+//	case 0:
+//		*autonomousTask = Nothing;
+//		break;
+//	case 1:
+//		*autonomousTask = Scale;
+//		break;
+//	case 2:
+//		*autonomousTask = Switch;
+//		break;
+//	case 3:
+//		*autonomousTask = Both;
+//		break;
+//	}
 	autonomousCommand = positionChooser.GetSelected();
+
 	if (autonomousCommand != nullptr)
 		autonomousCommand->Start();
-
-
-
-	//Probably want to drag in each value, make a string or array for use in switch/case statment!!  gameData is pionter to string array!!
 }
 
 void Robot::AutonomousPeriodic() {
