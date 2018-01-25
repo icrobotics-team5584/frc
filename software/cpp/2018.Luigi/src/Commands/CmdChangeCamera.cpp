@@ -9,11 +9,16 @@ CmdChangeCamera::CmdChangeCamera() {
 // Called just before this Command runs the first time
 void CmdChangeCamera::Initialize() {
 
+	Robot::subCameras->ChangeCamera();
+
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdChangeCamera::Execute() {
-	Robot::subCameras->TakeJoystickInputs(Robot::oi->getJoystick0());
+
+
+
+	//Robot::subCameras->TakeJoystickInputs(Robot::oi->getJoystick0());
 
 }
 

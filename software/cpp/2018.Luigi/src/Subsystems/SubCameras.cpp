@@ -11,7 +11,7 @@ SubCameras::SubCameras() : Subsystem("ExampleSubsystem") {
 	_cameraB = CameraServer::GetInstance()->StartAutomaticCapture(1);
 
 
-	_prevTrigger = false;
+	_prevTrigger = 0;
 	server = CameraServer::GetInstance()->GetServer();
 
 }
@@ -23,21 +23,23 @@ void SubCameras::Periodic() {
 
 void SubCameras::ChangeCamera() {
 
-	if ( !_prevTrigger) {
+	if ( _prevTrigger == 0) {
 	 printf("Setting camera B\n");;
 		server.SetSource(_cameraB);
-	} else if (_prevTrigger) {
-		    printf("Setting camera A\n");
-	   server.SetSource(_cameraA);
+		_prevTrigger = 1;
+	} else   {
+		printf("Setting camera A\n");
+		server.SetSource(_cameraA);
+		_prevTrigger = 1;
   }
-	_prevTrigger = true;
+
 
 }
 
-void SubCameras::TakeJoystickInputs(std::shared_ptr<Joystick> camJoy ) {
-
-	_camJoy = camJoy;
-}
+//void SubCameras::TakeJoystickInputs(std::shared_ptr<Joystick> camJoy ) {
+//
+//	_camJoy = camJoy;
+//}
 
 void SubCameras::InitDefaultCommand() {
 	// Set the default command for a subsystem here.

@@ -33,11 +33,11 @@ OI::OI() {
 
 	//Initiate Arm Encoded Actuator controls
 	btnArmToGround.reset(new JoystickButton(joystick0.get(), 10));
-	btnArmToGround->WhileHeld(new CmdArmPosGround());
+	btnArmToGround->WhenPressed(new CmdArmPosGround());
 	btnArmToSwitch.reset(new JoystickButton(joystick0.get(), 11));
-	btnArmToSwitch->WhileHeld(new CmdArmPosSwitch());
+	btnArmToSwitch->WhenPressed(new CmdArmPosSwitch());
 	btnArmToScale.reset(new JoystickButton(joystick0.get(), 12));
-	btnArmToScale->WhileHeld(new CmdArmPosScale());
+	btnArmToScale->WhenPressed(new CmdArmPosScale());
 
 	//Motion Profile test
 	btnMP.reset(new JoystickButton(joystick0.get(), 4));
@@ -46,7 +46,7 @@ OI::OI() {
 
 	//Initiate Change camera button
 	btnChangeCamera.reset(new JoystickButton(joystick0.get(), 9));
-	btnChangeCamera->WhileHeld(new CmdChangeCamera());
+	btnChangeCamera->WhenPressed(new CmdChangeCamera());
 
 }
 

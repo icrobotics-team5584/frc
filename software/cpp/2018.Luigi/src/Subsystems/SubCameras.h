@@ -8,8 +8,8 @@
 class SubCameras : public Subsystem {
 private:
 
-	bool _prevTrigger;
-	std::shared_ptr<frc::Joystick> _camJoy;
+	int _prevTrigger;
+	//std::shared_ptr<frc::Joystick> _camJoy;
 	cs::VideoSink server;
 	cs::UsbCamera _cameraA;
 	cs::UsbCamera _cameraB;
