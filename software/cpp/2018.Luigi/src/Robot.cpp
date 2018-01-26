@@ -1,5 +1,4 @@
 #include "Robot.h"
-#include "Commands/CmdAutoMotionProfileTest.h"
 
 //Forward Define Subsystems
 std::shared_ptr<SubDriveBase> Robot::subDriveBase;
@@ -10,6 +9,8 @@ std::shared_ptr<SubEncodedArmLift> Robot::subEncodedArmLift;
 std::shared_ptr<SubCameras> Robot::subCameras;
 
 void Robot::RobotInit() {
+	std::cout << "Running Robot::RobotInit()" << std::endl;
+
 	RobotMap::init();
 
 	//Initiate Subsystems
@@ -17,26 +18,14 @@ void Robot::RobotInit() {
 	subIntake.reset(new SubIntake());
 	subArmLift.reset(new SubArmLift());
 	subEncodedArmLift.reset(new SubEncodedArmLift());
-	subCameras.reset(new SubCameras);
+//	subCameras.reset(new SubCameras);
 	oi.reset(new OI());
 
 
-	//Setup Auto Position Chooser
-
-	std::cout << "setup auto chooser \n";
-	positionChooser.AddDefault("Left Starting Position", new CmdAutoMotionProfileTest());
-	positionChooser.AddObject("Middle Starting Position", new CmdAutoMotionProfileTest());
-	positionChooser.AddObject("Right Starting Position", new CmdAutoMotionProfileTest());
-	frc::SmartDashboard::PutData("Starting Position", &positionChooser);
-
-	//Setup Auto Task Chooser - Removed and replaced with a number selection on dash
-//	taskChooser.AddDefault("Go for Switch", Switch);
-//	taskChooser.AddObject("Get that Scale", Scale);
-//	taskChooser.AddObject("ACHIEVE EVERYTHING!", Both);
-//	taskChooser.AddObject("Don't. Move.", Nothing);
-//	frc::SmartDashboard::PutData("Autonomous Tasks", &taskChooser);
-
-	SmartDashboard::PutNumber("intAutonomousTask", intAutonomousTask);
+	//Setup Auto Chooser
+	std::cout << "creating and sending autoChooser" << std::endl;
+	autoChooser.AddDefault("Choose for me", new CmdAutonomous());
+	frc::SmartDashboard::PutData("Autonomous", &autoChooser);
 }
 
 void Robot::DisabledInit(){
@@ -48,25 +37,11 @@ void Robot::DisabledPeriodic() {
 }
 
 void Robot::AutonomousInit() {
-//	intAutonomousTask = SmartDashboard::GetNumber("intAutonomousTask", 0);
-//	autonomousTask.reset(new task);
-//	switch(intAutonomousTask){
-//	case 0:
-//		*autonomousTask = Nothing;
-//		break;
-//	case 1:
-//		*autonomousTask = Scale;
-//		break;
-//	case 2:
-//		*autonomousTask = Switch;
-//		break;
-//	case 3:
-//		*autonomousTask = Both;
-//		break;
-//	}
-	autonomousCommand = positionChooser.GetSelected();
+	std::cout << "Running Robot::AutonomousInit()" << std::endl;
+	autonomousCommand = autoChooser.GetSelected();
 
 	if (autonomousCommand != nullptr)
+		std::cout << "About to run autonomousCommand->Start()" << std::endl;
 		autonomousCommand->Start();
 }
 

@@ -2,7 +2,6 @@
 #include "CmdArmPosGround.h"
 
 CmdArmPosGround::CmdArmPosGround() {
-	std::cout << "created CmdArmPosGround \n";
 	Requires(Robot::subEncodedArmLift.get());
 
 }

@@ -3,36 +3,23 @@
 
 #include <vector>
 #include <Libaries/csv.h>
+#include <ctre/Phoenix.h>
 
 
 class MotionProfileData {
 public:
-	MotionProfileData( const double [][3], const double [][3], const int );
-	MotionProfileData( const double [][3], const int );
-	MotionProfileData();
-	void ReadCSV( std::string );
-	void PrintProfile();
-    int GetNumberOfPoints();
-    double GetPosition( int, int );
-    double GetVelocity( int, int );
-    double GetDuration( int, int );
 
-	struct Point {
-		double position;
-		double velocity;
-		double duration;
-	};
+	MotionProfileData();
+	void ReadCSV(int set, std::string fileName);
+    int GetNumberOfPoints();
+    double GetPosition( int set, int number);
+    double GetVelocity( int set, int number);
+    double GetDuration( int set, int number);
+    TrajectoryDuration ConvertDuration(double dur);
+    TrajectoryPoint GetPoint(int set, int number);
 
 private:
-	static const int kMaxMotionProfilePoints = 2048;
-	double _MP1[kMaxMotionProfilePoints][3];
-	double _MP2[kMaxMotionProfilePoints][3];
-	int _points;
-	int _sets;
-	std::vector<Point> leftProfile;
-	std::vector<Point> rightProfile;
-	std::vector<Point> profile;
-
+	std::vector<std::vector<TrajectoryPoint>> sets;
 };
 
 #endif /* SRC_MOTIONPROFILEDATA_H_ */

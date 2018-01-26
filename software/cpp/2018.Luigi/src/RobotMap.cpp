@@ -37,9 +37,6 @@ std::shared_ptr<frc::Ultrasonic> RobotMap::subDriveBaseUltrasonicInputLeft;
 //Define arm lift Actuators / Actuator
 std::shared_ptr<WPI_TalonSRX> RobotMap::subEncodedArmLiftSrxMaster;
 
-//Define Motion Profile Data
-std::shared_ptr<MotionProfileData> RobotMap::mpBaseline;
-std::shared_ptr<MotionProfileData> RobotMap::mpTest;
 
 void RobotMap::init() {
 
@@ -116,9 +113,5 @@ void RobotMap::init() {
 
     //Initiate arm lift Actuators / Actuator
     subEncodedArmLiftSrxMaster.reset(new WPI_TalonSRX(5));
-
-    //Construct Motion Profiles
-    mpBaseline.reset(new MotionProfileData(kBaselineA, kBaselineB, kBaselineASz));
-    mpTest.reset(new MotionProfileData(kMPLtest, kMPRtest, kMPLtestSz));
 
 }

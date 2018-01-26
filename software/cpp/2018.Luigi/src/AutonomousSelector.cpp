@@ -1,14 +1,14 @@
 #include "AutonomousSelector.h"
 
 AutonomousSelector::AutonomousSelector() {
-	autonomousTask = static_cast<Task>( SmartDashboard::GetNumber("intAutonomousTask", 0) );
+
 }
 
 std::string AutonomousSelector::DetermineMotionProfile(StartingPos pos){
 	//Pick a task to do: Switch, Scale, Both, or Nothing.
 	//Then return a string that looks like: startingPos-task-GameData.
 	//eg: return "L-S-R" (start = Left, task = switch, gameData = Right)
-	switch(autonomousTask){
+	switch(0){	//TODO: Replace 0 with a auto task selection from DB
 	case Nothing:
 		MPName = "Nothing";
 		break;

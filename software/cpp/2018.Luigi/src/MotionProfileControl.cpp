@@ -7,7 +7,7 @@ MotionProfileControl::MotionProfileControl(	std::shared_ptr<TalonSRX> LeftTalon,
 											std::shared_ptr<MotionProfileData> MP)
 : _notifier(&MotionProfileControl::PeriodicTask, this)
 {
-//	std::cout << "MotionProfileControl() MPControl \n";
+	std::cout << "Creating a MotionProfileControl" << std::endl;
 
 	_leftTalon = LeftTalon;
 	_rightTalon = RightTalon;
@@ -129,97 +129,74 @@ void MotionProfileControl::control(){
 }
 
 void MotionProfileControl::startFilling(){
-
-	//Clear the buffer of previous Motion Profiles
-	_leftTalon->ClearMotionProfileTrajectories();
-	_rightTalon->ClearMotionProfileTrajectories();
-
-	//Loop through profiles and push each point to talons
-	Pos pos;
-    double pointLeft[3];
-    double pointRight[3];
-    int totalCnt = _mp->GetNumberOfPoints();
-    for (int i = 0; i<totalCnt; ++i) {
-    	pos = mid;
-    	if (i == 0) {
-    		pos = first;
-    	}
-		if (i == totalCnt -1) {
-			pos = last;
-		}
-		pointLeft[0] = _mp->GetPosition(1,i);
-		pointLeft[1] = _mp->GetVelocity(1,i);
-		pointLeft[2] = _mp->GetDuration(1,i);
-		// NOTE: we multiply right side velocity and position by -1 here as the left
-		// and right drives are inverted
-		pointRight[0] = -1 * _mp->GetPosition(2,i);
-		pointRight[1] = -1 * _mp->GetVelocity(2,i);
-		pointRight[2] = _mp->GetDuration(2,i);
-		// std::cout << "startFilling() MPControl (point:" << i << ")\n";
-
-		if(_statusA.hasUnderrun ){
-			/* better log it so we know about it */
-			Instrumentation::OnUnderrun();
-			/*
-			 *
-			 * clear the error. This is what seperates "has underrun" from
-			 * "is underrun", because the former is cleared by the application.
-			 * That way, we never miss logging it.
-			 */
-			_leftTalon->ClearMotionProfileHasUnderrun(10);
-		}
-		if(_statusB.hasUnderrun ){
-			/* better log it so we know about it */
-			Instrumentation::OnUnderrun();
-			/*
-			 * clear the error. This is what seperates "has underrun" from
-			 * "is underrun", because the former is cleared by the application.
-			 * That way, we never miss logging it.
-			 */
-			_rightTalon->ClearMotionProfileHasUnderrun(10);
-		}
-
-		PushToTalon(pointLeft, _leftTalon, pos);
-		PushToTalon(pointRight, _rightTalon, pos);
+	int size = _mp->GetNumberOfPoints();
+	for (int i = 0; i<size; i++){
+		PushToTalon(_mp->GetPoint(0, i), _leftTalon);
+		PushToTalon(_mp->GetPoint(1, i), _rightTalon);
 	}
-
 }
 
-void MotionProfileControl::PushToTalon(double MotionProfilePoint[3], std::shared_ptr<TalonSRX> _talon, Pos pos) {
+//void MotionProfileControl::startFilling(){
+//
+//	//Clear the buffer of previous Motion Profiles
+//	_leftTalon->ClearMotionProfileTrajectories();
+//	_rightTalon->ClearMotionProfileTrajectories();
+//
+//	//Loop through profiles and push each point to talons
+//	Pos pos;
+//    double pointLeft[3];
+//    double pointRight[3];
+//    int totalCnt = _mp->GetNumberOfPoints();
+//    for (int i = 0; i<totalCnt; ++i) {
+//    	pos = mid;
+//    	if (i == 0) {
+//    		pos = first;
+//    	}
+//		if (i == totalCnt -1) {
+//			pos = last;
+//		}
+//		pointLeft[0] = _mp->GetPosition(1,i);
+//		pointLeft[1] = _mp->GetVelocity(1,i);
+//		pointLeft[2] = _mp->GetDuration(1,i);
+//		// NOTE: we multiply right side velocity and position by -1 here as the left
+//		// and right drives are inverted
+//		pointRight[0] = -1 * _mp->GetPosition(2,i);
+//		pointRight[1] = -1 * _mp->GetVelocity(2,i);
+//		pointRight[2] = _mp->GetDuration(2,i);
+//		// std::cout << "startFilling() MPControl (point:" << i << ")\n";
+//
+//		if(_statusA.hasUnderrun ){
+//			/* better log it so we know about it */
+//			Instrumentation::OnUnderrun();
+//			/*
+//			 *
+//			 * clear the error. This is what seperates "has underrun" from
+//			 * "is underrun", because the former is cleared by the application.
+//			 * That way, we never miss logging it.
+//			 */
+//			_leftTalon->ClearMotionProfileHasUnderrun(10);
+//		}
+//		if(_statusB.hasUnderrun ){
+//			/* better log it so we know about it */
+//			Instrumentation::OnUnderrun();
+//			/*
+//			 * clear the error. This is what seperates "has underrun" from
+//			 * "is underrun", because the former is cleared by the application.
+//			 * That way, we never miss logging it.
+//			 */
+//			_rightTalon->ClearMotionProfileHasUnderrun(10);
+//		}
+//
+//		PushToTalon(pointLeft, _leftTalon, pos);
+//		PushToTalon(pointRight, _rightTalon, pos);
+//	}
+//
+//}
 
-	//std::cout << "PushToTalon() MPControl \n";
+void MotionProfileControl::PushToTalon(TrajectoryPoint point, std::shared_ptr<TalonSRX> _talon) {
 
-	//Make a new trajectory point
-	TrajectoryPoint point;
-
-	//Set slots
-	point.profileSlotSelect0 = 0;
-	point.profileSlotSelect1 = 0;
-
-	//Fill the top buffer with position and velocity data
-	double positionRot = MotionProfilePoint[0];
-	double velocityRPM = MotionProfilePoint[1];
-	// double durationMs = MotionProfilePoint[2];
-
-//	std::cout << "  positionRot: " << positionRot << "\n";
-//	std::cout << "  velocityRPM: " << velocityRPM << "\n";
-//	std::cout << "  durationMs: " << durationMs << "\n";
-
-	point.position = positionRot * kSensorUnitsPerRotation;		//Convert revolutions to sensor units
-	point.velocity = velocityRPM * kSensorUnitsPerRotation/600;	//Convert RPM to units/100m
-	point.timeDur = TrajectoryDuration_10ms;					//Use 10ms for all points
-
-//	std::cout << "  point.position: " << point.position << "\n";
-//	std::cout << "  point.velocity: " << point.velocity << "\n";
-//	std::cout << "  point.timeDur: " << point.timeDur << "\n";
-
-	//Determine first and last points
-	point.zeroPos = false;
-	point.isLastPoint = false;
-	if (pos == first){
-		point.zeroPos = true;}
-	if (pos == last){
-		point.isLastPoint = true;}
+	point.position = point.position * kSensorUnitsPerRotation;		//Convert revolutions to sensor units
+	point.velocity = point.velocity * kSensorUnitsPerRotation/600;	//Convert RPM to units/100m
 
 	//Push point to Talon
 	ctre::phoenix::ErrorCode pushpointstatus;

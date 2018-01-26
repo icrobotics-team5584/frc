@@ -45,7 +45,7 @@ private:
 	const double kSensorUnitsPerRotation = 4096;
 
 	enum Pos {first, mid, last};
-	void PushToTalon(double[3], std::shared_ptr<TalonSRX>, Pos);
+	void PushToTalon(TrajectoryPoint, std::shared_ptr<TalonSRX>);
 	void PeriodicTask();
 	void reset();
 
