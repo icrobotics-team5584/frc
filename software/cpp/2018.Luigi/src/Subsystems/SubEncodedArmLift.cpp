@@ -7,14 +7,19 @@
 
 SubEncodedArmLift::SubEncodedArmLift() : Subsystem("ExampleSubsystem") {
 
+
+
 	TWO = 1;
 	THREE = 1;
 	FOUR = 1;
+
+
 
 	_talon = RobotMap::subEncodedArmLiftSrxMaster;
 	_prefs = Preferences::GetInstance();
 
 	targetPositionRotations = 0.0;
+
 
 }
 
@@ -35,12 +40,9 @@ void SubEncodedArmLift::ArmToSwitchPos() {  //Button 11
 	frc::SmartDashboard::PutNumber("Switch", THREE);
 	THREE++;
 
-
 	//targetPositionRotations = (_prefs->GetDouble("Switch Position", 0.0))*4096;
 	targetPositionRotations = 0.0;
 	_talon->Set(ControlMode::Position, targetPositionRotations);
-
-
 
 }
 
@@ -54,8 +56,6 @@ void SubEncodedArmLift::ArmToScalePos() {  //Button 12
 	targetPositionRotations = 2048;
 	_talon->Set(ControlMode::Position, targetPositionRotations);
 
-
-
 }
 
 void SubEncodedArmLift::Periodic() {
@@ -66,7 +66,6 @@ void SubEncodedArmLift::Periodic() {
 		frc::SmartDashboard::PutNumber("_talon current /start position", absolutePosition);
 		_loops = 0;
 	}
-
 }
 
 void SubEncodedArmLift::InitDefaultCommand() {
