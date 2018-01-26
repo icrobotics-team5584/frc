@@ -21,13 +21,14 @@ SubEncodedArmLift::SubEncodedArmLift() : Subsystem("ExampleSubsystem") {
 	targetPositionRotations = 0.0;
 
 
-
 }
 
 void SubEncodedArmLift::ArmToGroundPos() {  //Button 10
 
+
 	frc::SmartDashboard::PutNumber("Ground", TWO);
     TWO++;
+
 
 	//targetPositionRotations = (_prefs->GetDouble("Ground Position", 0.0))*4096;
 	targetPositionRotations = 0.0;
@@ -40,7 +41,6 @@ void SubEncodedArmLift::ArmToSwitchPos() {  //Button 11
 
 	frc::SmartDashboard::PutNumber("Switch", THREE);
 	THREE++;
-
 
 	//targetPositionRotations = (_prefs->GetDouble("Switch Position", 0.0))*4096;
 	targetPositionRotations = 0.0;

@@ -54,6 +54,5 @@ public:
 	static std::shared_ptr<MotionProfileData> mpBaseline;
 	static std::shared_ptr<MotionProfileData> mpTest;
 
-
 };
 #endif
