@@ -27,11 +27,6 @@ public:
 	static std::shared_ptr<DigitalInput> subIntakeSwtLeftLimit;
 	static std::shared_ptr<DigitalInput> subIntakeSwtRightLimit;
 
-	//Define Lift Actuators and Sensors
-	static std::shared_ptr<WPI_TalonSRX> subArmLiftLeft;
-	static std::shared_ptr<WPI_TalonSRX> subArmLiftRight;
-	static std::shared_ptr<DigitalInput> subArmLiftTopLimit;
-	static std::shared_ptr<DigitalInput> subArmLiftBottomLimit;
 
 
 //	//Define anlouge Ultrasonic sensors

@@ -17,18 +17,13 @@ std::shared_ptr<WPI_TalonSRX> RobotMap::subIntakeTnxBottom;
 std::shared_ptr<DigitalInput> RobotMap::subIntakeSwtRightLimit;
 std::shared_ptr<DigitalInput> RobotMap::subIntakeSwtLeftLimit;
 
-//Define Lift Actuators
-std::shared_ptr<WPI_TalonSRX> RobotMap::subArmLiftLeft;
-std::shared_ptr<WPI_TalonSRX> RobotMap::subArmLiftRight;
-std::shared_ptr<DigitalInput> RobotMap::subArmLiftTopLimit;
-std::shared_ptr<DigitalInput> RobotMap::subArmLiftBottomLimit;
-
-//Define Ultrasonic sensors
+//Define Ultrasonic sensors Analog
 //std::shared_ptr<frc::AnalogInput> RobotMap::subDriveBaseUltrasonicInputFront;
 //std::shared_ptr<frc::AnalogInput> RobotMap::subDriveBaseUltrasonicInputRight;
 //std::shared_ptr<frc::AnalogInput> RobotMap::subDriveBaseUltrasonicInputBack;
 //std::shared_ptr<frc::AnalogInput> RobotMap::subDriveBaseUltrasonicInputLeft;
 
+//Define Ultrasonic sensors Echo
 std::shared_ptr<frc::Ultrasonic> RobotMap::subDriveBaseUltrasonicInputFront;
 std::shared_ptr<frc::Ultrasonic> RobotMap::subDriveBaseUltrasonicInputRight;
 std::shared_ptr<frc::Ultrasonic> RobotMap::subDriveBaseUltrasonicInputBack;
@@ -90,14 +85,7 @@ void RobotMap::init() {
     subIntakeSwtLeftLimit.reset(new DigitalInput(0));
     subIntakeSwtRightLimit.reset(new DigitalInput(1));
 
-    //Initiate Lift Actuators
-    subArmLiftLeft.reset(new WPI_TalonSRX(6));
-    subArmLiftRight.reset(new WPI_TalonSRX(5));
-    //Initiate Lift Sensors
-    subArmLiftTopLimit.reset(new DigitalInput(3));
-    subArmLiftTopLimit.reset(new DigitalInput(4));
-
-//    //Initiate Ultrasonic sensors
+//    //Initiate Ultrasonic sensors Analog
 //    subDriveBaseUltrasonicInputFront.reset(new frc::AnalogInput(0));
 //    	//lw->AddSensor("SubUltrasonic", "UltrasonicInputFront",  subDriveBaseUltrasonicInputFront);
 //    subDriveBaseUltrasonicInputRight.reset(new frc::AnalogInput(1));
