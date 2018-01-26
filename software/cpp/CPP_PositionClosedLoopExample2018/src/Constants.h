@@ -2,12 +2,16 @@
 #ifndef SRC_CONSTANTS_H_
 #define SRC_CONSTANTS_H_
 
+
 enum Constants
 {
 	/**
 	 * Which talon are we using?
 	 */
 	 kTalonID = 5,
+
+	 kTalonIDSlave = 6,
+
 
 	 /**
 	 * Which PID slot to pull gains from.  Starting 2018, you can choose

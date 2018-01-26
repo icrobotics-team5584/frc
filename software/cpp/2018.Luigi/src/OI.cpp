@@ -2,6 +2,8 @@
 #include "Commands/MyJoystickDrive.h"
 #include "Commands/CmdIntake.h"
 #include "Commands/CmdOutput.h"
+//#include "Commands/CmdArmUp.h"
+//#include "Commands/CmdArmDown.h"
 #include "Commands/CmdArmPosGround.h"
 #include "Commands/CmdArmPosScale.h"
 #include "Commands/CmdArmPosSwitch.h"
@@ -20,6 +22,14 @@ OI::OI() {
     //Initiate Output button
     btnOutput.reset(new JoystickButton(joystick0.get(), 1));
 	btnOutput->WhileHeld(new CmdOutput());
+
+	//Initiate Arm Up button
+	//btnArmUp.reset(new JoystickButton(joystick0.get(), 5));
+	//btnArmUp->WhileHeld(new CmdArmUp());
+
+	//Initiate Arm Down button
+	//btnArmDown.reset(new JoystickButton(joystick0.get(), 3));
+	//btnArmDown->WhileHeld(new CmdArmDown());
 
 	//Initiate Arm Encoded Actuator controls
 	btnArmToGround.reset(new JoystickButton(joystick0.get(), 10));

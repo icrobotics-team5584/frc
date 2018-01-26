@@ -15,13 +15,17 @@
  *
  * Tweak the PID gains accordingly.
  */
-#include "WPILib.h"
+
+
 #include "ctre/Phoenix.h"
+#include "WPILib.h"
 #include "Constants.h"
 
 class Robot: public IterativeRobot {
 private:
+
 	TalonSRX * _talon = new TalonSRX(kTalonID);
+	TalonSRX * _talonSlave = new TalonSRX(kTalonIDSlave);
 	Joystick * _joy = new Joystick(0);
 	std::string _sb;
 	int _loops = 0;
@@ -30,6 +34,8 @@ private:
 	double targetPositionRotations;
 
 	void RobotInit() {
+		_talonSlave->Set( ctre::phoenix::motorcontrol::ControlMode::Follower, 5);
+
 		/* lets grab the 360 degree position of the MagEncoder's absolute position */
 		int absolutePosition = _talon->GetSelectedSensorPosition(0) & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */
 		/* use the low level API to set the quad encoder signal */

@@ -31,6 +31,7 @@ std::shared_ptr<frc::Ultrasonic> RobotMap::subDriveBaseUltrasonicInputLeft;
 
 //Define arm lift Actuators / Actuator
 std::shared_ptr<WPI_TalonSRX> RobotMap::subEncodedArmLiftSrxMaster;
+std::shared_ptr<WPI_TalonSRX> RobotMap::subEncodedArmLiftSrxSlave;
 
 //Define Motion Profile Data
 std::shared_ptr<MotionProfileData> RobotMap::mpBaseline;
@@ -107,6 +108,8 @@ void RobotMap::init() {
 
     //Initiate arm lift Actuators / Actuator
     subEncodedArmLiftSrxMaster.reset(new WPI_TalonSRX(5));
+    subEncodedArmLiftSrxSlave.reset(new WPI_TalonSRX(6));
+    subEncodedArmLiftSrxSlave->Set( ctre::phoenix::motorcontrol::ControlMode::Follower, 5);
 
     enum Constants
     {
