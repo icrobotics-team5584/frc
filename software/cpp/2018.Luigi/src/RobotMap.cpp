@@ -36,6 +36,7 @@ std::shared_ptr<frc::Ultrasonic> RobotMap::subDriveBaseUltrasonicInputLeft;
 
 //Define arm lift Actuators / Actuator
 std::shared_ptr<WPI_TalonSRX> RobotMap::subEncodedArmLiftSrxMaster;
+std::shared_ptr<WPI_TalonSRX> RobotMap::subEncodedArmLiftSrxSlave;
 
 //Define Motion Profile Data
 std::shared_ptr<MotionProfileData> RobotMap::mpBaseline;
@@ -90,9 +91,9 @@ void RobotMap::init() {
     subIntakeSwtLeftLimit.reset(new DigitalInput(0));
     subIntakeSwtRightLimit.reset(new DigitalInput(1));
 
-    //Initiate Lift Actuators
-    subArmLiftLeft.reset(new WPI_TalonSRX(6));
-    subArmLiftRight.reset(new WPI_TalonSRX(5));
+//    //Initiate Lift Actuators
+//    subArmLiftLeft.reset(new WPI_TalonSRX(6));
+//    subArmLiftRight.reset(new WPI_TalonSRX(5));
     //Initiate Lift Sensors
     subArmLiftTopLimit.reset(new DigitalInput(3));
     subArmLiftTopLimit.reset(new DigitalInput(4));
@@ -112,6 +113,10 @@ void RobotMap::init() {
     subDriveBaseUltrasonicInputRight.reset(new frc::Ultrasonic(2,3));
     subDriveBaseUltrasonicInputBack.reset(new frc::Ultrasonic(4,5));
     subDriveBaseUltrasonicInputLeft.reset(new frc::Ultrasonic(6,7));
+
+    //Construct Motion Profiles
+     mpBaseline.reset(new MotionProfileData(kBaselineA, kBaselineB, kBaselineASz));
+     mpTest.reset(new MotionProfileData(kMPLtest, kMPRtest, kMPLtestSz));
 
 
 
@@ -141,9 +146,9 @@ void RobotMap::init() {
 
 //=================================================================
 
-    //Construct Motion Profiles
-    mpBaseline.reset(new MotionProfileData(kBaselineA, kBaselineB, kBaselineASz));
-    mpTest.reset(new MotionProfileData(kMPLtest, kMPRtest, kMPLtestSz));
+    subEncodedArmLiftSrxMaster.reset(new WPI_TalonSRX(5));
+    subEncodedArmLiftSrxSlave.reset(new WPI_TalonSRX(6));
+    subEncodedArmLiftSrxSlave->Set( ctre::phoenix::motorcontrol::ControlMode::Follower, 5);
 
 	/* lets grab the 360 degree position of the MagEncoder's absolute position */
 	int absolutePosition = subEncodedArmLiftSrxMaster->GetSelectedSensorPosition(0) & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */

@@ -48,6 +48,7 @@ public:
 
 	//Define arm lift Actuators / Actuator
 	static std::shared_ptr<WPI_TalonSRX> subEncodedArmLiftSrxMaster;
+	static std::shared_ptr<WPI_TalonSRX> subEncodedArmLiftSrxSlave;
 
 	
 	//Define Motion Profile Data
