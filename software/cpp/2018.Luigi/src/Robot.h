@@ -7,6 +7,9 @@
 #include "LiveWindow/LiveWindow.h"
 #include "SmartDashboard/SmartDashboard.h"
 
+//Include Autonomous Commands
+#include "Commands/CmdAutonomous.h"
+
 //Include Subsystems
 #include "Subsystems/SubDriveBase.h"
 #include "Subsystems/SubIntake.h"
@@ -22,7 +25,7 @@ public:
 
 	frc::Command* autonomousCommand = nullptr;
 	frc::LiveWindow *lw = frc::LiveWindow::GetInstance();
-	frc::SendableChooser<frc::Command*> positionChooser;
+	frc::SendableChooser<frc::Command*> autoChooser;
 
 	static std::unique_ptr<OI> oi;
 	static std::shared_ptr<SubDriveBase> subDriveBase;

@@ -33,9 +33,6 @@ std::shared_ptr<frc::Ultrasonic> RobotMap::subDriveBaseUltrasonicInputLeft;
 std::shared_ptr<WPI_TalonSRX> RobotMap::subEncodedArmLiftSrxMaster;
 std::shared_ptr<WPI_TalonSRX> RobotMap::subEncodedArmLiftSrxSlave;
 
-//Define Motion Profile Data
-std::shared_ptr<MotionProfileData> RobotMap::mpBaseline;
-std::shared_ptr<MotionProfileData> RobotMap::mpTest;
 
 void RobotMap::init() {
 
