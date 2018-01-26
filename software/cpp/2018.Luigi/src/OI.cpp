@@ -16,12 +16,12 @@ OI::OI() {
 	joystick0.reset(new frc::Joystick(0));
 
     //Initiate Intake button
-    btnIntake.reset(new JoystickButton(joystick0.get(), 2));
-    btnIntake->WhileHeld(new CmdIntake());
+    //btnIntake.reset(new JoystickButton(joystick0.get(), 2));
+    //btnIntake->WhileHeld(new CmdIntake());
 
     //Initiate Output button
-    btnOutput.reset(new JoystickButton(joystick0.get(), 1));
-	btnOutput->WhileHeld(new CmdOutput());
+    //btnOutput.reset(new JoystickButton(joystick0.get(), 1));
+	//btnOutput->WhileHeld(new CmdOutput());
 
 	//Initiate Arm Up button
 	//btnArmUp.reset(new JoystickButton(joystick0.get(), 5));
