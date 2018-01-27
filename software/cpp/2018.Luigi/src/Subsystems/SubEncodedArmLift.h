@@ -16,6 +16,7 @@ private:
 	int THREE;
 	int FOUR;
 
+	std::shared_ptr<DigitalInput> _swtBottomReset;
 	std::shared_ptr<WPI_TalonSRX> _talon;
 	std::string _sb;
 	Preferences *_prefs;
