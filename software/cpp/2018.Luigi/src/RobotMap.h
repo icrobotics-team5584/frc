@@ -43,10 +43,13 @@ public:
 
 	//Define arm lift Actuators / Actuator
 	static std::shared_ptr<WPI_TalonSRX> subEncodedArmLiftSrxMaster;
+	static std::shared_ptr<WPI_TalonSRX> subEncodedArmLiftSrxSlave;
 
+	
 	//Define Motion Profile Data
 	static std::shared_ptr<MotionProfileData> mpBaseline;
 	static std::shared_ptr<MotionProfileData> mpTest;
+
 
 };
 #endif

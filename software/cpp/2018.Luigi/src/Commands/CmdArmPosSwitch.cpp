@@ -9,12 +9,14 @@ CmdArmPosSwitch::CmdArmPosSwitch() {
 // Called just before this Command runs the first time
 void CmdArmPosSwitch::Initialize() {
 
-	Robot::subEncodedArmLift->ArmToSwitchPos();
+
 
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdArmPosSwitch::Execute() {
+
+	Robot::subEncodedArmLift->ArmToSwitchPos();
 
 }
 

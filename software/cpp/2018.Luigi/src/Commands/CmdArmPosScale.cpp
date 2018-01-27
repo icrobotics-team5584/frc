@@ -9,12 +9,14 @@ CmdArmPosScale::CmdArmPosScale() {
 // Called just before this Command runs the first time
 void CmdArmPosScale::Initialize() {
 
-	Robot::subEncodedArmLift->ArmToScalePos();
+
 
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdArmPosScale::Execute() {
+
+	Robot::subEncodedArmLift->ArmToScalePos();
 
 }
 

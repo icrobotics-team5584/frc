@@ -4,6 +4,7 @@
 //Forward Define Subsystems
 std::shared_ptr<SubDriveBase> Robot::subDriveBase;
 std::shared_ptr<SubIntake> Robot::subIntake;
+//std::shared_ptr<SubArmLift> Robot::subArmLift;
 std::unique_ptr<OI> Robot::oi;
 std::shared_ptr<SubEncodedArmLift> Robot::subEncodedArmLift;
 std::shared_ptr<SubCameras> Robot::subCameras;
@@ -14,6 +15,7 @@ void Robot::RobotInit() {
 	//Initiate Subsystems
 	subDriveBase.reset(new SubDriveBase());
 	subIntake.reset(new SubIntake());
+	//subArmLift.reset(new SubArmLift());
 	subEncodedArmLift.reset(new SubEncodedArmLift());
 	subCameras.reset(new SubCameras);
 	oi.reset(new OI());

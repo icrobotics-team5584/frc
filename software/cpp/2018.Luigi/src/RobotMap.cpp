@@ -31,6 +31,7 @@ std::shared_ptr<frc::Ultrasonic> RobotMap::subDriveBaseUltrasonicInputLeft;
 
 //Define arm lift Actuators / Actuator
 std::shared_ptr<WPI_TalonSRX> RobotMap::subEncodedArmLiftSrxMaster;
+std::shared_ptr<WPI_TalonSRX> RobotMap::subEncodedArmLiftSrxSlave;
 
 //Define Motion Profile Data
 std::shared_ptr<MotionProfileData> RobotMap::mpBaseline;
@@ -101,12 +102,54 @@ void RobotMap::init() {
     subDriveBaseUltrasonicInputBack.reset(new frc::Ultrasonic(4,5));
     subDriveBaseUltrasonicInputLeft.reset(new frc::Ultrasonic(6,7));
 
-
-    //Initiate arm lift Actuators / Actuator
-    subEncodedArmLiftSrxMaster.reset(new WPI_TalonSRX(5));
-
     //Construct Motion Profiles
     mpBaseline.reset(new MotionProfileData(kBaselineA, kBaselineB, kBaselineASz));
     mpTest.reset(new MotionProfileData(kMPLtest, kMPRtest, kMPLtestSz));
+
+    //Initiate arm lift Actuators / Actuator
+    subEncodedArmLiftSrxMaster.reset(new WPI_TalonSRX(5));
+    subEncodedArmLiftSrxSlave.reset(new WPI_TalonSRX(6));
+    subEncodedArmLiftSrxSlave->Set( ctre::phoenix::motorcontrol::ControlMode::Follower, 5);
+
+    enum Constants
+    {
+    	/**
+    	 * Which PID slot to pull gains from.  Starting 2018, you can choose
+    	 * from 0,1,2 or 3.  Only the first two (0,1) are visible in web-based configuration.
+    	 */
+    	 kSlotIdx = 0,
+
+    	/* Talon SRX/ Victor SPX will supported multiple (cascaded) PID loops.
+    	 * For now we just want the primary one.
+    	 */
+    	 kPIDLoopIdx = 0,
+
+    	/*
+    	 * set to zero to skip waiting for confirmation, set to nonzero to wait
+    	 * and report to DS if action fails.
+    	 */
+    	 kTimeoutMs = 10
+    };
+
+	/* lets grab the 360 degree position of the MagEncoder's absolute position */
+	int absolutePosition = subEncodedArmLiftSrxMaster->GetSelectedSensorPosition(0) & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */
+		/* use the low level API to set the quad encoder signal */
+	subEncodedArmLiftSrxMaster->SetSelectedSensorPosition(absolutePosition, kPIDLoopIdx, kTimeoutMs);
+
+	/* choose the sensor and sensor direction */
+	subEncodedArmLiftSrxMaster->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, kPIDLoopIdx, kTimeoutMs);
+	subEncodedArmLiftSrxMaster->SetSensorPhase(false);
+
+	/* set the peak and nominal outputs, 12V means full */
+	subEncodedArmLiftSrxMaster->ConfigNominalOutputForward(0, kTimeoutMs);
+	subEncodedArmLiftSrxMaster->ConfigNominalOutputReverse(0, kTimeoutMs);
+	subEncodedArmLiftSrxMaster->ConfigPeakOutputForward(1, kTimeoutMs);
+	subEncodedArmLiftSrxMaster->ConfigPeakOutputReverse(-1, kTimeoutMs);
+
+	/* set closed loop gains in slot0 */
+	subEncodedArmLiftSrxMaster->Config_kF(kPIDLoopIdx, 0.0, kTimeoutMs);
+	subEncodedArmLiftSrxMaster->Config_kP(kPIDLoopIdx, 0.4, kTimeoutMs);
+	subEncodedArmLiftSrxMaster->Config_kI(kPIDLoopIdx, 0.0, kTimeoutMs);
+	subEncodedArmLiftSrxMaster->Config_kD(kPIDLoopIdx, 0.0, kTimeoutMs);
 
 }
