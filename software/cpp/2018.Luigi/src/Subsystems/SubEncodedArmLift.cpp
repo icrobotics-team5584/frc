@@ -52,8 +52,8 @@ void SubEncodedArmLift::ArmToScalePos() {  //Button 12
     FOUR++;
 
 	//targetPositionRotations = (_prefs->GetDouble("Scale Position", 0.0))*4096;
-//	targetPositionRotations = 2.0 * 4096;
-	targetPositionRotations = 2048;
+    targetPositionRotations = (6.0 * 4096);
+	//targetPositionRotations = 8192;
 	_talon->Set(ControlMode::Position, targetPositionRotations);
 
 }

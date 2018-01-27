@@ -148,7 +148,7 @@ void RobotMap::init() {
 
 	/* set closed loop gains in slot0 */
 	subEncodedArmLiftSrxMaster->Config_kF(kPIDLoopIdx, 0.0, kTimeoutMs);
-	subEncodedArmLiftSrxMaster->Config_kP(kPIDLoopIdx, 0.1, kTimeoutMs);
+	subEncodedArmLiftSrxMaster->Config_kP(kPIDLoopIdx, 0.4, kTimeoutMs);
 	subEncodedArmLiftSrxMaster->Config_kI(kPIDLoopIdx, 0.0, kTimeoutMs);
 	subEncodedArmLiftSrxMaster->Config_kD(kPIDLoopIdx, 0.0, kTimeoutMs);
 
