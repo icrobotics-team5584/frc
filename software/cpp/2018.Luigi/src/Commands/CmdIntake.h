@@ -1,17 +1,17 @@
-//#ifndef CmdArmUp_H
-//#define CmdArmUp_H
-//
-//#include <Commands/Command.h>
-//#include "Robot.h"
-//
-//class CmdArmUp : public Command {
-//public:
-//	CmdArmUp();
-//	void Initialize();
-//	void Execute();
-//	bool IsFinished();
-//	void End();
-//	void Interrupted();
-//};
-//
-//#endif  // CmdArmUp_H
+#ifndef CmdIntake_H
+#define CmdIntake_H
+
+#include <Commands/Command.h>
+#include "Robot.h"
+
+class CmdIntake : public Command {
+public:
+	CmdIntake();
+	void Initialize();
+	void Execute();
+	bool IsFinished();
+	void End();
+	void Interrupted();
+};
+
+#endif  // CmdArmUp_H
