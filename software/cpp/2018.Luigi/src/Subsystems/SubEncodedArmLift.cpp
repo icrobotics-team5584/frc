@@ -17,6 +17,7 @@ SubEncodedArmLift::SubEncodedArmLift() : Subsystem("ExampleSubsystem") {
 
 	_talon = RobotMap::subEncodedArmLiftSrxMaster;
 	_prefs = Preferences::GetInstance();
+	_swtBottomReset = RobotMap::subEncodedArmLiftSwtBottom;
 
 	targetPositionRotations = 0.0;
 
