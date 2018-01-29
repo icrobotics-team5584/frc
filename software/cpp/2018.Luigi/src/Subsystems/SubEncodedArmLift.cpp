@@ -91,9 +91,9 @@ void SubEncodedArmLift::Overide(std::shared_ptr<Joystick> sticky_2) {
 	}
 
 	_talon->Set(ControlMode::Position, targetPositionRotations);
-
-//use a loop to add up and down
+	frc::SmartDashboard::PutNumber("AXISUSE", _axis);
 
 }
+
 
 
