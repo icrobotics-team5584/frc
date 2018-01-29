@@ -17,7 +17,6 @@ public:
 	void Interrupted();
 private:
 	AutonomousSelector autoSelector;
-	std::shared_ptr<MotionProfileData> MPData;
 	MotionProfileControl MPController;
 };
 

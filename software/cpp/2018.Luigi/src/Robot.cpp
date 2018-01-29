@@ -1,16 +1,19 @@
 #include "Robot.h"
 
-//Forward Define Subsystems
+//Define Subsystems
 std::shared_ptr<SubDriveBase> Robot::subDriveBase;
 std::shared_ptr<SubIntake> Robot::subIntake;
 std::unique_ptr<OI> Robot::oi;
 std::shared_ptr<SubEncodedArmLift> Robot::subEncodedArmLift;
 std::shared_ptr<SubCameras> Robot::subCameras;
 
+std::shared_ptr<MotionProfileData> Robot::MPData;
+
 void Robot::RobotInit() {
 	std::cout << "Running Robot::RobotInit()" << std::endl;
 
 	RobotMap::init();
+	MPData.reset(new MotionProfileData());
 
 	//Initiate Subsystems
 	subDriveBase.reset(new SubDriveBase());

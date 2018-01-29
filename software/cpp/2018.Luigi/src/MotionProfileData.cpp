@@ -2,52 +2,68 @@
 #include <iostream>
 
 MotionProfileData::MotionProfileData( ) {
-
+	sets.resize(2);
+	mpSize = 0;
 }
 
 void MotionProfileData::ReadCSV(int set, std::string fileName) {
 	std::cout << "Running MotionProfileData::ReadCSV(...)" << std::endl;
-	std::cout << "Reading .csv from: /home/admin/" << fileName << std::endl;
 	io::CSVReader<3> in("/home/admin/" + fileName);
 
-	//I THINK I NEED TO PUSH A NEW VECTOR OF TPs TO SETS BEFORE PUSHING POINTS TO SETS[SET]
-	sets.push_back(new std::vector<TrajectoryPoint>);
-
-	std::cout << "Create Trajectory Point" << std::endl;
 	TrajectoryPoint point;
+
+	mpSize = 0;
 
 	double duration;
 	while(in.read_row(point.position, point.velocity, duration)){
+		mpSize++;
 		point.zeroPos = false;
 		point.isLastPoint = false;
-		std::cout << "Converting duration: " << duration << std::endl;
 		point.timeDur = ConvertDuration(duration);
-		std::cout << "Pushing point to vector" << std::endl;
 		sets[set].push_back(point);
-		std::cout << "point: " << point.position << ", " << point.velocity << ", " << duration << std::endl;
 	}
 
-	std::cout << "setting zero and last point in  MP vector" << std::endl;
 	sets[set][0].zeroPos = true;
 	sets[set].back().isLastPoint = true;
 }
 
 int MotionProfileData::GetNumberOfPoints() {
-	int size = (int)sets[0].size();
-	for (unsigned int i = 0; i<sets.size(); i++){
-		if ((int)sets[i].size() != size){
-			throw "Motion Profiles are not the same size";
-		}
-	}
-	return size;
+//	int size = (int)sets[0].size();
+//	std::cout << "Got MP Size " << size << std::endl;
+//	for (unsigned int i = 0; i<sets.size(); i++){
+//		std::cout << "Loop " << i << std::endl;
+//		if ((int)sets[i].size() != size){
+//			throw "Motion Profiles are not the same size";
+//		}
+//	}
+//	std::cout << "Finished looping" << std::endl;
+//	return size;
+//	return 104;
+	std::cout << "About to return" << std::endl;
+	return (int)sets[0].size();
 }
 
 double MotionProfileData::GetPosition( int set, int number ) {
-	return sets[set][number].position;
+	switch (set){
+	case 0:
+		return sets[set][number].position;
+	case 1:
+		return -sets[set][number].position;
+	default:
+		return sets[set][number].position;
+	}
+
 }
 
 double MotionProfileData::GetVelocity( int set, int number ) {
-	return sets[set][number].velocity;
+	switch (set){
+	case 0:
+		return sets[set][number].velocity;
+	case 1:
+		return -sets[set][number].velocity;
+	default:
+		return sets[set][number].velocity;
+	}
 }
 
 //double MotionProfileData::GetDuration( int set, int number ) {

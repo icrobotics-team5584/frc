@@ -129,10 +129,41 @@ void MotionProfileControl::control(){
 }
 
 void MotionProfileControl::startFilling(){
+	std::cout << "Runnging MotionProfileControl::startFilling()" << std::endl;
+	//Clear the buffer of previous Motion Profiles
+	_leftTalon->ClearMotionProfileTrajectories();
+	_rightTalon->ClearMotionProfileTrajectories();
+
+	if(_statusA.hasUnderrun){
+		/* better log it so we know about it */
+		Instrumentation::OnUnderrun();
+		/*
+		 *
+		 * clear the error. This is what seperates "has underrun" from
+		 * "is underrun", because the former is cleared by the application.
+		 * That way, we never miss logging it.
+		 */
+		_leftTalon->ClearMotionProfileHasUnderrun(10);
+	}
+	if(_statusB.hasUnderrun ){
+		/* better log it so we know about it */
+		Instrumentation::OnUnderrun();
+		/*
+		 * clear the error. This is what seperates "has underrun" from
+		 * "is underrun", because the former is cleared by the application.
+		 * That way, we never miss logging it.
+		 */
+		_rightTalon->ClearMotionProfileHasUnderrun(10);
+	}
+
+	std::cout << "About to run int size = _mp->GetNumberOfPoints(0);" <<std::endl;
 	int size = _mp->GetNumberOfPoints();
+	std::cout << "About to run for (int i = 0; i<size; i++){" <<std::endl;
 	for (int i = 0; i<size; i++){
-		PushToTalon(_mp->GetPoint(0, i), _leftTalon);
-		PushToTalon(_mp->GetPoint(1, i), _rightTalon);
+		std::cout << "About to run PushToTalon(_mp->GetPoint(0, i), _leftTalon);" <<std::endl;
+		PushToTalon(_mp->GetPoint(0, i), _leftTalon, 0);
+		std::cout << "About to run PushToTalon(_mp->GetPoint(0, i), _rightTalon);" <<std::endl;
+		PushToTalon(_mp->GetPoint(1, i), _rightTalon, 1);
 	}
 }
 
@@ -193,7 +224,12 @@ void MotionProfileControl::startFilling(){
 //
 //}
 
-void MotionProfileControl::PushToTalon(TrajectoryPoint point, std::shared_ptr<TalonSRX> _talon) {
+void MotionProfileControl::PushToTalon(TrajectoryPoint point, std::shared_ptr<TalonSRX> _talon, int side) {
+
+	if (side == 1) {
+		point.position *= -1;
+		point.velocity *= -1;
+	}
 
 	point.position = point.position * kSensorUnitsPerRotation;		//Convert revolutions to sensor units
 	point.velocity = point.velocity * kSensorUnitsPerRotation/600;	//Convert RPM to units/100m

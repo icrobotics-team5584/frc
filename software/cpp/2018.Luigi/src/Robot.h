@@ -22,7 +22,6 @@ class Robot : public frc::TimedRobot {
 public:
 	int intAutonomousTask = 0;
 
-
 	frc::Command* autonomousCommand = nullptr;
 	frc::LiveWindow *lw = frc::LiveWindow::GetInstance();
 	frc::SendableChooser<frc::Command*> autoChooser;
@@ -40,6 +39,8 @@ public:
 	void AutonomousPeriodic() override;
 	void TeleopInit() override;
 	void TeleopPeriodic() override;
+
+	static std::shared_ptr<MotionProfileData> MPData;
 
 };
 #endif

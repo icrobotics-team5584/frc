@@ -100,8 +100,8 @@ void RobotMap::init() {
     subDriveBaseUltrasonicInputLeft.reset(new frc::Ultrasonic(23,25));
 
     //Construct Motion Profiles
-    mpBaseline.reset(new MotionProfileData(kBaselineA, kBaselineB, kBaselineASz));
-    mpTest.reset(new MotionProfileData(kMPLtest, kMPRtest, kMPLtestSz));
+//    mpBaseline.reset(new MotionProfileData(kBaselineA, kBaselineB, kBaselineASz));
+//    mpTest.reset(new MotionProfileData(kMPLtest, kMPRtest, kMPLtestSz));
 
     //Initiate arm lift Actuators / Actuator
     subEncodedArmLiftSrxMaster.reset(new WPI_TalonSRX(5));

@@ -1,6 +1,6 @@
 #include "CmdAutonomous.h"
 
-CmdAutonomous::CmdAutonomous() : MPController(RobotMap::subDriveBaseSRXleft, RobotMap::subDriveBaseSRXright, MPData)
+CmdAutonomous::CmdAutonomous() : MPController(RobotMap::subDriveBaseSRXleft, RobotMap::subDriveBaseSRXright, Robot::MPData)
 {
 	std::cout << "Running CmdAutonomous::CmdAutonomous()" << std::endl;
 	Requires(Robot::subDriveBase.get());
@@ -17,9 +17,9 @@ void CmdAutonomous::Initialize() {
 
 	//Reading in CSV
 	std::cout << "reading in CSV: '" << MP << "_left.csv'" << std::endl;
-	MPData->ReadCSV(1, MP + "_left.csv");
+	Robot::MPData->ReadCSV(0, MP + "_left.csv");
 	std::cout << "reading in CSV: '" << MP << "_right.csv'" << std::endl;
-	MPData->ReadCSV(2, MP + "_right.csv");
+	Robot::MPData->ReadCSV(1, MP + "_right.csv");
 
 	//Initialise MPController
 	std::cout << "About to run MPController.initialise()" << std::endl;
@@ -28,7 +28,6 @@ void CmdAutonomous::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdAutonomous::Execute() {
-	std::cout << "About to run MPController.execute()" << std::endl;
 	MPController.execute();
 }
 

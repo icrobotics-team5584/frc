@@ -17,9 +17,9 @@ public:
     double GetDuration( int set, int number);
     TrajectoryDuration ConvertDuration(double dur);
     TrajectoryPoint GetPoint(int set, int number);
+    std::vector<std::vector<TrajectoryPoint>> sets;
+	int mpSize;
 
-private:
-	std::vector<std::vector<TrajectoryPoint>> sets;
 };
 
 #endif /* SRC_MOTIONPROFILEDATA_H_ */
