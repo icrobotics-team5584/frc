@@ -19,17 +19,18 @@ private:
 	int _loops = 0;
 	double targetPositionRotations;
 	int absolutePosition = 0;
-
+	double _axis = 0;
 
 
 public:
 	SubEncodedArmLift();
 	void ArmToGroundPos();
 	void ArmToSwitchPos();
+	void InitDefaultCommand() override;
 	void ArmToScalePos();
 	void ArmToExchangePos();
+	void Overide();
 	void Periodic();
-	void InitDefaultCommand();
 	void TakeJoystickInputs(std::shared_ptr<Joystick>);
 };
 
