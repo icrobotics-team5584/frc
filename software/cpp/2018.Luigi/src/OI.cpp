@@ -6,6 +6,7 @@
 #include "Commands/CmdArmPosScale.h"
 #include "Commands/CmdArmPosSwitch.h"
 #include "Commands/CmdArmPosExchange.h"
+#include "Commands/CmdArmOveride.h"
 #include "Commands/CmdAutoMotionProfileTest.h"
 #include "Commands/CmdChangeCamera.h"
 
@@ -31,6 +32,10 @@ OI::OI() {
 	btnArmToSwitch->WhenPressed(new CmdArmPosSwitch());
 	btnArmToScale.reset(new JoystickButton(joystick0.get(), 4));
 	btnArmToScale->WhenPressed(new CmdArmPosScale());
+	//Initiate Arm Extras
+	btnArmOveride.reset(new JoystickButton(joystick0.get(), 10));
+	btnArmOveride->WhileHeld(new CmdArmOveride());
+
 
 	//Motion Profile test
 	btnMP.reset(new JoystickButton(joystick0.get(), 44));
