@@ -73,6 +73,7 @@ void SubEncodedArmLift::Periodic() {
 
 }
 
+
 void SubEncodedArmLift::Overide(std::shared_ptr<Joystick> sticky_2) {
 
 	_axis = sticky_2->GetRawAxis(5);
@@ -92,6 +93,7 @@ void SubEncodedArmLift::Overide(std::shared_ptr<Joystick> sticky_2) {
 	_talon->Set(ControlMode::Position, targetPositionRotations);
 
 //use a loop to add up and down
+
 }
 
 
