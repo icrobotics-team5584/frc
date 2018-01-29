@@ -22,12 +22,10 @@ private:
 	int absolutePosition = 0;
 	double _axis = 0;
 
-
 public:
 	SubEncodedArmLift();
 	void ArmToGroundPos();
 	void ArmToSwitchPos();
-	void InitDefaultCommand() override;
 	void ArmToScalePos();
 	void ArmToExchangePos();
 	void Overide(std::shared_ptr<Joystick>);
