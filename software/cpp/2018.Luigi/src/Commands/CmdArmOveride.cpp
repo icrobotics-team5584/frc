@@ -13,7 +13,7 @@ void CmdArmOveride::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdArmOveride::Execute() {
-	Robot::subEncodedArmLift->Overide();
+	Robot::subEncodedArmLift->Overide(Robot::oi->getJoystick0());
 }
 
 // Make this return true when this Command no longer needs to run execute()
