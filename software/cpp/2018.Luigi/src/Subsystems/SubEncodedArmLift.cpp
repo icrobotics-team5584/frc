@@ -1,6 +1,6 @@
 #include "SubEncodedArmLift.h"
 #include "../RobotMap.h"
-
+#include <iostream>
 #include <WPILib.h>
 #include <ctre/Phoenix.h>
 #include "Constants.h"
@@ -73,26 +73,23 @@ void SubEncodedArmLift::Periodic() {
 
 }
 
-void SubEncodedArmLift::Overide() {
+void SubEncodedArmLift::Overide(std::shared_ptr<Joystick> sticky_2) {
 
-	//targetPositionRotations = leftYstick * 10.0 * 4096; /* 50 Rotations in either direction */
-	targetPositionRotations = (_axis * 10.0 * 4096 );
-	_talon->Set(ControlMode::Position, targetPositionRotations);
-	frc::SmartDashboard::PutNumber("AXISUSE", _axis);
-
-}
-
-void SubEncodedArmLift::TakeJoystickInputs(std::shared_ptr<Joystick> sticky_2 ) {
-	//double throttle = (((sticky->GetRawAxis(3) + 1 ) / 4 )*-1 ) +1;
-	//put local storage veriables here
 	_axis = sticky_2->GetRawAxis(5);
 	frc::SmartDashboard::PutNumber("AXIS!!!!", _axis);
+
+	targetPositionRotations = (_axis * 10.0 * 4096 );
+	frc::SmartDashboard::PutNumber("AXISUSE", _axis);
+	_talon->Set(ControlMode::Position, targetPositionRotations);
+
+
 }
 
-void SubEncodedArmLift::InitDefaultCommand() {
-	SetDefaultCommand(new MyJoystickDrive());
-	frc::SmartDashboard::PutNumber("AXISDEFAULT", _axis);
-}
+
+//void SubEncodedArmLift::InitDefaultCommand() {
+//	SetDefaultCommand(new MyJoystickDrive());
+//	frc::SmartDashboard::PutNumber("AXISDEFAULT", _axis);
+//}
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
