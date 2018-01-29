@@ -3,6 +3,7 @@
 CmdArmOveride::CmdArmOveride() {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
+	Requires(Robot::subEncodedArmLift.get());
 }
 
 // Called just before this Command runs the first time
@@ -12,7 +13,7 @@ void CmdArmOveride::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdArmOveride::Execute() {
-
+	Robot::subEncodedArmLift->Overide();
 }
 
 // Make this return true when this Command no longer needs to run execute()
