@@ -4,6 +4,7 @@
 #include <WPILib.h>
 #include <ctre/Phoenix.h>
 #include "Constants.h"
+#include "Commands/MyJoystickDrive.h"
 
 SubEncodedArmLift::SubEncodedArmLift() : Subsystem("ExampleSubsystem") {
 
@@ -72,9 +73,22 @@ void SubEncodedArmLift::Periodic() {
 
 }
 
+void SubEncodedArmLift::Overide() {
+
+	//targetPositionRotations = leftYstick * 10.0 * 4096; /* 50 Rotations in either direction */
+	targetPositionRotations = (_axis * 10.0 * 4096 );
+	_talon->Set(ControlMode::Position, targetPositionRotations);
+
+}
+
+void SubEncodedArmLift::TakeJoystickInputs(std::shared_ptr<Joystick> sticky_2 ) {
+	//double throttle = (((sticky->GetRawAxis(3) + 1 ) / 4 )*-1 ) +1;
+	//put local storage veriables here
+	_axis = sticky_2->GetRawAxis(5);
+}
+
 void SubEncodedArmLift::InitDefaultCommand() {
-
-
+	SetDefaultCommand(new MyJoystickDrive());
 }
 
 // Put methods for controlling this subsystem
