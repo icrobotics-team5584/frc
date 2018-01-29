@@ -28,10 +28,10 @@ private:
 	std::shared_ptr<frc::Ultrasonic> ultrasonicInputLeft;
 
 	int _Ultraloops = 0;
-	int frontUValue;
-	int rightUValue;
-	int backUValue;
-	int leftUValue;
+	int frontUValue = 0;
+	int rightUValue = 0;
+	int backUValue = 0;
+	int leftUValue = 0;
 
 public:
 	SubDriveBase();
