@@ -76,20 +76,22 @@ void SubEncodedArmLift::Periodic() {
 void SubEncodedArmLift::Overide(std::shared_ptr<Joystick> sticky_2) {
 
 	_axis = sticky_2->GetRawAxis(5);
-	frc::SmartDashboard::PutNumber("AXIS!!!!", _axis);
+	if (++_axisLoops >= 30) {
 
-	targetPositionRotations = (_axis * 10.0 * 4096 );
-	frc::SmartDashboard::PutNumber("AXISUSE", _axis);
+		if (_axis > 0.5) {
+			-- targetPositionRotations;
+		} else if (_axis <-0.5){
+			++ targetPositionRotations;
+		} else {
+
+		}
+
+		_axisLoops = 0;
+	}
+
 	_talon->Set(ControlMode::Position, targetPositionRotations);
 
-
+//use a loop to add up and down
 }
 
 
-//void SubEncodedArmLift::InitDefaultCommand() {
-//	SetDefaultCommand(new MyJoystickDrive());
-//	frc::SmartDashboard::PutNumber("AXISDEFAULT", _axis);
-//}
-
-// Put methods for controlling this subsystem
-// here. Call these from Commands.
