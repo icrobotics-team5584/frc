@@ -30,6 +30,7 @@ public:
 	void ArmToExchangePos();
 	void Overide(std::shared_ptr<Joystick>);
 	void Periodic();
+	void Reset();
 
 };
 
