@@ -10,9 +10,8 @@ std::shared_ptr<SubCameras> Robot::subCameras;
 std::shared_ptr<MotionProfileData> Robot::MPData;
 
 void Robot::RobotInit() {
-	std::cout << "Running Robot::RobotInit()" << std::endl;
-
 	RobotMap::init();
+
 	MPData.reset(new MotionProfileData());
 
 	//Initiate Subsystems
@@ -21,7 +20,6 @@ void Robot::RobotInit() {
 	subEncodedArmLift.reset(new SubEncodedArmLift());
 //	subCameras.reset(new SubCameras);
 	oi.reset(new OI());
-
 
 	//Setup Auto Chooser
 	std::cout << "creating and sending autoChooser" << std::endl;
@@ -38,15 +36,26 @@ void Robot::DisabledPeriodic() {
 }
 
 void Robot::AutonomousInit() {
-	std::cout << "Running Robot::AutonomousInit()" << std::endl;
-	autonomousCommand = autoChooser.GetSelected();
 
+	std::cout << "Running Robot::AutonomousInit" <<std::endl;
+	//Remove any pre-existing MP Trajectory Points in Talons
+	RobotMap::subDriveBaseSRXright->ClearMotionProfileTrajectories();
+	RobotMap::subDriveBaseSRXleft->ClearMotionProfileTrajectories();
+
+	//Reset Sensor positions to zero for future profiles
+	RobotMap::subDriveBaseSRXright->SetSelectedSensorPosition(0, 0, 10);
+	RobotMap::subDriveBaseSRXleft->SetSelectedSensorPosition(0, 0, 10);
+
+	//Determine auto command selected from Dashboard and run
+	autonomousCommand = autoChooser.GetSelected();
 	if (autonomousCommand != nullptr)
 		std::cout << "About to run autonomousCommand->Start()" << std::endl;
 		autonomousCommand->Start();
 }
 
 void Robot::AutonomousPeriodic() {
+	SmartDashboard::PutNumber("Left Encoder Value", RobotMap::subDriveBaseSRXleft->GetSelectedSensorPosition(0) & 0xFFF);
+	SmartDashboard::PutNumber("Right Encoder Value", RobotMap::subDriveBaseSRXright->GetSelectedSensorPosition(0) & 0xFFF);
 	frc::Scheduler::GetInstance()->Run();
 }
 

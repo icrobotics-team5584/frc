@@ -7,8 +7,8 @@ MotionProfileControl::MotionProfileControl(	std::shared_ptr<TalonSRX> LeftTalon,
 											std::shared_ptr<MotionProfileData> MP)
 : _notifier(&MotionProfileControl::PeriodicTask, this)
 {
-	std::cout << "Creating a MotionProfileControl" << std::endl;
 
+	//Initialise variables
 	_leftTalon = LeftTalon;
 	_rightTalon = RightTalon;
 	_mp = MP;
@@ -26,19 +26,13 @@ MotionProfileControl::MotionProfileControl(	std::shared_ptr<TalonSRX> LeftTalon,
 void MotionProfileControl::PeriodicTask(){
 
 	if( (_leftTalon->GetControlMode() == ControlMode::MotionProfile) && (_rightTalon->GetControlMode() == ControlMode::MotionProfile ) ) {
-
 		//Move points from top buffer (on RIO) to bottom buffer (on Talon)
 		_leftTalon->ProcessMotionProfileBuffer();
 		_rightTalon->ProcessMotionProfileBuffer();
-
 	}
-
 }
 
 void MotionProfileControl::reset(){
-
-//	std::cout << "reset() MPControl \n";
-
 	//clean buffer, disable talon, and reset state
 	_leftTalon->ClearMotionProfileTrajectories();
 	_rightTalon->ClearMotionProfileTrajectories();
@@ -49,16 +43,12 @@ void MotionProfileControl::reset(){
 }
 
 void MotionProfileControl::control(){
-
-//	std::cout << "control() MPControl \n";
-
-	//track time to make sure things dont get stuck
+	//track time to make sure things don't get stuck
 	if (_loopTimeout < 0) {
 		//do nothing, timeout is disabled
 	} else {
 		if (_loopTimeout == 0) {
 			//Error condition, no progress
-//			std::cout << "NO PROGRESS IN MOTION PROFILE LOOP\n";
 			Instrumentation::OnNoProgress();
 		} else {
 			//Decrement timeout
@@ -66,48 +56,44 @@ void MotionProfileControl::control(){
 		}
 	}
 
-		switch (_state) {
+	switch (_state) {
 
-			case 0: //Start filling
-				if (_bStart) {
-					std::cout << "case 0, start filling \n";
-					//start filling top-buffer with points
-					_bStart = false;
-					_setValue = SetValueMotionProfile::Disable;
-					startFilling();
-					std::cout << "changing state 0 to 1 \n";
-					_state = 1;
-					std::cout << "resetting timeout \n";
-					_loopTimeout = kNumLoopsTimeout;
-				}
-				break;
+		case 0: //Start filling
+			if (_bStart) {
+				//start filling top-buffer with points
+				_bStart = false;
+				_setValue = SetValueMotionProfile::Disable;
+				startFilling();
+				_state = 1;
+				_loopTimeout = kNumLoopsTimeout;
+			}
+			break;
 
-			case 1: //Start driving
-				if ( (_statusA.btmBufferCnt > kMinPointsInTalon) && (_statusB.btmBufferCnt > kMinPointsInTalon) ) {
-					std::cout << "case 1, start driving \n";
-					//start driving
-					_setValue = SetValueMotionProfile::Enable;
-					std::cout << "changing state 1 to 2 \n";
-					_state = 2;
-					_loopTimeout = kNumLoopsTimeout;
-				}
-				break;
+		case 1: //Start driving
+			if ( (_statusA.btmBufferCnt > kMinPointsInTalon) && (_statusB.btmBufferCnt > kMinPointsInTalon) ) {
+				//start driving
+				_setValue = SetValueMotionProfile::Enable;
+				_state = 2;
+				_loopTimeout = kNumLoopsTimeout;
+			}
+			break;
 
-			case 2: //Continue or stop driving
-				if ( (_statusA.isUnderrun == false) && (_statusB.isUnderrun == false) ) {
-					// std::cout << "case 2, running\n";
-					//things going well, reset timeout
-					_loopTimeout = kNumLoopsTimeout;
-				}
-				if ( (_statusA.activePointValid && _statusA.isLast) && (_statusB.activePointValid && _statusB.isLast) ){
-					std::cout << "case 2, last point\n";
-					//Reached last trajectory point, finish motion profile
-					_setValue = SetValueMotionProfile::Hold;
-					std::cout << "changing state 2 to 0 \n";
-					_state = 0;
-					_loopTimeout = -1;
-				}
-				break;
+		case 2: //Continue or stop driving
+			if ( (_statusA.isUnderrun == false) && (_statusB.isUnderrun == false) ) {
+				//things going well, reset timeout
+				_loopTimeout = kNumLoopsTimeout;
+			}
+			if ( (_statusA.activePointValid && _statusA.isLast) && (_statusB.activePointValid && _statusB.isLast) ){
+				//Reached last trajectory point, finish motion profile
+				_setValue = SetValueMotionProfile::Hold;
+
+				stop();
+
+				//Reset control variables
+				_state = 0;
+				_loopTimeout = -1;
+			}
+			break;
 		}
 
 		// Get the motion profile status every loop
@@ -129,40 +115,39 @@ void MotionProfileControl::control(){
 }
 
 void MotionProfileControl::startFilling(){
-	std::cout << "Runnging MotionProfileControl::startFilling()" << std::endl;
 	//Clear the buffer of previous Motion Profiles
 	_leftTalon->ClearMotionProfileTrajectories();
 	_rightTalon->ClearMotionProfileTrajectories();
 
+	// set the base trajectory period to zero, use the individual trajectory periods in PushToTalon(...)
+	_leftTalon->ConfigMotionProfileTrajectoryPeriod(0, 10);
+	_rightTalon->ConfigMotionProfileTrajectoryPeriod(0, 10);
+
+	//Check if talons have run out of points
 	if(_statusA.hasUnderrun){
-		/* better log it so we know about it */
+		// Log it in the console
 		Instrumentation::OnUnderrun();
-		/*
-		 *
-		 * clear the error. This is what seperates "has underrun" from
-		 * "is underrun", because the former is cleared by the application.
-		 * That way, we never miss logging it.
-		 */
+		 /*
+		  * Clear the error. This is what seperates "has underrun" from
+		  * "is underrun", because the former is cleared by the application.
+		  * That way, we never miss logging it.
+		  */
 		_leftTalon->ClearMotionProfileHasUnderrun(10);
 	}
 	if(_statusB.hasUnderrun ){
-		/* better log it so we know about it */
+		// Log it in the console
 		Instrumentation::OnUnderrun();
 		/*
-		 * clear the error. This is what seperates "has underrun" from
+		 * Clear the error. This is what seperates "has underrun" from
 		 * "is underrun", because the former is cleared by the application.
 		 * That way, we never miss logging it.
 		 */
 		_rightTalon->ClearMotionProfileHasUnderrun(10);
 	}
 
-	std::cout << "About to run int size = _mp->GetNumberOfPoints(0);" <<std::endl;
 	int size = _mp->GetNumberOfPoints();
-	std::cout << "About to run for (int i = 0; i<size; i++){" <<std::endl;
 	for (int i = 0; i<size; i++){
-		std::cout << "About to run PushToTalon(_mp->GetPoint(0, i), _leftTalon);" <<std::endl;
 		PushToTalon(_mp->GetPoint(0, i), _leftTalon, 0);
-		std::cout << "About to run PushToTalon(_mp->GetPoint(0, i), _rightTalon);" <<std::endl;
 		PushToTalon(_mp->GetPoint(1, i), _rightTalon, 1);
 	}
 }
@@ -226,6 +211,7 @@ void MotionProfileControl::startFilling(){
 
 void MotionProfileControl::PushToTalon(TrajectoryPoint point, std::shared_ptr<TalonSRX> _talon, int side) {
 
+	//negate right side because motor is inverted
 	if (side == 1) {
 		point.position *= -1;
 		point.velocity *= -1;
@@ -240,12 +226,9 @@ void MotionProfileControl::PushToTalon(TrajectoryPoint point, std::shared_ptr<Ta
 	if( pushpointstatus != 0 ) {
 		std::cout << "  push point status: " << pushpointstatus << "\n";
 	}
-
 }
 
 void MotionProfileControl::start(){
-	std::cout << "start() MPControl \n";
-
 	_bStart = true;
 	_leftTalon->Set(ControlMode::MotionProfile, _setValue);
 	_rightTalon->Set(ControlMode::MotionProfile, _setValue);
@@ -253,6 +236,11 @@ void MotionProfileControl::start(){
 
 void MotionProfileControl::stop(){
 	reset();
+
+	//Reset Sensor positions to zero for future profiles
+	_leftTalon->SetSelectedSensorPosition(0, 0, 10);
+	_rightTalon->SetSelectedSensorPosition(0, 0, 10);
+
 	_leftTalon->Set(ControlMode::PercentOutput, 0);
 	_rightTalon->Set(ControlMode::PercentOutput, 0);
 }
@@ -264,13 +252,18 @@ void MotionProfileControl::initialise(){
 	execounter = 0;
 }
 
-	void MotionProfileControl::execute(){
+void MotionProfileControl::execute(){
+	//Determine what to do based on state
 	control();
+	SmartDashboard::PutNumber("_loopTimeout", _loopTimeout);
+
+	//Set talons to take motion profile points
 	SetValueMotionProfile setOutput = GetSetValue();
 	_rightTalon->Set(ControlMode::MotionProfile, setOutput);
 	_leftTalon->Set(ControlMode::MotionProfile, setOutput);
-	if( firsttimearound )
-	{
+
+	//Start filling
+	if( firsttimearound ) {
 		start();
 		firsttimearound = false;
 	}
@@ -278,6 +271,6 @@ void MotionProfileControl::initialise(){
 }
 
 SetValueMotionProfile MotionProfileControl::GetSetValue(){
-//	std::cout << "GetSetValue() MPControl \n";
+	//Return Disable, Enable, or Hold
 	return _setValue;
 }
