@@ -17,7 +17,6 @@ private:
 	std::string _sb;
 	Preferences *_prefs;
 	int _loops = 0;
-	int _axisLoops = 0;
 	double targetPositionRotations;
 	int absolutePosition = 0;
 	double _axis = 0;

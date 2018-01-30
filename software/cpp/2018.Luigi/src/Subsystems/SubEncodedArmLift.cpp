@@ -91,9 +91,7 @@ void SubEncodedArmLift::Overide(std::shared_ptr<Joystick> sticky_2) {
 
 		}
 
-		_axisLoops = 0;
-
-
+		_talon->Set(ControlMode::Position, targetPositionRotations);
 	{
 
 
