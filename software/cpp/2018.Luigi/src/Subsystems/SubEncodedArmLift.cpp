@@ -35,7 +35,7 @@ void SubEncodedArmLift::ArmToExchangePos() {  //Button B
 
 
 	//targetPositionRotations = (_prefs->GetDouble("Ground Position", 0.0))*4096;
-	targetPositionRotations = (2.5 * 4096);
+	targetPositionRotations = -(1.0 * 4096);
 	_talon->Set(ControlMode::Position, targetPositionRotations);
 
 
@@ -46,7 +46,7 @@ void SubEncodedArmLift::ArmToSwitchPos() {  //Button X
 
 
 	//targetPositionRotations = (_prefs->GetDouble("Switch Position", 0.0))*4096;
-	targetPositionRotations = (3.5 * 4096);
+	targetPositionRotations = -(2.1 * 4096);
 	_talon->Set(ControlMode::Position, targetPositionRotations);
 
 }
@@ -56,7 +56,7 @@ void SubEncodedArmLift::ArmToScalePos() {  //Button Y
 
 
 	//targetPositionRotations = (_prefs->GetDouble("Scale Position", 0.0))*4096;
-    targetPositionRotations = (6.0 * 4096);
+    targetPositionRotations = -(5.1 * 4096);
 	_talon->Set(ControlMode::Position, targetPositionRotations);
 
 }
@@ -75,19 +75,23 @@ void SubEncodedArmLift::Periodic() {
 
 void SubEncodedArmLift::Overide(std::shared_ptr<Joystick> sticky_2) {
 
+	cout << "OVERIDE HAS BEEN CALLED" << _axis << endl;
+
 	_axis = sticky_2->GetRawAxis(5);
-	if (++_axisLoops >= 30) {
+	frc::SmartDashboard::PutNumber("_AXIS NO.", targetPositionRotations);
 
-		if (_axis > 0.5) {
-			-- targetPositionRotations;
-		} else if (_axis <-0.5){
-			++ targetPositionRotations;
-		} else {
-
-		}
-
-		_axisLoops = 0;
-	}
+//	if (++_axisLoops >= 4) {
+//
+//		if (_axis > 0.5) {
+//			-- targetPositionRotations;
+//		} else if (_axis <-0.5){
+//			++ targetPositionRotations;
+//		} else {
+//
+//		}
+//
+//		_axisLoops = 0;
+//	}
 
 	_talon->Set(ControlMode::Position, targetPositionRotations);
 
