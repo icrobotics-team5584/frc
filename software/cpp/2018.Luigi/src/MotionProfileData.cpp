@@ -38,8 +38,6 @@ int MotionProfileData::GetNumberOfPoints() {
 //	}
 //	std::cout << "Finished looping" << std::endl;
 //	return size;
-//	return 104;
-	std::cout << "About to return" << std::endl;
 	return (int)sets[0].size();
 }
 
