@@ -35,7 +35,7 @@ void SubEncodedArmLift::ArmToExchangePos() {  //Button B
 
 
 	//targetPositionRotations = (_prefs->GetDouble("Ground Position", 0.0))*4096;
-	targetPositionRotations = (2.5 * 4096);
+	targetPositionRotations = -(1.0 * 4096);
 	_talon->Set(ControlMode::Position, targetPositionRotations);
 
 
@@ -46,7 +46,7 @@ void SubEncodedArmLift::ArmToSwitchPos() {  //Button X
 
 
 	//targetPositionRotations = (_prefs->GetDouble("Switch Position", 0.0))*4096;
-	targetPositionRotations = (3.5 * 4096);
+	targetPositionRotations = -(2.1 * 4096);
 	_talon->Set(ControlMode::Position, targetPositionRotations);
 
 }
@@ -56,7 +56,7 @@ void SubEncodedArmLift::ArmToScalePos() {  //Button Y
 
 
 	//targetPositionRotations = (_prefs->GetDouble("Scale Position", 0.0))*4096;
-    targetPositionRotations = (6.0 * 4096);
+    targetPositionRotations = -(5.1 * 4096);
 	_talon->Set(ControlMode::Position, targetPositionRotations);
 
 }
