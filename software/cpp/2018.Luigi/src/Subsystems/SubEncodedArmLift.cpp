@@ -73,15 +73,11 @@ void SubEncodedArmLift::Periodic() {
 
 }
 
-
 void SubEncodedArmLift::Overide(std::shared_ptr<Joystick> sticky_2) {
-
-
 
 	_axis = sticky_2->GetRawAxis(5);
 	frc::SmartDashboard::PutNumber("_AXIS NO.", targetPositionRotations);
 	frc::SmartDashboard::PutNumber("AXIS!!!!", _axis);
-
 
 		if (_axis > 0.5) {
 			targetPositionRotations = targetPositionRotations - 50;
@@ -92,8 +88,7 @@ void SubEncodedArmLift::Overide(std::shared_ptr<Joystick> sticky_2) {
 		}
 
 		_talon->Set(ControlMode::Position, targetPositionRotations);
-	{
-
+}
 
 
 
