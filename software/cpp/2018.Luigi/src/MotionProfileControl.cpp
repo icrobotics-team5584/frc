@@ -24,7 +24,7 @@ MotionProfileControl::MotionProfileControl(	std::shared_ptr<TalonSRX> LeftTalon,
 }
 
 void MotionProfileControl::PeriodicTask(){
-
+	//Make sure we are in Motion Profile mode
 	if( (_leftTalon->GetControlMode() == ControlMode::MotionProfile) && (_rightTalon->GetControlMode() == ControlMode::MotionProfile ) ) {
 		//Move points from top buffer (on RIO) to bottom buffer (on Talon)
 		_leftTalon->ProcessMotionProfileBuffer();
@@ -88,9 +88,14 @@ void MotionProfileControl::control(){
 				_loopTimeout = kNumLoopsTimeout;
 			} else {
 				//Talons don't have enough points, log an underrun
-				Instrumentation::OnUnderrun();
 			}
-			if ( (_statusA.activePointValid && _statusA.isLast) && (_statusB.activePointValid && _statusB.isLast) ){
+
+//			std::cout << "_statusA.activePointValid: " << _statusA.activePointValid << std::endl;
+//			std::cout << "_statusA.isLast: " << _statusA.isLast << std::endl;
+//			std::cout << "_statusB.activePointValid: " << _statusB.activePointValid << std::endl;
+//			std::cout << "_statusB.isLast: " << _statusB.isLast << std::endl;
+
+			if ( (_statusA.activePointValid && _statusA.isLast) || (_statusB.activePointValid && _statusB.isLast) ){
 				//Reached last trajectory point, finish motion profile
 				_setValue = SetValueMotionProfile::Hold;
 				stop();
@@ -155,6 +160,9 @@ void MotionProfileControl::startFilling(){
 }
 
 void MotionProfileControl::PushToTalon(TrajectoryPoint point, std::shared_ptr<TalonSRX> _talon, int side) {
+//	std::cout << "Left talon top level buffer count: " << _leftTalon->GetMotionProfileTopLevelBufferCount() << std::endl;
+//	std::cout << "Right talon top level buffer count: " << _rightTalon->GetMotionProfileTopLevelBufferCount() << std::endl;
+
 	//negate right side because motor is inverted
 	if (side == 1) {
 		point.position *= -1;
@@ -173,7 +181,10 @@ void MotionProfileControl::PushToTalon(TrajectoryPoint point, std::shared_ptr<Ta
 }
 
 void MotionProfileControl::start(){
+	//signal to control() to start filling
 	_bStart = true;
+
+	//Put Talons in Motion Profile Mode
 	_leftTalon->Set(ControlMode::MotionProfile, _setValue);
 	_rightTalon->Set(ControlMode::MotionProfile, _setValue);
 }

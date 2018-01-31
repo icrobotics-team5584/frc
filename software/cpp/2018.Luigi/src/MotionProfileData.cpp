@@ -7,7 +7,8 @@ MotionProfileData::MotionProfileData( ) {
 }
 
 void MotionProfileData::ReadCSV(int set, std::string fileName) {
-	std::cout << "Running MotionProfileData::ReadCSV(...)" << std::endl;
+
+	std::cout << "Reading from: /home/admin/" << fileName << std::endl;
 	io::CSVReader<3> in("/home/admin/" + fileName);
 
 	TrajectoryPoint point;

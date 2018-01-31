@@ -22,7 +22,6 @@ void Robot::RobotInit() {
 	oi.reset(new OI());
 
 	//Setup Auto Chooser
-	std::cout << "creating and sending autoChooser" << std::endl;
 	autoChooser.AddDefault("Choose for me", new CmdAutonomous());
 	frc::SmartDashboard::PutData("Autonomous", &autoChooser);
 }
