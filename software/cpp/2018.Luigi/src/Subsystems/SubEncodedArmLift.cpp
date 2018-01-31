@@ -12,10 +12,9 @@ SubEncodedArmLift::SubEncodedArmLift() : Subsystem("ExampleSubsystem") {
 
 	_talon = RobotMap::subEncodedArmLiftSrxMaster;
 	_prefs = Preferences::GetInstance();
-	_swtBottomReset = RobotMap::subEncodedArmLiftSwtBottom;
+	_swtTopStop = RobotMap::subEncodedArmLiftSwtTop;
 
 	targetPositionRotations = 0.0;
-
 
 }
 
@@ -63,11 +62,19 @@ void SubEncodedArmLift::ArmToScalePos() {  //Button Y
 
 void SubEncodedArmLift::Periodic() {
 
-//	if (++_loops >= 40) {
-//			frc::SmartDashboard::PutNumber("absolutePosition", absolutePosition);
-//			frc::SmartDashboard::PutNumber("targetPositionRotations", targetPositionRotations);
-//			_loops = 0;
-//		}
+	//go slightly down from where its currently at!
+	if (_swtTopStop->Get()){
+
+//			targetPositionRotations = (_talon->GetSelectedSensorPosition(0) & 0xFFF) + 150;
+//			_talon->Set(ControlMode::Position, targetPositionRotations);
+			++_test;
+			if (++_loops >= 40) {
+				frc::SmartDashboard::PutNumber("THISISTHEONE",_test );
+				_loops = 0;
+			}
+
+		}
+
 
 }
 
@@ -93,6 +100,8 @@ void SubEncodedArmLift::Reset() {
 	_talon->Set(ControlMode::Position, targetPositionRotations);
 
 }
+
+
 
 
 
