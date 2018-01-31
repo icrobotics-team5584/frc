@@ -63,11 +63,11 @@ void SubEncodedArmLift::ArmToScalePos() {  //Button Y
 
 void SubEncodedArmLift::Periodic() {
 
-	if (++_loops >= 40) {
-			frc::SmartDashboard::PutNumber("absolutePosition", absolutePosition);
-			frc::SmartDashboard::PutNumber("targetPositionRotations", targetPositionRotations);
-			_loops = 0;
-		}
+//	if (++_loops >= 40) {
+//			frc::SmartDashboard::PutNumber("absolutePosition", absolutePosition);
+//			frc::SmartDashboard::PutNumber("targetPositionRotations", targetPositionRotations);
+//			_loops = 0;
+//		}
 
 }
 
