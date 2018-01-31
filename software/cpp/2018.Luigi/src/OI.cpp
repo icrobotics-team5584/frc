@@ -7,6 +7,7 @@
 #include "Commands/CmdArmPosSwitch.h"
 #include "Commands/CmdArmPosExchange.h"
 #include "Commands/CmdArmOveride.h"
+#include "Commands/CmdResetArmEncoPos.h"
 #include "Commands/CmdAutoMotionProfileTest.h"
 #include "Commands/CmdChangeCamera.h"
 
@@ -35,6 +36,8 @@ OI::OI() {
 	//Initiate Arm Extras
 	btnArmOveride.reset(new JoystickButton(joystick0.get(), 10));
 	btnArmOveride->WhileHeld(new CmdArmOveride());
+	btnEncoderPosReset.reset(new JoystickButton(joystick0.get(), 8));
+	btnEncoderPosReset->WhenPressed(new CmdResetArmEncoPos());
 
 
 	//Motion Profile test

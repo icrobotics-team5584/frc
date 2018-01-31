@@ -63,21 +63,17 @@ void SubEncodedArmLift::ArmToScalePos() {  //Button Y
 
 void SubEncodedArmLift::Periodic() {
 
-
-	absolutePosition = _talon->GetSelectedSensorPosition(0) & 0xFFF;
-	if (++_loops >= 40) {
-		frc::SmartDashboard::PutNumber("_talon current ", absolutePosition);
-		_loops = 0;
-	}
-
+//	if (++_loops >= 40) {
+//			frc::SmartDashboard::PutNumber("absolutePosition", absolutePosition);
+//			frc::SmartDashboard::PutNumber("targetPositionRotations", targetPositionRotations);
+//			_loops = 0;
+//		}
 
 }
 
 void SubEncodedArmLift::Overide(std::shared_ptr<Joystick> sticky_2) {
 
 	_axis = sticky_2->GetRawAxis(5);
-	frc::SmartDashboard::PutNumber("_AXIS NO.", targetPositionRotations);
-	frc::SmartDashboard::PutNumber("AXIS!!!!", _axis);
 
 		if (_axis > 0.5) {
 			targetPositionRotations = targetPositionRotations - 50;
@@ -88,6 +84,14 @@ void SubEncodedArmLift::Overide(std::shared_ptr<Joystick> sticky_2) {
 		}
 
 		_talon->Set(ControlMode::Position, targetPositionRotations);
+}
+
+void SubEncodedArmLift::Reset() {
+
+	_talon->SetSelectedSensorPosition(0,0,10);
+	targetPositionRotations = 0;
+	_talon->Set(ControlMode::Position, targetPositionRotations);
+
 }
 
 
