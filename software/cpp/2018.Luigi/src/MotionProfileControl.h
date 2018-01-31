@@ -40,7 +40,7 @@ private:
 	int _loopCount;
 
 	const int kMinPointsInTalon = 5;
-	const int kNumLoopsTimeout = 10;
+	const int kNumLoopsTimeout = 20;	//Was 10
 	const int kTimeoutMs = 10;
 	const double kSensorUnitsPerRotation = 4096;
 
