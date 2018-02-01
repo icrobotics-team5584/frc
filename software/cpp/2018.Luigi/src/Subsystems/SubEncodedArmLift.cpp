@@ -1,32 +1,27 @@
 #include "SubEncodedArmLift.h"
 #include "../RobotMap.h"
-
+#include <iostream>
 #include <WPILib.h>
 #include <ctre/Phoenix.h>
 #include "Constants.h"
+#include "Commands/MyJoystickDrive.h"
 
 SubEncodedArmLift::SubEncodedArmLift() : Subsystem("ExampleSubsystem") {
 
 
 
-	TWO = 1;
-	THREE = 1;
-	FOUR = 1;
-
-
-
 	_talon = RobotMap::subEncodedArmLiftSrxMaster;
 	_prefs = Preferences::GetInstance();
+	_swtBottomReset = RobotMap::subEncodedArmLiftSwtBottom;
 
 	targetPositionRotations = 0.0;
 
 
 }
 
-void SubEncodedArmLift::ArmToGroundPos() {  //Button 10
+void SubEncodedArmLift::ArmToGroundPos() {  //Button A
 
-	frc::SmartDashboard::PutNumber("Ground", TWO);
-    TWO++;
+
 
 	//targetPositionRotations = (_prefs->GetDouble("Ground Position", 0.0))*4096;
 	targetPositionRotations = 0.0;
@@ -35,43 +30,71 @@ void SubEncodedArmLift::ArmToGroundPos() {  //Button 10
 
 }
 
-void SubEncodedArmLift::ArmToSwitchPos() {  //Button 11
+void SubEncodedArmLift::ArmToExchangePos() {  //Button B
 
-	frc::SmartDashboard::PutNumber("Switch", THREE);
-	THREE++;
+
+
+	//targetPositionRotations = (_prefs->GetDouble("Ground Position", 0.0))*4096;
+	targetPositionRotations = -(1.0 * 4096);
+	_talon->Set(ControlMode::Position, targetPositionRotations);
+
+
+}
+
+void SubEncodedArmLift::ArmToSwitchPos() {  //Button X
+
+
 
 	//targetPositionRotations = (_prefs->GetDouble("Switch Position", 0.0))*4096;
-	targetPositionRotations = 0.0;
+	targetPositionRotations = -(2.1 * 4096);
 	_talon->Set(ControlMode::Position, targetPositionRotations);
 
 }
 
-void SubEncodedArmLift::ArmToScalePos() {  //Button 12
+void SubEncodedArmLift::ArmToScalePos() {  //Button Y
 
-	frc::SmartDashboard::PutNumber("Scale", FOUR);
-    FOUR++;
+
 
 	//targetPositionRotations = (_prefs->GetDouble("Scale Position", 0.0))*4096;
-    targetPositionRotations = (6.0 * 4096);
-	//targetPositionRotations = 8192;
+    targetPositionRotations = -(5.0 * 4096);
 	_talon->Set(ControlMode::Position, targetPositionRotations);
 
 }
 
 void SubEncodedArmLift::Periodic() {
 
-//	frc::SmartDashboard::PutNumber("_talon current /start position", 555);
-	absolutePosition = _talon->GetSelectedSensorPosition(0) & 0xFFF;
-	if (++_loops >= 40) {
-		frc::SmartDashboard::PutNumber("_talon current /start position", absolutePosition);
-		_loops = 0;
-	}
-}
-
-void SubEncodedArmLift::InitDefaultCommand() {
-
+//	if (++_loops >= 40) {
+//			frc::SmartDashboard::PutNumber("absolutePosition", absolutePosition);
+//			frc::SmartDashboard::PutNumber("targetPositionRotations", targetPositionRotations);
+//			_loops = 0;
+//		}
 
 }
 
-// Put methods for controlling this subsystem
-// here. Call these from Commands.
+void SubEncodedArmLift::Overide(std::shared_ptr<Joystick> sticky_2) {
+
+	_axis = sticky_2->GetRawAxis(5);
+
+		if (_axis > 0.5) {
+			targetPositionRotations = targetPositionRotations - 50;
+		} else if (_axis <-0.5){
+			targetPositionRotations = targetPositionRotations + 50;
+		} else {
+
+		}
+
+		_talon->Set(ControlMode::Position, targetPositionRotations);
+}
+
+void SubEncodedArmLift::Reset() {
+
+	_talon->SetSelectedSensorPosition(0,0,10);
+	targetPositionRotations = 0;
+	_talon->Set(ControlMode::Position, targetPositionRotations);
+
+}
+
+
+
+
+
