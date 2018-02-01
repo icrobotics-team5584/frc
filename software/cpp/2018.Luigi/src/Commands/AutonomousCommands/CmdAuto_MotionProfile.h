@@ -1,5 +1,5 @@
-#ifndef CmdAutonomous_H
-#define CmdAutonomous_H
+#ifndef CmdAuto_MotionProfile_H
+#define CmdAuto_MotionProfile_H
 
 #include "Commands/Command.h"
 #include "Robot.h"
@@ -7,17 +7,16 @@
 #include "Autonomous/MotionProfileData.h"
 #include "Autonomous/MotionProfileControl.h"
 
-class CmdAutonomous : public Command {
+class CmdAuto_MotionProfile : public Command {
 public:
-	CmdAutonomous();
+	CmdAuto_MotionProfile();
 	void Initialize();
 	void Execute();
 	bool IsFinished();
 	void End();
 	void Interrupted();
 private:
-//	AutonomousSelector autoSelector;
 	MotionProfileControl MPController;
 };
 
-#endif  // CmdAutonomous_H
+#endif  // CmdAuto_MotionProfile_H

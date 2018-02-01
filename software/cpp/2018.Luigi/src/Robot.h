@@ -7,8 +7,9 @@
 #include "LiveWindow/LiveWindow.h"
 #include "SmartDashboard/SmartDashboard.h"
 
-//Include Autonomous Commands
+//Include Autonomous Options
 #include "Commands/CmdAutonomous.h"
+#include "Autonomous/AutonomousSelector.h"
 
 //Include Subsystems
 #include "Subsystems/SubDriveBase.h"
@@ -20,8 +21,6 @@
 
 class Robot : public frc::TimedRobot {
 public:
-	int intAutonomousTask = 0;
-
 	frc::Command* autonomousCommand = nullptr;
 	frc::LiveWindow *lw = frc::LiveWindow::GetInstance();
 	frc::SendableChooser<frc::Command*> autoChooser;

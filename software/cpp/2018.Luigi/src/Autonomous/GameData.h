@@ -1,6 +1,7 @@
 #pragma once
 
 #include <WPILib.h>
+#include <string>
 
 /*
  * The GameData class reads in the state of the switches and scale at the beginning of
@@ -15,26 +16,24 @@ private:
 	std::string gameData;
 
 public:
-	enum State {L = 0, R = 1};
-
 	GameData(){
 		//Take in gameData from FMS
 		gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
 	}
 
-	State GetSwitch(){
+	std::string GetSwitch(){
 		//Return alliance switch position
 		if (gameData[0] == 'L')
-			return L;
+			return "Left";
 		else
-			return R;
+			return "Right";
 	}
 
-	State GetScale(){
+	std::string GetScale(){
 		//Return alliance scale position
 		if (gameData[1] == 'L')
-			return L;
+			return "Left";
 		else
-			return R;
+			return "Right";
 	}
 };

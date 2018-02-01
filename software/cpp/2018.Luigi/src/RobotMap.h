@@ -3,7 +3,7 @@
 
 #include "WPILib.h"
 #include "ctre/Phoenix.h"
-#include "MotionProfileData.h"
+#include "Autonomous/MotionProfileData.h"
 
 class RobotMap {
 public:

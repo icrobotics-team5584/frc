@@ -35,8 +35,6 @@ void Robot::DisabledPeriodic() {
 }
 
 void Robot::AutonomousInit() {
-
-	std::cout << "Running Robot::AutonomousInit" <<std::endl;
 	//Remove any pre-existing MP Trajectory Points in Talons
 	RobotMap::subDriveBaseSRXright->ClearMotionProfileTrajectories();
 	RobotMap::subDriveBaseSRXleft->ClearMotionProfileTrajectories();
@@ -50,6 +48,9 @@ void Robot::AutonomousInit() {
 	if (autonomousCommand != nullptr)
 		std::cout << "About to run autonomousCommand->Start()" << std::endl;
 		autonomousCommand->Start();
+
+
+
 }
 
 void Robot::AutonomousPeriodic() {
