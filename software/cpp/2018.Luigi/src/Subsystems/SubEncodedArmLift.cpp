@@ -65,11 +65,15 @@ void SubEncodedArmLift::Periodic() {
 	//go slightly down from where its currently at!
 	if (_swtTopStop->Get()){
 
-//			targetPositionRotations = (_talon->GetSelectedSensorPosition(0) & 0xFFF) + 150;
-//			_talon->Set(ControlMode::Position, targetPositionRotations);
+			targetPositionRotations = ((_talon->GetSelectedSensorPosition(0) & 0xFFF) + 150);
+			int _newTest = _talon->GetSelectedSensorPosition(0) & 0xFFF;
+			_talon->Set(ControlMode::Position, targetPositionRotations);
+
 			++_test;
-			if (++_loops >= 40) {
-				frc::SmartDashboard::PutNumber("THISISTHEONE",_test );
+			if (++_loops >= 1) {
+				frc::SmartDashboard::PutNumber("SWITCH   IS WORKING ",_test );
+				frc::SmartDashboard::PutNumber("NEW___TARGET",targetPositionRotations );
+				frc::SmartDashboard::PutNumber("GET______",_newTest );
 				_loops = 0;
 			}
 
