@@ -149,3 +149,45 @@ std::string AutonomousSelector::ToString(AutonomousTask task){
 		throw "Error: Chosen Autonomous Task does not exist. Look in AutonomousSelector.cpp!";
 	}
 }
+
+void AutonomousSelector::SendOptionsToDashboard(){
+	//Send two choosers (drop-down menus) to dashboard for auto task and start position
+
+	//Instantiate the selection classes to send. These will be the options available to the driver
+	StartingPositionSelection startLeft(Left);
+	StartingPositionSelection startMiddle(Middle);
+	StartingPositionSelection startRight(Right);
+	AutonomousTaskSelection taskSwitch(Switch);
+	AutonomousTaskSelection taskScale(Scale);
+	AutonomousTaskSelection taskBoth(Both);
+	AutonomousTaskSelection taskNothing(Nothing);
+
+	//Populate choosers with the options created above
+	posChooser.AddDefault("Left", startLeft);
+	posChooser.AddObject("Middle", startMiddle);
+	posChooser.AddObject("Right", startRight);
+	taskChooser.AddDefault("Switch", taskSwitch);
+	taskChooser.AddObject("Scale", taskScale);
+	taskChooser.AddObject("Both", taskBoth);
+	taskChooser.AddObject("Nothing", taskNothing);
+}
+
+
+AutonomousSelector::StartingPosition AutonomousSelector::GetStartingPosition(){
+	return posChooser.GetSelected()._pos;
+}
+
+AutonomousSelector::AutonomousTask AutonomousSelector::GetAutonomousTask(){
+	return taskChooser.GetSelected()._task;
+}
+
+//Below is the body of the two subclasses, StartingPositionSelection and AutonomousTaskSelection
+AutonomousSelector::StartingPositionSelection::StartingPositionSelection(StartingPosition pos){
+	//Constructor of StartingPositionSelection
+	_pos = pos;
+}
+
+AutonomousSelector::AutonomousTaskSelection::AutonomousTaskSelection(AutonomousTask task){
+	//Constructor of AutonomousTaskSelection
+	_task = task;
+}

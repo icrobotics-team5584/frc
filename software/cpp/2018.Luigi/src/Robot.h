@@ -10,6 +10,7 @@
 //Include Autonomous Options
 #include "Commands/CmdAutonomous.h"
 #include "Autonomous/AutonomousSelector.h"
+#include "Autonomous/GameData.h"
 
 //Include Subsystems
 #include "Subsystems/SubDriveBase.h"
@@ -24,6 +25,9 @@ public:
 	frc::Command* autonomousCommand = nullptr;
 	frc::LiveWindow *lw = frc::LiveWindow::GetInstance();
 	frc::SendableChooser<frc::Command*> autoChooser;
+
+	GameData gameData;
+	AutonomousSelector autoSelector;
 
 	static std::unique_ptr<OI> oi;
 	static std::shared_ptr<SubDriveBase> subDriveBase;

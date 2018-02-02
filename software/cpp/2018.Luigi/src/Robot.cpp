@@ -22,8 +22,7 @@ void Robot::RobotInit() {
 	oi.reset(new OI());
 
 	//Setup Auto Chooser
-	autoChooser.AddDefault("Choose for me", new CmdAutonomous());
-	frc::SmartDashboard::PutData("Autonomous", &autoChooser);
+	autoSelector.SendOptionsToDashboard();
 }
 
 void Robot::DisabledInit(){
@@ -44,18 +43,10 @@ void Robot::AutonomousInit() {
 	RobotMap::subDriveBaseSRXleft->SetSelectedSensorPosition(0, 0, 10);
 
 	//Determine auto command selected from Dashboard and run
-	autonomousCommand = autoChooser.GetSelected();
-	if (autonomousCommand != nullptr)
-		std::cout << "About to run autonomousCommand->Start()" << std::endl;
-		autonomousCommand->Start();
-
-
-
+	autoSelector.SelectAndRun(autoSelector.GetStartingPosition(), autoSelector.GetAutonomousTask, gameData);
 }
 
 void Robot::AutonomousPeriodic() {
-	SmartDashboard::PutNumber("Left Encoder Value", RobotMap::subDriveBaseSRXleft->GetSelectedSensorPosition(0) & 0xFFF);
-	SmartDashboard::PutNumber("Right Encoder Value", RobotMap::subDriveBaseSRXright->GetSelectedSensorPosition(0) & 0xFFF);
 	frc::Scheduler::GetInstance()->Run();
 }
 

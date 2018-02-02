@@ -2,6 +2,7 @@
 
 #include <string.h>
 #include <Commands/Command.h>
+#include <SmartDashboard/SmartDashboard.h>
 #include "GameData.h"
 
 //Include possible autonomous tasks
@@ -18,17 +19,36 @@
 class AutonomousSelector {
 public:
 	enum StartingPosition {Left, Middle, Right};
-	enum AutonomousTask {Nothing, Switch, Scale, Both};
+	enum AutonomousTask {Switch, Scale, Both, Nothing};
 
 	AutonomousSelector();
 	std::string DetermineRoutine(StartingPosition pos, AutonomousTask task, GameData data);
 	std::shared_ptr<frc::Command> DetermineCommand(std::string Routine);
 	void SelectAndRun(StartingPosition pos, AutonomousTask task, GameData data);
 	void ReadMotionProfile(std::string MP);
+	void SendOptionsToDashboard();
+	AutonomousTask GetAutonomousTask();
+	StartingPosition GetStartingPosition();
+
+	//Declare subclasses to store auto options (these are sendable to the dashboard)
+	class StartingPositionSelection {
+	public:
+		StartingPosition _pos;
+		StartingPositionSelection(StartingPosition pos);
+	};
+	class AutonomousTaskSelection {
+	public:
+		AutonomousTask _task;
+		AutonomousTaskSelection(AutonomousTask task);
+	};
 
 private:
 	std::shared_ptr<frc::Command> selectedCommand;
 
 	std::string ToString(StartingPosition pos);
 	std::string ToString(AutonomousTask task);
+
+	//Create choosers (drop-down menus) to send to dashboard
+	SendableChooser<StartingPositionSelection> posChooser;
+	SendableChooser<AutonomousTaskSelection> taskChooser;
 };
