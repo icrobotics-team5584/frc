@@ -1,6 +1,7 @@
 #ifndef ROBOTMAP_H
 #define ROBOTMAP_H
 
+#include "AHRS.h"
 #include "WPILib.h"
 #include "ctre/Phoenix.h"
 #include "MotionProfileData.h"
@@ -8,6 +9,7 @@
 #include "MotionProfiles/MotionProfileBaselineB.h"
 #include "MotionProfiles/MPL-test.h"
 #include "MotionProfiles/MPR-test.h"
+
 
 class RobotMap {
 public:
@@ -50,6 +52,9 @@ public:
 	//Define Motion Profile Data
 	static std::shared_ptr<MotionProfileData> mpBaseline;
 	static std::shared_ptr<MotionProfileData> mpTest;
+
+	//Define micro navX gyro
+	static std::shared_ptr<AHRS> ahrsGyro;
 
 
 };

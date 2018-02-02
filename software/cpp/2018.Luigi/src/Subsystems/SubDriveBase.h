@@ -5,6 +5,7 @@
 #include <Commands/Subsystem.h>
 #include <WPILib.h>
 #include <SmartDashboard/SmartDashboard.h>
+#include <AHRS.h>
 
 #include "RobotMap.h"
 

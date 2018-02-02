@@ -38,6 +38,9 @@ std::shared_ptr<DigitalInput> RobotMap::subEncodedArmLiftSwtBottom;
 std::shared_ptr<MotionProfileData> RobotMap::mpBaseline;
 std::shared_ptr<MotionProfileData> RobotMap::mpTest;
 
+//Define micro navX gyro
+std::shared_ptr<AHRS> RobotMap::ahrsGyro;
+
 void RobotMap::init() {
 
 	//Initiate DriveBase Actuators
@@ -106,6 +109,9 @@ void RobotMap::init() {
     //Construct Motion Profiles
     mpBaseline.reset(new MotionProfileData(kBaselineA, kBaselineB, kBaselineASz));
     mpTest.reset(new MotionProfileData(kMPLtest, kMPRtest, kMPLtestSz));
+
+    //Initiate micro navX gyro
+    ahrsGyro.reset(new AHRS(I2C::kMXP,32));
 
     //Initiate arm lift Actuators / Actuator
     subEncodedArmLiftSrxMaster.reset(new WPI_TalonSRX(5));
