@@ -10,7 +10,7 @@ void CmdAutonomous::Initialize() {
 	//Choose a motion profile
 	std::string MP;
 //	MP = autoSelector.DetermineMotionProfile(AutonomousSelector::Left);
-	MP = "Middle-Switch-Left";	//use for a hard-coded motion profile
+	MP = "Left-Scale-Left";	//use for a hard-coded motion profile
 
 	//Reading in CSV
 	Robot::MPData->ReadCSV(0, MP + "/" + MP + "_left.csv");

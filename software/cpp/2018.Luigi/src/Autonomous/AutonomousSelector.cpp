@@ -154,25 +154,25 @@ void AutonomousSelector::SendOptionsToDashboard(){
 	//Send two choosers (drop-down menus) to dashboard for auto task and start position
 
 	//Instantiate the selection classes to send. These will be the options available to the driver
-	StartingPositionSelection startLeft(Left);
-	StartingPositionSelection startMiddle(Middle);
-	StartingPositionSelection startRight(Right);
-	AutonomousTaskSelection taskSwitch(Switch);
-	AutonomousTaskSelection taskScale(Scale);
-	AutonomousTaskSelection taskBoth(Both);
-	AutonomousTaskSelection taskNothing(Nothing);
+//	StartingPositionSelection startLeft(Left);
+//	StartingPositionSelection startMiddle(Middle);
+//	StartingPositionSelection startRight(Right);
+//	AutonomousTaskSelection taskSwitch(Switch);
+//	AutonomousTaskSelection taskScale(Scale);
+//	AutonomousTaskSelection taskBoth(Both);
+//	AutonomousTaskSelection taskNothing(Nothing);
 
 	//Populate choosers with the options created above
-	posChooser.AddDefault("Left", startLeft);
-	posChooser.AddObject("Middle", startMiddle);
-	posChooser.AddObject("Right", startRight);
-	taskChooser.AddDefault("Switch", taskSwitch);
-	taskChooser.AddObject("Scale", taskScale);
-	taskChooser.AddObject("Both", taskBoth);
-	taskChooser.AddObject("Nothing", taskNothing);
+//	posChooser.AddDefault("Left", startLeft);
+//	posChooser.AddObject("Middle", startMiddle);
+//	posChooser.AddObject("Right", startRight);
+//	taskChooser.AddDefault("Switch", taskSwitch);
+//	taskChooser.AddObject("Scale", taskScale);
+//	taskChooser.AddObject("Both", taskBoth);
+//	taskChooser.AddObject("Nothing", taskNothing);
 }
 
-
+/*
 AutonomousSelector::StartingPosition AutonomousSelector::GetStartingPosition(){
 	return posChooser.GetSelected()._pos;
 }
@@ -191,3 +191,4 @@ AutonomousSelector::AutonomousTaskSelection::AutonomousTaskSelection(AutonomousT
 	//Constructor of AutonomousTaskSelection
 	_task = task;
 }
+*/

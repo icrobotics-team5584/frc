@@ -22,7 +22,7 @@ void Robot::RobotInit() {
 	oi.reset(new OI());
 
 	//Setup Auto Chooser
-	autoSelector.SendOptionsToDashboard();
+//	autoSelector.SendOptionsToDashboard();
 }
 
 void Robot::DisabledInit(){
@@ -43,7 +43,9 @@ void Robot::AutonomousInit() {
 	RobotMap::subDriveBaseSRXleft->SetSelectedSensorPosition(0, 0, 10);
 
 	//Determine auto command selected from Dashboard and run
-	autoSelector.SelectAndRun(autoSelector.GetStartingPosition(), autoSelector.GetAutonomousTask, gameData);
+//	autoSelector.SelectAndRun(autoSelector.GetStartingPosition(), autoSelector.GetAutonomousTask, gameData);
+	static CmdAutonomous ac;
+	ac.Start();
 }
 
 void Robot::AutonomousPeriodic() {

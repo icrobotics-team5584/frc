@@ -175,9 +175,9 @@ void MotionProfileControl::PushToTalon(TrajectoryPoint point, std::shared_ptr<Ta
 	//Push point to Talon
 	ctre::phoenix::ErrorCode pushpointstatus;
 	pushpointstatus = _talon->PushMotionProfileTrajectory(point);
-	if( pushpointstatus != 0 ) {
+//	if( pushpointstatus != 0 ) {
 		std::cout << "  push point status: " << pushpointstatus << "\n";
-	}
+//	}
 }
 
 void MotionProfileControl::start(){

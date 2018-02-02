@@ -27,7 +27,7 @@ public:
 	frc::SendableChooser<frc::Command*> autoChooser;
 
 	GameData gameData;
-	AutonomousSelector autoSelector;
+//	AutonomousSelector autoSelector;
 
 	static std::unique_ptr<OI> oi;
 	static std::shared_ptr<SubDriveBase> subDriveBase;

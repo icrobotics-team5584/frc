@@ -40,8 +40,8 @@ OI::OI() {
 	btnEncoderPosReset->WhenPressed(new CmdResetArmEncoPos());
 
 	//Initiate Change camera button
-	btnChangeCamera.reset(new JoystickButton(joystick0.get(), 99));
-	btnChangeCamera->WhenPressed(new CmdChangeCamera());
+//	btnChangeCamera.reset(new JoystickButton(joystick0.get(), 99));
+//	btnChangeCamera->WhenPressed(new CmdChangeCamera());
 
 }
 
