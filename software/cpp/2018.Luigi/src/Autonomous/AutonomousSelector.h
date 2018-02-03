@@ -1,12 +1,9 @@
 #pragma once
 
-#include <string.h>
+#include <string>
 #include <Commands/Command.h>
 #include <SmartDashboard/SmartDashboard.h>
 #include "GameData.h"
-
-//Include possible autonomous tasks
-#include "AutoCommandsIncludes.h"	//I don't know if this is bad practice, it seems nice though.
 
 /*
  * At the start of the autonomous period, the AutonomousSelector class will
@@ -27,6 +24,7 @@ public:
 	void SelectAndRun(StartingPosition pos, AutonomousTask task, GameData data);
 	void ReadMotionProfile(std::string MP);
 	void SendOptionsToDashboard();
+	void StopAutoCommand();
 	AutonomousTask GetAutonomousTask();
 	StartingPosition GetStartingPosition();
 
@@ -49,6 +47,6 @@ private:
 	std::string ToString(AutonomousTask task);
 
 	//Create choosers (drop-down menus) to send to dashboard
-	SendableChooser<StartingPositionSelection> posChooser;
-	SendableChooser<AutonomousTaskSelection> taskChooser;
+	SendableChooser< StartingPositionSelection* > posChooser;
+	SendableChooser< AutonomousTaskSelection* > taskChooser;
 };

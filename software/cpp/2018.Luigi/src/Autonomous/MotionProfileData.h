@@ -11,6 +11,7 @@ public:
 
 	MotionProfileData();
 	void ReadCSV(int set, std::string fileName);
+	void ReadMotionProfile(std::string MP);
     int GetNumberOfPoints();
     double GetPosition( int set, int number);
     double GetVelocity( int set, int number);

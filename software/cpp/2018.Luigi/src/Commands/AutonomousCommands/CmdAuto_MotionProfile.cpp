@@ -1,7 +1,8 @@
 #include "CmdAuto_MotionProfile.h"
 
-CmdAuto_MotionProfile::CmdAuto_MotionProfile() : MPController(RobotMap::subDriveBaseSRXleft, RobotMap::subDriveBaseSRXright, Robot::MPData)
+CmdAuto_MotionProfile::CmdAuto_MotionProfile(std::string profile) : MPController(RobotMap::subDriveBaseSRXleft, RobotMap::subDriveBaseSRXright, Robot::MPData)
 {
+	Robot::MPData->ReadMotionProfile(profile);
 	Requires(Robot::subDriveBase.get());
 }
 

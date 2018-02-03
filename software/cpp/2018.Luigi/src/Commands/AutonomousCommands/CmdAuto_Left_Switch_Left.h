@@ -2,9 +2,9 @@
 #define CmdAuto_Left_Switch_Left_H
 
 #include <Commands/CommandGroup.h>
-#include "Robot.h"
-#include "Commands/AutonomousCommands/CmdAuto_MotionProfile.h"
+#include "CmdAuto_MotionProfile.h"
 #include "Commands/CmdArmPosSwitch.h"
+#include "Commands/CmdOutput.h"
 
 class CmdAuto_Left_Switch_Left : public CommandGroup {
 public:

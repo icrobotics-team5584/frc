@@ -8,6 +8,8 @@ std::shared_ptr<SubEncodedArmLift> Robot::subEncodedArmLift;
 std::shared_ptr<SubCameras> Robot::subCameras;
 
 std::shared_ptr<MotionProfileData> Robot::MPData;
+GameData Robot::gameData;
+AutonomousSelector Robot::autoSelector;
 
 void Robot::RobotInit() {
 	RobotMap::init();
@@ -22,7 +24,7 @@ void Robot::RobotInit() {
 	oi.reset(new OI());
 
 	//Setup Auto Chooser
-//	autoSelector.SendOptionsToDashboard();
+	autoSelector.SendOptionsToDashboard();
 }
 
 void Robot::DisabledInit(){
@@ -43,9 +45,9 @@ void Robot::AutonomousInit() {
 	RobotMap::subDriveBaseSRXleft->SetSelectedSensorPosition(0, 0, 10);
 
 	//Determine auto command selected from Dashboard and run
-//	autoSelector.SelectAndRun(autoSelector.GetStartingPosition(), autoSelector.GetAutonomousTask, gameData);
-	static CmdAutonomous ac;
-	ac.Start();
+	autoSelector.SelectAndRun(autoSelector.GetStartingPosition(), autoSelector.GetAutonomousTask(), gameData);
+//	static CmdAutonomous ac;
+//	ac.Start();
 }
 
 void Robot::AutonomousPeriodic() {
@@ -53,13 +55,11 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
-	if (autonomousCommand != nullptr)
-		autonomousCommand->Cancel();
+	autoSelector.StopAutoCommand();
 }
 
 void Robot::TeleopPeriodic() {
 	frc::Scheduler::GetInstance()->Run();
-
 }
 
 START_ROBOT_CLASS(Robot);

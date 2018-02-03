@@ -1,4 +1,6 @@
 #include "AutonomousSelector.h"
+#include "Robot.h"
+#include "Autonomous/AutoCommandsIncludes.h"	//Include all possible autonomous commands
 
 AutonomousSelector::AutonomousSelector() {
 	selectedCommand.reset(new CmdAuto_Nothing());
@@ -6,7 +8,6 @@ AutonomousSelector::AutonomousSelector() {
 
 std::string AutonomousSelector::DetermineRoutine(StartingPosition pos, AutonomousTask task, GameData data) {
 	/*
-	 *
 	 * Build a string from start pos, game data, and auto task,
 	 *
 	 * String example: "Left-Switch-Right", means start at the left, and go for the right
@@ -15,7 +16,6 @@ std::string AutonomousSelector::DetermineRoutine(StartingPosition pos, Autonomou
 	 * Alternate routines include "Both-Left", which means go for both the switch and the
 	 * scale on the left side (also applies to right side) and "Nothing", which will not
 	 * move the robot at all.
-	 *
 	 */
 
 	//Create a strings to store elements of our routine
@@ -62,62 +62,64 @@ std::string AutonomousSelector::DetermineRoutine(StartingPosition pos, Autonomou
 }
 
 std::shared_ptr<frc::Command> AutonomousSelector::DetermineCommand(std::string routine){
-	//Use the determined routine string and return a pointer to its associated command.
-	//Annoyingly, switch case statements don't work with strings, so we're going with ifs.
+	/*
+	 * Use the determined routine string and return a pointer to its associated command.
+	 * Annoyingly, switch case statements don't work with strings, so we're going with ifs.
+	 */
+
+	std::shared_ptr<frc::Command> commandToSelect;
 
 	if (routine == "Left-Swtich-Left"){
-		selectedCommand.reset(new CmdAuto_Left_Switch_Left() );
+		commandToSelect.reset(new CmdAuto_Left_Switch_Left() );
 
 	}else if (routine == "Left-Swtich-Right"){
-		selectedCommand.reset(new CmdAuto_Left_Switch_Right() );
+		commandToSelect.reset(new CmdAuto_Left_Switch_Right() );
 
 	}else if (routine == "Right-Swtich-Left"){
-		selectedCommand.reset(new CmdAuto_Right_Switch_Left() );
+		commandToSelect.reset(new CmdAuto_Right_Switch_Left() );
 
 	}else if (routine == "Right-Swtich-Right"){
-		selectedCommand.reset(new CmdAuto_Right_Switch_Right() );
+		commandToSelect.reset(new CmdAuto_Right_Switch_Right() );
 
 	}else if (routine == "Middle-Swtich-Left"){
-		selectedCommand.reset(new CmdAuto_Middle_Switch_Left() );
+		commandToSelect.reset(new CmdAuto_Middle_Switch_Left() );
 
 	}else if (routine == "Middle-Swtich-Right"){
-		selectedCommand.reset(new CmdAuto_Middle_Switch_Right() );
+		commandToSelect.reset(new CmdAuto_Middle_Switch_Right() );
 
 	}else if (routine == "Left-Scale-Left"){
-		selectedCommand.reset(new CmdAuto_Left_Switch_Left() );
+		commandToSelect.reset(new CmdAuto_Left_Switch_Left() );
 
 	}else if (routine == "Left-Scale-Right"){
-		selectedCommand.reset(new CmdAuto_Left_Scale_Right() );
+		commandToSelect.reset(new CmdAuto_Left_Scale_Right() );
 
 	}else if (routine == "Right-Scale-Left"){
-		selectedCommand.reset(new CmdAuto_Right_Scale_Left() );
+		commandToSelect.reset(new CmdAuto_Right_Scale_Left() );
 
 	}else if (routine == "Right-Scale-Right"){
-		selectedCommand.reset(new CmdAuto_Right_Scale_Right() );
+		commandToSelect.reset(new CmdAuto_Right_Scale_Right() );
 
 	}else if ( routine == "Both-Left"){
-		selectedCommand.reset(new CmdAuto_Both_Left() );
+		commandToSelect.reset(new CmdAuto_Both_Left() );
 
 	}else if (routine == "Both-Right"){
-		selectedCommand.reset(new CmdAuto_Both_Right() );
+		commandToSelect.reset(new CmdAuto_Both_Right() );
 
 	}else /*if (routine == "Nothing")*/ {
-		selectedCommand.reset(new CmdAuto_Nothing() );
+		commandToSelect.reset(new CmdAuto_Nothing() );
 	}
-
-	return selectedCommand;
+	return commandToSelect;
 }
 
 void AutonomousSelector::SelectAndRun(StartingPosition pos, AutonomousTask task, GameData data){
-	std::string routine = DetermineRoutine(pos, task, data);
-	std::shared_ptr<frc::Command> command = DetermineCommand(routine);
-	command->Start();
+	std::string routine = DetermineRoutine(pos, task, data);	//Pick an autonomous routine based on inputs
+	selectedCommand = DetermineCommand(routine);				//Determine which command to run
+	selectedCommand->Start();									//Start the command
 }
 
-void AutonomousSelector::ReadMotionProfile(std::string MP) {
-	//Reading in CSV
-	Robot::MPData->ReadCSV(0, MP + "/" + MP + "_left.csv");
-	Robot::MPData->ReadCSV(1, MP + "/" + MP + "_right.csv");
+void AutonomousSelector::StopAutoCommand(){
+	//stop the command that started in AutonomousSelector::SelectAndRun(...)
+	selectedCommand->Cancel();
 }
 
 std::string AutonomousSelector::ToString(StartingPosition pos){
@@ -153,42 +155,40 @@ std::string AutonomousSelector::ToString(AutonomousTask task){
 void AutonomousSelector::SendOptionsToDashboard(){
 	//Send two choosers (drop-down menus) to dashboard for auto task and start position
 
-	//Instantiate the selection classes to send. These will be the options available to the driver
-//	StartingPositionSelection startLeft(Left);
-//	StartingPositionSelection startMiddle(Middle);
-//	StartingPositionSelection startRight(Right);
-//	AutonomousTaskSelection taskSwitch(Switch);
-//	AutonomousTaskSelection taskScale(Scale);
-//	AutonomousTaskSelection taskBoth(Both);
-//	AutonomousTaskSelection taskNothing(Nothing);
+	//Populate position chooser with options
+	posChooser.AddDefault("Left", new StartingPositionSelection(Left));
+	posChooser.AddObject("Middle", new StartingPositionSelection(Middle));
+	posChooser.AddObject("Right", new StartingPositionSelection(Right));
 
-	//Populate choosers with the options created above
-//	posChooser.AddDefault("Left", startLeft);
-//	posChooser.AddObject("Middle", startMiddle);
-//	posChooser.AddObject("Right", startRight);
-//	taskChooser.AddDefault("Switch", taskSwitch);
-//	taskChooser.AddObject("Scale", taskScale);
-//	taskChooser.AddObject("Both", taskBoth);
-//	taskChooser.AddObject("Nothing", taskNothing);
+	//Populate position chooser with options
+	taskChooser.AddDefault("Switch", new AutonomousTaskSelection(Switch));
+	taskChooser.AddObject("Scale", new AutonomousTaskSelection(Scale));
+	taskChooser.AddObject("Both", new AutonomousTaskSelection(Both));
+	taskChooser.AddObject("Nothing", new AutonomousTaskSelection(Nothing));
+
+	//Send choosers to dashboard
+	SmartDashboard::PutData("Starting Position", &posChooser);
+	SmartDashboard::PutData("Autonomous Task", &taskChooser);
 }
 
-/*
+
 AutonomousSelector::StartingPosition AutonomousSelector::GetStartingPosition(){
-	return posChooser.GetSelected()._pos;
+	StartingPositionSelection* selectedStartPos;
+	selectedStartPos = posChooser.GetSelected();
+	return selectedStartPos->_pos;
 }
 
 AutonomousSelector::AutonomousTask AutonomousSelector::GetAutonomousTask(){
-	return taskChooser.GetSelected()._task;
+	AutonomousTaskSelection* selectedAutoTask;
+	selectedAutoTask = taskChooser.GetSelected();
+	return selectedAutoTask->_task;
 }
 
 //Below is the body of the two subclasses, StartingPositionSelection and AutonomousTaskSelection
-AutonomousSelector::StartingPositionSelection::StartingPositionSelection(StartingPosition pos){
+AutonomousSelector::StartingPositionSelection::StartingPositionSelection(StartingPosition pos) : _pos(pos) {
 	//Constructor of StartingPositionSelection
-	_pos = pos;
 }
 
-AutonomousSelector::AutonomousTaskSelection::AutonomousTaskSelection(AutonomousTask task){
+AutonomousSelector::AutonomousTaskSelection::AutonomousTaskSelection(AutonomousTask task) : _task(task) {
 	//Constructor of AutonomousTaskSelection
-	_task = task;
 }
-*/
