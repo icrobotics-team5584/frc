@@ -94,7 +94,19 @@ void SubEncodedArmLift::Reset() {
 
 }
 
+int SubEncodedArmLift::GetCurrentPosition() {
 
+	//Return current position of the lift encoder in sensor units
+	return _talon->GetSelectedSensorPosition(0);
+
+}
+
+int SubEncodedArmLift::GetTargetPosition() {
+
+	//Return target position of the lift encoder in sensor units
+	return (targetPositionRotations / 4096);
+
+}
 
 
 

@@ -1,6 +1,7 @@
 #ifndef CmdAuto_Left_Switch_Left_H
 #define CmdAuto_Left_Switch_Left_H
 
+#include <iostream>
 #include <Commands/CommandGroup.h>
 #include "CmdAuto_MotionProfile.h"
 #include "Commands/CmdArmPosSwitch.h"

@@ -42,8 +42,8 @@ std::string AutonomousSelector::DetermineRoutine(StartingPosition pos, Autonomou
 	//If going for just one thing, figure out which
 	if ( (_task == "Switch") or (_task == "Scale") ){
 		//Append elements of the routine
-		routine.append( _pos );
-		routine.append( _task );
+		routine.append( _pos  + "-");
+		routine.append( _task  + "-");
 		//Determine whether to use switch or scale GameData
 		if ( _task == "Switch"){
 			_data = data.GetSwitch();
@@ -58,6 +58,7 @@ std::string AutonomousSelector::DetermineRoutine(StartingPosition pos, Autonomou
 		routine = "Nothing";
 	}
 
+	std::cout << "Detemining auto routine: " << routine << std::endl;
 	return routine;
 }
 
@@ -112,8 +113,10 @@ std::shared_ptr<frc::Command> AutonomousSelector::DetermineCommand(std::string r
 }
 
 void AutonomousSelector::SelectAndRun(StartingPosition pos, AutonomousTask task, GameData data){
+	std::cout << "Select and run routine" << std::endl;
 	std::string routine = DetermineRoutine(pos, task, data);	//Pick an autonomous routine based on inputs
 	selectedCommand = DetermineCommand(routine);				//Determine which command to run
+	std::cout << "Running routine: " << routine << std::endl;
 	selectedCommand->Start();									//Start the command
 }
 
@@ -175,6 +178,7 @@ void AutonomousSelector::SendOptionsToDashboard(){
 AutonomousSelector::StartingPosition AutonomousSelector::GetStartingPosition(){
 	StartingPositionSelection* selectedStartPos;
 	selectedStartPos = posChooser.GetSelected();
+	std::cout << "Getting start pos: " << selectedStartPos->_pos << std::endl;
 	return selectedStartPos->_pos;
 }
 

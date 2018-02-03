@@ -31,6 +31,8 @@ public:
 	void Overide(std::shared_ptr<Joystick>);
 	void Periodic();
 	void Reset();
+	int GetCurrentPosition();
+	int GetTargetPosition();
 
 };
 

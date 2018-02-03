@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <iostream>
 #include <Commands/Command.h>
 #include <SmartDashboard/SmartDashboard.h>
 #include "GameData.h"

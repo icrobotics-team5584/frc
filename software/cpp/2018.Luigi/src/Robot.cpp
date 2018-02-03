@@ -24,6 +24,7 @@ void Robot::RobotInit() {
 	oi.reset(new OI());
 
 	//Setup Auto Chooser
+	std::cout << "Sending options to dash" << std::endl;
 	autoSelector.SendOptionsToDashboard();
 }
 
@@ -36,6 +37,8 @@ void Robot::DisabledPeriodic() {
 }
 
 void Robot::AutonomousInit() {
+	gameData.UpdateGameData();
+
 	//Remove any pre-existing MP Trajectory Points in Talons
 	RobotMap::subDriveBaseSRXright->ClearMotionProfileTrajectories();
 	RobotMap::subDriveBaseSRXleft->ClearMotionProfileTrajectories();

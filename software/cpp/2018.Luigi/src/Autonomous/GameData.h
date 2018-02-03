@@ -21,8 +21,14 @@ public:
 		gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
 	}
 
+	void UpdateGameData() {
+		//Take in gameData from FMS
+		gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
+	}
+
 	std::string GetSwitch(){
 		//Return alliance switch position
+		std::cout << "GettingSwitch from Gamedata: " << gameData[0] << std::endl;
 		if (gameData[0] == 'L')
 			return "Left";
 		else
