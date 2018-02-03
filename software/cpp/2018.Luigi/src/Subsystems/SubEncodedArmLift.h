@@ -22,6 +22,7 @@ private:
 	int absolutePosition = 0;
 	double _axis = 0;
 	int _test = 0;
+	double _tempStore = 0;
 
 public:
 	SubEncodedArmLift();
@@ -32,6 +33,7 @@ public:
 	void Overide(std::shared_ptr<Joystick>);
 	void Periodic();
 	void Reset();
+	void TopStop();
 
 };
 
