@@ -113,10 +113,9 @@ std::shared_ptr<frc::Command> AutonomousSelector::DetermineCommand(std::string r
 }
 
 void AutonomousSelector::SelectAndRun(StartingPosition pos, AutonomousTask task, GameData data){
-	std::cout << "Select and run routine" << std::endl;
 	std::string routine = DetermineRoutine(pos, task, data);	//Pick an autonomous routine based on inputs
 	selectedCommand = DetermineCommand(routine);				//Determine which command to run
-	std::cout << "Running routine: " << routine << std::endl;
+	std::cout << "about to run routine: " << routine << std::endl;
 	selectedCommand->Start();									//Start the command
 }
 
@@ -185,6 +184,7 @@ AutonomousSelector::StartingPosition AutonomousSelector::GetStartingPosition(){
 AutonomousSelector::AutonomousTask AutonomousSelector::GetAutonomousTask(){
 	AutonomousTaskSelection* selectedAutoTask;
 	selectedAutoTask = taskChooser.GetSelected();
+	std::cout << "Getting auto task: " << selectedAutoTask->_task << std::endl;
 	return selectedAutoTask->_task;
 }
 

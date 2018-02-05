@@ -28,7 +28,7 @@ public:
 
 	std::string GetSwitch(){
 		//Return alliance switch position
-		std::cout << "GettingSwitch from Gamedata: " << gameData[0] << std::endl;
+		std::cout << "Getting Switch Gamedata: " << gameData[0] << std::endl;
 		if (gameData[0] == 'L')
 			return "Left";
 		else
@@ -37,6 +37,7 @@ public:
 
 	std::string GetScale(){
 		//Return alliance scale position
+		std::cout << "Getting Scale Gamedata: " << gameData[1] << std::endl;
 		if (gameData[1] == 'L')
 			return "Left";
 		else

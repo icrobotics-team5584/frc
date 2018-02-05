@@ -42,6 +42,7 @@ private:
 	const int kMinPointsInTalon = 5;
 	const int kNumLoopsTimeout = 10;
 	const int kTimeoutMs = 10;
+	const int kTopBufferSize = 4000;
 	const double kSensorUnitsPerRotation = 4096;
 
 	enum Pos {first, mid, last};

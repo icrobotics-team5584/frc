@@ -8,7 +8,7 @@ MotionProfileControl::MotionProfileControl(	std::shared_ptr<TalonSRX> LeftTalon,
 : _notifier(&MotionProfileControl::PeriodicTask, this)
 {
 
-	//Initialise variables
+	//Assign variables
 	_leftTalon = LeftTalon;
 	_rightTalon = RightTalon;
 	_mp = MP;
@@ -21,6 +21,10 @@ MotionProfileControl::MotionProfileControl(	std::shared_ptr<TalonSRX> LeftTalon,
 
 	_leftTalon->ChangeMotionControlFramePeriod(5);
 	_rightTalon->ChangeMotionControlFramePeriod(5);
+
+	//Set size of top level trajectory point buffer ---I found it!!---
+	_statusA.topBufferCnt = kTopBufferSize;
+	_statusB.topBufferCnt = kTopBufferSize;
 }
 
 void MotionProfileControl::PeriodicTask(){
@@ -90,6 +94,7 @@ void MotionProfileControl::control(){
 				//Talons don't have enough points, log an underrun
 			}
 
+			//Uncomment these to find out why the MP isn't ending
 //			std::cout << "_statusA.activePointValid: " << _statusA.activePointValid << std::endl;
 //			std::cout << "_statusA.isLast: " << _statusA.isLast << std::endl;
 //			std::cout << "_statusB.activePointValid: " << _statusB.activePointValid << std::endl;
@@ -160,8 +165,9 @@ void MotionProfileControl::startFilling(){
 }
 
 void MotionProfileControl::PushToTalon(TrajectoryPoint point, std::shared_ptr<TalonSRX> _talon, int side) {
-//	std::cout << "Left talon top level buffer count: " << _leftTalon->GetMotionProfileTopLevelBufferCount() << std::endl;
-//	std::cout << "Right talon top level buffer count: " << _rightTalon->GetMotionProfileTopLevelBufferCount() << std::endl;
+	//Uncomment these to find out if the top buffer is filling up
+//	std::cout << "Left top-buffer count: " << _leftTalon->GetMotionProfileTopLevelBufferCount() << " out of " << kTopBufferSize << std::endl;
+//	std::cout << "Right top-buffer count: " << _rightTalon->GetMotionProfileTopLevelBufferCount() << " out of " << kTopBufferSize << std::endl;
 
 	//negate right side because motor is inverted
 	if (side == 1) {
@@ -169,15 +175,16 @@ void MotionProfileControl::PushToTalon(TrajectoryPoint point, std::shared_ptr<Ta
 		point.velocity *= -1;
 	}
 
-	point.position = point.position * kSensorUnitsPerRotation;		//Convert revolutions to sensor units
-	point.velocity = point.velocity * kSensorUnitsPerRotation/600;	//Convert RPM to units/100m
+	//Convert pos and vel to sensor units
+	point.position = point.position * kSensorUnitsPerRotation;
+	point.velocity = point.velocity * kSensorUnitsPerRotation/600;
 
 	//Push point to Talon
 	ctre::phoenix::ErrorCode pushpointstatus;
 	pushpointstatus = _talon->PushMotionProfileTrajectory(point);
-//	if( pushpointstatus != 0 ) {
+	if( pushpointstatus != 0 ) {
 		std::cout << "  push point status: " << pushpointstatus << "\n";
-//	}
+	}
 }
 
 void MotionProfileControl::start(){
