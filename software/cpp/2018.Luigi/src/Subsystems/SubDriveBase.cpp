@@ -12,6 +12,8 @@ SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase") {
     ultrasonicInputRight = RobotMap::subDriveBaseUltrasonicInputRight;
     ultrasonicInputBack = RobotMap::subDriveBaseUltrasonicInputBack;
     ultrasonicInputLeft = RobotMap::subDriveBaseUltrasonicInputLeft;
+    ahrsGyro = RobotMap::ahrsGyro;
+    aCounter =0;
 }
 
 void SubDriveBase::InitDefaultCommand() {
@@ -46,8 +48,13 @@ void SubDriveBase::Periodic() {
 	//frc::SmartDashboard::PutNumber("Ultra RAW, DIO:0", ultrasonicInputFront->GetValue());
 
 	_Ultraloops = 0;
-
 	}
+
+	aCounter++;
+
+	double aValue = ahrsGyro->GetAngle();
+	frc::SmartDashboard::PutNumber("NAVX Useful value", aValue);
+	frc::SmartDashboard::PutNumber("NAVX Counter", aCounter);
 
 }
 

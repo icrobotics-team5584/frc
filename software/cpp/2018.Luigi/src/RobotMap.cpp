@@ -111,8 +111,27 @@ void RobotMap::init() {
     mpTest.reset(new MotionProfileData(kMPLtest, kMPRtest, kMPLtestSz));
 
     //Initiate micro navX gyro
-    ahrsGyro.reset(new AHRS(I2C::kMXP,32));
-
+    // ahrsGyro.reset(new AHRS(US,32));
+    try {
+			/***********************************************************************
+			 * navX-MXP:
+			 * - Communication via RoboRIO MXP (SPI, I2C, TTL UART) and USB.
+			 * - See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface.
+			 *
+			 * navX-Micro:
+			 * - Communication via I2C (RoboRIO MXP or Onboard) and USB.
+			 * - See http://navx-micro.kauailabs.com/guidance/selecting-an-interface.
+			 *
+			 * Multiple navX-model devices on a single robot are supported.
+			 ************************************************************************/
+         //ahrs = new AHRS(SPI::Port::kMXP);
+         ahrsGyro.reset (new AHRS(I2C::Port::kMXP));
+         ahrsGyro->EnableLogging(true);
+     } catch (std::exception& ex ) {
+         std::string err_string = "Error instantiating navX MXP:  ";
+         err_string += ex.what();
+         DriverStation::ReportError(err_string.c_str());
+     }
     //Initiate arm lift Actuators / Actuator
     subEncodedArmLiftSrxMaster.reset(new WPI_TalonSRX(5));
     subEncodedArmLiftSrxSlave.reset(new WPI_TalonSRX(6));

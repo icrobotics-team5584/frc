@@ -28,6 +28,8 @@ private:
 	std::shared_ptr<frc::Ultrasonic> ultrasonicInputBack;
 	std::shared_ptr<frc::Ultrasonic> ultrasonicInputLeft;
 
+	std::shared_ptr<AHRS> ahrsGyro;
+
 	int _Ultraloops = 0;
 	int frontUValue = 0;
 	int rightUValue = 0;
@@ -41,6 +43,7 @@ public:
 	void AutoDrive(double, double);
 	void Stop();
 	void TakeJoystickInputs(std::shared_ptr<Joystick>);
+	int aCounter;
 
 };
 
