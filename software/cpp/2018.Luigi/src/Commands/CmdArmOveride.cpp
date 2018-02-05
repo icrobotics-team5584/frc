@@ -27,11 +27,11 @@ bool CmdArmOveride::IsFinished() {
 
 // Called once after isFinished returns true
 void CmdArmOveride::End() {
-
+	Robot::subEncodedArmLift->Stop();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void CmdArmOveride::Interrupted() {
-
+	End();
 }
