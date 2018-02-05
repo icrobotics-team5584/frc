@@ -1,12 +1,14 @@
 #include "CmdIntake.h"
 
-CmdIntake::CmdIntake() {
+CmdIntake::CmdIntake(int timeout) : _timeout(timeout) {
 	Requires(Robot::subIntake.get());
 }
 
  //Called just before this Command runs the first time
 void CmdIntake::Initialize() {
-
+	if (Robot::getInstance()->IsAutonomous()){
+		SetTimeout(_timeout);
+	}
 }
 
  //Called repeatedly when this Command is scheduled to run

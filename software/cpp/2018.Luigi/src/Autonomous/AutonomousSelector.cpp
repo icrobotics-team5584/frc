@@ -2,8 +2,8 @@
 #include "Robot.h"
 #include "Autonomous/AutoCommandsIncludes.h"	//Include all possible autonomous commands
 
-AutonomousSelector::AutonomousSelector() {
-	selectedCommand.reset(new CmdAuto_Nothing());
+AutonomousSelector::AutonomousSelector() : selectedCommand(new CmdAuto_Nothing())
+{
 }
 
 std::string AutonomousSelector::DetermineRoutine(StartingPosition pos, AutonomousTask task, GameData data) {
@@ -62,60 +62,56 @@ std::string AutonomousSelector::DetermineRoutine(StartingPosition pos, Autonomou
 	return routine;
 }
 
-std::shared_ptr<frc::Command> AutonomousSelector::DetermineCommand(std::string routine){
+void AutonomousSelector::SetCommand(std::string routine){
 	/*
 	 * Use the determined routine string and return a pointer to its associated command.
 	 * Annoyingly, switch case statements don't work with strings, so we're going with ifs.
 	 */
 
-	std::shared_ptr<frc::Command> commandToSelect;
+	if (routine == "Left-Switch-Left"){
+		selectedCommand.reset(new CmdAuto_Left_Switch_Left() );
 
-	if (routine == "Left-Swtich-Left"){
-		commandToSelect.reset(new CmdAuto_Left_Switch_Left() );
+	}else if (routine == "Left-Switch-Right"){
+		selectedCommand.reset(new CmdAuto_Left_Switch_Right() );
 
-	}else if (routine == "Left-Swtich-Right"){
-		commandToSelect.reset(new CmdAuto_Left_Switch_Right() );
+	}else if (routine == "Right-Switch-Left"){
+		selectedCommand.reset(new CmdAuto_Right_Switch_Left() );
 
-	}else if (routine == "Right-Swtich-Left"){
-		commandToSelect.reset(new CmdAuto_Right_Switch_Left() );
+	}else if (routine == "Right-Switch-Right"){
+		selectedCommand.reset(new CmdAuto_Right_Switch_Right() );
 
-	}else if (routine == "Right-Swtich-Right"){
-		commandToSelect.reset(new CmdAuto_Right_Switch_Right() );
+	}else if (routine == "Middle-Switch-Left"){
+		selectedCommand.reset(new CmdAuto_Middle_Switch_Left() );
 
-	}else if (routine == "Middle-Swtich-Left"){
-		commandToSelect.reset(new CmdAuto_Middle_Switch_Left() );
-
-	}else if (routine == "Middle-Swtich-Right"){
-		commandToSelect.reset(new CmdAuto_Middle_Switch_Right() );
+	}else if (routine == "Middle-Switch-Right"){
+		selectedCommand.reset(new CmdAuto_Middle_Switch_Right() );
 
 	}else if (routine == "Left-Scale-Left"){
-		commandToSelect.reset(new CmdAuto_Left_Switch_Left() );
+		selectedCommand.reset(new CmdAuto_Left_Switch_Left() );
 
 	}else if (routine == "Left-Scale-Right"){
-		commandToSelect.reset(new CmdAuto_Left_Scale_Right() );
+		selectedCommand.reset(new CmdAuto_Left_Scale_Right() );
 
 	}else if (routine == "Right-Scale-Left"){
-		commandToSelect.reset(new CmdAuto_Right_Scale_Left() );
+		selectedCommand.reset(new CmdAuto_Right_Scale_Left() );
 
 	}else if (routine == "Right-Scale-Right"){
-		commandToSelect.reset(new CmdAuto_Right_Scale_Right() );
+		selectedCommand.reset(new CmdAuto_Right_Scale_Right() );
 
 	}else if ( routine == "Both-Left"){
-		commandToSelect.reset(new CmdAuto_Both_Left() );
+		selectedCommand.reset(new CmdAuto_Both_Left() );
 
 	}else if (routine == "Both-Right"){
-		commandToSelect.reset(new CmdAuto_Both_Right() );
+		selectedCommand.reset(new CmdAuto_Both_Right() );
 
 	}else /*if (routine == "Nothing")*/ {
-		commandToSelect.reset(new CmdAuto_Nothing() );
+		selectedCommand.reset(new CmdAuto_Nothing() );
 	}
-	return commandToSelect;
 }
 
 void AutonomousSelector::SelectAndRun(StartingPosition pos, AutonomousTask task, GameData data){
 	std::string routine = DetermineRoutine(pos, task, data);	//Pick an autonomous routine based on inputs
-	selectedCommand = DetermineCommand(routine);				//Determine which command to run
-	std::cout << "about to run routine: " << routine << std::endl;
+	SetCommand(routine);										//Determine which command to run
 	selectedCommand->Start();									//Start the command
 }
 

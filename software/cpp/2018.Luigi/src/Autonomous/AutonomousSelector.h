@@ -21,7 +21,7 @@ public:
 
 	AutonomousSelector();
 	std::string DetermineRoutine(StartingPosition pos, AutonomousTask task, GameData data);
-	std::shared_ptr<frc::Command> DetermineCommand(std::string Routine);
+	void SetCommand(std::string Routine);
 	void SelectAndRun(StartingPosition pos, AutonomousTask task, GameData data);
 	void ReadMotionProfile(std::string MP);
 	void SendOptionsToDashboard();

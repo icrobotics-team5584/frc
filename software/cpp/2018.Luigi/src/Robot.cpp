@@ -11,6 +11,18 @@ std::shared_ptr<MotionProfileData> Robot::MPData;
 GameData Robot::gameData;
 AutonomousSelector Robot::autoSelector;
 
+Robot* Robot::instance = 0;
+Robot* Robot::getInstance(){
+	if (instance == 0) {
+		instance = new Robot();
+	}
+	return instance;
+}
+
+Robot::Robot() : frc::TimedRobot() {
+
+}
+
 void Robot::RobotInit() {
 	RobotMap::init();
 
@@ -65,4 +77,15 @@ void Robot::TeleopPeriodic() {
 	frc::Scheduler::GetInstance()->Run();
 }
 
-START_ROBOT_CLASS(Robot);
+int main() {
+    if (!HAL_Initialize(500, 0)) {
+      llvm::errs() << "FATAL ERROR: HAL could not be initialized\n";
+      return -1;
+    }
+    HAL_Report(HALUsageReporting::kResourceType_Language,
+               HALUsageReporting::kLanguage_CPlusPlus);
+    llvm::outs() << "\n********** Robot program starting **********\n";
+    Robot::getInstance()->StartCompetition();
+  }
+
+//START_ROBOT_CLASS(Robot);

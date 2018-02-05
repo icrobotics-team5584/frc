@@ -23,3 +23,4 @@
 //Extra Commands
 #include "Commands/AutonomousCommands/CmdAuto_Nothing.h"
 #include "Commands/AutonomousCommands/CmdAuto_MotionProfile.h"
+#include "Commands/CmdAutonomous.h"

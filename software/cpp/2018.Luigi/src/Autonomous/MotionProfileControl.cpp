@@ -21,10 +21,6 @@ MotionProfileControl::MotionProfileControl(	std::shared_ptr<TalonSRX> LeftTalon,
 
 	_leftTalon->ChangeMotionControlFramePeriod(5);
 	_rightTalon->ChangeMotionControlFramePeriod(5);
-
-	//Set size of top level trajectory point buffer ---I found it!!---
-	_statusA.topBufferCnt = kTopBufferSize;
-	_statusB.topBufferCnt = kTopBufferSize;
 }
 
 void MotionProfileControl::PeriodicTask(){

@@ -6,12 +6,14 @@
 
 class CmdIntake : public Command {
 public:
-	CmdIntake();
+	CmdIntake(int timeout = 0);
 	void Initialize();
 	void Execute();
 	bool IsFinished();
 	void End();
 	void Interrupted();
+private:
+	int _timeout;
 };
 
 #endif  // CmdArmUp_H
