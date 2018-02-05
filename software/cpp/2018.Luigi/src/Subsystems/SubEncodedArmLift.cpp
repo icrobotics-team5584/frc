@@ -78,7 +78,7 @@ void SubEncodedArmLift::InitDefaultCommand() {
 
 void SubEncodedArmLift::Stop() {
 
-		std::cout << "CmdDefaStop" << std::endl;
+		std::cout << "CmdDefaStop STOPSTOPSTOPSTOP!!!!" << std::endl;
 		targetPositionRotations = (_talon->GetSelectedSensorPosition(0));
 		_talon->Set(ControlMode::Position, targetPositionRotations);
 
