@@ -1,37 +1,32 @@
-#include "CmdArmOveride.h"
+#include "CmdArmDefault.h"
 
-CmdArmOveride::CmdArmOveride() {
+CmdArmDefault::CmdArmDefault() {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
-	Requires(Robot::subEncodedArmLift.get());
 }
 
 // Called just before this Command runs the first time
-void CmdArmOveride::Initialize() {
+void CmdArmDefault::Initialize() {
 
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdArmOveride::Execute() {
-	Robot::subEncodedArmLift->Overide(Robot::oi->getJoystick0());
+void CmdArmDefault::Execute() {
+	Robot::subEncodedArmLift->Stop();
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdArmOveride::IsFinished() {
-	if(Robot::subEncodedArmLift->GetSwitches()){
-		return true;
-	} else {
-			return false;
-		}
-	}
+bool CmdArmDefault::IsFinished() {
+	return false;
+}
 
 // Called once after isFinished returns true
-void CmdArmOveride::End() {
+void CmdArmDefault::End() {
 
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdArmOveride::Interrupted() {
+void CmdArmDefault::Interrupted() {
 
 }

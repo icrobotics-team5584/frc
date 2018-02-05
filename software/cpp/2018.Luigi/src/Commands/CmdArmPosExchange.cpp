@@ -23,7 +23,7 @@ void CmdArmPosExchange::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdArmPosExchange::IsFinished() {
-	if(Robot::subIntake->GetSwitches()){
+	if(Robot::subEncodedArmLift->GetSwitches()){
 			return true;
 		} else {
 				return false;
@@ -32,7 +32,7 @@ bool CmdArmPosExchange::IsFinished() {
 
 // Called once after isFinished returns true
 void CmdArmPosExchange::End() {
-	Robot::subEncodedArmLift->CmdDefaStop();
+
 }
 
 // Called when another command which requires one or more of the same

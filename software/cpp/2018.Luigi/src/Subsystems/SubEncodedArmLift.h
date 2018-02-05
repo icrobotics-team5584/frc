@@ -33,7 +33,8 @@ public:
 	void Overide(std::shared_ptr<Joystick>);
 	bool GetSwitches();
 	void Reset();
-	void CmdDefaStop();
+	void Stop();
+	void InitDefaultCommand();
 
 };
 

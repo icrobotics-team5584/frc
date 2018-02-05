@@ -4,7 +4,7 @@
 #include <WPILib.h>
 #include <ctre/Phoenix.h>
 #include "Constants.h"
-#include "Commands/MyJoystickDrive.h"
+#include "Commands/CmdArmDefault.h"
 
 SubEncodedArmLift::SubEncodedArmLift() : Subsystem("ExampleSubsystem") {
 
@@ -62,16 +62,24 @@ void SubEncodedArmLift::ArmToScalePos() {  //Button Y
 
 bool SubEncodedArmLift::GetSwitches() {
 
+	std::cout << "GetSwitches" << std::endl;
 	//go slightly down from where its currently at!
 	if (_swtTopStop->Get()){
 			return true;
+			std::cout << "TRUE GetSwitches" << std::endl;
 		} else {
 			return false;
+			std::cout << "FALSE GetSwitches" << std::endl;
 		}
 }
 
-void SubEncodedArmLift::CmdDefaStop() {
+void SubEncodedArmLift::InitDefaultCommand() {
+	SetDefaultCommand(new CmdArmDefault());
+}
 
+void SubEncodedArmLift::Stop() {
+
+		std::cout << "CmdDefaStop" << std::endl;
 		targetPositionRotations = (_talon->GetSelectedSensorPosition(0));
 		_talon->Set(ControlMode::Position, targetPositionRotations);
 
