@@ -31,9 +31,9 @@ public:
 	void ArmToScalePos();
 	void ArmToExchangePos();
 	void Overide(std::shared_ptr<Joystick>);
-	void Periodic();
+	bool GetSwitches();
 	void Reset();
-	void TopStop();
+	void CmdDefaStop();
 
 };
 

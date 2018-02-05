@@ -23,12 +23,16 @@ void CmdArmPosGround::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdArmPosGround::IsFinished() {
-	return false;
-}
+	if(Robot::subIntake->GetSwitches()){
+			return true;
+		} else {
+				return false;
+			}
+		}
 
 // Called once after isFinished returns true
 void CmdArmPosGround::End() {
-	std::cout << "deleted CmdArmPosGround \n";
+	Robot::subEncodedArmLift->CmdDefaStop();
 }
 
 // Called when another command which requires one or more of the same

@@ -60,27 +60,20 @@ void SubEncodedArmLift::ArmToScalePos() {  //Button Y
 
 }
 
-void SubEncodedArmLift::Periodic() {
+bool SubEncodedArmLift::GetSwitches() {
 
 	//go slightly down from where its currently at!
 	if (_swtTopStop->Get()){
-			TopStop();
+			return true;
+		} else {
+			return false;
 		}
-
 }
 
-void SubEncodedArmLift::TopStop() {
+void SubEncodedArmLift::CmdDefaStop() {
 
 		targetPositionRotations = (_talon->GetSelectedSensorPosition(0));
 		_talon->Set(ControlMode::Position, targetPositionRotations);
-
-//				++_test;
-//				if (++_loops >= 1) {
-//					frc::SmartDashboard::PutNumber("SWITCH   IS WORKING ",_test );
-//					frc::SmartDashboard::PutNumber("TARGET!!!",targetPositionRotations );
-//					frc::SmartDashboard::PutNumber("CURRENT",_tempStore );
-//					_loops = 0;
-//				}
 
 }
 
