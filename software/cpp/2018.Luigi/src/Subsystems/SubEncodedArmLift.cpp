@@ -62,14 +62,13 @@ void SubEncodedArmLift::ArmToScalePos() {  //Button Y
 
 bool SubEncodedArmLift::GetSwitches() {
 
-	std::cout << "GetSwitches" << std::endl;
-	//go slightly down from where its currently at!
+	//std::cout << "GetSwitches" << std::endl;
 	if (_swtTopStop->Get()){
+		std::cout << "TRUE GetSwitches" << std::endl;
 			return true;
-			std::cout << "TRUE GetSwitches" << std::endl;
 		} else {
-			return false;
 			std::cout << "FALSE GetSwitches" << std::endl;
+			return false;
 		}
 }
 

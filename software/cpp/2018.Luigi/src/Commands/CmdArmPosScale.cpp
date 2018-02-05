@@ -23,12 +23,13 @@ void CmdArmPosScale::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdArmPosScale::IsFinished() {
+	std::cout << "CMD SCA IS_FINISHED" << std::endl;
 	if(Robot::subEncodedArmLift->GetSwitches()){
-			return true;
 			std::cout << "TRUE CMD scale" << std::endl;
+			return true;
 		} else {
-				return false;
-				std::cout << "FALSE CMD scale" << std::endl;
+			std::cout << "FALSE CMD scale" << std::endl;
+			return false;
 			}
 		}
 
