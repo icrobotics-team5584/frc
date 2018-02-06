@@ -34,8 +34,14 @@ void MotionProfileControl::PeriodicTask(){
 
 void MotionProfileControl::reset(){
 	//clean buffer
+	int _leftTpBefore = _leftTalon->GetMotionProfileTopLevelBufferCount();
+	int _rightTpBefore = _rightTalon->GetMotionProfileTopLevelBufferCount();
 	_leftTalon->ClearMotionProfileTrajectories();
 	_rightTalon->ClearMotionProfileTrajectories();
+	int _leftTpAfter = _leftTalon->GetMotionProfileTopLevelBufferCount();
+	int _rightTpAfter = _rightTalon->GetMotionProfileTopLevelBufferCount();
+	std::cout << "RESET: _leftTp:" << _leftTpBefore << " (before) " << _leftTpAfter << " (after)" << std::endl;
+	std::cout << "RESET: _rightTp:" << _rightTpBefore << " (before) " << _rightTpAfter << " (after)" << std::endl;
 
 	//disable talon, and reset state
 	_setValue = SetValueMotionProfile::Disable;
@@ -124,8 +130,14 @@ void MotionProfileControl::control(){
 
 void MotionProfileControl::startFilling(){
 	//Clear the buffer of previous Motion Profiles
+	int _leftTpBefore = _leftTalon->GetMotionProfileTopLevelBufferCount();
+	int _rightTpBefore = _rightTalon->GetMotionProfileTopLevelBufferCount();
 	_leftTalon->ClearMotionProfileTrajectories();
 	_rightTalon->ClearMotionProfileTrajectories();
+	int _leftTpAfter = _leftTalon->GetMotionProfileTopLevelBufferCount();
+	int _rightTpAfter = _rightTalon->GetMotionProfileTopLevelBufferCount();
+	std::cout << "STARTFILLING: _leftTp:" << _leftTpBefore << " (before) " << _leftTpAfter << " (after)" << std::endl;
+	std::cout << "STARTFILLING: _rightTp:" << _rightTpBefore << " (before) " << _rightTpAfter << " (after)" << std::endl;
 
 	//set the base trajectory period to zero, use the individual trajectory periods in PushToTalon(...)
 	_leftTalon->ConfigMotionProfileTrajectoryPeriod(0, 10);
