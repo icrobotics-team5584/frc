@@ -23,6 +23,7 @@ private:
 	int _test = 0;
 	double _tempStore = 0;
 	int swtCase = 0;
+	int stopCase = 0;
 
 public:
 	SubEncodedArmLift();
@@ -33,6 +34,7 @@ public:
 	void Overide(std::shared_ptr<Joystick>);
 	bool GetSwitches();
 	void Reset();
+	void StartBtnReset();
 	void Stop();
 	void DefaultStop();
 	void InitDefaultCommand();
