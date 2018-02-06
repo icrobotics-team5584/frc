@@ -15,15 +15,15 @@ void SubIntake::InitDefaultCommand() {
 }
 
 void SubIntake::Out(){
-	tnxRight->Set(0.5);
-	tnxLeft->Set(-0.5);
-	tnxBottom->Set(-0.5);
+	tnxRight->Set(1);
+	tnxLeft->Set(-1);
+	tnxBottom->Set(-1);
 }
 
 void SubIntake::In(){
-	tnxRight->Set(-0.5);
-	tnxLeft->Set(0.5);
-	tnxBottom->Set(0.5);
+	tnxRight->Set(-1);
+	tnxLeft->Set(1);
+	tnxBottom->Set(1);
 }
 
 void SubIntake::Stop(){
