@@ -21,6 +21,8 @@ MotionProfileControl::MotionProfileControl(	std::shared_ptr<TalonSRX> LeftTalon,
 
 	_leftTalon->ChangeMotionControlFramePeriod(5);
 	_rightTalon->ChangeMotionControlFramePeriod(5);
+
+	isRunning = true;
 }
 
 void MotionProfileControl::PeriodicTask(){
@@ -207,6 +209,7 @@ void MotionProfileControl::start(){
 void MotionProfileControl::stop(){
 	//Reset variables and objects (controllers, sensors, etc)
 	reset();
+	isRunning = false;
 
 	//Put talons back in manual mode
 	_leftTalon->Set(ControlMode::PercentOutput, 0);
@@ -221,6 +224,7 @@ void MotionProfileControl::initialise(){
 	//Setup start vars (used in execute())
 	firsttimearound = true;
 	execounter = 0;
+	isRunning = true;
 }
 
 void MotionProfileControl::execute(){
@@ -244,4 +248,8 @@ void MotionProfileControl::execute(){
 SetValueMotionProfile MotionProfileControl::GetSetValue(){
 	//Return Disable, Enable, or Hold
 	return _setValue;
+}
+
+bool MotionProfileControl::IsRunning(){
+	return isRunning;
 }

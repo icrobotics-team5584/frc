@@ -1,7 +1,6 @@
 #include "CmdArmPosSwitch.h"
 
 CmdArmPosSwitch::CmdArmPosSwitch() {
-	std::cout << "Created CmdArmPosSwitch" << std::endl;
 	Requires(Robot::subEncodedArmLift.get());
 
 }

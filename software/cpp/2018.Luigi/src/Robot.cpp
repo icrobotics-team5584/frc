@@ -36,7 +36,6 @@ void Robot::RobotInit() {
 	oi.reset(new OI());
 
 	//Setup Auto Chooser
-	std::cout << "Sending options to dash" << std::endl;
 	autoSelector.SendOptionsToDashboard();
 }
 

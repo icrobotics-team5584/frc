@@ -20,6 +20,7 @@ public:
 	void stop();
 	void execute();
 	void initialise();
+	bool IsRunning();
 
 private:
 	MotionProfileStatus _statusA;
@@ -51,6 +52,7 @@ private:
 
 	bool firsttimearound = true;
 	int execounter = 0;
+	bool isRunning;
 
 };
 
