@@ -9,9 +9,7 @@
 SubEncodedArmLift::SubEncodedArmLift() : Subsystem("ExampleSubsystem") {
 
 
-
 	_talon = RobotMap::subEncodedArmLiftSrxMaster;
-	_prefs = Preferences::GetInstance();
 	_swtTopStop = RobotMap::subEncodedArmLiftSwtTop;
 
 	targetPositionRotations = 0.0;
@@ -20,31 +18,20 @@ SubEncodedArmLift::SubEncodedArmLift() : Subsystem("ExampleSubsystem") {
 
 void SubEncodedArmLift::ArmToGroundPos() {  //Button A
 
-
-
-	//targetPositionRotations = (_prefs->GetDouble("Ground Position", 0.0))*4096;
 	targetPositionRotations = 0.0;
 	_talon->Set(ControlMode::Position, targetPositionRotations);
-
 
 }
 
 void SubEncodedArmLift::ArmToExchangePos() {  //Button B
 
-
-
-	//targetPositionRotations = (_prefs->GetDouble("Ground Position", 0.0))*4096;
 	targetPositionRotations = -(1.0 * 4096);
 	_talon->Set(ControlMode::Position, targetPositionRotations);
-
 
 }
 
 void SubEncodedArmLift::ArmToSwitchPos() {  //Button X
 
-
-
-	//targetPositionRotations = (_prefs->GetDouble("Switch Position", 0.0))*4096;
 	targetPositionRotations = -(2.1 * 4096);
 	_talon->Set(ControlMode::Position, targetPositionRotations);
 
@@ -52,9 +39,6 @@ void SubEncodedArmLift::ArmToSwitchPos() {  //Button X
 
 void SubEncodedArmLift::ArmToScalePos() {  //Button Y
 
-
-
-	//targetPositionRotations = (_prefs->GetDouble("Scale Position", 0.0))*4096;
     targetPositionRotations = -(5.0 * 4096);
 	_talon->Set(ControlMode::Position, targetPositionRotations);
 
@@ -62,12 +46,9 @@ void SubEncodedArmLift::ArmToScalePos() {  //Button Y
 
 bool SubEncodedArmLift::GetSwitches() {
 
-	//std::cout << "GetSwitches" << std::endl;
 	if (_swtTopStop->Get()){
-		std::cout << "TRUE GetSwitches" << std::endl;
 			return true;
 		} else {
-			std::cout << "FALSE GetSwitches" << std::endl;
 			return false;
 		}
 }
@@ -76,11 +57,17 @@ void SubEncodedArmLift::InitDefaultCommand() {
 	SetDefaultCommand(new CmdArmDefault());
 }
 
-void SubEncodedArmLift::Stop() {
+void SubEncodedArmLift::DefaultStop() {
 
-		std::cout << "CmdDefaStop STOPSTOPSTOPSTOP!!!!" << std::endl;
 		targetPositionRotations = (_talon->GetSelectedSensorPosition(0));
 		_talon->Set(ControlMode::Position, targetPositionRotations);
+
+}
+
+void SubEncodedArmLift::Stop() {
+
+		targetPositionRotations = (_talon->GetSelectedSensorPosition(0));
+		_talon->Set(ControlMode::Position, (targetPositionRotations +600));
 
 }
 
@@ -89,9 +76,9 @@ void SubEncodedArmLift::Overide(std::shared_ptr<Joystick> sticky_2) {
 	_axis = sticky_2->GetRawAxis(5);
 
 		if (_axis > 0.5) {
-			targetPositionRotations = targetPositionRotations - 50;
-		} else if (_axis <-0.5){
 			targetPositionRotations = targetPositionRotations + 50;
+		} else if (_axis <-0.5){
+			targetPositionRotations = targetPositionRotations - 50;
 		} else {
 
 		}

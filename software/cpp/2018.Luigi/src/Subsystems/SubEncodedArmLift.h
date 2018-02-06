@@ -14,8 +14,6 @@ private:
 
 	std::shared_ptr<DigitalInput> _swtTopStop;
 	std::shared_ptr<WPI_TalonSRX> _talon;
-	std::string _sb;
-	Preferences *_prefs;
 	int _loops = 0;
 	int _axisLoops = 0;
 	double targetPositionRotations;
@@ -34,6 +32,7 @@ public:
 	bool GetSwitches();
 	void Reset();
 	void Stop();
+	void DefaultStop();
 	void InitDefaultCommand();
 
 };

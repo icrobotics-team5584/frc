@@ -12,7 +12,7 @@ void CmdArmDefault::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdArmDefault::Execute() {
-	Robot::subEncodedArmLift->Stop();
+	Robot::subEncodedArmLift->DefaultStop();
 }
 
 // Make this return true when this Command no longer needs to run execute()
