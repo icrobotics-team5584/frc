@@ -11,6 +11,7 @@ SubEncodedArmLift::SubEncodedArmLift() : Subsystem("ExampleSubsystem") {
 
 	_talon = RobotMap::subEncodedArmLiftSrxMaster;
 	_swtTopStop = RobotMap::subEncodedArmLiftSwtTop;
+	_swtBottomStop = RobotMap::subEncodedArmLiftSwtBottom;
 
 	targetPositionRotations = 0.0;
 
@@ -47,10 +48,20 @@ void SubEncodedArmLift::ArmToScalePos() {  //Button Y
 bool SubEncodedArmLift::GetSwitches() {
 
 	if (_swtTopStop->Get()){
+		swtCase = 0;
+	} else if (_swtBottomStop->Get()) {
+		swtCase = 1;
+	}
+
+	if (_swtTopStop->Get() or _swtBottomStop->Get()){
 			return true;
 		} else {
 			return false;
 		}
+}
+
+int SubEncodedArmLift::GetSwtCase() {
+	return swtCase;
 }
 
 void SubEncodedArmLift::InitDefaultCommand() {
