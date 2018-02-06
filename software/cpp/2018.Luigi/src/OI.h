@@ -15,6 +15,7 @@ private:
 	std::shared_ptr<JoystickButton> btnArmToScale;
 	std::shared_ptr<JoystickButton> btnArmToExchange;
 	std::shared_ptr<JoystickButton> btnArmOveride;
+	std::shared_ptr<JoystickButton> btnEncoderPosReset;
 	std::shared_ptr<JoystickButton> btnMP;
 	std::shared_ptr<JoystickButton> btnChangeCamera;
 
