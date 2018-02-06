@@ -12,15 +12,15 @@ class SubEncodedArmLift : public Subsystem {
 private:
 
 
-	std::shared_ptr<DigitalInput> _swtBottomReset;
+	std::shared_ptr<DigitalInput> _swtTopStop;
 	std::shared_ptr<WPI_TalonSRX> _talon;
-	std::string _sb;
-	Preferences *_prefs;
 	int _loops = 0;
 	int _axisLoops = 0;
 	double targetPositionRotations;
 	int absolutePosition = 0;
 	double _axis = 0;
+	int _test = 0;
+	double _tempStore = 0;
 
 public:
 	SubEncodedArmLift();
@@ -29,8 +29,11 @@ public:
 	void ArmToScalePos();
 	void ArmToExchangePos();
 	void Overide(std::shared_ptr<Joystick>);
-	void Periodic();
+	bool GetSwitches();
 	void Reset();
+	void Stop();
+	void DefaultStop();
+	void InitDefaultCommand();
 
 };
 
