@@ -10,7 +10,7 @@
 
 class CmdAuto_MotionProfile : public Command {
 public:
-	CmdAuto_MotionProfile(std::string profile);
+	CmdAuto_MotionProfile(std::string profile, int profileTimeout);
 	void Initialize();
 	void Execute();
 	bool IsFinished();

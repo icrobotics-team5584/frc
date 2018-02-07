@@ -12,7 +12,8 @@ class MotionProfileControl {
 public:
 	MotionProfileControl(	std::shared_ptr<TalonSRX>,
 							std::shared_ptr<TalonSRX>,
-							std::shared_ptr<MotionProfileData>);
+							std::shared_ptr<MotionProfileData>,
+							int timeout);
 	SetValueMotionProfile GetSetValue();
 	void control();
 	void startFilling();
@@ -39,6 +40,7 @@ private:
 	int _state;
 	int _loopTimeout;
 	int _loopCount;
+	int _profileTimeout;
 
 	const int kMinPointsInTalon = 5;
 	const int kNumLoopsTimeout = 10;

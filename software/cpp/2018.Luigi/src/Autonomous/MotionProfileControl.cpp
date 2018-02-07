@@ -4,8 +4,9 @@
 
 MotionProfileControl::MotionProfileControl(	std::shared_ptr<TalonSRX> LeftTalon,
 											std::shared_ptr<TalonSRX> RightTalon,
-											std::shared_ptr<MotionProfileData> MP)
-: _notifier(&MotionProfileControl::PeriodicTask, this)
+											std::shared_ptr<MotionProfileData> MP,
+											int profileTimeout)
+: _notifier(&MotionProfileControl::PeriodicTask, this), _profileTimeout(profileTimeout)
 {
 
 	//Assign variables
@@ -32,6 +33,13 @@ void MotionProfileControl::PeriodicTask(){
 		_leftTalon->ProcessMotionProfileBuffer();
 		_rightTalon->ProcessMotionProfileBuffer();
 	}
+	execounter++;
+	if (execounter >= 200){
+		_profileTimeout--;
+		std::cout << "_profileTimeout--;" << std::endl;
+		execounter = 0;
+	}
+
 }
 
 void MotionProfileControl::reset(){
@@ -96,6 +104,11 @@ void MotionProfileControl::control(){
 				_loopTimeout = kNumLoopsTimeout;
 			} else {
 				//Talons don't have enough points, log an underrun
+			}
+
+			if (_profileTimeout <= 0){
+				//Profile has timed out, stop
+				stop();
 			}
 
 			//Uncomment these to find out why the MP isn't ending
@@ -242,7 +255,6 @@ void MotionProfileControl::execute(){
 		start();
 		firsttimearound = false;
 	}
-	execounter++;
 }
 
 SetValueMotionProfile MotionProfileControl::GetSetValue(){

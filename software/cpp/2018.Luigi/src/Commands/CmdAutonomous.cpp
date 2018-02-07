@@ -1,6 +1,6 @@
 #include "CmdAutonomous.h"
 
-CmdAutonomous::CmdAutonomous() : MPController(RobotMap::subDriveBaseSRXleft, RobotMap::subDriveBaseSRXright, Robot::MPData)
+CmdAutonomous::CmdAutonomous() : MPController(RobotMap::subDriveBaseSRXleft, RobotMap::subDriveBaseSRXright, Robot::MPData, 15)
 {
 	Requires(Robot::subDriveBase.get());
 }
