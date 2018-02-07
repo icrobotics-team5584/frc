@@ -25,6 +25,7 @@ private:
 	int swtCase = 0;
 	int stopCase = 0;
 
+
 public:
 	SubEncodedArmLift();
 	void ArmToGroundPos();
@@ -41,6 +42,7 @@ public:
 	int GetSwtCase();
 	void IfBottom();
 	void IfTop();
+	void MovementCheck();
 
 };
 

@@ -23,7 +23,8 @@ void SubEncodedArmLift::ArmToGroundPos() {  //Button A
 	IfBottom();
 	IfTop();
 	_talon->Set(ControlMode::Position, targetPositionRotations);
-	stopCase = 0;
+	std::cout << "BUTTON ACTULLY WORKED" << stopCase << std::endl;
+	MovementCheck();
 
 }
 
@@ -33,7 +34,8 @@ void SubEncodedArmLift::ArmToExchangePos() {  //Button B
 	IfBottom();
 	IfTop();
 	_talon->Set(ControlMode::Position, targetPositionRotations);
-	stopCase = 0;
+	std::cout << "BUTTON ACTULLY WORKED" << stopCase <<std::endl;
+	MovementCheck();
 
 }
 
@@ -43,7 +45,8 @@ void SubEncodedArmLift::ArmToSwitchPos() {  //Button X
 	IfBottom();
 	IfTop();
 	_talon->Set(ControlMode::Position, targetPositionRotations);
-	stopCase = 0;
+	std::cout << "BUTTON ACTULLY WORKED" << stopCase <<std::endl;
+	MovementCheck();
 
 }
 
@@ -53,7 +56,8 @@ void SubEncodedArmLift::ArmToScalePos() {  //Button Y
     IfBottom();
     IfTop();
 	_talon->Set(ControlMode::Position, targetPositionRotations);
-	stopCase = 0;
+	std::cout << "BUTTON ACTULLY WORKED" << stopCase <<std::endl;
+	MovementCheck();
 
 }
 
@@ -74,7 +78,7 @@ void SubEncodedArmLift::Overide(std::shared_ptr<Joystick> sticky_2) {  //right j
 		}
 
 		_talon->Set(ControlMode::Position, targetPositionRotations);
-		stopCase = 0;
+		MovementCheck();
 
 }
 
@@ -125,14 +129,13 @@ void SubEncodedArmLift::Stop() {  //for top lim switch
 
 }
 
-void SubEncodedArmLift::Reset() { //bottom lim swt reset
+void SubEncodedArmLift::Reset() { //for bottom lim swt reset
 
 		_talon->SetSelectedSensorPosition(0,0,10);
 		targetPositionRotations = 0;
 		_talon->Set(ControlMode::Position, targetPositionRotations);
 
 }
-
 
 void SubEncodedArmLift::StartBtnReset() { //reset (start button)
 
@@ -142,8 +145,9 @@ void SubEncodedArmLift::StartBtnReset() { //reset (start button)
 
 }
 
-void SubEncodedArmLift::IfBottom() {
+void SubEncodedArmLift::IfBottom() { //can it move off bottom switch???
 
+	std::cout << "IFBOTTOM" << stopCase  <<std::endl;
 	if (_swtBottomStop->Get()) {
 		if (targetPositionRotations < (_talon->GetSelectedSensorPosition(0))) {
 			stopCase = 1;
@@ -152,8 +156,9 @@ void SubEncodedArmLift::IfBottom() {
 
 }
 
-void SubEncodedArmLift::IfTop() {
+void SubEncodedArmLift::IfTop() { //can it move off TOP switch???
 
+	std::cout << "IFTOP" << stopCase  <<std::endl;
 	if (_swtTopStop->Get()) {
 			if (targetPositionRotations > (_talon->GetSelectedSensorPosition(0))) {
 				stopCase = 1;
@@ -162,20 +167,14 @@ void SubEncodedArmLift::IfTop() {
 
 }
 
+void SubEncodedArmLift::MovementCheck() {
 
+ //check for switch not prssed
 
+	if(not _swtTopStop->Get() & not _swtBottomStop->Get() ){
+		stopCase = 0;
+	}
 
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 
