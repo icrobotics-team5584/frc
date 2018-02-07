@@ -90,7 +90,7 @@ bool SubEncodedArmLift::GetSwitches() {
 	}
 
 	switch (stopCase) {
-	case 0 :
+	default:
 	if (_swtTopStop->Get() or _swtBottomStop->Get()){
 			return true;
 		} else {
