@@ -19,7 +19,7 @@ void CmdAuto_MotionProfile::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdAuto_MotionProfile::IsFinished() {
-	if (MPController.GetSetValue() == 0 /*Disabled*/){
+	if (not MPController.IsRunning()){
 		return true;
 	} else {
 		return false;

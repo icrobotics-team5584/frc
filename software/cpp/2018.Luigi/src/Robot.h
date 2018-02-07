@@ -12,6 +12,7 @@
 #include "Commands/CmdAutonomous.h"
 #include "Autonomous/AutonomousSelector.h"
 #include "Autonomous/GameData.h"
+#include "Commands/AutonomousCommands/CmdAuto_Left_Switch_Left.h"
 
 //Include Subsystems
 #include "Subsystems/SubDriveBase.h"
@@ -21,6 +22,7 @@
 
 class Robot : public frc::TimedRobot {
 public:
+	static Robot* getInstance();
 
 	//Declare objects for autonomous selection
 	static GameData gameData;
@@ -44,6 +46,10 @@ public:
 	void AutonomousPeriodic() override;
 	void TeleopInit() override;
 	void TeleopPeriodic() override;
+
+private:
+	static Robot* instance;
+	Robot();
 };
 
 #endif

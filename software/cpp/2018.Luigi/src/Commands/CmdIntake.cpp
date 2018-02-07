@@ -1,24 +1,36 @@
 #include "CmdIntake.h"
+#include <iostream>
 
-CmdIntake::CmdIntake() {
+CmdIntake::CmdIntake(double timeout, double speed) : _timeout(timeout), _speed(speed) {
 	Requires(Robot::subIntake.get());
 }
 
  //Called just before this Command runs the first time
 void CmdIntake::Initialize() {
 
+	std::cout << "Running CmdIntake::Initialize()" << std::endl;
+
+	//Start spitting out
+	Robot::subIntake->In(_speed);
+
+	//Apply timeout if we are in autonomous mode
+	bool autoMode = Robot::getInstance()->IsAutonomous();
+	if (autoMode){
+		SetTimeout(_timeout);
+		if (_timeout == 0) {
+			std::cout << "WARNING: AUTO INTAKE HAS ZERO TIMEOUT" << std::endl;
+		}
+	}
 }
 
  //Called repeatedly when this Command is scheduled to run
 void CmdIntake::Execute() {
-	if (not Robot::subIntake->GetSwitches()) {
-		Robot::subIntake->In();
-	}
+
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdIntake::IsFinished() {
-	if (Robot::subIntake->GetSwitches()) {
+	if ( (Robot::subIntake->GetSwitches()) or (IsTimedOut()) ) {
 		return true;
 	} else {
 		return false;
