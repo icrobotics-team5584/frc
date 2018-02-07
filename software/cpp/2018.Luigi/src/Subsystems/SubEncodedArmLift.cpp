@@ -20,30 +20,64 @@ SubEncodedArmLift::SubEncodedArmLift() : Subsystem("ExampleSubsystem") {
 void SubEncodedArmLift::ArmToGroundPos() {  //Button A
 
 	targetPositionRotations = 0.0;
+	IfBottom();
+	IfTop();
 	_talon->Set(ControlMode::Position, targetPositionRotations);
+	stopCase = 0;
 
 }
 
 void SubEncodedArmLift::ArmToExchangePos() {  //Button B
 
 	targetPositionRotations = -(1.0 * 4096);
+	IfBottom();
+	IfTop();
 	_talon->Set(ControlMode::Position, targetPositionRotations);
+	stopCase = 0;
 
 }
 
 void SubEncodedArmLift::ArmToSwitchPos() {  //Button X
 
 	targetPositionRotations = -(2.1 * 4096);
+	IfBottom();
+	IfTop();
 	_talon->Set(ControlMode::Position, targetPositionRotations);
+	stopCase = 0;
 
 }
 
 void SubEncodedArmLift::ArmToScalePos() {  //Button Y
 
     targetPositionRotations = -(5.0 * 4096);
+    IfBottom();
+    IfTop();
 	_talon->Set(ControlMode::Position, targetPositionRotations);
+	stopCase = 0;
 
 }
+
+void SubEncodedArmLift::Overide(std::shared_ptr<Joystick> sticky_2) {  //right joystick
+
+	_axis = sticky_2->GetRawAxis(5);
+
+		if (_axis > 0.5) {
+			targetPositionRotations = targetPositionRotations + 50;
+			IfBottom();
+			IfTop();
+		} else if (_axis <-0.5){
+			targetPositionRotations = targetPositionRotations - 50;
+			IfBottom();
+			IfTop();
+		} else {
+
+		}
+
+		_talon->Set(ControlMode::Position, targetPositionRotations);
+		stopCase = 0;
+
+}
+
 
 bool SubEncodedArmLift::GetSwitches() {
 
@@ -55,14 +89,21 @@ bool SubEncodedArmLift::GetSwitches() {
 		swtCase = 3;
 	}
 
+	switch (stopCase) {
+	case 0 :
 	if (_swtTopStop->Get() or _swtBottomStop->Get()){
 			return true;
 		} else {
 			return false;
 		}
+	break;
+	case 1 :
+		return false ;
+	break;
+	}
 }
 
-int SubEncodedArmLift::GetSwtCase() {
+int SubEncodedArmLift::GetSwtCase() { //this is for commands End()s so they know what to do
 	return swtCase;
 }
 
@@ -70,7 +111,7 @@ void SubEncodedArmLift::InitDefaultCommand() {
 	SetDefaultCommand(new CmdArmDefault());
 }
 
-void SubEncodedArmLift::DefaultStop() {
+void SubEncodedArmLift::DefaultStop() { //default command
 
 		targetPositionRotations = (_talon->GetSelectedSensorPosition(0));
 		_talon->Set(ControlMode::Position, targetPositionRotations);
@@ -78,46 +119,20 @@ void SubEncodedArmLift::DefaultStop() {
 }
 
 void SubEncodedArmLift::Stop() {  //for top lim switch
-switch (stopCase){
-	case 0 :
+
 		targetPositionRotations = (_talon->GetSelectedSensorPosition(0));
 		_talon->Set(ControlMode::Position, targetPositionRotations);
-	break;
-	case 1 :
-	break;
-}
 
-
-}
-
-void SubEncodedArmLift::Overide(std::shared_ptr<Joystick> sticky_2) {  //right joystick
-
-	_axis = sticky_2->GetRawAxis(5);
-
-		if (_axis > 0.5) {
-			targetPositionRotations = targetPositionRotations + 50;
-		} else if (_axis <-0.5){
-			targetPositionRotations = targetPositionRotations - 50;
-		} else {
-
-		}
-
-		_talon->Set(ControlMode::Position, targetPositionRotations);
 }
 
 void SubEncodedArmLift::Reset() { //bottom lim swt reset
-switch (stopCase) {
-	case 0 :
+
 		_talon->SetSelectedSensorPosition(0,0,10);
 		targetPositionRotations = 0;
 		_talon->Set(ControlMode::Position, targetPositionRotations);
-	break;
-	case 1 :
-	break;
-	}
-
 
 }
+
 
 void SubEncodedArmLift::StartBtnReset() { //reset (start button)
 
@@ -126,5 +141,41 @@ void SubEncodedArmLift::StartBtnReset() { //reset (start button)
 	_talon->Set(ControlMode::Position, targetPositionRotations);
 
 }
+
+void SubEncodedArmLift::IfBottom() {
+
+	if (_swtBottomStop->Get()) {
+		if (targetPositionRotations < (_talon->GetSelectedSensorPosition(0))) {
+			stopCase = 1;
+		}
+	}
+
+}
+
+void SubEncodedArmLift::IfTop() {
+
+	if (_swtTopStop->Get()) {
+			if (targetPositionRotations > (_talon->GetSelectedSensorPosition(0))) {
+				stopCase = 1;
+			}
+		}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
