@@ -7,9 +7,6 @@ CmdIntake::CmdIntake(double timeout, double speed) : _timeout(timeout), _speed(s
 
  //Called just before this Command runs the first time
 void CmdIntake::Initialize() {
-
-	std::cout << "Running CmdIntake::Initialize()" << std::endl;
-
 	//Start spitting out
 	Robot::subIntake->In(_speed);
 

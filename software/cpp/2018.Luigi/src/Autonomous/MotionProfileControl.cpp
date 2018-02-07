@@ -35,9 +35,8 @@ void MotionProfileControl::PeriodicTask(){
 		_rightTalon->ProcessMotionProfileBuffer();
 	}
 	execounter++;
-	if (execounter >= 200){
+	if ((execounter >= 200) and (_profileTimeout > -1)){
 		_profileTimeout--;
-		std::cout << "_profileTimeout--;" << std::endl;
 		execounter = 0;
 	}
 
@@ -107,8 +106,9 @@ void MotionProfileControl::control(){
 			// try sending some points ...
 			streamToTopBuffer( false );
 
+			//Stop if profile timed out
 			if (_profileTimeout <= 0){
-				//Profile has timed out, stop
+				std::cout << "Profile timed out" << std::endl;
 				stop();
 			}
 
@@ -193,13 +193,13 @@ void MotionProfileControl::streamToTopBuffer( bool firstpass ){
 		_blocks = ( _minTopBufferRem > kBlockSize ) ? 1 : 0;
 	}
 
-	std::cout << "INFO: processing " << _blocks << " blocks" << std::endl;
+//	std::cout << "INFO: processing " << _blocks << " blocks" << std::endl;
 
 	// no process the zero or more blocks
 	while( _blocks > 0 ) {
 		int mpsize = _mp->GetNumberOfPoints();
 		int start = _pointsprocessed;
-		std::cout << "INFO: points processed (before): " << _pointsprocessed << "/" << mpsize << std::endl;
+//		std::cout << "INFO: points processed (before): " << _pointsprocessed << "/" << mpsize << std::endl;
 		int finish;
 		int remaining = mpsize - _pointsprocessed;
 		if( remaining > kBlockSize ) {
@@ -212,7 +212,7 @@ void MotionProfileControl::streamToTopBuffer( bool firstpass ){
 			PushToTalon(_mp->GetPoint(1, i), _rightTalon, 1);
 		}
 		_pointsprocessed = finish;
-		std::cout << "INFO: points processed (after): " << _pointsprocessed << "/" << mpsize << std::endl;
+//		std::cout << "INFO: points processed (after): " << _pointsprocessed << "/" << mpsize << std::endl;
 		_blocks--;
 	}
 }

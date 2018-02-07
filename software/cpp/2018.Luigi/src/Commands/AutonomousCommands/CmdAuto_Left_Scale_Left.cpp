@@ -1,20 +1,17 @@
 #include "CmdAuto_Left_Scale_Left.h"
+#include "CmdAuto_DeployArm.h"
+#include "Commands/CmdOutput.h"
+#include "Commands/CmdArmPosScale.h"
+#include "CmdAuto_MotionProfile.h"
 
 CmdAuto_Left_Scale_Left::CmdAuto_Left_Scale_Left() {
-	// Add Commands here:
-	// e.g. AddSequential(new Command1());
-	//      AddSequential(new Command2());
-	// these will run in order.
+	/*
+	 * From the left starting positoin, put a cube in the left side of the scale
+	 */
 
-	// To run multiple commands at the same time,
-	// use AddParallel()
-	// e.g. AddParallel(new Command1());
-	//      AddSequential(new Command2());
-	// Command1 and Command2 will run in parallel.
-
-	// A command group will require all of the subsystems that each member
-	// would require.
-	// e.g. if Command1 requires chassis, and Command2 requires arm,
-	// a CommandGroup containing them would require both the chassis and the
-	// arm.
+	AddParallel(new CmdAuto_DeployArm());
+	AddSequential(new CmdAuto_MotionProfile("Left-Scale-Left-pt1", 8));
+	AddParallel(new CmdArmPosScale());
+	AddSequential(new CmdAuto_MotionProfile("Left-Scale-Left-pt2", 7));
+	AddSequential(new CmdOutput(1, 1));
 }

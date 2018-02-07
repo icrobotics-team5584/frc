@@ -58,7 +58,6 @@ std::string AutonomousSelector::DetermineRoutine(StartingPosition pos, Autonomou
 		routine = "Nothing";
 	}
 
-	std::cout << "Detemining auto routine: " << routine << std::endl;
 	return routine;
 }
 
@@ -87,7 +86,7 @@ void AutonomousSelector::SetCommand(std::string routine){
 		selectedCommand.reset(new CmdAuto_Middle_Switch_Right() );
 
 	}else if (routine == "Left-Scale-Left"){
-		selectedCommand.reset(new CmdAuto_Left_Switch_Left() );
+		selectedCommand.reset(new CmdAuto_Left_Scale_Left() );
 
 	}else if (routine == "Left-Scale-Right"){
 		selectedCommand.reset(new CmdAuto_Left_Scale_Right() );
@@ -110,9 +109,11 @@ void AutonomousSelector::SetCommand(std::string routine){
 }
 
 void AutonomousSelector::SelectAndRun(StartingPosition pos, AutonomousTask task, GameData data){
-	std::string routine = DetermineRoutine(pos, task, data);	//Pick an autonomous routine based on inputs
-	SetCommand(routine);										//Determine which command to run
-	selectedCommand->Start();									//Start the command
+	//Determine which command to run and start it
+	std::string routine = DetermineRoutine(pos, task, data);
+	std::cout << "Selected routine: " << routine << std::endl;
+	SetCommand(routine);
+	selectedCommand->Start();
 }
 
 void AutonomousSelector::StopAutoCommand(){
@@ -173,14 +174,12 @@ void AutonomousSelector::SendOptionsToDashboard(){
 AutonomousSelector::StartingPosition AutonomousSelector::GetStartingPosition(){
 	StartingPositionSelection* selectedStartPos;
 	selectedStartPos = posChooser.GetSelected();
-	std::cout << "Getting start pos: " << selectedStartPos->_pos << std::endl;
 	return selectedStartPos->_pos;
 }
 
 AutonomousSelector::AutonomousTask AutonomousSelector::GetAutonomousTask(){
 	AutonomousTaskSelection* selectedAutoTask;
 	selectedAutoTask = taskChooser.GetSelected();
-	std::cout << "Getting auto task: " << selectedAutoTask->_task << std::endl;
 	return selectedAutoTask->_task;
 }
 

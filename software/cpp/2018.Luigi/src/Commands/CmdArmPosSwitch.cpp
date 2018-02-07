@@ -7,8 +7,6 @@ CmdArmPosSwitch::CmdArmPosSwitch() {
 
 // Called just before this Command runs the first time
 void CmdArmPosSwitch::Initialize() {
-	std::cout << "Running CmdArmPosSwitch::Initialize()" << std::endl;
-
 
 }
 
