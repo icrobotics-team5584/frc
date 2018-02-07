@@ -18,6 +18,7 @@ MotionProfileControl::MotionProfileControl(	std::shared_ptr<TalonSRX> LeftTalon,
 	_setValue = SetValueMotionProfile::Disable;
 	_notifier.StartPeriodic(0.005);
 	_loopCount = 0;
+	_pointsprocessed = 0;
 
 	_leftTalon->ChangeMotionControlFramePeriod(5);
 	_rightTalon->ChangeMotionControlFramePeriod(5);
@@ -38,14 +39,8 @@ void MotionProfileControl::PeriodicTask(){
 
 void MotionProfileControl::reset(){
 	//clean buffer
-	int _leftTpBefore = _leftTalon->GetMotionProfileTopLevelBufferCount();
-	int _rightTpBefore = _rightTalon->GetMotionProfileTopLevelBufferCount();
 	_leftTalon->ClearMotionProfileTrajectories();
 	_rightTalon->ClearMotionProfileTrajectories();
-	int _leftTpAfter = _leftTalon->GetMotionProfileTopLevelBufferCount();
-	int _rightTpAfter = _rightTalon->GetMotionProfileTopLevelBufferCount();
-	std::cout << "RESET: _leftTp:" << _leftTpBefore << " (before) " << _leftTpAfter << " (after)" << std::endl;
-	std::cout << "RESET: _rightTp:" << _rightTpBefore << " (before) " << _rightTpAfter << " (after)" << std::endl;
 
 	//disable talon, and reset state
 	_setValue = SetValueMotionProfile::Disable;
@@ -78,7 +73,8 @@ void MotionProfileControl::control(){
 			if (_bStart) {
 				_bStart = false;
 				_setValue = SetValueMotionProfile::Disable;
-				startFilling();
+				// try sending some points ...
+				streamToTopBuffer( true );
 				_state = 1;
 				_loopTimeout = kNumLoopsTimeout;
 			}
@@ -87,6 +83,8 @@ void MotionProfileControl::control(){
 		case 1: //Start driving
 			if ( (_statusA.btmBufferCnt > kMinPointsInTalon) && (_statusB.btmBufferCnt > kMinPointsInTalon) ) {
 				_setValue = SetValueMotionProfile::Enable;
+				// try sending some points ...
+				streamToTopBuffer( false );
 				_state = 2;
 				_loopTimeout = kNumLoopsTimeout;
 			}
@@ -99,6 +97,9 @@ void MotionProfileControl::control(){
 			} else {
 				//Talons don't have enough points, log an underrun
 			}
+
+			// try sending some points ...
+			streamToTopBuffer( false );
 
 			//Uncomment these to find out why the MP isn't ending
 //			std::cout << "_statusA.activePointValid: " << _statusA.activePointValid << std::endl;
@@ -132,20 +133,18 @@ void MotionProfileControl::control(){
 
 }
 
-void MotionProfileControl::startFilling(){
-	//Clear the buffer of previous Motion Profiles
-	int _leftTpBefore = _leftTalon->GetMotionProfileTopLevelBufferCount();
-	int _rightTpBefore = _rightTalon->GetMotionProfileTopLevelBufferCount();
-	_leftTalon->ClearMotionProfileTrajectories();
-	_rightTalon->ClearMotionProfileTrajectories();
-	int _leftTpAfter = _leftTalon->GetMotionProfileTopLevelBufferCount();
-	int _rightTpAfter = _rightTalon->GetMotionProfileTopLevelBufferCount();
-	std::cout << "STARTFILLING: _leftTp:" << _leftTpBefore << " (before) " << _leftTpAfter << " (after)" << std::endl;
-	std::cout << "STARTFILLING: _rightTp:" << _rightTpBefore << " (before) " << _rightTpAfter << " (after)" << std::endl;
+void MotionProfileControl::streamToTopBuffer( bool firstpass ){
 
-	//set the base trajectory period to zero, use the individual trajectory periods in PushToTalon(...)
-	_leftTalon->ConfigMotionProfileTrajectoryPeriod(0, 10);
-	_rightTalon->ConfigMotionProfileTrajectoryPeriod(0, 10);
+	if( firstpass ) {
+
+		//Clear the buffer of previous Motion Profiles
+		_leftTalon->ClearMotionProfileTrajectories();
+		_rightTalon->ClearMotionProfileTrajectories();
+
+		//set the base trajectory period to zero, use the individual trajectory periods in PushToTalon(...)
+		_leftTalon->ConfigMotionProfileTrajectoryPeriod(0, 10);
+		_rightTalon->ConfigMotionProfileTrajectoryPeriod(0, 10);
+	}
 
 	//Check if talons have run out of points
 	if(_statusA.hasUnderrun){
@@ -169,10 +168,41 @@ void MotionProfileControl::startFilling(){
 		_rightTalon->ClearMotionProfileHasUnderrun(10);
 	}
 
-	int size = _mp->GetNumberOfPoints();
-	for (int i = 0; i<size; i++){
-		PushToTalon(_mp->GetPoint(0, i), _leftTalon, 0);
-		PushToTalon(_mp->GetPoint(1, i), _rightTalon, 1);
+	// decide how many blocks to process
+	int _topBufferRemA = _statusA.topBufferRem;
+	int _topBufferRemB = _statusB.topBufferRem;
+	int _minTopBufferRem = ( _topBufferRemA < _topBufferRemB ) ? _topBufferRemA : _topBufferRemB;
+	int _blocks = 0;
+	if( firstpass ) {
+		// process as many blocks as possible (zero or more)
+		_blocks = trunc( _minTopBufferRem / kBlockSize );
+	}
+	if( ! firstpass ) {
+		// process zero or one blocks
+		_blocks = ( _minTopBufferRem > kBlockSize ) ? 1 : 0;
+	}
+
+	std::cout << "INFO: processing " << _blocks << " blocks" << std::endl;
+
+	// no process the zero or more blocks
+	while( _blocks > 0 ) {
+		int mpsize = _mp->GetNumberOfPoints();
+		int start = _pointsprocessed;
+		std::cout << "INFO: points processed (before): " << _pointsprocessed << "/" << mpsize << std::endl;
+		int finish;
+		int remaining = mpsize - _pointsprocessed;
+		if( remaining > kBlockSize ) {
+			finish = _pointsprocessed + kBlockSize;
+		} else {
+			finish = _pointsprocessed + remaining;
+		}
+		for (int i = start; i<finish; i++){
+			PushToTalon(_mp->GetPoint(0, i), _leftTalon, 0);
+			PushToTalon(_mp->GetPoint(1, i), _rightTalon, 1);
+		}
+		_pointsprocessed = finish;
+		std::cout << "INFO: points processed (after): " << _pointsprocessed << "/" << mpsize << std::endl;
+		_blocks--;
 	}
 }
 

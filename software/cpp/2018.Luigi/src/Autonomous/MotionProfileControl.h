@@ -15,7 +15,7 @@ public:
 							std::shared_ptr<MotionProfileData>);
 	SetValueMotionProfile GetSetValue();
 	void control();
-	void startFilling();
+	void streamToTopBuffer( bool );
 	void start();
 	void stop();
 	void execute();
@@ -38,11 +38,13 @@ private:
 	int _state;
 	int _loopTimeout;
 	int _loopCount;
+	int _pointsprocessed;
 
 	const int kMinPointsInTalon = 5;
 	const int kNumLoopsTimeout = 10;
 	const int kTimeoutMs = 10;
 	const int kTopBufferSize = 4000;
+	const int kBlockSize = 128;
 	const double kSensorUnitsPerRotation = 4096;
 
 	enum Pos {first, mid, last};
