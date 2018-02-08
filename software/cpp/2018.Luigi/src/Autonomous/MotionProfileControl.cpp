@@ -139,8 +139,8 @@ void MotionProfileControl::control(){
 
 		// printfs and/or logging ... we really need to process statuses in a better
 		// way as they will appear jumbled in the console when we do it like this
-		Instrumentation::Process(_statusA, _posA, _velA, _headingA);
-		Instrumentation::Process(_statusB, _posB, _velB, _headingB);
+//		Instrumentation::Process(_statusA, _posA, _velA, _headingA);
+//		Instrumentation::Process(_statusB, _posB, _velB, _headingB);
 
 }
 

@@ -23,7 +23,7 @@ void SubEncodedArmLift::ArmToGroundPos() {  //Button A
 	IfBottom();
 	IfTop();
 	_talon->Set(ControlMode::Position, targetPositionRotations);
-	std::cout << "BUTTON ACTULLY WORKED" << stopCase << std::endl;
+//	std::cout << "BUTTON ACTULLY WORKED" << stopCase << std::endl;
 	MovementCheck();
 
 }
@@ -34,7 +34,7 @@ void SubEncodedArmLift::ArmToExchangePos() {  //Button B
 	IfBottom();
 	IfTop();
 	_talon->Set(ControlMode::Position, targetPositionRotations);
-	std::cout << "BUTTON ACTULLY WORKED" << stopCase <<std::endl;
+//	std::cout << "BUTTON ACTULLY WORKED" << stopCase <<std::endl;
 	MovementCheck();
 
 }
@@ -45,7 +45,7 @@ void SubEncodedArmLift::ArmToSwitchPos() {  //Button X
 	IfBottom();
 	IfTop();
 	_talon->Set(ControlMode::Position, targetPositionRotations);
-	std::cout << "BUTTON ACTULLY WORKED" << stopCase <<std::endl;
+//	std::cout << "BUTTON ACTULLY WORKED" << stopCase <<std::endl;
 	MovementCheck();
 
 }
@@ -56,7 +56,7 @@ void SubEncodedArmLift::ArmToScalePos() {  //Button Y
     IfBottom();
     IfTop();
 	_talon->Set(ControlMode::Position, targetPositionRotations);
-	std::cout << "BUTTON ACTULLY WORKED" << stopCase <<std::endl;
+//	std::cout << "BUTTON ACTULLY WORKED" << stopCase <<std::endl;
 	MovementCheck();
 
 }
@@ -112,7 +112,7 @@ int SubEncodedArmLift::GetSwtCase() { //this is for commands End()s so they know
 }
 
 void SubEncodedArmLift::InitDefaultCommand() {
-	SetDefaultCommand(new CmdArmDefault());
+//	SetDefaultCommand(new CmdArmDefault());
 }
 
 void SubEncodedArmLift::DefaultStop() { //default command
@@ -162,7 +162,7 @@ int SubEncodedArmLift::GetTargetPosition() {
 
 void SubEncodedArmLift::IfBottom() { //can it move off bottom switch???
 
-	std::cout << "IFBOTTOM" << stopCase  <<std::endl;
+//	std::cout << "IFBOTTOM" << stopCase  <<std::endl;
 	if (_swtBottomStop->Get()) {
 		if (targetPositionRotations < (_talon->GetSelectedSensorPosition(0))) {
 			stopCase = 1;
@@ -173,7 +173,7 @@ void SubEncodedArmLift::IfBottom() { //can it move off bottom switch???
 
 void SubEncodedArmLift::IfTop() { //can it move off TOP switch???
 
-	std::cout << "IFTOP" << stopCase  <<std::endl;
+//	std::cout << "IFTOP" << stopCase  <<std::endl;
 	if (_swtTopStop->Get()) {
 			if (targetPositionRotations > (_talon->GetSelectedSensorPosition(0))) {
 				stopCase = 1;

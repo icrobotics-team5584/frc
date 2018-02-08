@@ -8,6 +8,7 @@ CmdAuto_MotionProfile::CmdAuto_MotionProfile(std::string profile, int profileTim
 
 // Called just before this Command runs the first time
 void CmdAuto_MotionProfile::Initialize() {
+	std::cout << "Driving a MP" << std::endl;
 	//Initialise MPController
 	MPController.initialise();
 }

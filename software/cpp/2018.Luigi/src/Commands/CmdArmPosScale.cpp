@@ -23,12 +23,18 @@ void CmdArmPosScale::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdArmPosScale::IsFinished() {
-	if(Robot::subEncodedArmLift->GetSwitches()){
-			return true;
-		} else {
-			return false;
-			}
-		}
+	if (Robot::subEncodedArmLift->GetSwitches()){
+		//Stop command if hit limit switches
+		return true;
+	}
+
+	if (Robot::subEncodedArmLift->GetCurrentPosition() == Robot::subEncodedArmLift->GetTargetPosition()){
+		//Stop command if target position is reached
+		return true;
+	}
+
+	return false;
+}
 
 // Called once after isFinished returns true
 void CmdArmPosScale::End() {
@@ -39,6 +45,8 @@ void CmdArmPosScale::End() {
 			break;
 		case 1 :
 			Robot::subEncodedArmLift->Reset();
+			break;
+		default :
 			break;
 		}
 }
