@@ -33,6 +33,7 @@ std::shared_ptr<frc::Ultrasonic> RobotMap::subDriveBaseUltrasonicInputLeft;
 std::shared_ptr<WPI_TalonSRX> RobotMap::subEncodedArmLiftSrxMaster;
 std::shared_ptr<WPI_TalonSRX> RobotMap::subEncodedArmLiftSrxSlave;
 std::shared_ptr<DigitalInput> RobotMap::subEncodedArmLiftSwtTop;
+std::shared_ptr<DigitalInput> RobotMap::subEncodedArmLiftSwtBottom;
 
 //Define Motion Profile Data
 std::shared_ptr<MotionProfileData> RobotMap::mpBaseline;
@@ -112,6 +113,7 @@ void RobotMap::init() {
     subEncodedArmLiftSrxSlave.reset(new WPI_TalonSRX(6));
     subEncodedArmLiftSrxSlave->Set( ctre::phoenix::motorcontrol::ControlMode::Follower, 5);
     subEncodedArmLiftSwtTop.reset(new DigitalInput(3));
+    subEncodedArmLiftSwtBottom.reset(new DigitalInput(2));
 
     enum Constants
     {

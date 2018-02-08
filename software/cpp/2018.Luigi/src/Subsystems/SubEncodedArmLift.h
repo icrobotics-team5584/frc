@@ -13,6 +13,7 @@ private:
 
 
 	std::shared_ptr<DigitalInput> _swtTopStop;
+	std::shared_ptr<DigitalInput> _swtBottomStop;
 	std::shared_ptr<WPI_TalonSRX> _talon;
 	int _loops = 0;
 	int _axisLoops = 0;
@@ -21,6 +22,9 @@ private:
 	double _axis = 0;
 	int _test = 0;
 	double _tempStore = 0;
+	int swtCase = 0;
+	int stopCase = 0;
+
 
 public:
 	SubEncodedArmLift();
@@ -31,9 +35,14 @@ public:
 	void Overide(std::shared_ptr<Joystick>);
 	bool GetSwitches();
 	void Reset();
+	void StartBtnReset();
 	void Stop();
 	void DefaultStop();
 	void InitDefaultCommand();
+	int GetSwtCase();
+	void IfBottom();
+	void IfTop();
+	void MovementCheck();
 
 };
 

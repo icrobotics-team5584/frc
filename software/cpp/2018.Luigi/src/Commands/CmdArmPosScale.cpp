@@ -23,20 +23,24 @@ void CmdArmPosScale::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdArmPosScale::IsFinished() {
-	std::cout << "CMD SCA IS_FINISHED" << std::endl;
 	if(Robot::subEncodedArmLift->GetSwitches()){
-			std::cout << "TRUE CMD scale" << std::endl;
 			return true;
 		} else {
-			std::cout << "FALSE CMD scale" << std::endl;
 			return false;
 			}
 		}
 
 // Called once after isFinished returns true
 void CmdArmPosScale::End() {
-	std::cout << "CMD scale END" << std::endl;
-	Robot::subEncodedArmLift->Stop();
+	switch (Robot::subEncodedArmLift->GetSwtCase()) {
+
+		case 0 :
+			Robot::subEncodedArmLift->Stop();
+			break;
+		case 1 :
+			Robot::subEncodedArmLift->Reset();
+			break;
+		}
 }
 
 // Called when another command which requires one or more of the same
