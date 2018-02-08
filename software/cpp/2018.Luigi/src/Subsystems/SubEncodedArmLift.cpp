@@ -145,7 +145,7 @@ void SubEncodedArmLift::StartBtnReset() { //reset (start button)
 
 }
 
-<<<<<<< HEAD
+
 int SubEncodedArmLift::GetCurrentPosition() {
 
 	//Return current position of the lift encoder in sensor units
@@ -159,7 +159,7 @@ int SubEncodedArmLift::GetTargetPosition() {
 	return (targetPositionRotations / 4096);
 
 }
-=======
+
 void SubEncodedArmLift::IfBottom() { //can it move off bottom switch???
 
 	std::cout << "IFBOTTOM" << stopCase  <<std::endl;
@@ -183,7 +183,7 @@ void SubEncodedArmLift::IfTop() { //can it move off TOP switch???
 }
 
 void SubEncodedArmLift::MovementCheck() {
->>>>>>> master
+
 
  //check for switch not prssed
 
