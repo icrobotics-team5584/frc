@@ -8,6 +8,8 @@ CmdAuto_DeployArm::CmdAuto_DeployArm() {
 	 * Run intake quickly while arm deploys, then intake it slowly for the rest of the run
 	 */
 
+	std::cout << "Deploying arm" << std::endl;
+
 	AddParallel(new CmdArmPosSwitch());			//Deoply arm
 	AddSequential(new CmdIntake(2, 1));			//fast intake to avoid dropping cube on lift deployment
 	AddSequential(new CmdIntake(13, 0.75));		//Slow intake to avoid dropping cube on fast turn

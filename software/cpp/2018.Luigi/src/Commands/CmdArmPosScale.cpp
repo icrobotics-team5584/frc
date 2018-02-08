@@ -9,7 +9,7 @@ CmdArmPosScale::CmdArmPosScale() {
 // Called just before this Command runs the first time
 void CmdArmPosScale::Initialize() {
 
-
+	std::cout << "Moving arm to scale" << std::endl;
 
 }
 

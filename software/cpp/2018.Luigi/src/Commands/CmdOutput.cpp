@@ -6,9 +6,7 @@ CmdOutput::CmdOutput(double timeout, double speed) : _timeout(timeout), _speed(s
 
  //Called just before this Command runs the first time
 void CmdOutput::Initialize() {
-
-	std::cout << "Running CmdOutput::Initialize()" << std::endl;
-	std::cout << "output timeout:" << _timeout << std::endl;
+	std::cout << "Outputting cube" << std::endl;
 
 	//Start spitting out
 	Robot::subIntake->Out(_speed);
