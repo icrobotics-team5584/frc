@@ -1,4 +1,5 @@
 #include "CmdArmPosScale.h"
+#include <iostream>
 
 CmdArmPosScale::CmdArmPosScale() {
 
@@ -22,16 +23,28 @@ void CmdArmPosScale::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdArmPosScale::IsFinished() {
-	return false;
-}
+	if(Robot::subEncodedArmLift->GetSwitches()){
+			return true;
+		} else {
+			return false;
+			}
+		}
 
 // Called once after isFinished returns true
 void CmdArmPosScale::End() {
+	switch (Robot::subEncodedArmLift->GetSwtCase()) {
 
+		case 0 :
+			Robot::subEncodedArmLift->Stop();
+			break;
+		case 1 :
+			Robot::subEncodedArmLift->Reset();
+			break;
+		}
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void CmdArmPosScale::Interrupted() {
-
+	End();
 }
