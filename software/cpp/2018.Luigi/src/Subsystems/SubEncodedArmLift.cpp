@@ -23,7 +23,6 @@ void SubEncodedArmLift::ArmToGroundPos() {  //Button A
 	IfBottom();
 	IfTop();
 	_talon->Set(ControlMode::Position, targetPositionRotations);
-	std::cout << "BUTTON ACTULLY WORKED" << stopCase << std::endl;
 	MovementCheck();
 
 }
@@ -34,7 +33,6 @@ void SubEncodedArmLift::ArmToExchangePos() {  //Button B
 	IfBottom();
 	IfTop();
 	_talon->Set(ControlMode::Position, targetPositionRotations);
-	std::cout << "BUTTON ACTULLY WORKED" << stopCase <<std::endl;
 	MovementCheck();
 
 }
@@ -45,7 +43,6 @@ void SubEncodedArmLift::ArmToSwitchPos() {  //Button X
 	IfBottom();
 	IfTop();
 	_talon->Set(ControlMode::Position, targetPositionRotations);
-	std::cout << "BUTTON ACTULLY WORKED" << stopCase <<std::endl;
 	MovementCheck();
 
 }
@@ -56,26 +53,36 @@ void SubEncodedArmLift::ArmToScalePos() {  //Button Y
     IfBottom();
     IfTop();
 	_talon->Set(ControlMode::Position, targetPositionRotations);
-	std::cout << "BUTTON ACTULLY WORKED" << stopCase <<std::endl;
 	MovementCheck();
 
 }
 
-void SubEncodedArmLift::Overide(std::shared_ptr<Joystick> sticky_2) {  //right joystick
+void SubEncodedArmLift::Overide(std::shared_ptr<Joystick> sticky_2) {  //right joystick button press
 
-	_axis = sticky_2->GetRawAxis(5);
+	_axis5 = sticky_2->GetRawAxis(5); //up down control axis
+	_axis3 = sticky_2->GetRawAxis(3); //right trigger overide boost
 
-		if (_axis > 0.5) {
-			targetPositionRotations = targetPositionRotations + 50;
-			IfBottom();
-			IfTop();
-		} else if (_axis <-0.5){
-			targetPositionRotations = targetPositionRotations - 50;
-			IfBottom();
-			IfTop();
-		} else {
+	frc::SmartDashboard::PutNumber("AXIS 33333", _axis3);
 
-		}
+	switch (overideCase) {
+	case 0:
+		overideSpeed = 50;
+	break;
+	case 1:
+		overideSpeed = 150;
+	break;
+	}
+
+	if (_axis5 > 0.5) { //down
+		targetPositionRotations = targetPositionRotations + 50;
+		IfBottom();
+		IfTop();
+	} else if (_axis5 <-0.5){ //up
+		targetPositionRotations = targetPositionRotations - 50;
+		IfBottom();
+		IfTop();
+	} else {
+	}
 
 		_talon->Set(ControlMode::Position, targetPositionRotations);
 		MovementCheck();
@@ -83,9 +90,9 @@ void SubEncodedArmLift::Overide(std::shared_ptr<Joystick> sticky_2) {  //right j
 }
 
 
-bool SubEncodedArmLift::GetSwitches() {
+bool SubEncodedArmLift::GetSwitches() { //run evry ~20ms checks the switch states
 
-	if (_swtTopStop->Get()){
+	if (_swtTopStop->Get()){ //this if statement is so it knows what funtion to call in end
 		swtCase = 0;
 	} else if (_swtBottomStop->Get()) {
 		swtCase = 1;
@@ -93,7 +100,7 @@ bool SubEncodedArmLift::GetSwitches() {
 		swtCase = 3;
 	}
 
-	switch (stopCase) {
+	switch (stopCase) {//this is determs weather or not we want to ignore the switch
 	default:
 	if (_swtTopStop->Get() or _swtBottomStop->Get()){
 			return true;
@@ -107,7 +114,7 @@ bool SubEncodedArmLift::GetSwitches() {
 	}
 }
 
-int SubEncodedArmLift::GetSwtCase() { //this is for commands End()s so they know what to do
+int SubEncodedArmLift::GetSwtCase() { //this is for commands End()s so they can get swtCase
 	return swtCase;
 }
 
@@ -137,7 +144,7 @@ void SubEncodedArmLift::Reset() { //for bottom lim swt reset
 
 }
 
-void SubEncodedArmLift::StartBtnReset() { //reset (start button)
+void SubEncodedArmLift::StartBtnReset() { //reset (start button) xbox 360 controler
 
 	_talon->SetSelectedSensorPosition(0,0,10);
 	targetPositionRotations = 0;
@@ -147,7 +154,6 @@ void SubEncodedArmLift::StartBtnReset() { //reset (start button)
 
 void SubEncodedArmLift::IfBottom() { //can it move off bottom switch???
 
-	std::cout << "IFBOTTOM" << stopCase  <<std::endl;
 	if (_swtBottomStop->Get()) {
 		if (targetPositionRotations < (_talon->GetSelectedSensorPosition(0))) {
 			stopCase = 1;
@@ -158,7 +164,6 @@ void SubEncodedArmLift::IfBottom() { //can it move off bottom switch???
 
 void SubEncodedArmLift::IfTop() { //can it move off TOP switch???
 
-	std::cout << "IFTOP" << stopCase  <<std::endl;
 	if (_swtTopStop->Get()) {
 			if (targetPositionRotations > (_talon->GetSelectedSensorPosition(0))) {
 				stopCase = 1;
