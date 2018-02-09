@@ -16,7 +16,11 @@ void SubRamp::TakeJoystickInputs(std::shared_ptr<Joystick> sticky_3) {
 
 	_POV = sticky_3->GetPOV();
 
-	frc::SmartDashboard::PutNumber("POV  ========", _POV);
+	if (135 <= _POV && _POV <= 225) {
+
+
+
+	}
 
 }
 
