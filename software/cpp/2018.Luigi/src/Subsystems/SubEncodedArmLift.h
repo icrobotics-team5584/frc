@@ -35,8 +35,6 @@ public:
 	void Reset();
 	void StartBtnReset();
 	void Stop();
-	void DefaultStop();
-	void InitDefaultCommand();
 	int GetSwtCase();
 	void IfBottom();
 	void IfTop();

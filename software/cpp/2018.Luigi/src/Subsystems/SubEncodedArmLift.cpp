@@ -4,7 +4,6 @@
 #include <WPILib.h>
 #include <ctre/Phoenix.h>
 #include "Constants.h"
-#include "Commands/CmdArmDefault.h"
 
 SubEncodedArmLift::SubEncodedArmLift() : Subsystem("ExampleSubsystem") {
 
@@ -19,11 +18,11 @@ SubEncodedArmLift::SubEncodedArmLift() : Subsystem("ExampleSubsystem") {
 
 void SubEncodedArmLift::ArmToGroundPos() {  //Button A
 
-	targetPositionRotations = 0.0;
-	IfBottom();
-	IfTop();
-	_talon->Set(ControlMode::Position, targetPositionRotations);
-	MovementCheck();
+	targetPositionRotations = 0.0; //set the targ rotations (total)
+	IfBottom(); //check for bottom switch
+	IfTop(); //check for top switch
+	_talon->Set(ControlMode::Position, targetPositionRotations); //start the background loop that goes to targtPo...
+	MovementCheck(); //check for moved of switch to reset stopCase back to 0 ready for another switch press
 
 }
 
@@ -62,9 +61,13 @@ void SubEncodedArmLift::Overide(std::shared_ptr<Joystick> sticky_2) {  //right j
 	_axis5 = sticky_2->GetRawAxis(5); //up down control axis
 	_axis3 = sticky_2->GetRawAxis(3); //right trigger overide boost
 
-	frc::SmartDashboard::PutNumber("AXIS 33333", _axis3);
+	if (_axis3 > 0.5) { //checks if axes3 (right trig held) if change case for overideSpeed
+		overideCase = 1;
+	} else {
+		overideCase = 0;
+	}
 
-	switch (overideCase) {
+	switch (overideCase) { //change overideSpeed based on overideCase
 	case 0:
 		overideSpeed = 50;
 	break;
@@ -74,11 +77,11 @@ void SubEncodedArmLift::Overide(std::shared_ptr<Joystick> sticky_2) {  //right j
 	}
 
 	if (_axis5 > 0.5) { //down
-		targetPositionRotations = targetPositionRotations + 50;
+		targetPositionRotations = targetPositionRotations + overideSpeed;
 		IfBottom();
 		IfTop();
 	} else if (_axis5 <-0.5){ //up
-		targetPositionRotations = targetPositionRotations - 50;
+		targetPositionRotations = targetPositionRotations - overideSpeed;
 		IfBottom();
 		IfTop();
 	} else {
@@ -116,17 +119,6 @@ bool SubEncodedArmLift::GetSwitches() { //run evry ~20ms checks the switch state
 
 int SubEncodedArmLift::GetSwtCase() { //this is for commands End()s so they can get swtCase
 	return swtCase;
-}
-
-void SubEncodedArmLift::InitDefaultCommand() {
-	SetDefaultCommand(new CmdArmDefault());
-}
-
-void SubEncodedArmLift::DefaultStop() { //default command
-
-		targetPositionRotations = (_talon->GetSelectedSensorPosition(0));
-		_talon->Set(ControlMode::Position, targetPositionRotations);
-
 }
 
 void SubEncodedArmLift::Stop() {  //for top lim switch
