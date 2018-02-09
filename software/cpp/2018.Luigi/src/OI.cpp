@@ -10,7 +10,7 @@
 #include "Commands/CmdResetArmEncoPos.h"
 #include "Commands/CmdAutoMotionProfileTest.h"
 #include "Commands/CmdChangeCamera.h"
-
+#include "Commands/CmdRampDrop.h"
 
 OI::OI() {
     //Initiate Joystick

@@ -7,6 +7,7 @@ std::shared_ptr<SubIntake> Robot::subIntake;
 std::unique_ptr<OI> Robot::oi;
 std::shared_ptr<SubEncodedArmLift> Robot::subEncodedArmLift;
 std::shared_ptr<SubCameras> Robot::subCameras;
+std::shared_ptr<SubRamp> Robot::subRamp;
 
 void Robot::RobotInit() {
 	RobotMap::init();
@@ -16,6 +17,7 @@ void Robot::RobotInit() {
 	subIntake.reset(new SubIntake());
 	subEncodedArmLift.reset(new SubEncodedArmLift());
 	subCameras.reset(new SubCameras);
+	subRamp.reset(new SubRamp);
 	oi.reset(new OI());
 
 

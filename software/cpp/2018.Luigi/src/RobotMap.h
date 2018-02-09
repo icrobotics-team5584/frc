@@ -47,6 +47,8 @@ public:
 	static std::shared_ptr<DigitalInput> subEncodedArmLiftSwtTop;
 	static std::shared_ptr<DigitalInput> subEncodedArmLiftSwtBottom;
 
+	//Define Ramp drop actuator
+	static std::shared_ptr<VictorSP> subRampSPLeft;
 	
 	//Define Motion Profile Data
 	static std::shared_ptr<MotionProfileData> mpBaseline;
