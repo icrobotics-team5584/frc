@@ -58,6 +58,9 @@ void Robot::AutonomousInit() {
 	RobotMap::subDriveBaseSRXright->SetSelectedSensorPosition(0, 0, 10);
 	RobotMap::subDriveBaseSRXleft->SetSelectedSensorPosition(0, 0, 10);
 
+	//Make sure lift starts at zero
+	subEncodedArmLift->Reset();
+
 	//Determine auto command selected from Dashboard and run
 	autoSelector.SelectAndRun(autoSelector.GetStartingPosition(), autoSelector.GetAutonomousTask(), gameData);
 //	static CmdAutonomous ac;

@@ -1,7 +1,5 @@
 #include "CmdAuto_Left_Switch_Left.h"
 #include "CmdAuto_MotionProfile.h"
-#include "Commands/CmdArmPosSwitch.h"
-#include "Commands/CmdIntake.h"
 #include "Commands/CmdOutput.h"
 #include "Commands/AutonomousCommands/CmdAuto_DeployArm.h"
 

@@ -1,20 +1,16 @@
 #include "CmdAuto_Right_Switch_Right.h"
+#include "CmdAuto_MotionProfile.h"
+#include "Commands/CmdOutput.h"
+#include "Commands/AutonomousCommands/CmdAuto_DeployArm.h"
 
 CmdAuto_Right_Switch_Right::CmdAuto_Right_Switch_Right() {
-	// Add Commands here:
-	// e.g. AddSequential(new Command1());
-	//      AddSequential(new Command2());
-	// these will run in order.
 
-	// To run multiple commands at the same time,
-	// use AddParallel()
-	// e.g. AddParallel(new Command1());
-	//      AddSequential(new Command2());
-	// Command1 and Command2 will run in parallel.
+	/*
+	 * Drive from the right start position and place a cube in the right side of the switch
+	 */
 
-	// A command group will require all of the subsystems that each member
-	// would require.
-	// e.g. if Command1 requires chassis, and Command2 requires arm,
-	// a CommandGroup containing them would require both the chassis and the
-	// arm.
+	AddParallel(new CmdAuto_DeployArm());
+	AddSequential(new CmdAuto_MotionProfile("Right-Switch-Right", 7));
+	AddSequential(new CmdOutput(1, 1));
+
 }
