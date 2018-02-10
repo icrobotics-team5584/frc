@@ -10,12 +10,10 @@ private:
 	// It's desirable that everything possible under private except
 	// for methods that implement subsystem capabilities
 	std::shared_ptr<VictorSP> SPLeft;
-	int _POV = 0;
 
 public:
 	SubRamp();
 	void InitDefaultCommand();
-	void TakeJoystickInputs(std::shared_ptr<Joystick>);
 };
 
 #endif  // SubRamp_H
