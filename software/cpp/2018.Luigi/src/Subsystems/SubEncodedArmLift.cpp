@@ -61,6 +61,9 @@ void SubEncodedArmLift::Overide(std::shared_ptr<Joystick> sticky_2) {  //right j
 	_axis5 = sticky_2->GetRawAxis(5); //up down control axis
 	_axis3 = sticky_2->GetRawAxis(3); //right trigger overide boost
 
+	_btn7 = sticky_2->GetRawButton(7);
+	frc::SmartDashboard::PutNumber("_btn7   777777777", _btn7);
+
 	if (_axis3 > 0.5) { //checks if axes3 (right trig held) if change case for overideSpeed
 		overideCase = 1;
 	} else {
