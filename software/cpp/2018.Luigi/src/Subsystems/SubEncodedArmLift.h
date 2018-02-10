@@ -18,6 +18,7 @@ private:
 	double targetPositionRotations;
 	double _axis5 = 0;
 	double _axis3 = 0;
+	double _btn7 = 0;
 	int overideCase = 0;
 	int overideSpeed = 0;
 	int swtCase = 0;

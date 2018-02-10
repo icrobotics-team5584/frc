@@ -35,6 +35,9 @@ std::shared_ptr<WPI_TalonSRX> RobotMap::subEncodedArmLiftSrxSlave;
 std::shared_ptr<DigitalInput> RobotMap::subEncodedArmLiftSwtTop;
 std::shared_ptr<DigitalInput> RobotMap::subEncodedArmLiftSwtBottom;
 
+//Define Ramp drop actuator
+std::shared_ptr<VictorSP> RobotMap::subRampSPLeft;
+
 
 void RobotMap::init() {
 
@@ -109,7 +112,10 @@ void RobotMap::init() {
 //    mpBaseline.reset(new MotionProfileData(kBaselineA, kBaselineB, kBaselineASz));
 //    mpTest.reset(new MotionProfileData(kMPLtest, kMPRtest, kMPLtestSz));
 
-    //Initiate arm lift Actuators / Actuator
+    //Initiate Ramp Drop Actuator
+    subRampSPLeft.reset(new VictorSP(0));
+
+    //Initiate arm lift Actuators / Actuator /Sensors
     subEncodedArmLiftSrxMaster.reset(new WPI_TalonSRX(5));
     subEncodedArmLiftSrxSlave.reset(new WPI_TalonSRX(6));
     subEncodedArmLiftSrxSlave->Set( ctre::phoenix::motorcontrol::ControlMode::Follower, 5);

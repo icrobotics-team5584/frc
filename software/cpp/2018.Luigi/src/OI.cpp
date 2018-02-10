@@ -11,7 +11,6 @@
 #include "Commands/CmdResetArmEncoPos.h"
 #include "Commands/CmdChangeCamera.h"
 
-
 OI::OI() {
     //Initiate Joystick
 	joystick0.reset(new frc::Joystick(0));
