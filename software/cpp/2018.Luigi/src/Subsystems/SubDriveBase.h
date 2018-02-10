@@ -6,11 +6,11 @@
 #include <WPILib.h>
 #include <SmartDashboard/SmartDashboard.h>
 #include <AHRS.h>
-
+#include "PIDOutput.h"
 #include "RobotMap.h"
 
 
-class SubDriveBase: public frc::Subsystem {
+class SubDriveBase: public frc::Subsystem{
 private:
 	std::shared_ptr<WPI_TalonSRX> sRXleft;
 	std::shared_ptr<WPI_TalonSRX> sRXright;
@@ -28,13 +28,15 @@ private:
 	std::shared_ptr<frc::Ultrasonic> ultrasonicInputBack;
 	std::shared_ptr<frc::Ultrasonic> ultrasonicInputLeft;
 
-	std::shared_ptr<AHRS> ahrsGyro;
-
 	int _Ultraloops = 0;
 	int frontUValue = 0;
 	int rightUValue = 0;
 	int backUValue = 0;
 	int leftUValue = 0;
+
+	//NavX objects
+	std::shared_ptr<AHRS> ahrsGyro;
+	PIDController turnController;
 
 public:
 	SubDriveBase();
@@ -43,7 +45,9 @@ public:
 	void AutoDrive(double, double);
 	void Stop();
 	void TakeJoystickInputs(std::shared_ptr<Joystick>);
-	int aCounter;
+	void Rotate(double angle);
+	void PIDWrite(double output);
+	void ZeroNavX();
 
 };
 
