@@ -17,8 +17,8 @@ private:
 public:
 	SubIntake();
 	void InitDefaultCommand();
-	void In();
-	void Out();
+	void In(double speed);
+	void Out(double speed);
 	void Stop();
 	bool GetSwitches();
 };

@@ -14,7 +14,7 @@ void CmdResetArmEncoPos::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void CmdResetArmEncoPos::Execute() {
 
-	Robot::subEncodedArmLift->Reset();
+	Robot::subEncodedArmLift->StartBtnReset();
 
 }
 

@@ -69,6 +69,6 @@ void SubDriveBase::Stop(){
 void SubDriveBase::TakeJoystickInputs(std::shared_ptr<Joystick> sticky ) {
 	//double throttle = (((sticky->GetRawAxis(3) + 1 ) / 4 )*-1 ) +1;
 	//differentialDrive->ArcadeDrive(-sticky->GetY() * throttle, sticky->GetX() * throttle);
-	double boost = (((sticky->GetRawAxis(2)+2))/3);
+	double boost = (((sticky->GetRawAxis(2)+3))/4);
 	differentialDrive->ArcadeDrive(-sticky->GetY() * boost, sticky->GetX() * boost);
 }

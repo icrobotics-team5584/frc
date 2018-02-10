@@ -5,10 +5,10 @@
 #include "Commands/CmdArmPosGround.h"
 #include "Commands/CmdArmPosScale.h"
 #include "Commands/CmdArmPosSwitch.h"
+
 #include "Commands/CmdArmPosExchange.h"
 #include "Commands/CmdArmOveride.h"
 #include "Commands/CmdResetArmEncoPos.h"
-#include "Commands/CmdAutoMotionProfileTest.h"
 #include "Commands/CmdChangeCamera.h"
 
 
@@ -39,15 +39,9 @@ OI::OI() {
 	btnEncoderPosReset.reset(new JoystickButton(joystick0.get(), 8));
 	btnEncoderPosReset->WhenPressed(new CmdResetArmEncoPos());
 
-
-	//Motion Profile test
-	btnMP.reset(new JoystickButton(joystick0.get(), 44));
-	// btnMP->ToggleWhenPressed(new CmdAutoMotionProfileTest());
-	btnMP->WhileHeld(new CmdAutoMotionProfileTest());
-
 	//Initiate Change camera button
-	btnChangeCamera.reset(new JoystickButton(joystick0.get(), 99));
-	btnChangeCamera->WhenPressed(new CmdChangeCamera());
+//	btnChangeCamera.reset(new JoystickButton(joystick0.get(), 99));
+//	btnChangeCamera->WhenPressed(new CmdChangeCamera());
 
 }
 

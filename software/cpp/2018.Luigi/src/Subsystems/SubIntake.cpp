@@ -14,16 +14,16 @@ void SubIntake::InitDefaultCommand() {
 
 }
 
-void SubIntake::Out(){
-	tnxRight->Set(0.5);
-	tnxLeft->Set(-0.5);
-	tnxBottom->Set(-0.5);
+void SubIntake::Out(double speed){
+	tnxRight->Set(speed);
+	tnxLeft->Set(-speed);
+	tnxBottom->Set(-speed);
 }
 
-void SubIntake::In(){
-	tnxRight->Set(-0.5);
-	tnxLeft->Set(0.5);
-	tnxBottom->Set(0.5);
+void SubIntake::In(double speed){
+	tnxRight->Set(-speed);
+	tnxLeft->Set(speed);
+	tnxBottom->Set(speed);
 }
 
 void SubIntake::Stop(){

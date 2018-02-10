@@ -1,0 +1,14 @@
+#include "CmdAuto_Right_Scale_Right.h"
+#include "Commands/CmdOutput.h"
+#include "CmdAuto_MotionProfile.h"
+#include "CmdAuto_DeployArmToScale.h"
+
+CmdAuto_Right_Scale_Right::CmdAuto_Right_Scale_Right() {
+	/*
+	 * From the right starting position, put a cube in the right side of the scale
+	 */
+
+	AddParallel(new CmdAuto_DeployArmToScale(5));
+	AddSequential(new CmdAuto_MotionProfile("Right-Scale-Right", 10));
+	AddSequential(new CmdOutput(1, 1));
+}
