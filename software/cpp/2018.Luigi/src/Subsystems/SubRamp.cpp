@@ -20,6 +20,12 @@ void SubRamp::DropRamp(){ //start spining
 
 }
 
+void SubRamp::ResetRamp() {
+
+	SPLeft->Set(0.2);
+
+}
+
 void SubRamp::StopRamp() {
 
 	SPLeft->Set(0.0);

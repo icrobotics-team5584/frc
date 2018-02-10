@@ -18,11 +18,14 @@ void CmdRampDefault::Execute() {
 	_POV = sticky_3->GetPOV();
 
 	if (135 <= _POV && _POV <= 225) {
-
 		SetTimeout(0.5);
 		Robot::subRamp->DropRamp();
-
 		}
+
+	if (270 <= _POV or (_POV <= 90 && _POV >= 0) ){
+		SetTimeout(0.15);
+		Robot::subRamp->ResetRamp();
+	}
 
 }
 

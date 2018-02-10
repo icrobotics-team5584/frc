@@ -16,6 +16,7 @@ public:
 	void InitDefaultCommand();
 	void DropRamp();
 	void StopRamp();
+	void ResetRamp();
 };
 
 #endif  // SubRamp_H
