@@ -3,11 +3,7 @@
 
 #include "WPILib.h"
 #include "ctre/Phoenix.h"
-#include "MotionProfileData.h"
-#include "MotionProfiles/MotionProfileBaselineA.h"
-#include "MotionProfiles/MotionProfileBaselineB.h"
-#include "MotionProfiles/MPL-test.h"
-#include "MotionProfiles/MPR-test.h"
+#include "Autonomous/MotionProfileData.h"
 
 class RobotMap {
 public:
@@ -46,12 +42,6 @@ public:
 	static std::shared_ptr<WPI_TalonSRX> subEncodedArmLiftSrxSlave;
 	static std::shared_ptr<DigitalInput> subEncodedArmLiftSwtTop;
 	static std::shared_ptr<DigitalInput> subEncodedArmLiftSwtBottom;
-
-	
-	//Define Motion Profile Data
-	static std::shared_ptr<MotionProfileData> mpBaseline;
-	static std::shared_ptr<MotionProfileData> mpTest;
-
 
 };
 #endif

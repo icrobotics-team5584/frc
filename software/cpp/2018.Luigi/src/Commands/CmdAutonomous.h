@@ -3,9 +3,9 @@
 
 #include "Commands/Command.h"
 #include "Robot.h"
-#include "AutonomousSelector.h"
-#include "MotionProfileData.h"
-#include "MotionProfileControl.h"
+#include "Autonomous/AutonomousSelector.h"
+#include "Autonomous/MotionProfileData.h"
+#include "Autonomous/MotionProfileControl.h"
 
 class CmdAutonomous : public Command {
 public:
@@ -16,8 +16,7 @@ public:
 	void End();
 	void Interrupted();
 private:
-	AutonomousSelector autoSelector;
-	std::shared_ptr<MotionProfileData> MPData;
+//	AutonomousSelector autoSelector;
 	MotionProfileControl MPController;
 };
 

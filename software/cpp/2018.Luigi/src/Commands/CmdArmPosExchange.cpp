@@ -2,15 +2,12 @@
 #include "CmdArmPosExchange.h"
 
 CmdArmPosExchange::CmdArmPosExchange() {
-	std::cout << "created CmdArmPosExchange \n";
 	Requires(Robot::subEncodedArmLift.get());
 
 }
 
 // Called just before this Command runs the first time
 void CmdArmPosExchange::Initialize() {
-
-
 
 }
 
