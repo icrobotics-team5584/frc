@@ -6,6 +6,13 @@
 #include "RobotMap.h"
 #include "LiveWindow/LiveWindow.h"
 #include "SmartDashboard/SmartDashboard.h"
+#include "OI.h"
+
+//Include Autonomous Options
+#include "Commands/CmdAutonomous.h"
+#include "Autonomous/AutonomousSelector.h"
+#include "Autonomous/GameData.h"
+#include "Commands/AutonomousCommands/CmdAuto_Left_Switch_Left.h"
 
 //Include Subsystems
 #include "Subsystems/SubDriveBase.h"
@@ -14,24 +21,26 @@
 #include "Subsystems/SubCameras.h"
 #include "Subsystems/SubRamp.h"
 
-#include "OI.h"
-
 class Robot : public frc::TimedRobot {
 public:
-	int intAutonomousTask = 0;
+	static Robot* getInstance();
 
+	//Declare objects for autonomous selection
+	static GameData gameData;
+	static AutonomousSelector autoSelector;
+	static std::shared_ptr<MotionProfileData> MPData;
 
-	frc::Command* autonomousCommand = nullptr;
-	frc::LiveWindow *lw = frc::LiveWindow::GetInstance();
-	frc::SendableChooser<frc::Command*> positionChooser;
-
+	//Decalre operator interface
 	static std::unique_ptr<OI> oi;
+
+	//Declare subsystems
 	static std::shared_ptr<SubDriveBase> subDriveBase;
 	static std::shared_ptr<SubIntake> subIntake;
 	static std::shared_ptr<SubEncodedArmLift> subEncodedArmLift;
 	static std::shared_ptr<SubCameras> subCameras;
 	static std::shared_ptr<SubRamp> subRamp;
 
+	//Declare robot functions
 	void RobotInit() override;
 	void DisabledInit() override;
 	void DisabledPeriodic() override;
@@ -40,5 +49,9 @@ public:
 	void TeleopInit() override;
 	void TeleopPeriodic() override;
 
+private:
+	static Robot* instance;
+	Robot();
 };
+
 #endif

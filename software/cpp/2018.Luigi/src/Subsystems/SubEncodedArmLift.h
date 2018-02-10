@@ -34,6 +34,8 @@ public:
 	void Overide(std::shared_ptr<Joystick>);
 	bool GetSwitches();
 	void Reset();
+	int GetCurrentPosition();
+	int GetTargetPosition();
 	void StartBtnReset();
 	void Stop();
 	int GetSwtCase();

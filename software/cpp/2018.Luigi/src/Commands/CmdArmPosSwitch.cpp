@@ -1,16 +1,13 @@
 #include "CmdArmPosSwitch.h"
 
 CmdArmPosSwitch::CmdArmPosSwitch() {
-
 	Requires(Robot::subEncodedArmLift.get());
 
 }
 
 // Called just before this Command runs the first time
 void CmdArmPosSwitch::Initialize() {
-
-
-
+	std::cout << "Arm to Switch Position" << std::endl;
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -22,12 +19,18 @@ void CmdArmPosSwitch::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdArmPosSwitch::IsFinished() {
-	if(Robot::subEncodedArmLift->GetSwitches()){
-			return true;
-		} else {
-				return false;
-			}
-		}
+	if (Robot::subEncodedArmLift->GetSwitches()){
+		//Stop command if hit limit switches
+		return true;
+	}
+
+	if (Robot::subEncodedArmLift->GetCurrentPosition() == Robot::subEncodedArmLift->GetTargetPosition()){
+		//Stop command if target position is reached
+		return true;
+	}
+
+	return false;
+}
 
 // Called once after isFinished returns true
 void CmdArmPosSwitch::End() {
@@ -38,6 +41,8 @@ void CmdArmPosSwitch::End() {
 			break;
 		case 1 :
 			Robot::subEncodedArmLift->Reset();
+			break;
+		default:
 			break;
 		}
 }

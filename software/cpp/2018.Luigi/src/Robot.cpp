@@ -1,7 +1,6 @@
 #include "Robot.h"
-#include "Commands/CmdAutoMotionProfileTest.h"
 
-//Forward Define Subsystems
+//Define Subsystems
 std::shared_ptr<SubDriveBase> Robot::subDriveBase;
 std::shared_ptr<SubIntake> Robot::subIntake;
 std::unique_ptr<OI> Robot::oi;
@@ -9,8 +8,26 @@ std::shared_ptr<SubEncodedArmLift> Robot::subEncodedArmLift;
 std::shared_ptr<SubCameras> Robot::subCameras;
 std::shared_ptr<SubRamp> Robot::subRamp;
 
+std::shared_ptr<MotionProfileData> Robot::MPData;
+GameData Robot::gameData;
+AutonomousSelector Robot::autoSelector;
+
+Robot* Robot::instance = 0;
+Robot* Robot::getInstance(){
+	if (instance == 0) {
+		instance = new Robot();
+	}
+	return instance;
+}
+
+Robot::Robot() : frc::TimedRobot() {
+
+}
+
 void Robot::RobotInit() {
 	RobotMap::init();
+
+	MPData.reset(new MotionProfileData());
 
 	//Initiate Subsystems
 	subDriveBase.reset(new SubDriveBase());
@@ -20,23 +37,8 @@ void Robot::RobotInit() {
 	subRamp.reset(new SubRamp);
 	oi.reset(new OI());
 
-
-	//Setup Auto Position Chooser
-
-	std::cout << "setup auto chooser \n";
-	positionChooser.AddDefault("Left Starting Position", new CmdAutoMotionProfileTest());
-	positionChooser.AddObject("Middle Starting Position", new CmdAutoMotionProfileTest());
-	positionChooser.AddObject("Right Starting Position", new CmdAutoMotionProfileTest());
-	frc::SmartDashboard::PutData("Starting Position", &positionChooser);
-
-	//Setup Auto Task Chooser - Removed and replaced with a number selection on dash
-//	taskChooser.AddDefault("Go for Switch", Switch);
-//	taskChooser.AddObject("Get that Scale", Scale);
-//	taskChooser.AddObject("ACHIEVE EVERYTHING!", Both);
-//	taskChooser.AddObject("Don't. Move.", Nothing);
-//	frc::SmartDashboard::PutData("Autonomous Tasks", &taskChooser);
-
-	SmartDashboard::PutNumber("intAutonomousTask", intAutonomousTask);
+	//Setup Auto Chooser
+	autoSelector.SendOptionsToDashboard();
 }
 
 void Robot::DisabledInit(){
@@ -48,26 +50,23 @@ void Robot::DisabledPeriodic() {
 }
 
 void Robot::AutonomousInit() {
-//	intAutonomousTask = SmartDashboard::GetNumber("intAutonomousTask", 0);
-//	autonomousTask.reset(new task);
-//	switch(intAutonomousTask){
-//	case 0:
-//		*autonomousTask = Nothing;
-//		break;
-//	case 1:
-//		*autonomousTask = Scale;
-//		break;
-//	case 2:
-//		*autonomousTask = Switch;
-//		break;
-//	case 3:
-//		*autonomousTask = Both;
-//		break;
-//	}
-	autonomousCommand = positionChooser.GetSelected();
+	gameData.UpdateGameData();
 
-	if (autonomousCommand != nullptr)
-		autonomousCommand->Start();
+	//Remove any pre-existing MP Trajectory Points in Talons
+	RobotMap::subDriveBaseSRXright->ClearMotionProfileTrajectories();
+	RobotMap::subDriveBaseSRXleft->ClearMotionProfileTrajectories();
+
+	//Reset Sensor positions to zero for future profiles
+	RobotMap::subDriveBaseSRXright->SetSelectedSensorPosition(0, 0, 10);
+	RobotMap::subDriveBaseSRXleft->SetSelectedSensorPosition(0, 0, 10);
+
+	//Make sure lift starts at zero
+	subEncodedArmLift->Reset();
+
+	//Determine auto command selected from Dashboard and run
+	autoSelector.SelectAndRun(autoSelector.GetStartingPosition(), autoSelector.GetAutonomousTask(), gameData);
+//	static CmdAutonomous ac;
+//	ac.Start();
 }
 
 void Robot::AutonomousPeriodic() {
@@ -75,13 +74,22 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
-	if (autonomousCommand != nullptr)
-		autonomousCommand->Cancel();
+	autoSelector.StopAutoCommand();
 }
 
 void Robot::TeleopPeriodic() {
 	frc::Scheduler::GetInstance()->Run();
-
 }
 
-START_ROBOT_CLASS(Robot);
+int main() {
+    if (!HAL_Initialize(500, 0)) {
+      llvm::errs() << "FATAL ERROR: HAL could not be initialized\n";
+      return -1;
+    }
+    HAL_Report(HALUsageReporting::kResourceType_Language,
+               HALUsageReporting::kLanguage_CPlusPlus);
+    llvm::outs() << "\n********** Robot program starting **********\n";
+    Robot::getInstance()->StartCompetition();
+  }
+
+//START_ROBOT_CLASS(Robot);

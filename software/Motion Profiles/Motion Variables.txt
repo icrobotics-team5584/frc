@@ -1,4 +1,4 @@
-Time Step = 0.05
+Time Step = 0.01
 Velocity = 4
 Acceleration = 3
 Jerk = 60

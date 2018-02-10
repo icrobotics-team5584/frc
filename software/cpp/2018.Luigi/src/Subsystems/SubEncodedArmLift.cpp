@@ -151,6 +151,21 @@ void SubEncodedArmLift::StartBtnReset() { //reset (start button) xbox 360 contro
 
 }
 
+
+int SubEncodedArmLift::GetCurrentPosition() {
+
+	//Return current position of the lift encoder in sensor units
+	return _talon->GetSelectedSensorPosition(0);
+
+}
+
+int SubEncodedArmLift::GetTargetPosition() {
+
+	//Return target position of the lift encoder in sensor units
+	return (targetPositionRotations / 4096);
+
+}
+
 void SubEncodedArmLift::IfBottom() { //can it move off bottom switch???
 
 	if (_swtBottomStop->Get()) {
@@ -172,6 +187,7 @@ void SubEncodedArmLift::IfTop() { //can it move off TOP switch???
 }
 
 void SubEncodedArmLift::MovementCheck() {
+
 
  //check for switch not prssed
 

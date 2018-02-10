@@ -1,6 +1,7 @@
 #ifndef CmdArmPosSwitch_H
 #define CmdArmPosSwitch_H
 
+#include <iostream>
 #include <Commands/Command.h>
 #include "Robot.h"
 
