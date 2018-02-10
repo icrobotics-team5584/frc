@@ -22,7 +22,7 @@ void SubRamp::DropRamp(){ //start spining
 
 void SubRamp::ResetRamp() {
 
-	SPLeft->Set(0.2);
+	SPLeft->Set(-0.2);
 
 }
 
