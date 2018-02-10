@@ -14,16 +14,13 @@ void CmdRampDefault::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void CmdRampDefault::Execute() {
 
-	//Robot::subRamp->TakeJoystickInputs(Robot::oi->getJoystick0());
 	sticky_3 = Robot::oi->getJoystick0();
-
 	_POV = sticky_3->GetPOV();
-
-	frc::SmartDashboard::PutNumber("_POV+++++++", _POV);
 
 	if (135 <= _POV && _POV <= 225) {
 
-		frc::SmartDashboard::PutNumber("_POV=========", _POV);
+		SetTimeout(0.5);
+		Robot::subRamp->DropRamp();
 
 		}
 
@@ -31,12 +28,12 @@ void CmdRampDefault::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdRampDefault::IsFinished() {
-	return false;
+	return IsTimedOut();
 }
 
 // Called once after isFinished returns true
 void CmdRampDefault::End() {
-
+	Robot::subRamp->StopRamp();
 }
 
 // Called when another command which requires one or more of the same

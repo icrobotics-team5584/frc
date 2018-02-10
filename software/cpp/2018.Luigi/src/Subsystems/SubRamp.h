@@ -14,6 +14,8 @@ private:
 public:
 	SubRamp();
 	void InitDefaultCommand();
+	void DropRamp();
+	void StopRamp();
 };
 
 #endif  // SubRamp_H

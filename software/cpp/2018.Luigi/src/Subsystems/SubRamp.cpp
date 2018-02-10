@@ -14,7 +14,17 @@ void SubRamp::InitDefaultCommand() {
 	SetDefaultCommand(new CmdRampDefault());
 }
 
+void SubRamp::DropRamp(){ //start spining
 
+	SPLeft->Set(0.4);
+
+}
+
+void SubRamp::StopRamp() {
+
+	SPLeft->Set(0.0);
+
+}
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
