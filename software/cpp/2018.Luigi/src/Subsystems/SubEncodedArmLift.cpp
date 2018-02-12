@@ -29,7 +29,7 @@ void SubEncodedArmLift::ArmToGroundPos() {  //Button A
 
 void SubEncodedArmLift::ArmToExchangePos() {  //Button B
 
-	targetPositionRotations = -(1.0 * 4096);
+	targetPositionRotations = -(0.39 * 4096);
 	IfBottom();
 	IfTop();
 	_talon->Set(ControlMode::Position, targetPositionRotations);
@@ -49,7 +49,7 @@ void SubEncodedArmLift::ArmToSwitchPos() {  //Button X
 
 void SubEncodedArmLift::ArmToScalePos() {  //Button Y
 
-    targetPositionRotations = -(5.0 * 4096);
+    targetPositionRotations = -(5.5 * 4096);
     IfBottom();
     IfTop();
 	_talon->Set(ControlMode::Position, targetPositionRotations);
@@ -102,6 +102,8 @@ void SubEncodedArmLift::Overide(std::shared_ptr<Joystick> sticky_2) {  //right j
 
 
 bool SubEncodedArmLift::GetSwitches() { //run evry ~20ms checks the switch states
+
+	//frc::SmartDashboard::PutNumber("Where It Is Now ??????????", targetPositionRotations); //this is for checking heights
 
 	if (_swtTopStop->Get() or _swtTopSecondryStop->Get()){ //this if statement is so it knows what funtion to call in end
 		swtCase = 0;
@@ -192,7 +194,7 @@ void SubEncodedArmLift::MovementCheck() {
 
  //check for switch not prssed
 
-	if(not _swtTopStop->Get() & (not _swtBottomStop->Get() or not _swtTopSecondryStop->Get()) ){
+	if(not _swtTopStop->Get() && (not (_swtBottomStop->Get() or _swtTopSecondryStop->Get())) ){
 		stopCase = 0;
 	}
 
