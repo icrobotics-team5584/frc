@@ -8,7 +8,7 @@ CmdAuto_Right_Scale_Right::CmdAuto_Right_Scale_Right() {
 	 * From the right starting position, put a cube in the right side of the scale
 	 */
 
-	AddParallel(new CmdAuto_DeployArmToScale(5));
+	AddParallel(new CmdAuto_DeployArmToScale());
 	AddSequential(new CmdAuto_MotionProfile("Right-Scale-Right", 10));
 	AddSequential(new CmdOutput(1, 1));
 }
