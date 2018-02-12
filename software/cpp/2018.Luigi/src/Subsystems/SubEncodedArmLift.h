@@ -13,6 +13,7 @@ private:
 
 
 	std::shared_ptr<DigitalInput> _swtTopStop;
+	std::shared_ptr<DigitalInput> _swtTopSecondryStop;
 	std::shared_ptr<DigitalInput> _swtBottomStop;
 	std::shared_ptr<WPI_TalonSRX> _talon;
 	double targetPositionRotations;

@@ -10,6 +10,7 @@ SubEncodedArmLift::SubEncodedArmLift() : Subsystem("ExampleSubsystem") {
 
 	_talon = RobotMap::subEncodedArmLiftSrxMaster;
 	_swtTopStop = RobotMap::subEncodedArmLiftSwtTop;
+	_swtTopSecondryStop = RobotMap::subEncodedArmLiftSwtTopSecondary;
 	_swtBottomStop = RobotMap::subEncodedArmLiftSwtBottom;
 
 	targetPositionRotations = 0.0;
@@ -102,7 +103,7 @@ void SubEncodedArmLift::Overide(std::shared_ptr<Joystick> sticky_2) {  //right j
 
 bool SubEncodedArmLift::GetSwitches() { //run evry ~20ms checks the switch states
 
-	if (_swtTopStop->Get()){ //this if statement is so it knows what funtion to call in end
+	if (_swtTopStop->Get() or _swtTopSecondryStop->Get()){ //this if statement is so it knows what funtion to call in end
 		swtCase = 0;
 	} else if (_swtBottomStop->Get()) {
 		swtCase = 1;
@@ -112,7 +113,7 @@ bool SubEncodedArmLift::GetSwitches() { //run evry ~20ms checks the switch state
 
 	switch (stopCase) {//this is determs weather or not we want to ignore the switch
 	default:
-	if (_swtTopStop->Get() or _swtBottomStop->Get()){
+	if (_swtTopStop->Get() or _swtBottomStop->Get() or _swtTopSecondryStop->Get()){
 			return true;
 		} else {
 			return false;
@@ -178,7 +179,7 @@ void SubEncodedArmLift::IfBottom() { //can it move off bottom switch???
 
 void SubEncodedArmLift::IfTop() { //can it move off TOP switch???
 
-	if (_swtTopStop->Get()) {
+	if (_swtTopStop->Get() or _swtTopSecondryStop->Get()) {
 			if (targetPositionRotations > (_talon->GetSelectedSensorPosition(0))) {
 				stopCase = 1;
 			}
@@ -191,7 +192,7 @@ void SubEncodedArmLift::MovementCheck() {
 
  //check for switch not prssed
 
-	if(not _swtTopStop->Get() & not _swtBottomStop->Get() ){
+	if(not _swtTopStop->Get() & (not _swtBottomStop->Get() or not _swtTopSecondryStop->Get()) ){
 		stopCase = 0;
 	}
 
