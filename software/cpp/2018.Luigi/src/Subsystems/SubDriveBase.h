@@ -7,10 +7,11 @@
 #include <SmartDashboard/SmartDashboard.h>
 #include <AHRS.h>
 #include "PIDOutput.h"
+#include "PIDController.h"
 #include "RobotMap.h"
 
 
-class SubDriveBase: public frc::Subsystem{
+class SubDriveBase: public frc::Subsystem, public PIDOutput{
 private:
 	std::shared_ptr<WPI_TalonSRX> sRXleft;
 	std::shared_ptr<WPI_TalonSRX> sRXright;
@@ -35,7 +36,7 @@ private:
 	int leftUValue = 0;
 
 	//NavX objects
-	std::shared_ptr<AHRS> ahrsGyro;
+	AHRS* navX;
 	PIDController turnController;
 
 public:
@@ -46,7 +47,7 @@ public:
 	void Stop();
 	void TakeJoystickInputs(std::shared_ptr<Joystick>);
 	void Rotate(double angle);
-	void PIDWrite(double output);
+	void PIDWrite(double rotationSpeed);
 	void ZeroNavX();
 
 };

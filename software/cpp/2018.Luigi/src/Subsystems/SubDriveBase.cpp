@@ -1,21 +1,25 @@
 #include "SubDriveBase.h"
 #include "Commands/MyJoystickDrive.h"
-#include "PIDOutput.h"
 
-SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase") {
+//PID turning constants
+const static double p = 1;
+const static double i = 0;
+const static double d = 0;
+
+SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase"), turnController(p, i, d, navX, this){
 	//Drive wheels
 	sRXleft = RobotMap::subDriveBaseSRXleft;
     sRXright = RobotMap::subDriveBaseSRXright;
     differentialDrive = RobotMap::subDriveBaseDifferentialDrive;
 
-    //Ultrasonic
+    //copy Ultrasonics from RobotMap
     ultrasonicInputFront = RobotMap::subDriveBaseUltrasonicInputFront;
     ultrasonicInputRight = RobotMap::subDriveBaseUltrasonicInputRight;
     ultrasonicInputBack = RobotMap::subDriveBaseUltrasonicInputBack;
     ultrasonicInputLeft = RobotMap::subDriveBaseUltrasonicInputLeft;
 
-    //NavX
-    ahrsGyro = RobotMap::ahrsGyro;
+    //setup NavX turning controller
+    navX = RobotMap::navX.get();
     turnController.SetInputRange(-180.0f, 180.0f);
     turnController.SetOutputRange(-1.0, 1.0);
     turnController.SetAbsoluteTolerance(2);
@@ -57,7 +61,7 @@ void SubDriveBase::Periodic() {
 	}
 
 	//Put NavX angle on Dashboard
-	frc::SmartDashboard::PutNumber("NAVX", ahrsGyro->GetAngle());
+	frc::SmartDashboard::PutData("NavX", navX);
 }
 
 void SubDriveBase::Rotate(double angle){
@@ -65,14 +69,14 @@ void SubDriveBase::Rotate(double angle){
 	turnController.SetSetpoint(angle);
 }
 
-void SubDriveBase::PIDWrite(double output){
+void SubDriveBase::PIDWrite(double rotationSpeed){
     // This function is invoked periodically by the PID Controller
-	this->Rotate(output);
+	this->AutoDrive(rotationSpeed, 0);
 }
 
 void SubDriveBase::ZeroNavX(){
 	//Set NavX Gyro Yaw to zero
-	ahrsGyro->Reset();
+	navX->Reset();
 }
 
 void SubDriveBase::AutoDrive(double speed, double rotation) {

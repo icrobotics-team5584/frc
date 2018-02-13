@@ -46,6 +46,7 @@ public:
 	static std::shared_ptr<DigitalInput> subEncodedArmLiftSwtBottom;
 
 	//Define micro navX gyro
-	static std::shared_ptr<AHRS> ahrsGyro;
+//	static AHRS* navX;
+	static std::shared_ptr<AHRS> navX;
 };
 #endif
