@@ -6,6 +6,11 @@
 
 CmdAuto_DeployArmToScale::CmdAuto_DeployArmToScale(double offsetTime) {
 
+	/*
+	 * Deploy arm to switch position for driving, then after a number of
+	 * seconds equal to offsetTime, move the arm to the scale position.
+	 */
+
 	AddParallel(new CmdAuto_DeployArm());
 	AddSequential(new CmdAuto_Wait(offsetTime));
 	AddSequential(new CmdArmPosScale());

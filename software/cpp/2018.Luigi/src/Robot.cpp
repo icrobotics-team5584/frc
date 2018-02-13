@@ -3,40 +3,32 @@
 //Define Subsystems
 std::shared_ptr<SubDriveBase> Robot::subDriveBase;
 std::shared_ptr<SubIntake> Robot::subIntake;
-std::unique_ptr<OI> Robot::oi;
 std::shared_ptr<SubEncodedArmLift> Robot::subEncodedArmLift;
 std::shared_ptr<SubCameras> Robot::subCameras;
 
+//Define Operator interface
+std::unique_ptr<OI> Robot::oi;
+
+//Define Autonomous Objects
 std::shared_ptr<MotionProfileData> Robot::MPData;
 GameData Robot::gameData;
 AutonomousSelector Robot::autoSelector;
 
-Robot* Robot::instance = 0;
-Robot* Robot::getInstance(){
-	if (instance == 0) {
-		instance = new Robot();
-	}
-	return instance;
-}
-
-Robot::Robot() : frc::TimedRobot() {
-
-}
-
 void Robot::RobotInit() {
 	RobotMap::init();
-
-	MPData.reset(new MotionProfileData());
 
 	//Initiate Subsystems
 	subDriveBase.reset(new SubDriveBase());
 	subIntake.reset(new SubIntake());
 	subEncodedArmLift.reset(new SubEncodedArmLift());
 //	subCameras.reset(new SubCameras);
+
+	//Initiate Operator Interface
 	oi.reset(new OI());
 
 	//Setup Auto Chooser
 	autoSelector.SendOptionsToDashboard();
+	MPData.reset(new MotionProfileData());
 }
 
 void Robot::DisabledInit(){
@@ -79,15 +71,4 @@ void Robot::TeleopPeriodic() {
 	frc::Scheduler::GetInstance()->Run();
 }
 
-int main() {
-    if (!HAL_Initialize(500, 0)) {
-      llvm::errs() << "FATAL ERROR: HAL could not be initialized\n";
-      return -1;
-    }
-    HAL_Report(HALUsageReporting::kResourceType_Language,
-               HALUsageReporting::kLanguage_CPlusPlus);
-    llvm::outs() << "\n********** Robot program starting **********\n";
-    Robot::getInstance()->StartCompetition();
-  }
-
-//START_ROBOT_CLASS(Robot);
+START_ROBOT_CLASS(Robot);

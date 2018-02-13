@@ -11,7 +11,7 @@ void CmdIntake::Initialize() {
 	Robot::subIntake->In(_speed);
 
 	//Apply timeout if we are in autonomous mode
-	bool autoMode = Robot::getInstance()->IsAutonomous();
+	bool autoMode = DriverStation::GetInstance().IsAutonomous();
 	if (autoMode){
 		SetTimeout(_timeout);
 		if (_timeout == 0) {
