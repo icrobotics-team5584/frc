@@ -13,11 +13,13 @@ private:
 
 
 	std::shared_ptr<DigitalInput> _swtTopStop;
+	std::shared_ptr<DigitalInput> _swtTopSecondryStop;
 	std::shared_ptr<DigitalInput> _swtBottomStop;
 	std::shared_ptr<WPI_TalonSRX> _talon;
 	double targetPositionRotations;
 	double _axis5 = 0;
 	double _axis3 = 0;
+	double _btn7 = 0;
 	int overideCase = 0;
 	int overideSpeed = 0;
 	int swtCase = 0;

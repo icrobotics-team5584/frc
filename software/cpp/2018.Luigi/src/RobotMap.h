@@ -41,7 +41,11 @@ public:
 	static std::shared_ptr<WPI_TalonSRX> subEncodedArmLiftSrxMaster;
 	static std::shared_ptr<WPI_TalonSRX> subEncodedArmLiftSrxSlave;
 	static std::shared_ptr<DigitalInput> subEncodedArmLiftSwtTop;
+	static std::shared_ptr<DigitalInput> subEncodedArmLiftSwtTopSecondary;
 	static std::shared_ptr<DigitalInput> subEncodedArmLiftSwtBottom;
+
+	//Define Ramp drop actuator
+	static std::shared_ptr<VictorSP> subRampSPLeft;
 
 };
 #endif
