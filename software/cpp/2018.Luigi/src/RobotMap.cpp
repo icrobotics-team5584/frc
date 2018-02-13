@@ -37,7 +37,6 @@ std::shared_ptr<DigitalInput> RobotMap::subEncodedArmLiftSwtBottom;
 
 
 //Define micro navX gyro
-//AHRS* RobotMap::navX;
 std::shared_ptr<AHRS> RobotMap::navX;
 
 void RobotMap::init() {
@@ -110,8 +109,7 @@ void RobotMap::init() {
     subDriveBaseUltrasonicInputLeft.reset(new frc::Ultrasonic(23,25));
 
     //Initiate micro navX gyro
-//  navX = new AHRS(SerialPort::kUSB1);    //See navx-micro.kauailabs.com/guidance/selecting-an-interface.
-    navX.reset(new AHRS(SerialPort::kUSB1));
+    navX.reset(new AHRS(SerialPort::kUSB1)); //See navx-micro.kauailabs.com/guidance/selecting-an-interface.
 
     //Initiate arm lift Actuators / Actuator
     subEncodedArmLiftSrxMaster.reset(new WPI_TalonSRX(5));
