@@ -40,6 +40,8 @@ public:
 	void AutoDrive(double, double);
 	void Stop();
 	void TakeJoystickInputs(std::shared_ptr<Joystick>);
+	void ZeroDriveEncoders();
+	void ClearMPBuffers();
 
 };
 

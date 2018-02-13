@@ -42,19 +42,15 @@ void Robot::DisabledPeriodic() {
 void Robot::AutonomousInit() {
 	gameData.UpdateGameData();
 
-	//Remove any pre-existing MP Trajectory Points in Talons
-	RobotMap::subDriveBaseSRXright->ClearMotionProfileTrajectories();
-	RobotMap::subDriveBaseSRXleft->ClearMotionProfileTrajectories();
-
-	//Reset Sensor positions to zero for future profiles
-	RobotMap::subDriveBaseSRXright->SetSelectedSensorPosition(0, 0, 10);
-	RobotMap::subDriveBaseSRXleft->SetSelectedSensorPosition(0, 0, 10);
-
-	//Make sure lift starts at zero
+	//Reset sensors to zero
+	subDriveBase->ClearMPBuffers();
+	subDriveBase->ZeroDriveEncoders();
 	subEncodedArmLift->Reset();
 
 	//Determine auto command selected from Dashboard and run
 	autoSelector.SelectAndRun(autoSelector.GetStartingPosition(), autoSelector.GetAutonomousTask(), gameData);
+
+	//Use this for a predetermined autonomous routine
 //	static CmdAutonomous ac;
 //	ac.Start();
 }
