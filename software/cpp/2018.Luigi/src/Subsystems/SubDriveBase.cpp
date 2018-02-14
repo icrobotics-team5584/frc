@@ -6,7 +6,7 @@ const static double p = 1;
 const static double i = 0;
 const static double d = 0;
 
-SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase"), turnController(p, i, d, navX, this){
+SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase"){
 	//Drive wheels
 	sRXleft = RobotMap::subDriveBaseSRXleft;
     sRXright = RobotMap::subDriveBaseSRXright;
@@ -20,14 +20,18 @@ SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase"), turnController(p,
 
     //setup NavX turning controller
     navX = RobotMap::navX.get();
-    turnController.SetInputRange(-180.0f, 180.0f);
-    turnController.SetOutputRange(-1.0, 1.0);
-    turnController.SetAbsoluteTolerance(2);
-    turnController.SetContinuous(true);
+    turnController = new PIDController(p, i, d, navX, this);
+    turnController->SetInputRange(-180.0f, 180.0f);
+    turnController->SetOutputRange(-1.0, 1.0);
+    turnController->SetContinuous(true);
+
+	//Put NavX angle on Dashboard
+	SmartDashboard::PutData("NavX", navX);
+	SmartDashboard::PutData("turnController", turnController);
 }
 
 void SubDriveBase::InitDefaultCommand() {
-	SetDefaultCommand(new MyJoystickDrive());
+//	SetDefaultCommand(new MyJoystickDrive());
 }
 
 void SubDriveBase::Periodic() {
@@ -60,18 +64,16 @@ void SubDriveBase::Periodic() {
 		_Ultraloops = 0;
 	}
 
-	//Put NavX angle on Dashboard
-	frc::SmartDashboard::PutData("NavX", navX);
 }
 
 void SubDriveBase::Rotate(double angle){
 	//Target a specific angle, with a 2 deg tolerance (can be changed in constructor)
-	turnController.SetSetpoint(angle);
 }
 
-void SubDriveBase::PIDWrite(double rotationSpeed){
+void SubDriveBase::PIDWrite(double rotation){
     // This function is invoked periodically by the PID Controller
-	this->AutoDrive(rotationSpeed, 0);
+	SmartDashboard::PutNumber("PIDWrite rotation", rotation);
+	differentialDrive->CurvatureDrive(0, rotation, true);
 }
 
 void SubDriveBase::ZeroNavX(){
@@ -81,16 +83,16 @@ void SubDriveBase::ZeroNavX(){
 
 void SubDriveBase::AutoDrive(double speed, double rotation) {
 	//A basic drive with no sensor feedback
-	differentialDrive->ArcadeDrive(speed, rotation);
+//	differentialDrive->ArcadeDrive(speed, rotation);
 }
 
 void SubDriveBase::Stop(){
 	//Stop the drive motors
-	differentialDrive->ArcadeDrive(0,0);
+//	differentialDrive->ArcadeDrive(0,0);
 }
 
 void SubDriveBase::TakeJoystickInputs(std::shared_ptr<Joystick> sticky ) {
 	//Drive with the Gamepad left stick, use L2 as boost
 	double boost = (((sticky->GetRawAxis(2)+3))/4);
-	differentialDrive->ArcadeDrive(-sticky->GetY() * boost, sticky->GetX() * boost);
+//	differentialDrive->ArcadeDrive(-sticky->GetY() * boost, sticky->GetX() * boost);
 }

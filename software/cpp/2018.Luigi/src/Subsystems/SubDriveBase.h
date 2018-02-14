@@ -37,7 +37,7 @@ private:
 
 	//NavX objects
 	AHRS* navX;
-	PIDController turnController;
+	PIDController* turnController;
 
 public:
 	SubDriveBase();
