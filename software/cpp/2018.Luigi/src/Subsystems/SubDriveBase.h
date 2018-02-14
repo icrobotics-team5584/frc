@@ -12,7 +12,34 @@
 
 
 class SubDriveBase: public frc::Subsystem, public PIDOutput{
+public:
+	//DriveModes
+	enum DriveMode {Manual, Gyroscope};
+
+	SubDriveBase();
+	void InitDefaultCommand() override;
+	void Periodic() override;
+	void AutoDrive(double, double);
+	void Stop();
+	void TakeJoystickInputs(std::shared_ptr<Joystick>);
+	void Rotate(double angle);
+	void PIDWrite(double rotationSpeed);
+	void ZeroNavX();
+	double GetAngle();
+	bool ReachedTarget();
+	void SetDriveMode(DriveMode driveMode);
+
 private:
+
+	DriveMode selectedDriveMode;
+	class DriveModeClass {
+	public:
+		DriveMode myDriveMode;
+		DriveModeClass(DriveMode dm){myDriveMode = dm;}
+	};
+	SendableChooser<DriveModeClass*> driveModeChooser;
+
+	//Drive Controllers
 	std::shared_ptr<WPI_TalonSRX> sRXleft;
 	std::shared_ptr<WPI_TalonSRX> sRXright;
 	std::shared_ptr<frc::DifferentialDrive> differentialDrive;
@@ -38,18 +65,6 @@ private:
 	//NavX objects
 	AHRS* navX;
 	PIDController* turnController;
-
-public:
-	SubDriveBase();
-	void InitDefaultCommand() override;
-	void Periodic() override;
-	void AutoDrive(double, double);
-	void Stop();
-	void TakeJoystickInputs(std::shared_ptr<Joystick>);
-	void Rotate(double angle);
-	void PIDWrite(double rotationSpeed);
-	void ZeroNavX();
-
 };
 
 #endif

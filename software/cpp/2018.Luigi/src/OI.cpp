@@ -11,6 +11,8 @@
 #include "Commands/CmdResetArmEncoPos.h"
 #include "Commands/CmdChangeCamera.h"
 
+#include "Commands/CmdGyroTurn.h"
+
 
 OI::OI() {
     //Initiate Joystick
@@ -42,7 +44,6 @@ OI::OI() {
 	//Initiate Change camera button
 //	btnChangeCamera.reset(new JoystickButton(joystick0.get(), 99));
 //	btnChangeCamera->WhenPressed(new CmdChangeCamera());
-
 }
 
 
