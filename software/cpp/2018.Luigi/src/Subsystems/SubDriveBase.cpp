@@ -3,7 +3,7 @@
 #include "Commands/CmdGyroTurn.h"
 
 //PID turning constants
-const static double p = 1;
+const static double p = 0.014;
 const static double i = 0;
 const static double d = 0;
 
