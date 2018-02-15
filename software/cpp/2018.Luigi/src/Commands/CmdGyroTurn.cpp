@@ -12,7 +12,7 @@ relativeAngle(Robot::subDriveBase->GetAngle() + _angle)
 
 // Called just before this Command runs the first time
 void CmdGyroTurn::Initialize() {
-	Robot::subDriveBase->SetDriveMode(SubDriveBase::Gyroscope);
+	Robot::subDriveBase->SetDriveMode(SubDriveBase::Autonomous);
 
 	if (_relative){
 		//turn as if current direction is zero

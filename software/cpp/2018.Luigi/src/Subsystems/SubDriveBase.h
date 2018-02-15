@@ -4,17 +4,19 @@
 #include <ctre/Phoenix.h>
 #include <Commands/Subsystem.h>
 #include <WPILib.h>
-#include <SmartDashboard/SmartDashboard.h>
 #include <AHRS.h>
+#include <EncoderDistanceSource.h>
 #include "PIDOutput.h"
+#include "PIDSource.h"
 #include "PIDController.h"
 #include "RobotMap.h"
+#include "NavxDriveRotationOutput.h"
+#include "NavxDriveSpeedOutput.h"
 
-
-class SubDriveBase: public frc::Subsystem, public PIDOutput{
+class SubDriveBase: public frc::Subsystem{
 public:
 	//DriveModes
-	enum DriveMode {Manual, Gyroscope};
+	enum DriveMode {Manual, Autonomous};
 
 	SubDriveBase();
 	void InitDefaultCommand() override;
@@ -23,11 +25,21 @@ public:
 	void Stop();
 	void TakeJoystickInputs(std::shared_ptr<Joystick>);
 	void Rotate(double angle);
-	void PIDWrite(double rotationSpeed);
+	void GyroDrive(double distance);
 	void ZeroNavX();
 	double GetAngle();
+	void SetPIDSpeed(double speed);
+	void SetPIDRotation(double rotation);
+	void HandlePIDOutput(double xSpeed, double zRotation);
 	bool ReachedTarget();
 	void SetDriveMode(DriveMode driveMode);
+	void SetEncodersToRelativeZero();
+	double GetRelativeDisplacement();
+
+	//Objects used by the Gyro PIDControllers
+	static AHRS* navX;
+	static double _Speed;
+	static double _Rotation;
 
 private:
 
@@ -44,12 +56,6 @@ private:
 	std::shared_ptr<WPI_TalonSRX> sRXright;
 	std::shared_ptr<frc::DifferentialDrive> differentialDrive;
 
-	//This is for anlouge ultras
-//	std::shared_ptr<frc::AnalogInput> ultrasonicInputFront;
-//	std::shared_ptr<frc::AnalogInput> ultrasonicInputRight;
-//	std::shared_ptr<frc::AnalogInput> ultrasonicInputBack;
-//	std::shared_ptr<frc::AnalogInput> ultrasonicInputLeft;
-
 	//this is for echo ultras
 	std::shared_ptr<frc::Ultrasonic> ultrasonicInputFront;
 	std::shared_ptr<frc::Ultrasonic> ultrasonicInputRight;
@@ -62,9 +68,15 @@ private:
 	int backUValue = 0;
 	int leftUValue = 0;
 
-	//NavX objects
-	AHRS* navX;
+	//NavX objects for autonomous driving
 	PIDController* turnController;
+	PIDController* driveController;
+	NavxDriveRotationOutput* rotationOutput;
+	NavxDriveSpeedOutput* speedOutput;
+
+    //Encoder objects for autonomous driving
+	EncoderDistanceSource* distanceSource;
+	double relativeZero;
 };
 
 #endif
