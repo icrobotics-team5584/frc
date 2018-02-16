@@ -1,20 +1,16 @@
 #include "CmdAuto_Left_Scale_Right.h"
+#include "Commands/CmdGyroDrive.h"
+#include "Commands/CmdArmPosScale.h"
+#include "CmdAuto_DeployArm.h"
+#include "Commands/CmdOutput.h"
 
 CmdAuto_Left_Scale_Right::CmdAuto_Left_Scale_Right() {
-	// Add Commands here:
-	// e.g. AddSequential(new Command1());
-	//      AddSequential(new Command2());
-	// these will run in order.
-
-	// To run multiple commands at the same time,
-	// use AddParallel()
-	// e.g. AddParallel(new Command1());
-	//      AddSequential(new Command2());
-	// Command1 and Command2 will run in parallel.
-
-	// A command group will require all of the subsystems that each member
-	// would require.
-	// e.g. if Command1 requires chassis, and Command2 requires arm,
-	// a CommandGroup containing them would require both the chassis and the
-	// arm.
+	AddParallel(new CmdAuto_DeployArm());			//Deploy arm to switch position
+	AddSequential(new CmdGyroDrive(4, 0));			//Drive forward
+	AddSequential(new CmdGyroDrive(0.5, 90), 2);	//Turn right
+	AddSequential(new CmdGyroDrive(4, 0));			//Drive forward
+	AddSequential(new CmdGyroDrive(0.5, -90), 2);	//Turn left
+	AddParallel(new CmdArmPosScale());				//Raise arm to scale position
+	AddSequential(new CmdGyroDrive(2, 0));			//Drive forward
+	AddSequential(new CmdOutput(1, 1));				//Output cube
 }

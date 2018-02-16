@@ -1,4 +1,4 @@
-#include <NavxDriveRotationOutput.h>
+#include "NavxDriveRotationOutput.h"
 #include "Robot.h"
 
 NavxDriveRotationOutput::NavxDriveRotationOutput() {

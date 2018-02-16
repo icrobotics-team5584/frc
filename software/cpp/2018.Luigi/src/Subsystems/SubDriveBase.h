@@ -5,13 +5,13 @@
 #include <Commands/Subsystem.h>
 #include <WPILib.h>
 #include <AHRS.h>
-#include <EncoderDistanceSource.h>
+#include <Autonomous/DrivePID/EncoderDistanceSource.h>
 #include "PIDOutput.h"
 #include "PIDSource.h"
 #include "PIDController.h"
 #include "RobotMap.h"
-#include "NavxDriveRotationOutput.h"
-#include "NavxDriveSpeedOutput.h"
+#include "Autonomous/DrivePID/NavxDriveRotationOutput.h"
+#include "Autonomous/DrivePID/NavxDriveSpeedOutput.h"
 
 class SubDriveBase: public frc::Subsystem{
 public:
