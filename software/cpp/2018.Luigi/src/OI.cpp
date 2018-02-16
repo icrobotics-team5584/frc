@@ -11,7 +11,7 @@
 #include "Commands/CmdResetArmEncoPos.h"
 #include "Commands/CmdChangeCamera.h"
 
-#include "Commands/CmdGyroTurn.h"
+#include "Commands/CmdGyroDrive.h"
 
 
 OI::OI() {
@@ -44,6 +44,13 @@ OI::OI() {
 	//Initiate Change camera button
 //	btnChangeCamera.reset(new JoystickButton(joystick0.get(), 99));
 //	btnChangeCamera->WhenPressed(new CmdChangeCamera());
+
+	//Tempoary Shuffleboard control of autonomous gyro driving
+	SmartDashboard::PutData("Turn to 90", new CmdGyroDrive(0, 90, false));
+	SmartDashboard::PutData("Turn to 0", new CmdGyroDrive(0, -90, false));
+	SmartDashboard::PutData("Relative straight drive 3m", new CmdGyroDrive(3, 0));
+	SmartDashboard::PutData("Global straight drive 3m", new CmdGyroDrive(3, 0, false));
+	SmartDashboard::PutData("Relative slow Turn 90 over 1m", new CmdGyroDrive(1, 90));
 }
 
 

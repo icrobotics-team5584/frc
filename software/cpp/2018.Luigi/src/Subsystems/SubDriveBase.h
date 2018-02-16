@@ -24,14 +24,14 @@ public:
 	void AutoDrive(double, double);
 	void Stop();
 	void TakeJoystickInputs(std::shared_ptr<Joystick>);
-	void Rotate(double angle);
+	void GyroRotate(double angle);
 	void GyroDrive(double distance);
 	void ZeroNavX();
 	double GetAngle();
 	void SetPIDSpeed(double speed);
 	void SetPIDRotation(double rotation);
 	void HandlePIDOutput(double xSpeed, double zRotation);
-	bool ReachedTarget();
+	bool ReachedSetPoint();
 	void SetDriveMode(DriveMode driveMode);
 	void SetEncodersToRelativeZero();
 	double GetRelativeDisplacement();
@@ -51,10 +51,13 @@ private:
 	};
 	SendableChooser<DriveModeClass*> driveModeChooser;
 
-	//Drive Controllers
-	std::shared_ptr<WPI_TalonSRX> sRXleft;
-	std::shared_ptr<WPI_TalonSRX> sRXright;
+	//Drive Wheel Motors
+	std::shared_ptr<WPI_TalonSRX> srxLeft;
+	std::shared_ptr<WPI_TalonSRX> srxRight;
 	std::shared_ptr<frc::DifferentialDrive> differentialDrive;
+	const double wheelDiameter = 0.1016; //in meters
+	const double wheelCircumference = (wheelDiameter * M_PI);
+	const int sensorUnitsPerRotation = 4096;
 
 	//this is for echo ultras
 	std::shared_ptr<frc::Ultrasonic> ultrasonicInputFront;

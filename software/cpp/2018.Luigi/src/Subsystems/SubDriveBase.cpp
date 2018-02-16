@@ -1,8 +1,8 @@
 #include "SubDriveBase.h"
 #include "Commands/MyJoystickDrive.h"
-#include "Commands/AutonomousCommands/CmdAuto_GyroDrive.h"
+#include "Commands/CmdGyroDrive.h"
 #include <SmartDashboard/SmartDashboard.h>
-
+#include <math.h>
 
 //PID constants
 const static double turnP = 0.014;
@@ -20,8 +20,8 @@ double SubDriveBase::_Rotation;
 
 SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase"), selectedDriveMode(Manual){
 	//Copy Drive wheels from RobotMap
-	sRXleft = RobotMap::subDriveBaseSRXleft;
-    sRXright = RobotMap::subDriveBaseSRXright;
+	srxLeft = RobotMap::subDriveBaseSRXleft;
+    srxRight = RobotMap::subDriveBaseSRXright;
     differentialDrive = RobotMap::subDriveBaseDifferentialDrive;
 
     //copy Ultrasonics from RobotMap
@@ -30,10 +30,10 @@ SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase"), selectedDriveMode
     ultrasonicInputBack = RobotMap::subDriveBaseUltrasonicInputBack;
     ultrasonicInputLeft = RobotMap::subDriveBaseUltrasonicInputLeft;
 
-    //setup NavX PID controllers
-    navX = RobotMap::navX.get();
-    _Speed = 0;
+    //setup NavX PID controller
     _Rotation = 0;
+    navX = RobotMap::navX.get();
+	SmartDashboard::PutData("NavX", navX);
     rotationOutput = new NavxDriveRotationOutput();
     speedOutput = new NavxDriveSpeedOutput();
     distanceSource = new EncoderDistanceSource();
@@ -42,19 +42,15 @@ SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase"), selectedDriveMode
     turnController->SetOutputRange(-1.0, 1.0);
     turnController->SetContinuous(true);
     turnController->SetAbsoluteTolerance(1);
-    driveController = new PIDController(driveP, driveI, driveD, distanceSource, speedOutput);
+	SmartDashboard::PutData("turnController", turnController);
+
+    //Setup encoder PID controller
+	_Speed = 0;
+	relativeZero = 0;
+	driveController = new PIDController(driveP, driveI, driveD, distanceSource, speedOutput);
     driveController->SetInputRange(-10, 10);
     driveController->SetOutputRange(-1,1);
-
-	//Put NavX angle on Dashboard
-	SmartDashboard::PutData("NavX", navX);
-	SmartDashboard::PutData("turnController", turnController);
-	SmartDashboard::PutData("driveController", driveController);
-	driveModeChooser.AddDefault("Manual", new DriveModeClass(Manual));
-	driveModeChooser.AddObject("Gyro", new DriveModeClass(Autonomous));
-	SmartDashboard::PutData("driveModeChooser", &driveModeChooser);
-	SmartDashboard::PutString("DriveBase Current Command", this->GetCurrentCommandName());
-	SmartDashboard::PutString("DriveBase Default Command", this->GetDefaultCommandName());
+    SmartDashboard::PutData("driveController", driveController);
 }
 
 void SubDriveBase::InitDefaultCommand() {
@@ -82,12 +78,6 @@ void SubDriveBase::Periodic() {
 		_Ultraloops = 0;
 	}
 
-	SmartDashboard::PutString("Current Command", this->GetCurrentCommandName());
-	SmartDashboard::PutNumber("Displacement", GetRelativeDisplacement());
-	if (selectedDriveMode != driveModeChooser.GetSelected()->myDriveMode){
-		SetDriveMode(driveModeChooser.GetSelected()->myDriveMode);
-	}
-
 	if (selectedDriveMode == Autonomous){
 		HandlePIDOutput(_Speed, _Rotation);
 	}
@@ -102,13 +92,11 @@ void SubDriveBase::SetDriveMode(DriveMode driveMode){
 	case Manual:
 		turnController->Disable();
 		driveController->Disable();
-		(new MyJoystickDrive())->Start();
 		break;
 
 	case Autonomous:
 		turnController->Enable();
 		driveController->Enable();
-		(new CmdAuto_GyroDrive())->Start();
 		break;
 	}
 }
@@ -124,7 +112,7 @@ void SubDriveBase::HandlePIDOutput(double xSpeed, double zRotation){
 	differentialDrive->CurvatureDrive(xSpeed, zRotation, isQuickTurn);
 }
 
-void SubDriveBase::Rotate(double angle){
+void SubDriveBase::GyroRotate(double angle){
 	//Target a specific angle
 	turnController->SetSetpoint(angle);
 	turnController->Enable();
@@ -137,24 +125,26 @@ void SubDriveBase::GyroDrive(double distance){
 	driveController->Enable();
 }
 
-bool SubDriveBase::ReachedTarget(){
-	//Is the robot pointing at it's PID setpoint?
-	return turnController->OnTarget();
+bool SubDriveBase::ReachedSetPoint(){
+	//Has the robot reached it's angle and distance PID setpoints?
+	if (turnController->OnTarget() and driveController->OnTarget()){
+		return true;
+	} else {
+		return false;
+	}
 }
 
 void SubDriveBase::SetPIDSpeed(double speed){
-	//This is a pretty hacked-together way of doing things,
-	//BUT THERES ONLY FOUR DAYS LEFT! LEAVE ME ALONE!
+	//_Speed is used as the forwards velocity when under Autonomous PID control
 	_Speed = speed;
 }
 
 void SubDriveBase::SetPIDRotation(double rotation){
-	//Same as above
+	//_Rotation is used as the speed of z rotation when under Autonomous PID control
 	_Rotation = rotation;
 }
 
 void SubDriveBase::ZeroNavX(){
-	//Set NavX Gyro Yaw to zero
 	navX->Reset();
 }
 
@@ -164,22 +154,25 @@ double SubDriveBase::GetAngle(){
 
 void SubDriveBase::SetEncodersToRelativeZero(){
 	/*
-	 * THIS DOES NOT ZERO THE ENCODERS!!
+	 * THIS DOESN'T ZERO THE ENCODERS
 	 * It only remembers the current position and uses that as an effective zero when the
 	 * GetRelativeDisplacement() function is called. for example, the robot might be
 	 * in the middle of the field when this is called, setting relative zero to 5584.123,
 	 * the robot then drives to position 6000, GetRelativeDisplacement() will then return
-	 * 415.877 (= 6000-5584.123)
+	 * 415.877 (= 6000-5584.123). This is a non-destructive method of getting the current
+	 * position that allows us to use the total encoder movement later on.
 	 */
-	relativeZero = sRXleft->GetSelectedSensorPosition(0);
+	relativeZero = srxLeft->GetSelectedSensorPosition(0);
 }
 
 double SubDriveBase::GetRelativeDisplacement(){
 	//Return displacement relative to position where SetEncodersToRelativeZero() was called
-	double relativeSensorUnits = (sRXleft->GetSelectedSensorPosition(0) - relativeZero);
-	double relativeRotations = (relativeSensorUnits / 4096); //<-- Sensor units per rotation
-	double relativeMeters = (relativeRotations * 0.319278); //<-- Circumference of wheels
-	return relativeMeters;
+	double leftSensorUnits = (srxLeft->GetSelectedSensorPosition(0) - relativeZero);
+	double rightSensorUnits = (srxRight->GetSelectedSensorPosition(0) - relativeZero);
+	double aveSensorUnits = (leftSensorUnits + rightSensorUnits) / 2;
+	double rotations = (aveSensorUnits / sensorUnitsPerRotation);
+	double meters = (rotations * wheelCircumference);
+	return meters;
 }
 
 void SubDriveBase::AutoDrive(double speed, double rotation) {
