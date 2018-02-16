@@ -4,8 +4,7 @@ CmdGyroDrive::CmdGyroDrive(double distance, double angle, bool relative)
 :
 _distance(distance),
 _angle(angle),
-_relative(relative),
-relativeAngle(Robot::subDriveBase->GetAngle() + _angle)
+_relative(relative)
 {
 	Requires(Robot::subDriveBase.get());
 }
@@ -13,15 +12,7 @@ relativeAngle(Robot::subDriveBase->GetAngle() + _angle)
 // Called just before this Command runs the first time
 void CmdGyroDrive::Initialize() {
 	Robot::subDriveBase->SetDriveMode(SubDriveBase::Autonomous);
-
-	if (_relative){
-			//turn as if current direction is zero
-			Robot::subDriveBase->GyroRotate(relativeAngle);
-		} else {
-			//turn as if the robot's starting angle is zero
-			Robot::subDriveBase->GyroRotate(_angle);
-		}
-
+	Robot::subDriveBase->GyroRotate(_angle, _relative);
 	Robot::subDriveBase->GyroDrive(_distance);
 }
 

@@ -17,6 +17,5 @@ private:
 	double _distance;
 	double _angle;
 	bool _relative;
-	double relativeAngle;
 };
 

@@ -8,7 +8,7 @@ EncoderDistanceSource::EncoderDistanceSource() {
 
 double EncoderDistanceSource::PIDGet(){
 	//Implementation of PIDSource
-	return Robot::subDriveBase->GetRelativeDisplacement();
+	return Robot::subDriveBase->GetEncoderDistance();
 }
 
 EncoderDistanceSource::~EncoderDistanceSource() {

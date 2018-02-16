@@ -8,8 +8,8 @@
 const static double turnP = 0.014;
 const static double turnI = 0;
 const static double turnD = 0;
-const static double driveP = 0.03;
-const static double driveI = 0;
+const static double driveP = 0.25;
+const static double driveI = 0.00015;
 const static double driveD = 0;
 
 //Define static objects
@@ -78,6 +78,12 @@ void SubDriveBase::Periodic() {
 		_Ultraloops = 0;
 	}
 
+	SmartDashboard::PutNumber("PID Speed", _Speed);
+	SmartDashboard::PutNumber("PID Rotation", _Rotation);
+	SmartDashboard::PutNumber("EncoderDistanceSource", GetEncoderDistance());
+	SmartDashboard::PutNumber("Left enc", srxLeft->GetSelectedSensorPosition(0));
+	SmartDashboard::PutNumber("Right enc", srxRight->GetSelectedSensorPosition(0));
+
 	if (selectedDriveMode == Autonomous){
 		HandlePIDOutput(_Speed, _Rotation);
 	}
@@ -104,7 +110,7 @@ void SubDriveBase::SetDriveMode(DriveMode driveMode){
 void SubDriveBase::HandlePIDOutput(double xSpeed, double zRotation){
 	//Run outputs from driveController and turnController
 	bool isQuickTurn;
-	if (xSpeed != 0){
+	if (xSpeed == 0){
 		isQuickTurn = true;
 	} else {
 		isQuickTurn = false;
@@ -112,15 +118,18 @@ void SubDriveBase::HandlePIDOutput(double xSpeed, double zRotation){
 	differentialDrive->CurvatureDrive(xSpeed, zRotation, isQuickTurn);
 }
 
-void SubDriveBase::GyroRotate(double angle){
+void SubDriveBase::GyroRotate(double angle, bool relative){
 	//Target a specific angle
+	if (relative){
+		angle = GetAngle() + angle;
+	}
 	turnController->SetSetpoint(angle);
 	turnController->Enable();
 }
 
 void SubDriveBase::GyroDrive(double distance){
 	//Target a specific displacement
-	SetEncodersToRelativeZero();
+	ZeroEncoders();
 	driveController->SetSetpoint(distance);
 	driveController->Enable();
 }
@@ -152,23 +161,37 @@ double SubDriveBase::GetAngle(){
 	return navX->GetAngle();
 }
 
-void SubDriveBase::SetEncodersToRelativeZero(){
-	/*
-	 * THIS DOESN'T ZERO THE ENCODERS
-	 * It only remembers the current position and uses that as an effective zero when the
-	 * GetRelativeDisplacement() function is called. for example, the robot might be
-	 * in the middle of the field when this is called, setting relative zero to 5584.123,
-	 * the robot then drives to position 6000, GetRelativeDisplacement() will then return
-	 * 415.877 (= 6000-5584.123). This is a non-destructive method of getting the current
-	 * position that allows us to use the total encoder movement later on.
-	 */
-	relativeZero = srxLeft->GetSelectedSensorPosition(0);
+//void SubDriveBase::SetEncodersToRelativeZero(){
+//	/*
+//	 * THIS DOESN'T ZERO THE ENCODERS
+//	 * It only remembers the current position and uses that as an effective zero when the
+//	 * GetRelativeDisplacement() function is called. for example, the robot might be
+//	 * in the middle of the field when this is called, setting relative zero to 5584.123,
+//	 * the robot then drives to position 6000, GetRelativeDisplacement() will then return
+//	 * 415.877 (= 6000-5584.123). This is a non-destructive method of getting the current
+//	 * position that allows us to use the total encoder movement later on.
+//	 */
+//	relativeZero = srxLeft->GetSelectedSensorPosition(0);
+//}
+//
+//double SubDriveBase::GetRelativeDisplacement(){
+//	//Return displacement relative to position where SetEncodersToRelativeZero() was called
+//	double leftSensorUnits = (srxLeft->GetSelectedSensorPosition(0) - relativeZero);
+//	double rightSensorUnits = (srxRight->GetSelectedSensorPosition(0) - relativeZero);
+//	double aveSensorUnits = (leftSensorUnits + rightSensorUnits) / 2;
+//	double rotations = (aveSensorUnits / sensorUnitsPerRotation);
+//	double meters = (rotations * wheelCircumference);
+//	return meters;
+//}
+
+void SubDriveBase::ZeroEncoders(){
+	srxLeft->SetSelectedSensorPosition(0,0,10);
+	srxRight->SetSelectedSensorPosition(0,0,10);
 }
 
-double SubDriveBase::GetRelativeDisplacement(){
-	//Return displacement relative to position where SetEncodersToRelativeZero() was called
-	double leftSensorUnits = (srxLeft->GetSelectedSensorPosition(0) - relativeZero);
-	double rightSensorUnits = (srxRight->GetSelectedSensorPosition(0) - relativeZero);
+double SubDriveBase::GetEncoderDistance(){
+	double leftSensorUnits = (srxLeft->GetSelectedSensorPosition(0));
+	double rightSensorUnits = (-srxRight->GetSelectedSensorPosition(0));
 	double aveSensorUnits = (leftSensorUnits + rightSensorUnits) / 2;
 	double rotations = (aveSensorUnits / sensorUnitsPerRotation);
 	double meters = (rotations * wheelCircumference);

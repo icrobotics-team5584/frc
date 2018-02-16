@@ -24,7 +24,7 @@ public:
 	void AutoDrive(double, double);
 	void Stop();
 	void TakeJoystickInputs(std::shared_ptr<Joystick>);
-	void GyroRotate(double angle);
+	void GyroRotate(double angle, bool relative);
 	void GyroDrive(double distance);
 	void ZeroNavX();
 	double GetAngle();
@@ -33,8 +33,10 @@ public:
 	void HandlePIDOutput(double xSpeed, double zRotation);
 	bool ReachedSetPoint();
 	void SetDriveMode(DriveMode driveMode);
-	void SetEncodersToRelativeZero();
-	double GetRelativeDisplacement();
+//	void SetEncodersToRelativeZero();
+//	double GetRelativeDisplacement();
+	double GetEncoderDistance();
+	void ZeroEncoders();
 
 	//Objects used by the Gyro PIDControllers
 	static AHRS* navX;
