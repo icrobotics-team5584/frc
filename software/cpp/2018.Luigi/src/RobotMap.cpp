@@ -33,7 +33,11 @@ std::shared_ptr<frc::Ultrasonic> RobotMap::subDriveBaseUltrasonicInputLeft;
 std::shared_ptr<WPI_TalonSRX> RobotMap::subEncodedArmLiftSrxMaster;
 std::shared_ptr<WPI_TalonSRX> RobotMap::subEncodedArmLiftSrxSlave;
 std::shared_ptr<DigitalInput> RobotMap::subEncodedArmLiftSwtTop;
+std::shared_ptr<DigitalInput> RobotMap::subEncodedArmLiftSwtTopSecondary;
 std::shared_ptr<DigitalInput> RobotMap::subEncodedArmLiftSwtBottom;
+
+//Define Ramp drop actuator
+std::shared_ptr<VictorSP> RobotMap::subRampSPLeft;
 
 
 //Define micro navX gyro
@@ -111,11 +115,15 @@ void RobotMap::init() {
     //Initiate micro navX gyro
     navX.reset(new AHRS(SerialPort::kUSB1)); //See navx-micro.kauailabs.com/guidance/selecting-an-interface.
 
-    //Initiate arm lift Actuators / Actuator
+    //Initiate Ramp Drop Actuator
+    subRampSPLeft.reset(new VictorSP(0));
+
+    //Initiate arm lift Actuators / Actuator /Sensors
     subEncodedArmLiftSrxMaster.reset(new WPI_TalonSRX(5));
     subEncodedArmLiftSrxSlave.reset(new WPI_TalonSRX(6));
     subEncodedArmLiftSrxSlave->Set( ctre::phoenix::motorcontrol::ControlMode::Follower, 5);
     subEncodedArmLiftSwtTop.reset(new DigitalInput(3));
+    subEncodedArmLiftSwtTopSecondary.reset(new DigitalInput(4));
     subEncodedArmLiftSwtBottom.reset(new DigitalInput(2));
 
     enum Constants

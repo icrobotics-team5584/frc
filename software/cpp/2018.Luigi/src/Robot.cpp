@@ -6,6 +6,7 @@ std::shared_ptr<SubIntake> Robot::subIntake;
 std::unique_ptr<OI> Robot::oi;
 std::shared_ptr<SubEncodedArmLift> Robot::subEncodedArmLift;
 std::shared_ptr<SubCameras> Robot::subCameras;
+std::shared_ptr<SubRamp> Robot::subRamp;
 
 std::shared_ptr<MotionProfileData> Robot::MPData;
 GameData Robot::gameData;
@@ -32,7 +33,8 @@ void Robot::RobotInit() {
 	subDriveBase.reset(new SubDriveBase());
 	subIntake.reset(new SubIntake());
 	subEncodedArmLift.reset(new SubEncodedArmLift());
-//	subCameras.reset(new SubCameras);
+	subCameras.reset(new SubCameras);
+	subRamp.reset(new SubRamp);
 	oi.reset(new OI());
 
 	//Setup Auto Chooser

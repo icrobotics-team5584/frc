@@ -13,7 +13,6 @@
 
 #include "Commands/CmdGyroDrive.h"
 
-
 OI::OI() {
     //Initiate Joystick
 	joystick0.reset(new frc::Joystick(0));
