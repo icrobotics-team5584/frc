@@ -7,7 +7,7 @@ class CmdGyroDrive : public frc::Command {
 public:
 	//Set relative to true if you want turn relative to current angle.
 	//Drive distance is always relative and based on the left wheel's movement.
-	CmdGyroDrive(double distance, double angle, bool relative = true);
+	CmdGyroDrive(double distance, double angle, bool relative = false, bool isQuickTurn = false);
 	void Initialize() override;
 	void Execute() override;
 	bool IsFinished() override;
@@ -17,5 +17,6 @@ private:
 	double _distance;
 	double _angle;
 	bool _relative;
+	bool _isQuickTurn;
 };
 

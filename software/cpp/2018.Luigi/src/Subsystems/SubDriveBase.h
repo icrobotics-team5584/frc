@@ -27,31 +27,20 @@ public:
 	void GyroRotate(double angle, bool relative);
 	void GyroDrive(double distance);
 	void ZeroNavX();
-	double GetAngle();
+	void ZeroEncoders();
+	void ClearMPBuffers();
 	void SetPIDSpeed(double speed);
 	void SetPIDRotation(double rotation);
-	void HandlePIDOutput(double xSpeed, double zRotation);
-	bool ReachedSetPoint();
+	void SetPIDIsQuickTurn(bool isQuickTurn);
+	void HandlePIDOutput(double xSpeed, double zRotation, bool isQuickTurn);
 	void SetDriveMode(DriveMode driveMode);
-//	void SetEncodersToRelativeZero();
-//	double GetRelativeDisplacement();
+	bool ReachedSetPoint();
 	double GetEncoderDistance();
-	void ZeroEncoders();
-
-	//Objects used by the Gyro PIDControllers
-	static AHRS* navX;
-	static double _Speed;
-	static double _Rotation;
+	double GetAngle();
 
 private:
 
 	DriveMode selectedDriveMode;
-	class DriveModeClass {
-	public:
-		DriveMode myDriveMode;
-		DriveModeClass(DriveMode dm){myDriveMode = dm;}
-	};
-	SendableChooser<DriveModeClass*> driveModeChooser;
 
 	//Drive Wheel Motors
 	std::shared_ptr<WPI_TalonSRX> srxLeft;
@@ -82,6 +71,12 @@ private:
     //Encoder objects for autonomous driving
 	EncoderDistanceSource* distanceSource;
 	double relativeZero;
+
+	//Objects used by the Gyro PIDControllers
+	AHRS* navX;
+	double _Speed;
+	double _Rotation;
+	bool _isQuickTurn;
 };
 
 #endif

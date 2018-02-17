@@ -8,15 +8,11 @@
 const static double turnP = 0.014;
 const static double turnI = 0;
 const static double turnD = 0;
-const static double driveP = 0.25;
-const static double driveI = 0.00015;
+const static double driveP = 0.1;
+const static double driveI = 0.00027;
 const static double driveD = 0;
 
 //Define static objects
-AHRS* SubDriveBase::navX;
-double SubDriveBase::_Speed;
-double SubDriveBase::_Rotation;
-
 
 SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase"), selectedDriveMode(Manual){
 	//Copy Drive wheels from RobotMap
@@ -32,6 +28,7 @@ SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase"), selectedDriveMode
 
     //setup NavX PID controller
     _Rotation = 0;
+    _isQuickTurn = false;
     navX = RobotMap::navX.get();
 	SmartDashboard::PutData("NavX", navX);
     rotationOutput = new NavxDriveRotationOutput();
@@ -48,7 +45,6 @@ SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase"), selectedDriveMode
 	_Speed = 0;
 	relativeZero = 0;
 	driveController = new PIDController(driveP, driveI, driveD, distanceSource, speedOutput);
-    driveController->SetInputRange(-10, 10);
     driveController->SetOutputRange(-1,1);
     SmartDashboard::PutData("driveController", driveController);
 }
@@ -78,15 +74,78 @@ void SubDriveBase::Periodic() {
 		_Ultraloops = 0;
 	}
 
-	SmartDashboard::PutNumber("PID Speed", _Speed);
-	SmartDashboard::PutNumber("PID Rotation", _Rotation);
 	SmartDashboard::PutNumber("EncoderDistanceSource", GetEncoderDistance());
-	SmartDashboard::PutNumber("Left enc", srxLeft->GetSelectedSensorPosition(0));
-	SmartDashboard::PutNumber("Right enc", srxRight->GetSelectedSensorPosition(0));
-
 	if (selectedDriveMode == Autonomous){
-		HandlePIDOutput(_Speed, _Rotation);
+		HandlePIDOutput(_Speed, _Rotation, _isQuickTurn);
 	}
+}
+
+void SubDriveBase::AutoDrive(double speed, double rotation) {
+	//A basic drive with no sensor feedback
+	differentialDrive->ArcadeDrive(speed, rotation);
+}
+
+void SubDriveBase::Stop(){
+	//Stop the drive motors
+	differentialDrive->ArcadeDrive(0,0);
+	turnController->Disable();
+}
+
+void SubDriveBase::TakeJoystickInputs(std::shared_ptr<Joystick> sticky ) {
+	//Drive with the Gamepad left stick, use L2 as boost
+	double boost = (((sticky->GetRawAxis(2)+3))/4);
+	differentialDrive->ArcadeDrive(-sticky->GetY() * boost, sticky->GetX() * boost);
+}
+
+void SubDriveBase::GyroRotate(double angle, bool relative){
+	//Target a specific angle
+	if (relative){
+		angle = GetAngle() + angle;
+	}
+	turnController->SetSetpoint(angle);
+}
+
+void SubDriveBase::GyroDrive(double distance){
+	//Target a specific displacement
+	ZeroEncoders();
+	driveController->SetSetpoint(distance);
+}
+
+void SubDriveBase::ZeroNavX(){
+	navX->Reset();
+}
+
+void SubDriveBase::ZeroEncoders(){
+	srxLeft->SetSelectedSensorPosition(0,0,10);
+	srxRight->SetSelectedSensorPosition(0,0,10);
+}
+
+void SubDriveBase::ClearMPBuffers(){
+	srxRight->ClearMotionProfileTrajectories();
+	srxLeft->ClearMotionProfileTrajectories();
+}
+
+void SubDriveBase::SetPIDSpeed(double speed){
+	//_Speed is used as the forwards velocity when under Autonomous PID control
+	_Speed = speed;
+}
+
+void SubDriveBase::SetPIDRotation(double rotation){
+	//_Rotation is used as the speed of z rotation when under Autonomous PID control
+	_Rotation = rotation;
+}
+
+void SubDriveBase::SetPIDIsQuickTurn(bool isQuickTurn){
+	//If _isQuickTurn is set, the PIDControllers will ignore any xSpeed inputs
+	_isQuickTurn = isQuickTurn;
+}
+
+void SubDriveBase::HandlePIDOutput(double xSpeed, double zRotation, bool isQuickTurn){
+	//Run outputs from driveController and turnController
+	if (isQuickTurn) {
+		xSpeed = 0;
+	}
+	differentialDrive->CurvatureDrive(xSpeed, zRotation, isQuickTurn);
 }
 
 void SubDriveBase::SetDriveMode(DriveMode driveMode){
@@ -107,33 +166,6 @@ void SubDriveBase::SetDriveMode(DriveMode driveMode){
 	}
 }
 
-void SubDriveBase::HandlePIDOutput(double xSpeed, double zRotation){
-	//Run outputs from driveController and turnController
-	bool isQuickTurn;
-	if (xSpeed == 0){
-		isQuickTurn = true;
-	} else {
-		isQuickTurn = false;
-	}
-	differentialDrive->CurvatureDrive(xSpeed, zRotation, isQuickTurn);
-}
-
-void SubDriveBase::GyroRotate(double angle, bool relative){
-	//Target a specific angle
-	if (relative){
-		angle = GetAngle() + angle;
-	}
-	turnController->SetSetpoint(angle);
-	turnController->Enable();
-}
-
-void SubDriveBase::GyroDrive(double distance){
-	//Target a specific displacement
-	ZeroEncoders();
-	driveController->SetSetpoint(distance);
-	driveController->Enable();
-}
-
 bool SubDriveBase::ReachedSetPoint(){
 	//Has the robot reached it's angle and distance PID setpoints?
 	if (turnController->OnTarget() and driveController->OnTarget()){
@@ -143,84 +175,17 @@ bool SubDriveBase::ReachedSetPoint(){
 	}
 }
 
-void SubDriveBase::SetPIDSpeed(double speed){
-	//_Speed is used as the forwards velocity when under Autonomous PID control
-	_Speed = speed;
-}
-
-void SubDriveBase::SetPIDRotation(double rotation){
-	//_Rotation is used as the speed of z rotation when under Autonomous PID control
-	_Rotation = rotation;
-}
-
-void SubDriveBase::ZeroNavX(){
-	navX->Reset();
-}
-
 double SubDriveBase::GetAngle(){
 	return navX->GetAngle();
 }
 
-//void SubDriveBase::SetEncodersToRelativeZero(){
-//	/*
-//	 * THIS DOESN'T ZERO THE ENCODERS
-//	 * It only remembers the current position and uses that as an effective zero when the
-//	 * GetRelativeDisplacement() function is called. for example, the robot might be
-//	 * in the middle of the field when this is called, setting relative zero to 5584.123,
-//	 * the robot then drives to position 6000, GetRelativeDisplacement() will then return
-//	 * 415.877 (= 6000-5584.123). This is a non-destructive method of getting the current
-//	 * position that allows us to use the total encoder movement later on.
-//	 */
-//	relativeZero = srxLeft->GetSelectedSensorPosition(0);
-//}
-//
-//double SubDriveBase::GetRelativeDisplacement(){
-//	//Return displacement relative to position where SetEncodersToRelativeZero() was called
-//	double leftSensorUnits = (srxLeft->GetSelectedSensorPosition(0) - relativeZero);
-//	double rightSensorUnits = (srxRight->GetSelectedSensorPosition(0) - relativeZero);
-//	double aveSensorUnits = (leftSensorUnits + rightSensorUnits) / 2;
-//	double rotations = (aveSensorUnits / sensorUnitsPerRotation);
-//	double meters = (rotations * wheelCircumference);
-//	return meters;
-//}
-
-void SubDriveBase::ZeroEncoders(){
-	srxLeft->SetSelectedSensorPosition(0,0,10);
-	srxRight->SetSelectedSensorPosition(0,0,10);
-}
-
 double SubDriveBase::GetEncoderDistance(){
+	//Return the straight distance traveled by the robot since Zeroing the encoders
+	//The return value is measured in meters.
 	double leftSensorUnits = (srxLeft->GetSelectedSensorPosition(0));
 	double rightSensorUnits = (-srxRight->GetSelectedSensorPosition(0));
 	double aveSensorUnits = (leftSensorUnits + rightSensorUnits) / 2;
 	double rotations = (aveSensorUnits / sensorUnitsPerRotation);
 	double meters = (rotations * wheelCircumference);
 	return meters;
-}
-
-void SubDriveBase::AutoDrive(double speed, double rotation) {
-	//A basic drive with no sensor feedback
-	differentialDrive->ArcadeDrive(speed, rotation);
-}
-
-void SubDriveBase::Stop(){
-	//Stop the drive motors
-	differentialDrive->ArcadeDrive(0,0);
-	turnController->Disable();
-}
-
-void SubDriveBase::TakeJoystickInputs(std::shared_ptr<Joystick> sticky ) {
-	//Drive with the Gamepad left stick, use L2 as boost
-	double boost = (((sticky->GetRawAxis(2)+3))/4);
-	differentialDrive->ArcadeDrive(-sticky->GetY() * boost, sticky->GetX() * boost);
-}
-
-void SubDriveBase::ZeroDriveEncoders(){
-	sRXright->SetSelectedSensorPosition(0, 0, 10);
-	sRXleft->SetSelectedSensorPosition(0, 0, 10);
-}
-
-void SubDriveBase::ClearMPBuffers(){
-	sRXright->ClearMotionProfileTrajectories();
-	sRXleft->ClearMotionProfileTrajectories();
 }

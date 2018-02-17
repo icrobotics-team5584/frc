@@ -1,19 +1,23 @@
 #include "CmdGyroDrive.h"
 
-CmdGyroDrive::CmdGyroDrive(double distance, double angle, bool relative)
+CmdGyroDrive::CmdGyroDrive(double distance, double angle, bool relative, bool isQuickTurn)
 :
 _distance(distance),
 _angle(angle),
-_relative(relative)
+_relative(relative),
+_isQuickTurn(isQuickTurn)
 {
 	Requires(Robot::subDriveBase.get());
 }
 
 // Called just before this Command runs the first time
 void CmdGyroDrive::Initialize() {
-	Robot::subDriveBase->SetDriveMode(SubDriveBase::Autonomous);
+	Robot::subDriveBase->SetPIDIsQuickTurn(_isQuickTurn);
+	if (not _isQuickTurn){
+		Robot::subDriveBase->GyroDrive(_distance);
+	}
 	Robot::subDriveBase->GyroRotate(_angle, _relative);
-	Robot::subDriveBase->GyroDrive(_distance);
+	Robot::subDriveBase->SetDriveMode(SubDriveBase::Autonomous);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -23,6 +27,7 @@ void CmdGyroDrive::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdGyroDrive::IsFinished() {
+	SmartDashboard::PutBoolean("ReachedSetPoint", Robot::subDriveBase->ReachedSetPoint());
 	return Robot::subDriveBase->ReachedSetPoint();
 }
 

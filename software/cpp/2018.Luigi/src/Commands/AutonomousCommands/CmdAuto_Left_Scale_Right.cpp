@@ -3,14 +3,18 @@
 #include "Commands/CmdArmPosScale.h"
 #include "CmdAuto_DeployArm.h"
 #include "Commands/CmdOutput.h"
+#include "CmdAuto_BasicDrive.h"
+#include "Commands/CmdArmPosGround.h"
 
 CmdAuto_Left_Scale_Right::CmdAuto_Left_Scale_Right() {
-	AddParallel(new CmdAuto_DeployArm());			//Deploy arm to switch position
-	AddSequential(new CmdGyroDrive(4, 0));			//Drive forward
-	AddSequential(new CmdGyroDrive(0.5, 90), 2);	//Turn right
-	AddSequential(new CmdGyroDrive(4, 0));			//Drive forward
-	AddSequential(new CmdGyroDrive(0.5, -90), 2);	//Turn left
-	AddParallel(new CmdArmPosScale());				//Raise arm to scale position
-	AddSequential(new CmdGyroDrive(2, 0));			//Drive forward
-	AddSequential(new CmdOutput(1, 1));				//Output cube
+	AddParallel(new CmdAuto_DeployArm());				//Deploy arm to switch position
+	AddSequential(new CmdGyroDrive(4, 0));				//Drive forward
+	AddSequential(new CmdGyroDrive(0.5, 90), 2);		//Turn right
+	AddSequential(new CmdGyroDrive(4, 0));				//Drive forward
+	AddSequential(new CmdGyroDrive(0.5, -90), 2);		//Turn left
+	AddParallel(new CmdArmPosScale());					//Raise arm to scale position
+	AddSequential(new CmdGyroDrive(2, 0));				//Drive forward
+	AddSequential(new CmdOutput(1, 1));					//Output cube
+	AddSequential(new CmdAuto_BasicDrive(-0.4, 0, 5));	//Drive Backward
+	AddSequential(new CmdArmPosGround());				//Arm to ground
 }
