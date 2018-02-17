@@ -23,7 +23,6 @@
 
 class Robot : public frc::TimedRobot {
 public:
-	static Robot* getInstance();
 
 	//Declare objects for autonomous selection
 	static GameData gameData;
@@ -48,10 +47,6 @@ public:
 	void AutonomousPeriodic() override;
 	void TeleopInit() override;
 	void TeleopPeriodic() override;
-
-private:
-	static Robot* instance;
-	Robot();
 };
 
 #endif

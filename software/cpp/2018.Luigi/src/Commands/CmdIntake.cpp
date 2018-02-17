@@ -7,11 +7,13 @@ CmdIntake::CmdIntake(double timeout, double speed) : _timeout(timeout), _speed(s
 
  //Called just before this Command runs the first time
 void CmdIntake::Initialize() {
+	std::cout << "Running CmdIntake::Initialize()" << std::endl;
+
 	//Start spitting out
 	Robot::subIntake->In(_speed);
 
 	//Apply timeout if we are in autonomous mode
-	bool autoMode = Robot::getInstance()->IsAutonomous();
+	bool autoMode = DriverStation::GetInstance().IsAutonomous();
 	if (autoMode){
 		SetTimeout(_timeout);
 		if (_timeout == 0) {

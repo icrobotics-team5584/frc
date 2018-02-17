@@ -1,0 +1,190 @@
+{
+  "dividerPosition": 0.2692878338278932,
+  "tabPane": [
+    {
+      "title": "Autonomous Selection",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "tiles": {
+          "0,0": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "ComboBox Chooser",
+              "_source0": "network_table:///SmartDashboard/Autonomous Task",
+              "_title": "Autonomous Task"
+            }
+          },
+          "2,0": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "ComboBox Chooser",
+              "_source0": "network_table:///SmartDashboard/Starting Position",
+              "_title": "Starting Position"
+            }
+          },
+          "0,1": {
+            "size": [
+              4,
+              1
+            ],
+            "content": {
+              "_type": "Basic FMS Info",
+              "_source0": "network_table:///FMSInfo",
+              "_title": "Match Info"
+            }
+          },
+          "0,2": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Camera Stream",
+              "_source0": "camera_server://USB Camera 0",
+              "_title": "Front"
+            }
+          },
+          "2,2": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Camera Stream",
+              "_source0": "camera_server://USB Camera 1",
+              "_title": "Top"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "NavX",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "tiles": {
+          "0,0": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Gyro",
+              "_source0": "network_table:///SmartDashboard/NavX",
+              "_title": "NavX",
+              "majorTickSpace": 45.0,
+              "startAngle": 180.0,
+              "tickMarkRingVisible": true
+            }
+          },
+          "2,0": {
+            "size": [
+              1,
+              2
+            ],
+            "content": {
+              "_type": "PID Controller",
+              "_source0": "network_table:///SmartDashboard/turnController",
+              "_title": "turnController"
+            }
+          },
+          "3,0": {
+            "size": [
+              1,
+              2
+            ],
+            "content": {
+              "_type": "PID Controller",
+              "_source0": "network_table:///SmartDashboard/driveController",
+              "_title": "driveController"
+            }
+          },
+          "0,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Command",
+              "_source0": "network_table:///SmartDashboard/Relative slow Turn 90 over 1m",
+              "_title": "SmartDashboard/Relative slow Turn 90 over 1m"
+            }
+          },
+          "0,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Command",
+              "_source0": "network_table:///SmartDashboard/Relative straight drive 3m",
+              "_title": "SmartDashboard/Relative straight drive 3m"
+            }
+          },
+          "2,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Command",
+              "_source0": "network_table:///SmartDashboard/Turn to 0",
+              "_title": "SmartDashboard/Turn to 0"
+            }
+          },
+          "2,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Command",
+              "_source0": "network_table:///SmartDashboard/Turn to 90",
+              "_title": "SmartDashboard/Turn to 90"
+            }
+          },
+          "3,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/angle to drive to",
+              "_title": "SmartDashboard/angle to drive to"
+            }
+          },
+          "3,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/ReachedSetPoint",
+              "_title": "SmartDashboard/ReachedSetPoint",
+              "colorWhenTrue": "#7CFC00FF",
+              "colorWhenFalse": "#8B0000FF"
+            }
+          }
+        }
+      }
+    }
+  ]
+}
