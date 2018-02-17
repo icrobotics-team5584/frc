@@ -8,7 +8,6 @@ std::shared_ptr<SubEncodedArmLift> Robot::subEncodedArmLift;
 std::shared_ptr<SubCameras> Robot::subCameras;
 std::shared_ptr<SubRamp> Robot::subRamp;
 
-std::shared_ptr<MotionProfileData> Robot::MPData;
 GameData Robot::gameData;
 AutonomousSelector Robot::autoSelector;
 
@@ -26,8 +25,6 @@ Robot::Robot() : frc::TimedRobot() {
 
 void Robot::RobotInit() {
 	RobotMap::init();
-
-	MPData.reset(new MotionProfileData());
 
 	//Initiate Subsystems
 	subDriveBase.reset(new SubDriveBase());
