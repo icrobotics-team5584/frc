@@ -90,7 +90,8 @@ my @accelerations = getaccelerations( $itp, @velocities );
 
 # construct buffer for header file
 
-my $buffer = "";
+my $hbuffer = "";
+my $cbuffer = "";
 my $eol = ",";
 my $steps = $#velocities + 1;
 my $i;
@@ -98,12 +99,14 @@ for( $i = 0; $i < $steps; $i++ )
   {
   my $rotations = @positions[$i];
   my $rpm = @velocities[$i] * 60;
+  my $vel = @velocities[$i];
   my $duration = $itp;
-  if( $i == $steps - 1 ) 
+  if( $i == $steps - 1 )
     {
     $eol = "};";
     }
-  $buffer = $buffer . "{${rotations},\t${rpm}\t,${duration}}${eol}\n";
+  $hbuffer = $hbuffer . "{${rotations},\t${rpm}\t,${duration}}${eol}\n";
+  $cbuffer = $cbuffer . "${rotations},${vel},${duration}\n";
   }
 
 
@@ -116,7 +119,7 @@ print HDR "// COLUMN 2 = Velocity (rpm)\n";
 print HDR "// COLUMN 3 = Duration (ms)\n";
 print HDR "const int k${ident}Sz = $steps;\n";
 print HDR "const double k${ident}[][3] = {\n";
-print HDR $buffer;
+print HDR $hbuffer;
 close( HDR );
 
 
@@ -126,11 +129,21 @@ close( HDR );
 my $steps = $#velocities + 1;
 my $i;
 open( CSV, ">MotionProfile${ident}.csv" );
+print CSV $cbuffer;
+close( CSV );
+
+
+
+# output the debug file
+
+my $steps = $#velocities + 1;
+my $i;
+open( DEBUG, ">MotionProfile${ident}.debug" );
 for( $i = 0; $i < $steps; $i++ )
   {
-  print CSV "$i,$velocities[$i],$positions[$i],$accelerations[$i]\n";
+  print DEBUG "$i,$velocities[$i],$positions[$i],$accelerations[$i]\n";
   }
-close( CSV );
+close( DEBUG );
 
 
 
