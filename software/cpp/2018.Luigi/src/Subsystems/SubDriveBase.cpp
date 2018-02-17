@@ -65,3 +65,13 @@ void SubDriveBase::TakeJoystickInputs(std::shared_ptr<Joystick> sticky ) {
 	double boost = (((sticky->GetRawAxis(2)+3))/4);
 	differentialDrive->ArcadeDrive(-sticky->GetY() * boost, sticky->GetX() * boost);
 }
+
+void SubDriveBase::ZeroDriveEncoders(){
+	sRXright->SetSelectedSensorPosition(0, 0, 10);
+	sRXleft->SetSelectedSensorPosition(0, 0, 10);
+}
+
+void SubDriveBase::ClearMPBuffers(){
+	sRXright->ClearMotionProfileTrajectories();
+	sRXleft->ClearMotionProfileTrajectories();
+}

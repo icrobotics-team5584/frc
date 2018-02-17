@@ -5,7 +5,7 @@
 
 class CmdAuto_DeployArmToScale : public CommandGroup {
 public:
-	CmdAuto_DeployArmToScale(double offsetTime);
+	CmdAuto_DeployArmToScale(double offsetTime = 0);
 };
 
 #endif  // CmdAuto_DeployArmToScale_H

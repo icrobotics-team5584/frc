@@ -10,7 +10,7 @@ CmdAuto_Left_Switch_Left::CmdAuto_Left_Switch_Left() {
 	 */
 
 	AddParallel(new CmdAuto_DeployArm());							//Deploy arm
-	AddSequential(new CmdAuto_MotionProfile("Left-Switch-Left", 7));//Drive to switch
-	AddSequential(new CmdOutput(1, 1));								//Output cube
+	AddSequential(new CmdAuto_MotionProfile("Left-Switch-Left", 5));//Drive to switch
+	AddSequential(new CmdOutput(1, 0.5));								//Output cube
 
 }
