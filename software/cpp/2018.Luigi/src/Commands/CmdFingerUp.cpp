@@ -15,6 +15,7 @@ CmdFingerUp::CmdFingerUp() {
 // Called just before this Command runs the first time
 void CmdFingerUp::Initialize() {
 
+	std::cout << "CmdFingerUp::Initialize()  " << std::endl;
 	Robot::subFinger->FingerUp();
 
 }
@@ -27,7 +28,9 @@ void CmdFingerUp::Execute() {
 // Make this return true when this Command no longer needs to run execute()
 bool CmdFingerUp::IsFinished() {
 
+	std::cout << "CmdFingerUp::IsFinished()  " << std::endl;
 	if(Robot::subFinger->GetSwitches()){
+		std::cout << "CmdFingerUp::IsFinished() TRUEEEE  " << std::endl;
 		return true;
 	}else {
 		return false;
@@ -37,6 +40,7 @@ bool CmdFingerUp::IsFinished() {
 
 // Called once after isFinished returns true
 void CmdFingerUp::End() {
+	std::cout << "CmdFingerUp::End() " << std::endl;
 	Robot::subFinger->FingerStop();
 }
 

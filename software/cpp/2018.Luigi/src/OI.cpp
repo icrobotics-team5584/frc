@@ -18,15 +18,16 @@ OI::OI() {
 
     //Initiate Intake button
 	btnIntake.reset(new JoystickButton(joystick0.get(), 6));
-	btnFingerUp.reset(new JoystickButton(joystick0.get(), 6));
+	btnFingerUpOne.reset(new JoystickButton(joystick0.get(), 6));
 	btnIntake->WhileHeld(new CmdIntake());
 
     //Initiate Output button
     btnOutput.reset(new JoystickButton(joystick0.get(), 5));
-    btnFingerUp.reset(new JoystickButton(joystick0.get(), 5));
+    btnFingerUpTwo.reset(new JoystickButton(joystick0.get(), 5));
 	btnOutput->WhileHeld(new CmdOutput());
 
-	btnFingerUp->WhileHeld(new CmdFingerUp());
+	btnFingerUpOne->WhileHeld(new CmdFingerUp());
+	btnFingerUpTwo->WhileHeld(new CmdFingerUp());
 
 	//Initiate Arm Encoded Actuator controls
 	btnArmToGround.reset(new JoystickButton(joystick0.get(), 1));

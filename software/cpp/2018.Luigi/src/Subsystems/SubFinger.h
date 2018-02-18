@@ -18,7 +18,7 @@ private:
 
 	std::shared_ptr<VictorSP> _fingerSP;
 	std::shared_ptr<DigitalInput> _fingerUpSwt;
-	int _switchCase;
+	int _switchCase = 0;
 
 public:
 	SubFinger();

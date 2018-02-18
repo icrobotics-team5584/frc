@@ -10,7 +10,8 @@ private:
 	std::shared_ptr<frc::Joystick> joystick0;
 	std::shared_ptr<JoystickButton> btnIntake;
 	std::shared_ptr<JoystickButton> btnOutput;
-	std::shared_ptr<JoystickButton> btnFingerUp;
+	std::shared_ptr<JoystickButton> btnFingerUpOne;
+	std::shared_ptr<JoystickButton> btnFingerUpTwo;
 	std::shared_ptr<JoystickButton> btnArmToGround;
 	std::shared_ptr<JoystickButton> btnArmToSwitch;
 	std::shared_ptr<JoystickButton> btnArmToScale;

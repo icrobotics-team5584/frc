@@ -10,19 +10,22 @@
 CmdFingerDefault::CmdFingerDefault() {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
+	std::cout << "CmdFingerDefault::CmdFingerDefault() " << std::endl;
 }
 
 // Called just before this Command runs the first time
 void CmdFingerDefault::Initialize() {
-
+	std::cout << "CmdFingerDefault::Initialize() " << std::endl;
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdFingerDefault::Execute() {
+	std::cout << "CmdFingerDefault::Execute() " << std::endl;
 	switch (Robot::subFinger->GetSwitchCase()){
 	case 0:
 	break;
 	case 1:
+		std::cout << "Case 111111 " << std::endl;
 		SetTimeout(0.5);
 		Robot::subFinger->FingerDown();
 	break;
