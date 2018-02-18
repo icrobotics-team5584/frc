@@ -97,7 +97,7 @@ void RobotMap::init() {
 
     //Intitate Finger Act / Sen
     subFingerSP.reset(new VictorSP(1));
-    subFingerSwtFingerUp.reset(new DigitalInput(5));
+    subFingerSwtFingerUp.reset(new DigitalInput(6));
 
 //    //Initiate Ultrasonic sensors Analog
 //    subDriveBaseUltrasonicInputFront.reset(new frc::AnalogInput(0));

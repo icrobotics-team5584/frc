@@ -16,7 +16,6 @@ SubFinger::SubFinger() : Subsystem("ExampleSubsystem") {
 	_fingerSP = RobotMap::subFingerSP;
 	_fingerUpSwt = RobotMap::subFingerSwtFingerUp;
 
-	GetSwitches();
 }
 
 //void SubFinger::InitDefaultCommand() {
@@ -50,13 +49,15 @@ void SubFinger::FingerDefaultStop() {
 }
 
 bool SubFinger::GetSwitches() {
-	std::cout << "GetSwitches" << std::endl;
-	if(_fingerUpSwt->Get()){
-		_switchCase = 1;
+	std::cout << "GetSwitches OneHere" << std::endl;
+
+	if(_fingerUpSwt->Get() ){
+		std::cout << "GetSwitches  TRUE _______" << std::endl;
 		return true;
-	}else {
-		return false;
 	}
+	std::cout << "GetSwitches  FALSE _______" << std::endl;
+	return false;
+
 }
 
 int SubFinger::GetSwitchCase() {
