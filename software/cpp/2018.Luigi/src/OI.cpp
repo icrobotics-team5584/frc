@@ -10,7 +10,6 @@
 #include "Commands/CmdArmOveride.h"
 #include "Commands/CmdResetArmEncoPos.h"
 #include "Commands/CmdChangeCamera.h"
-#include "Commands/CmdFingerUp.h"
 
 OI::OI() {
     //Initiate Joystick
@@ -25,9 +24,6 @@ OI::OI() {
     btnOutput.reset(new JoystickButton(joystick0.get(), 5));
     btnFingerUpTwo.reset(new JoystickButton(joystick0.get(), 5));
 	btnOutput->WhileHeld(new CmdOutput());
-
-	btnFingerUpOne->WhileHeld(new CmdFingerUp());
-	btnFingerUpTwo->WhileHeld(new CmdFingerUp());
 
 	//Initiate Arm Encoded Actuator controls
 	btnArmToGround.reset(new JoystickButton(joystick0.get(), 1));

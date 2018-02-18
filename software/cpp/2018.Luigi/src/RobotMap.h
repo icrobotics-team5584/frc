@@ -19,14 +19,10 @@ public:
 	//Define Intake Actuators and Sensors
 	static std::shared_ptr<WPI_TalonSRX> subIntakeTnxRight;
 	static std::shared_ptr<WPI_TalonSRX> subIntakeTnxLeft;
+	static std::shared_ptr<VictorSP> subIntakeSpFinger;
+	static std::shared_ptr<DigitalInput> subIntakeSwtFingerUp;
 	static std::shared_ptr<DigitalInput> subIntakeSwtLeftLimit;
 	static std::shared_ptr<DigitalInput> subIntakeSwtRightLimit;
-
-	//Define Finger Actuators /Sensors
-	static std::shared_ptr<VictorSP> subFingerSP;
-	static std::shared_ptr<DigitalInput> subFingerSwtFingerUp;
-
-
 
 //	//Define anlouge Ultrasonic sensors
 //	static std::shared_ptr<frc::AnalogInput> subDriveBaseUltrasonicInputFront;
