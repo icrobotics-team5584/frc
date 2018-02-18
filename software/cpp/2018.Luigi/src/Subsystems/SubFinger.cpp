@@ -8,6 +8,7 @@
 #include "SubFinger.h"
 #include "../RobotMap.h"
 #include "Commands/CmdFingerDefault.h"
+#include "Commands/CmdFingerDown.h"
 #include <iostream>
 
 SubFinger::SubFinger() : Subsystem("ExampleSubsystem") {
@@ -18,10 +19,10 @@ SubFinger::SubFinger() : Subsystem("ExampleSubsystem") {
 	GetSwitches();
 }
 
-void SubFinger::InitDefaultCommand() {
-	std::cout << "SubFinger::InitDefaultCommand()" << std::endl;
-	SetDefaultCommand(new CmdFingerDefault());
-}
+//void SubFinger::InitDefaultCommand() {
+//	std::cout << "SubFinger::InitDefaultCommand()" << std::endl;
+//	SetDefaultCommand(new CmdFingerDefault());
+//}
 
 void SubFinger::FingerUp() {
 	std::cout << "FingerUp" << std::endl;
@@ -37,6 +38,9 @@ void SubFinger::FingerDown() {
 void SubFinger::FingerStop() {
 	std::cout << "FingerStop" << std::endl;
 	_fingerSP->Set(0.0);
+	CmdFingerDown * cmdFingerDown;
+	cmdFingerDown = new CmdFingerDown;
+	cmdFingerDown->Start();
 }
 
 void SubFinger::FingerDefaultStop() {

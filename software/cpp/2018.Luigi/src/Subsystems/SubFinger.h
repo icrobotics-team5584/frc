@@ -11,10 +11,10 @@
 #define SubFinger_H
 
 #include <Commands/Subsystem.h>
-#include <ctre/phoenix.h>
 #include <WPILib.h>
+#include <ctre/phoenix.h>
 
-class SubFinger : public frc::Subsystem {
+class SubFinger : public Subsystem {
 private:
 	// It's desirable that everything possible under private except
 	// for methods that implement subsystem capabilities
@@ -25,7 +25,7 @@ private:
 
 public:
 	SubFinger();
-	void InitDefaultCommand() override;
+	//void InitDefaultCommand();
 	void FingerUp();
 	void FingerDown();
 	void FingerStop();
