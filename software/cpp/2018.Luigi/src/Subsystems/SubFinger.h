@@ -5,7 +5,10 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#pragma once
+//#pragma once
+
+#ifndef SubFinger_H
+#define SubFinger_H
 
 #include <Commands/Subsystem.h>
 #include <ctre/phoenix.h>
@@ -31,3 +34,4 @@ public:
 	int GetSwitchCase();
 };
 
+#endif  // SubFinger_H
