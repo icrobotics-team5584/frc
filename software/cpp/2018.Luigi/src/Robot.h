@@ -20,6 +20,7 @@
 #include "Subsystems/SubEncodedArmLift.h"
 #include "Subsystems/SubCameras.h"
 #include "Subsystems/SubRamp.h"
+#include "Subsystems/SubFinger.h"
 
 class Robot : public frc::TimedRobot {
 public:
@@ -38,6 +39,7 @@ public:
 	static std::shared_ptr<SubEncodedArmLift> subEncodedArmLift;
 	static std::shared_ptr<SubCameras> subCameras;
 	static std::shared_ptr<SubRamp> subRamp;
+	static std::shared_ptr<SubFinger> subFinger;
 
 	//Declare robot functions
 	void RobotInit() override;

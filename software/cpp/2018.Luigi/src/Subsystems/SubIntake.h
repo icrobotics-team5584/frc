@@ -9,7 +9,6 @@ class SubIntake : public Subsystem {
 private:
 	std::shared_ptr<WPI_TalonSRX> tnxRight;
 	std::shared_ptr<WPI_TalonSRX> tnxLeft;
-	std::shared_ptr<WPI_TalonSRX> tnxBottom;
 
 	std::shared_ptr<DigitalInput> swtLeftLimit;
 	std::shared_ptr<DigitalInput> swtRightLimit;

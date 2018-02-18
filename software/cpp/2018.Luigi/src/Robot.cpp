@@ -6,6 +6,7 @@ std::shared_ptr<SubIntake> Robot::subIntake;
 std::shared_ptr<SubEncodedArmLift> Robot::subEncodedArmLift;
 std::shared_ptr<SubCameras> Robot::subCameras;
 std::shared_ptr<SubRamp> Robot::subRamp;
+std::shared_ptr<SubFinger> Robot::subFinger;
 
 //Define Operator interface
 std::unique_ptr<OI> Robot::oi;
@@ -24,6 +25,7 @@ void Robot::RobotInit() {
 	subEncodedArmLift.reset(new SubEncodedArmLift());
 	subCameras.reset(new SubCameras);
 	subRamp.reset(new SubRamp);
+	subFinger.reset(new SubFinger);
 
 	//Initiate Operator Interface
 	oi.reset(new OI());
