@@ -57,6 +57,16 @@ void SubEncodedArmLift::ArmToScalePos() {  //Button Y
 
 }
 
+void SubEncodedArmLift::ArmToClimbPos() {  //triggerd by CmdPrepForClimb
+
+    targetPositionRotations = -(5.0 * 4096);
+    IfBottom();
+    IfTop();
+	_talon->Set(ControlMode::Position, targetPositionRotations);
+	MovementCheck();
+
+}
+
 void SubEncodedArmLift::Overide(std::shared_ptr<Joystick> sticky_2) {  //right joystick button press
 
 	_axis5 = sticky_2->GetRawAxis(5); //up down control axis
