@@ -1,10 +1,10 @@
 #include "CmdGyroDrive.h"
 
-CmdGyroDrive::CmdGyroDrive(double distance, double angle, bool isQuickTurn, bool relative)
+CmdGyroDrive::CmdGyroDrive(double distance, double angle, bool isQuickTurn, bool slow)
 :
 _distance(distance),
 _angle(angle),
-_relative(relative),
+_slow(slow),
 _isQuickTurn(isQuickTurn)
 {
 	Requires(Robot::subDriveBase.get());
@@ -14,9 +14,15 @@ _isQuickTurn(isQuickTurn)
 void CmdGyroDrive::Initialize() {
 	Robot::subDriveBase->SetPIDIsQuickTurn(_isQuickTurn);
 	if (not _isQuickTurn){
-		Robot::subDriveBase->GyroDrive(_distance);
+		if (_slow){
+			Robot::subDriveBase->SetDrivePIDVals(0.55, 0, 0);
+			Robot::subDriveBase->GyroDrive(_distance, 0.3);
+		} else {
+			Robot::subDriveBase->SetDrivePIDVals(0.3, 0, 0);
+			Robot::subDriveBase->GyroDrive(_distance, 0.8);
+		}
 	}
-	Robot::subDriveBase->GyroRotate(_angle, _relative);
+	Robot::subDriveBase->GyroRotate(_angle);
 	Robot::subDriveBase->SetDriveMode(SubDriveBase::Autonomous);
 }
 

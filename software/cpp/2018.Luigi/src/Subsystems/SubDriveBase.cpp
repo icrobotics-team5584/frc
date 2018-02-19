@@ -5,7 +5,7 @@
 #include <math.h>
 
 //PID constants
-const static double turnP = 0.012;
+const static double turnP = 0.015;
 const static double turnI = 0;
 const static double turnD = 0;
 const static double driveP = 0.3;
@@ -36,7 +36,7 @@ SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase"), selectedDriveMode
     distanceSource = new EncoderDistanceSource();
     turnController = new PIDController(turnP, turnI, turnD, navX, rotationOutput);
     turnController->SetInputRange(-180.0f, 180.0f);
-    turnController->SetOutputRange(-1.0, 1.0);
+    turnController->SetOutputRange(-0.7, 0.7);
     turnController->SetContinuous(true);
     turnController->SetAbsoluteTolerance(2);
 	SmartDashboard::PutData("turnController", turnController);
@@ -98,17 +98,17 @@ void SubDriveBase::TakeJoystickInputs(std::shared_ptr<Joystick> sticky ) {
 	differentialDrive->ArcadeDrive(-sticky->GetY() * boost, sticky->GetX() * boost);
 }
 
-void SubDriveBase::GyroRotate(double angle, bool relative){
+void SubDriveBase::GyroRotate(double angle){
 	//Target a specific angle
-	if (relative){
-		angle = GetAngle() + angle;
-	}
 	turnController->SetSetpoint(angle);
 }
 
-void SubDriveBase::GyroDrive(double distance){
+void SubDriveBase::GyroDrive(double distance, double maxPower){
 	//Target a specific displacement
+	SmartDashboard::PutNumber("maxPower", maxPower);
+	std::cout << "ran sd::pn(mp)" << std::endl;
 	ZeroEncoders();
+	driveController->SetOutputRange(-maxPower, maxPower);
 	driveController->SetSetpoint(distance);
 }
 
@@ -139,6 +139,10 @@ void SubDriveBase::SetPIDRotation(double rotation){
 void SubDriveBase::SetPIDIsQuickTurn(bool isQuickTurn){
 	//If _isQuickTurn is set, the PIDControllers will ignore any xSpeed inputs
 	_isQuickTurn = isQuickTurn;
+}
+
+void SubDriveBase::SetDrivePIDVals(double p, double i, double d){
+	driveController->SetPID(p, i, d);
 }
 
 void SubDriveBase::HandlePIDOutput(double xSpeed, double zRotation, bool isQuickTurn){

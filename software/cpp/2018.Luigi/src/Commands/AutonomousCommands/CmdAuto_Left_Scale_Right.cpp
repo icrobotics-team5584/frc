@@ -16,8 +16,8 @@ CmdAuto_Left_Scale_Right::CmdAuto_Left_Scale_Right() {
 	AddParallel(new CmdArmPosExchange());				//Deploy arm
 	AddSequential(new CmdGyroDrive(5.3,0), 5);			//Drive to gap between switch and scale
 	AddSequential(new CmdGyroDrive(0, 90, true), 2);	//Turn toward gap
-	AddSequential(new CmdGyroDrive(4.1, 90), 5);		//Drive over cable to opposite side of switch
-	AddSequential(new CmdGyroDrive(0, 0, true), 2);	//Turn toward Scale
+	AddSequential(new CmdGyroDrive(4.1, 90, false, 0.3), 5);		//Drive over cable to opposite side of switch
+	AddSequential(new CmdGyroDrive(0, 0, true), 2);		//Turn toward Scale
 	AddParallel(new CmdArmPosScale());					//Lift arm to scale height
 	AddSequential(new CmdAuto_BasicDrive(0.3, 0, 3));	//Drive slowly into scale
 	AddSequential(new CmdOutput(1,1));					//Output cube

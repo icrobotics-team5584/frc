@@ -15,7 +15,7 @@ CmdAuto_Left_Switch_Right::CmdAuto_Left_Switch_Right() {
 	AddParallel(new CmdArmPosExchange());				//Deploy arm
 	AddSequential(new CmdGyroDrive(5.3, 0));			//Drive to gap between switch and scale
 	AddSequential(new CmdGyroDrive(0, 90, true), 2);	//Turn toward gap
-	AddSequential(new CmdGyroDrive(4.1, 90));			//Drive over cable to opposite side of switch
+	AddSequential(new CmdGyroDrive(4.1, 90, false, true));			//Drive over cable to opposite side of switch
 	AddSequential(new CmdGyroDrive(0, 135, true), 2);	//Turn toward switch
 	AddParallel(new CmdArmPosSwitch());					//Lift arm to switch height
 	AddSequential(new CmdGyroDrive(0.2, 0));			//Drive into switch

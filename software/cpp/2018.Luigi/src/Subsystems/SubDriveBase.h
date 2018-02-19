@@ -24,14 +24,15 @@ public:
 	void AutoDrive(double, double);
 	void Stop();
 	void TakeJoystickInputs(std::shared_ptr<Joystick>);
-	void GyroRotate(double angle, bool relative);
-	void GyroDrive(double distance);
+	void GyroRotate(double angle);
+	void GyroDrive(double distance, double maxPower);
 	void ZeroNavX();
 	void ZeroEncoders();
 	void ClearMPBuffers();
 	void SetPIDSpeed(double speed);
 	void SetPIDRotation(double rotation);
 	void SetPIDIsQuickTurn(bool isQuickTurn);
+	void SetDrivePIDVals(double p, double i, double d);
 	void HandlePIDOutput(double xSpeed, double zRotation, bool isQuickTurn);
 	void SetDriveMode(DriveMode driveMode);
 	bool ReachedSetPoint();
