@@ -71,7 +71,11 @@ void SubRamp::Periodic() {
 void SubRamp::ResetRamp() {
 
 	SPLeft->Set(-0.2);
+
 	_startAutoCount = 0;
+	_scaleCount = 0;
+	_dropCount = 0 ;
+	_climbCount = 0;
 }
 
 void SubRamp::StopRamp() {

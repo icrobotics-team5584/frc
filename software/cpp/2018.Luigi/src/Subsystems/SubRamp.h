@@ -13,13 +13,13 @@ private:
 	int _startAutoCount = 0;
 
 	int _scaleCount = 0;
-	int _scaleTarget = 100;  //wait for scale to go up
+	int _scaleTarget = 160;  //wait for scale to go up
 
 	int _dropCount = 0;
-	int _dropTarget = 8; //ramp motor relase time
+	int _dropTarget = 11; //ramp motor relase time
 
 	int _climbCount = 0;
-	int _climbTarget = 100; //wait for ramp drop time
+	int _climbTarget = 130; //wait for ramp drop time
 
 
 public:
