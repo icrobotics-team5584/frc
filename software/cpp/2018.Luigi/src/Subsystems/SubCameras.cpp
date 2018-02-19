@@ -9,7 +9,8 @@ SubCameras::SubCameras() : Subsystem("ExampleSubsystem") {
 	_cameraA.SetFPS(10);
 
 	_cameraB = CameraServer::GetInstance()->StartAutomaticCapture(1);
-
+	_cameraB.SetResolution(320, 240);
+	_cameraB.SetFPS(10);
 
 	_prevTrigger = 0;
 	server = CameraServer::GetInstance()->GetServer();
