@@ -5,11 +5,11 @@
 #include <math.h>
 
 //PID constants
-const static double turnP = 0.014;
+const static double turnP = 0.012;
 const static double turnI = 0;
 const static double turnD = 0;
-const static double driveP = 0.1;
-const static double driveI = 0.00027;
+const static double driveP = 0.3;
+const static double driveI = 0;
 const static double driveD = 0;
 
 //Define static objects
@@ -38,7 +38,7 @@ SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase"), selectedDriveMode
     turnController->SetInputRange(-180.0f, 180.0f);
     turnController->SetOutputRange(-1.0, 1.0);
     turnController->SetContinuous(true);
-    turnController->SetAbsoluteTolerance(1);
+    turnController->SetAbsoluteTolerance(2);
 	SmartDashboard::PutData("turnController", turnController);
 
     //Setup encoder PID controller
@@ -46,6 +46,7 @@ SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase"), selectedDriveMode
 	relativeZero = 0;
 	driveController = new PIDController(driveP, driveI, driveD, distanceSource, speedOutput);
     driveController->SetOutputRange(-1,1);
+    driveController->SetAbsoluteTolerance(0.05);
     SmartDashboard::PutData("driveController", driveController);
 }
 
@@ -142,6 +143,8 @@ void SubDriveBase::SetPIDIsQuickTurn(bool isQuickTurn){
 
 void SubDriveBase::HandlePIDOutput(double xSpeed, double zRotation, bool isQuickTurn){
 	//Run outputs from driveController and turnController
+	SmartDashboard::PutNumber("xSpeed", xSpeed);
+	SmartDashboard::PutNumber("zRotation", zRotation);
 	if (isQuickTurn) {
 		xSpeed = 0;
 	}
@@ -168,7 +171,11 @@ void SubDriveBase::SetDriveMode(DriveMode driveMode){
 
 bool SubDriveBase::ReachedSetPoint(){
 	//Has the robot reached it's angle and distance PID setpoints?
-	if (turnController->OnTarget() and driveController->OnTarget()){
+	SmartDashboard::PutBoolean("turnController->OnTarget", turnController->OnTarget());
+	SmartDashboard::PutBoolean("driveController->OnTarget", driveController->OnTarget());
+	if (_isQuickTurn){
+		return turnController->OnTarget();
+	} else if (turnController->OnTarget() and driveController->OnTarget()){
 		return true;
 	} else {
 		return false;

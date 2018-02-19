@@ -27,7 +27,6 @@ void CmdGyroDrive::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdGyroDrive::IsFinished() {
-	SmartDashboard::PutBoolean("ReachedSetPoint", Robot::subDriveBase->ReachedSetPoint());
 	return Robot::subDriveBase->ReachedSetPoint();
 }
 

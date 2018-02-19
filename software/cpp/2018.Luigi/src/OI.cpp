@@ -45,10 +45,10 @@ OI::OI() {
 //	btnChangeCamera->WhenPressed(new CmdChangeCamera());
 
 	//Tempoary Shuffleboard control of autonomous gyro driving
-	SmartDashboard::PutData("Turn to 90", new CmdGyroDrive(0, 90, false, true));
+	SmartDashboard::PutData("Drive 5.3", new CmdGyroDrive(5.3,0,false,false));
+	SmartDashboard::PutData("Turn to -90", new CmdGyroDrive(0,-90,false,true));
+	SmartDashboard::PutData("Drive 4.1", new CmdGyroDrive(4.1, -90, false, false));
 	SmartDashboard::PutData("Turn to 0", new CmdGyroDrive(0, 0, false, true));
-	SmartDashboard::PutData("Relative straight drive 3m", new CmdGyroDrive(3, 0, false, false));
-	SmartDashboard::PutData("Relative slow Turn 90 over 1m", new CmdGyroDrive(1, 90, true, false));
 }
 
 
