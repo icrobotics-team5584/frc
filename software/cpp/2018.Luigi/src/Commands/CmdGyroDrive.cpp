@@ -1,6 +1,6 @@
 #include "CmdGyroDrive.h"
 
-CmdGyroDrive::CmdGyroDrive(double distance, double angle, bool relative, bool isQuickTurn)
+CmdGyroDrive::CmdGyroDrive(double distance, double angle, bool isQuickTurn, bool relative)
 :
 _distance(distance),
 _angle(angle),
