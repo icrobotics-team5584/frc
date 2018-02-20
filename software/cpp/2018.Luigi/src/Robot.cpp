@@ -11,7 +11,6 @@ std::shared_ptr<SubRamp> Robot::subRamp;
 std::unique_ptr<OI> Robot::oi;
 
 //Define Autonomous Objects
-std::shared_ptr<MotionProfileData> Robot::MPData;
 GameData Robot::gameData;
 AutonomousSelector Robot::autoSelector;
 
@@ -30,7 +29,6 @@ void Robot::RobotInit() {
 
 	//Setup Auto Chooser
 	autoSelector.SendOptionsToDashboard();
-	MPData.reset(new MotionProfileData());
 }
 
 void Robot::DisabledInit(){

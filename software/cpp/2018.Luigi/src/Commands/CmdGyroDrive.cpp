@@ -16,7 +16,7 @@ void CmdGyroDrive::Initialize() {
 	if (not _isQuickTurn){
 		if (_slow){
 			Robot::subDriveBase->SetDrivePIDVals(0.55, 0, 0);
-			Robot::subDriveBase->GyroDrive(_distance, 0.3);
+			Robot::subDriveBase->GyroDrive(_distance, 0.4);
 		} else {
 			Robot::subDriveBase->SetDrivePIDVals(0.3, 0, 0);
 			Robot::subDriveBase->GyroDrive(_distance, 0.8);
