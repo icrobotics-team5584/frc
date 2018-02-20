@@ -23,6 +23,7 @@ public:
 	void InitDefaultCommand();
 	void Periodic();
 	void In(double speed);
+	void AutoIn(double speed);
 	void Out(double speed);
 	void Stop();
 	bool GetSwitches();
