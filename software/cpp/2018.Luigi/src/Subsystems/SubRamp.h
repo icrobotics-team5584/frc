@@ -19,7 +19,7 @@ private:
 	int _dropTarget = 20; //ramp motor relase time
 
 	int _climbCount = 0;
-	int _climbTarget = 100; //wait for ramp drop time
+	int _climbTarget = 39; //wait for ramp drop time
 
 
 public:
