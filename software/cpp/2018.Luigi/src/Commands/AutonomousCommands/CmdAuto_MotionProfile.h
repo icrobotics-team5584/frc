@@ -18,6 +18,7 @@ public:
 	void Interrupted();
 private:
 	MotionProfileControl MPController;
+	std::string _profile;
 };
 
 #endif  // CmdAuto_MotionProfile_H

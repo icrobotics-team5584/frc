@@ -4,7 +4,7 @@
 
 MotionProfileControl::MotionProfileControl(	std::shared_ptr<TalonSRX> LeftTalon,
 											std::shared_ptr<TalonSRX> RightTalon,
-											std::shared_ptr<MotionProfileData> MP,
+											std::string profile,
 											int profileTimeout)
 : _notifier(&MotionProfileControl::PeriodicTask, this), _profileTimeout(profileTimeout)
 {
@@ -12,7 +12,7 @@ MotionProfileControl::MotionProfileControl(	std::shared_ptr<TalonSRX> LeftTalon,
 	//Assign variables
 	_leftTalon = LeftTalon;
 	_rightTalon = RightTalon;
-	_mp = MP;
+	_profile = profile;
 	_state = 0;
 	_bStart = false;
 	_loopTimeout = -1;
@@ -43,6 +43,9 @@ void MotionProfileControl::PeriodicTask(){
 }
 
 void MotionProfileControl::reset(){
+
+	std::cout << "MotionProfileControl: reset" << std::endl;
+
 	//clean buffer
 	_leftTalon->ClearMotionProfileTrajectories();
 	_rightTalon->ClearMotionProfileTrajectories();
@@ -197,7 +200,7 @@ void MotionProfileControl::streamToTopBuffer( bool firstpass ){
 
 	// no process the zero or more blocks
 	while( _blocks > 0 ) {
-		int mpsize = _mp->GetNumberOfPoints();
+		int mpsize = _mpData.GetNumberOfPoints();
 		int start = _pointsprocessed;
 //		std::cout << "INFO: points processed (before): " << _pointsprocessed << "/" << mpsize << std::endl;
 		int finish;
@@ -208,8 +211,8 @@ void MotionProfileControl::streamToTopBuffer( bool firstpass ){
 			finish = _pointsprocessed + remaining;
 		}
 		for (int i = start; i<finish; i++){
-			PushToTalon(_mp->GetPoint(0, i), _leftTalon, 0);
-			PushToTalon(_mp->GetPoint(1, i), _rightTalon, 1);
+			PushToTalon(_mpData.GetPoint(0, i), _leftTalon, 0);
+			PushToTalon(_mpData.GetPoint(1, i), _rightTalon, 1);
 		}
 		_pointsprocessed = finish;
 //		std::cout << "INFO: points processed (after): " << _pointsprocessed << "/" << mpsize << std::endl;
@@ -250,6 +253,7 @@ void MotionProfileControl::start(){
 }
 
 void MotionProfileControl::stop(){
+	std::cout << "MotionProfileControl: stop" << std::endl;
 	//Reset variables and objects (controllers, sensors, etc)
 	reset();
 	isRunning = false;
@@ -259,7 +263,14 @@ void MotionProfileControl::stop(){
 	_rightTalon->Set(ControlMode::PercentOutput, 0);
 }
 
+void MotionProfileControl::load(){
+	std::cout << "MotionProfileControl: load" << std::endl;
+	_mpData.ReadMotionProfile(_profile);
+}
+
 void MotionProfileControl::initialise(){
+
+	std::cout << "MotionProfileControl: initialise" << std::endl;
 	//Put Talons in MP mode
 	_rightTalon->Set(ControlMode::MotionProfile, 0);
 	_leftTalon->Set(ControlMode::MotionProfile, 0);

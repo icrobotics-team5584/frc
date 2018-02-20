@@ -13,7 +13,6 @@ CmdAuto_Both_Left::CmdAuto_Both_Left() {
 	 */
 
 	AddSequential(new CmdAuto_Left_Scale_Left());	//Get a cube in the scale
-	AddSequential(new CmdGyroDrive(-1, -90));		//Drive back and turn toward the gap between switch and scale
 	AddParallel(new CmdIntake(5, 1));				//Run intake
 	AddSequential(new CmdGyroDrive(1, 180));		//Drive toward a cube
 	AddSequential(new CmdArmPosSwitch());			//Lift arm to switch height

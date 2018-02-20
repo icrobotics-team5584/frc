@@ -6,7 +6,6 @@ MotionProfileData::MotionProfileData( ) {
 	mpSize = 0;
 }
 
-
 void MotionProfileData::ReadMotionProfile(std::string MP) {
 	//Read in two csv files, one for each side of the robot
 	ReadCSV(0, MP + "/" + MP + "_left.csv");
@@ -15,12 +14,17 @@ void MotionProfileData::ReadMotionProfile(std::string MP) {
 
 void MotionProfileData::ReadCSV(int set, std::string fileName) {
 	//Read in a csv of trajectory points into a vector
-	std::cout << "Reading from: /home/admin/" << fileName << std::endl;
+	std::cout << "MotionProfileData: reading from: /home/admin/" << fileName << std::endl;
 	io::CSVReader<3> in("/home/admin/" + fileName);
 
 	TrajectoryPoint point;
 
 	mpSize = 0;
+
+	if( ! sets[set].empty() ) {
+		std::cout << "MotionProfileData: detected content - clearing buffer set: " << set << std::endl;
+		sets[set].clear();
+	}
 
 	double duration;
 	while(in.read_row(point.position, point.velocity, duration)){
@@ -33,6 +37,7 @@ void MotionProfileData::ReadCSV(int set, std::string fileName) {
 
 	sets[set][0].zeroPos = true;
 	sets[set].back().isLastPoint = true;
+
 }
 
 int MotionProfileData::GetNumberOfPoints() {

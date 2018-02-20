@@ -5,7 +5,7 @@
 #include <math.h>
 
 //PID constants
-const static double turnP = 0.015;
+const static double turnP = 0.01;
 const static double turnI = 0;
 const static double turnD = 0;
 const static double driveP = 0.3;

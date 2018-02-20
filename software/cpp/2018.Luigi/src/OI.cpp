@@ -12,6 +12,7 @@
 #include "Commands/CmdChangeCamera.h"
 
 #include "Commands/CmdGyroDrive.h"
+#include "Commands/AutonomousCommands/CmdAuto_Left_Scale_Left.h"
 
 OI::OI() {
     //Initiate Joystick
@@ -44,10 +45,13 @@ OI::OI() {
 //	btnChangeCamera.reset(new JoystickButton(joystick0.get(), 99));
 //	btnChangeCamera->WhenPressed(new CmdChangeCamera());
 
-	//Tempoary Shuffleboard control of autonomous gyro driving
-	SmartDashboard::PutData("Drive 3 slow", new CmdGyroDrive(3, 0, false, true));
-	SmartDashboard::PutData("Drive back", new CmdGyroDrive(-3, 0, false, true));
-	SmartDashboard::PutData("Drive 3 fast", new CmdGyroDrive(3, 0, false, false));
+	//Tempoary Shuffleboard control of autonomous driving
+	SmartDashboard::PutData("Scale", new CmdAuto_Left_Scale_Left());
+	SmartDashboard::PutData("Drive back and turn", new CmdGyroDrive(-1, -90));
+	SmartDashboard::PutData("Intake", new CmdIntake(5, 1));
+	SmartDashboard::PutData("Drive to switch", new CmdGyroDrive(1, 180));
+	SmartDashboard::PutData("Lift", new CmdArmPosSwitch());
+	SmartDashboard::PutData("Output", new CmdOutput(1,1));
 
 }
 
