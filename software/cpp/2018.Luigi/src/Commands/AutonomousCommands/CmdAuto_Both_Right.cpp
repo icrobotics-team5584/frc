@@ -1,20 +1,22 @@
 #include "CmdAuto_Both_Right.h"
+#include "CmdAuto_Right_Scale_Right.h"
+#include "CmdAuto_BasicDrive.h"
+#include "Commands/CmdGyroDrive.h"
+#include "Commands/CmdArmPosGround.h"
+#include "Commands/CmdArmPosSwitch.h"
+#include "Commands/CmdIntake.h"
+#include "Commands/CmdOutput.h"
 
 CmdAuto_Both_Right::CmdAuto_Both_Right() {
-	// Add Commands here:
-	// e.g. AddSequential(new Command1());
-	//      AddSequential(new Command2());
-	// these will run in order.
+	/*
+	 * Start on the right, get a cube in the right scale and
+	 * then a second cube in the right switch.
+	 */
 
-	// To run multiple commands at the same time,
-	// use AddParallel()
-	// e.g. AddParallel(new Command1());
-	//      AddSequential(new Command2());
-	// Command1 and Command2 will run in parallel.
-
-	// A command group will require all of the subsystems that each member
-	// would require.
-	// e.g. if Command1 requires chassis, and Command2 requires arm,
-	// a CommandGroup containing them would require both the chassis and the
-	// arm.
+	AddSequential(new CmdAuto_Right_Scale_Right());	//Get a cube in the scale
+	AddSequential(new CmdGyroDrive(-1, 90));		//Drive back and turn toward the gap between switch and scale
+	AddParallel(new CmdIntake(5, 1));				//Run intake
+	AddSequential(new CmdGyroDrive(1, 180));		//Drive toward a cube
+	AddSequential(new CmdArmPosSwitch());			//Lift arm to switch height
+	AddSequential(new CmdOutput(1,1));				//Output the cube
 }

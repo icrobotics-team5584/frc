@@ -1,9 +1,11 @@
 #ifndef ROBOTMAP_H
 #define ROBOTMAP_H
 
+#include "AHRS.h"
 #include "WPILib.h"
 #include "ctre/Phoenix.h"
 #include "Autonomous/MotionProfileData.h"
+
 
 class RobotMap {
 public:
@@ -46,5 +48,7 @@ public:
 	//Define Ramp drop actuator
 	static std::shared_ptr<VictorSP> subRampSPLeft;
 
+	//Define micro navX gyro
+	static std::shared_ptr<AHRS> navX;
 };
 #endif
