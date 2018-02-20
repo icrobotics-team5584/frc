@@ -61,6 +61,11 @@ void SubIntake::In(double speed){
 	fingerDesiredPositionUp = true;
 }
 
+void SubIntake::AutoIn(double speed){
+	tnxRight->Set(-speed);
+	tnxLeft->Set(speed);
+}
+
 void SubIntake::Stop(){
 	tnxRight->Set(0);
 	tnxLeft->Set(0);
