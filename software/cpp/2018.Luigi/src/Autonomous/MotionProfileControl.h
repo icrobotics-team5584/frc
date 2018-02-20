@@ -12,7 +12,7 @@ class MotionProfileControl {
 public:
 	MotionProfileControl(	std::shared_ptr<TalonSRX>,
 							std::shared_ptr<TalonSRX>,
-							std::shared_ptr<MotionProfileData>,
+							std::string profile,
 							int timeout);
 	SetValueMotionProfile GetSetValue();
 	void control();
@@ -21,11 +21,17 @@ public:
 	void stop();
 	void execute();
 	void initialise();
+	void load();
 	bool IsRunning();
 
 private:
+
+	std::string _profile;
+
 	MotionProfileStatus _statusA;
 	MotionProfileStatus _statusB;
+
+	MotionProfileData _mpData;
 
 	double _posA=0,_velA=0,_headingA=0;
 	double _posB=0,_velB=0,_headingB=0;
@@ -33,7 +39,6 @@ private:
 	SetValueMotionProfile _setValue;
 	std::shared_ptr<TalonSRX> _leftTalon;
 	std::shared_ptr<TalonSRX> _rightTalon;
-	std::shared_ptr<MotionProfileData> _mp;
 	Notifier _notifier;
 
 	bool _bStart;

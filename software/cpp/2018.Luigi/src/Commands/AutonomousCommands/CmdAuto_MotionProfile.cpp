@@ -1,16 +1,23 @@
 #include "CmdAuto_MotionProfile.h"
 
-CmdAuto_MotionProfile::CmdAuto_MotionProfile(std::string profile, int profileTimeout) : MPController(RobotMap::subDriveBaseSRXleft, RobotMap::subDriveBaseSRXright, Robot::MPData, profileTimeout)
+
+CmdAuto_MotionProfile::CmdAuto_MotionProfile(std::string profile, int profileTimeout) : MPController(RobotMap::subDriveBaseSRXleft, RobotMap::subDriveBaseSRXright, profile, profileTimeout)
 {
-	Robot::MPData->ReadMotionProfile(profile);
+	std::cout << "CmdAuto_MotionProfile: Constructor Start (" << profile << ")" << std::endl;
+	_profile = profile;
 	Requires(Robot::subDriveBase.get());
+	std::cout << "CmdAuto_MotionProfile: Constructor Finish (" << profile << ")" << std::endl;
 }
 
 // Called just before this Command runs the first time
 void CmdAuto_MotionProfile::Initialize() {
-	std::cout << "Driving a MP" << std::endl;
+	std::cout << "CmdAuto_MotionProfile: Initialise Start (" << _profile << ")" << std::endl;
+	std::cout << "CmdAuto_MotionProfile: Loading MP" << std::endl;
+	MPController.load();
+	std::cout << "CmdAuto_MotionProfile: Driving MP" << std::endl;
 	//Initialise MPController
 	MPController.initialise();
+	std::cout << "CmdAuto_MotionProfile: Initialise Finish (" << _profile << ")" << std::endl;
 }
 
 // Called repeatedly when this Command is scheduled to run

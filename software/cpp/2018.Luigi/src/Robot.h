@@ -9,7 +9,6 @@
 #include "OI.h"
 
 //Include Autonomous Options
-#include "Commands/CmdAutonomous.h"
 #include "Autonomous/AutonomousSelector.h"
 #include "Autonomous/GameData.h"
 #include "Commands/AutonomousCommands/CmdAuto_Left_Switch_Left.h"
@@ -27,7 +26,6 @@ public:
 	//Declare objects for autonomous selection
 	static GameData gameData;
 	static AutonomousSelector autoSelector;
-	static std::shared_ptr<MotionProfileData> MPData;
 
 	//Decalre operator interface
 	static std::unique_ptr<OI> oi;

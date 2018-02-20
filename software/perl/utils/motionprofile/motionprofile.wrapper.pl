@@ -8,19 +8,21 @@ use strict;
 use File::Copy;
 
 my $eclipseroot = "c:/scm/icrobotics/frc/software/cpp";
-my $eclipseprojectname = "Chunky.Wantirna";
+my $eclipseprojectname = "2018.Luigi";
 my $eclipseprojectpath = "src/Custom";
+my $deploy_header_files = 0;
+my $deploy_csv_files = 0;
 
 #####################################################################################
 
 print "INFO: creating profiles for baseline run\n";
 
 my $vprog = 2.00;
-my $dist = 10.00;
+my $dist = 5.00;
 my $curve2dist = 0.00;
 my $curve2offset = 0;
 
-my $biasA = 1.01;
+my $biasA = 1.00;
 my $biasB = 1.00;
 my $vprogA = $vprog * $biasA;
 my $vprogB = $vprog * $biasB;
@@ -46,7 +48,7 @@ my $dist = 6.70;
 my $curve2dist = 0.00;
 my $curve2offset = 0;
 
-my $biasA = 1.01;
+my $biasA = 1.00;
 my $biasB = 1.00;
 my $vprogA = $vprog * $biasA;
 my $vprogB = $vprog * $biasB;
@@ -68,11 +70,11 @@ runcmd( "perl motionprofile.graph.pl -ident MidB" );
 print "INFO: creating profiles for retreat run\n";
 
 my $vprog = -2.00;
-my $dist = -1.50;
+my $dist = -5.00;
 my $curve2dist = 0.00;
 my $curve2offset = 0;
 
-my $biasA = 1.01;
+my $biasA = 1.00;
 my $biasB = 1.00;
 my $vprogA = $vprog * $biasA;
 my $vprogB = $vprog * $biasB;
@@ -99,7 +101,7 @@ my $dist = 12.45;
 my $curve2dist = 2.70;
 my $curve2offset = 235;
 
-my $biasA = 1.01;
+my $biasA = 1.00;
 my $biasB = 1.00;
 my $vprogA = $vprog * $biasA;
 my $vprogB = $vprog * $biasB;
@@ -126,7 +128,7 @@ my $dist = 12.9;
 my $curve2dist = 2.80;
 my $curve2offset = 225;
 
-my $biasA = 1.01;
+my $biasA = 1.00;
 my $biasB = 1.00;
 my $vprogA = $vprog * $biasA;
 my $vprogB = $vprog * $biasB;
@@ -148,24 +150,47 @@ print "INFO: creating html document for all profiles\n";
 
 runcmd( "perl motionprofile.document.pl" );
 
+#####################################################################################
 
-
-my $targetdir = "${eclipseroot}/${eclipseprojectname}/${eclipseprojectpath}";
-if( -d $targetdir )
+if( $deploy_header_files )
   {
-  print "INFO: transfering files to eclipse project $eclipseprojectname (please refresh project to reload)\n";
-  foreach( glob( "*.h" ) )
+  my $targetdir = "${eclipseroot}/${eclipseprojectname}/${eclipseprojectpath}";
+  if( -d $targetdir )
     {
-    print "  ... transfering $_\n";
-    copy( $_, $targetdir );
-    } 
+    print "INFO: transfering *.h files to eclipse project $eclipseprojectname (please refresh project to reload)\n";
+    foreach( glob( "*.h" ) )
+      {
+      print "  ... transfering $_\n";
+      copy( $_, $targetdir );
+      } 
+    }
+  else
+    {
+    print "WARNING: unable to transfer *.h files to eclipse project $eclipseprojectname - target directory does not exist!\n";
+    }
   }
-else
+
+#####################################################################################
+
+if( $deploy_csv_files )
   {
-  print "WARNING: unable to transfering files to eclipse project $eclipseprojectname - target directory does not exist!\n";
+  my $targetdir = "${eclipseroot}/${eclipseprojectname}/${eclipseprojectpath}";
+  if( -d $targetdir )
+    {
+    print "INFO: transfering *.csv files to eclipse project $eclipseprojectname (please refresh project to reload)\n";
+    foreach( glob( "*.csv" ) )
+      {
+      print "  ... transfering $_\n";
+      copy( $_, $targetdir );
+      } 
+    }
+  else
+    {
+    print "WARNING: unable to transfer *.csv files to eclipse project $eclipseprojectname - target directory does not exist!\n";
+    }
   }
 
-
+#####################################################################################
 
 sub runcmd
   {
