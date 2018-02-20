@@ -11,18 +11,18 @@
 #include "Commands/CmdResetArmEncoPos.h"
 #include "Commands/CmdChangeCamera.h"
 
+#include "Commands/CmdGyroDrive.h"
+
 OI::OI() {
     //Initiate Joystick
 	joystick0.reset(new frc::Joystick(0));
 
     //Initiate Intake button
 	btnIntake.reset(new JoystickButton(joystick0.get(), 6));
-	btnFingerUpOne.reset(new JoystickButton(joystick0.get(), 6));
 	btnIntake->WhileHeld(new CmdIntake());
 
     //Initiate Output button
     btnOutput.reset(new JoystickButton(joystick0.get(), 5));
-    btnFingerUpTwo.reset(new JoystickButton(joystick0.get(), 5));
 	btnOutput->WhileHeld(new CmdOutput());
 
 	//Initiate Arm Encoded Actuator controls
@@ -43,6 +43,11 @@ OI::OI() {
 	//Initiate Change camera button
 //	btnChangeCamera.reset(new JoystickButton(joystick0.get(), 99));
 //	btnChangeCamera->WhenPressed(new CmdChangeCamera());
+
+	//Tempoary Shuffleboard control of autonomous gyro driving
+	SmartDashboard::PutData("Drive 3 slow", new CmdGyroDrive(3, 0, false, true));
+	SmartDashboard::PutData("Drive back", new CmdGyroDrive(-3, 0, false, true));
+	SmartDashboard::PutData("Drive 3 fast", new CmdGyroDrive(3, 0, false, false));
 
 }
 

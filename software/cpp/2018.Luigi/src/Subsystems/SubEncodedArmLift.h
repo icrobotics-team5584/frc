@@ -31,6 +31,8 @@ public:
 	void ArmToGroundPos();
 	void ArmToSwitchPos();
 	void ArmToScalePos();
+	void ArmToClimbPos();
+	void ArmToScalePosAuto();
 	void ArmToExchangePos();
 	void Overide(std::shared_ptr<Joystick>);
 	bool GetSwitches();

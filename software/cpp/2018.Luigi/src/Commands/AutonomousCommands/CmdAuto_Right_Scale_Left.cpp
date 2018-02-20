@@ -1,20 +1,28 @@
 #include "CmdAuto_Right_Scale_Left.h"
+#include "Commands/CmdGyroDrive.h"
+#include "CmdAuto_BasicDrive.h"
+#include "Commands/CmdArmPosScale.h"
+#include "Commands/CmdArmPosExchange.h"
+#include "Commands/CmdArmPosSwitch.h"
+#include "Commands/CmdArmPosScaleAuto.h"
+#include "Commands/CmdOutput.h"
 
 CmdAuto_Right_Scale_Left::CmdAuto_Right_Scale_Left() {
-	// Add Commands here:
-	// e.g. AddSequential(new Command1());
-	//      AddSequential(new Command2());
-	// these will run in order.
+	/*
+	 * Start on the right, drive around the switch, put a cube
+	 * in the scale.
+	 */
 
-	// To run multiple commands at the same time,
-	// use AddParallel()
-	// e.g. AddParallel(new Command1());
-	//      AddSequential(new Command2());
-	// Command1 and Command2 will run in parallel.
+	//GyroDive(distance, angle, isQuickTurn = false, relative = false)
 
-	// A command group will require all of the subsystems that each member
-	// would require.
-	// e.g. if Command1 requires chassis, and Command2 requires arm,
-	// a CommandGroup containing them would require both the chassis and the
-	// arm.
+	AddParallel(new CmdArmPosSwitch());							//Deploy arm
+	AddSequential(new CmdGyroDrive(5.5, 0), 3);					//Drive to gap between switch and scale
+	AddSequential(new CmdGyroDrive(0, -90, true), 2);			//Turn toward gap
+	AddSequential(new CmdGyroDrive(5.8, -90, false, true), 9);	//Drive slowly over cable to opposite side of switch
+	AddParallel(new CmdArmPosScaleAuto());						//Lift arm to scale height
+	AddSequential(new CmdGyroDrive(0, 20, true), 2);			//Turn slowly toward Scale
+	AddSequential(new CmdGyroDrive(1.5, 20, false, true), 5);	//Drive slowly into scale
+	AddSequential(new CmdOutput(1,1));							//Output cube
+	AddSequential(new CmdGyroDrive(-0.5, 0, false, true), 5);	//Drive slowly backward
+	AddSequential(new CmdArmPosExchange());						//Drop arm to exchange position
 }

@@ -1,15 +1,28 @@
 #include "CmdAuto_Left_Scale_Right.h"
-#include "Commands/CmdOutput.h"
-#include "CmdAuto_MotionProfile.h"
-#include "CmdAuto_DeployArmToScale.h"
+#include "Commands/CmdGyroDrive.h"
 #include "CmdAuto_BasicDrive.h"
+#include "Commands/CmdArmPosScale.h"
+#include "Commands/CmdArmPosSwitch.h"
+#include "Commands/CmdArmPosScaleAuto.h"
+#include "Commands/CmdArmPosExchange.h"
+#include "Commands/CmdOutput.h"
 
 CmdAuto_Left_Scale_Right::CmdAuto_Left_Scale_Right() {
 	/*
-	 * From the left starting position, put a cube in the right side of the scale
+	 * Start on the left, drive around the switch, put a cube
+	 * in the scale.
 	 */
 
-	AddParallel(new CmdAuto_DeployArmToScale(15));
-	AddSequential(new CmdAuto_MotionProfile("Left-Scale-Right", 15));
-//	AddSequential(new CmdOutput(1, 1));
+	//GyroDive(distance, angle, isQuickTurn = false, relative = false)
+
+	AddParallel(new CmdArmPosSwitch());							//Deploy arm
+	AddSequential(new CmdGyroDrive(5.5, 0), 3);					//Drive to gap between switch and scale
+	AddSequential(new CmdGyroDrive(0, 90, true), 2);			//Turn toward gap
+	AddSequential(new CmdGyroDrive(5.8, 90, false, true), 9);	//Drive over cable to opposite side of switch
+	AddParallel(new CmdArmPosScale());							//Lift arm to scale height
+	AddSequential(new CmdGyroDrive(0, -20, true), 2);			//Turn slowly toward scale
+	AddSequential(new CmdGyroDrive(1.5, -20, false, true));		//Drive slowly into scale
+	AddSequential(new CmdOutput(1,1));							//Output cube
+	AddSequential(new CmdGyroDrive(-0.5, 0, false, true));		//Drive slowly backward a safe distance
+	AddSequential(new CmdArmPosExchange());						//Drop arm to exchange position
 }
