@@ -45,14 +45,14 @@ void SubRamp::Periodic() {
 	break;
 	case 1 :
 		if (_scaleCount >= _scaleTarget) { //wait for scale
-			DropRamp();
+			DropRamp();						//DROP RAMP
 		} else {
 			_scaleCount++;
 		}
 	break;
 	case 2 :
 		if (_dropCount >= _dropTarget) { //Stop the motor,, ramp rel
-			AutoStopRamp(); //stop motor ramp rel
+			AutoStopRamp(); 			//stop motor ramp rel
 		} else {
 			_dropCount++;
 		}
