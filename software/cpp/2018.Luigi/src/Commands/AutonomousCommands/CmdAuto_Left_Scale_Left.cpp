@@ -7,6 +7,7 @@
 #include "Commands/CmdGyroDrive.h"
 
 CmdAuto_Left_Scale_Left::CmdAuto_Left_Scale_Left() {
+
 	/*
 	 * From the left starting position, put a cube in the left side of the scale
 	 */

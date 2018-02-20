@@ -12,7 +12,5 @@ CmdAuto_Middle_Switch_Right::CmdAuto_Middle_Switch_Right() {
 
 	AddParallel(new CmdArmPosSwitch());									//Deploy arm with cube
 	AddSequential(new CmdAuto_MotionProfile("Middle-Switch-Right", 4));	//Drive to switch
-	AddSequential(new CmdOutput(1, 1));									//Output cube
-	AddSequential(new CmdAuto_BasicDrive(-0.4, 0, 5));					//Drive Backward
-	AddSequential(new CmdArmPosGround());								//Arm to ground
+	AddSequential(new CmdOutput(1, 0.5));									//Output cube
 }

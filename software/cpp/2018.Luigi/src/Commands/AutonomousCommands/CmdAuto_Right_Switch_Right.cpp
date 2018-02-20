@@ -3,6 +3,8 @@
 #include "Commands/CmdOutput.h"
 #include "Commands/AutonomousCommands/CmdAuto_DeployArm.h"
 #include "Commands/CmdArmPosSwitch.h"
+#include "CmdAuto_BasicDrive.h"
+#include "Commands/CmdArmPosExchange.h"
 
 CmdAuto_Right_Switch_Right::CmdAuto_Right_Switch_Right() {
 
@@ -12,6 +14,7 @@ CmdAuto_Right_Switch_Right::CmdAuto_Right_Switch_Right() {
 
 	AddParallel(new CmdArmPosSwitch());
 	AddSequential(new CmdAuto_MotionProfile("Right-Switch-Right", 7));
-	AddSequential(new CmdOutput(1, 1));
-
+	AddSequential(new CmdOutput(1, 0.5));
+	AddSequential(new CmdAuto_BasicDrive(-0.4, 0, 5));					//Drive backwards
+	AddSequential(new CmdArmPosExchange());								//Drop the arm for teleop
 }

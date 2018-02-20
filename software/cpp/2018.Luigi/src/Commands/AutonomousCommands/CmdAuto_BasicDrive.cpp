@@ -22,11 +22,11 @@ bool CmdAuto_BasicDrive::IsFinished() {
 
 // Called once after isFinished returns true
 void CmdAuto_BasicDrive::End() {
-
+	Robot::subDriveBase->AutoDrive(0.0, 0.0);
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void CmdAuto_BasicDrive::Interrupted() {
-
+	End();
 }

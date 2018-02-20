@@ -3,7 +3,7 @@
 #include "Commands/CmdOutput.h"
 #include "Commands/CmdArmPosSwitch.h"
 #include "CmdAuto_BasicDrive.h"
-#include "Commands/CmdArmPosGround.h"
+#include "Commands/CmdArmPosExchange.h"
 
 CmdAuto_Left_Switch_Left::CmdAuto_Left_Switch_Left() {
 
@@ -15,5 +15,5 @@ CmdAuto_Left_Switch_Left::CmdAuto_Left_Switch_Left() {
 	AddSequential(new CmdAuto_MotionProfile("Left-Switch-Left", 5));	//Drive to switch
 	AddSequential(new CmdOutput(1, 0.5));								//Output cube
 	AddSequential(new CmdAuto_BasicDrive(-0.4, 0, 5));					//Drive backwards
-	AddSequential(new CmdArmPosGround());								//Arm to ground
+	AddSequential(new CmdArmPosExchange());								//Drop the arm for teleop
 }
