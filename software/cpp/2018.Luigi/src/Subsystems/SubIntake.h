@@ -16,7 +16,7 @@ private:
 	std::shared_ptr<DigitalInput> swtRightLimit;
 	bool fingerDesiredPositionUp;
 	int fingerTicks;
-	int fingerTicksToMove = 10;
+	int fingerTicksToMove = 12;
 
 public:
 	SubIntake();
