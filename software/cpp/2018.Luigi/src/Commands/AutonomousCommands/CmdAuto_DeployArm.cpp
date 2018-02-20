@@ -8,7 +8,8 @@ CmdAuto_DeployArm::CmdAuto_DeployArm() {
 	 * Run intake quickly while arm deploys, then intake it slowly for the rest of the run
 	 */
 
-	AddParallel(new CmdArmPosSwitch());			//Deoply arm
-	AddSequential(new CmdIntake(2, 1));			//fast intake to avoid dropping cube on lift deployment
-	AddSequential(new CmdIntake(13, 0.4));		//Slow intake to avoid dropping cube on fast turn
+	AddParallel(new CmdArmPosSwitch());			//Deploy arm
+	// The following no longer required now that we have fingers in the Intake Subsystem
+	// AddSequential(new CmdIntake(2, 1));			//fast intake to avoid dropping cube on lift deployment
+	// AddSequential(new CmdIntake(13, 0.4));		//Slow intake to avoid dropping cube on fast turn
 }
