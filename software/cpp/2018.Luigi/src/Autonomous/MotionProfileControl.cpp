@@ -34,12 +34,19 @@ void MotionProfileControl::PeriodicTask(){
 		_leftTalon->ProcessMotionProfileBuffer();
 		_rightTalon->ProcessMotionProfileBuffer();
 	}
-	execounter++;
-	if ((execounter >= 200) and (_profileTimeout > -1)){
-		_profileTimeout--;
-		execounter = 0;
-	}
 
+	// we need to check that profile is actually running, and only process timeout counter once we have kicked off the profile
+	if(_state > 0) {
+//		std::cout << "MotionProfileControl: periodic task: MP has commenced - time out timer kicked off" << std::endl;
+		execounter++;
+		if ((execounter >= 200) and (_profileTimeout > -1)) {
+			_profileTimeout--;
+			execounter = 0;
+		}
+
+	} else {
+//		std::cout << "MotionProfileControl: periodic task: MP has not commenced yet - time out timer on hold" << std::endl;
+	}
 }
 
 void MotionProfileControl::reset(){
@@ -55,6 +62,7 @@ void MotionProfileControl::reset(){
 	_state = 0;
 	_loopTimeout = -1;
 	_bStart = false;
+	execounter = 0;
 
 	//Reset Sensor positions to zero for future profiles
 	_leftTalon->SetSelectedSensorPosition(0, 0, 10);
