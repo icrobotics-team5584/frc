@@ -57,9 +57,20 @@ void SubEncodedArmLift::ArmToScalePos() {  //Button Y
 
 }
 
+
 void SubEncodedArmLift::ArmToClimbPos() {  //triggerd by CmdPrepForClimb
 
     targetPositionRotations = -(5.0 * 4096);
+    IfBottom();
+    IfTop();
+   	_talon->Set(ControlMode::Position, targetPositionRotations);
+   	MovementCheck();
+
+}
+
+void SubEncodedArmLift::ArmToScalePosAuto() {  //Auto run uses this !!
+
+    targetPositionRotations = -(6.0 * 4096);
     IfBottom();
     IfTop();
 	_talon->Set(ControlMode::Position, targetPositionRotations);

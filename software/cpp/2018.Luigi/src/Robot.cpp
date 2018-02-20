@@ -46,7 +46,7 @@ void Robot::AutonomousInit() {
 
 	//Reset sensors to zero
 	subDriveBase->ClearMPBuffers();
-	subDriveBase->ZeroDriveEncoders();
+	subDriveBase->ZeroEncoders();
 	subEncodedArmLift->Reset();
 
 	//Determine auto command selected from Dashboard and run
