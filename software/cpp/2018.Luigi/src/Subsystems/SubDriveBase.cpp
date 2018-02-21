@@ -38,7 +38,7 @@ SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase"), selectedDriveMode
     turnController->SetInputRange(-180.0f, 180.0f);
     turnController->SetOutputRange(-0.7, 0.7);
     turnController->SetContinuous(true);
-    turnController->SetAbsoluteTolerance(2);
+    turnController->SetAbsoluteTolerance(3);
 	SmartDashboard::PutData("turnController", turnController);
 
     //Setup encoder PID controller
@@ -46,7 +46,7 @@ SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase"), selectedDriveMode
 	relativeZero = 0;
 	driveController = new PIDController(driveP, driveI, driveD, distanceSource, speedOutput);
     driveController->SetOutputRange(-1,1);
-    driveController->SetAbsoluteTolerance(0.05);
+    driveController->SetAbsoluteTolerance(0.1);
     SmartDashboard::PutData("driveController", driveController);
 }
 
