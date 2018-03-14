@@ -20,45 +20,58 @@ std::string AutonomousSelector::DetermineRoutine(StartingPosition pos, Autonomou
 
 	//Create a strings to store elements of our routine
 	std::string routine;
-	std::string _data;
 	std::string _pos = ToString(pos);
 	std::string _task = ToString(task);
 
-	//If going for both, check that gameData lines up with start position
-	if ( _task == "Both" ) {
-		if (data.GetScale() == data.GetSwitch() && data.GetScale() == _pos) {
-			if (data.GetScale() == "Left") {
-				routine = "Both-Left";
-			} else /* if data.GetScale() == "Right" */ {
-				routine = "Both-Right";
+	if (_pos == "Middle") {
+		routine = "Middle-Switch-";
+		routine.append(data.GetSwitch());
+	} else {
+		routine.append(_pos);
+		if(PrioritizeSwitch()){
+			if (data.GetSwitch() == _pos){
+				routine.append("-Switch-");
+				routine.append(data.GetSwitch());
+			} else {
+				routine = CrossOrStayAway(routine, _pos, data);
 			}
 		} else {
-			//gameData doesn't line up with start position, we can't do both
-			//do a switch routine instead
-			_task = "Switch";
+			if (data.GetScale() == _pos) {
+				if (data.GetSwitch() == _pos){
+					routine = "Both-";
+					routine.append(_pos);
+				} else {
+					routine.append("-Scale-");
+					routine.append(data.GetScale());
+				}
+			} else {
+				routine = CrossOrStayAway(routine, _pos, data);
+			}
 		}
-	}
-
-	//If going for just one thing, figure out which
-	if ( (_task == "Switch") or (_task == "Scale") ){
-		//Append elements of the routine
-		routine.append( _pos  + "-");
-		routine.append( _task  + "-");
-		//Determine whether to use switch or scale GameData
-		if ( _task == "Switch"){
-			_data = data.GetSwitch();
-		} else if ( _task == "Scale" ) {
-			_data = data.GetScale();
-		}
-		routine.append( _data );
-	}
-
-	//if not doing anything, well.. don't do anything I guess
-	if (_task == "Nothing") {
-		routine = "Nothing";
 	}
 
 	return routine;
+}
+
+std::string AutonomousSelector::CrossOrStayAway(std::string routineSoFar, std::string pos, GameData data){
+	/*
+	 * Edit the routine string to reflect whether or not we need to stay on our side of the field
+	 * in the case that we are allied with another robot who wants to go for the opposite side of
+	 * the scale instead of us.
+	 */
+
+	if (StayAway()){
+		if (data.GetSwitch() == pos){
+			routineSoFar.append("-Switch-");
+			routineSoFar.append(data.GetSwitch());
+			return routineSoFar;
+		}
+		return "Baseline";
+	} else {
+		routineSoFar.append("-Scale-");
+		routineSoFar.append(data.GetScale());
+		return routineSoFar;
+	}
 }
 
 void AutonomousSelector::SetCommand(std::string routine){
@@ -102,6 +115,9 @@ void AutonomousSelector::SetCommand(std::string routine){
 
 	}else if (routine == "Both-Right"){
 		selectedCommand.reset(new CmdAuto_Both_Right() );
+
+	}else if (routine == "Baseline"){
+		selectedCommand.reset(new CmdGyroDrive(3, 0));
 
 	}else /*if (routine == "Nothing")*/ {
 		selectedCommand.reset(new CmdAuto_Nothing() );
@@ -167,9 +183,20 @@ void AutonomousSelector::SendOptionsToDashboard(){
 
 	//Send choosers to dashboard
 	SmartDashboard::PutData("Starting Position", &posChooser);
-	SmartDashboard::PutData("Autonomous Task", &taskChooser);
+//	SmartDashboard::PutData("Autonomous Task", &taskChooser);
+
+	//Send Boolean Options to dashboard
+	SmartDashboard::PutBoolean("Prioritize Switch", false);
+	SmartDashboard::PutBoolean("Stay out of ally's way", false);
 }
 
+bool AutonomousSelector::PrioritizeSwitch(){
+	return (SmartDashboard::GetBoolean("Prioritize Switch", false));
+}
+
+bool AutonomousSelector::StayAway(){
+	return (SmartDashboard::GetBoolean("Stay out of ally's way", false));
+}
 
 AutonomousSelector::StartingPosition AutonomousSelector::GetStartingPosition(){
 	StartingPositionSelection* selectedStartPos;

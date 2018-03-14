@@ -26,6 +26,9 @@ public:
 	void ReadMotionProfile(std::string MP);
 	void SendOptionsToDashboard();
 	void StopAutoCommand();
+	bool PrioritizeSwitch();
+	bool StayAway();
+	std::string CrossOrStayAway(std::string routineSoFar, std::string pos, GameData data);
 	AutonomousTask GetAutonomousTask();
 	StartingPosition GetStartingPosition();
 
