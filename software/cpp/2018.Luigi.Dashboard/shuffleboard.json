@@ -1,5 +1,5 @@
 {
-  "dividerPosition": 0.17961876832844575,
+  "dividerPosition": 0.2690615835777126,
   "tabPane": [
     {
       "title": "Autonomous Selection",
@@ -11,20 +11,9 @@
         "hgap": 16.0,
         "vgap": 16.0,
         "tiles": {
-          "0,3": {
+          "2,3": {
             "size": [
-              3,
-              1
-            ],
-            "content": {
-              "_type": "ComboBox Chooser",
-              "_source0": "network_table:///SmartDashboard/Autonomous Task",
-              "_title": "Autonomous Task"
-            }
-          },
-          "3,3": {
-            "size": [
-              3,
+              2,
               1
             ],
             "content": {
@@ -53,6 +42,28 @@
               "_type": "Camera Stream",
               "_source0": "camera_server://USB Camera 1",
               "_title": "Top"
+            }
+          },
+          "0,3": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Toggle Switch",
+              "_source0": "network_table:///SmartDashboard/Prioritize Switch",
+              "_title": "Prioritize Switch"
+            }
+          },
+          "4,3": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Toggle Switch",
+              "_source0": "network_table:///SmartDashboard/Stay out of ally\u0027s way",
+              "_title": "Stay out of ally\u0027s way"
             }
           }
         }
@@ -104,65 +115,6 @@
               "_title": "driveController"
             }
           },
-          "5,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/EncoderDistanceSource",
-              "_title": "/SmartDashboard/EncoderDistanceSource"
-            }
-          },
-          "4,2": {
-            "size": [
-              2,
-              1
-            ],
-            "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///SmartDashboard/driveController-\u003eOnTarget",
-              "_title": "/SmartDashboard/driveController-\u003eOnTarget",
-              "colorWhenTrue": "#7CFC00FF",
-              "colorWhenFalse": "#8B0000FF"
-            }
-          },
-          "4,3": {
-            "size": [
-              2,
-              1
-            ],
-            "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///SmartDashboard/turnController-\u003eOnTarget",
-              "_title": "/SmartDashboard/turnController-\u003eOnTarget",
-              "colorWhenTrue": "#7CFC00FF",
-              "colorWhenFalse": "#8B0000FF"
-            }
-          },
-          "1,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Command",
-              "_source0": "network_table:///SmartDashboard/Turn to -90",
-              "_title": "/SmartDashboard/Turn to -90"
-            }
-          },
-          "3,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Command",
-              "_source0": "network_table:///SmartDashboard/Turn to 0",
-              "_title": "/SmartDashboard/Turn to 0"
-            }
-          },
           "0,2": {
             "size": [
               1,
@@ -170,8 +122,19 @@
             ],
             "content": {
               "_type": "Command",
-              "_source0": "network_table:///SmartDashboard/Drive 5.3",
-              "_title": "/SmartDashboard/Drive 5.3"
+              "_source0": "network_table:///SmartDashboard/Relative slow Turn 90 over 1m",
+              "_title": "SmartDashboard/Relative slow Turn 90 over 1m"
+            }
+          },
+          "0,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Command",
+              "_source0": "network_table:///SmartDashboard/Relative straight drive 3m",
+              "_title": "SmartDashboard/Relative straight drive 3m"
             }
           },
           "2,2": {
@@ -181,8 +144,43 @@
             ],
             "content": {
               "_type": "Command",
-              "_source0": "network_table:///SmartDashboard/Drive 4.1",
-              "_title": "/SmartDashboard/Drive 4.1"
+              "_source0": "network_table:///SmartDashboard/Turn to 0",
+              "_title": "SmartDashboard/Turn to 0"
+            }
+          },
+          "2,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Command",
+              "_source0": "network_table:///SmartDashboard/Turn to 90",
+              "_title": "SmartDashboard/Turn to 90"
+            }
+          },
+          "3,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/angle to drive to",
+              "_title": "SmartDashboard/angle to drive to"
+            }
+          },
+          "3,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/ReachedSetPoint",
+              "_title": "SmartDashboard/ReachedSetPoint",
+              "colorWhenTrue": "#7CFC00FF",
+              "colorWhenFalse": "#8B0000FF"
             }
           }
         }
