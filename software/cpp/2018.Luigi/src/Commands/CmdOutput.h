@@ -6,7 +6,7 @@
 
 class CmdOutput : public Command {
 public:
-	CmdOutput(double timeout = 0, double speed = 0.75);
+	CmdOutput(double timeout = 0, double speed = 0.5);
 	void Initialize();
 	void Execute();
 	bool IsFinished();
