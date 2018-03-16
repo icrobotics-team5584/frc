@@ -5,6 +5,7 @@
 #include "Commands/CmdArmPosGround.h"
 #include "Commands/CmdArmPosScale.h"
 #include "Commands/CmdArmPosSwitch.h"
+#include "Commands/CmdArmPosScaleLow.h"
 
 #include "Commands/CmdArmPosExchange.h"
 #include "Commands/CmdArmOveride.h"
@@ -39,8 +40,8 @@ OI::OI() {
 	//Initiate Arm Extras
 	btnArmOveride.reset(new JoystickButton(joystick0.get(), 10));
 	btnArmOveride->WhileHeld(new CmdArmOveride());
-	btnEncoderPosReset.reset(new JoystickButton(joystick0.get(), 8));
-	btnEncoderPosReset->WhenPressed(new CmdResetArmEncoPos());
+	btnArmToScaleLow.reset(new JoystickButton(joystick0.get(), 8));
+	btnArmToScaleLow->WhenPressed(new CmdArmPosScaleLow());
 
 	//Initiate Change camera button
 //	btnChangeCamera.reset(new JoystickButton(joystick0.get(), 99));

@@ -30,6 +30,7 @@ public:
 	SubEncodedArmLift();
 	void ArmToGroundPos();
 	void ArmToSwitchPos();
+	void ArmToScalePosLow();
 	void ArmToScalePos();
 	void ArmToClimbPos();
 	void ArmToScalePosAuto();
