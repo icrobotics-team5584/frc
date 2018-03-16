@@ -94,8 +94,8 @@ void SubDriveBase::Stop(){
 
 void SubDriveBase::TakeJoystickInputs(std::shared_ptr<Joystick> sticky ) {
 	//Drive with the Gamepad left stick, use L2 as boost
-	double boost = (((sticky->GetRawAxis(2)+3))/4);
-	differentialDrive->ArcadeDrive(-sticky->GetY() * boost, sticky->GetX() * boost);
+	//double boost = (((sticky->GetRawAxis(2)+3))/4);
+	differentialDrive->ArcadeDrive(-sticky->GetY(), sticky->GetX());
 }
 
 void SubDriveBase::GyroRotate(double angle){

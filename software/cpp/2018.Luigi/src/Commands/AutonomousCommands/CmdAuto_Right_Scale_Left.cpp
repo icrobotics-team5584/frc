@@ -16,7 +16,7 @@ CmdAuto_Right_Scale_Left::CmdAuto_Right_Scale_Left() {
 	//GyroDive(distance, angle, isQuickTurn = false, relative = false)
 
 	AddParallel(new CmdArmPosSwitch());							//Deploy arm
-	AddSequential(new CmdGyroDrive(5.5, 0), 3);					//Drive to gap between switch and scale
+	AddSequential(new CmdGyroDrive(5.5, 0), 2.5);				//Drive to gap between switch and scale
 	AddSequential(new CmdGyroDrive(0, -90, true), 2);			//Turn toward gap
 	AddSequential(new CmdGyroDrive(5.8, -90, false, true), 5);	//Drive slowly over cable to opposite side of switch
 	AddParallel(new CmdArmPosScaleAuto());						//Lift arm to scale height
