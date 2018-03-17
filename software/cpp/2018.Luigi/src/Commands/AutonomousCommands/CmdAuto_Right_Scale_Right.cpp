@@ -7,6 +7,7 @@
 #include "Commands/CmdArmPosSwitch.h"
 #include "Commands/CmdGyroDrive.h"
 #include "Commands/CmdArmPosGround.h"
+#include "Commands/CmdIntakeAuto.h"
 
 CmdAuto_Right_Scale_Right::CmdAuto_Right_Scale_Right() {
 
@@ -22,6 +23,7 @@ CmdAuto_Right_Scale_Right::CmdAuto_Right_Scale_Right() {
 
 
 	AddParallel(new CmdArmPosSwitch());							//Deploy arm to switch
+	AddParallel(new CmdIntakeAuto(2, 1));
 	AddSequential(new CmdGyroDrive(5.5, 0), 3.2);					//Deploy arm to switch
 	AddParallel(new CmdArmPosScale());							//Raise arm to scale height
 	AddSequential(new CmdGyroDrive(0, -55, true, true), 1);		//Turn toward scale
