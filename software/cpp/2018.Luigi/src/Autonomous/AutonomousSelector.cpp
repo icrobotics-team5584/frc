@@ -23,31 +23,45 @@ std::string AutonomousSelector::DetermineRoutine(StartingPosition pos, Autonomou
 	std::string _pos = ToString(pos);
 	std::string _task = ToString(task);
 
-	if (_pos == "Middle") {
-		routine = "Middle-Switch-";
-		routine.append(data.GetSwitch());
-	} else {
-		routine.append(_pos);
-		if(PrioritizeSwitch()){
-			if (data.GetSwitch() == _pos){
-				routine.append("-Switch-");
-				routine.append(data.GetSwitch());
-			} else {
-				routine = CrossOrStayAway(routine, _pos, data);
-			}
-		} else {
-			if (data.GetScale() == _pos) {
-				if (data.GetSwitch() == _pos){
-					routine = "Both-";
-					routine.append(_pos);
-				} else {
-					routine.append("-Scale-");
-					routine.append(data.GetScale());
-				}
-			} else {
-				routine = CrossOrStayAway(routine, _pos, data);
-			}
-		}
+//	if (_pos == "Middle") {
+//		routine = "Middle-Switch-";
+//		routine.append(data.GetSwitch());
+//	} else {
+//		routine.append(_pos);
+//		if(PrioritizeSwitch()){
+//			if (data.GetSwitch() == _pos){
+//				routine.append("-Switch-");
+//				routine.append(data.GetSwitch());
+//			} else {
+//				routine = CrossOrStayAway(routine, _pos, data);
+//			}
+//		} else {
+//			if (data.GetScale() == _pos) {
+//				if (data.GetSwitch() == _pos){
+//					routine = "Both-";
+//					routine.append(_pos);
+//				} else {
+//					routine.append("-Scale-");
+//					routine.append(data.GetScale());
+//				}
+//			} else {
+//				routine = CrossOrStayAway(routine, _pos, data);
+//			}
+//		}
+//	}
+
+	if ( (data.GetSwitch() == "Left") and (data.GetScale() == "Left") ) {
+		routine = "Left-Scale-Left";
+
+	} else if ( (data.GetSwitch() == "Left") and (data.GetScale() == "Right") ) {
+		routine = "Left-Switch-Left";
+
+	} else if ( (data.GetSwitch() == "Right") and (data.GetScale() == "Left") )  {
+		routine = "Left-Scale-Left";
+
+	} else if ( (data.GetSwitch() == "Right") and (data.GetScale() == "Right") )  {
+		routine = "BaselineRight";
+
 	}
 
 	return routine;
@@ -118,6 +132,9 @@ void AutonomousSelector::SetCommand(std::string routine){
 
 	}else if (routine == "Baseline"){
 		selectedCommand.reset(new CmdGyroDrive(3, 0));
+
+	}else if (routine == "BaselineRight"){
+		selectedCommand.reset(new CmdAuto_BaselineRight());
 
 	}else /*if (routine == "Nothing")*/ {
 		selectedCommand.reset(new CmdAuto_Nothing() );

@@ -27,5 +27,5 @@ CmdAuto_Left_Scale_Left::CmdAuto_Left_Scale_Left() {
 	AddSequential(new CmdGyroDrive(1.3, 45, false, true), 1.7);	//Slowly drive into scale
 	AddSequential(new CmdOutput(1,0.5), 0.5);						//Output the cube
 	AddParallel(new CmdArmPosGround());							//Drop arm to ground position
-	AddSequential(new CmdGyroDrive(-0.5, 45, false, true), 1);	//Drive back a safe distance
+	AddSequential(new CmdGyroDrive(-2, 45, false, true), 3);	//Drive back a safe distance
 }
