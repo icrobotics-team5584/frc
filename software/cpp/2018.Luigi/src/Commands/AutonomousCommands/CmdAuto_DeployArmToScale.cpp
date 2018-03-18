@@ -3,6 +3,7 @@
 #include "Commands/CmdArmPosSwitch.h"
 #include "CmdAuto_Wait.h"
 #include "Commands/CmdIntake.h"
+#include "Commands/CmdIntakeAuto.h"
 
 CmdAuto_DeployArmToScale::CmdAuto_DeployArmToScale(double offsetTime) {
 
@@ -12,6 +13,7 @@ CmdAuto_DeployArmToScale::CmdAuto_DeployArmToScale(double offsetTime) {
 	 */
 
 	AddParallel(new CmdArmPosSwitch());									//Deploy arm with cube
+	AddParallel(new CmdIntakeAuto(2, 1));
 	AddSequential(new CmdAuto_Wait(offsetTime));
 	AddSequential(new CmdArmPosScale());
 

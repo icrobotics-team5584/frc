@@ -8,6 +8,7 @@
 #include "Commands/CmdArmPosScale.h"
 #include "Commands/CmdOutput.h"
 #include "CmdAuto_Wait.h"
+#include "Commands/CmdIntakeAuto.h"
 
 CmdAuto_Both_Left::CmdAuto_Both_Left() {
 	/*
@@ -17,6 +18,7 @@ CmdAuto_Both_Left::CmdAuto_Both_Left() {
 
 //	AddSequential(new CmdAuto_Left_Scale_Left());	//Get a cube in the scale
 	AddParallel(new CmdArmPosSwitch());							//Deploy arm to switch
+	AddParallel(new CmdIntakeAuto(2, 1));
 	AddSequential(new CmdGyroDrive(5.5, 0), 3.2);					//Deploy arm to switch
 	AddParallel(new CmdArmPosScale());							//Raise arm to scale height
 	AddSequential(new CmdGyroDrive(0, 55, true, true), 1);		//Turn toward scale

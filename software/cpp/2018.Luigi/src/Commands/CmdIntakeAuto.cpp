@@ -10,7 +10,7 @@ void CmdIntakeAuto::Initialize() {
 	std::cout << "Running CmdIntakeAuto::Initialize()" << std::endl;
 
 	//Start spitting out
-	Robot::subIntake->In(_speed);
+	Robot::subIntake->AutoIn(_speed);
 
 	//Apply timeout if we are in autonomous mode
 	bool autoMode = DriverStation::GetInstance().IsAutonomous();

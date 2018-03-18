@@ -3,6 +3,7 @@
 #include "Commands/CmdArmPosExchange.h"
 #include "Commands/CmdArmPosSwitch.h"
 #include "Commands/CmdOutput.h"
+#include "Commands/CmdIntakeAuto.h"
 
 CmdAuto_Left_Switch_Right::CmdAuto_Left_Switch_Right() {
 	/*
@@ -13,6 +14,7 @@ CmdAuto_Left_Switch_Right::CmdAuto_Left_Switch_Right() {
 	//GyroDive(distance, angle, isQuickTurn = false, relative = false)
 
 	AddParallel(new CmdArmPosSwitch());				//Deploy arm
+	AddParallel(new CmdIntakeAuto(2, 1));
 	AddSequential(new CmdGyroDrive(5.5, 0), 3);			//Drive to gap between switch and scale
 	AddSequential(new CmdGyroDrive(0, 90, true), 2);	//Turn toward gap
 	AddSequential(new CmdGyroDrive(5.8, 90, false, true), 9);			//Drive over cable to opposite side of switch

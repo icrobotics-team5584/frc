@@ -1,10 +1,10 @@
 #include "CmdAuto_Right_Switch_Right.h"
 #include "CmdAuto_MotionProfile.h"
 #include "Commands/CmdOutput.h"
-#include "Commands/AutonomousCommands/CmdAuto_DeployArm.h"
 #include "Commands/CmdArmPosSwitch.h"
 #include "CmdAuto_BasicDrive.h"
 #include "Commands/CmdArmPosExchange.h"
+#include "Commands/CmdIntakeAuto.h"
 
 CmdAuto_Right_Switch_Right::CmdAuto_Right_Switch_Right() {
 
@@ -13,6 +13,7 @@ CmdAuto_Right_Switch_Right::CmdAuto_Right_Switch_Right() {
 	 */
 
 	AddParallel(new CmdArmPosSwitch());
+	AddParallel(new CmdIntakeAuto(2, 1));
 	AddSequential(new CmdAuto_MotionProfile("Right-Switch-Right", 7));
 	AddSequential(new CmdOutput(1, 0.5));
 	AddSequential(new CmdAuto_BasicDrive(-0.4, 0, 5));					//Drive backwards
