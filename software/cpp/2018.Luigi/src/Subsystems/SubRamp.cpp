@@ -21,7 +21,7 @@ void SubRamp::DropRamp(){ //start spining
 	SPLeft->Set(1.0);
 	_startAutoCount = 2;
 
-	std::cout << "MOTO RUNINGN" << std::endl;
+	//std::cout << "MOTO RUNINGN" << std::endl;
 
 }
 
@@ -48,28 +48,28 @@ void SubRamp::Periodic() {
 	case 1 :
 		if (_scaleCount >= _scaleTarget) { //wait for scale
 			DropRamp();						//DROP RAMP
-			std::cout << "DROPRAMP" << std::endl;
+			//std::cout << "DROPRAMP" << std::endl;
 		} else {
 			_scaleCount++;
-			std::cout << "SCALE COUNT" << _scaleCount << std::endl;
+			//std::cout << "SCALE COUNT" << _scaleCount << std::endl;
 		}
 	break;
 	case 2 :
 		if (_dropCount >= _dropTarget) { //Stop the motor,, ramp rel
 			AutoStopRamp(); 			//stop motor ramp rel
-			std::cout << "AUTO STOP RAMP" << std::endl;
+			//std::cout << "AUTO STOP RAMP" << std::endl;
 		} else {
 			_dropCount++;
-			std::cout << "DROP COUNT" << _dropCount <<  std::endl;
+			//std::cout << "DROP COUNT" << _dropCount <<  std::endl;
 		}
 	break;
 	case 3 :
 		if (_climbCount >= _climbTarget) { //wait for ramp drop time
 			GotoClimbHeight();
-			std::cout << "GOTO CLIMB HEIGHT"  <<  std::endl;
+			//std::cout << "GOTO CLIMB HEIGHT"  <<  std::endl;
 		} else {
 			_climbCount++;
-			std::cout << "CLIMB COUNT" << _climbCount <<  std::endl;
+			//std::cout << "CLIMB COUNT" << _climbCount <<  std::endl;
 		}
 	break;
 	}
@@ -86,7 +86,7 @@ void SubRamp::ResetRamp() {
 	_climbCount = 0;
 
 
-	std::cout << "RESET !! CLIMB COUNT" << _climbCount <<  std::endl;
+	//std::cout << "RESET !! CLIMB COUNT" << _climbCount <<  std::endl;
 }
 
 void SubRamp::StopRamp() {
