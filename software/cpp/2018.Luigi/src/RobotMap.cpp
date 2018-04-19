@@ -115,9 +115,11 @@ void RobotMap::init() {
     subDriveBaseUltrasonicInputLeft.reset(new frc::Ultrasonic(23,25));
 
     //Initiate micro navX gyro
-    navX.reset(new AHRS(SerialPort::kMXP)); //See navx-micro.kauailabs.com/guidance/selecting-an-interface.
+    navX.reset(new AHRS(SPI::Port::kMXP)); //See navx-micro.kauailabs.com/guidance/selecting-an-interface.
 
     //Initiate Ramp Drop Actuator
+
+
     subRampSPLeft.reset(new VictorSP(0));
 
     //Initiate arm lift Actuators / Actuator /Sensors
