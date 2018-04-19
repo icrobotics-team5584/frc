@@ -1,6 +1,7 @@
 #include "CmdOutput.h"
+#include "OI.h"
 
-CmdOutput::CmdOutput(double timeout, double speed) : _timeout(timeout), _speed(speed) {
+CmdOutput::CmdOutput(double timeout, double speed, bool variableSpeed) : _timeout(timeout), _speed(speed), _variableSpeed(variableSpeed) {
 	Requires(Robot::subIntake.get());
 }
 
@@ -23,7 +24,9 @@ void CmdOutput::Initialize() {
 
  //Called repeatedly when this Command is scheduled to run
 void CmdOutput::Execute() {
-
+	if (_variableSpeed) {
+		Robot::subIntake->Out(0.2);
+	}
 }
 
 // Make this return true when this Command no longer needs to run execute()
