@@ -26,17 +26,6 @@ public:
 	static std::shared_ptr<DigitalInput> subIntakeSwtLeftLimit;
 	static std::shared_ptr<DigitalInput> subIntakeSwtRightLimit;
 
-//	//Define anlouge Ultrasonic sensors
-//	static std::shared_ptr<frc::AnalogInput> subDriveBaseUltrasonicInputFront;
-//	static std::shared_ptr<frc::AnalogInput> subDriveBaseUltrasonicInputRight;
-//	static std::shared_ptr<frc::AnalogInput> subDriveBaseUltrasonicInputBack;
-//	static std::shared_ptr<frc::AnalogInput> subDriveBaseUltrasonicInputLeft;
-
-	//Define echo ultrasonic sensors
-	static std::shared_ptr<frc::Ultrasonic> subDriveBaseUltrasonicInputFront;
-	static std::shared_ptr<frc::Ultrasonic> subDriveBaseUltrasonicInputRight;
-	static std::shared_ptr<frc::Ultrasonic> subDriveBaseUltrasonicInputBack;
-	static std::shared_ptr<frc::Ultrasonic> subDriveBaseUltrasonicInputLeft;
 
 	//Define arm lift Actuators / Actuator
 	static std::shared_ptr<WPI_TalonSRX> subEncodedArmLiftSrxMaster;

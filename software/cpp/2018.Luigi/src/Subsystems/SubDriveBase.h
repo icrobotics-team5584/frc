@@ -51,17 +51,6 @@ private:
 	const double wheelCircumference = (wheelDiameter * M_PI);
 	const int sensorUnitsPerRotation = 4096;
 
-	//this is for echo ultras
-	std::shared_ptr<frc::Ultrasonic> ultrasonicInputFront;
-	std::shared_ptr<frc::Ultrasonic> ultrasonicInputRight;
-	std::shared_ptr<frc::Ultrasonic> ultrasonicInputBack;
-	std::shared_ptr<frc::Ultrasonic> ultrasonicInputLeft;
-
-	int _Ultraloops = 0;
-	int frontUValue = 0;
-	int rightUValue = 0;
-	int backUValue = 0;
-	int leftUValue = 0;
 
 	//NavX objects for autonomous driving
 	PIDController* turnController;

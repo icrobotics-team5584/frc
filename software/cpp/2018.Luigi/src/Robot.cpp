@@ -61,6 +61,7 @@ void Robot::AutonomousPeriodic() {
 
 void Robot::TeleopInit() {
 	autoSelector.StopAutoCommand();
+	subDriveBase->SetDriveMode(SubDriveBase::Manual);
 }
 
 void Robot::TeleopPeriodic() {

@@ -47,7 +47,7 @@ void SubEncodedArmLift::ArmToSwitchPos() {  //Button X
 
 }
 
-void SubEncodedArmLift::ArmToScalePosLow() {  //Button Y
+void SubEncodedArmLift::ArmToScalePosLow() {  //Used by SubRamp for auto climb height
 
     targetPositionRotations = -(4.2 * 4096);
     IfBottom();

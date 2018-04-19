@@ -20,11 +20,6 @@ SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase"), selectedDriveMode
     srxRight = RobotMap::subDriveBaseSRXright;
     differentialDrive = RobotMap::subDriveBaseDifferentialDrive;
 
-    //copy Ultrasonics from RobotMap
-    ultrasonicInputFront = RobotMap::subDriveBaseUltrasonicInputFront;
-    ultrasonicInputRight = RobotMap::subDriveBaseUltrasonicInputRight;
-    ultrasonicInputBack = RobotMap::subDriveBaseUltrasonicInputBack;
-    ultrasonicInputLeft = RobotMap::subDriveBaseUltrasonicInputLeft;
 
     //setup NavX PID controller
     _Rotation = 0;
@@ -56,24 +51,6 @@ void SubDriveBase::InitDefaultCommand() {
 
 void SubDriveBase::Periodic() {
 
-	//code for DIO echo ultrasonic sensors
-	if (++_Ultraloops >= 30) {
-		ultrasonicInputFront->SetAutomaticMode(true);
-		ultrasonicInputRight->SetAutomaticMode(true);
-		ultrasonicInputBack->SetAutomaticMode(true);
-		ultrasonicInputFront->SetAutomaticMode(true);
-		frontUValue = ultrasonicInputFront->GetRangeInches();
-		rightUValue = ultrasonicInputRight->GetRangeInches();
-		backUValue = ultrasonicInputBack->GetRangeInches();
-		leftUValue = ultrasonicInputLeft->GetRangeInches();
-
-		frc::SmartDashboard::PutNumber("Ultra, front", frontUValue);
-		frc::SmartDashboard::PutNumber("Ultra, right", rightUValue);
-		frc::SmartDashboard::PutNumber("Ultra, back", backUValue);
-		frc::SmartDashboard::PutNumber("Ultra, left", leftUValue);
-
-		_Ultraloops = 0;
-	}
 
 	SmartDashboard::PutNumber("EncoderDistanceSource", GetEncoderDistance());
 	if (selectedDriveMode == Autonomous){
