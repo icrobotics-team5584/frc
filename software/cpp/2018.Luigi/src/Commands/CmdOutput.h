@@ -6,7 +6,7 @@
 
 class CmdOutput : public Command {
 public:
-	CmdOutput(double timeout = 0, double speed = 0.5);
+	CmdOutput(double timeout = 0, double speed = 0.5, bool variableSpeed = false);
 	void Initialize();
 	void Execute();
 	bool IsFinished();
@@ -15,6 +15,7 @@ public:
 private:
 	int _timeout;
 	double _speed;
+	bool _variableSpeed;
 };
 
 #endif  // CmdArmDown_H
