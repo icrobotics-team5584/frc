@@ -18,17 +18,6 @@ std::shared_ptr<DigitalInput> RobotMap::subIntakeSwtFingerUp;
 std::shared_ptr<DigitalInput> RobotMap::subIntakeSwtRightLimit;
 std::shared_ptr<DigitalInput> RobotMap::subIntakeSwtLeftLimit;
 
-//Define Ultrasonic sensors Analog
-//std::shared_ptr<frc::AnalogInput> RobotMap::subDriveBaseUltrasonicInputFront;
-//std::shared_ptr<frc::AnalogInput> RobotMap::subDriveBaseUltrasonicInputRight;
-//std::shared_ptr<frc::AnalogInput> RobotMap::subDriveBaseUltrasonicInputBack;
-//std::shared_ptr<frc::AnalogInput> RobotMap::subDriveBaseUltrasonicInputLeft;
-
-//Define Ultrasonic sensors Echo
-std::shared_ptr<frc::Ultrasonic> RobotMap::subDriveBaseUltrasonicInputFront;
-std::shared_ptr<frc::Ultrasonic> RobotMap::subDriveBaseUltrasonicInputRight;
-std::shared_ptr<frc::Ultrasonic> RobotMap::subDriveBaseUltrasonicInputBack;
-std::shared_ptr<frc::Ultrasonic> RobotMap::subDriveBaseUltrasonicInputLeft;
 
 //Define arm lift Actuators / Actuator
 std::shared_ptr<WPI_TalonSRX> RobotMap::subEncodedArmLiftSrxMaster;
@@ -98,21 +87,6 @@ void RobotMap::init() {
     subIntakeSwtLeftLimit.reset(new DigitalInput(0));
     subIntakeSwtRightLimit.reset(new DigitalInput(1));
 
-//    //Initiate Ultrasonic sensors Analog
-//    subDriveBaseUltrasonicInputFront.reset(new frc::AnalogInput(0));
-//    	//lw->AddSensor("SubUltrasonic", "UltrasonicInputFront",  subDriveBaseUltrasonicInputFront);
-//    subDriveBaseUltrasonicInputRight.reset(new frc::AnalogInput(1));
-//    	//lw->AddSensor("SubUltrasonic", "UltrasonicInputFront",  subDriveBaseUltrasonicInputRight);
-//    subDriveBaseUltrasonicInputBack.reset(new frc::AnalogInput(2));
-//    	//lw->AddSensor("SubUltrasonic", "UltrasonicInputFront",  subDriveBaseUltrasonicInputBack);
-//    subDriveBaseUltrasonicInputLeft.reset(new frc::AnalogInput(3));
-//    	//lw->AddSensor("SubUltrasonic", "UltrasonicInputFront",  subDriveBaseUltrasonicInputLeft);
-
-    //initiate echo Ultrasonic objects
-    subDriveBaseUltrasonicInputFront.reset(new frc::Ultrasonic(11,13));
-    subDriveBaseUltrasonicInputRight.reset(new frc::Ultrasonic(15,17));
-    subDriveBaseUltrasonicInputBack.reset(new frc::Ultrasonic(19,21));
-    subDriveBaseUltrasonicInputLeft.reset(new frc::Ultrasonic(23,25));
 
     //Initiate micro navX gyro
     navX.reset(new AHRS(SPI::Port::kMXP)); //See navx-micro.kauailabs.com/guidance/selecting-an-interface.
