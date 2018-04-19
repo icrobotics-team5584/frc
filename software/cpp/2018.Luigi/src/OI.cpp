@@ -23,8 +23,8 @@ OI::OI() {
     //Initiate Intake button
 	btnIntake.reset(new JoystickButton(joystick0.get(), 6));
 	btnIntake->WhileHeld(new CmdIntake());
-	axsIntake.reset(new AxisButton(joystick0.get(), 2));
-	axsIntake->WhileHeld(new CmdIntake(axsIntake->GetAxis())); //GetAxis() returns the position of the axsIntake trigger
+	axsOutput.reset(new AxisButton(joystick0.get(), 2));
+	axsOutput->WhileHeld(new CmdOutput(0, axsOutput->GetAxis())); //GetAxis() returns the position of the axsIntake trigger
 
     //Initiate Output button
     btnOutput.reset(new JoystickButton(joystick0.get(), 5));
