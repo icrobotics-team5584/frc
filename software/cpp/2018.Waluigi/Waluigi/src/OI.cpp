@@ -25,9 +25,9 @@ OI::OI() {
     frc::SmartDashboard::PutData("Autonomous Command", new AutonomousCommand());
 
     //Intake
-    btnSucker.reset(new JoystickButton(joystick.get(), 4));
+    btnSucker.reset(new JoystickButton(joystick.get(), 5));
     btnSucker->WhileHeld(new CmdSuck());
-    btnSpitter.reset(new JoystickButton(joystick.get(), 5));
+    btnSpitter.reset(new JoystickButton(joystick.get(), 6));
     btnSpitter->WhileHeld(new CmdSpit());
 }
 
