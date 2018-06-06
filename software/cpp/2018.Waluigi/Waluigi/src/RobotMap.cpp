@@ -27,4 +27,8 @@ void RobotMap::init() {
     subDriveBaseDifDrive->SetExpiration(0.1);
     subDriveBaseDifDrive->SetMaxOutput(1.0);
 
+    //setup Intake motors
+    subIntakeTnxRight.reset(new WPI_TalonSRX(2));
+    subIntakeTnxLeft.reset(new WPI_TalonSRX(1));
+
 }
