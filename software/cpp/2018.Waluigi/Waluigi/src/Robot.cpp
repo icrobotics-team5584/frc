@@ -11,6 +11,7 @@
 
 #include "Robot.h"
 std::shared_ptr<SubDriveBase> Robot::subDriveBase;
+std::shared_ptr<SubIntake> Robot::subIntake;
 std::unique_ptr<OI> Robot::oi;
 
 void Robot::RobotInit() {

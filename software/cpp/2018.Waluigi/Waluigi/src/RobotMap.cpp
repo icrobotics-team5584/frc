@@ -9,6 +9,10 @@ std::shared_ptr<frc::DifferentialDrive> RobotMap::subDriveBaseDifDrive;
 std::shared_ptr<WPI_TalonSRX> RobotMap::subDriveBaseTnxBackLeft;
 std::shared_ptr<WPI_TalonSRX> RobotMap::subDriveBaseTnxBackRight;
 
+std::shared_ptr<WPI_TalonSRX> RobotMap::subIntakeTnxLeft;
+std::shared_ptr<WPI_TalonSRX> RobotMap::subIntakeTnxRight;
+
+
 void RobotMap::init() {
 
 	//Create drive motors

@@ -31,3 +31,8 @@ void SubIntake::Out(){
 	tnxRight->Set(-0.5);
 	tnxLeft->Set(0.5);
 }
+
+void SubIntake::Stop(){
+	tnxRight->Set(0);
+	tnxLeft->Set(0);
+}
