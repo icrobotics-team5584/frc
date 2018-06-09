@@ -6,26 +6,30 @@
 /*----------------------------------------------------------------------------*/
 
 #include "CmdAutoDrive.h"
-
+#include <iostream>
 
 CmdAutoDrive::CmdAutoDrive(double Distance) {
+	Requires(Robot::subDriveBase.get());
 	_Distance = Distance;
 }
 
 // Called just before this Command runs the first time
 void CmdAutoDrive::Initialize() {
-
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdAutoDrive::Execute() {
-	Robot::subDriveBase->AutoDrive(0.25);
+	Robot::subDriveBase->AutoDrive(0.5);
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdAutoDrive::IsFinished() {
 	double Meters;
 	Meters = Robot::subDriveBase->GetEncoderDistance();
+
+	std::cout << "Meters Travelled: " << Meters << std::endl;
+	std::cout << "SetDistance: " << _Distance << std::endl;
+
 	if (Meters >= _Distance){
 		return true;
 	}
@@ -40,5 +44,5 @@ void CmdAutoDrive::End() {
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void CmdAutoDrive::Interrupted() {
-
+	End();
 }

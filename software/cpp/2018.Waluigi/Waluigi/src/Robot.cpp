@@ -11,6 +11,8 @@
 
 #include "Robot.h"
 #include "Commands/CmdAutoDrive.h"
+#include <iostream>
+
 std::shared_ptr<SubDriveBase> Robot::subDriveBase;
 std::shared_ptr<SubIntake> Robot::subIntake;
 std::unique_ptr<OI> Robot::oi;
@@ -46,7 +48,8 @@ void Robot::DisabledPeriodic() {
 }
 
 void Robot::AutonomousInit() {
-	CmdAutoDrive BaseLineDrive(3.5);
+
+	static CmdAutoDrive BaseLineDrive(3.5);
 	BaseLineDrive.Start();
 }
 
