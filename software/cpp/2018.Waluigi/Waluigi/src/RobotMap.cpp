@@ -12,6 +12,9 @@ std::shared_ptr<WPI_TalonSRX> RobotMap::subDriveBaseTnxBackRight;
 std::shared_ptr<WPI_TalonSRX> RobotMap::subIntakeTnxLeft;
 std::shared_ptr<WPI_TalonSRX> RobotMap::subIntakeTnxRight;
 
+std::shared_ptr<WPI_TalonSRX> RobotMap::subEncodedArmTnx;
+std::shared_ptr<AnalogInput> RobotMap::subEncodedArmPot;
+
 
 void RobotMap::init() {
 
@@ -35,4 +38,7 @@ void RobotMap::init() {
     subIntakeTnxRight.reset(new WPI_TalonSRX(2));
     subIntakeTnxLeft.reset(new WPI_TalonSRX(1));
 
+    //setup EncodedArm Actuator/Sensors
+    subEncodedArmTnx.reset(new WPI_TalonSRX(4));
+    subEncodedArmPot.reset(new AnalogInput(0));
 }
