@@ -3,6 +3,7 @@
 #include "SubEncodedArm.h"
 #include "../RobotMap.h"
 #include <SmartDashboard/SmartDashboard.h>
+#include "../Commands/CmdArmDefault.h"
 
 SubEncodedArm::SubEncodedArm() : Subsystem("ExampleSubsystem") {
 
@@ -26,7 +27,17 @@ void SubEncodedArm::Periodic() {
 }
 
 void SubEncodedArm::InitDefaultCommand() {
-
+	SetDefaultCommand(new CmdArmDefault());
 }
+
+
+
+void SubEncodedArm::Stop() {
+	_talon->Set(0.0);
+}
+
+
+
+
 
 

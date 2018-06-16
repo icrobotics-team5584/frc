@@ -4,7 +4,7 @@
 
 #include <Commands/Subsystem.h>
 #include "WPILib.h"
-#include "ctre/Phoenix.h"
+#include <ctre/phoenix.h>
 #include <SmartDashboard/SmartDashboard.h>
 
 class SubEncodedArm : public frc::Subsystem {
@@ -19,5 +19,6 @@ public:
 	SubEncodedArm();
 	void InitDefaultCommand() override;
 	void Periodic();
+	void Stop();
 };
 
