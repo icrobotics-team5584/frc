@@ -29,7 +29,7 @@ void RobotMap::init() {
     subDriveBaseTnxFrontLeft->Set(ControlMode::Follower, 6);	//Follow backLeft
     
     //Setup differential drive
-    subDriveBaseDifDrive.reset(new DifferentialDrive(*subDriveBaseTnxFrontLeft, *subDriveBaseTnxFrontRight));
+    subDriveBaseDifDrive.reset(new DifferentialDrive(*subDriveBaseTnxBackLeft, *subDriveBaseTnxBackRight));
     subDriveBaseDifDrive->SetSafetyEnabled(true);
     subDriveBaseDifDrive->SetExpiration(0.1);
     subDriveBaseDifDrive->SetMaxOutput(1.0);

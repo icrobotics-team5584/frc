@@ -17,6 +17,8 @@ The aim of the MULTI mode is to support generation of a profile that can be used
 Summary:
 --------
 
+Recommend that you run the following in a windows command prompt (or git bash shell) ...
+
   motionprofile.wrapper.pl      - wrapper script enabling us to record all parameters and regenerate all motion profiles in one hit, as well as calling each of the other three scripts here, the wrapper will copy the *.h files into the appropriate directory of the eclipse project
 
   motionprofile.pl              - generates a *.h and a *.csv using the parameters listed below
@@ -24,6 +26,28 @@ Summary:
   motionprofile.graph.pl        - generates *.png image from the *.csv file, image contains a graph of the position, velocity and acceleration in the profile
 
   motionprofile.document.pl     - generates a single MotionProfile.html file with references to each of the *.png files so that we have a summary-on-a-page of all of the Motion Profiles that we have generated
+
+NOTE: motionprofile.graph.pl has a dependency on the GD module. If your version of perl reports errors like "Can't locate GD/Graph/lines.pm in @INC (you may need to install the GD::Graph::lines module) (@INC contains: ..." then install the GD module and any dependencies, or just install strawberry perl as that has GD and depencencies already incorporated in the base package
+
+NOTE: to change the perl installation that is used you will need to add the appropriate installation directory to the start of the path, if using GIT bash shell then ...
+
+        export PATH=/c/Strawberry/perl/bin/:$PATH
+
+Or, if using windows command prompt ...
+
+        set PATH=c:\Strawberry\perl\bin\;%PATH%
+
+NOTE: if the GD::Graph module is still listed as missing then use CPAN Client to install the module ...
+
+    Start Menu > Strawberry Perl > Tools > CPAN Client
+    Start > Cpan Client
+    Start Menu > All Apps > Strawberry Perl > CPAN Client
+
+Then install the module (e.g. the GD::Graph module) in the client window by typing ...
+
+    install GD::Graph
+    exit
+
 
 
 

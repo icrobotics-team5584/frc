@@ -42,3 +42,17 @@ void SubDriveBase::JoyStickDrive(std::shared_ptr<frc::Joystick> SunFlower){
 
 }
 
+double SubDriveBase::GetEncoderDistance(){
+	double EncoderTics;
+	EncoderTics = tnxBackLeft->GetSelectedSensorPosition(0);
+	double WheelRotations;
+	WheelRotations = EncoderTics/80;
+	double Theamountofmetersgoneby;
+	Theamountofmetersgoneby = WheelRotations * 0.3192;
+	return Theamountofmetersgoneby;
+}
+
+void SubDriveBase::AutoDrive(double Speed){
+	difDrive->ArcadeDrive (Speed,0);
+
+}
