@@ -17,6 +17,10 @@ public:
 	static std::shared_ptr<WPI_TalonSRX> subIntakeTnxLeft;
 	static std::shared_ptr<WPI_TalonSRX> subIntakeTnxRight;
 
+	//EncodedArm
+	static std::shared_ptr<WPI_TalonSRX> subEncodedArmTnx;
+	static std::shared_ptr<AnalogInput> subEncodedArmPot;
+
 	static void init();
 };
 #endif
