@@ -31,10 +31,11 @@ void SubEncodedArm::InitDefaultCommand() {
 void SubEncodedArm::ArmJoyMove(std::shared_ptr<frc::Joystick> controller) {
 	_axis5 = controller->GetRawAxis(5); //up down control axis
 
+	_talon->Set(_axis5);  //Probably will need some extra stuff in here for better control / movement
 
 }
 
-void SubEncodedArm::Stop() {
+void SubEncodedArm::Stop() {	//Used by the default command
 	_talon->Set(0.0);
 }
 
