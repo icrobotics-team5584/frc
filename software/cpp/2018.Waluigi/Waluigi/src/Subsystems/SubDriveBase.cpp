@@ -39,20 +39,32 @@ void SubDriveBase::JoyStickDrive(std::shared_ptr<frc::Joystick> SunFlower){
 }
 
 double SubDriveBase::GetEncoderDistance(){
+	double gearRatio = 10.5;
+	double EncoderTicsPerRotation = 80;
+	double MetersPerRotation = 0.4787;
+
 	double EncoderTics;
 	EncoderTics = tnxBackLeft->GetSelectedSensorPosition(0);
+	EncoderTics = EncoderTics/gearRatio;
 	double WheelRotations;
-	WheelRotations = EncoderTics/80;
+	WheelRotations = EncoderTics/EncoderTicsPerRotation;
 	double Theamountofmetersgoneby;
-	Theamountofmetersgoneby = WheelRotations * 0.3192;
+	Theamountofmetersgoneby = WheelRotations * MetersPerRotation;
 
-	//MUST ACCOUNT FOR GEARBOX
 
 	return Theamountofmetersgoneby;
 }
 
 void SubDriveBase::AutoDrive(double Speed){
 	std::cout << "Running at speed " << Speed << std::endl;
-	difDrive->ArcadeDrive(Speed, 0);
+	difDrive->ArcadeDrive(Speed,-0.23 );
 
 }
+
+void SubDriveBase::ResetEncoder(){
+	tnxBackLeft->SetSelectedSensorPosition(0.0,0.0,10);
+	tnxBackRight->SetSelectedSensorPosition(0.0,0.0,10);
+
+
+}
+

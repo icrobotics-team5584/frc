@@ -43,6 +43,7 @@ public:
 	void JoyStickDrive(std::shared_ptr<frc::Joystick> SunFlower);
 	double GetEncoderDistance();
 	void AutoDrive(double Speed);
+	void ResetEncoder();
 };
 
 #endif
