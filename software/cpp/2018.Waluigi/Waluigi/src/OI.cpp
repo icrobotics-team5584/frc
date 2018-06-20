@@ -32,7 +32,7 @@ OI::OI() {
     btnSpitter->WhileHeld(new CmdSpit());
 
     //Arm Controls
-    btnManualArm.reset(new JoystickButton(joystick.get(), 99));	//@@@@@ number
+    btnManualArm.reset(new JoystickButton(joystick.get(), 10));
     btnManualArm->WhileHeld(new CmdArmJoy());
 }
 
