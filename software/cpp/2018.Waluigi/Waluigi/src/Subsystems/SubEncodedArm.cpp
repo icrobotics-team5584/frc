@@ -54,7 +54,7 @@ void SubEncodedArm::PIDToggle() { //Toggles PID (armController) on/off
 }
 
 void SubEncodedArm::PIDArmTo(int target) {
-
+	armController->SetSetpoint(target);
 }
 
 
