@@ -12,6 +12,9 @@ private:
 
 	std::shared_ptr<WPI_TalonSRX> _talon;
 	std::shared_ptr<AnalogInput> _potMain;
+
+	PIDController* armController;
+
 	int  lc = 0;
 	double _axis5 = 0.0;
 
@@ -22,5 +25,7 @@ public:
 	void Periodic();
 	void Stop();
 	void ArmJoyMove(std::shared_ptr<frc::Joystick> controller);
+	void PIDToggle();
+	void PIDArmTo(int target);
 };
 

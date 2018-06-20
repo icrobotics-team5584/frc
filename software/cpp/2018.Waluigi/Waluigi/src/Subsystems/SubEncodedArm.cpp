@@ -10,6 +10,12 @@ SubEncodedArm::SubEncodedArm() : Subsystem("ExampleSubsystem") {
 	_talon = RobotMap::subEncodedArmTnx;
 	_potMain = RobotMap::subEncodedArmPot;
 
+	armController = new PIDController(0.1, 0.0, 0.0, _potMain.get(), _talon.get());
+	armController->SetInputRange(100, 2300);
+	armController->SetOutputRange(-0.7, 0.7);
+	armController->SetContinuous(false);
+	SmartDashboard::PutData("Arm PID Controls", armController);
+
 }
 
 void SubEncodedArm::Periodic() {
@@ -24,21 +30,33 @@ void SubEncodedArm::Periodic() {
 	}
 }
 
-void SubEncodedArm::InitDefaultCommand() {
+void SubEncodedArm::InitDefaultCommand() { //Default Command sets _talon to 0.0
 	SetDefaultCommand(new CmdArmDefault());
 }
 
-void SubEncodedArm::ArmJoyMove(std::shared_ptr<frc::Joystick> controller) {
+void SubEncodedArm::ArmJoyMove(std::shared_ptr<frc::Joystick> controller) { //Override control for the arm
 	_axis5 = controller->GetRawAxis(5); //up down control axis
 	double speed = 0.0;
 	speed = _axis5/4;
-	_talon->Set(speed);  //Probably will need some extra stuff in here for better control / movement
-
+	_talon->Set(speed);
 }
 
-void SubEncodedArm::Stop() {	//Used by the default command
+void SubEncodedArm::Stop() { //Used by the default command
 	_talon->Set(0.0);
 }
+
+void SubEncodedArm::PIDToggle() { //Toggles PID (armController) on/off
+	if (armController->IsEnabled()) {
+		armController->Disable();
+	}else {
+		armController->Enable();
+	}
+}
+
+void SubEncodedArm::PIDArmTo(int target) {
+
+}
+
 
 
 
