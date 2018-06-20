@@ -22,15 +22,17 @@ void SubEncodedArm::Periodic() {
 		SmartDashboard::PutNumber("POT Voltage Average", _potMain->GetAverageVoltage());
 		lc = 0;
 	}
-
-
 }
 
 void SubEncodedArm::InitDefaultCommand() {
 	SetDefaultCommand(new CmdArmDefault());
 }
 
+void SubEncodedArm::ArmJoyMove(std::shared_ptr<frc::Joystick> controller) {
+	_axis5 = controller->GetRawAxis(5); //up down control axis
 
+
+}
 
 void SubEncodedArm::Stop() {
 	_talon->Set(0.0);
