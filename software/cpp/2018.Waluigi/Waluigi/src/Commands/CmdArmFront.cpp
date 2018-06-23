@@ -13,7 +13,7 @@ void CmdArmFront::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdArmFront::Execute() {
-	Robot::subEncodedArm->PIDArmTo(2500);
+	Robot::subEncodedArm->PIDArmTo(-80);
 }
 
 // Make this return true when this Command no longer needs to run execute()

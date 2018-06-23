@@ -18,6 +18,10 @@ private:
 	int  lc = 0;
 	double _axis5 = 0.0;
 
+	int PotBack = 152;
+	int PotFront = 2346;
+	int totalAngle = 190;
+
 
 public:
 	SubEncodedArm();
@@ -26,6 +30,6 @@ public:
 	void Stop();
 	void ArmJoyMove(std::shared_ptr<frc::Joystick> controller);
 	void PIDToggle();
-	void PIDArmTo(int target);
+	void PIDArmTo(int angle);
 };
 

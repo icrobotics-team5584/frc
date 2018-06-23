@@ -53,7 +53,14 @@ void SubEncodedArm::PIDToggle() { //Toggles PID (armController) on/off
 	}
 }
 
-void SubEncodedArm::PIDArmTo(int target) {
+void SubEncodedArm::PIDArmTo(int angle) { //PID to a POT value given angle
+
+	int spec = PotFront- PotBack;
+
+	double target = spec * ((angle + (totalAngle/2))/totalAngle)+152;
+
+	SmartDashboard::PutNumber("TARGET Value", target);
+
 	armController->SetSetpoint(target);
 }
 
