@@ -2,3 +2,5 @@
 *.h
 *.csv
 *.debug
+*.graph
+*.png

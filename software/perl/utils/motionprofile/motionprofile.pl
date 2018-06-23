@@ -31,12 +31,18 @@ my $curve2proportion = 0.50;   # use 0.0 to 1.0 to define curve2 max velocity re
 my $curve2multiplier = -1;     # set to +1 to add curve1 and curve2, set to -1 to subtract curve2 from curve1
 my $curve2dist = 2.94;         # in rotations
 
+# additional default values for initial position and initial velocity ...
+my $vini = 0;
+my $pini = 0;
+
 GetOptions (
   "ident=s"            => \$ident,
   "mode=s"             => \$mode,
   "itp=s"              => \$itp,
   "t1=s"               => \$t1,
   "t2=s"               => \$t2,  
+  "vini=s"             => \$vini,
+  "pini=s"             => \$pini,
   "vprog=s"            => \$vprog,
   "dist=s"             => \$dist,
   "curve2offset=s"     => \$curve2offset,
@@ -81,6 +87,8 @@ else
   exit 1;
   }
 
+
+
 # now generate the position and acceleration arrays from the velocity array
 
 my @positions = getpositions( $itp, @velocities );
@@ -88,10 +96,39 @@ my @accelerations = getaccelerations( $itp, @velocities );
 
 
 
+# if necessary, inject the initial velocity
+
+if( $vini != 0 )
+  {
+  my $counter = 0;
+  foreach( @velocities )
+    {
+    $velocities[$counter] = $velocities[$counter] + $vini;
+    $counter++;
+    }
+  }
+
+
+
+# if necessary, inject the initial position
+
+if( $pini != 0 )
+  {
+  my $counter = 0;
+  foreach( @positions )
+    {
+    $positions[$counter] = $positions[$counter] + $pini;
+    $counter++;
+    }
+  }
+
+
+
 # construct buffer for header file
 
-my $hbuffer = "";
-my $cbuffer = "";
+my $hbuffer = "";   # buffer for data to go to HTML file
+my $cbuffer = "";   # buffer for data to go to CSV file
+my $gbuffer = "";   # buffer for data to go the GRAPH file
 my $eol = ",";
 my $steps = $#velocities + 1;
 my $i;
@@ -107,6 +144,7 @@ for( $i = 0; $i < $steps; $i++ )
     }
   $hbuffer = $hbuffer . "{${rotations},\t${rpm}\t,${duration}}${eol}\n";
   $cbuffer = $cbuffer . "${rotations},${vel},${duration}\n";
+  $gbuffer = $gbuffer . @positions[$i] . "," . @velocities[$i] . "," . @accelerations[$i] . "\n";
   }
 
 
@@ -134,16 +172,16 @@ close( CSV );
 
 
 
-# output the debug file
+# output the graph file (this file is in a suitable format for use by the graph generation program)
 
 my $steps = $#velocities + 1;
 my $i;
-open( DEBUG, ">MotionProfile${ident}.debug" );
+open( GRAPH, ">MotionProfile${ident}.graph" );
 for( $i = 0; $i < $steps; $i++ )
   {
-  print DEBUG "$i,$velocities[$i],$positions[$i],$accelerations[$i]\n";
+  print GRAPH "$i,$velocities[$i],$positions[$i],$accelerations[$i]\n";
   }
-close( DEBUG );
+close( GRAPH );
 
 
 

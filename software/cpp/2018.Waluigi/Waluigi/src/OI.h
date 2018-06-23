@@ -20,6 +20,8 @@ private:
 	std::shared_ptr<frc::Joystick> joystick;
 	std::shared_ptr<JoystickButton> btnSucker;
 	std::shared_ptr<JoystickButton> btnSpitter;
+	std::shared_ptr<JoystickButton> btnManualArm;
+
 public:
 	OI();
 
