@@ -9,14 +9,14 @@ SubEncodedArm::SubEncodedArm() : Subsystem("ExampleSubsystem") {
 
 	_talon = RobotMap::subEncodedArmTnx;
 	_potMain = RobotMap::subEncodedArmPot;
+	_potSourcePID = new PIDPot();
 
-	armController = new PIDController(0.0, 0.0, 0.0, _potMain.get(), _talon.get());
+	armController = new PIDController(0.0, 0.0, 0.0, _potSourcePID, _talon.get());
 	armController->SetSetpoint(1249);
 	armController->SetInputRange(152, 2346);
 	armController->SetOutputRange(-0.7, 0.7);
 	armController->SetContinuous(false);
 	armController->Disable();
-	std::cout << "HEREERERERER" << std::endl;
 	frc::SmartDashboard::PutData("Arm PID Controls", armController);
 
 }

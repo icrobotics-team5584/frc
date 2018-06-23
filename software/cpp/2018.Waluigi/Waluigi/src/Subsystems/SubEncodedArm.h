@@ -7,6 +7,7 @@
 #include <ctre/phoenix.h>
 #include <SmartDashboard/SmartDashboard.h>
 #include <iostream>
+#include "PIDPot.h"
 
 class SubEncodedArm : public frc::Subsystem {
 private:
@@ -15,6 +16,7 @@ private:
 	std::shared_ptr<AnalogInput> _potMain;
 
 	PIDController* armController;
+	PIDPot* _potSourcePID;
 
 	int  lc = 0;
 	double _axis5 = 0.0;
