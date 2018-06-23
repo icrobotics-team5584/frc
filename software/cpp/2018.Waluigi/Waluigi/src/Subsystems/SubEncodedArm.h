@@ -18,9 +18,9 @@ private:
 	int  lc = 0;
 	double _axis5 = 0.0;
 
-	int PotBack = 152;
-	int PotFront = 2346;
-	int totalAngle = 190;
+	double PotBack = 152;
+	double PotFront = 2346;
+	double totalAngle = 190;
 
 
 public:

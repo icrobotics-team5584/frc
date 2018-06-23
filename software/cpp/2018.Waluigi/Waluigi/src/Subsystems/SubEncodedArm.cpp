@@ -11,9 +11,10 @@ SubEncodedArm::SubEncodedArm() : Subsystem("ExampleSubsystem") {
 	_potMain = RobotMap::subEncodedArmPot;
 
 	armController = new PIDController(0.1, 0.0, 0.0, _potMain.get(), _talon.get());
-	armController->SetInputRange(100, 2300);
+	armController->SetInputRange(PotBack, PotFront);
 	armController->SetOutputRange(-0.7, 0.7);
 	armController->SetContinuous(false);
+	armController->Enable();
 	SmartDashboard::PutData("Arm PID Controls", armController);
 
 }
@@ -55,7 +56,7 @@ void SubEncodedArm::PIDToggle() { //Toggles PID (armController) on/off
 
 void SubEncodedArm::PIDArmTo(int angle) { //PID to a POT value given angle
 
-	int spec = PotFront- PotBack;
+	double spec = PotFront- PotBack;
 
 	double target = spec * ((angle + (totalAngle/2))/totalAngle)+152;
 
