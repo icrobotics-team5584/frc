@@ -11,6 +11,7 @@ SubEncodedArm::SubEncodedArm() : Subsystem("ExampleSubsystem") {
 	_potMain = RobotMap::subEncodedArmPot;
 
 	armController = new PIDController(0.0, 0.0, 0.0, _potMain.get(), _talon.get());
+	armController->SetSetpoint(1249);
 	armController->SetInputRange(152, 2346);
 	armController->SetOutputRange(-0.7, 0.7);
 	armController->SetContinuous(false);
@@ -31,6 +32,8 @@ void SubEncodedArm::Periodic() {
 
 		SmartDashboard::PutNumber("ARM ERROR", armController->GetError());
 		SmartDashboard::PutNumber("ARM OUTPUT", armController->Get());
+		SmartDashboard::PutNumber("ARM SETPOINT", armController->GetSetpoint());
+		SmartDashboard::PutNumber("ARM ERROR", armController->Get);
 
 		lc = 0;
 	}
