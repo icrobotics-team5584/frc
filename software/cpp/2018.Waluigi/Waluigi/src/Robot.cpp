@@ -50,7 +50,7 @@ void Robot::DisabledPeriodic() {
 }
 
 void Robot::AutonomousInit() {
-subDriveBase->ResetEncoder();
+	subDriveBase->ResetEncoder();
 	static CmdAutoDrive BaseLineDrive(2.0);
 	BaseLineDrive.Start();
 }

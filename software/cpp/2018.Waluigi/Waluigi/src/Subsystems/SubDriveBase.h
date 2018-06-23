@@ -13,6 +13,7 @@
 #define SUBDRIVEBASE_H
 #include "Commands/Subsystem.h"
 #include "WPILib.h"
+#include "AHRS.h"
 
 /**
  *
@@ -28,6 +29,7 @@ private:
 	std::shared_ptr<frc::DifferentialDrive> difDrive;
 	std::shared_ptr<WPI_TalonSRX> tnxBackLeft;
 	std::shared_ptr<WPI_TalonSRX> tnxBackRight;
+	std::shared_ptr<AHRS> NavX;
 
 //	PIDController* turnController;
 //	PIDController* driveController;
@@ -44,6 +46,8 @@ public:
 	double GetEncoderDistance();
 	void AutoDrive(double Speed);
 	void ResetEncoder();
+	double GetAngle();
+	void AutoTurn();
 };
 
 #endif

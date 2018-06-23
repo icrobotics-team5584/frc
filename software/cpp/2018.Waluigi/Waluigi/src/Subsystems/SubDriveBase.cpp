@@ -15,6 +15,7 @@ SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase") {
     difDrive = RobotMap::subDriveBaseDifDrive;
     tnxBackLeft = RobotMap::subDriveBaseTnxBackLeft;
     tnxBackRight = RobotMap::subDriveBaseTnxBackRight;
+    NavX = RobotMap::subDriveBaseNavx;
 }
 
 void SubDriveBase::InitDefaultCommand() {
@@ -61,10 +62,19 @@ void SubDriveBase::AutoDrive(double Speed){
 
 }
 
+void SubDriveBase::AutoTurn(){
+	difDrive->ArcadeDrive(0,0.5);
+}
+
 void SubDriveBase::ResetEncoder(){
 	tnxBackLeft->SetSelectedSensorPosition(0.0,0.0,10);
 	tnxBackRight->SetSelectedSensorPosition(0.0,0.0,10);
 
+
+}
+
+double SubDriveBase::GetAngle(){
+	return NavX->GetAngle();
 
 }
 

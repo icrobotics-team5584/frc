@@ -3,6 +3,7 @@
 
 #include "WPILib.h"
 #include "ctre/Phoenix.h"
+#include "AHRS.h"
 
 class RobotMap {
 public:
@@ -12,6 +13,7 @@ public:
 	static std::shared_ptr<frc::DifferentialDrive> subDriveBaseDifDrive;
 	static std::shared_ptr<WPI_TalonSRX> subDriveBaseTnxBackLeft;
 	static std::shared_ptr<WPI_TalonSRX> subDriveBaseTnxBackRight;
+	static std::shared_ptr<AHRS> subDriveBaseNavx;
 
 	//InTake
 	static std::shared_ptr<WPI_TalonSRX> subIntakeTnxLeft;

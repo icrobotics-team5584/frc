@@ -3,18 +3,21 @@
 #include "ctre/Phoenix.h"
 #include "WPILib.h"
 
+//Forward define Drivebase objects
 std::shared_ptr<WPI_TalonSRX> RobotMap::subDriveBaseTnxFrontRight;
 std::shared_ptr<WPI_TalonSRX> RobotMap::subDriveBaseTnxFrontLeft;
 std::shared_ptr<frc::DifferentialDrive> RobotMap::subDriveBaseDifDrive;
 std::shared_ptr<WPI_TalonSRX> RobotMap::subDriveBaseTnxBackLeft;
 std::shared_ptr<WPI_TalonSRX> RobotMap::subDriveBaseTnxBackRight;
+std::shared_ptr<AHRS> RobotMap::subDriveBaseNavx;
 
+//Forward define Intake objects
 std::shared_ptr<WPI_TalonSRX> RobotMap::subIntakeTnxLeft;
 std::shared_ptr<WPI_TalonSRX> RobotMap::subIntakeTnxRight;
 
+//Forward define Arm objects
 std::shared_ptr<WPI_TalonSRX> RobotMap::subEncodedArmTnx;
 std::shared_ptr<AnalogInput> RobotMap::subEncodedArmPot;
-
 
 void RobotMap::init() {
 
@@ -24,6 +27,9 @@ void RobotMap::init() {
     subDriveBaseTnxBackLeft.reset(new WPI_TalonSRX(6));
     subDriveBaseTnxBackRight.reset(new WPI_TalonSRX(5));
     
+    //Create NavX
+    subDriveBaseNavx.reset(new AHRS(SerialPort::kUSB));
+
     //Define slaves
     subDriveBaseTnxFrontRight->Set(ControlMode::Follower, 5);	//Follow backRight
     subDriveBaseTnxFrontLeft->Set(ControlMode::Follower, 6);	//Follow backLeft
