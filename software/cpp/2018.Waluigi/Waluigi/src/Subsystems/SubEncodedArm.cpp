@@ -33,7 +33,7 @@ void SubEncodedArm::Periodic() {
 		SmartDashboard::PutNumber("ARM ERROR", armController->GetError());
 		SmartDashboard::PutNumber("ARM OUTPUT", armController->Get());
 		SmartDashboard::PutNumber("ARM SETPOINT", armController->GetSetpoint());
-		SmartDashboard::PutNumber("ARM ERROR", armController->Get);
+		SmartDashboard::PutNumber("ARM ERROR", armController->Get());
 
 		lc = 0;
 	}
