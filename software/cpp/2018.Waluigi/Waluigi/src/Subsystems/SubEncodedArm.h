@@ -6,6 +6,7 @@
 #include "WPILib.h"
 #include <ctre/phoenix.h>
 #include <SmartDashboard/SmartDashboard.h>
+#include <iostream>
 
 class SubEncodedArm : public frc::Subsystem {
 private:

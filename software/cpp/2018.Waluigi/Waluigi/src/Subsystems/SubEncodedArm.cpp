@@ -10,12 +10,13 @@ SubEncodedArm::SubEncodedArm() : Subsystem("ExampleSubsystem") {
 	_talon = RobotMap::subEncodedArmTnx;
 	_potMain = RobotMap::subEncodedArmPot;
 
-	armController = new PIDController(0.1, 0.0, 0.0, _potMain.get(), _talon.get());
-	armController->SetInputRange(PotBack, PotFront);
+	armController = new PIDController(0.0, 0.0, 0.0, _potMain.get(), _talon.get());
+	armController->SetInputRange(152, 2346);
 	armController->SetOutputRange(-0.7, 0.7);
 	armController->SetContinuous(false);
-	armController->Enable();
-	SmartDashboard::PutData("Arm PID Controls", armController);
+	armController->Disable();
+	std::cout << "HEREERERERER" << std::endl;
+	frc::SmartDashboard::PutData("Arm PID Controls", armController);
 
 }
 
@@ -23,22 +24,26 @@ void SubEncodedArm::Periodic() {
 
 	lc++;
 	if( lc > 10){
-		SmartDashboard::PutNumber("POT Value", _potMain->GetValue());
-		SmartDashboard::PutNumber("POT Voltage", _potMain->GetVoltage());
+		//SmartDashboard::PutNumber("POT Value", _potMain->GetValue());
+		//SmartDashboard::PutNumber("POT Voltage", _potMain->GetVoltage());
 		SmartDashboard::PutNumber("POT Value Average", _potMain->GetAverageValue());
-		SmartDashboard::PutNumber("POT Voltage Average", _potMain->GetAverageVoltage());
+		//SmartDashboard::PutNumber("POT Voltage Average", _potMain->GetAverageVoltage());
+
+		SmartDashboard::PutNumber("ARM ERROR", armController->GetError());
+		SmartDashboard::PutNumber("ARM OUTPUT", armController->Get());
+
 		lc = 0;
 	}
 }
 
 void SubEncodedArm::InitDefaultCommand() { //Default Command sets _talon to 0.0
-	SetDefaultCommand(new CmdArmDefault());
+	//SetDefaultCommand(new CmdArmDefault());
 }
 
 void SubEncodedArm::ArmJoyMove(std::shared_ptr<frc::Joystick> controller) { //Override control for the arm
 	_axis5 = controller->GetRawAxis(5); //up down control axis
 	double speed = 0.0;
-	speed = _axis5/4;
+	speed = _axis5/3;
 	_talon->Set(speed);
 }
 
