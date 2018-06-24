@@ -1,6 +1,7 @@
 
 
 #include "PIDPot.h"
+#include "../RobotMap.h"
 
 PIDPot::PIDPot() {
 	// TODO Auto-generated constructor stub

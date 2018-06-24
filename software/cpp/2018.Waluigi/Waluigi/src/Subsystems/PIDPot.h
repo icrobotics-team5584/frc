@@ -4,13 +4,13 @@
  *  Created on: 23 Jun. 2018
  *      Author: User
  */
+
 #pragma once
 
 #ifndef SRC_SUBSYSTEMS_PIDPOT_H_
 #define SRC_SUBSYSTEMS_PIDPOT_H_
 
 #include <WPILib.h>
-#include "../Robot.h"
 
 class PIDPot : public PIDSource {
 public:
