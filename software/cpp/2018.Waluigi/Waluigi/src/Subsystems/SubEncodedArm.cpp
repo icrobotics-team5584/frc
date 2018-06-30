@@ -35,6 +35,8 @@ void SubEncodedArm::Periodic() {
 		SmartDashboard::PutNumber("ARM SETPOINT", armController->GetSetpoint());
 		SmartDashboard::PutNumber("ARM ERROR", armController->Get());
 
+		SmartDashboard::PutNumber("The custom value thing", _potSourcePID->PIDGet());
+
 		lc = 0;
 	}
 }
@@ -72,10 +74,3 @@ void SubEncodedArm::PIDArmTo(int angle) { //PID to a POT value given angle
 
 	armController->SetSetpoint(target);
 }
-
-
-
-
-
-
-

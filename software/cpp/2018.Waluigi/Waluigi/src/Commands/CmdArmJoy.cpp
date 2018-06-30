@@ -23,11 +23,11 @@ bool CmdArmJoy::IsFinished() {
 
 // Called once after isFinished returns true
 void CmdArmJoy::End() {
-
+	Robot::subEncodedArm->Stop();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void CmdArmJoy::Interrupted() {
-
+	End();
 }

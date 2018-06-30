@@ -7,10 +7,10 @@
 
 #pragma once
 
-#ifndef SRC_SUBSYSTEMS_PIDPOT_H_
-#define SRC_SUBSYSTEMS_PIDPOT_H_
+//#ifndef SRC_SUBSYSTEMS_PIDPOT_H_
+//#define SRC_SUBSYSTEMS_PIDPOT_H_
 
-#include <WPILib.h>
+#include "WPILib.h"
 
 class PIDPot : public PIDSource {
 public:
@@ -22,4 +22,4 @@ private:
 
 };
 
-#endif /* SRC_SUBSYSTEMS_PIDPOT_H_ */
+//#endif /* SRC_SUBSYSTEMS_PIDPOT_H_ */
