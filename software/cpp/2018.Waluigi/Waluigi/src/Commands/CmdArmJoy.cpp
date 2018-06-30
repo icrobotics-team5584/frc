@@ -13,6 +13,7 @@ void CmdArmJoy::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdArmJoy::Execute() {
+	Robot::subEncodedArm->PIDDisable();
 	Robot::subEncodedArm->ArmJoyMove(Robot::oi->getJoystick());
 }
 

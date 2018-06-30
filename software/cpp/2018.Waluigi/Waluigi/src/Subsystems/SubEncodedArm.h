@@ -33,6 +33,8 @@ public:
 	void Stop();
 	void ArmJoyMove(std::shared_ptr<frc::Joystick> controller);
 	void PIDToggle();
+	void PIDEnable();
+	void PIDDisable();
 	void PIDArmTo(int angle);
 };
 
