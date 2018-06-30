@@ -11,11 +11,15 @@
 
 class CmdAutoTurn : public frc::Command {
 public:
-	CmdAutoTurn();
+	CmdAutoTurn(double Angle);
 	void Initialize() override;
 	void Execute() override;
 	bool IsFinished() override;
 	void End() override;
 	void Interrupted() override;
+
+private:
+		double _Angle;
+		bool _GoRight;
 };
 

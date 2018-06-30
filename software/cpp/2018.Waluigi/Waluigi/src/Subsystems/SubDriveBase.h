@@ -47,7 +47,7 @@ public:
 	void AutoDrive(double Speed);
 	void ResetEncoder();
 	double GetAngle();
-	void AutoTurn();
+	void AutoTurn(bool GoRight);
 };
 
 #endif

@@ -62,8 +62,14 @@ void SubDriveBase::AutoDrive(double Speed){
 
 }
 
-void SubDriveBase::AutoTurn(){
-	difDrive->ArcadeDrive(0,0.5);
+void SubDriveBase::AutoTurn(bool GoRight){
+	if(GoRight==true){
+		difDrive->ArcadeDrive(0,0.5);
+	}
+	else{
+		difDrive->ArcadeDrive(0,-0.5);
+	}
+
 }
 
 void SubDriveBase::ResetEncoder(){

@@ -6,24 +6,36 @@
 /*----------------------------------------------------------------------------*/
 
 #include "CmdAutoTurn.h"
+#include "../Robot.h"
 
-CmdAutoTurn::CmdAutoTurn() {
+CmdAutoTurn::CmdAutoTurn(double Angle) {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
+	Requires(Robot::subDriveBase.get());
+	_Angle = Angle;
+	_GoRight = false;
 }
 
 // Called just before this Command runs the first time
 void CmdAutoTurn::Initialize() {
-
+	double CurrentAngle = Robot::subDriveBase->GetAngle();
+	if(_Angle - CurrentAngle < 0 ){
+			_GoRight = false;
+		}
+		else{
+			_GoRight = true;
+		}
 }
-
 // Called repeatedly when this Command is scheduled to run
 void CmdAutoTurn::Execute() {
+	Robot::subDriveBase->AutoTurn(_GoRight);
 
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdAutoTurn::IsFinished() {
+
+
 	return false;
 }
 
