@@ -11,7 +11,7 @@ PIDPot::PIDPot() {
 
 double PIDPot::PIDGet() {
 
-	return _potMain->GetAverageValue();
+	return _potMain->GetAverageValue();  //this is a analyze error only
 
 }
 
