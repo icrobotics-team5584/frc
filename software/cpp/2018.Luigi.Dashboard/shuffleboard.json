@@ -1,5 +1,5 @@
 {
-  "dividerPosition": 0.2690615835777126,
+  "dividerPosition": 0.2690513219284603,
   "tabPane": [
     {
       "title": "Autonomous Selection",
@@ -181,6 +181,30 @@
               "_title": "SmartDashboard/ReachedSetPoint",
               "colorWhenTrue": "#7CFC00FF",
               "colorWhenFalse": "#8B0000FF"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Tab 3",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "tiles": {
+          "0,0": {
+            "size": [
+              1,
+              2
+            ],
+            "content": {
+              "_type": "PID Controller",
+              "_source0": "network_table:///SmartDashboard/turncontroller",
+              "_title": "SmartDashboard/turncontroller"
             }
           }
         }

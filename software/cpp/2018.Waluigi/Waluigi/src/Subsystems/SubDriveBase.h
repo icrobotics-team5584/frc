@@ -14,6 +14,10 @@
 #include "Commands/Subsystem.h"
 #include "WPILib.h"
 #include "AHRS.h"
+#include "PIDOutput.h"
+#include "PIDSource.h"
+#include "PIDController.h"
+#include "../NavxDriveRotationOutput.h"
 
 /**
  *
@@ -30,6 +34,8 @@ private:
 	std::shared_ptr<WPI_TalonSRX> tnxBackLeft;
 	std::shared_ptr<WPI_TalonSRX> tnxBackRight;
 	std::shared_ptr<AHRS> NavX;
+	PIDController* turnController;
+	NavxDriveRotationOutput* rotationOutput;
 
 //	PIDController* turnController;
 //	PIDController* driveController;
@@ -48,6 +54,16 @@ public:
 	void ResetEncoder();
 	double GetAngle();
 	void AutoTurn(bool GoRight);
+	void PIDTurn(double Rotation);
+	void SetSetpoint(double Setpoint);
+	void PIDEnd();
+	bool AtSetpoint();
+	void ResetNavX();
+
+
+
 };
+
+
 
 #endif

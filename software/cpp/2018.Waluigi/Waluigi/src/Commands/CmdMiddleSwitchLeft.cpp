@@ -5,20 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#pragma once
+#include "CmdMiddleSwitchLeft.h"
+#include "CmdAutoDrive.h"
+#include "CmdAutoTurn.h"
 
-#include <Commands/Command.h>
+CmdMiddleSwitchLeft::CmdMiddleSwitchLeft() {
 
-class CmdAutoTurn : public frc::Command {
-public:
-	CmdAutoTurn(double Angle);
-	void Initialize() override;
-	void Execute() override;
-	bool IsFinished() override;
-	void End() override;
-	void Interrupted() override;
+	AddSequential(new CmdAutoDrive(1));
+	AddSequential(new CmdAutoTurn(-45));
+	AddSequential(new CmdAutoDrive(1));
+	AddSequential(new CmdAutoTurn(0));
+	AddSequential(new CmdAutoDrive(1));
 
-private:
-		double _Angle;
-};
 
+
+
+
+}

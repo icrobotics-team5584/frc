@@ -13,39 +13,35 @@ CmdAutoTurn::CmdAutoTurn(double Angle) {
 	// eg. Requires(Robot::chassis.get());
 	Requires(Robot::subDriveBase.get());
 	_Angle = Angle;
-	_GoRight = false;
+
 }
 
 // Called just before this Command runs the first time
 void CmdAutoTurn::Initialize() {
-	double CurrentAngle = Robot::subDriveBase->GetAngle();
-	if(_Angle - CurrentAngle < 0 ){
-			_GoRight = false;
-		}
-		else{
-			_GoRight = true;
-		}
+	Robot::subDriveBase->SetSetpoint(_Angle);
 }
 // Called repeatedly when this Command is scheduled to run
 void CmdAutoTurn::Execute() {
-	Robot::subDriveBase->AutoTurn(_GoRight);
+
 
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdAutoTurn::IsFinished() {
 
+	return Robot::subDriveBase->AtSetpoint();
 
-	return false;
+
+
 }
 
 // Called once after isFinished returns true
 void CmdAutoTurn::End() {
-
+	Robot::subDriveBase->PIDEnd();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void CmdAutoTurn::Interrupted() {
-
+	End();
 }

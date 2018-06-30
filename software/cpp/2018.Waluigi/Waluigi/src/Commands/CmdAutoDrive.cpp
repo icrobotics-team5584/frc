@@ -39,6 +39,7 @@ bool CmdAutoDrive::IsFinished() {
 // Called once after isFinished returns true
 void CmdAutoDrive::End() {
 	Robot::subDriveBase->AutoDrive(0.000);
+	Robot::subDriveBase->ResetEncoder();
 }
 
 // Called when another command which requires one or more of the same

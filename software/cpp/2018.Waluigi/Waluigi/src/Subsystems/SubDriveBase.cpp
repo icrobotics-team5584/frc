@@ -9,6 +9,7 @@
 #include <iostream>
 #include "../Commands/CmdJoyStickDrive.h"
 
+
 SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase") {
     tnxFrontRight = RobotMap::subDriveBaseTnxFrontRight;
     tnxFrontLeft = RobotMap::subDriveBaseTnxFrontLeft;
@@ -16,6 +17,15 @@ SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase") {
     tnxBackLeft = RobotMap::subDriveBaseTnxBackLeft;
     tnxBackRight = RobotMap::subDriveBaseTnxBackRight;
     NavX = RobotMap::subDriveBaseNavx;
+
+    //Setup PIDController
+    rotationOutput = new NavxDriveRotationOutput();
+    turnController = new PIDController(0.02, 0, 0, NavX.get(), rotationOutput);
+    turnController->SetInputRange(-180.0f, 180.0f);
+    turnController->SetOutputRange(-0.7, 0.7);
+    turnController->SetContinuous(true);
+    turnController->SetAbsoluteTolerance(3);
+    SmartDashboard::PutData("turncontroller", turnController);
 }
 
 void SubDriveBase::InitDefaultCommand() {
@@ -35,7 +45,7 @@ void SubDriveBase::Periodic() {
 void SubDriveBase::JoyStickDrive(std::shared_ptr<frc::Joystick> SunFlower){
 	float Speed = SunFlower->GetY();
 	float Turn = SunFlower->GetX();
-	difDrive->ArcadeDrive(Speed, Turn);
+	//difDrive->ArcadeDrive(Speed, Turn);
 
 }
 
@@ -82,5 +92,27 @@ void SubDriveBase::ResetEncoder(){
 double SubDriveBase::GetAngle(){
 	return NavX->GetAngle();
 
+
 }
 
+void SubDriveBase::PIDTurn(double Rotation){
+	difDrive->ArcadeDrive(0,Rotation);
+}
+
+void SubDriveBase::SetSetpoint(double Setpoint){
+	turnController->SetSetpoint(Setpoint);
+	turnController->Enable();
+}
+
+void SubDriveBase::PIDEnd(){
+	turnController->Disable();
+
+}
+
+bool SubDriveBase::AtSetpoint(){
+	return turnController->OnTarget();
+}
+
+void SubDriveBase::ResetNavX(){
+	NavX->Reset();
+}

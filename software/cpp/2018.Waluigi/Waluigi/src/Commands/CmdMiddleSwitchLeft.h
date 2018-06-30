@@ -7,18 +7,10 @@
 
 #pragma once
 
-#include <Commands/Command.h>
+#include <Commands/CommandGroup.h>
 
-class CmdAutoTurn : public frc::Command {
+class CmdMiddleSwitchLeft : public frc::CommandGroup {
 public:
-	CmdAutoTurn(double Angle);
-	void Initialize() override;
-	void Execute() override;
-	bool IsFinished() override;
-	void End() override;
-	void Interrupted() override;
-
-private:
-		double _Angle;
+	CmdMiddleSwitchLeft();
 };
 
