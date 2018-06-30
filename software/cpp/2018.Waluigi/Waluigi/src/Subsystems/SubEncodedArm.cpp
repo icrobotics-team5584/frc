@@ -80,7 +80,7 @@ void SubEncodedArm::PIDArmTo(int angle) { //PID to a POT value given angle
 
 	SmartDashboard::PutNumber("TARGET Value", target);
 
-	//armController->SetSetpoint(target);
+	armController->SetSetpoint(target);
 
 
 }
