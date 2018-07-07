@@ -11,9 +11,9 @@
 
 CmdMiddleSwitchRight::CmdMiddleSwitchRight() {
 
-	AddSequential(new CmdAutoDrive(1, 0));
+	AddSequential(new CmdAutoDrive(0.5, 0));
 	AddSequential(new CmdAutoTurn(45));
-	AddSequential(new CmdAutoDrive(1, 45));
+	AddSequential(new CmdAutoDrive(2, 45));
 	AddSequential(new CmdAutoTurn(0));
 	AddSequential(new CmdAutoDrive(1, 0));
 

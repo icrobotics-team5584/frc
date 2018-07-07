@@ -8,14 +8,17 @@
 #include "CmdMiddleSwitchLeft.h"
 #include "CmdAutoDrive.h"
 #include "CmdAutoTurn.h"
+#include "CmdSpit.h"
 
 CmdMiddleSwitchLeft::CmdMiddleSwitchLeft() {
 
-	AddSequential(new CmdAutoDrive(1, 0));
+	AddSequential(new CmdAutoDrive(0.5, 0));
 	AddSequential(new CmdAutoTurn(-45));
-	AddSequential(new CmdAutoDrive(1, -45));
-	AddSequential(new CmdAutoTurn(0));
-	AddSequential(new CmdAutoDrive(1, 0));
+	AddSequential(new CmdAutoDrive(2, -45));
+	AddSequential(new CmdAutoTurn(0),2);
+	AddSequential(new CmdAutoDrive(1, 0),3);
+	AddSequential(new CmdSpit(),0.5);
+
 
 
 
