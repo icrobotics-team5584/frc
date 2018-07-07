@@ -7,20 +7,10 @@
 
 #pragma once
 
-#include <Commands/Command.h>
-#include "../Robot.h"
+#include <Commands/CommandGroup.h>
 
-class CmdAutoDrive : public frc::Command {
+class CmdMiddleSwitchRight : public frc::CommandGroup {
 public:
-	CmdAutoDrive(double Distance, double Angle);
-	void Initialize() override;
-	void Execute() override;
-	bool IsFinished() override;
-	void End() override;
-	void Interrupted() override;
-
-private:
-	double _Distance;
-	double _Angle;
+	CmdMiddleSwitchRight();
 };
 

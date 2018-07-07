@@ -66,9 +66,14 @@ double SubDriveBase::GetEncoderDistance(){
 	return Theamountofmetersgoneby;
 }
 
-void SubDriveBase::AutoDrive(double Speed){
-	std::cout << "Running at speed " << Speed << std::endl;
-	difDrive->ArcadeDrive(Speed,-0.23 );
+void SubDriveBase::AutoDrive(double Speed, double Angle){
+
+	double currentAngle = GetAngle();
+	double pValue = 0.05;
+	double error = Angle - currentAngle;
+	double rotation = error * pValue;
+std::cout << "Running at speed " << Speed << std::endl;
+	difDrive->ArcadeDrive(Speed,rotation );
 
 }
 
