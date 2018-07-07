@@ -43,9 +43,9 @@ void SubDriveBase::Periodic() {
 }
 
 void SubDriveBase::JoyStickDrive(std::shared_ptr<frc::Joystick> SunFlower){
-	float Speed = SunFlower->GetY();
-	float Turn = SunFlower->GetX();
-	//difDrive->ArcadeDrive(Speed, Turn);
+	float Speed = -SunFlower->GetY();
+	float Turn = SunFlower->GetX() - 0.1;
+	difDrive->ArcadeDrive(Speed, Turn);
 
 }
 

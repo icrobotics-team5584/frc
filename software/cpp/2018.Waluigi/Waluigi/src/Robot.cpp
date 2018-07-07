@@ -14,6 +14,7 @@
 #include "Commands/CmdAutoTurn.h"
 #include <iostream>
 #include "Commands/CmdMiddleSwitchLeft.h"
+#include "Commands/CmdRightSwitchRight.h"
 
 std::shared_ptr<SubDriveBase> Robot::subDriveBase;
 std::shared_ptr<SubIntake> Robot::subIntake;
@@ -55,7 +56,7 @@ void Robot::AutonomousInit() {
 	subDriveBase->ResetEncoder();
 	subDriveBase->ResetNavX();
 
-	static CmdMiddleSwitchLeft Switch;
+	static CmdRightSwitchRight Switch;
 	Switch.Start();
 }
 
