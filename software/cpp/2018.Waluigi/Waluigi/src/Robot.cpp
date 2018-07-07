@@ -14,8 +14,12 @@
 #include "Commands/CmdAutoTurn.h"
 #include <iostream>
 #include "Commands/CmdMiddleSwitchLeft.h"
+#include "Commands/CmdRightSwitchRight.h"
 #include "Commands/CmdLeftSwitchLeft.h"
 #include "Commands/CmdMiddleSwitchRight.h"
+#include "Util/AutonomousSelector.h"
+#include "Util/GameData.h"
+
 
 std::shared_ptr<SubDriveBase> Robot::subDriveBase;
 std::shared_ptr<SubIntake> Robot::subIntake;
@@ -56,9 +60,9 @@ void Robot::DisabledPeriodic() {
 void Robot::AutonomousInit() {
 	subDriveBase->ResetEncoder();
 	subDriveBase->ResetNavX();
-
-	static CmdMiddleSwitchLeft Switch;
-	Switch.Start();
+	AutonomousSelector autoSel;
+	GameData gamedata;
+	autoSel.DetermineRoutine(gamedata)->Start();
 }
 
 void Robot::AutonomousPeriodic() {
