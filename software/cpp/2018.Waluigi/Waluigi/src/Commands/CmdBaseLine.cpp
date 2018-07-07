@@ -10,5 +10,5 @@
 #include "CmdAutoTurn.h"
 
 CmdBaseLine::CmdBaseLine() {
-	AddSequential(new CmdAutoDrive(4));
+	AddSequential(new CmdAutoDrive(4, 0));
 }

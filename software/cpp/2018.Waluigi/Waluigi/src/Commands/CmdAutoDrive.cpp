@@ -8,18 +8,20 @@
 #include "CmdAutoDrive.h"
 #include <iostream>
 
-CmdAutoDrive::CmdAutoDrive(double Distance) {
+CmdAutoDrive::CmdAutoDrive(double Distance, double Angle) {
 	Requires(Robot::subDriveBase.get());
 	_Distance = Distance;
+	_Angle = Angle;
 }
 
 // Called just before this Command runs the first time
 void CmdAutoDrive::Initialize() {
+
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdAutoDrive::Execute() {
-	Robot::subDriveBase->AutoDrive(0.5);
+	Robot::subDriveBase->AutoDrive(0.5, _Angle);
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -38,7 +40,7 @@ bool CmdAutoDrive::IsFinished() {
 
 // Called once after isFinished returns true
 void CmdAutoDrive::End() {
-	Robot::subDriveBase->AutoDrive(0.000);
+	Robot::subDriveBase->AutoDrive(0.000, 0);
 	Robot::subDriveBase->ResetEncoder();
 }
 

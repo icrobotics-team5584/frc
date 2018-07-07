@@ -8,11 +8,13 @@
 #include "CmdRightSwitchRight.h"
 #include "CmdAutoDrive.h"
 #include "CmdAutoTurn.h"
+#include "CmdSpit.h"
 
 CmdRightSwitchRight::CmdRightSwitchRight() {
 
-	AddSequential(new CmdAutoDrive(4));
+	AddSequential(new CmdAutoDrive(4, 0));
 	AddSequential(new CmdAutoTurn(-90));
-	AddSequential(new CmdAutoDrive(0.5));
+	AddSequential(new CmdAutoDrive(0.5, -90));
 	//lift arm down
+	AddSequential(new CmdSpit(), 1);
 }

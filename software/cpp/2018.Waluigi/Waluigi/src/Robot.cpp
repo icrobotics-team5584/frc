@@ -15,6 +15,8 @@
 #include <iostream>
 #include "Commands/CmdMiddleSwitchLeft.h"
 #include "Commands/CmdRightSwitchRight.h"
+#include "Commands/CmdLeftSwitchLeft.h"
+
 
 std::shared_ptr<SubDriveBase> Robot::subDriveBase;
 std::shared_ptr<SubIntake> Robot::subIntake;
@@ -55,6 +57,7 @@ void Robot::DisabledPeriodic() {
 void Robot::AutonomousInit() {
 	subDriveBase->ResetEncoder();
 	subDriveBase->ResetNavX();
+
 
 	static CmdRightSwitchRight Switch;
 	Switch.Start();

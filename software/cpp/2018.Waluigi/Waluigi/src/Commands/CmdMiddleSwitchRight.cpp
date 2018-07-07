@@ -5,22 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#pragma once
+#include "CmdMiddleSwitchRight.h"
+#include "CmdAutoDrive.h"
+#include "CmdAutoTurn.h"
 
-#include <Commands/Command.h>
-#include "../Robot.h"
+CmdMiddleSwitchRight::CmdMiddleSwitchRight() {
 
-class CmdAutoDrive : public frc::Command {
-public:
-	CmdAutoDrive(double Distance, double Angle);
-	void Initialize() override;
-	void Execute() override;
-	bool IsFinished() override;
-	void End() override;
-	void Interrupted() override;
+	AddSequential(new CmdAutoDrive(1, 0));
+	AddSequential(new CmdAutoTurn(45));
+	AddSequential(new CmdAutoDrive(1, 45));
+	AddSequential(new CmdAutoTurn(0));
+	AddSequential(new CmdAutoDrive(1, 0));
 
-private:
-	double _Distance;
-	double _Angle;
-};
 
+
+
+}

@@ -50,7 +50,7 @@ public:
 	void Periodic() override;
 	void JoyStickDrive(std::shared_ptr<frc::Joystick> SunFlower);
 	double GetEncoderDistance();
-	void AutoDrive(double Speed);
+	void AutoDrive(double Speed, double Angle);
 	void ResetEncoder();
 	double GetAngle();
 	void AutoTurn(bool GoRight);
