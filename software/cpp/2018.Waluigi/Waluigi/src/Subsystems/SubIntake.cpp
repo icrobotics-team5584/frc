@@ -36,3 +36,9 @@ void SubIntake::Stop(){
 	tnxRight->Set(0);
 	tnxLeft->Set(0);
 }
+
+//Spin
+void SubIntake::Spin() {
+	tnxRight->Set(-1);
+	tnxLeft->Set(1);
+}

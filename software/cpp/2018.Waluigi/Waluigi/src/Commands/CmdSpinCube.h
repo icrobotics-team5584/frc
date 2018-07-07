@@ -7,23 +7,15 @@
 
 #pragma once
 
-#include <Commands/Subsystem.h>
-#include "WPILib.h"
-#include "ctre/Phoenix.h"
+#include <Commands/Command.h>
 
-class SubIntake : public frc::Subsystem {
-private:
-	// It's desirable that everything possible under private except
-	// for methods that implement subsystem capabilities
-	std::shared_ptr<WPI_TalonSRX> tnxRight;
-	std::shared_ptr<WPI_TalonSRX> tnxLeft;
-
+class CmdSpinCube : public frc::Command {
 public:
-	SubIntake();
-	void InitDefaultCommand() override;
-	void In();
-	void Out();
-	void Stop();
-	void Spin();
+	CmdSpinCube();
+	void Initialize() override;
+	void Execute() override;
+	bool IsFinished() override;
+	void End() override;
+	void Interrupted() override;
 };
 

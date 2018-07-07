@@ -28,7 +28,6 @@ void SubDriveBase::InitDefaultCommand() {
 
 void SubDriveBase::Periodic() {
     // Put code here to be run every loop
-
 }
 
 void SubDriveBase::JoyStickDrive(std::shared_ptr<frc::Joystick> SunFlower){
