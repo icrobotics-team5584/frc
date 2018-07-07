@@ -31,6 +31,42 @@ std::shared_ptr<Command> AutonomousSelector::DetermineRoutine(GameData gameData)
 	 */
 
 	std::shared_ptr<Command> autoCommand;
+	switch(positionSelector->GetSelected()) {
+
+	case startLeft:
+		if (gameData.GetSwitch() == GameData::targetLeft)
+		{
+			autoCommand.reset(new CmdLeftSwitchLeft);
+		}
+		else
+		{
+			autoCommand.reset(new CmdBaseLine);
+		}
+		break;
+
+	case startMiddle:
+		if (gameData.GetSwitch() == GameData::targetLeft)
+		{
+			autoCommand.reset(new CmdMiddleSwitchLeft);
+		}
+		else
+		{
+			autoCommand.reset(new CmdMiddleSwitchRight);
+		}
+		break;
+
+	case startRight:
+		if (gameData.GetSwitch() == GameData::targetLeft)
+		{
+			autoCommand.reset(new CmdBaseLine);
+		}
+		else
+		{
+			autoCommand.reset(new CmdRightSwitchRight);
+		}
+		break;
+
+	}
 
 
 	//TODO: Add logic to select an auto command based on gameData and startingPosition
