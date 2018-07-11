@@ -17,12 +17,14 @@ std::shared_ptr<SubDriveBase> Robot::subDriveBase;
 std::shared_ptr<SubIntake> Robot::subIntake;
 std::unique_ptr<OI> Robot::oi;
 std::shared_ptr<SubEncodedArm> Robot::subEncodedArm;
+std::shared_ptr<SubCamera> Robot::subCamera;
 
 void Robot::RobotInit() {
 	RobotMap::init();
     subDriveBase.reset(new SubDriveBase());
     subIntake.reset(new SubIntake());
     subEncodedArm.reset(new SubEncodedArm());
+    subCamera.reset(new SubCamera());
 	// This MUST be here. If the OI creates Commands (which it very likely
 	// will), constructing it during the construction of CommandBase (from
 	// which commands extend), subsystems are not guaranteed to be
