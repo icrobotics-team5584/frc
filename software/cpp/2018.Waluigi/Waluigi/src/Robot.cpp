@@ -60,7 +60,10 @@ void Robot::AutonomousInit() {
 	subDriveBase->ResetEncoder();
 	subDriveBase->ResetNavX();
 
-	autoSel.DetermineRoutine(gamedata)->Start();
+
+	static CmdMiddleSwitchRight Fred;
+	Fred.Start();
+	//autoSel.DetermineRoutine(gamedata)->Start();
 }
 
 void Robot::AutonomousPeriodic() {
