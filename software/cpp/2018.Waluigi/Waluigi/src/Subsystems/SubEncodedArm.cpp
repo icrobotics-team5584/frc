@@ -31,7 +31,7 @@ void SubEncodedArm::InitDefaultCommand() {
 void SubEncodedArm::ArmJoyMove(std::shared_ptr<frc::Joystick> controller) {
 	_axis5 = controller->GetRawAxis(5); //up down control axis
 	double speed = 0.0;
-	speed = _axis5/4;
+	speed = _axis5;
 	_talon->Set(speed);  //Probably will need some extra stuff in here for better control / movement
 
 }
