@@ -17,8 +17,11 @@
 #include "Commands/CmdSpit.h"
 #include "Commands/CmdArmJoy.h"
 #include "Commands/CmdArmFront.h"
-#include "Commands/CmdArmBack.h"
+#include "Commands/CmdArmFrontMid.h"
 #include "Commands/CmdArmUp.h"
+#include "Commands/CmdArmBackMid.h"
+#include "Commands/CmdArmBack.h"
+
 
 OI::OI() {
     joystick.reset(new frc::Joystick(0));
@@ -38,11 +41,15 @@ OI::OI() {
     btnManualArm.reset(new JoystickButton(joystick.get(), 10));
     btnManualArm->WhileHeld(new CmdArmJoy());
 
-    btnArmPIDFront.reset(new JoystickButton(joystick.get(), 1));
+    btnArmPIDFront.reset(new JoystickButton(joystick.get(), 7));
     btnArmPIDFront->WhileHeld(new CmdArmFront());
+    btnArmPIDFrontMid.reset(new JoystickButton(joystick.get(), 1));
+    btnArmPIDFrontMid->WhileHeld(new CmdArmFrontMid());
     btnArmPIDUp.reset(new JoystickButton(joystick.get(), 2));
     btnArmPIDUp->WhileHeld(new CmdArmUp());
-    btnArmPIDBack.reset(new JoystickButton(joystick.get(), 4));
+    btnArmPIDBackMid.reset(new JoystickButton(joystick.get(), 4));
+    btnArmPIDBackMid->WhileHeld(new CmdArmBackMid());
+    btnArmPIDBack.reset(new JoystickButton(joystick.get(), 8));
     btnArmPIDBack->WhileHeld(new CmdArmBack());
 }
 

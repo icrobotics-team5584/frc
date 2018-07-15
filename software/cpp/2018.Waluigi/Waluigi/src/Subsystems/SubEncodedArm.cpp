@@ -15,7 +15,7 @@ SubEncodedArm::SubEncodedArm() : Subsystem("ExampleSubsystem") {
 	armController = new PIDController(PIDp, PIDi, PIDd, _potSourcePID, _armOutputPID);
 	armController->SetSetpoint(PotUp);
 	armController->SetInputRange(PotBack, PotFront);
-	armController->SetOutputRange(-0.7, 0.7);
+	armController->SetOutputRange(-0.3, 0.3);
 	armController->SetContinuous(false);
 	armController->Disable();
 	frc::SmartDashboard::PutData("Arm PID Controls", armController);
