@@ -18,6 +18,7 @@
 #include "Commands/CmdArmJoy.h"
 #include "Commands/CmdArmFront.h"
 #include "Commands/CmdArmBack.h"
+#include "Commands/CmdArmUp.h"
 
 OI::OI() {
     joystick.reset(new frc::Joystick(0));
@@ -39,6 +40,8 @@ OI::OI() {
 
     btnArmPIDFront.reset(new JoystickButton(joystick.get(), 1));
     btnArmPIDFront->WhileHeld(new CmdArmFront());
+    btnArmPIDUp.reset(new JoystickButton(joystick.get(), 2));
+    btnArmPIDUp->WhileHeld(new CmdArmUp());
     btnArmPIDBack.reset(new JoystickButton(joystick.get(), 4));
     btnArmPIDBack->WhileHeld(new CmdArmBack());
 }

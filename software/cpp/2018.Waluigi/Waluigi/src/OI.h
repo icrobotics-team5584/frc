@@ -23,6 +23,7 @@ private:
 	std::shared_ptr<JoystickButton> btnManualArm;
 	std::shared_ptr<JoystickButton> btnArmPIDFront;
 	std::shared_ptr<JoystickButton> btnArmPIDBack;
+	std::shared_ptr<JoystickButton> btnArmPIDUp;
 
 public:
 	OI();
