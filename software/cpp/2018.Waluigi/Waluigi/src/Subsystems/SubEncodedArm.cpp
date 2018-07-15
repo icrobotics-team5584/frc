@@ -10,10 +10,11 @@ SubEncodedArm::SubEncodedArm() : Subsystem("ExampleSubsystem") {
 	_talon = RobotMap::subEncodedArmTnx;
 	_potMain = RobotMap::subEncodedArmPot;
 	_potSourcePID = new PIDPot();
+	_armOutputPID = new armPID();
 
-	armController = new PIDController(-0.0007, 0.0, 0.0, _potSourcePID, _talon.get());
-	armController->SetSetpoint(1249);
-	armController->SetInputRange(152, 2346);
+	armController = new PIDController(PIDp, PIDi, PIDd, _potSourcePID, _armOutputPID);
+	armController->SetSetpoint(PotUp);
+	armController->SetInputRange(PotBack, PotFront);
 	armController->SetOutputRange(-0.7, 0.7);
 	armController->SetContinuous(false);
 	armController->Disable();
@@ -23,6 +24,7 @@ SubEncodedArm::SubEncodedArm() : Subsystem("ExampleSubsystem") {
 
 void SubEncodedArm::Periodic() {
 
+	// refresh dashboard (but not every time!) . . .
 	lc++;
 	if( lc > 10){
 		//SmartDashboard::PutNumber("POT Value", _potMain->GetValue());
@@ -52,6 +54,19 @@ void SubEncodedArm::ArmJoyMove(std::shared_ptr<frc::Joystick> controller) { //Ov
 	_talon->Set(speed);
 }
 
+void SubEncodedArm::VoltageControl(double percentage) {
+	_talon->Set(percentage);
+}
+
+double SubEncodedArm::GetArmAngle() {
+	double value = _potMain->GetAverageValue();
+	value = value - PotBack; //number of sensor units when arm is flat back
+	value = value / (PotFront - PotBack); //range of sensor units from back to front
+	value = value * totalAngle; //range of angles in degrees
+	value = value - (totalAngle/2); //half of total range of angles in degrees
+	return value;
+}
+
 void SubEncodedArm::Stop() { //Used by the default command
 	_talon->Set(0.0);
 }
@@ -76,11 +91,10 @@ void SubEncodedArm::PIDArmTo(int angle) { //PID to a POT value given angle
 
 	double spec = PotFront- PotBack;
 
-	double target = spec * ((angle + (totalAngle/2))/totalAngle)+152;
+	double target = spec * ((angle + (totalAngle/2))/totalAngle)+PotBack;
 
 	SmartDashboard::PutNumber("TARGET Value", target);
 
 	armController->SetSetpoint(target);
-
 
 }
