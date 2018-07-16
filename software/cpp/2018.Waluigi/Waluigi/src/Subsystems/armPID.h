@@ -19,7 +19,7 @@ public:
 private:
 
 	double feedForward;
-	double multiplier = 1.3;
+	double multiplier = 1.75;
 
 	//Arm constants
 	const double dist =             0.54;   //Meters
