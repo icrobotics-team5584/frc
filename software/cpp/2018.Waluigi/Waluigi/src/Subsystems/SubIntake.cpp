@@ -39,6 +39,6 @@ void SubIntake::Stop(){
 
 //Spin
 void SubIntake::Spin() {
-	tnxRight->Set(-1);
-	tnxLeft->Set(1);
+	tnxRight->Set(0.8);
+	//tnxLeft->Set(0.8);
 }
