@@ -12,7 +12,7 @@ void CmdArmFrontMid::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdArmFrontMid::Execute() {
-	Robot::subEncodedArm->PIDArmTo(-45);
+	Robot::subEncodedArm->PIDArmTo(-35);
 	Robot::subEncodedArm->PIDEnable();
 }
 

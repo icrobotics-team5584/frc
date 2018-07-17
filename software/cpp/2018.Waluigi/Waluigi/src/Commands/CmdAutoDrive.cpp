@@ -29,9 +29,6 @@ bool CmdAutoDrive::IsFinished() {
 	double Meters;
 	Meters = Robot::subDriveBase->GetEncoderDistance();
 
-	std::cout << "Meters Travelled: " << Meters << std::endl;
-	std::cout << "SetDistance: " << _Distance << std::endl;
-
 	if (Meters >= _Distance){
 		return true;
 	}

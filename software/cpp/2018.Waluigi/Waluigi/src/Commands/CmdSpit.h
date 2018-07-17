@@ -12,11 +12,14 @@
 
 class CmdSpit : public frc::Command {
 public:
-	CmdSpit();
+	CmdSpit(bool slow = false);
 	void Initialize() override;
 	void Execute() override;
 	bool IsFinished() override;
 	void End() override;
 	void Interrupted() override;
+
+private:
+	bool _slow;
 };
 
