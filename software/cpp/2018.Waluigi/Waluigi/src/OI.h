@@ -27,6 +27,8 @@ private:
 	std::shared_ptr<JoystickButton> btnArmPIDBackMid;
 	std::shared_ptr<JoystickButton> btnArmPIDBack;
 
+	std::shared_ptr<JoystickButton> btnSpinCube;
+
 public:
 	OI();
 

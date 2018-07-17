@@ -22,17 +22,23 @@ void SubIntake::InitDefaultCommand() {
 
 //In
 void SubIntake::In(){
-	tnxRight->Set(0.5);
-	tnxLeft->Set(-0.5);
+	tnxRight->Set(1);
+	tnxLeft->Set(-1);
 }
 
 //Out
 void SubIntake::Out(){
-	tnxRight->Set(-0.5);
-	tnxLeft->Set(0.5);
+	tnxRight->Set(-1);
+	tnxLeft->Set(1);
 }
 
 void SubIntake::Stop(){
 	tnxRight->Set(0);
 	tnxLeft->Set(0);
+}
+
+//Spin
+void SubIntake::Spin() {
+	tnxRight->Set(0.8);
+	//tnxLeft->Set(0.8);
 }

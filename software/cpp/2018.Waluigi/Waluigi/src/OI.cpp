@@ -21,6 +21,7 @@
 #include "Commands/CmdArmUp.h"
 #include "Commands/CmdArmBackMid.h"
 #include "Commands/CmdArmBack.h"
+#include "Commands/CmdSpinCube.h"
 
 
 OI::OI() {
@@ -36,6 +37,8 @@ OI::OI() {
     btnSucker->WhileHeld(new CmdSuck());
     btnSpitter.reset(new JoystickButton(joystick.get(), 6));
     btnSpitter->WhileHeld(new CmdSpit());
+    btnSpinCube.reset(new JoystickButton(joystick.get(), 9));
+    btnSpinCube->WhileHeld(new CmdSpinCube());
 
     //Arm Controls
     btnManualArm.reset(new JoystickButton(joystick.get(), 10));

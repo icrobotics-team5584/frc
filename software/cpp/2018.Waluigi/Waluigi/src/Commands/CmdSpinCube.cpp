@@ -5,44 +5,37 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "CmdAutoDrive.h"
-#include <iostream>
+#include "CmdSpinCube.h"
+#include "../Robot.h"
 
-CmdAutoDrive::CmdAutoDrive(double Distance) {
-	Requires(Robot::subDriveBase.get());
-	_Distance = Distance;
+CmdSpinCube::CmdSpinCube() {
+	// Use Requires() here to declare subsystem dependencies
+	// eg. Requires(Robot::chassis.get());
+	Requires(Robot::subIntake.get());
 }
 
 // Called just before this Command runs the first time
-void CmdAutoDrive::Initialize() {
+void CmdSpinCube::Initialize() {
+
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdAutoDrive::Execute() {
-	Robot::subDriveBase->AutoDrive(0.5);
+void CmdSpinCube::Execute() {
+	Robot::subIntake->Spin();
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdAutoDrive::IsFinished() {
-	double Meters;
-	Meters = Robot::subDriveBase->GetEncoderDistance();
-
-	std::cout << "Meters Travelled: " << Meters << std::endl;
-	std::cout << "SetDistance: " << _Distance << std::endl;
-
-	if (Meters >= _Distance){
-		return true;
-	}
+bool CmdSpinCube::IsFinished() {
 	return false;
 }
 
 // Called once after isFinished returns true
-void CmdAutoDrive::End() {
-	Robot::subDriveBase->AutoDrive(0.000);
+void CmdSpinCube::End() {
+	Robot::subIntake->Stop();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdAutoDrive::Interrupted() {
+void CmdSpinCube::Interrupted() {
 	End();
 }
