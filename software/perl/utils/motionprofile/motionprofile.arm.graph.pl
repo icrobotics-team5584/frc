@@ -57,9 +57,9 @@ $graph->set(
     legend_placement=> 'RC',
     line_width      => 1,
 
-    y_min_value     => -1.5,
-    y_max_value     => +1.5,
-    y_tick_number   => 6,
+    y_min_value     => -3,
+    y_max_value     => +3,
+    y_tick_number   => 12,
     #y_label_skip    => 3,
  
     #x_labels_vertical => 1,
