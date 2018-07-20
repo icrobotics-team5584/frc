@@ -27,9 +27,9 @@ void SubIntake::In(){
 }
 
 //Out
-void SubIntake::Out(){
-	tnxRight->Set(-1);
-	tnxLeft->Set(1);
+void SubIntake::Out(double speed){
+	tnxRight->Set(-speed);
+	tnxLeft->Set(speed);
 }
 
 void SubIntake::Stop(){

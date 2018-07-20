@@ -9,15 +9,19 @@
 #include "CmdAutoDrive.h"
 #include "CmdAutoTurn.h"
 #include "CmdSpit.h"
+#include "CmdArmBackMid.h"
+#include "CmdArmFront.h"
 
 CmdMiddleSwitchLeft::CmdMiddleSwitchLeft() {
 
-	AddSequential(new CmdAutoDrive(0.5, 0));
-	AddSequential(new CmdAutoTurn(-45));
-	AddSequential(new CmdAutoDrive(2, -45));
-	AddSequential(new CmdAutoTurn(0),2);
-	AddSequential(new CmdAutoDrive(1, 0),3);
-	AddSequential(new CmdSpit(),0.5);
+	AddParallel(new CmdArmBackMid());			//Move arm
+	AddSequential(new CmdAutoDrive(0.5, 0));	//Drive
+	AddSequential(new CmdAutoTurn(-45), 2);		//Turn left
+	AddSequential(new CmdAutoDrive(2, -45));	//Drive
+	AddSequential(new CmdAutoTurn(0),1.5);		//Turn right
+	AddSequential(new CmdAutoDrive(1, 0),2);	//Drive
+	AddSequential(new CmdSpit(true),0.5);		//Ouptut cube
+	AddSequential(new CmdArmFront());
 
 
 

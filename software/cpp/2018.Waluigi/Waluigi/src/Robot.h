@@ -51,5 +51,6 @@ public:
 private:
 	AutonomousSelector autoSel;
 	GameData gamedata;
+	static std::shared_ptr<Command> chosenCommand;
 };
 #endif

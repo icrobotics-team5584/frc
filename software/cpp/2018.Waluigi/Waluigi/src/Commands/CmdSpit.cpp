@@ -8,7 +8,8 @@
 #include "CmdSpit.h"
 #include "../Robot.h"
 
-CmdSpit::CmdSpit() {
+CmdSpit::CmdSpit(bool slow) {
+	_slow = slow;
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 }
@@ -20,7 +21,12 @@ void CmdSpit::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdSpit::Execute() {
-	Robot::subIntake->Out();
+	if (_slow) {
+		Robot::subIntake->Out(0.5);
+	} else {
+		Robot::subIntake->Out();
+	}
+
 }
 
 // Make this return true when this Command no longer needs to run execute()

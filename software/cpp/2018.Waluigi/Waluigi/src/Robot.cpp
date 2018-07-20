@@ -24,6 +24,7 @@ std::shared_ptr<SubDriveBase> Robot::subDriveBase;
 std::shared_ptr<SubIntake> Robot::subIntake;
 std::unique_ptr<OI> Robot::oi;
 std::shared_ptr<SubEncodedArm> Robot::subEncodedArm;
+std::shared_ptr<Command> Robot::chosenCommand;
 
 void Robot::RobotInit() {
 	RobotMap::init();
@@ -57,13 +58,18 @@ void Robot::DisabledPeriodic() {
 }
 
 void Robot::AutonomousInit() {
+	//Reset sensors
 	subDriveBase->ResetEncoder();
 	subDriveBase->ResetNavX();
 
+	//Keep arm in upright position
+	subEncodedArm->PIDArmTo(0);
+	subEncodedArm->PIDEnable();
 
-	static CmdMiddleSwitchRight Fred;
-	Fred.Start();
-	//autoSel.DetermineRoutine(gamedata)->Start();
+	//Start auto
+	gamedata.UpdateGameData();
+	chosenCommand = autoSel.DetermineRoutine(gamedata);
+	chosenCommand->Start();
 }
 
 void Robot::AutonomousPeriodic() {
@@ -75,8 +81,7 @@ void Robot::TeleopInit() {
 	// teleop starts running. If you want the autonomous to
 	// continue until interrupted by another command, remove
 	// these lines or comment it out.
-	if (autonomousCommand != nullptr)
-		autonomousCommand->Cancel();
+	//chosenCommand->Cancel();
 }
 
 void Robot::TeleopPeriodic() {
