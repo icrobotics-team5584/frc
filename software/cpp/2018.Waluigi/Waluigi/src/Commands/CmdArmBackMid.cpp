@@ -7,13 +7,13 @@ CmdArmBackMid::CmdArmBackMid() {
 
 // Called just before this Command runs the first time
 void CmdArmBackMid::Initialize() {
+	Robot::subEncodedArm->PIDEnable();
 
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdArmBackMid::Execute() {
 	Robot::subEncodedArm->PIDArmTo(35);
-	Robot::subEncodedArm->PIDEnable();
 }
 
 // Make this return true when this Command no longer needs to run execute()

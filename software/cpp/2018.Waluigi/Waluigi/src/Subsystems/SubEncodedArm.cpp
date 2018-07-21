@@ -41,6 +41,12 @@ void SubEncodedArm::Periodic() {
 
 		lc = 0;
 	}
+
+	if ((armController->GetSetpoint() > 2000) and (GetArmAngle() > 80)){
+		PIDDisable();
+	} else if ((armController->GetSetpoint() < 800) and (GetArmAngle() < -80)){
+		PIDDisable();
+	}
 }
 
 void SubEncodedArm::InitDefaultCommand() { //Default Command sets _talon to 0.0
@@ -85,6 +91,7 @@ void SubEncodedArm::PIDEnable() {
 
 void SubEncodedArm::PIDDisable() {
 	armController->Disable();
+	_talon->Set(0);
 }
 
 void SubEncodedArm::PIDArmTo(int angle) { //PID to a POT value given angle

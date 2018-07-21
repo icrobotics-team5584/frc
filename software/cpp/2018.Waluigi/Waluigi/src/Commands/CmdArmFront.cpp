@@ -8,13 +8,13 @@ CmdArmFront::CmdArmFront() {
 
 // Called just before this Command runs the first time
 void CmdArmFront::Initialize() {
+	Robot::subEncodedArm->PIDEnable();
 
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdArmFront::Execute() {
 	Robot::subEncodedArm->PIDArmTo(-90);
-	Robot::subEncodedArm->PIDEnable();
 }
 
 // Make this return true when this Command no longer needs to run execute()
