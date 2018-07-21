@@ -187,7 +187,7 @@ sub generatearmprofile
   runcmd( "perl motionprofile.pl" .
           " -ident ${ident}" .
           " -mode SIMPLE" .
-          " -t1 400 -t2 200 -itp 10" .
+          " -t1 200 -t2 200 -itp 10" .
           " -vprog ${vprog} -dist ${dist}" .
           " -pini ${pini} -vini ${vini}" );
 
