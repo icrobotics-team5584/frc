@@ -42,3 +42,11 @@ void SubIntake::Spin() {
 	tnxRight->Set(0.8);
 	//tnxLeft->Set(0.8);
 }
+
+void SubIntake::LeftIntake(double speed) {
+	tnxLeft->Set(-speed);
+}
+
+void SubIntake::RightIntake(double speed) {
+	tnxRight->Set(speed);
+}
