@@ -29,22 +29,23 @@ void SubEncodedArm::Periodic() {
 	if( lc > 10){
 		//SmartDashboard::PutNumber("POT Value", _potMain->GetValue());
 		//SmartDashboard::PutNumber("POT Voltage", _potMain->GetVoltage());
-		SmartDashboard::PutNumber("POT Value Average", _potMain->GetAverageValue());
+		//SmartDashboard::PutNumber("ARM SETPOINT", armController->GetSetpoint());
+		//SmartDashboard::PutNumber("ARM ERROR", armController->Get());
+		//SmartDashboard::PutNumber("ARM ERROR", armController->GetError());
 		//SmartDashboard::PutNumber("POT Voltage Average", _potMain->GetAverageVoltage());
 
-		SmartDashboard::PutNumber("ARM ERROR", armController->GetError());
-		SmartDashboard::PutNumber("ARM OUTPUT", armController->Get());
-		SmartDashboard::PutNumber("ARM SETPOINT", armController->GetSetpoint());
-		SmartDashboard::PutNumber("ARM ERROR", armController->Get());
-
+		SmartDashboard::PutNumber("ARM PID OUTPUT", armController->Get());
+		SmartDashboard::PutNumber("POT Value Average", _potMain->GetAverageValue());
+		SmartDashboard::PutNumber("ARM ANGLE", GetArmAngle());
 		SmartDashboard::PutNumber("The custom value thing", _potSourcePID->PIDGet());
+		SmartDashboard::PutNumber("ARM TALON OUTPUT %", _talon->GetMotorOutputPercent());
 
 		lc = 0;
 	}
 
-	if ((armController->GetSetpoint() > 2000) and (GetArmAngle() > 80)){
+	if ((armController->GetSetpoint() < 500) and (GetArmAngle() > 80)){
 		PIDDisable();
-	} else if ((armController->GetSetpoint() < 800) and (GetArmAngle() < -80)){
+	} else if ((armController->GetSetpoint() > 2400) and (GetArmAngle() < -94)){
 		PIDDisable();
 	}
 }

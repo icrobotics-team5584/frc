@@ -22,11 +22,11 @@ private:
 	int  lc = 0;
 	double _axis5 = 0.0;
 
-	double PotBack = 152;
-	double PotFront = 2346;
-	double PotUp = 1249;
-	double totalAngle = 190;
-	double PIDp = -0.0007;
+	double PotBack = 2500;
+	double PotFront = 440;
+	double PotUp = 1435;
+	double totalAngle = 180;
+	double PIDp = 0.0007;
 	double PIDi = 0.0;
 	double PIDd = 0.0;
 
