@@ -50,7 +50,7 @@ void SubEncodedArm::InitDefaultCommand() { //Default Command sets _talon to 0.0
 void SubEncodedArm::ArmJoyMove(std::shared_ptr<frc::Joystick> controller) { //Override control for the arm
 	_axis5 = controller->GetRawAxis(5); //up down control axis
 	double speed = 0.0;
-	speed = _axis5/3;
+	speed = _axis5/2;
 	_talon->Set(speed);
 }
 
