@@ -1,34 +1,34 @@
 
 
-#include "CmdArmJoy.h"
+#include "CmdArmFront.h"
 
-CmdArmJoy::CmdArmJoy() {
+CmdArmFront::CmdArmFront() {
 	Requires(Robot::subEncodedArm.get());
 }
 
 // Called just before this Command runs the first time
-void CmdArmJoy::Initialize() {
+void CmdArmFront::Initialize() {
 
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdArmJoy::Execute() {
-	Robot::subEncodedArm->PIDDisable();
-	Robot::subEncodedArm->ArmJoyMove(Robot::oi->getJoystick());
+void CmdArmFront::Execute() {
+	Robot::subEncodedArm->PIDArmTo(-90);
+	Robot::subEncodedArm->PIDEnable();
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdArmJoy::IsFinished() {
+bool CmdArmFront::IsFinished() {
 	return false;
 }
 
 // Called once after isFinished returns true
-void CmdArmJoy::End() {
-	Robot::subEncodedArm->Stop();
+void CmdArmFront::End() {
+
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdArmJoy::Interrupted() {
+void CmdArmFront::Interrupted() {
 	End();
 }

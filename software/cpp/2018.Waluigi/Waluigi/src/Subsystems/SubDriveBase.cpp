@@ -24,7 +24,7 @@ SubDriveBase::SubDriveBase() : frc::Subsystem("SubDriveBase") {
     turnController->SetInputRange(-180.0f, 180.0f);
     turnController->SetOutputRange(-0.7, 0.7);
     turnController->SetContinuous(true);
-    turnController->SetAbsoluteTolerance(3);
+    turnController->SetAbsoluteTolerance(7);
     SmartDashboard::PutData("turncontroller", turnController);
 }
 
@@ -39,7 +39,6 @@ void SubDriveBase::InitDefaultCommand() {
 
 void SubDriveBase::Periodic() {
     // Put code here to be run every loop
-
 }
 
 void SubDriveBase::JoyStickDrive(std::shared_ptr<frc::Joystick> SunFlower){
@@ -73,7 +72,6 @@ void SubDriveBase::AutoDrive(double Speed, double Angle){
 	double pValue = 0.05;
 	double error = Angle - currentAngle;
 	double rotation = error * pValue;
-std::cout << "Running at speed " << Speed << std::endl;
 	difDrive->ArcadeDrive(Speed,rotation );
 
 }

@@ -8,16 +8,20 @@
 #include "CmdMiddleSwitchRight.h"
 #include "CmdAutoDrive.h"
 #include "CmdAutoTurn.h"
+#include "CmdArmBackMid.h"
 #include "CmdSpit.h"
+#include "CmdArmFront.h"
 
 CmdMiddleSwitchRight::CmdMiddleSwitchRight() {
 
+	AddParallel(new CmdArmBackMid());
 	AddSequential(new CmdAutoDrive(0.5, 0));
 	AddSequential(new CmdAutoTurn(45));
 	AddSequential(new CmdAutoDrive(2, 45));
 	AddSequential(new CmdAutoTurn(0),2);
 	AddSequential(new CmdAutoDrive(1, 0),3);
 	AddSequential(new CmdSpit(),0.5);
+	AddSequential(new CmdArmFront());
 
 
 

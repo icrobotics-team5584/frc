@@ -5,21 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "CmdLeftSwitchLeft.h"
-#include "CmdAutoDrive.h"
-#include "CmdAutoTurn.h"
-#include "CmdArmBackMid.h"
-#include "CmdSpit.h"
-#include "CmdArmFront.h"
+#pragma once
 
-CmdLeftSwitchLeft::CmdLeftSwitchLeft() {
+#include <Commands/Subsystem.h>
+#include <WPILib.h>
+#include <cscore_oo.h>
 
-	AddParallel(new CmdArmBackMid());
-	AddSequential(new CmdAutoDrive(4, 0));
-	AddSequential(new CmdAutoTurn(90));
-	AddSequential(new CmdAutoDrive(0.5, 90));
-	AddSequential(new CmdSpit(true), 0.5);
-	AddSequential(new CmdArmFront());
+class SubCamera : public frc::Subsystem {
+private:
+	cs::VideoSink server;
+	cs::UsbCamera camera;
 
+public:
+	SubCamera();
+	void InitDefaultCommand() override;
+	void flipImage();
+};
 
-}

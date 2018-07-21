@@ -22,7 +22,8 @@ public:
 	SubIntake();
 	void InitDefaultCommand() override;
 	void In();
-	void Out();
+	void Out(double speed = 1);
 	void Stop();
+	void Spin();
 };
 

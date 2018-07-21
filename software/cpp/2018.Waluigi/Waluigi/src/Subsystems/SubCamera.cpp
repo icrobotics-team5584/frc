@@ -5,40 +5,24 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "SubIntake.h"
+#include "SubCamera.h"
 #include "../RobotMap.h"
+#include <CameraServer.h>
 
-//Constructor
-SubIntake::SubIntake() : Subsystem("ExampleSubsystem") {
+SubCamera::SubCamera() : Subsystem("SubCamera") {
 
-	tnxRight = RobotMap::subIntakeTnxRight;
-	tnxLeft = RobotMap::subIntakeTnxLeft;
+	camera = CameraServer::GetInstance()->StartAutomaticCapture(0);
+	camera.SetResolution(320, 240);
+	camera.SetFPS(10);
+
+	server = CameraServer::GetInstance()->GetServer();
 }
 
-void SubIntake::InitDefaultCommand() {
+void SubCamera::InitDefaultCommand() {
 	// Set the default command for a subsystem here.
 	// SetDefaultCommand(new MySpecialCommand());
 }
 
-//In
-void SubIntake::In(){
-	tnxRight->Set(1);
-	tnxLeft->Set(-1);
-}
+void SubCamera::flipImage() {
 
-//Out
-void SubIntake::Out(double speed){
-	tnxRight->Set(-speed);
-	tnxLeft->Set(speed);
-}
-
-void SubIntake::Stop(){
-	tnxRight->Set(0);
-	tnxLeft->Set(0);
-}
-
-//Spin
-void SubIntake::Spin() {
-	tnxRight->Set(0.8);
-	//tnxLeft->Set(0.8);
 }
