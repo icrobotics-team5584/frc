@@ -10,15 +10,26 @@
 #include <Commands/Subsystem.h>
 #include <WPILib.h>
 #include <cscore_oo.h>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/core/core.hpp>
 
-class SubCamera : public frc::Subsystem {
-private:
-	cs::VideoSink server;
-	cs::UsbCamera camera;
-
-public:
-	SubCamera();
-	void InitDefaultCommand() override;
-	void flipImage();
+enum FlipCode {
+	X_AXIS = 0,
+	Y_AXIS = 1,
+	BOTH_AXES = -1,
 };
 
+const int xRes = 320;
+const int yRes = 240;
+
+class SubVisionProcessor : public frc::Subsystem {
+private:
+	// cs::VideoSink server;
+	// cs::UsbCamera camera;
+	std::thread * _visionThreadPtr;
+	static void VisionThread();
+
+public:
+	SubVisionProcessor();
+	void InitDefaultCommand() override;
+};
