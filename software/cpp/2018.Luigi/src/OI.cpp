@@ -6,6 +6,7 @@
 #include "Commands/CmdArmPosScale.h"
 #include "Commands/CmdArmPosSwitch.h"
 #include "Commands/CmdArmPosScaleLow.h"
+#include "Commands/CmdOpenRampClamp.h"
 
 #include "Commands/CmdArmPosExchange.h"
 #include "Commands/CmdArmOveride.h"
@@ -65,6 +66,9 @@ OI::OI() {
 //	SmartDashboard::PutData("Drive into switch", new CmdAuto_BasicDrive(0.5, 0, 1));
 //	SmartDashboard::PutData("Output the cube", new CmdOutput(0.5,1));
 
+	//RampButtons
+	DropRampClamp.reset(new JoystickButton(joystick0.get(), 7));
+	DropRampClamp->WhileHeld(new CmdOpenRampClamp());
 }
 
 

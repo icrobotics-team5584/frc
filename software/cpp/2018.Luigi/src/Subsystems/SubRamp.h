@@ -32,6 +32,7 @@ public:
 	void AutoStopRamp();
 	void ResetRamp();
 	void GotoClimbHeight();
+	void OpenRampClamp();
 	void Periodic();
 };
 

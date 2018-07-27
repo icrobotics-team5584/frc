@@ -20,6 +20,7 @@ private:
 	std::shared_ptr<JoystickButton> btnEncoderPosReset;
 	std::shared_ptr<JoystickButton> btnMP;
 	std::shared_ptr<JoystickButton> btnChangeCamera;
+	std::shared_ptr<JoystickButton> DropRampClamp;
 
 public:
 	OI();

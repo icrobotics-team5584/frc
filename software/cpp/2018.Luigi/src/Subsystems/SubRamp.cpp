@@ -112,5 +112,9 @@ void SubRamp::GotoClimbHeight() {
 
 }
 
+void SubRamp::OpenRampClamp() {
+	SPLeft->Set(1);
+}
+
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
