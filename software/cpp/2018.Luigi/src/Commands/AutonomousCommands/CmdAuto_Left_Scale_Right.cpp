@@ -22,7 +22,7 @@ CmdAuto_Left_Scale_Right::CmdAuto_Left_Scale_Right() {
 	AddSequential(new CmdGyroDrive(0, 90, true), 2);			//Turn toward gap
 	AddSequential(new CmdGyroDrive(5.8, 90, false, true), 5);	//Drive over cable to opposite side of switch
 	AddParallel(new CmdArmPosScaleAuto());						//Lift arm to scale height
-	AddSequential(new CmdGyroDrive(0, -20, true), 2);			//Turn slowly toward scale
+	AddSequential(new CmdGyroDrive(0, -20, true), 3);			//Turn slowly toward scale
 	AddSequential(new CmdGyroDrive(1.2, -20, false, true), 2);	//Drive slowly into scale
 	AddSequential(new CmdOutput(1,1));							//Output cube
 	AddSequential(new CmdGyroDrive(-0.5, 0, false, true), 2);	//Drive slowly backward a safe distance
