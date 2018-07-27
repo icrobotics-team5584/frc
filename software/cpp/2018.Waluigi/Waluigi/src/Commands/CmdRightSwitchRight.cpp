@@ -18,6 +18,6 @@ CmdRightSwitchRight::CmdRightSwitchRight() {
 	AddSequential(new CmdAutoDrive(4, 0));
 	AddSequential(new CmdAutoTurn(-90));
 	AddSequential(new CmdAutoDrive(0.5, -90));
-	AddSequential(new CmdSpit(), 1);
+	AddSequential(new CmdSpit(true), 1);
 	AddSequential(new CmdArmFront());
 }

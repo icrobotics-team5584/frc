@@ -51,11 +51,11 @@ OI::OI() {
 
     btnArmPIDFront.reset(new JoystickButton(joystick.get(), 7));
     btnArmPIDFront->WhileHeld(new CmdArmFront());
-    btnArmPIDFrontMid.reset(new JoystickButton(joystick.get(), 3));
+    btnArmPIDFrontMid.reset(new JoystickButton(joystick.get(), 2));
     btnArmPIDFrontMid->WhileHeld(new CmdArmFrontMid());
     btnArmPIDUp.reset(new JoystickButton(joystick.get(), 4));
     btnArmPIDUp->WhileHeld(new CmdArmUp());
-    btnArmPIDBackMid.reset(new JoystickButton(joystick.get(), 2));
+    btnArmPIDBackMid.reset(new JoystickButton(joystick.get(), 3));
     btnArmPIDBackMid->WhileHeld(new CmdArmBackMid());
     btnArmPIDBack.reset(new JoystickButton(joystick.get(), 8));
     btnArmPIDBack->WhileHeld(new CmdArmBack());

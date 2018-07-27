@@ -20,7 +20,7 @@ CmdMiddleSwitchRight::CmdMiddleSwitchRight() {
 	AddSequential(new CmdAutoDrive(2, 45));
 	AddSequential(new CmdAutoTurn(0),2);
 	AddSequential(new CmdAutoDrive(1, 0),3);
-	AddSequential(new CmdSpit(),0.5);
+	AddSequential(new CmdSpit(true),0.5);
 	AddSequential(new CmdArmFront());
 
 
