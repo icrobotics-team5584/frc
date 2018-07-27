@@ -34,22 +34,22 @@ OI::OI() {
     frc::SmartDashboard::PutData("Autonomous Command", new AutonomousCommand());
 
     //Intake
-    btnSucker.reset(new JoystickButton(joystick.get(), 6));
+    btnSucker.reset(new JoystickButton(joystick.get(), 5));
     btnSucker->WhileHeld(new CmdSuck());
-    btnSpitter.reset(new JoystickButton(joystick.get(), 5));
+    btnSpitter.reset(new JoystickButton(joystick.get(), 6));
     btnSpitter->WhileHeld(new CmdSpit());
     btnSpinCube.reset(new JoystickButton(joystick.get(), 9));
     btnSpinCube->WhileHeld(new CmdSpinCube());
-    axbLeftIntake.reset(new AxisButton(joystick.get(), 2));
+    axbLeftIntake.reset(new AxisButton(joystick.get(), 3));
 	axbLeftIntake->WhileHeld(new CmdLeftIntake());
-    axbRightIntake.reset(new AxisButton(joystick.get(), 3));
+    axbRightIntake.reset(new AxisButton(joystick.get(), 2));
     axbRightIntake->WhileHeld(new CmdRightIntake());
 
     //Arm Controls
     btnManualArm.reset(new JoystickButton(joystick.get(), 10));
     btnManualArm->WhileHeld(new CmdArmJoy());
 
-    btnArmPIDFront.reset(new JoystickButton(joystick.get(), 8));
+    btnArmPIDFront.reset(new JoystickButton(joystick.get(), 7));
     btnArmPIDFront->WhileHeld(new CmdArmFront());
     btnArmPIDFrontMid.reset(new JoystickButton(joystick.get(), 3));
     btnArmPIDFrontMid->WhileHeld(new CmdArmFrontMid());
@@ -57,7 +57,7 @@ OI::OI() {
     btnArmPIDUp->WhileHeld(new CmdArmUp());
     btnArmPIDBackMid.reset(new JoystickButton(joystick.get(), 2));
     btnArmPIDBackMid->WhileHeld(new CmdArmBackMid());
-    btnArmPIDBack.reset(new JoystickButton(joystick.get(), 7));
+    btnArmPIDBack.reset(new JoystickButton(joystick.get(), 8));
     btnArmPIDBack->WhileHeld(new CmdArmBack());
 }
 
