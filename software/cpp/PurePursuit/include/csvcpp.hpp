@@ -16,19 +16,19 @@ std::pair<double, double> csvXY(int lineNumber) {
     std::vector<std::vector<std::string> > parsedCsv;
     std::string x, y;
     data.ignore(lineNumber, '\n');
-    while(std::getline(data,line)){
-      std::stringstream ss(line);
-      std::getline(ss, x, ',');
-      std::getline(ss, y, ',');
-      double pointX = ::atof(x.c_str());
-      double pointY = ::atof(y.c_str());
-      std::pair<double, double>xyPoints;
-      xyPoints.first = pointX;
-      xyPoints.second = pointY;
-      std::cout << "checkpoint 1: " << pointX << std::endl;
-      std::system("PAUSE");
-      //this program usually loops till the csv file ends, but that broken by the return (intentional)
-      return xyPoints;
-    }
+    std::getline(data,line);
+    std::stringstream ss(line);
+    std::getline(ss, x, ',');
+    std::getline(ss, y, ',');
+    double pointX = ::atof(x.c_str());
+    double pointY = ::atof(y.c_str());
+    std::pair<double, double>xyPoints;
+    xyPoints.first = pointX;
+    xyPoints.second = pointY;
+    std::cout << "checkpoint 1: " << pointX << std::endl;
+    std::system("PAUSE");
+    //this program usually loops till the csv file ends, but that broken by the return (intentional)
+    return xyPoints;
+    
 }
 #endif
