@@ -2,6 +2,7 @@
 #include "csvcpp.hpp"
 #include <tuple>
 #include <utility>
+#include <vector>
 
 int csvLineCounter = 1; 
 bool pointNotFound;
@@ -22,20 +23,19 @@ bool circle(double x1, double y1, double x2,
         return true; 
 } 
 
-//
-std::pair<double, double> findLookaheadPoint(double xPos, double yPos) {
+int xyPathPointCount = 0;
+
+std::pair<double, double> findLookaheadPoint(double xPos, double yPos, std::vector<std::pair<double, double>> xyPath) {
     std::cout << "checkpoint 1: " << std::endl;
     std::pair<double, double>pathPoints;
     double xPoint, yPoint;
+    //keeps track of where our last point was so that we dont have to search the entire vector for the point again 
     bool doTheyIntersect;
     while (pointNotFound){
-        //get the x and y co ords for the point on the path.
-        pathPoints = csvXY(csvLineCounter);
-        xPoint = pathPoints.first;
-        yPoint = pathPoints.second;
+        //change below
+        xPoint = xyPath.at(xyPathPointCount).first;
+        yPoint = xyPath.at(xyPathPointCount).second;
         std::cout << "checkpoint 2: " << xPoint << std::endl;
-        //tells the program what point we are at on the csv file (so we don't search the entire thing every time)
-        ++csvLineCounter;
         //if the distance between the two centres of the circles is smaller/equal to the radius, the circles intersect/touch
         doTheyIntersect = circle(xPoint, yPoint, xPos, yPos, pointRadius, lookaheadDistance);
         //check if they intersect, if they do, give that point to the program to follow
@@ -46,6 +46,10 @@ std::pair<double, double> findLookaheadPoint(double xPos, double yPos) {
             pathPoints.second = yPoint;
             std::cout << "checkpoint 3: " << xPoint << std::endl;
             return pathPoints;
+        }
+        //not needed, but easier to read: if they dont intersect, the count will increase at it'll analyse the next point
+        else {
+            xyPathPointCount++;
         }
     }  
 }

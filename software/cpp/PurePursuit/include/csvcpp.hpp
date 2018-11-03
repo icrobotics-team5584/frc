@@ -8,27 +8,25 @@
 #include <fstream>
 #include <utility>
 
-//function that takes in a linenumber and returns the x,y values of that line respectively. Takes this data from the csv file in the first line
-//of the function
-std::pair<double, double> csvXY(int lineNumber) {
-    std::ifstream data("C:/Users/Tal Donde/Documents/FRC/frc/software/cpp/PurePursuit/test_left.csv");
-    std::string line;
-    std::vector<std::vector<std::string> > parsedCsv;
-    std::string x, y;
-    data.ignore(lineNumber, '\n');
-    std::getline(data,line);
-    std::stringstream ss(line);
-    std::getline(ss, x, ',');
-    std::getline(ss, y, ',');
-    double pointX = ::atof(x.c_str());
-    double pointY = ::atof(y.c_str());
-    std::pair<double, double>xyPoints;
-    xyPoints.first = pointX;
-    xyPoints.second = pointY;
-    std::cout << "checkpoint 1: " << pointX << std::endl;
-    std::system("PAUSE");
-    //this program usually loops till the csv file ends, but that broken by the return (intentional)
-    return xyPoints;
-    
-}
+// This functions takes a csv file with an x and y header, and puts it all into pairs (doubles) and then into a vector to make it easy to read.
+std::vector<std::pair<double, double>> csvXY() {
+        std::ifstream data("C:/Users/Tal Donde/Documents/FRC/frc/software/cpp/PurePursuit/test_left.csv");
+        std::string line;
+        std::vector<std::vector<std::string> > parsedCsv;
+        std::vector<std::pair<double, double>>xyPath;
+        std::string x, y;
+        while(std::getline(data,line)){
+                std::stringstream ss(line);
+                std::getline(ss, x, ',');
+                std::getline(ss, y, ',');
+                double pointX = ::atof(x.c_str());
+                double pointY = ::atof(y.c_str());
+                std::pair<double, double>xyPoints;
+                xyPoints.first = pointX;
+                xyPoints.second = pointY;
+                xyPath.push_back(xyPoints);
+                std::system("PAUSE");
+        } 
+        return xyPath;
+}     
 #endif
