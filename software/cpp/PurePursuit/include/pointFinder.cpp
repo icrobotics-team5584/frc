@@ -10,8 +10,7 @@ bool pointNotFound;
     it is squared to avoid using a sqrt
 */
 bool circle(double x1, double y1, double x2,  
-           double y2, double r1, double r2) 
-{ 
+           double y2, double r1, double r2) { 
     int distSq = (x1 - x2) * (x1 - x2) + 
                  (y1 - y2) * (y1 - y2); 
     int radSumSq = (r1 + r2) * (r1 + r2); 
@@ -25,6 +24,7 @@ bool circle(double x1, double y1, double x2,
 
 //
 std::pair<double, double> findLookaheadPoint(double xPos, double yPos) {
+    std::cout << "checkpoint 1: " << std::endl;
     std::pair<double, double>pathPoints;
     double xPoint, yPoint;
     bool doTheyIntersect;
@@ -33,6 +33,7 @@ std::pair<double, double> findLookaheadPoint(double xPos, double yPos) {
         pathPoints = csvXY(csvLineCounter);
         xPoint = pathPoints.first;
         yPoint = pathPoints.second;
+        std::cout << "checkpoint 2: " << xPoint << std::endl;
         //tells the program what point we are at on the csv file (so we don't search the entire thing every time)
         ++csvLineCounter;
         //if the distance between the two centres of the circles is smaller/equal to the radius, the circles intersect/touch
@@ -43,6 +44,7 @@ std::pair<double, double> findLookaheadPoint(double xPos, double yPos) {
             std::pair <double, double> pathPoints;
             pathPoints.first = xPoint;
             pathPoints.second = yPoint;
+            std::cout << "checkpoint 3: " << xPoint << std::endl;
             return pathPoints;
         }
     }  

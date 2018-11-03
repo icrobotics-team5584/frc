@@ -10,4 +10,6 @@ int main()
     std::pair<double, double>points = findLookaheadPoint(xPos, yPos);
     std::cout << "x: " << points.first << " y: " << points.second << std::endl;
     std::system("PAUSE");
+    
+    
 }
