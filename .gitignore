@@ -11,3 +11,11 @@ software/cpp/PurePursuit/\.vscode/c_cpp_properties\.json
 software/cpp/PurePursuit/\.vscode/
 
 software/cpp/PurePursuit/Makefile
+
+software/cpp/PurePursuit/\.idea/
+
+software/cpp/PurePursuit/cmake-build-debug/CMakeFiles/3\.12\.2/
+
+software/cpp/PurePursuit/cmake-build-debug/
+
+software/cpp/PurePursuit/CMakeLists\.txt
