@@ -14,7 +14,7 @@ std::vector<std::pair<double, double>> csvXY() {
         std::string line;
         std::vector<std::vector<std::string> > parsedCsv;
         std::vector<std::pair<double, double>>xyPath;
-        std::string x, y;
+        std::string x, y;   
         while(std::getline(data,line)){
                 std::stringstream ss(line);
                 std::getline(ss, x, ',');
@@ -25,7 +25,6 @@ std::vector<std::pair<double, double>> csvXY() {
                 xyPoints.first = pointX;
                 xyPoints.second = pointY;
                 xyPath.push_back(xyPoints);
-                std::system("PAUSE");
         } 
         return xyPath;
 }     

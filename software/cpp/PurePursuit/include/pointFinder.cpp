@@ -4,8 +4,7 @@
 #include <utility>
 #include <vector>
 
-int csvLineCounter = 1; 
-bool pointNotFound;
+
 
 /*  if the distance between the two centres is smaller or equal to the sum of the radii it returns true (they intersect)
     it is squared to avoid using a sqrt
@@ -22,34 +21,24 @@ bool circle(double x1, double y1, double x2,
     else
         return true; 
 } 
-
-int xyPathPointCount = 0;
+//starts at -1 so that when the while loop is played it goes to 0
+int xyPathPointCount = -1;
+bool pointNotFound = false;
 
 std::pair<double, double> findLookaheadPoint(double xPos, double yPos, std::vector<std::pair<double, double>> xyPath) {
-    std::cout << "checkpoint 1: " << std::endl;
     std::pair<double, double>pathPoints;
     double xPoint, yPoint;
     //keeps track of where our last point was so that we dont have to search the entire vector for the point again 
-    bool doTheyIntersect;
-    while (pointNotFound){
-        //change below
+    bool doTheyIntersect = false;
+    //check if they intersect, if they do, give that point to the program to follow
+    while (!doTheyIntersect){
+        xyPathPointCount++;
         xPoint = xyPath.at(xyPathPointCount).first;
         yPoint = xyPath.at(xyPathPointCount).second;
-        std::cout << "checkpoint 2: " << xPoint << std::endl;
         //if the distance between the two centres of the circles is smaller/equal to the radius, the circles intersect/touch
         doTheyIntersect = circle(xPoint, yPoint, xPos, yPos, pointRadius, lookaheadDistance);
-        //check if they intersect, if they do, give that point to the program to follow
-        if (doTheyIntersect) {
-            pointNotFound = true;
-            std::pair <double, double> pathPoints;
-            pathPoints.first = xPoint;
-            pathPoints.second = yPoint;
-            std::cout << "checkpoint 3: " << xPoint << std::endl;
-            return pathPoints;
         }
-        //not needed, but easier to read: if they dont intersect, the count will increase at it'll analyse the next point
-        else {
-            xyPathPointCount++;
-        }
+    pathPoints.first = xPoint;
+    pathPoints.second = yPoint;
+    return pathPoints;
     }  
-}
