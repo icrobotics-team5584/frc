@@ -3,6 +3,7 @@
 #include <tuple>
 #include <utility>
 #include <vector>
+#include <typeinfo>
 
 
 
@@ -11,15 +12,15 @@
 */
 bool circle(double x1, double y1, double x2,  
            double y2, double r1, double r2) { 
-    int distSq = (x1 - x2) * (x1 - x2) + 
-                 (y1 - y2) * (y1 - y2); 
-    int radSumSq = (r1 + r2) * (r1 + r2); 
+    double distSq = (x2-x1) * (x2 - x1) + 
+                 (y2 - y1) * (y2 - y1); 
+    double radSumSq = (r1 + r2) * (r1 + r2); 
     if (distSq == radSumSq) 
-        return true; 
+        return true;
     else if (distSq > radSumSq) 
-        return false; 
+        return false;
     else
-        return true; 
+        return true;
 } 
 //starts at -1 so that when the while loop is played it goes to 0
 int xyPathPointCount = -1;
@@ -35,6 +36,7 @@ std::pair<double, double> findLookaheadPoint(double xPos, double yPos, std::vect
         xyPathPointCount++;
         xPoint = xyPath.at(xyPathPointCount).first;
         yPoint = xyPath.at(xyPathPointCount).second;
+        std::cout << typeid(xPoint).name() << std::endl;
         //if the distance between the two centres of the circles is smaller/equal to the radius, the circles intersect/touch
         doTheyIntersect = circle(xPoint, yPoint, xPos, yPos, pointRadius, lookaheadDistance);
         }
