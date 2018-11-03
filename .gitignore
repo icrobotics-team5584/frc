@@ -3,3 +3,11 @@ launchConfigurations/
 software/cpp/2018\.Luigi/\.settings/language\.settings\.xml
 
 software/cpp/Chunky\.Wantirna/\.settings/language\.settings\.xml
+software\cpp\PurePursuit\.vscode
+frc\.code-workspace
+
+software/cpp/PurePursuit/\.vscode/c_cpp_properties\.json
+
+software/cpp/PurePursuit/\.vscode/
+
+software/cpp/PurePursuit/Makefile
