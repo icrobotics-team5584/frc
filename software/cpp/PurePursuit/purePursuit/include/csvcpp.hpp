@@ -1,19 +1,19 @@
 #ifndef _CSV
 #define _CSV
-#include "csvcpp.hpp"
 #include <iostream>
 #include <string>
 #include <vector>
 #include <sstream>
 #include <fstream>
 #include <utility>
+#include <stdlib.h>
 
 // This functions takes a csv file with an x and y header, and puts it all into pairs (doubles) and then into a vector to make it easy to read.
-std::vector<std::pair<double, double>> csvXY() {
+std::vector<std::pair<double, double> > csvXY() {
         //open the file
-        std::ifstream data("C:/Users/Tal Donde/Documents/FRC/frc/software/cpp/PurePursuit/test_left.csv");
+        std::ifstream data("examplePaths/test_left.csv");
         std::string line;
-        std::vector<std::pair<double, double>>xyPath;
+        std::vector<std::pair<double, double> >xyPath;
         std::string x, y;
         //go through each line of the csv file, grab the x and y value, and put it into a pair, and then into a vector.
         while(std::getline(data,line)){

@@ -1,8 +1,5 @@
 #include "constants.hpp"
-#include "csvcpp.hpp"
-#include <tuple>
-#include <utility>
-#include <vector>
+#include "pointFinder.hpp"
 #include <typeinfo>
 #include <cmath>
 
@@ -33,7 +30,7 @@ bool circle(double x1, double y1, double x2,
 int xyPathPointCount = -1;
 bool pointNotFound = false;
 
-std::pair<double, double> findLookaheadPoint(double xPos, double yPos, std::vector<std::pair<double, double>> xyPath) {
+std::pair<double, double> findLookaheadPoint(double xPos, double yPos, std::vector<std::pair<double, double> > xyPath) {
     std::pair<double, double>pathPoints;
     double xPoint, yPoint;
     //keeps track of where our last point was so that we dont have to search the entire vector for the point again 
