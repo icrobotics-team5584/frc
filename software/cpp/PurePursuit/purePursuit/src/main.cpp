@@ -7,10 +7,10 @@
 #include <Point.hpp>
 int main()
 {
-    double robotX = 2.00095;
-    double robotY = 2.2231;
+    double robotX = 2;
+    double robotY = 2;
     std::vector<Point> xyPath;
     xyPath = csvXY();
-    Point point = findLookaheadPoint(robotX, robotY, xyPath);
-    std::cout << "x:  " << point.x << "| y: " << point.y << std::endl;
+    Point point = findVelocityPoint(robotX, robotY, xyPath);
+    std::cout << "x:  " << point.x << "| y: " << point.y << "| velocity: " << point.velocity << std::endl;
 }
