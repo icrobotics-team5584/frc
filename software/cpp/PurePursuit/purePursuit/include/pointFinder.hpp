@@ -2,9 +2,10 @@
 #define _POINTFINDER
 #include <utility>
 #include <vector>
+#include "Point.hpp"
 
 bool circle(double, double, double,
             double, double, double);
-std::pair<double, double> findLookaheadPoint(double, double, std::vector<std::pair<double, double> >);
+Point findLookaheadPoint(double, double, std::vector<Point>);
 
 #endif

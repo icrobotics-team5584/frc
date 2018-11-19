@@ -2,7 +2,7 @@
 #include "pointFinder.hpp"
 #include <typeinfo>
 #include <cmath>
-
+#include "Point.hpp"
 
 /*  if the distance between the two centres is smaller or equal to the sum of the radii it returns true (they intersect)
     it is squared to avoid using a sqrt (because who likes those amiright)
@@ -30,21 +30,21 @@ bool circle(double x1, double y1, double x2,
 int xyPathPointCount = -1;
 bool pointNotFound = false;
 
-std::pair<double, double> findLookaheadPoint(double xPos, double yPos, std::vector<std::pair<double, double> > xyPath) {
-    std::pair<double, double>pathPoints;
+Point findLookaheadPoint(double xPos, double yPos, std::vector<Point> xyPath) {
+    Point pathPoints;
     double xPoint, yPoint;
     //keeps track of where our last point was so that we dont have to search the entire vector for the point again 
     bool doTheyIntersect = false;
     //check if they intersect, if they do, give that point to the program to follow
     while (!doTheyIntersect){
         xyPathPointCount++;
-        xPoint = xyPath.at(xyPathPointCount).first;
-        yPoint = xyPath.at(xyPathPointCount).second;
+        xPoint = xyPath.at(xyPathPointCount).x;
+        yPoint = xyPath.at(xyPathPointCount).y;
         //if the distance between the two centres of the circles is smaller/equal to the radius, the circles intersect/touch
         doTheyIntersect = circle(xPoint, yPoint, xPos, yPos, pointRadius, lookaheadDistance);
         //std::cout << "x: " << xPoint << " y: " << yPoint <<" intecept?" << doTheyIntersect << std::endl;
         }
-    pathPoints.first = xPoint;
-    pathPoints.second = yPoint;
+    pathPoints.x = xPoint;
+    pathPoints.y = yPoint;
     return pathPoints;
     }  

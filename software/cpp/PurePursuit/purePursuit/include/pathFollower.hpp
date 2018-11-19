@@ -26,4 +26,4 @@ public:
     void setLookAheadDistacne(double meters);
     void followPath();
     bool isFinished();
-}
+};
