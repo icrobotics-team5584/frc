@@ -4,17 +4,13 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <sstream>
-#include <fstream>
-#include <utility>
+#include <Point.hpp>
 int main()
 {
-    double robotX = 2.00095;
-    double robotY = 2.2231;
-    double please; 
-    std::vector<std::pair<double, double> > xyPath;
+    double robotX = 2;
+    double robotY = 2;
+    std::vector<Point> xyPath;
     xyPath = csvXY();
-    std::pair<double, double> point = findLookaheadPoint(robotX, robotY, xyPath);
-    std::cout << "x:  " << point.first << " y: " << point.second<< std::endl;
-    system("PAUSE");
+    Point point = findVelocityPoint(robotX, robotY, xyPath);
+    std::cout << "x:  " << point.x << "| y: " << point.y << "| velocity: " << point.velocity << std::endl;
 }

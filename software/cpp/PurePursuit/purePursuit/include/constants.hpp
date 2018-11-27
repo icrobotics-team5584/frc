@@ -1,5 +1,5 @@
 #ifndef MYLIB_CONSTANTS_H
-#define MYLIB_CONSTANTS_H
+#define _CONSTANTS
 
 //lookahead distance in metres
 const double lookaheadDistance = 1;

@@ -1,17 +1,18 @@
 #pragma once
 
-#include <vector>
-#include <string>
 #include "Point.hpp"
 #include "PositionSource.hpp"
 #include "DriveOutput.hpp"
+#include <vector>
+#include <string>
+
 
 using namespace std;
 
 class PathFollower {
 private:
     vector<Point> path;
-    double lookAheadDistance;   //Measureed in meters
+    double lookAheadDistance;   //Measured in meters
     PositionSource positionSource;
     DriveOutput driveOutput;
 
@@ -26,4 +27,4 @@ public:
     void setLookAheadDistacne(double meters);
     void followPath();
     bool isFinished();
-}
+};
