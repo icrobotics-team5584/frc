@@ -45,6 +45,7 @@ model {
                 exportedHeaders {
                     srcDir 'src/include'
                     include "**/*.h"
+                    include "../**/*.hpp"
                 }
             }
 
