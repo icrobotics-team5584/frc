@@ -21,6 +21,7 @@ private:
     double generateDriveCurve();
     void updatePosition();
     vector<Point> constructVectorPath(string csvPath);
+    void driveCurve();
 
 public:
     PathFollower(string csvPath, PositionSource source, DriveOutput output);
