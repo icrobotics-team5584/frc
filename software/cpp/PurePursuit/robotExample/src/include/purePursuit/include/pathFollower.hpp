@@ -20,12 +20,15 @@ private:
     Point findLookaheadPoint();
     double generateDriveCurve();
     void updatePosition();
-    vector<Point> constructVectorPath(string csvPath);
     void driveCurve();
 
 public:
+    vector<Point> constructVectorPath(string csvPath);    
     PathFollower(string csvPath, PositionSource source, DriveOutput output);
-    void setLookAheadDistacne(double meters);
+    PathFollower();
+    void setLookAheadDistance(double meters);
     void followPath();
     bool isFinished();
+
+    ~PathFollower();
 };

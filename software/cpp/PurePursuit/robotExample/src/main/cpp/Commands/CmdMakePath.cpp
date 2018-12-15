@@ -1,10 +1,13 @@
 #include "Commands/CmdMakePath.h"
 #include "purePursuit/include/pathFollower.hpp"
+#include "purePursuit/include/Point.hpp"
 
 
 CmdMakePath::CmdMakePath() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
+  PathFollower pf;
+  //vector<Point> path = pf.constructVectorPath("../../include/purePursit/examplePaths/test_left.csv");
 }
 
 // Called just before this Command runs the first time

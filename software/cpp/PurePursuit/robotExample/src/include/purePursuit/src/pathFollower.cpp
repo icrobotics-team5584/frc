@@ -5,6 +5,45 @@
 #include <utility>
 #include <stdlib.h>
 
+PathFollower::PathFollower() {
+        
+}
+
+PathFollower::PathFollower(string csvPath, PositionSource source, DriveOutput output) {}
+
+Point PathFollower::findClosestPoint() {
+        Point p;
+        p.velocity = 0;
+        p.x = 0;
+        p.y = 0;
+        return p;
+}
+
+Point PathFollower::findLookaheadPoint() {
+        Point p;
+        p.velocity = 0;
+        p.x = 0;
+        p.y = 0;
+        return p;
+}
+
+double PathFollower::generateDriveCurve() {
+        return 0;
+}
+
+void PathFollower::updatePosition() {}
+
+void PathFollower::driveCurve() {}
+
+void PathFollower::setLookAheadDistance(double meters) {
+}
+
+void PathFollower::followPath() {}
+
+bool PathFollower::isFinished() {
+        return true;
+}
+
 // This functions takes a csv file with an x and y header, and puts it all into pairs (doubles) and then into a vector to make it easy to read.
 std::vector<Point> PathFollower::constructVectorPath(string csvPath) {
         //open the file
@@ -32,4 +71,8 @@ std::vector<Point> PathFollower::constructVectorPath(string csvPath) {
 
         } 
         return xyPath;
-}     
+}
+
+PathFollower::~PathFollower(){
+        
+}

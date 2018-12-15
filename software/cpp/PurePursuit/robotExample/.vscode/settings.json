@@ -12,5 +12,8 @@
     ".project": true
   },
   "wpilib.online": true,
-  "C_Cpp.configurationWarnings": "Disabled"
+  "C_Cpp.configurationWarnings": "Disabled",
+  "files.associations": {
+    "vector": "cpp"
+  }
 }
