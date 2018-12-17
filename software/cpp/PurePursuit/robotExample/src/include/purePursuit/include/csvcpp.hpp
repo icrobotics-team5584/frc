@@ -7,7 +7,7 @@
 #include <fstream>
 #include <utility>
 #include <stdlib.h>
-#include <Point.hpp>
+#include "purePursuit/include/Point.hpp"
 
 // This functions takes a csv file with an x and y header, and puts it all into pairs (doubles) and then into a vector to make it easy to read.
 std::vector<Point> csvXY() {

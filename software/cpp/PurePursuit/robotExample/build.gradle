@@ -39,13 +39,13 @@ model {
 
             sources.cpp {
                 source {
-                    srcDir 'src/main/cpp'
+                    srcDirs 'src/main/cpp', 'src/include/purePursuit'
                     include "**/*.cpp"
                 }
                 exportedHeaders {
-                    srcDir 'src/include'
+                    srcDir 'src/include' 
                     include "**/*.h"
-                    include "../**/*.hpp"
+                    include "**/*.hpp"
                 }
             }
 

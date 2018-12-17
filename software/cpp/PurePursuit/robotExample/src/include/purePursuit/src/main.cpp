@@ -1,11 +1,11 @@
-#include "csvcpp.hpp"
-#include "pointFinder.hpp"
-#include "constants.hpp"
+#include "purePursuit/include/csvcpp.hpp"
+#include "purePursuit/include/pointFinder.hpp"
+#include "purePursuit/include/constants.hpp"
 #include <iostream>
 #include <string>
 #include <vector>
-#include <Point.hpp>
-int main()
+#include "purePursuit/include/Point.hpp"
+int main_purepursuit()
 {
     double robotX = 2;
     double robotY = 2;

@@ -1,6 +1,6 @@
-#include "constants.hpp"
-#include "pointFinder.hpp"
-#include "Point.hpp"
+#include "purePursuit/include/constants.hpp"
+#include "purePursuit/include/pointFinder.hpp"
+#include "purePursuit/include/Point.hpp"
 #include <typeinfo>
 #include <cmath>
 #include <iostream>
