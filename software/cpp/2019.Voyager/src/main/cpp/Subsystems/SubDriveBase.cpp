@@ -8,15 +8,15 @@
 #include "Subsystems/SubDriveBase.h"
 #include "Robot.h"
 #include "Commands/CmdJoystickDrive.h"
-
+#include <iostream>
 SubDriveBase::SubDriveBase() : 
-  Subsystem("ExampleSubsystem"),
-  difDrive(*_srxFrontLeft, *_srxFrontRight) {
+  Subsystem("ExampleSubsystem"){
+    cout << "Run drive base" << endl;
   _srxBackLeft = Robot::_robotMap->srxDriveBaseBackLeft;
   _srxBackRight = Robot::_robotMap->srxDriveBaseBackRight;
   _srxFrontRight = Robot::_robotMap->srxDriveBaseFrontRight;
   _srxFrontLeft = Robot::_robotMap->srxDriveBaseFrontLeft;
-  
+  difDrive.reset(new DifferentialDrive(*_srxFrontLeft, *_srxFrontRight));
 }
 
 void SubDriveBase::InitDefaultCommand() {
@@ -25,5 +25,5 @@ void SubDriveBase::InitDefaultCommand() {
 }
 
 void SubDriveBase::drive(double speed, double rotation) {
-  difDrive.ArcadeDrive(speed, rotation);
+  difDrive->ArcadeDrive(speed, rotation);
 }

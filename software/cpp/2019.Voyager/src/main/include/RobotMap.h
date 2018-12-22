@@ -13,9 +13,9 @@ using namespace std;
 
 enum Can {
     can_srxDriveBaseFrontRight = 1,
-    can_srxDriveBaseFrontLeft = 2,
-    can_srxDriveBaseBackLeft = 3,
-    can_srxDriveBaseBackRight = 4,
+    can_srxDriveBaseFrontLeft = 3,
+    can_srxDriveBaseBackRight = 2,
+    can_srxDriveBaseBackLeft = 4,
 };
 
 class RobotMap {

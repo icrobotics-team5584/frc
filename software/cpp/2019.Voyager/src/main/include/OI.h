@@ -7,7 +7,7 @@
 
 #pragma once
 #include <WPILib.h>
-
+using namespace std;
 class OI {
  public:
  std::shared_ptr<Joystick> controller;

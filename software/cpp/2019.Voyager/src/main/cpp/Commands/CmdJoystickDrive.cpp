@@ -19,7 +19,7 @@ void CmdJoystickDrive::Initialize() {}
 void CmdJoystickDrive::Execute() {
   double x = Robot::_oi->controller->GetX();
   double y = Robot::_oi->controller->GetY();
-  Robot::subDriveBase->drive(x,y);
+  Robot::subDriveBase->drive(y,x);
 }
 
 // Make this return true when this Command no longer needs to run execute()

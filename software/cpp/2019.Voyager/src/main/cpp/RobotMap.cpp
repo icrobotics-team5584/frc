@@ -1,5 +1,7 @@
 #include "RobotMap.h"
+#include <iostream>
 RobotMap::RobotMap(){
+    cout << "Run robot map" << endl;
     srxDriveBaseFrontRight.reset(new WPI_TalonSRX(can_srxDriveBaseFrontRight));
     srxDriveBaseFrontLeft.reset(new WPI_TalonSRX(can_srxDriveBaseFrontLeft));
     srxDriveBaseBackLeft.reset(new WPI_TalonSRX(can_srxDriveBaseBackLeft));

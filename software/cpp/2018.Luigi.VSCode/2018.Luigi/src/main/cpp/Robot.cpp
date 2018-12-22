@@ -19,7 +19,7 @@ void Robot::RobotInit() {
 
 	//Initiate Subsystems
 	subDriveBase.reset(new SubDriveBase());
-	subIntake.reset(new SubIntake());
+	subIntake.reset(new SubIntake()); 
 	subEncodedArmLift.reset(new SubEncodedArmLift());
 	subCameras.reset(new SubCameras);
 	subRamp.reset(new SubRamp);

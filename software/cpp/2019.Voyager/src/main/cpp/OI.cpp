@@ -8,7 +8,10 @@
 #include "OI.h"
 
 #include <WPILib.h>
+#include <iostream>
 
 OI::OI() {
+  
   controller.reset(new Joystick(0));
+  cout << "Run Robot OI" << endl;
 }
