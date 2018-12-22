@@ -6,6 +6,8 @@
 #include "OI.h"
 #include "RobotMap.h"
 #include "Subsystems/SubDriveBase.h"
+#include "Commands/CmdMakePath.h"
+
 
 using namespace std;
 
@@ -14,6 +16,7 @@ class Robot : public frc::TimedRobot {
   static shared_ptr<SubDriveBase> subDriveBase;
   static shared_ptr<OI> oi;
   static shared_ptr<RobotMap> robotMap;
+  unique_ptr<CmdMakePath> cmdMakePath;
 
   void RobotInit() override;
   void RobotPeriodic() override;

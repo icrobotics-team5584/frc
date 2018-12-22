@@ -8,9 +8,16 @@
 #pragma once
 
 #include <Commands/Command.h>
+#include "purePursuit/include/Point.hpp"
+#include <vector>
+
+using namespace std;
 
 class CmdMakePath : public frc::Command {
- public:
+private:
+  vector<Point> path;
+
+public:
   CmdMakePath();
   void Initialize() override;
   void Execute() override;

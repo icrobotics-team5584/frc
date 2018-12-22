@@ -1,24 +1,28 @@
 #include "Commands/CmdMakePath.h"
 #include "purePursuit/include/pathFollower.hpp"
-#include "purePursuit/include/Point.hpp"
-#include <vector>
 #include <iostream>
 
 CmdMakePath::CmdMakePath() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
+  cout << "Constructing a CmdMakePath" << endl;
   PathFollower pf;
-  
-  vector<Point> path = pf.constructVectorPath("../../include/purePursit/examplePaths/test_left.csv");
-
-  for (Point point : path) {
-    cout << point.x << point.y << point.velocity << endl;
-  }
+  path = pf.constructVectorPath("../../include/purePursit/examplePaths/test_left.csv");
+  cout << "Finished constructVectorPath" << endl;
 }
 
 // Called just before this Command runs the first time
+void CmdMakePath::Initialize() {
+  cout << "Running init" << endl;
+  cout << path.size() << endl;
 
-void CmdMakePath::Initialize() {}
+
+  for (int i=0; i<path.size(); i++) {
+    cout << i << ": ";
+    cout << path[i].x << path[i].y << path[i].velocity << endl;
+  }
+
+}
 
 // Called repeatedly when this Command is scheduled to run
 void CmdMakePath::Execute() {}

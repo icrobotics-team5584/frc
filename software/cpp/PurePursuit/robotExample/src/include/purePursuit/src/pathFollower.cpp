@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 PathFollower::PathFollower() {
-        
+        cout << "Constructing a PathFollower" << endl; 
 }
 
 PathFollower::PathFollower(string csvPath, PositionSource source, DriveOutput output) {}

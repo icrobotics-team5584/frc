@@ -1,12 +1,14 @@
 #include "Robot.h"
 #include <Commands/Scheduler.h>
 #include <SmartDashboard/SmartDashboard.h>
+#include <iostream>
 
 shared_ptr<SubDriveBase> Robot::subDriveBase;
 shared_ptr<OI> Robot::oi;
 shared_ptr<RobotMap> Robot::robotMap;
 
 void Robot::RobotInit() {
+  cmdMakePath.reset(new CmdMakePath);
   robotMap.reset(new RobotMap());
 
   // Create Subsystems after robotMap so subsystems can use all the devices created
@@ -53,6 +55,8 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
+  cout << "Running Teleop init" << endl;
+  cmdMakePath->Start();
 }
 
 void Robot::TeleopPeriodic() { 
