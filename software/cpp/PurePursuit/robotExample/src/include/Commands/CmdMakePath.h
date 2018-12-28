@@ -8,20 +8,23 @@
 #pragma once
 
 #include <Commands/Command.h>
-#include "purePursuit/include/Point.hpp"
 #include <vector>
+#include "purePursuit/include/Point.hpp"
+#include "purePursuit/include/pathFollower.hpp"
+
 
 using namespace std;
 
 class CmdMakePath : public frc::Command {
-private:
-  vector<Point> path;
+   private:
+    vector<Point> path;
+    unique_ptr<PathFollower> pathFollower;
 
-public:
-  CmdMakePath();
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
+   public:
+    CmdMakePath();
+    void Initialize() override;
+    void Execute() override;
+    bool IsFinished() override;
+    void End() override;
+    void Interrupted() override;
 };
