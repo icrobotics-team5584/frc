@@ -4,16 +4,7 @@
 CmdMakePath::CmdMakePath() {
     // Use Requires() here to declare subsystem dependencies
     // eg. Requires(Robot::chassis.get());
-    cout << "Running CmdMakePath::CmdMakePath()" << endl;
-    pathFollower.reset(new PathFollower);
-    cout << "Running CmdMakePath::Initialize()" << endl;
-    path = pathFollower->constructVectorPath("test_left");
-    int size = path.size();
-    cout << "path of size " << size << " created." << endl;
-    cout << "first points:" << endl; 
-    for (int i = 0; i < min(size, 5); i++) {
-        cout << "\t" << path[i].x << path[i].y << path[i].velocity << endl;
-    }
+    pathFollower.reset(new PathFollower("test_left", posEncoderGyro.get(), dvoTank.get()));
 }
 
 // Called just before this Command runs the first time

@@ -6,7 +6,6 @@
 #include <vector>
 #include <string>
 
-
 using namespace std;
 
 class PathFollower {
@@ -21,11 +20,11 @@ private:
     double generateDriveCurve();
     void updatePosition();
     void driveCurve();
+    vector<Point> constructVectorPath(string csvPath);    
 
 public:
-    vector<Point> constructVectorPath(string csvPath);    
-    PathFollower(string csvPath, PositionSource source, DriveOutput output);
-    PathFollower();
+    PathFollower(string csvPath, PositionSource* source, DriveOutput* output);
+    int getPathSize();
     void setLookAheadDistance(double meters);
     void followPath();
     bool isFinished();

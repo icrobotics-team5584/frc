@@ -5,10 +5,21 @@
 #include <sstream>
 #include <utility>
 
-PathFollower::PathFollower() { cout << "Running PathFollower::PathFollower()" << endl; }
-
-PathFollower::PathFollower(string csvPath, PositionSource source,
-                           DriveOutput output) {}
+/*
+ * Instantiate a PathFollower object with a given robot path represented by a csv file of 
+ * x, y, velocity points. source is the object used to determine robot's current position,
+ * and output is the object used to operate the drivebase. During construction, this class
+ * prints the size and first five points of the created path. 
+ */
+PathFollower::PathFollower(string csvPath, PositionSource* source,
+                           DriveOutput* output) {
+    path = constructVectorPath(csvPath);
+    cout << "path of size " << getPathSize() << " created." << endl;
+    cout << "first points:" << endl; 
+    for (int i = 0; i < min(getPathSize(), 5); i++) {
+        cout << "  " << path[i].x << path[i].y << path[i].velocity << endl;
+    }
+}
 
 Point PathFollower::findClosestPoint() {
     Point p;
@@ -65,9 +76,12 @@ std::vector<Point> PathFollower::constructVectorPath(string csvPath) {
         point.velocity = velocity;
         xyPath.push_back(point);
         // cout for debugging in the future
-        //      std::cout << "x: " << point.x << " | y: " << point.y << " | velcoity: " << point.velocity << std::endl;
+        //      std::cout << "x: " << point.x << " | y: " << point.y << " |
+        //      velcoity: " << point.velocity << std::endl;
     }
     return xyPath;
 }
+
+int PathFollower::getPathSize() { return path.size(); }
 
 PathFollower::~PathFollower() {}

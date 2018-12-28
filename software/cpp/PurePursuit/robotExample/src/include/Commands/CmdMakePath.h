@@ -9,16 +9,16 @@
 
 #include <Commands/Command.h>
 #include <vector>
-#include "purePursuit/include/Point.hpp"
 #include "purePursuit/include/pathFollower.hpp"
-
+#include "WPILib.h"
 
 using namespace std;
 
 class CmdMakePath : public frc::Command {
    private:
-    vector<Point> path;
     unique_ptr<PathFollower> pathFollower;
+    unique_ptr<PositionSource> posEncoderGyro;
+    unique_ptr<DriveOutput> dvoTank;
 
    public:
     CmdMakePath();
