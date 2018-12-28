@@ -5,7 +5,7 @@
 #include <sstream>
 #include <utility>
 
-PathFollower::PathFollower() { cout << "Constructing a PathFollower" << endl; }
+PathFollower::PathFollower() { cout << "Running PathFollower::PathFollower()" << endl; }
 
 PathFollower::PathFollower(string csvPath, PositionSource source,
                            DriveOutput output) {}
@@ -42,7 +42,8 @@ bool PathFollower::isFinished() { return true; }
 // pairs (doubles) and then into a vector to make it easy to read.
 std::vector<Point> PathFollower::constructVectorPath(string csvPath) {
     // open the file
-    std::ifstream data(csvPath);
+    cout << "Constructing path: " << csvPath << endl;
+    std::ifstream data("home/lvuser/paths/" + csvPath + ".csv");
     std::string line;
     std::vector<Point> xyPath;
     std::string x, y, v;

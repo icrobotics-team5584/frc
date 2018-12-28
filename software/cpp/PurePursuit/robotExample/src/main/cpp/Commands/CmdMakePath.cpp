@@ -7,21 +7,19 @@ CmdMakePath::CmdMakePath() {
   // eg. Requires(Robot::chassis.get());
   cout << "Constructing a CmdMakePath" << endl;
   PathFollower pf;
-  path = pf.constructVectorPath("../../include/purePursit/examplePaths/test_left.csv");
+  path = pf.constructVectorPath("test_left");
   cout << "Finished constructVectorPath" << endl;
 }
 
 // Called just before this Command runs the first time
 void CmdMakePath::Initialize() {
-  cout << "Running init" << endl;
-  cout << path.size() << endl;
-
+  cout << "Running CmdMakePath::Initialize()" << endl;
+  cout << "path size: " << path.size() << endl;
 
   for (int i=0; i<path.size(); i++) {
-    cout << i << ": ";
+    cout << "point " << i << ": ";
     cout << path[i].x << path[i].y << path[i].velocity << endl;
   }
-
 }
 
 // Called repeatedly when this Command is scheduled to run

@@ -15,5 +15,6 @@
   "C_Cpp.configurationWarnings": "Disabled",
   "files.associations": {
     "vector": "cpp"
-  }
+  },
+  "C_Cpp.default.configurationProvider": "vscode-wpilib"
 }
