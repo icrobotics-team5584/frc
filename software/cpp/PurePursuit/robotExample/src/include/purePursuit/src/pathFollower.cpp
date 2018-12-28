@@ -6,16 +6,24 @@
 #include <utility>
 
 /*
- * Instantiate a PathFollower object with a given robot path represented by a csv file of 
- * x, y, velocity points. source is the object used to determine robot's current position,
- * and output is the object used to operate the drivebase. During construction, this class
- * prints the size and first five points of the created path. 
+ * Instantiate a PathFollower object with a given robot path represented by a
+ * csv file of x, y, velocity points. source is the object used to determine
+ * robot's current position, and output is the object used to operate the
+ * drivebase. During construction, this class prints the size and first five
+ * points of the created path.
  */
-PathFollower::PathFollower(string csvPath, PositionSource* source,
-                           DriveOutput* output) {
+PathFollower::PathFollower(string csvPath, shared_ptr<PositionSource> source,
+                           shared_ptr<DriveOutput> output) {
+    // Save objects locally
+    cout << source->ping() << endl;
+    _source = source;
+    _output = output;
+    cout << _source->ping() << endl;
     path = constructVectorPath(csvPath);
+
+    // Output debug information
     cout << "path of size " << getPathSize() << " created." << endl;
-    cout << "first points:" << endl; 
+    cout << "first points:" << endl;
     for (int i = 0; i < min(getPathSize(), 5); i++) {
         cout << "  " << path[i].x << path[i].y << path[i].velocity << endl;
     }
@@ -45,7 +53,10 @@ void PathFollower::driveCurve() {}
 
 void PathFollower::setLookAheadDistance(double meters) {}
 
-void PathFollower::followPath() {}
+// Run this in execute, presumed to run every 20ms
+void PathFollower::followPath() { 
+    currentPoint = _source->get();
+}
 
 bool PathFollower::isFinished() { return true; }
 
@@ -80,6 +91,10 @@ std::vector<Point> PathFollower::constructVectorPath(string csvPath) {
         //      velcoity: " << point.velocity << std::endl;
     }
     return xyPath;
+}
+
+Point PathFollower::getCurrentPoint() { 
+    return currentPoint; 
 }
 
 int PathFollower::getPathSize() { return path.size(); }

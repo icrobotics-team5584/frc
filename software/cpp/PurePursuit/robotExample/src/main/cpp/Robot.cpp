@@ -18,7 +18,6 @@ void Robot::RobotInit() {
 
     // Begin loading pure persuit path as soon as robot is on.
     cmdMakePath.reset(new CmdMakePath);
-    cmdMakePath->Start();
 }
 
 /**
@@ -48,7 +47,9 @@ void Robot::AutonomousInit() {}
 
 void Robot::AutonomousPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
-void Robot::TeleopInit() {}
+void Robot::TeleopInit() {
+    cmdMakePath->Start();
+}
 
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 

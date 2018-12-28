@@ -1,6 +1,7 @@
 #pragma once
 
 #include <WPILib.h>
+#include <AHRS.h>
 #include <ctre/Phoenix.h>
 
 using namespace std;
@@ -30,10 +31,13 @@ class RobotMap {
 public:
     RobotMap();
 
-    //DriveBase Actuators
+    // DriveBase Actuators
     shared_ptr<WPI_TalonSRX> srxDriveBaseLeft;
     shared_ptr<WPI_TalonSRX> srxDriveBaseRight;
     shared_ptr<WPI_TalonSRX> srxDriveBaseLeftSlave;
     shared_ptr<WPI_TalonSRX> srxDriveBaseRightSlave;
+
+    // DriveBase Sensors
+    shared_ptr<AHRS> ahrsDriveBaseNavX;
 };
 

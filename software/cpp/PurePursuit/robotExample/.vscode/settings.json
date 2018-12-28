@@ -14,7 +14,17 @@
   "wpilib.online": true,
   "C_Cpp.configurationWarnings": "Disabled",
   "files.associations": {
-    "vector": "cpp"
-  },
+    "vector": "cpp",
+    "memory": "cpp",
+    "array": "cpp",
+    "istream": "cpp",
+    "tuple": "cpp",
+    "type_traits": "cpp",
+    "utility": "cpp",
+    "xlocmes": "cpp",
+    "xlocmon": "cpp",
+    "xlocnum": "cpp",
+    "xloctime": "cpp"
+},
   "C_Cpp.default.configurationProvider": "vscode-wpilib"
 }
