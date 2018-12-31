@@ -20,7 +20,7 @@ class CmdMakePath : public frc::Command {
     unique_ptr<PathFollower> pathFollower;
     shared_ptr<PosEncoderGyro> posEncoderGyro;
     shared_ptr<DriveOutput> dvoTank;
-    
+    int iteration = 0;
    public:
     CmdMakePath();
     void Initialize() override;

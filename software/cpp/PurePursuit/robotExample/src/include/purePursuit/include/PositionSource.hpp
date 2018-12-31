@@ -6,9 +6,7 @@ class PositionSource {
 
 public:
     PositionSource();
-
-    virtual bool ping();
-
+    
     virtual Point get() = 0;
 
     ~PositionSource();

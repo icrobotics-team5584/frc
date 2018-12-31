@@ -48,10 +48,16 @@ void Robot::AutonomousInit() {}
 void Robot::AutonomousPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::TeleopInit() {
+    //Zero sensors
+    subDriveBase->zeroEncoders();
+    subDriveBase->zeroGyro();
+
     cmdMakePath->Start();
 }
 
-void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
+void Robot::TeleopPeriodic() { 
+    frc::Scheduler::GetInstance()->Run(); 
+}
 
 void Robot::TestPeriodic() {}
 

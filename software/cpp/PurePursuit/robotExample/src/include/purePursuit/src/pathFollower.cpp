@@ -15,10 +15,8 @@
 PathFollower::PathFollower(string csvPath, shared_ptr<PositionSource> source,
                            shared_ptr<DriveOutput> output) {
     // Save objects locally
-    cout << source->ping() << endl;
     _source = source;
     _output = output;
-    cout << _source->ping() << endl;
     path = constructVectorPath(csvPath);
 
     // Output debug information

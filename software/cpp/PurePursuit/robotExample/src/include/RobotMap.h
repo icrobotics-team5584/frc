@@ -15,10 +15,11 @@ using namespace std;
 
 enum CanID {
     //DriveBase Actuator IDs
-    canID_srxDriveBaseFrontLeft     = 8,
-    canID_srxDriveBaseFrontRight    = 7,
-    canID_srxDriveBaseBackLeft      = 6,
-    canID_srxDriveBaseBackRight     = 5,
+    canID_srxDriveBaseFrontLeft     = 2,
+    canID_srxDriveBaseFrontRight    = 4,
+    canID_srxDriveBaseBackLeft      = 1,
+    canID_srxDriveBaseBackRight     = 3,
+    canID_srxAngleEncoder           = 8
 };
 
 enum IOPort {

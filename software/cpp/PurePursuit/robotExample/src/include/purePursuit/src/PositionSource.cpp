@@ -4,10 +4,6 @@ PositionSource::PositionSource() {
 
 }
 
-bool PositionSource::ping() {
-    return false;
-}
-
 PositionSource::~PositionSource() {
 
 }

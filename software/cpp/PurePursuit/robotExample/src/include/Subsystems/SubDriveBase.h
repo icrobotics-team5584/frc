@@ -15,8 +15,9 @@ class SubDriveBase : public frc::Subsystem {
     shared_ptr<WPI_TalonSRX> srxRightSlave;
     unique_ptr<frc::DifferentialDrive> diffDrive;
 
-    unique_ptr<SpeedControllerGroup> scgLeft;
-    unique_ptr<SpeedControllerGroup> scgRight;
+    const int UNITS_PER_ROTATION = 4096;
+    const double WHEEL_DIAMETER = 0.1; // in m
+    double wheelCircumference; 
 
     shared_ptr<AHRS> ahrsNavX;
 
@@ -26,4 +27,6 @@ class SubDriveBase : public frc::Subsystem {
     void drive(double speed, double rotation, bool squaredInput = false);
     double getAngle();
     double getDistance();
+    void zeroGyro();
+    void zeroEncoders();
 };

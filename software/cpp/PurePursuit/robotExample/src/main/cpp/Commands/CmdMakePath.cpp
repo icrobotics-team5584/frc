@@ -1,5 +1,6 @@
 #include "Commands/CmdMakePath.h"
 #include <iostream>
+#include "Robot.h"
 
 CmdMakePath::CmdMakePath() {
     // Use Requires() here to declare subsystem dependencies
@@ -7,7 +8,6 @@ CmdMakePath::CmdMakePath() {
     cout << "Running CmdMakePath::CmdMakePath()" << endl;
     posEncoderGyro.reset(new PosEncoderGyro);
     dvoTank.reset(new DriveOutput);
-    cout << posEncoderGyro->ping() << endl;
     pathFollower.reset(new PathFollower("test_left", posEncoderGyro, dvoTank));
 }
 
@@ -20,8 +20,13 @@ void CmdMakePath::Initialize() {
 void CmdMakePath::Execute() {
 
     pathFollower->followPath();
+
     Point p = pathFollower->getCurrentPoint();
-    cout << "current state: " << p.x << " " << p.y << p.velocity << endl; 
+    SmartDashboard::PutNumber("angle", Robot::subDriveBase->getAngle());
+    SmartDashboard::PutNumber("dist", Robot::subDriveBase->getDistance());
+    SmartDashboard::PutNumber("x pos", p.x);
+    SmartDashboard::PutNumber("y pos", p.y);
+    SmartDashboard::PutNumber("velocity", p.velocity);
 }
 
 // Make this return true when this Command no longer needs to run execute()

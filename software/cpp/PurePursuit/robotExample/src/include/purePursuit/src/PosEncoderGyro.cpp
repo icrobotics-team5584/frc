@@ -1,32 +1,32 @@
 #include "purePursuit/include/PosEncoderGyro.h"
 #include "Robot.h"
 #include <iostream>
+#include <cmath>
 
 PosEncoderGyro::PosEncoderGyro() {
-    prevPoint.velocity = 0;
-    prevPoint.x = 0;
-    prevPoint.y = 0;
-}
-
-bool PosEncoderGyro::ping() {
-    return true;
+    currentPoint.velocity = 0;
+    currentPoint.x = 0;
+    currentPoint.y = 0;
+    timer.Start();
 }
 
 Point PosEncoderGyro::get() {
-    Point currentPoint;
+    //Check time period
+    SmartDashboard::PutNumber("time interval", timer.Get());
+    timer.Reset();
 
     // Get relevant values
-    double currentAngle = Robot::subDriveBase->getAngle();
+    double currentAngle = Robot::subDriveBase->getAngle() * 0.01745329251; // Convert to radians
     double currentDistance = Robot::subDriveBase->getDistance();
     double distanceDelta = currentDistance - prevDistance;
+    SmartDashboard::PutNumber("distanceDelta", distanceDelta);
 
     // Determine current position
-    currentPoint.x = distanceDelta * cos(currentAngle);
-    currentPoint.y = distanceDelta * sin(currentAngle);
+    currentPoint.x += distanceDelta * cos(currentAngle);
+    currentPoint.y += distanceDelta * sin(currentAngle);
     currentPoint.velocity = distanceDelta / 0.02; // Presumed to run every 20ms
 
     // Save values for next iteration
-    prevPoint = currentPoint;
     prevDistance = currentDistance;
 
     return currentPoint;
