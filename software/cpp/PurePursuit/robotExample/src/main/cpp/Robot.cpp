@@ -18,6 +18,8 @@ void Robot::RobotInit() {
 
     // Begin loading pure persuit path as soon as robot is on.
     cmdMakePath.reset(new CmdMakePath);
+
+    cout << "End of RobotInit" << endl;
 }
 
 /**
@@ -48,6 +50,8 @@ void Robot::AutonomousInit() {}
 void Robot::AutonomousPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::TeleopInit() {
+    cout << "Start of TeleopInit" << endl;
+
     //Zero sensors
     subDriveBase->zeroEncoders();
     subDriveBase->zeroGyro();

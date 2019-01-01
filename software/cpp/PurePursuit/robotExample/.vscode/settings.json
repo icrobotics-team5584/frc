@@ -25,7 +25,9 @@
     "xlocmon": "cpp",
     "xlocnum": "cpp",
     "xloctime": "cpp",
-    "cmath": "cpp"
+    "cmath": "cpp",
+    "ostream": "cpp",
+    "iostream": "cpp"
 },
   "C_Cpp.default.configurationProvider": "vscode-wpilib"
 }

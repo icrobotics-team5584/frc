@@ -11,6 +11,7 @@
 #include <vector>
 #include "purePursuit/include/pathFollower.hpp"
 #include "purePursuit/include/PosEncoderGyro.h"
+#include "purePursuit/include/DvoTank.h"
 #include "WPILib.h"
 
 using namespace std;
@@ -19,7 +20,7 @@ class CmdMakePath : public frc::Command {
    private:
     unique_ptr<PathFollower> pathFollower;
     shared_ptr<PosEncoderGyro> posEncoderGyro;
-    shared_ptr<DriveOutput> dvoTank;
+    shared_ptr<DvoTank> dvoTank;
     int iteration = 0;
    public:
     CmdMakePath();

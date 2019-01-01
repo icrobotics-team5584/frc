@@ -6,6 +6,7 @@
 #include <sstream>
 #include <typeinfo>
 #include <utility>
+#include <WPILib.h>
 
 /*
  * Instantiate a PathFollower object with a given robot path represented by a
@@ -21,12 +22,24 @@ PathFollower::PathFollower(string csvPath, shared_ptr<PositionSource> source,
     _output = output;
     path = constructVectorPath(csvPath);
 
+    // Set robot position to start of path
+    SmartDashboard::PutNumber("start x", path[0].x);
+    SmartDashboard::PutNumber("start y", path[0].y);
+    _source->set(path[0].x, path[0].y);
+
     // Output debug information
-    cout << "path of size " << getPathSize() << " created." << endl;
-    cout << "first points:" << endl;
-    for (int i = 0; i < min(getPathSize(), 5); i++) {
-        cout << "  " << path[i].x << path[i].y << path[i].velocity << endl;
+    if (getPathSize() > 0) {
+        cout << "path of size " << getPathSize() << " created." << endl;
+        cout << "first points:" << endl;
+        for (int i = 0; i < min(getPathSize(), 5); i++) {
+            cout << "  " << path[i].x << path[i].y << path[i].velocity << endl;
+        }
+    } else {
+        cout << "WARNING: Pure Pursuit path size is zero, this could cause problems" << endl;
+        cout << "Make sure the correct path is selected and the csv files are on the RIO" << endl;
     }
+
+    cout << "end of PathFollower()" << endl;
 }
 
 int PathFollower::getPathSize() { return path.size(); }
@@ -42,9 +55,28 @@ void PathFollower::setPointRadius(double meters) {
 // Drives the robot along the path as long as this is continuously called. 
 void PathFollower::followPath() { 
     currentPosition = _source->get();
+    SmartDashboard::PutNumber("current x", currentPosition.first);
+    SmartDashboard::PutNumber("current y", currentPosition.second);
+
+    Point lookaheadPoint = findLookaheadPoint();
+    SmartDashboard::PutNumber("lookahead x", lookaheadPoint.x);    
+    SmartDashboard::PutNumber("lookahead y", lookaheadPoint.y);    
+    
+    // Point closestPoint = findClosestPoint();
+    // SmartDashboard::PutNumber("closest x", closestPoint.x);
+    // SmartDashboard::PutNumber("closest y", closestPoint.y); 
+
+    // double driveCurve = generateDriveCurve();
+    // SmartDashboard::PutNumber("driveCurve", driveCurve);
+
+    // _output->set(driveCurve);
 }
 
 bool PathFollower::isFinished() { return false; }
+
+void PathFollower::reset() {
+    _source->set(path[0].x, path[0].y);
+}
 
 /*
  * This function returns the 'closest' point. However, it only works under
@@ -60,15 +92,17 @@ bool PathFollower::isFinished() { return false; }
  * 'previously' used for finding velocity. Then draw lines between each point
  * and notice how the distance from them increase as you go along the path.
  */
-Point PathFollower::findClosestPoint(double xPos, double yPos,
-                                     std::vector<Point> xyPath) {
+Point PathFollower::findClosestPoint() {
+    double xPos = currentPosition.first;
+    double yPos = currentPosition.second;
+
     // a velocity point is just a normal point from the csv, but we are using it
     // for velocity purpose
     Point velocityPoint;
     double oldVelocityPointX, oldVelocityPointY;
     double newVelocityPointX, newVelocityPointY;
-    oldVelocityPointX = xyPath.at(closestVelocityPointCount).x;
-    oldVelocityPointY = xyPath.at(closestVelocityPointCount).y;
+    oldVelocityPointX = path.at(closestVelocityPointCount).x;
+    oldVelocityPointY = path.at(closestVelocityPointCount).y;
     // so that we can compare the original and the changing distances so that we
     // know when the distance is getting bigger.
     double oldDistance =
@@ -77,23 +111,25 @@ Point PathFollower::findClosestPoint(double xPos, double yPos,
     // so that the loop goes on forever (the return breaks it)
     while (true) {
         closestVelocityPointCount++;
-        newVelocityPointX = xyPath.at(closestVelocityPointCount).x;
-        newVelocityPointY = xyPath.at(closestVelocityPointCount).y;
-        newDistance =
-            distanceToPoint(xPos, yPos, newVelocityPointX, newVelocityPointY);
-        Point point = xyPath.at(closestVelocityPointCount);
-        std::cout << "olddistance: " << oldDistance
-                  << "| newdistance: " << newDistance << std::endl;
+        newVelocityPointX = path.at(closestVelocityPointCount).x;
+        newVelocityPointY = path.at(closestVelocityPointCount).y;
+        newDistance = distanceToPoint(xPos, yPos, newVelocityPointX, newVelocityPointY);
+        Point point = path.at(closestVelocityPointCount);
+        std::cout << "olddistance: " << oldDistance << "| newdistance: " << newDistance << std::endl;
         // checks whether we are currently looking at our closest point (if it
         // is true then yes)
         if (newDistance > oldDistance) {
-            velocityPoint = xyPath.at(closestVelocityPointCount);
+            velocityPoint = path.at(closestVelocityPointCount);
             return velocityPoint;
         } else {
             newVelocityPointX = oldVelocityPointX;
             newVelocityPointY = oldVelocityPointY;
         }
     }
+}
+
+int PathFollower::findClosestPointIndex() {
+    return closestVelocityPointCount;
 }
 
 // Use pythagoras to find the distance between 2 points
@@ -116,43 +152,58 @@ bool PathFollower::isLookaheadPoint(double x1, double y1, double x2, double y2,
                                     double r1, double r2) {
     double distSq = (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1);
     double radSumSq = (r1 + r2) * (r1 + r2);
-    // if they distance is greater than the sum of the two triangles, they are
+
+    //cout << "point x: " << x1 << ". point y: " << y1 << ". radius: " << pointRadius << endl;
+    //cout << "dist   : " << sqrt(distSq) << ". radSum : " << sqrt(radSumSq) << endl;
+
+    // if the distance is greater than the sum of the two triangles, they are
     // not touching
-    if (distSq > radSumSq) return false;
-    // this checks whether it circle is inside the other
-    else if (distSq < std::abs(r1 - r2))
+    if (distSq > radSumSq) {
         return false;
+    }
+    // this checks whether it circle is inside the other
+    else if (distSq < std::abs(r1 - r2)) {
+        return false;
+    }
     // check whether they are the same circle (will not happen in our current
     // situation, since the radiuses are different, but just in case)
-    else if ((distSq == 0) && (r1 = r2))
+    else if ((distSq == 0) && (r1 = r2)) {
         return false;
-    else if (distSq < radSumSq)
+    }
+    else if (distSq < radSumSq) {
         return true;
-    else
+    }
+    else {
         return false;
+    }
 }
 
-Point PathFollower::findLookaheadPoint(double xPos, double yPos,
-                                       std::vector<Point> xyPath) {
+Point PathFollower::findLookaheadPoint() {
+    double xPos = currentPosition.first;
+    double yPos = currentPosition.second;
+
     Point pathPoints;
     double xPoint, yPoint;
-    // keeps track of where our last point was so that we dont have to search
-    // the entire vector for the point again
+    double xyPathPointCount = findClosestPointIndex();  // Start search at point closest to robot
+
+    // Find the point with a radius that intersects the circle made by our lookahead distance
     bool doTheyIntersect = false;
-    // if they intersect, give that point to the program to follow
-    while (!doTheyIntersect) {
+    while ((!doTheyIntersect) && (xyPathPointCount < getPathSize()-1)) {
         xyPathPointCount++;
-        xPoint = xyPath.at(xyPathPointCount).x;
-        yPoint = xyPath.at(xyPathPointCount).y;
+        xPoint = path.at(xyPathPointCount).x;
+        yPoint = path.at(xyPathPointCount).y;
         // if the distance between the two centres of the circles is
         // smaller/equal to the radius, the circles intersect/touch
         doTheyIntersect = isLookaheadPoint(xPoint, yPoint, xPos, yPos,
                                            pointRadius, lookaheadDistance);
-        // std::cout << "x: " << xPoint << " y: " << yPoint <<" intecept?" <<
-        // doTheyIntersect << std::endl;
     }
-    pathPoints.x = xPoint;
-    pathPoints.y = yPoint;
+    if (doTheyIntersect) {
+        pathPoints.x = xPoint;
+        pathPoints.y = yPoint;
+    } else {
+        cout << "ERROR: Could not find lookahead point. Using 0, 0" << endl;
+    }
+
     return pathPoints;
 }
 

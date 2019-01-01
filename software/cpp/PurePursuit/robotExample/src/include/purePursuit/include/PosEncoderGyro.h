@@ -6,9 +6,11 @@
 using namespace std;
 
 class PosEncoderGyro : public PositionSource {
-   public:
+public:
     PosEncoderGyro();
+    void reset();
     pair<double, double> get();
+    void set(double x, double y);
 private:
     pair<double, double> currentPosition;
     double prevDistance = 0;

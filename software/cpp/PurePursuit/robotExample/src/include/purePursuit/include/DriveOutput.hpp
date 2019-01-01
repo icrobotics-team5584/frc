@@ -3,6 +3,7 @@
 class DriveOutput {
 
 public:
-    DriveOutput();
-    ~DriveOutput();
+
+    virtual void set(double curve) = 0;
+
 };

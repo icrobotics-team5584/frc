@@ -17,23 +17,25 @@ public:
     void setPointRadius(double meters);
     void followPath();
     bool isFinished();
+    void reset();
 
 private:
+    double lookaheadDistance = 1;   // Measured in meters
+    double pointRadius = 0.3;       // Measured in meters
     vector<Point> path;
-    double lookaheadDistance = 0.8;   // Measured in meters
-    double pointRadius = 0.1;  // Measured in meters
     shared_ptr<PositionSource> _source;
     shared_ptr<DriveOutput> _output;
-    pair<double, double> currentPosition;
 
+    pair<double, double> currentPosition;
     int closestVelocityPointCount = 0;
     int xyPathPointCount = -1;
     bool pointNotFound = false;
 
-    Point findClosestPoint(double xPos, double yPos, std::vector<Point> xyPath);
+    Point findClosestPoint();
+    int findClosestPointIndex();
     double distanceToPoint(double xPos, double yPos, double xPoint, double yPoint);
     bool isLookaheadPoint(double x1, double y1, double x2, double y2, double r1, double r2);
-    Point findLookaheadPoint(double xPos, double yPos, std::vector<Point> xyPath);
+    Point findLookaheadPoint();
     double generateDriveCurve();
     void updatePosition();
     vector<Point> constructVectorPath(string csvPath);    
