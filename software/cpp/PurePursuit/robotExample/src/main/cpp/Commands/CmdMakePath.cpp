@@ -21,12 +21,12 @@ void CmdMakePath::Execute() {
 
     pathFollower->followPath();
 
-    Point p = pathFollower->getCurrentPoint();
+    pair<double, double> currentPosition = posEncoderGyro->get();
+
     SmartDashboard::PutNumber("angle", Robot::subDriveBase->getAngle());
     SmartDashboard::PutNumber("dist", Robot::subDriveBase->getDistance());
-    SmartDashboard::PutNumber("x pos", p.x);
-    SmartDashboard::PutNumber("y pos", p.y);
-    SmartDashboard::PutNumber("velocity", p.velocity);
+    SmartDashboard::PutNumber("x pos", currentPosition.first);
+    SmartDashboard::PutNumber("y pos", currentPosition.second);
 }
 
 // Make this return true when this Command no longer needs to run execute()

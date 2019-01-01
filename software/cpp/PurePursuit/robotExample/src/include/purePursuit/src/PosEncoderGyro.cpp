@@ -4,13 +4,12 @@
 #include <cmath>
 
 PosEncoderGyro::PosEncoderGyro() {
-    currentPoint.velocity = 0;
-    currentPoint.x = 0;
-    currentPoint.y = 0;
+    currentPosition.first = 0;
+    currentPosition.second = 0;
     timer.Start();
 }
 
-Point PosEncoderGyro::get() {
+pair<double, double> PosEncoderGyro::get() {
     //Check time period
     SmartDashboard::PutNumber("time interval", timer.Get());
     timer.Reset();
@@ -22,12 +21,11 @@ Point PosEncoderGyro::get() {
     SmartDashboard::PutNumber("distanceDelta", distanceDelta);
 
     // Determine current position
-    currentPoint.x += distanceDelta * cos(currentAngle);
-    currentPoint.y += distanceDelta * sin(currentAngle);
-    currentPoint.velocity = distanceDelta / 0.02; // Presumed to run every 20ms
+    currentPosition.first += distanceDelta * cos(currentAngle);
+    currentPosition.second += distanceDelta * sin(currentAngle);
 
     // Save values for next iteration
     prevDistance = currentDistance;
 
-    return currentPoint;
+    return currentPosition;
 }

@@ -1,13 +1,10 @@
 #pragma once
 
-#include <purePursuit/include/Point.hpp>
+#include <utility>
+
+using namespace std;
 
 class PositionSource {
-
-public:
-    PositionSource();
-    
-    virtual Point get() = 0;
-
-    ~PositionSource();
+public:    
+    virtual pair<double, double> get() = 0;
 };
