@@ -62,9 +62,9 @@ void PathFollower::followPath() {
     SmartDashboard::PutNumber("lookahead x", lookaheadPoint.x);    
     SmartDashboard::PutNumber("lookahead y", lookaheadPoint.y);    
     
-    // Point closestPoint = findClosestPoint();
-    // SmartDashboard::PutNumber("closest x", closestPoint.x);
-    // SmartDashboard::PutNumber("closest y", closestPoint.y); 
+    Point closestPoint = findClosestPoint();
+    SmartDashboard::PutNumber("closest x", closestPoint.x);
+    SmartDashboard::PutNumber("closest y", closestPoint.y); 
 
     // double driveCurve = generateDriveCurve();
     // SmartDashboard::PutNumber("driveCurve", driveCurve);
@@ -96,8 +96,7 @@ Point PathFollower::findClosestPoint() {
     double xPos = currentPosition.first;
     double yPos = currentPosition.second;
 
-    // a velocity point is just a normal point from the csv, but we are using it
-    // for velocity purpose
+    // The velocityPoint is just a Point, but we are using it for velocity purpose
     Point velocityPoint;
     double oldVelocityPointX, oldVelocityPointY;
     double newVelocityPointX, newVelocityPointY;
@@ -105,20 +104,27 @@ Point PathFollower::findClosestPoint() {
     oldVelocityPointY = path.at(closestVelocityPointCount).y;
     // so that we can compare the original and the changing distances so that we
     // know when the distance is getting bigger.
-    double oldDistance =
-        distanceToPoint(xPos, yPos, oldVelocityPointX, oldVelocityPointY);
+    double oldDistance = distanceToPoint(oldVelocityPointX, oldVelocityPointY);
     double newDistance;
-    // so that the loop goes on forever (the return breaks it)
+    
+    // Start a few points back from last closest to avoid outrunning the robot
+    if (closestVelocityPointCount <= 5) {
+        closestVelocityPointCount = -1;
+    } else {
+        closestVelocityPointCount -= 5;
+    }
+
+    // Find the closest point
     while (true) {
         closestVelocityPointCount++;
         newVelocityPointX = path.at(closestVelocityPointCount).x;
         newVelocityPointY = path.at(closestVelocityPointCount).y;
-        newDistance = distanceToPoint(xPos, yPos, newVelocityPointX, newVelocityPointY);
+        newDistance = distanceToPoint(newVelocityPointX, newVelocityPointY);
         Point point = path.at(closestVelocityPointCount);
-        std::cout << "olddistance: " << oldDistance << "| newdistance: " << newDistance << std::endl;
         // checks whether we are currently looking at our closest point (if it
         // is true then yes)
         if (newDistance > oldDistance) {
+            closestVelocityPointCount-=1; // Go back one to the smallest
             velocityPoint = path.at(closestVelocityPointCount);
             return velocityPoint;
         } else {
@@ -133,9 +139,10 @@ int PathFollower::findClosestPointIndex() {
 }
 
 // Use pythagoras to find the distance between 2 points
-double PathFollower::distanceToPoint(double xPos, double yPos, double xPoint,
-                                     double yPoint) {
+double PathFollower::distanceToPoint(double xPoint, double yPoint) {
     double distance;
+    double xPos = currentPosition.first;
+    double yPos = currentPosition.second;
     distance = std::sqrt((xPos - xPoint) * (xPos - xPoint) +
                          (yPos - yPoint) * (yPos - yPoint));
     return distance;

@@ -29,11 +29,10 @@ private:
     pair<double, double> currentPosition;
     int closestVelocityPointCount = 0;
     int xyPathPointCount = -1;
-    bool pointNotFound = false;
 
     Point findClosestPoint();
     int findClosestPointIndex();
-    double distanceToPoint(double xPos, double yPos, double xPoint, double yPoint);
+    double distanceToPoint(double xPoint, double yPoint);
     bool isLookaheadPoint(double x1, double y1, double x2, double y2, double r1, double r2);
     Point findLookaheadPoint();
     double generateDriveCurve();
