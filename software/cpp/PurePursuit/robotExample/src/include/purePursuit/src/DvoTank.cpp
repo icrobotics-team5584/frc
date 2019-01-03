@@ -2,5 +2,5 @@
 #include "Robot.h"
 
 void DvoTank::set(double curve) {
-    //Robot::subDriveBase->drive(0.5, curve);
+    Robot::subDriveBase->drive(0, curve);
 }

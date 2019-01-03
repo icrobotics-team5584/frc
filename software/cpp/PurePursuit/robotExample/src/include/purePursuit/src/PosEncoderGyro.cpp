@@ -6,7 +6,6 @@
 PosEncoderGyro::PosEncoderGyro() {
     currentPosition.first = 0;
     currentPosition.second = 0;
-    timer.Start();
 }
 
 void PosEncoderGyro::reset() {
@@ -19,16 +18,10 @@ void PosEncoderGyro::reset() {
  * Determines the robot's current position as represented by an x and y value
  */
 pair<double, double> PosEncoderGyro::get() {
-    // Check time period
-    SmartDashboard::PutNumber("time interval", timer.Get());
-    timer.Reset();
-
     // Get relevant values
-    double currentAngle =
-        Robot::subDriveBase->getAngle() * 0.01745329251;  // Convert to radians
+    double currentAngle = Robot::subDriveBase->getAngle() * 0.01745329251;  // Convert to radians
     double currentDistance = Robot::subDriveBase->getDistance();
     double distanceDelta = currentDistance - prevDistance;
-    SmartDashboard::PutNumber("distanceDelta", distanceDelta);
 
     // Determine current position
     currentPosition.first += distanceDelta * cos(currentAngle);

@@ -3,16 +3,12 @@
 #include "Robot.h"
 
 CmdMakePath::CmdMakePath() {
-    cout << "Start of CmdMakePath()" << endl;
-
     // Use Requires() here to declare subsystem dependencies
     Requires(Robot::subDriveBase.get());
-    cout << "Running CmdMakePath::CmdMakePath()" << endl;
     posEncoderGyro.reset(new PosEncoderGyro);
     dvoTank.reset(new DvoTank);
     pathFollower.reset(new PathFollower("test_left", posEncoderGyro, dvoTank));
 
-    cout << "End of CmdMakePath()" << endl;
 }
 
 // Called just before this Command runs the first time

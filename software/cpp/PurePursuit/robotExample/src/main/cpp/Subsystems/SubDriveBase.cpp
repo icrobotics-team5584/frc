@@ -4,21 +4,17 @@
 #include "math.h"
 
 SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
-  // Copy pointers to the drive base talons
+  // Copy pointers to the drive base talons into a diff drive
   srxLeft = Robot::robotMap->srxDriveBaseLeft;
   srxRight = Robot::robotMap->srxDriveBaseRight;
   srxLeftSlave = Robot::robotMap->srxDriveBaseLeftSlave;
   srxRightSlave = Robot::robotMap->srxDriveBaseRightSlave;
-
-  // Smoosh talons into a differential drive
   diffDrive.reset(new DifferentialDrive(*srxLeft, *srxRight));
 
   // Copy pointer to the navX
   ahrsNavX = Robot::robotMap->ahrsDriveBaseNavX;
 
-  // Determine revs per meter
   wheelCircumference = 3.14159265358 * WHEEL_DIAMETER;
-  SmartDashboard::PutNumber("wheel circumference", wheelCircumference);
 }
 
 void SubDriveBase::InitDefaultCommand() {
@@ -33,6 +29,10 @@ double SubDriveBase::getAngle() {
     return ahrsNavX->GetYaw();
 }
 
+/*
+ * Determines the total distance travelled by the robot since the encoders had last been 
+ * zeroed. This is the average distance travelled by both sides of the drive base.
+ */
 double SubDriveBase::getDistance() {
     double leftSensorUnits = srxLeft->GetSelectedSensorPosition(0);
     double rightSensorUnits = srxRight->GetSelectedSensorPosition(0);
@@ -41,26 +41,6 @@ double SubDriveBase::getDistance() {
     double rotations = aveSensorUnits/UNITS_PER_ROTATION;
     return (rotations * wheelCircumference);
 }
-
-
-/*
-double gearRatio = 10.5;
-	double EncoderTicsPerRotation = 80;
-	double MetersPerRotation = 0.4787;
-
-	double EncoderTics;
-	EncoderTics = tnxBackLeft->GetSelectedSensorPosition(0);
-	EncoderTics = EncoderTics/gearRatio;
-	double WheelRotations;
-	WheelRotations = EncoderTics/EncoderTicsPerRotation;
-	double Theamountofmetersgoneby;
-	Theamountofmetersgoneby = WheelRotations * MetersPerRotation;
-
-
-	return Theamountofmetersgoneby;
-}
-*/
-
 
 void SubDriveBase::zeroGyro(){
     ahrsNavX->ZeroYaw();

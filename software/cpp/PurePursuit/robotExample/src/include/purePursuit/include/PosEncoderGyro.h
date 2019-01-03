@@ -14,5 +14,4 @@ public:
 private:
     pair<double, double> currentPosition;
     double prevDistance = 0;
-    Timer timer;
 };

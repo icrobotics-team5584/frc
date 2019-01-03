@@ -27,7 +27,7 @@ private:
     shared_ptr<DriveOutput> _output;
 
     pair<double, double> currentPosition;
-    int closestVelocityPointCount = 0;
+    int closestPointIndex = 0;
     int xyPathPointCount = -1;
 
     Point findClosestPoint();

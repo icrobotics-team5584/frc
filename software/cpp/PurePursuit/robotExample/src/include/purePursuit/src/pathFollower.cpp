@@ -23,8 +23,6 @@ PathFollower::PathFollower(string csvPath, shared_ptr<PositionSource> source,
     path = constructVectorPath(csvPath);
 
     // Set robot position to start of path
-    SmartDashboard::PutNumber("start x", path[0].x);
-    SmartDashboard::PutNumber("start y", path[0].y);
     _source->set(path[0].x, path[0].y);
 
     // Output debug information
@@ -35,11 +33,9 @@ PathFollower::PathFollower(string csvPath, shared_ptr<PositionSource> source,
             cout << "  " << path[i].x << path[i].y << path[i].velocity << endl;
         }
     } else {
-        cout << "WARNING: Pure Pursuit path size is zero, this could cause problems" << endl;
-        cout << "Make sure the correct path is selected and the csv files are on the RIO" << endl;
+        cout << "WARNING: Pure Pursuit path size is zero, this could cause problems. " <<
+        "Make sure the correct path is selected and the csv files are on the RIO." << endl;
     }
-
-    cout << "end of PathFollower()" << endl;
 }
 
 int PathFollower::getPathSize() { return path.size(); }
@@ -60,16 +56,16 @@ void PathFollower::followPath() {
 
     Point lookaheadPoint = findLookaheadPoint();
     SmartDashboard::PutNumber("lookahead x", lookaheadPoint.x);    
-    SmartDashboard::PutNumber("lookahead y", lookaheadPoint.y);    
+    SmartDashboard::PutNumber("lookahead y", lookaheadPoint.y);
     
     Point closestPoint = findClosestPoint();
     SmartDashboard::PutNumber("closest x", closestPoint.x);
     SmartDashboard::PutNumber("closest y", closestPoint.y); 
 
-    // double driveCurve = generateDriveCurve();
-    // SmartDashboard::PutNumber("driveCurve", driveCurve);
+    double driveCurve = generateDriveCurve();
+    SmartDashboard::PutNumber("driveCurve", driveCurve);
 
-    // _output->set(driveCurve);
+    _output->set(driveCurve);
 }
 
 bool PathFollower::isFinished() { return false; }
@@ -96,46 +92,51 @@ Point PathFollower::findClosestPoint() {
     double xPos = currentPosition.first;
     double yPos = currentPosition.second;
 
-    // The velocityPoint is just a Point, but we are using it for velocity purpose
-    Point velocityPoint;
-    double oldVelocityPointX, oldVelocityPointY;
-    double newVelocityPointX, newVelocityPointY;
-    oldVelocityPointX = path.at(closestVelocityPointCount).x;
-    oldVelocityPointY = path.at(closestVelocityPointCount).y;
-    // so that we can compare the original and the changing distances so that we
-    // know when the distance is getting bigger.
-    double oldDistance = distanceToPoint(oldVelocityPointX, oldVelocityPointY);
+    // Get previous closest point data to compare against
+    double oldClosestPointX = path.at(closestPointIndex).x;
+    double oldClosestPointY = path.at(closestPointIndex).y;
+    double oldDistance = distanceToPoint(oldClosestPointX, oldClosestPointY);
+
+    // Create space for potential new closest points data
+    double newClosestPointX;
+    double newClosestPointY;
     double newDistance;
     
-    // Start a few points back from last closest to avoid outrunning the robot
-    if (closestVelocityPointCount <= 5) {
-        closestVelocityPointCount = -1;
+    // Start search a few points back from previous closest to avoid outrunning the robot
+    if (closestPointIndex <= 5) {
+        closestPointIndex = -1;
     } else {
-        closestVelocityPointCount -= 5;
+        closestPointIndex -= 5;
     }
 
     // Find the closest point
     while (true) {
-        closestVelocityPointCount++;
-        newVelocityPointX = path.at(closestVelocityPointCount).x;
-        newVelocityPointY = path.at(closestVelocityPointCount).y;
-        newDistance = distanceToPoint(newVelocityPointX, newVelocityPointY);
-        Point point = path.at(closestVelocityPointCount);
-        // checks whether we are currently looking at our closest point (if it
-        // is true then yes)
+        // Get data of next point on path
+        closestPointIndex++;
+        newClosestPointX = path.at(closestPointIndex).x;
+        newClosestPointY = path.at(closestPointIndex).y;
+        newDistance = distanceToPoint(newClosestPointX, newClosestPointY);
+        
+        // check if point is further from robot than previous point
         if (newDistance > oldDistance) {
-            closestVelocityPointCount-=1; // Go back one to the smallest
-            velocityPoint = path.at(closestVelocityPointCount);
-            return velocityPoint;
+            // We passed the closest, return previous point
+            if (closestPointIndex > 0) {
+                closestPointIndex-=1;
+            } else {
+                closestPointIndex = 0;
+            }
+            return path.at(closestPointIndex);
+
         } else {
-            newVelocityPointX = oldVelocityPointX;
-            newVelocityPointY = oldVelocityPointY;
+            // Distance is still decreasing, continue search
+            newClosestPointX = oldClosestPointX;
+            newClosestPointY = oldClosestPointY;
         }
     }
 }
 
 int PathFollower::findClosestPointIndex() {
-    return closestVelocityPointCount;
+    return closestPointIndex;
 }
 
 // Use pythagoras to find the distance between 2 points
