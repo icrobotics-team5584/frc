@@ -23,14 +23,14 @@ PathFollower::PathFollower(string csvPath, shared_ptr<PositionSource> source,
     path = constructVectorPath(csvPath);
 
     // Set robot position to start of path
-    _source->set(path[0].x, path[0].y);
+    _source->setPosition(path[0].position.x, path[0].position.y);
 
     // Output debug information
     if (getPathSize() > 0) {
         cout << "path of size " << getPathSize() << " created." << endl;
         cout << "first points:" << endl;
         for (int i = 0; i < min(getPathSize(), 5); i++) {
-            cout << "  " << path[i].x << path[i].y << path[i].velocity << endl;
+            cout << "  " << path[i].position.x << path[i].position.y << path[i].velocity << endl;
         }
     } else {
         cout << "WARNING: Pure Pursuit path size is zero, this could cause problems. " <<
@@ -50,18 +50,6 @@ void PathFollower::setPointRadius(double meters) {
 
 // Drives the robot along the path as long as this is continuously called. 
 void PathFollower::followPath() { 
-    currentPosition = _source->get();
-    SmartDashboard::PutNumber("current x", currentPosition.first);
-    SmartDashboard::PutNumber("current y", currentPosition.second);
-
-    Point lookaheadPoint = findLookaheadPoint();
-    SmartDashboard::PutNumber("lookahead x", lookaheadPoint.x);    
-    SmartDashboard::PutNumber("lookahead y", lookaheadPoint.y);
-    
-    Point closestPoint = findClosestPoint();
-    SmartDashboard::PutNumber("closest x", closestPoint.x);
-    SmartDashboard::PutNumber("closest y", closestPoint.y); 
-
     double driveCurve = generateDriveCurve();
     SmartDashboard::PutNumber("driveCurve", driveCurve);
 
@@ -71,7 +59,7 @@ void PathFollower::followPath() {
 bool PathFollower::isFinished() { return false; }
 
 void PathFollower::reset() {
-    _source->set(path[0].x, path[0].y);
+    _source->setPosition(path[0].position.x, path[0].position.y);
 }
 
 /*
@@ -89,12 +77,9 @@ void PathFollower::reset() {
  * and notice how the distance from them increase as you go along the path.
  */
 Point PathFollower::findClosestPoint() {
-    double xPos = currentPosition.first;
-    double yPos = currentPosition.second;
-
     // Get previous closest point data to compare against
-    double oldClosestPointX = path.at(closestPointIndex).x;
-    double oldClosestPointY = path.at(closestPointIndex).y;
+    double oldClosestPointX = path.at(closestPointIndex).position.x;
+    double oldClosestPointY = path.at(closestPointIndex).position.y;
     double oldDistance = distanceToPoint(oldClosestPointX, oldClosestPointY);
 
     // Create space for potential new closest points data
@@ -113,8 +98,8 @@ Point PathFollower::findClosestPoint() {
     while (true) {
         // Get data of next point on path
         closestPointIndex++;
-        newClosestPointX = path.at(closestPointIndex).x;
-        newClosestPointY = path.at(closestPointIndex).y;
+        newClosestPointX = path.at(closestPointIndex).position.x;
+        newClosestPointY = path.at(closestPointIndex).position.y;
         newDistance = distanceToPoint(newClosestPointX, newClosestPointY);
         
         // check if point is further from robot than previous point
@@ -125,7 +110,9 @@ Point PathFollower::findClosestPoint() {
             } else {
                 closestPointIndex = 0;
             }
-            return path.at(closestPointIndex);
+            Point closestPoint = path.at(closestPointIndex); 
+            SmartDashboard::PutNumberArray("closest point", {closestPoint.position.x, closestPoint.position.y, closestPoint.velocity});
+            return closestPoint;
 
         } else {
             // Distance is still decreasing, continue search
@@ -142,8 +129,8 @@ int PathFollower::findClosestPointIndex() {
 // Use pythagoras to find the distance between 2 points
 double PathFollower::distanceToPoint(double xPoint, double yPoint) {
     double distance;
-    double xPos = currentPosition.first;
-    double yPos = currentPosition.second;
+    double xPos = currentPosition.x;
+    double yPos = currentPosition.y;
     distance = std::sqrt((xPos - xPoint) * (xPos - xPoint) +
                          (yPos - yPoint) * (yPos - yPoint));
     return distance;
@@ -187,8 +174,8 @@ bool PathFollower::isLookaheadPoint(double x1, double y1, double x2, double y2,
 }
 
 Point PathFollower::findLookaheadPoint() {
-    double xPos = currentPosition.first;
-    double yPos = currentPosition.second;
+    double xPos = currentPosition.x;
+    double yPos = currentPosition.y;
 
     Point pathPoints;
     double xPoint, yPoint;
@@ -198,26 +185,50 @@ Point PathFollower::findLookaheadPoint() {
     bool doTheyIntersect = false;
     while ((!doTheyIntersect) && (xyPathPointCount < getPathSize()-1)) {
         xyPathPointCount++;
-        xPoint = path.at(xyPathPointCount).x;
-        yPoint = path.at(xyPathPointCount).y;
+        xPoint = path.at(xyPathPointCount).position.x;
+        yPoint = path.at(xyPathPointCount).position.y;
         // if the distance between the two centres of the circles is
         // smaller/equal to the radius, the circles intersect/touch
         doTheyIntersect = isLookaheadPoint(xPoint, yPoint, xPos, yPos,
                                            pointRadius, lookaheadDistance);
     }
     if (doTheyIntersect) {
-        pathPoints.x = xPoint;
-        pathPoints.y = yPoint;
+        pathPoints.position.x = xPoint;
+        pathPoints.position.y = yPoint;
     } else {
         cout << "ERROR: Could not find lookahead point. Using 0, 0" << endl;
     }
 
+    SmartDashboard::PutNumberArray("lookahead point", {xPoint, yPoint});
     return pathPoints;
 }
 
-double PathFollower::generateDriveCurve() { return 0; }
+/*
+ * Generates the curve that the robot needs to drive along to reach its lookahead point. 
+ * Note that curvature = 1/radius. This curvature can be given directly to a DifferentialDrive
+ * objcet using the CurvatureDrive() function.
+ */
+double PathFollower::generateDriveCurve() {
+    // Determine error between LA point and expected robot position
+    double tangent = -tan(_source->getAngle());
+    double c = tangent * (currentPosition.x - currentPosition.y); // Details at Team 1712's paper
+    Point lookAheadPoint = findLookaheadPoint();
+    double error = abs(tangent * lookAheadPoint.position.x +
+                       lookAheadPoint.position.y + c) /
+                   sqrt(pow(tangent,2) + 1);
+    
 
-void PathFollower::updatePosition() { currentPosition = _source->get(); }
+    // Determine drive absolute curve (direction to come after)
+    double curve = 2 * error / pow(lookaheadDistance, 2);
+
+    // Determine whether to curve left or right 
+    double distToLAPoint = 0;
+    double distToExpectedRobotPos = 0;
+
+    return 0;
+}
+
+void PathFollower::updatePosition() { currentPosition = _source->getPosition(); }
 
 /*
  * Loads path points from a csv file in the format:
@@ -245,8 +256,8 @@ std::vector<Point> PathFollower::constructVectorPath(string csvPath) {
         double pointY = ::atof(y.c_str());
         double velocity = ::atof(v.c_str());
         Point point;
-        point.x = pointX;
-        point.y = pointY;
+        point.position.x = pointX;
+        point.position.y = pointY;
         point.velocity = velocity;
         xyPath.push_back(point);
         // cout for debugging in the future

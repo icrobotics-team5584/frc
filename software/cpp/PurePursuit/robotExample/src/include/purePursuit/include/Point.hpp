@@ -1,7 +1,8 @@
 #pragma once
 
+#include "Position.h"
+
 struct Point {
-    double x;
-    double y;
+    Position position;
     double velocity;
 };

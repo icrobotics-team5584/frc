@@ -1,17 +1,19 @@
 #pragma once
 
 #include "PositionSource.hpp"
-#include "purePursuit/include/Point.hpp"
+#include "purePursuit/include/Position.h"
 #include <WPILib.h>
 using namespace std;
 
 class PosEncoderGyro : public PositionSource {
 public:
     PosEncoderGyro();
+    Position getPosition();
+    double getAngle();
+    void setPosition(double x, double y);
     void reset();
-    pair<double, double> get();
-    void set(double x, double y);
+
 private:
-    pair<double, double> currentPosition;
+    Position currentPosition;
     double prevDistance = 0;
 };

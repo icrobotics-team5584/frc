@@ -3,6 +3,7 @@
 #include "Point.hpp"
 #include "PositionSource.hpp"
 #include "DriveOutput.hpp"
+#include "Position.h"
 #include <vector>
 #include <string>
 #include <memory>
@@ -26,7 +27,7 @@ private:
     shared_ptr<PositionSource> _source;
     shared_ptr<DriveOutput> _output;
 
-    pair<double, double> currentPosition;
+    Position currentPosition;
     int closestPointIndex = 0;
     int xyPathPointCount = -1;
 
