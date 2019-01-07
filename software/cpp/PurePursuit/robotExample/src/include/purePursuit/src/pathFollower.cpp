@@ -227,6 +227,19 @@ double PathFollower::generateDriveCurve() {
 
     return 0;
 }
+double PathFollower::generateSignedCurvature() {
+    Point lookAheadPoint = findLookaheadPoint();
+    Point position = currentPosition;
+    double signedCurvature;
+    //foward is supposed to be 90
+    //gets the sign of the curvature (1 is right, 0 is foward, -1 is left)
+    double robotAngle = _source->getAngle();
+    side = signum((sin(robotAngle)) * 
+    (lookAheadPoint.position.x - currentPosition.x) - cos(robotAngle) *
+    (lookAheadPoint.position.y - currentPosition.y));
+    signedCurvature = generateDriveCurve() * side;
+    return signedCurvature;
+}
 
 void PathFollower::updatePosition() { currentPosition = _source->getPosition(); }
 
