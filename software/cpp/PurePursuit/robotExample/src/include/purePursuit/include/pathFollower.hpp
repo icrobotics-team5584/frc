@@ -37,6 +37,8 @@ private:
     bool isLookaheadPoint(double x1, double y1, double x2, double y2, double r1, double r2);
     Point findLookaheadPoint();
     double generateDriveCurve();
+    double generateSignedCurve();
     void updatePosition();
+    int getSign(double);
     vector<Point> constructVectorPath(string csvPath);    
 };

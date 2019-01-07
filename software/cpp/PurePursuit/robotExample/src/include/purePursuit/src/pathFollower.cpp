@@ -227,14 +227,14 @@ double PathFollower::generateDriveCurve() {
 
     return 0;
 }
-double PathFollower::generateSignedCurvature() {
+double PathFollower::generateSignedCurve() {
     Point lookAheadPoint = findLookaheadPoint();
-    Point position = currentPosition;
+    Position position = currentPosition;
     double signedCurvature;
     //foward is supposed to be 90
     //gets the sign of the curvature (1 is right, 0 is foward, -1 is left)
     double robotAngle = _source->getAngle();
-    side = signum((sin(robotAngle)) * 
+    int side = getSign(sin(robotAngle) * 
     (lookAheadPoint.position.x - currentPosition.x) - cos(robotAngle) *
     (lookAheadPoint.position.y - currentPosition.y));
     signedCurvature = generateDriveCurve() * side;
@@ -278,4 +278,18 @@ std::vector<Point> PathFollower::constructVectorPath(string csvPath) {
         //      velcoity: " << point.velocity << std::endl;
     }
     return xyPath;
+}
+
+int PathFollower::getSign(double side){
+    int sign;
+    if (side > 0) {
+        sign = 1;
+    }
+    else if (side < 0) {
+        sign = -1;
+    }
+    else {
+        sign = 0;
+    }
+    return sign;
 }
