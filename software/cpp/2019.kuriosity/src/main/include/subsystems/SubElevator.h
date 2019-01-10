@@ -5,9 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "OI.h"
+#pragma once
 
-OI::OI() {
-  controller.reset(new frc::Joystick(0));
-  cout << "Run Robot OI" << endl;
-}
+#include <frc/commands/Subsystem.h>
+
+class SubElevator : public frc::Subsystem {
+ private:
+  // It's desirable that everything possible under private except
+  // for methods that implement subsystem capabilities
+
+ public:
+  SubElevator();
+  void InitDefaultCommand() override;
+};

@@ -5,9 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "OI.h"
+#include "subsystems/SubElevator.h"
 
-OI::OI() {
-  controller.reset(new frc::Joystick(0));
-  cout << "Run Robot OI" << endl;
+SubElevator::SubElevator() : Subsystem("ExampleSubsystem") {}
+
+void SubElevator::InitDefaultCommand() {
+  // Set the default command for a subsystem here.
+  // SetDefaultCommand(new MySpecialCommand());
 }
+
+// Put methods for controlling this subsystem
+// here. Call these from Commands.

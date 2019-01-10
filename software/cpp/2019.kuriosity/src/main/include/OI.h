@@ -7,7 +7,13 @@
 
 #pragma once
 
+#include <iostream>
+#include <frc/WPILib.h>
+
+using namespace std;
+
 class OI {
  public:
+  std::shared_ptr<frc::Joystick> controller;
   OI();
 };

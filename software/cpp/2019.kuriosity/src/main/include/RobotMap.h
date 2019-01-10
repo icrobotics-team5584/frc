@@ -6,6 +6,28 @@
 /*----------------------------------------------------------------------------*/
 
 #pragma once
+#include <ctre/Phoenix.h>
+#include <frc/WPILib.h>
+
+using namespace std;
+
+enum Can {
+    can_srxDriveBaseFrontRight = 1,
+    can_srxDriveBaseFrontLeft = 3,
+    can_srxDriveBaseBackRight = 2,
+    can_srxDriveBaseBackLeft = 4
+};
+
+class RobotMap {
+public:
+    shared_ptr<WPI_TalonSRX> srxDriveBaseFrontRight;
+	shared_ptr<WPI_TalonSRX> srxDriveBaseFrontLeft;
+    shared_ptr<WPI_TalonSRX> srxDriveBaseBackLeft;
+	shared_ptr<WPI_TalonSRX> srxDriveBaseBackRight;
+
+    RobotMap();
+
+};
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into

@@ -14,12 +14,24 @@
 #include "OI.h"
 #include "commands/ExampleCommand.h"
 #include "commands/MyAutoCommand.h"
+#include "RobotMap.h"
 #include "subsystems/ExampleSubsystem.h"
+#include "subsystems/SubDriveBase.h"
+#include "subsystems/SubElevator.h"
+#include "subsystems/SubTurret.h"
+
+#include <iostream>
+
+using namespace std;
 
 class Robot : public frc::TimedRobot {
  public:
   static ExampleSubsystem m_subsystem;
-  static OI m_oi;
+  static unique_ptr<OI> _oi;
+  static unique_ptr<RobotMap> _robotMap;
+  static unique_ptr<SubDriveBase> subDriveBase;
+  static unique_ptr<SubElevator> subElevator;
+  static unique_ptr<SubTurret> subTurret;
 
   void RobotInit() override;
   void RobotPeriodic() override;
@@ -34,8 +46,8 @@ class Robot : public frc::TimedRobot {
  private:
   // Have it null by default so that if testing teleop it
   // doesn't have undefined behavior and potentially crash.
-  frc::Command* m_autonomousCommand = nullptr;
-  ExampleCommand m_defaultAuto;
-  MyAutoCommand m_myAuto;
-  frc::SendableChooser<frc::Command*> m_chooser;
+  //frc::Command* m_autonomousCommand = nullptr;
+  //ExampleCommand m_defaultAuto;
+  //MyAutoCommand m_myAuto;
+  //frc::SendableChooser<frc::Command*> m_chooser;
 };
