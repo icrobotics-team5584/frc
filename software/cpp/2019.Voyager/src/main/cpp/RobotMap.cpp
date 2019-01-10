@@ -8,6 +8,10 @@ RobotMap::RobotMap(){
     srxDriveBaseBackRight.reset(new WPI_TalonSRX(can_srxDriveBaseBackRight));
     srxDriveBaseBackRight->Set(ControlMode::Follower, can_srxDriveBaseFrontRight);
     srxDriveBaseBackLeft->Set(ControlMode::Follower, can_srxDriveBaseFrontLeft);
-    
+
+    //Create drivebase sensors
+    ulsDriveBaseLeft.reset(new AnalogInput(0));
+    ahrsDriveBaseNavXGyro.reset(new AHRS(SerialPort::kMXP));
+    clsDriveBaseLeft.reset(new DigitalInput(0));
     
 }

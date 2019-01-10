@@ -20,6 +20,7 @@ void Robot::RobotInit() {
   cout << "Run Robot init" << endl;
   _robotMap.reset(new RobotMap);
   _oi.reset(new OI);
+  _ulsTest.reset(new UlsTest);
 
   //m_chooser.AddDefault("Default Auto", &m_defaultAuto);
   //m_chooser.AddObject("My Auto", &m_myAuto);
@@ -85,9 +86,17 @@ void Robot::TeleopInit() {
   //   m_autonomousCommand->Cancel();
   //   m_autonomousCommand = nullptr;
   // }
+  subDriveBase->resetYaw();
+  _ulsTest->Start();
+  timer.Start();
 }
 
-void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
+void Robot::TeleopPeriodic() { 
+frc::Scheduler::GetInstance()->Run();   
+frc::SmartDashboard::PutNumber("Colour sensor: ", _robotMap->clsDriveBaseLeft->Get());
+ // std::cout << "unaveraged value (mm)" << _robotMap->ulsDriveBaseLeft->GetVoltage() *1000 / 0.977 ;
+frc::SmartDashboard::PutNumber("unaveraged value (mm)", _robotMap->ulsDriveBaseLeft->GetVoltage() *1000 / 0.977 );
+}
 
 void Robot::TestPeriodic() {}
 

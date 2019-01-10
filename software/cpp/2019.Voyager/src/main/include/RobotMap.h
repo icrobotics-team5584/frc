@@ -8,6 +8,7 @@
 #pragma once
 #include <ctre/Phoenix.h>
 #include <WPILib.h>
+#include <AHRS.h>
 
 using namespace std;
 
@@ -24,7 +25,9 @@ public:
 	shared_ptr<WPI_TalonSRX> srxDriveBaseFrontLeft;
     shared_ptr<WPI_TalonSRX> srxDriveBaseBackLeft;
 	shared_ptr<WPI_TalonSRX> srxDriveBaseBackRight;
-
+    shared_ptr<AnalogInput> ulsDriveBaseLeft;
+    shared_ptr<AHRS> ahrsDriveBaseNavXGyro;
+    shared_ptr<DigitalInput> clsDriveBaseLeft;
     RobotMap();
 
 };
