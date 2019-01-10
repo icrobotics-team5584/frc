@@ -22,6 +22,8 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem"){
 
   //sensors
   _ulsLeft = Robot::_robotMap->ulsDriveBaseLeft;
+  _ulsLeft->SetAutomaticMode(true);
+  // _ulsEchoLeft = Robot::_robotMap->ulsEchoDriveBaseLeft;
   _ahrsNavXGyro = Robot::_robotMap->ahrsDriveBaseNavXGyro;
   _clsLeft = Robot::_robotMap->clsDriveBaseLeft;
 }
@@ -34,15 +36,12 @@ void SubDriveBase::InitDefaultCommand() {
 void SubDriveBase::drive(double speed, double rotation) {
   difDrive->ArcadeDrive(speed, rotation);
 }
-//returns the distance of the ultrasonic sensor reading
-double SubDriveBase::getRange(){
-  return _ulsLeft->GetAverageVoltage()* 1000/(0.997) ;
-}
+
 //checks whether the bay on the cargo ship has a hatch panel on it
-bool SubDriveBase::isBayEmpty() {
-  SmartDashboard::PutBoolean("pls", getRange() > 500);
-  return getRange() > 500;
-}
+// bool SubDriveBase::isBayEmpty() {
+//   SmartDashboard::PutBoolean("pls", getRange() > 500);
+//   return getRange() > 500;
+// }
 
 void SubDriveBase::resetYaw(){
   _ahrsNavXGyro->ZeroYaw();
@@ -56,4 +55,8 @@ bool SubDriveBase::hasReachedLine() {
 }
 void SubDriveBase::brakeRobot() {
   difDrive->ArcadeDrive(-0.4, 0.2);
+}
+void SubDriveBase::getRange() {
+  SmartDashboard::PutNumber("Ultrasonic Range", _ulsLeft->GetRangeMM());
+  SmartDashboard::PutBoolean("Is range valid", _ulsLeft->IsRangeValid());
 }

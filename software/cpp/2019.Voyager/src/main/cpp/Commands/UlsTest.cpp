@@ -20,15 +20,16 @@ void UlsTest::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void UlsTest::Execute() {
-  std::cout << "Execute: " << true << std::endl;
-  double angle = Robot::subDriveBase->getYaw();
-  Robot::subDriveBase->drive(0.7, -0.2);
+  //double angle = Robot::subDriveBase->getYaw();
+  //Robot::subDriveBase->drive(0.7, -0.2);
+  Robot::subDriveBase->getRange();
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool UlsTest::IsFinished() { 
-  frc::SmartDashboard::PutBoolean("Has ended", Robot::subDriveBase->hasReachedLine());
-  return Robot::subDriveBase->hasReachedLine();
+  // frc::SmartDashboard::PutBoolean("Has ended", Robot::subDriveBase->hasReachedLine());
+  // return Robot::subDriveBase->hasReachedLine();
+  return false;
 }
 // Called once after isFinished returns true
 void UlsTest::End() {

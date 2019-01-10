@@ -93,9 +93,9 @@ void Robot::TeleopInit() {
 
 void Robot::TeleopPeriodic() { 
 frc::Scheduler::GetInstance()->Run();   
+subDriveBase->getRange();
 frc::SmartDashboard::PutNumber("Colour sensor: ", _robotMap->clsDriveBaseLeft->Get());
  // std::cout << "unaveraged value (mm)" << _robotMap->ulsDriveBaseLeft->GetVoltage() *1000 / 0.977 ;
-frc::SmartDashboard::PutNumber("unaveraged value (mm)", _robotMap->ulsDriveBaseLeft->GetVoltage() *1000 / 0.977 );
 }
 
 void Robot::TestPeriodic() {}

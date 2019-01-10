@@ -10,8 +10,10 @@ RobotMap::RobotMap(){
     srxDriveBaseBackLeft->Set(ControlMode::Follower, can_srxDriveBaseFrontLeft);
 
     //Create drivebase sensors
-    ulsDriveBaseLeft.reset(new AnalogInput(0));
+    //ulsDriveBaseLeft.reset(new Ultrasonic(0, 1, Ultrasonic::kMilliMeters));
+    ulsTriggerDriveBaseLeft.reset(new DigitalOutput(0));
+    ulsEchoDriveBaseLeft.reset(new DigitalInput(1));
+    ulsDriveBaseLeft.reset(new Ultrasonic(ulsTriggerDriveBaseLeft, ulsEchoDriveBaseLeft));
     ahrsDriveBaseNavXGyro.reset(new AHRS(SerialPort::kMXP));
-    clsDriveBaseLeft.reset(new DigitalInput(0));
-    
+    clsDriveBaseLeft.reset(new DigitalInput(2));
 }
