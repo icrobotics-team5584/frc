@@ -15,5 +15,5 @@ RobotMap::RobotMap(){
     ulsDriveBaseLeft.reset(new Ultrasonic(ulsTriggerDriveBaseLeft, ulsEchoDriveBaseLeft));
     ahrsDriveBaseNavXGyro.reset(new AHRS(SerialPort::kMXP));
     clsDriveBaseLeft.reset(new DigitalInput(2)); //the collision avoidance sensor
-    clsDrivebaseFront.reset(new AnalogInput(3)); //the black colour sensor with the lights
+    clsDriveBaseFront.reset(new AnalogInput(3)); //the black colour sensor with the lights
 }

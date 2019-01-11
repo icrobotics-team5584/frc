@@ -26,3 +26,25 @@ void SubDriveBase::InitDefaultCommand() {
 void SubDriveBase::drive(double speed, double rotation) {
   difDrive->ArcadeDrive(speed, rotation);
 }
+
+void SubDriveBase::resetYaw(){
+  _ahrsNavXGyro->ZeroYaw();
+}
+
+double SubDriveBase::getYaw() {
+  return _ahrsNavXGyro->GetYaw();
+}
+bool SubDriveBase::hasReachedLine() {
+  return not(_clsLeft->Get());
+}
+void SubDriveBase::brakeRobot() {
+    difDrive->ArcadeDrive(-0.4, 0.2);
+}
+void SubDriveBase::getRange() {
+  SmartDashboard::PutNumber("Ultrasonic Range", _ulsLeft->GetRangeMM());
+  SmartDashboard::PutBoolean("Is range valid", _ulsLeft->IsRangeValid());
+}
+void SubDriveBase::getClsData() {
+  SmartDashboard::PutNumber("Black Colour Sensor Value", _clsFront->GetValue());
+  SmartDashboard::PutNumber("Black Colour Sensor Voltage", _clsFront->GetVoltage());
+}
