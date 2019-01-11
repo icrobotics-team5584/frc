@@ -31,6 +31,7 @@ public:
     shared_ptr<Ultrasonic> ulsDriveBaseLeft;
     shared_ptr<AHRS> ahrsDriveBaseNavXGyro;
     shared_ptr<DigitalInput> clsDriveBaseLeft;
+    shared_ptr<AnalogInput> clsDriveBaseFront;
     RobotMap();
 
 };

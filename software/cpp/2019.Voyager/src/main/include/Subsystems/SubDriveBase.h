@@ -28,6 +28,7 @@ class SubDriveBase : public frc::Subsystem {
   // shared_ptr<DigitalInput> _ulsEchoLeft;
   shared_ptr<AHRS> _ahrsNavXGyro;
   shared_ptr<DigitalInput> _clsLeft;
+  shared_ptr<AnalogInput> _clsFront;
 
  public:
   SubDriveBase();
@@ -39,4 +40,5 @@ class SubDriveBase : public frc::Subsystem {
   void resetYaw();
  // bool isBayEmpty();
   void brakeRobot();
+  void getClsData();
 };

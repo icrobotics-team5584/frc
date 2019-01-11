@@ -26,6 +26,7 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem"){
   // _ulsEchoLeft = Robot::_robotMap->ulsEchoDriveBaseLeft;
   _ahrsNavXGyro = Robot::_robotMap->ahrsDriveBaseNavXGyro;
   _clsLeft = Robot::_robotMap->clsDriveBaseLeft;
+  _clsFront = Robot::_robotMap->clsDriveBaseFront;
 }
 
 void SubDriveBase::InitDefaultCommand() {
@@ -54,9 +55,12 @@ bool SubDriveBase::hasReachedLine() {
   return not(_clsLeft->Get());
 }
 void SubDriveBase::brakeRobot() {
-  difDrive->ArcadeDrive(-0.4, 0.2);
+    difDrive->ArcadeDrive(-0.4, 0.2);
 }
 void SubDriveBase::getRange() {
   SmartDashboard::PutNumber("Ultrasonic Range", _ulsLeft->GetRangeMM());
   SmartDashboard::PutBoolean("Is range valid", _ulsLeft->IsRangeValid());
+}
+void SubDriveBase::getClsData() {
+  SmartDashboard::PutNumber("Black Colour Sensor", _clsFront->Get());
 }
