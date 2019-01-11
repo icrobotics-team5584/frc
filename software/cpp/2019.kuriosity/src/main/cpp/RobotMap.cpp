@@ -1,6 +1,6 @@
 #include "RobotMap.h"
+#include <AHRS.h>
 #include <iostream>
-
 
 RobotMap::RobotMap(){
     // DriveBase Actuators
@@ -12,6 +12,7 @@ RobotMap::RobotMap(){
     srxDriveBaseBackLeft->Set(ControlMode::Follower, can_srxDriveBaseFrontLeft);
 
     // DriveBase Sensors
+    ahrsNavXDriveBase.reset(new AHRS(SerialPort::kMXP));
     clsDriveBaseFront.reset(new DigitalInput(dio_clsDriveBaseFront));
     clsDriveBaseMid.reset(new AnalogInput(ana_clsDriveBaseMid));
     ulsDriveBaseLeft.reset(new Ultrasonic(dio_ulsTriggerDriveBaseLeft, dio_ulsEchoDriveBaseLeft));

@@ -7,6 +7,7 @@
 
 #pragma once
 #include <ctre/Phoenix.h>
+#include <AHRS.h>
 #include <frc/WPILib.h>
 
 using namespace std;
@@ -53,6 +54,7 @@ public:
 	shared_ptr<WPI_TalonSRX> srxDriveBaseBackRight;
 
     // DriveBase Sensors
+    shared_ptr<AHRS> ahrsNavXDriveBase;
     shared_ptr<AnalogInput> clsDriveBaseMid;
     shared_ptr<DigitalInput> clsDriveBaseFront;
     shared_ptr<Ultrasonic> ulsDriveBaseLeft;

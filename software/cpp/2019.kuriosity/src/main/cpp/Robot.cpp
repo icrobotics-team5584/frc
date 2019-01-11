@@ -10,7 +10,6 @@
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
-ExampleSubsystem Robot::m_subsystem;
 unique_ptr<OI> Robot::_oi;
 unique_ptr<RobotMap> Robot::_robotMap;
 unique_ptr<SubDriveBase> Robot::subDriveBase;

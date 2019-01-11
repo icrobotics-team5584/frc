@@ -8,14 +8,17 @@
 #include "subsystems/SubDriveBase.h"
 #include "Robot.h"
 #include "commands/CmdJoystickDrive.h"
-SubDriveBase::SubDriveBase() : 
-Subsystem("ExampleSubsystem") {
+
+SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   _srxBackLeft = Robot::_robotMap->srxDriveBaseBackLeft;
   _srxBackRight = Robot::_robotMap->srxDriveBaseBackRight;
   _srxFrontRight = Robot::_robotMap->srxDriveBaseFrontRight;
   _srxFrontLeft = Robot::_robotMap->srxDriveBaseFrontLeft;
   difDrive.reset(new frc::DifferentialDrive(*_srxFrontLeft, *_srxFrontRight));
 
+  _ahrsNavXGyro = Robot::_robotMap->ahrsNavXDriveBase;
+  _clsMid = Robot::_robotMap->clsDriveBaseMid;
+  _clsFront = Robot::_robotMap->clsDriveBaseFront;
   }
 
 void SubDriveBase::InitDefaultCommand() {
@@ -35,7 +38,7 @@ double SubDriveBase::getYaw() {
   return _ahrsNavXGyro->GetYaw();
 }
 bool SubDriveBase::hasReachedLine() {
-  return not(_clsLeft->Get());
+  return not(_clsFront->Get());
 }
 void SubDriveBase::brakeRobot() {
     difDrive->ArcadeDrive(-0.4, 0.2);
@@ -45,6 +48,6 @@ void SubDriveBase::getRange() {
   SmartDashboard::PutBoolean("Is range valid", _ulsLeft->IsRangeValid());
 }
 void SubDriveBase::getClsData() {
-  SmartDashboard::PutNumber("Black Colour Sensor Value", _clsFront->GetValue());
-  SmartDashboard::PutNumber("Black Colour Sensor Voltage", _clsFront->GetVoltage());
+  SmartDashboard::PutNumber("Black Colour Sensor Value", _clsMid->GetValue());
+  SmartDashboard::PutNumber("Black Colour Sensor Voltage", _clsMid->GetVoltage());
 }

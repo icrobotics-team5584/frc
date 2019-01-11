@@ -10,7 +10,7 @@
 #include <frc/WPILib.h>
 #include <frc/commands/Subsystem.h>
 #include <ctre/Phoenix.h>
-#include <WPILib.h>
+#include <AHRS.h>
 
 using namespace std;
 using namespace frc;
@@ -25,13 +25,20 @@ class SubDriveBase : public frc::Subsystem {
   unique_ptr<frc::DifferentialDrive> difDrive;
   
   // Sensors
-  shared_ptr<AnalogInput> clsMid;
-  shared_ptr<AnalogInput> clsFront;
-  shared_ptr<Ultrasonic> ulsLeft;
-  shared_ptr<Ultrasonic> ulsRight;
+  shared_ptr<AnalogInput> _clsMid;
+  shared_ptr<DigitalInput> _clsFront;
+  shared_ptr<Ultrasonic> _ulsLeft;
+  shared_ptr<Ultrasonic> _ulsRight;
+  shared_ptr<AHRS> _ahrsNavXGyro;
 
  public:
   SubDriveBase();
   void drive(double speed, double rotation);
+  void resetYaw();
+  double getYaw();
+  bool hasReachedLine();
+  void brakeRobot();
+  void getRange();
+  void getClsData();
   void InitDefaultCommand() override;
 };
