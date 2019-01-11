@@ -38,8 +38,8 @@ enum PCM {
     pcm_solPanelAffectorTopRightReverse = 3,
     pcm_solPanelAffectorBottomLeftForward = 4,
     pcm_solPanelAffectorBottomLeftReverse = 5,
-    pcm_solPanelAffectorBottomRightForward = 7,
-    pcm_solPanelAffectorBottomRightReverse = 8,
+    pcm_solPanelAffectorBottomRightForward = 6,
+    pcm_solPanelAffectorBottomRightReverse = 7,
 };
 
 class RobotMap {

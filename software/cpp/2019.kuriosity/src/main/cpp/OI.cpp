@@ -6,10 +6,12 @@
 /*----------------------------------------------------------------------------*/
 
 #include "OI.h"
+#include "commands/CmdOutputPanel.h"
 
 OI::OI() {
   controller.reset(new frc::Joystick(0));
   cout << "Run Robot OI" << endl;
 
   btnDeployPanel.reset(new frc::JoystickButton(controller.get(), btn_DeployPanel));
+  btnDeployPanel->WhileHeld(new CmdOutputPanel);
 }
