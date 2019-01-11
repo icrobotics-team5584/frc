@@ -15,7 +15,9 @@ enum Can {
     can_srxDriveBaseFrontRight = 1,
     can_srxDriveBaseFrontLeft = 3,
     can_srxDriveBaseBackRight = 2,
-    can_srxDriveBaseBackLeft = 4
+    can_srxDriveBaseBackLeft = 4,
+    can_talIntakeOutakeRight = 1, //pwn
+    can_talIntakeOutakeLeft = 0   //pwn
 };
 
 class RobotMap {
@@ -24,6 +26,9 @@ public:
 	shared_ptr<WPI_TalonSRX> srxDriveBaseFrontLeft;
     shared_ptr<WPI_TalonSRX> srxDriveBaseBackLeft;
 	shared_ptr<WPI_TalonSRX> srxDriveBaseBackRight;
+
+    shared_ptr<frc::Talon> talIntakeOutakeRight;
+    shared_ptr<frc::Talon> talIntakeOutakeLeft;
 
     RobotMap();
 

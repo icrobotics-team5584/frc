@@ -7,29 +7,24 @@
 
 #pragma once
 
-#include <iostream>
 #include <frc/WPILib.h>
+#include <frc/commands/Subsystem.h>
+#include <ctre/Phoenix.h>
 
 using namespace std;
+class SubIntakeOutake : public frc::Subsystem {
+ private:
+  // It's desirable that everything possible under private except
+  // for methods that implement subsystem capabilities
+  shared_ptr<frc::Talon> _talLeft;
+  shared_ptr<frc::Talon> _talRight;
+  double outSpeed = -1;
+  double inSpeed = 0.5;
 
-enum Buttons {
-     aBtn= 1,
-     bBtn= 2,
-     xBtn = 3,
-     yBtn = 4,
-     leftBtn = 5,
-     rightBtn = 6,
-     backBtn = 7,
-     startBtn = 8,
-     leftStickBtn = 9,
-     rightStickBtn =10
-};
-
-
-class OI {
  public:
-  shared_ptr<frc::Joystick> controller;
-  shared_ptr<frc::JoystickButton> btnCargoPodOut;
-  shared_ptr<frc::JoystickButton> btnCargoPodIn;
-  OI();
+  SubIntakeOutake();
+  void InitDefaultCommand() override;
+  void Intake();
+  void Outake();
+  void Stop();
 };

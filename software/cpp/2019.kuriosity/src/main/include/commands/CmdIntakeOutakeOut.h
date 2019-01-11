@@ -7,29 +7,14 @@
 
 #pragma once
 
-#include <iostream>
-#include <frc/WPILib.h>
+#include <frc/commands/Command.h>
 
-using namespace std;
-
-enum Buttons {
-     aBtn= 1,
-     bBtn= 2,
-     xBtn = 3,
-     yBtn = 4,
-     leftBtn = 5,
-     rightBtn = 6,
-     backBtn = 7,
-     startBtn = 8,
-     leftStickBtn = 9,
-     rightStickBtn =10
-};
-
-
-class OI {
+class CmdIntakeOutakeOut : public frc::Command {
  public:
-  shared_ptr<frc::Joystick> controller;
-  shared_ptr<frc::JoystickButton> btnCargoPodOut;
-  shared_ptr<frc::JoystickButton> btnCargoPodIn;
-  OI();
+  CmdIntakeOutakeOut();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
 };
