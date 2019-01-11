@@ -32,10 +32,14 @@ enum Analog {
 };
 
 enum PCM {
-    pcm_solPanelAffectorLeftForward = 0,
-    pcm_solPanelAffectorLeftReverse = 1,
-    pcm_solPanelAffectorRightForward = 2,
-    pcm_solPanelAffectorRightReverse = 3,
+    pcm_solPanelAffectorTopLeftForward = 0,
+    pcm_solPanelAffectorTopLeftReverse = 1,
+    pcm_solPanelAffectorTopRightForward = 2,
+    pcm_solPanelAffectorTopRightReverse = 3,
+    pcm_solPanelAffectorBottomLeftForward = 4,
+    pcm_solPanelAffectorBottomLeftReverse = 5,
+    pcm_solPanelAffectorBottomRightForward = 7,
+    pcm_solPanelAffectorBottomRightReverse = 8,
 };
 
 class RobotMap {
@@ -55,8 +59,10 @@ public:
     shared_ptr<Ultrasonic> ulsDriveBaseRight;
 
     // Panel Affector Actuators
-    shared_ptr<DoubleSolenoid> solPanelAffectorLeft;
-    shared_ptr<DoubleSolenoid> solPanelAffectorRight;
+    shared_ptr<DoubleSolenoid> solPanelAffectorTopLeft;
+    shared_ptr<DoubleSolenoid> solPanelAffectorTopRight;
+    shared_ptr<DoubleSolenoid> solPanelAffectorBottomLeft;
+    shared_ptr<DoubleSolenoid> solPanelAffectorBottomRight;
 
 };
 

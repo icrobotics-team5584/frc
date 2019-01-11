@@ -17,6 +17,8 @@ RobotMap::RobotMap(){
     ulsDriveBaseLeft.reset(new Ultrasonic(dio_ulsTriggerDriveBaseLeft, dio_ulsEchoDriveBaseLeft));
 
     // Panel Affector Actuators
-    solPanelAffectorLeft.reset(new DoubleSolenoid(pcm_solPanelAffectorLeftForward, pcm_solPanelAffectorLeftReverse));
-    solPanelAffectorRight.reset(new DoubleSolenoid(pcm_solPanelAffectorRightForward, pcm_solPanelAffectorRightReverse));
+    solPanelAffectorTopLeft.reset(new DoubleSolenoid(pcm_solPanelAffectorTopLeftForward, pcm_solPanelAffectorTopLeftReverse));
+    solPanelAffectorTopRight.reset(new DoubleSolenoid(pcm_solPanelAffectorTopRightForward, pcm_solPanelAffectorTopRightReverse));
+    solPanelAffectorBottomLeft.reset(new DoubleSolenoid(pcm_solPanelAffectorBottomLeftForward, pcm_solPanelAffectorBottomLeftReverse));
+    solPanelAffectorBottomRight.reset(new DoubleSolenoid(pcm_solPanelAffectorBottomRightForward, pcm_solPanelAffectorBottomRightReverse));
 }

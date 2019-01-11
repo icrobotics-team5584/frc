@@ -9,8 +9,10 @@
 #include "Robot.h"
 
 SubPanelAffector::SubPanelAffector() : Subsystem("SubPanelAffector") {
-  solLeft = Robot::_robotMap->solPanelAffectorLeft;
-  solRight = Robot::_robotMap->solPanelAffectorRight;
+  solTopLeft = Robot::_robotMap->solPanelAffectorTopLeft;
+  solTopRight = Robot::_robotMap->solPanelAffectorTopRight;
+  solBottomLeft = Robot::_robotMap->solPanelAffectorBottomLeft;
+  solBottomRight = Robot::_robotMap->solPanelAffectorBottomRight;
 
   Retract();
 }
@@ -21,11 +23,15 @@ void SubPanelAffector::InitDefaultCommand() {
 }
 
 void SubPanelAffector::Retract() {
-  solLeft->Set(DoubleSolenoid::kForward);
-  solRight->Set(DoubleSolenoid::kReverse);
+  solTopLeft->Set(DoubleSolenoid::kReverse);
+  solTopRight->Set(DoubleSolenoid::kReverse);
+  solBottomLeft->Set(DoubleSolenoid::kReverse);
+  solBottomRight->Set(DoubleSolenoid::kReverse);
 }
 
 void SubPanelAffector::Deploy() {
-  solLeft->Set(DoubleSolenoid::kForward);
-  solRight->Set(DoubleSolenoid::kForward);
+  solTopLeft->Set(DoubleSolenoid::kForward);
+  solTopRight->Set(DoubleSolenoid::kForward);
+  solBottomLeft->Set(DoubleSolenoid::kForward);
+  solBottomRight->Set(DoubleSolenoid::kForward);
 }
