@@ -10,18 +10,25 @@
 #include <frc/WPILib.h>
 #include <frc/commands/Subsystem.h>
 #include <ctre/Phoenix.h>
-
+#include <WPILib.h>
 
 using namespace std;
+using namespace frc;
+
 class SubDriveBase : public frc::Subsystem {
  private:
-  // It's desirable that everything possible under private except
-  // for methods that implement subsystem capabilities
+  // Actuators
   shared_ptr<WPI_TalonSRX> _srxFrontLeft;
   shared_ptr<WPI_TalonSRX> _srxFrontRight;
   shared_ptr<WPI_TalonSRX> _srxBackLeft;
   shared_ptr<WPI_TalonSRX> _srxBackRight;
   unique_ptr<frc::DifferentialDrive> difDrive;
+  
+  // Sensors
+  shared_ptr<AnalogInput> clsMid;
+  shared_ptr<AnalogInput> clsFront;
+  shared_ptr<Ultrasonic> ulsLeft;
+  shared_ptr<Ultrasonic> ulsRight;
 
  public:
   SubDriveBase();
