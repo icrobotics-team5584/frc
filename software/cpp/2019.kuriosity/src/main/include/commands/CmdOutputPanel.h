@@ -5,11 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "OI.h"
+#pragma once
 
-OI::OI() {
-  controller.reset(new frc::Joystick(0));
-  cout << "Run Robot OI" << endl;
+#include <frc/commands/Command.h>
 
-  btnDeployPanel.reset(new frc::JoystickButton(controller.get(), btn_DeployPanel));
-}
+class CmdOutputPanel : public frc::Command {
+ public:
+  CmdOutputPanel();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
+};

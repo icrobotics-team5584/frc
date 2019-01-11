@@ -31,6 +31,13 @@ enum Analog {
     ana_clsDriveBaseMid = 0,
 };
 
+enum PCM {
+    pcm_solPanelAffectorLeftForward = 0,
+    pcm_solPanelAffectorLeftReverse = 1,
+    pcm_solPanelAffectorRightForward = 2,
+    pcm_solPanelAffectorRightReverse = 3,
+};
+
 class RobotMap {
 public:
     RobotMap();
@@ -46,6 +53,10 @@ public:
     shared_ptr<DigitalInput> clsDriveBaseFront;
     shared_ptr<Ultrasonic> ulsDriveBaseLeft;
     shared_ptr<Ultrasonic> ulsDriveBaseRight;
+
+    // Panel Affector Actuators
+    shared_ptr<DoubleSolenoid> solPanelAffectorLeft;
+    shared_ptr<DoubleSolenoid> solPanelAffectorRight;
 
 };
 

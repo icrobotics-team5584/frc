@@ -19,6 +19,7 @@
 #include "subsystems/SubDriveBase.h"
 #include "subsystems/SubElevator.h"
 #include "subsystems/SubTurret.h"
+#include "subsystems/SubPanelAffector.h"
 
 #include <iostream>
 
@@ -32,6 +33,7 @@ class Robot : public frc::TimedRobot {
   static unique_ptr<SubDriveBase> subDriveBase;
   static unique_ptr<SubElevator> subElevator;
   static unique_ptr<SubTurret> subTurret;
+  static unique_ptr<SubPanelAffector> subPanelAffector;
 
   void RobotInit() override;
   void RobotPeriodic() override;

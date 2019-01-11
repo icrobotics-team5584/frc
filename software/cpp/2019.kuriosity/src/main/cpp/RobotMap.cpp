@@ -1,5 +1,7 @@
 #include "RobotMap.h"
 #include <iostream>
+
+
 RobotMap::RobotMap(){
     // DriveBase Actuators
     srxDriveBaseFrontRight.reset(new WPI_TalonSRX(can_srxDriveBaseFrontRight));
@@ -14,4 +16,7 @@ RobotMap::RobotMap(){
     clsDriveBaseMid.reset(new AnalogInput(ana_clsDriveBaseMid));
     ulsDriveBaseLeft.reset(new Ultrasonic(dio_ulsTriggerDriveBaseLeft, dio_ulsEchoDriveBaseLeft));
 
+    // Panel Affector Actuators
+    solPanelAffectorLeft.reset(new DoubleSolenoid(pcm_solPanelAffectorLeftForward, pcm_solPanelAffectorLeftReverse));
+    solPanelAffectorRight.reset(new DoubleSolenoid(pcm_solPanelAffectorRightForward, pcm_solPanelAffectorRightReverse));
 }

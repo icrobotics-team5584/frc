@@ -12,8 +12,15 @@
 
 using namespace std;
 
-class OI {
- public:
+enum JoystickButton {
+  btn_DeployPanel = 1,
+};
+
+class OI{
+public:
   std::shared_ptr<frc::Joystick> controller;
   OI();
+
+private:
+  unique_ptr<frc::JoystickButton> btnDeployPanel;
 };

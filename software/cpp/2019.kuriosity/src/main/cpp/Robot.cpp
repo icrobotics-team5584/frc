@@ -16,6 +16,7 @@ unique_ptr<RobotMap> Robot::_robotMap;
 unique_ptr<SubDriveBase> Robot::subDriveBase;
 unique_ptr<SubElevator> Robot::subElevator;
 unique_ptr<SubTurret> Robot::subTurret;
+unique_ptr<SubPanelAffector> Robot::subPanelAffector;
 
 void Robot::RobotInit() {
   cout << "Run Robot init" << endl;
@@ -25,6 +26,7 @@ void Robot::RobotInit() {
   subDriveBase.reset(new SubDriveBase());
   subElevator.reset(new SubElevator());
   subTurret.reset(new SubTurret());
+  subPanelAffector.reset(new SubPanelAffector());
 
   //m_chooser.SetDefaultOption("Default Auto", &m_defaultAuto);
   //m_chooser.AddOption("My Auto", &m_myAuto);

@@ -5,11 +5,22 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "OI.h"
+#pragma once
 
-OI::OI() {
-  controller.reset(new frc::Joystick(0));
-  cout << "Run Robot OI" << endl;
+#include <frc/commands/Subsystem.h>
+#include <frc/WPILib.h>
 
-  btnDeployPanel.reset(new frc::JoystickButton(controller.get(), btn_DeployPanel));
-}
+using namespace std;
+using namespace frc;
+
+class SubPanelAffector : public frc::Subsystem {
+ private:
+  shared_ptr<DoubleSolenoid> solLeft; 
+  shared_ptr<DoubleSolenoid> solRight;
+
+ public:
+  SubPanelAffector();
+  void InitDefaultCommand() override;
+  void Retract();
+  void Deploy();
+};
