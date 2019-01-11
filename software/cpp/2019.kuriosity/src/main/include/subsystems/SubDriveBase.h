@@ -7,14 +7,24 @@
 
 #pragma once
 
+#include <frc/WPILib.h>
 #include <frc/commands/Subsystem.h>
+#include <ctre/Phoenix.h>
 
+
+using namespace std;
 class SubDriveBase : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
+  shared_ptr<WPI_TalonSRX> _srxFrontLeft;
+  shared_ptr<WPI_TalonSRX> _srxFrontRight;
+  shared_ptr<WPI_TalonSRX> _srxBackLeft;
+  shared_ptr<WPI_TalonSRX> _srxBackRight;
+  unique_ptr<frc::DifferentialDrive> difDrive;
 
  public:
   SubDriveBase();
+  void drive(double speed, double rotation);
   void InitDefaultCommand() override;
 };
