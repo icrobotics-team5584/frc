@@ -10,6 +10,7 @@
 #include <frc/WPILib.h>
 
 using namespace std;
+using namespace frc;
 
 enum Can {
     can_srxDriveBaseFrontRight = 1,
@@ -18,14 +19,33 @@ enum Can {
     can_srxDriveBaseBackLeft = 4
 };
 
+enum DIO {
+    dio_clsDriveBaseFront = 0,
+    dio_ulsTriggerDriveBaseLeft = 1,
+    dio_ulsEchoDriveBaseLeft = 2,
+    dio_ulsTriggerDriveBaseRight = 3,
+    dio_ulsEchoDriveBaseRight = 4,
+};
+
+enum Analog {
+    ana_clsDriveBaseMid = 0,
+};
+
 class RobotMap {
 public:
+    RobotMap();
+
+    // DriveBase Actuators
     shared_ptr<WPI_TalonSRX> srxDriveBaseFrontRight;
 	shared_ptr<WPI_TalonSRX> srxDriveBaseFrontLeft;
     shared_ptr<WPI_TalonSRX> srxDriveBaseBackLeft;
 	shared_ptr<WPI_TalonSRX> srxDriveBaseBackRight;
 
-    RobotMap();
+    // DriveBase Sensors
+    shared_ptr<AnalogInput> clsDriveBaseMid;
+    shared_ptr<DigitalInput> clsDriveBaseFront;
+    shared_ptr<Ultrasonic> ulsDriveBaseLeft;
+    shared_ptr<Ultrasonic> ulsDriveBaseRight;
 
 };
 
