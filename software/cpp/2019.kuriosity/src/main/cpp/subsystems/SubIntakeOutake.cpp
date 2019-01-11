@@ -10,7 +10,7 @@
 SubIntakeOutake::SubIntakeOutake() 
 : Subsystem("ExampleSubsystem") {
   _talLeft = Robot::_robotMap->talIntakeOutakeLeft;
-  _talLeft = Robot::_robotMap->talIntakeOutakeLeft;
+  _talRight = Robot::_robotMap->talIntakeOutakeRight;
 }
 
 void SubIntakeOutake::InitDefaultCommand() {
@@ -20,3 +20,17 @@ void SubIntakeOutake::InitDefaultCommand() {
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
+
+void SubIntakeOutake::Intake() {
+  _talLeft->Set(inSpeed);
+  _talRight->Set(-inSpeed);
+}
+void SubIntakeOutake::Outake() {
+  _talLeft->Set(outSpeed);
+  _talRight->Set(-outSpeed);
+}
+void SubIntakeOutake::Stop() {
+  _talRight->Set(0.0);
+  _talLeft->Set(0.0);
+
+}

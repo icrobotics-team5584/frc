@@ -16,8 +16,8 @@ enum Can {
     can_srxDriveBaseFrontLeft = 3,
     can_srxDriveBaseBackRight = 2,
     can_srxDriveBaseBackLeft = 4,
-    can_talIntakeOutakeRight = 1,
-    can_talIntakeOutakeLeft = 0
+    can_talIntakeOutakeRight = 1, //pwn
+    can_talIntakeOutakeLeft = 0   //pwn
 };
 
 class RobotMap {

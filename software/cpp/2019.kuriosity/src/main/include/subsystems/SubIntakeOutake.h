@@ -18,7 +18,13 @@ class SubIntakeOutake : public frc::Subsystem {
   // for methods that implement subsystem capabilities
   shared_ptr<frc::Talon> _talLeft;
   shared_ptr<frc::Talon> _talRight;
+  double outSpeed = -1;
+  double inSpeed = 0.5;
+
  public:
   SubIntakeOutake();
   void InitDefaultCommand() override;
+  void Intake();
+  void Outake();
+  void Stop();
 };
