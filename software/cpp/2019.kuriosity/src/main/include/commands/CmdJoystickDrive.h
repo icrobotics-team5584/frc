@@ -7,13 +7,14 @@
 
 #pragma once
 
-#include <iostream>
-#include <frc/WPILib.h>
+#include <frc/commands/Command.h>
 
-using namespace std;
-
-class OI {
+class CmdJoystickDrive : public frc::Command {
  public:
-  shared_ptr<frc::Joystick> controller;
-  OI();
+  CmdJoystickDrive();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
 };

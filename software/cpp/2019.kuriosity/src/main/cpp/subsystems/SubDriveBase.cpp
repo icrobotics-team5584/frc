@@ -6,13 +6,23 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/SubDriveBase.h"
+#include "Robot.h"
+#include "commands/CmdJoystickDrive.h"
+SubDriveBase::SubDriveBase() : 
+Subsystem("ExampleSubsystem") {
+  _srxBackLeft = Robot::_robotMap->srxDriveBaseBackLeft;
+  _srxBackRight = Robot::_robotMap->srxDriveBaseBackRight;
+  _srxFrontRight = Robot::_robotMap->srxDriveBaseFrontRight;
+  _srxFrontLeft = Robot::_robotMap->srxDriveBaseFrontLeft;
+  difDrive.reset(new frc::DifferentialDrive(*_srxFrontLeft, *_srxFrontRight));
 
-SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {}
+  }
 
 void SubDriveBase::InitDefaultCommand() {
   // Set the default command for a subsystem here.
-  // SetDefaultCommand(new MySpecialCommand());
+  SetDefaultCommand(new CmdJoystickDrive());
 }
 
-// Put methods for controlling this subsystem
-// here. Call these from Commands.
+void SubDriveBase::drive(double speed, double rotation) {
+  difDrive->ArcadeDrive(speed, rotation);
+}
