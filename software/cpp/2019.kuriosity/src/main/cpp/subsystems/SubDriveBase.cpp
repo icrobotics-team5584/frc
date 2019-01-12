@@ -23,7 +23,7 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
 
 void SubDriveBase::InitDefaultCommand() {
   // Set the default command for a subsystem here.
-  SetDefaultCommand(new CmdJoystickDrive());
+  //SetDefaultCommand(new CmdJoystickDrive());
 }
 
 void SubDriveBase::drive(double speed, double rotation) {

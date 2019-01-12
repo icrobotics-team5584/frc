@@ -20,6 +20,6 @@ OI::OI() {
   btnCargoPodOut->WhileHeld(new CmdIntakeOutakeOut());
   btnCargoPodIn->WhileHeld(new CmdIntakeOutakeIn());
 
-  btnDeployPanel.reset(new frc::JoystickButton(controller.get(), btn_DeployPanel));
-  btnDeployPanel->WhileHeld(new CmdOutputPanel);
+  // btnDeployPanel.reset(new frc::JoystickButton(controller.get(), btn_DeployPanel));
+  // btnDeployPanel->WhileHeld(new CmdOutputPanel);
 }

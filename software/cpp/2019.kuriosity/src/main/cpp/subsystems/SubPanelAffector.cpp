@@ -9,8 +9,10 @@
 #include "Robot.h"
 
 SubPanelAffector::SubPanelAffector() : Subsystem("SubPanelAffector") {
-  solTop = Robot::_robotMap->solPanelAffectorTop;
-  solBottom = Robot::_robotMap->solPanelAffectorBottom;
+  // solTopLeft = Robot::_robotMap->solPanelAffectorTopLeft;
+  // solTopRight = Robot::_robotMap->solPanelAffectorTopRight;
+  // solBottomLeft = Robot::_robotMap->solPanelAffectorBottomLeft;
+  // solBottomRight = Robot::_robotMap->solPanelAffectorBottomRight;
 
   Retract();
 }

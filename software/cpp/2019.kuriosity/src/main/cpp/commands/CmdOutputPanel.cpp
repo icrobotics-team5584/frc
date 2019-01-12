@@ -10,12 +10,12 @@
 
 CmdOutputPanel::CmdOutputPanel() {
   // Use Requires() here to declare subsystem dependencies
-  Requires(Robot::subPanelAffector.get());
+  // Requires(Robot::subPanelAffector.get());
 }
 
 // Called just before this Command runs the first time
 void CmdOutputPanel::Initialize() {
-  Robot::subPanelAffector->Deploy();
+  // Robot::subPanelAffector->Deploy();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -26,7 +26,7 @@ bool CmdOutputPanel::IsFinished() { return false; }
 
 // Called once after isFinished returns true
 void CmdOutputPanel::End() {
-  Robot::subPanelAffector->Retract();
+  // Robot::subPanelAffector->Retract();
 }
 
 // Called when another command which requires one or more of the same
