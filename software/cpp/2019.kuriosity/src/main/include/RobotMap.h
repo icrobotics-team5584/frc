@@ -17,7 +17,9 @@ enum Can {
     can_srxDriveBaseFrontRight = 1,
     can_srxDriveBaseFrontLeft = 3,
     can_srxDriveBaseBackRight = 2,
-    can_srxDriveBaseBackLeft = 4
+    can_srxDriveBaseBackLeft = 4,
+    can_talIntakeOutakeRight = 1, //pwn
+    can_talIntakeOutakeLeft = 0   //pwn
 };
 
 enum DIO {
@@ -59,6 +61,10 @@ public:
     shared_ptr<DigitalInput> clsDriveBaseFront;
     shared_ptr<Ultrasonic> ulsDriveBaseLeft;
     shared_ptr<Ultrasonic> ulsDriveBaseRight;
+    shared_ptr<frc::Talon> talIntakeOutakeRight;
+    shared_ptr<frc::Talon> talIntakeOutakeLeft;
+
+    RobotMap();
 
     // Panel Affector Actuators
     shared_ptr<DoubleSolenoid> solPanelAffectorTopLeft;

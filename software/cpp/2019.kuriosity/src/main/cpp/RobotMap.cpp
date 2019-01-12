@@ -11,6 +11,10 @@ RobotMap::RobotMap(){
     srxDriveBaseBackRight->Set(ControlMode::Follower, can_srxDriveBaseFrontRight);
     srxDriveBaseBackLeft->Set(ControlMode::Follower, can_srxDriveBaseFrontLeft);
 
+    talIntakeOutakeRight.reset(new frc::Talon(can_talIntakeOutakeRight));
+    talIntakeOutakeLeft.reset(new frc::Talon(can_talIntakeOutakeLeft));
+
+
     // DriveBase Sensors
     ahrsNavXDriveBase.reset(new AHRS(SerialPort::kMXP));
     clsDriveBaseFront.reset(new DigitalInput(dio_clsDriveBaseFront));

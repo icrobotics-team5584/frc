@@ -15,6 +15,7 @@ unique_ptr<SubDriveBase> Robot::subDriveBase;
 unique_ptr<SubElevator> Robot::subElevator;
 unique_ptr<SubTurret> Robot::subTurret;
 unique_ptr<SubPanelAffector> Robot::subPanelAffector;
+unique_ptr<SubIntakeOutake> Robot::subIntakeOutake;
 
 void Robot::RobotInit() {
   cout << "Run Robot init" << endl;
@@ -25,9 +26,8 @@ void Robot::RobotInit() {
   subDriveBase.reset(new SubDriveBase());
   subElevator.reset(new SubElevator());
   subTurret.reset(new SubTurret());
+  subIntakeOutake.reset(new SubIntakeOutake());
   subPanelAffector.reset(new SubPanelAffector());
-  
-  std::cout << "checkpoint rinit" << std::endl;
 
   //m_chooser.SetDefaultOption("Default Auto", &m_defaultAuto);
   //m_chooser.AddOption("My Auto", &m_myAuto);
