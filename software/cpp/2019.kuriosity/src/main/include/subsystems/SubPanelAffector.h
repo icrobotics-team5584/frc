@@ -15,10 +15,8 @@ using namespace frc;
 
 class SubPanelAffector : public frc::Subsystem {
  private:
-  shared_ptr<DoubleSolenoid> solTopLeft; 
-  shared_ptr<DoubleSolenoid> solTopRight;
-  shared_ptr<DoubleSolenoid> solBottomLeft; 
-  shared_ptr<DoubleSolenoid> solBottomRight;
+  shared_ptr<DoubleSolenoid> solTop; 
+  shared_ptr<DoubleSolenoid> solBottom;
 
  public:
   SubPanelAffector();
