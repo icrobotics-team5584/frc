@@ -25,10 +25,10 @@ enum Can {
 enum DIO {
     dio_clsDriveBaseFront = 0,
     dio_clsDriveBaseMid = 1,
-    dio_ulsTriggerDriveBaseLeft = 2,
-    dio_ulsEchoDriveBaseLeft = 3,
-    dio_ulsTriggerDriveBaseRight = 4,
-    dio_ulsEchoDriveBaseRight = 5,
+    dio_ulsTriggerDriveBaseLeft = 1,
+    dio_ulsEchoDriveBaseLeft = 2,
+    dio_ulsTriggerDriveBaseRight = 3,
+    dio_ulsEchoDriveBaseRight = 4,
 };
 
 enum Analog {
@@ -61,11 +61,8 @@ public:
     shared_ptr<frc::Talon> talIntakeOutakeLeft;
 
     // Panel Affector Actuators
-    // shared_ptr<DoubleSolenoid> solPanelAffectorTopLeft;
-    // shared_ptr<DoubleSolenoid> solPanelAffectorTopRight;
-    // shared_ptr<DoubleSolenoid> solPanelAffectorBottomLeft;
-    // shared_ptr<DoubleSolenoid> solPanelAffectorBottomRight;
-
+    shared_ptr<DoubleSolenoid> solPanelAffectorTop;
+    shared_ptr<DoubleSolenoid> solPanelAffectorBottom;
 };
 
 /**
