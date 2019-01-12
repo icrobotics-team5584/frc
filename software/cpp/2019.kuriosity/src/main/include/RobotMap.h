@@ -64,8 +64,6 @@ public:
     shared_ptr<frc::Talon> talIntakeOutakeRight;
     shared_ptr<frc::Talon> talIntakeOutakeLeft;
 
-    RobotMap();
-
     // Panel Affector Actuators
     shared_ptr<DoubleSolenoid> solPanelAffectorTopLeft;
     shared_ptr<DoubleSolenoid> solPanelAffectorTopRight;
