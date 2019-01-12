@@ -19,7 +19,12 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   _ahrsNavXGyro = Robot::_robotMap->ahrsNavXDriveBase;
   _clsMid = Robot::_robotMap->clsDriveBaseMid;
   _clsFront = Robot::_robotMap->clsDriveBaseFront;
+  _ulsLeft = Robot::_robotMap->ulsDriveBaseLeft;
+
+  _ulsLeft->SetAutomaticMode(true);
   }
+
+
 
 void SubDriveBase::InitDefaultCommand() {
   // Set the default command for a subsystem here.

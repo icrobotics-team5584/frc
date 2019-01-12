@@ -20,15 +20,16 @@ unique_ptr<SubIntakeOutake> Robot::subIntakeOutake;
 void Robot::RobotInit() {
   cout << "Run Robot init" << endl;
   _robotMap.reset(new RobotMap);
-  _oi.reset(new OI);
-  
-  cmdSeekCargoShip.reset(new CmdSeekCargoShip());
+
   subDriveBase.reset(new SubDriveBase());
   subElevator.reset(new SubElevator());
   subTurret.reset(new SubTurret());
   subIntakeOutake.reset(new SubIntakeOutake());
   subPanelAffector.reset(new SubPanelAffector());
+  cmdSeekCargoShip.reset(new CmdSeekCargoShip());
 
+  _oi.reset(new OI);
+  std::cout << "robot init finish" << std::endl;
   //m_chooser.SetDefaultOption("Default Auto", &m_defaultAuto);
   //m_chooser.AddOption("My Auto", &m_myAuto);
   //frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
@@ -92,7 +93,10 @@ void Robot::TeleopInit() {
   //  m_autonomousCommand->Cancel();
   //  m_autonomousCommand = nullptr;
   //}
-  //cmdSeekCargoShip->Start();
+  std::cout << "cmd about to run" << std::endl;
+  cmdSeekCargoShip->Start();
+  std::cout << "cmd has run" << std::endl;
+
 }
 
 void Robot::TeleopPeriodic() {
