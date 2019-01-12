@@ -9,9 +9,9 @@
 
 #include <frc/commands/Command.h>
 
-class CmdJoystickDrive : public frc::Command {
+class CmdOutputPanel : public frc::Command {
  public:
-  CmdJoystickDrive();
+  CmdOutputPanel();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;

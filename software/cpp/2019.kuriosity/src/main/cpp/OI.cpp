@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "OI.h"
+#include "commands/CmdOutputPanel.h"
 #include "commands/CmdIntakeOutakeOut.h"
 #include "commands/CmdIntakeOutakeIn.h"
 
@@ -16,4 +17,7 @@ OI::OI() {
   btnCargoPodOut->WhileHeld(new CmdIntakeOutakeOut());
   btnCargoPodIn->WhileHeld(new CmdIntakeOutakeIn());
   cout << "Run Robot OI" << endl;
+
+  btnDeployPanel.reset(new frc::JoystickButton(controller.get(), btn_DeployPanel));
+  btnDeployPanel->WhileHeld(new CmdOutputPanel);
 }

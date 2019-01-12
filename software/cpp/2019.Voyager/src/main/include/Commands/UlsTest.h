@@ -7,11 +7,11 @@
 
 #pragma once
 
-#include <frc/commands/Command.h>
+#include <Commands/Command.h>
 
-class ExampleCommand : public frc::Command {
+class UlsTest : public frc::Command {
  public:
-  ExampleCommand();
+  UlsTest();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;

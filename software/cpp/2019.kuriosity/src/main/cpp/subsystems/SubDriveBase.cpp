@@ -8,14 +8,17 @@
 #include "subsystems/SubDriveBase.h"
 #include "Robot.h"
 #include "commands/CmdJoystickDrive.h"
-SubDriveBase::SubDriveBase() : 
-Subsystem("ExampleSubsystem") {
+
+SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   _srxBackLeft = Robot::_robotMap->srxDriveBaseBackLeft;
   _srxBackRight = Robot::_robotMap->srxDriveBaseBackRight;
   _srxFrontRight = Robot::_robotMap->srxDriveBaseFrontRight;
   _srxFrontLeft = Robot::_robotMap->srxDriveBaseFrontLeft;
   difDrive.reset(new frc::DifferentialDrive(*_srxFrontLeft, *_srxFrontRight));
 
+  _ahrsNavXGyro = Robot::_robotMap->ahrsNavXDriveBase;
+  _clsMid = Robot::_robotMap->clsDriveBaseMid;
+  _clsFront = Robot::_robotMap->clsDriveBaseFront;
   }
 
 void SubDriveBase::InitDefaultCommand() {
@@ -25,4 +28,34 @@ void SubDriveBase::InitDefaultCommand() {
 
 void SubDriveBase::drive(double speed, double rotation) {
   difDrive->ArcadeDrive(speed, rotation);
+}
+
+void SubDriveBase::resetYaw(){
+  _ahrsNavXGyro->ZeroYaw();
+}
+
+double SubDriveBase::getYaw() {
+  return _ahrsNavXGyro->GetYaw();
+}
+bool SubDriveBase::frontHasReachedLine() {
+  return not(_clsFront->Get());
+}
+bool SubDriveBase::midHasReachedLine() {
+  return not(_clsMid->Get());
+}
+void SubDriveBase::brakeRobot() {
+    difDrive->ArcadeDrive(-0.4, 0.2);
+}
+void SubDriveBase::getRange() {
+  SmartDashboard::PutNumber("Ultrasonic Range", _ulsLeft->GetRangeMM());
+  SmartDashboard::PutBoolean("Is range valid", _ulsLeft->IsRangeValid());
+}
+//uses the ultrasonic sensor to check whether the cargo ship bay has a hatch panel on it
+bool SubDriveBase::isBayEmpty() {
+  if (_ulsLeft->GetRangeMM() < 500) {
+    return false;
+  }
+  else {
+    return true;
+  }
 }

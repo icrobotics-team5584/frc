@@ -6,16 +6,15 @@
 /*----------------------------------------------------------------------------*/
 
 #include "Robot.h"
-
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
-ExampleSubsystem Robot::m_subsystem;
 unique_ptr<OI> Robot::_oi;
 unique_ptr<RobotMap> Robot::_robotMap;
 unique_ptr<SubDriveBase> Robot::subDriveBase;
 unique_ptr<SubElevator> Robot::subElevator;
 unique_ptr<SubTurret> Robot::subTurret;
+unique_ptr<SubPanelAffector> Robot::subPanelAffector;
 unique_ptr<SubIntakeOutake> Robot::subIntakeOutake;
 
 void Robot::RobotInit() {
@@ -23,10 +22,12 @@ void Robot::RobotInit() {
   _robotMap.reset(new RobotMap);
   _oi.reset(new OI);
   
+  cmdSeekCargoShip.reset(new CmdSeekCargoShip());
   subDriveBase.reset(new SubDriveBase());
   subElevator.reset(new SubElevator());
   subTurret.reset(new SubTurret());
   subIntakeOutake.reset(new SubIntakeOutake());
+  subPanelAffector.reset(new SubPanelAffector());
 
   //m_chooser.SetDefaultOption("Default Auto", &m_defaultAuto);
   //m_chooser.AddOption("My Auto", &m_myAuto);
@@ -77,6 +78,7 @@ void Robot::AutonomousInit() {
 //  if (m_autonomousCommand != nullptr) {
  //   m_autonomousCommand->Start();
  // }
+
 }
 
 void Robot::AutonomousPeriodic() { frc::Scheduler::GetInstance()->Run(); }
@@ -90,9 +92,12 @@ void Robot::TeleopInit() {
   //  m_autonomousCommand->Cancel();
   //  m_autonomousCommand = nullptr;
   //}
+  //cmdSeekCargoShip->Start();
 }
 
-void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
+void Robot::TeleopPeriodic() {
+  frc::Scheduler::GetInstance()->Run();
+}                           
 
 void Robot::TestPeriodic() {}
 

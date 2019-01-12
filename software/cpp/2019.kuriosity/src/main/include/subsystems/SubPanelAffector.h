@@ -8,13 +8,21 @@
 #pragma once
 
 #include <frc/commands/Subsystem.h>
+#include <frc/WPILib.h>
 
-class ExampleSubsystem : public frc::Subsystem {
- public:
-  ExampleSubsystem();
-  void InitDefaultCommand() override;
+using namespace std;
+using namespace frc;
 
+class SubPanelAffector : public frc::Subsystem {
  private:
-  // It's desirable that everything possible under private except
-  // for methods that implement subsystem capabilities
+  shared_ptr<DoubleSolenoid> solTopLeft; 
+  shared_ptr<DoubleSolenoid> solTopRight;
+  shared_ptr<DoubleSolenoid> solBottomLeft; 
+  shared_ptr<DoubleSolenoid> solBottomRight;
+
+ public:
+  SubPanelAffector();
+  void InitDefaultCommand() override;
+  void Retract();
+  void Deploy();
 };

@@ -5,27 +5,32 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ExampleCommand.h"
-
+#include "commands/CmdOutputPanel.h"
 #include "Robot.h"
 
-ExampleCommand::ExampleCommand() {
+CmdOutputPanel::CmdOutputPanel() {
   // Use Requires() here to declare subsystem dependencies
-  Requires(&Robot::m_subsystem);
+  Requires(Robot::subPanelAffector.get());
 }
 
 // Called just before this Command runs the first time
-void ExampleCommand::Initialize() {}
+void CmdOutputPanel::Initialize() {
+  Robot::subPanelAffector->Deploy();
+}
 
 // Called repeatedly when this Command is scheduled to run
-void ExampleCommand::Execute() {}
+void CmdOutputPanel::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool ExampleCommand::IsFinished() { return false; }
+bool CmdOutputPanel::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void ExampleCommand::End() {}
+void CmdOutputPanel::End() {
+  Robot::subPanelAffector->Retract();
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ExampleCommand::Interrupted() {}
+void CmdOutputPanel::Interrupted() {
+  End();
+}

@@ -13,7 +13,7 @@
 using namespace std;
 
 enum Buttons {
-     aBtn= 1,
+     btn_DeployPanel= 1,
      bBtn= 2,
      xBtn = 3,
      yBtn = 4,
@@ -32,4 +32,7 @@ class OI {
   shared_ptr<frc::JoystickButton> btnCargoPodOut;
   shared_ptr<frc::JoystickButton> btnCargoPodIn;
   OI();
+
+private:
+  unique_ptr<frc::JoystickButton> btnDeployPanel;
 };

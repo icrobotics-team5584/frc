@@ -7,9 +7,11 @@
 
 #pragma once
 #include <ctre/Phoenix.h>
+#include <AHRS.h>
 #include <frc/WPILib.h>
 
 using namespace std;
+using namespace frc;
 
 enum Can {
     can_srxDriveBaseFrontRight = 1,
@@ -20,17 +22,53 @@ enum Can {
     can_talIntakeOutakeLeft = 0   //pwn
 };
 
+enum DIO {
+    dio_clsDriveBaseFront = 0,
+    dio_clsDriveBaseMid = 1,
+    dio_ulsTriggerDriveBaseLeft = 1,
+    dio_ulsEchoDriveBaseLeft = 2,
+    dio_ulsTriggerDriveBaseRight = 3,
+    dio_ulsEchoDriveBaseRight = 4,
+};
+
+enum Analog {
+};
+
+enum PCM {
+    pcm_solPanelAffectorTopLeftForward = 0,
+    pcm_solPanelAffectorTopLeftReverse = 1,
+    pcm_solPanelAffectorTopRightForward = 2,
+    pcm_solPanelAffectorTopRightReverse = 3,
+    pcm_solPanelAffectorBottomLeftForward = 4,
+    pcm_solPanelAffectorBottomLeftReverse = 5,
+    pcm_solPanelAffectorBottomRightForward = 6,
+    pcm_solPanelAffectorBottomRightReverse = 7,
+};
+
 class RobotMap {
 public:
+    RobotMap();
+
+    // DriveBase Actuators
     shared_ptr<WPI_TalonSRX> srxDriveBaseFrontRight;
 	shared_ptr<WPI_TalonSRX> srxDriveBaseFrontLeft;
     shared_ptr<WPI_TalonSRX> srxDriveBaseBackLeft;
 	shared_ptr<WPI_TalonSRX> srxDriveBaseBackRight;
 
+    // DriveBase Sensors
+    shared_ptr<AHRS> ahrsNavXDriveBase;
+    shared_ptr<DigitalInput> clsDriveBaseMid;
+    shared_ptr<DigitalInput> clsDriveBaseFront;
+    shared_ptr<Ultrasonic> ulsDriveBaseLeft;
+    shared_ptr<Ultrasonic> ulsDriveBaseRight;
     shared_ptr<frc::Talon> talIntakeOutakeRight;
     shared_ptr<frc::Talon> talIntakeOutakeLeft;
 
-    RobotMap();
+    // Panel Affector Actuators
+    shared_ptr<DoubleSolenoid> solPanelAffectorTopLeft;
+    shared_ptr<DoubleSolenoid> solPanelAffectorTopRight;
+    shared_ptr<DoubleSolenoid> solPanelAffectorBottomLeft;
+    shared_ptr<DoubleSolenoid> solPanelAffectorBottomRight;
 
 };
 

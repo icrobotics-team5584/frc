@@ -9,12 +9,16 @@
 
 #include <frc/commands/Command.h>
 
-class CmdJoystickDrive : public frc::Command {
+class CmdSeekCargoShip : public frc::Command {
  public:
-  CmdJoystickDrive();
+  CmdSeekCargoShip();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+ private:
+  bool frontClsDetected = false;
+  bool midClsDetected = false;
+  double drivePower = 1;
 };
