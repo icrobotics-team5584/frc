@@ -35,14 +35,10 @@ enum Analog {
 };
 
 enum PCM {
-    pcm_solPanelAffectorTopLeftForward = 0,
-    pcm_solPanelAffectorTopLeftReverse = 1,
-    pcm_solPanelAffectorTopRightForward = 2,
-    pcm_solPanelAffectorTopRightReverse = 3,
-    pcm_solPanelAffectorBottomLeftForward = 4,
-    pcm_solPanelAffectorBottomLeftReverse = 5,
-    pcm_solPanelAffectorBottomRightForward = 6,
-    pcm_solPanelAffectorBottomRightReverse = 7,
+    pcm_solPanelAffectorTopForward = 1,
+    pcm_solPanelAffectorTopReverse = 0,
+     pcm_solPanelAffectorBottomForward = 3,
+    pcm_solPanelAffectorBottomReverse = 2,
 };
 
 class RobotMap {
@@ -65,11 +61,8 @@ public:
     shared_ptr<frc::Talon> talIntakeOutakeLeft;
 
     // Panel Affector Actuators
-    shared_ptr<DoubleSolenoid> solPanelAffectorTopLeft;
-    shared_ptr<DoubleSolenoid> solPanelAffectorTopRight;
-    shared_ptr<DoubleSolenoid> solPanelAffectorBottomLeft;
-    shared_ptr<DoubleSolenoid> solPanelAffectorBottomRight;
-
+    shared_ptr<DoubleSolenoid> solPanelAffectorTop;
+    shared_ptr<DoubleSolenoid> solPanelAffectorBottom;
 };
 
 /**
