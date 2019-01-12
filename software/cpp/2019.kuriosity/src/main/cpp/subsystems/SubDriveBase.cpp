@@ -37,8 +37,11 @@ void SubDriveBase::resetYaw(){
 double SubDriveBase::getYaw() {
   return _ahrsNavXGyro->GetYaw();
 }
-bool SubDriveBase::hasReachedLine() {
+bool SubDriveBase::frontHasReachedLine() {
   return not(_clsFront->Get());
+}
+bool SubDriveBase::midHasReachedLine() {
+  return not(_clsMid->Get());
 }
 void SubDriveBase::brakeRobot() {
     difDrive->ArcadeDrive(-0.4, 0.2);
@@ -47,7 +50,12 @@ void SubDriveBase::getRange() {
   SmartDashboard::PutNumber("Ultrasonic Range", _ulsLeft->GetRangeMM());
   SmartDashboard::PutBoolean("Is range valid", _ulsLeft->IsRangeValid());
 }
-void SubDriveBase::getClsData() {
-  SmartDashboard::PutNumber("Black Colour Sensor Value", _clsMid->GetValue());
-  SmartDashboard::PutNumber("Black Colour Sensor Voltage", _clsMid->GetVoltage());
+//uses the ultrasonic sensor to check whether the cargo ship bay has a hatch panel on it
+bool SubDriveBase::isBayEmpty() {
+  if (_ulsLeft->GetRangeMM() < 500) {
+    return false;
+  }
+  else {
+    return true;
+  }
 }

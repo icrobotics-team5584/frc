@@ -25,7 +25,7 @@ class SubDriveBase : public frc::Subsystem {
   unique_ptr<frc::DifferentialDrive> difDrive;
   
   // Sensors
-  shared_ptr<AnalogInput> _clsMid;
+  shared_ptr<DigitalInput> _clsMid;
   shared_ptr<DigitalInput> _clsFront;
   shared_ptr<Ultrasonic> _ulsLeft;
   shared_ptr<Ultrasonic> _ulsRight;
@@ -36,9 +36,10 @@ class SubDriveBase : public frc::Subsystem {
   void drive(double speed, double rotation);
   void resetYaw();
   double getYaw();
-  bool hasReachedLine();
+  bool frontHasReachedLine();
+  bool midHasReachedLine();
   void brakeRobot();
   void getRange();
-  void getClsData();
+  bool isBayEmpty();
   void InitDefaultCommand() override;
 };

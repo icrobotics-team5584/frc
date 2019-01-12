@@ -17,4 +17,8 @@ class CmdSeekCargoShip : public frc::Command {
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+ private:
+  bool frontClsDetected = false;
+  bool midClsDetected = false;
+  double drivePower = 1;
 };

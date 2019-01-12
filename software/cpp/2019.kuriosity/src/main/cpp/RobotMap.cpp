@@ -14,7 +14,7 @@ RobotMap::RobotMap(){
     // DriveBase Sensors
     ahrsNavXDriveBase.reset(new AHRS(SerialPort::kMXP));
     clsDriveBaseFront.reset(new DigitalInput(dio_clsDriveBaseFront));
-    clsDriveBaseMid.reset(new AnalogInput(ana_clsDriveBaseMid));
+    clsDriveBaseMid.reset(new DigitalInput(dio_clsDriveBaseMid));
     ulsDriveBaseLeft.reset(new Ultrasonic(dio_ulsTriggerDriveBaseLeft, dio_ulsEchoDriveBaseLeft));
 
     // Panel Affector Actuators

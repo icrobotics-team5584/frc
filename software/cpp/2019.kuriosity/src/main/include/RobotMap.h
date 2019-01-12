@@ -22,6 +22,7 @@ enum Can {
 
 enum DIO {
     dio_clsDriveBaseFront = 0,
+    dio_clsDriveBaseMid = 1,
     dio_ulsTriggerDriveBaseLeft = 1,
     dio_ulsEchoDriveBaseLeft = 2,
     dio_ulsTriggerDriveBaseRight = 3,
@@ -29,7 +30,6 @@ enum DIO {
 };
 
 enum Analog {
-    ana_clsDriveBaseMid = 0,
 };
 
 enum PCM {
@@ -55,7 +55,7 @@ public:
 
     // DriveBase Sensors
     shared_ptr<AHRS> ahrsNavXDriveBase;
-    shared_ptr<AnalogInput> clsDriveBaseMid;
+    shared_ptr<DigitalInput> clsDriveBaseMid;
     shared_ptr<DigitalInput> clsDriveBaseFront;
     shared_ptr<Ultrasonic> ulsDriveBaseLeft;
     shared_ptr<Ultrasonic> ulsDriveBaseRight;
