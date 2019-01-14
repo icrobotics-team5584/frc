@@ -8,27 +8,27 @@
 #include "subsystems/SubRollerIntake.h"
 #include "Robot.h"
 
-SubRollerIntake::SubRollerIntake() {
-  // Use Requires() here to declare subsystem dependencies
-  // eg. Requires(Robot::chassis.get());
+SubRollerIntake::SubRollerIntake() 
+: Subsystem("ExampleSubsystem") {
+  _spkRoller = Robot::_robotMap->spkRollerIntake;
 }
 
-// Called just before this Command runs the first time
-void SubRollerIntake::Initialize() {}
+void SubRollerIntake::InitDefaultCommand() {
+  // Set the default command for a subsystem here.
+  // SetDefaultCommand(new MySpecialCommand());
+}
 
-// Called repeatedly when this Command is scheduled to run
-void SubRollerIntake::Execute() {}
-
-// Make this return true when this Command no longer needs to run execute()
-bool SubRollerIntake::IsFinished() { return false; }
-
-// Called once after isFinished returns true
-void SubRollerIntake::End() {}
-
-// Called when another command which requires one or more of the same
-// subsystems is scheduled to run
-void SubRollerIntake::Interrupted() {}
+// Put methods for controlling this subsystem
+// here. Call these from Commands.
 
 void SubRollerIntake::RollerIn() {
+  _spkRoller->Set(inSpeed);
+}
 
+void SubRollerIntake::RollerOut() {
+  _spkRoller->Set(outSpeed);
+}
+
+void SubRollerIntake::Stop() {
+    _spkRoller->Set(0.0);
 }

@@ -10,16 +10,19 @@
 #include <frc/WPILib.h>
 #include <frc/commands/Subsystem.h>
 #include <ctre/Phoenix.h>
-//#include <AHRS.h>
 
-
-class SubRollerIntake : public frc::Command {
+using namespace std;
+class SubRollerIntake : public frc::Subsystem {
+ private:
+  // It's desirable that everything possible under private except
+  // for methods that implement subsystem capabilities
+  shared_ptr<frc::Spark> _spkRoller;
+  double inSpeed = 1.0;
+  double outSpeed = -1.0;
  public:
   SubRollerIntake();
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
   void RollerIn();
+  void RollerOut();
+  void Stop();
+  void InitDefaultCommand() override;
 };
