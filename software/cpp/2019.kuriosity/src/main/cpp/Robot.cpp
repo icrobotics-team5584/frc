@@ -26,7 +26,6 @@ void Robot::RobotInit() {
   subTurret.reset(new SubTurret());
   subIntakeOutake.reset(new SubIntakeOutake());
   subPanelAffector.reset(new SubPanelAffector());
-  cmdSeekCargoShip.reset(new CmdSeekCargoShip());
 
   _oi.reset(new OI);
   std::cout << "robot init finish" << std::endl;
@@ -49,7 +48,9 @@ void Robot::RobotInit() {
  * <p> This runs after the mode specific periodic functions, but before
  * LiveWindow and SmartDashboard integrated updating.
  */
-void Robot::RobotPeriodic() {}
+void Robot::RobotPeriodic() {
+  subDriveBase->getRange();
+}
 
 /**
  * This function is called once each time the robot enters Disabled mode. You
@@ -100,6 +101,7 @@ void Robot::TeleopInit() {
   //  m_autonomousCommand = nullptr;
   //}
 
+  cmdSeekCargoShip.reset(new CmdSeekCargoShip());
 
   std::cout << "cmd about to run" << std::endl;
   cmdSeekCargoShip->Start();
@@ -109,6 +111,7 @@ void Robot::TeleopInit() {
 
 void Robot::TeleopPeriodic() {
   frc::Scheduler::GetInstance()->Run();
+
 }                           
 
 void Robot::TestPeriodic() {}

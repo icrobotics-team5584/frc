@@ -22,7 +22,7 @@ void CmdSeekCargoShip::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void CmdSeekCargoShip::Execute() {
   //This is done so that you only need to change drivePower when changing speed. The drivePower default is 100%
-  Robot::subDriveBase->drive(drivePower, 0);
+  Robot::subDriveBase->drive(-drivePower, 0);
   Robot::subDriveBase->getRange();
   if (Robot::subDriveBase->frontHasReachedLine()) {
     frontClsDetected = true;
@@ -36,11 +36,11 @@ void CmdSeekCargoShip::Execute() {
 
 
   if (frontClsDetected) {
-    drivePower = 0.4;
+    drivePower = 0.8;
     midClsDetected = false;
   }
   if (midClsDetected) {
-    drivePower = 0.;
+    drivePower = 0.3;
     frontClsDetected = false;
   }
 }
@@ -53,9 +53,13 @@ bool CmdSeekCargoShip::IsFinished() {
 // Called once after isFinished returns true
 void CmdSeekCargoShip::End() {
   SmartDashboard::PutBoolean("started running End()", true);
-   while(!Robot::subDriveBase->midHasReachedLine()) {
-  SmartDashboard::PutBoolean("started running backwards()", true);
-    Robot::subDriveBase->drive(-0.5, 0);
+  frc::Timer timer;
+  timer.Start();
+   while(!Robot::subDriveBase->midHasReachedLine() or (!(timer.Get() > 0.5))) {
+    Robot::subDriveBase->getRange();
+    SmartDashboard::PutBoolean("started running backwards()", true);
+    Robot::subDriveBase->drive(0.5, 0);
+
    }
   Robot::subDriveBase->drive(0,0);
   SmartDashboard::PutBoolean("finished running backwards()", true);
