@@ -17,9 +17,13 @@ enum Can {
     can_srxDriveBaseFrontRight = 1,
     can_srxDriveBaseFrontLeft = 3,
     can_srxDriveBaseBackRight = 2,
-    can_srxDriveBaseBackLeft = 4,
-    can_talIntakeOutakeRight = 1, //pwn
-    can_talIntakeOutakeLeft = 0   //pwn
+    can_srxDriveBaseBackLeft = 4
+};
+
+enum PWM {
+    pwm_talIntakeOutakeRight = 1, 
+    pwm_talIntakeOutakeLeft = 0,   
+    pwm_spkRollerIntake = 2
 };
 
 enum DIO {
@@ -28,7 +32,7 @@ enum DIO {
     dio_ulsTriggerDriveBaseLeft = 1,
     dio_ulsEchoDriveBaseLeft = 2,
     dio_ulsTriggerDriveBaseRight = 3,
-    dio_ulsEchoDriveBaseRight = 4,
+    dio_ulsEchoDriveBaseRight = 4
 };
 
 enum Analog {
@@ -38,7 +42,7 @@ enum PCM {
     pcm_solPanelAffectorTopForward = 3,
     pcm_solPanelAffectorTopReverse = 2,
     pcm_solPanelAffectorBottomForward = 1,
-    pcm_solPanelAffectorBottomReverse = 0,
+    pcm_solPanelAffectorBottomReverse = 0
 };
 
 class RobotMap {
@@ -57,8 +61,11 @@ public:
     shared_ptr<DigitalInput> clsDriveBaseFront;
     shared_ptr<Ultrasonic> ulsDriveBaseLeft;
     shared_ptr<Ultrasonic> ulsDriveBaseRight;
+
+    //Intake and outake
     shared_ptr<frc::Talon> talIntakeOutakeRight;
     shared_ptr<frc::Talon> talIntakeOutakeLeft;
+    shared_ptr<frc::Spark> spkRollerIntake;
 
     // Panel Affector Actuators
     shared_ptr<DoubleSolenoid> solPanelAffectorTop;
