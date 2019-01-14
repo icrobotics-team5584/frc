@@ -35,10 +35,10 @@ enum Analog {
 };
 
 enum PCM {
-    pcm_solPanelAffectorTopForward = 1,
-    pcm_solPanelAffectorTopReverse = 0,
-     pcm_solPanelAffectorBottomForward = 3,
-    pcm_solPanelAffectorBottomReverse = 2,
+    pcm_solPanelAffectorTopForward = 3,
+    pcm_solPanelAffectorTopReverse = 2,
+    pcm_solPanelAffectorBottomForward = 1,
+    pcm_solPanelAffectorBottomReverse = 0,
 };
 
 class RobotMap {
