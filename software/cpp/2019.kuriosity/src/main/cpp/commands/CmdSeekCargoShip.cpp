@@ -11,35 +11,36 @@
 
 CmdSeekCargoShip::CmdSeekCargoShip() {
   // Use Requires() here to declare subsystem dependencies
-  std::cout << "cmd constructor" << std::endl;
   Requires(Robot::subDriveBase.get());
 }
 
 // Called just before this Command runs the first time
 void CmdSeekCargoShip::Initialize() {
-  std::cout << "cmd init" << std::endl;
   
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdSeekCargoShip::Execute() {
   //This is done so that you only need to change drivePower when changing speed. The drivePower default is 100%
-  std::cout << "cmd exe start" << std::endl;
-  Robot::subDriveBase->drive(drivePower, -0.2);
+  Robot::subDriveBase->drive(drivePower, 0);
   Robot::subDriveBase->getRange();
-  std::cout << "cmd getrange ok" << std::endl;
   if (Robot::subDriveBase->frontHasReachedLine()) {
     frontClsDetected = true;
   }
   if (Robot::subDriveBase->midHasReachedLine()) {
     midClsDetected = true;
   }
+
+  SmartDashboard::PutNumber("frontClsDetected", frontClsDetected);
+  SmartDashboard::PutNumber("midClsDetected", midClsDetected);
+
+
   if (frontClsDetected) {
     drivePower = 0.4;
     midClsDetected = false;
   }
   if (midClsDetected) {
-    drivePower = 1;
+    drivePower = 0.;
     frontClsDetected = false;
   }
 }
@@ -51,7 +52,14 @@ bool CmdSeekCargoShip::IsFinished() {
 
 // Called once after isFinished returns true
 void CmdSeekCargoShip::End() {
+  SmartDashboard::PutBoolean("started running End()", true);
+   while(!Robot::subDriveBase->midHasReachedLine()) {
+  SmartDashboard::PutBoolean("started running backwards()", true);
+    Robot::subDriveBase->drive(-0.5, 0);
+   }
   Robot::subDriveBase->drive(0,0);
+  SmartDashboard::PutBoolean("finished running backwards()", true);
+
   //run put cargo in bay here
 }
 

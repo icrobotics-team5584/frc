@@ -10,22 +10,22 @@
 #include "commands/CmdJoystickDrive.h"
 
 SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
+
+  //motors
   _srxBackLeft = Robot::_robotMap->srxDriveBaseBackLeft;
   _srxBackRight = Robot::_robotMap->srxDriveBaseBackRight;
   _srxFrontRight = Robot::_robotMap->srxDriveBaseFrontRight;
   _srxFrontLeft = Robot::_robotMap->srxDriveBaseFrontLeft;
   difDrive.reset(new frc::DifferentialDrive(*_srxFrontLeft, *_srxFrontRight));
 
+  //sensors
   _ahrsNavXGyro = Robot::_robotMap->ahrsNavXDriveBase;
   _clsMid = Robot::_robotMap->clsDriveBaseMid;
   _clsFront = Robot::_robotMap->clsDriveBaseFront;
   _ulsLeft = Robot::_robotMap->ulsDriveBaseLeft;
 
   _ulsLeft->SetAutomaticMode(true);
-  }
-
-
-
+}
 void SubDriveBase::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   SetDefaultCommand(new CmdJoystickDrive());
@@ -43,9 +43,11 @@ double SubDriveBase::getYaw() {
   return _ahrsNavXGyro->GetYaw();
 }
 bool SubDriveBase::frontHasReachedLine() {
+  SmartDashboard::PutNumber("frontHasReachedLine", not(_clsFront->Get()));
   return not(_clsFront->Get());
 }
 bool SubDriveBase::midHasReachedLine() {
+  SmartDashboard::PutNumber("midHasReachedLine", not(_clsMid->Get()));
   return not(_clsMid->Get());
 }
 void SubDriveBase::brakeRobot() {

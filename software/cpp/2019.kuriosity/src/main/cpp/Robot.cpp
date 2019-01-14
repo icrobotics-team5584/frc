@@ -30,6 +30,12 @@ void Robot::RobotInit() {
 
   _oi.reset(new OI);
   std::cout << "robot init finish" << std::endl;
+
+
+  SmartDashboard::PutBoolean("started running End()", false);
+  SmartDashboard::PutBoolean("started running backwards()", false);
+  SmartDashboard::PutBoolean("finished running backwards()", false);
+
   //m_chooser.SetDefaultOption("Default Auto", &m_defaultAuto);
   //m_chooser.AddOption("My Auto", &m_myAuto);
   //frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
@@ -93,6 +99,8 @@ void Robot::TeleopInit() {
   //  m_autonomousCommand->Cancel();
   //  m_autonomousCommand = nullptr;
   //}
+
+
   std::cout << "cmd about to run" << std::endl;
   cmdSeekCargoShip->Start();
   std::cout << "cmd has run" << std::endl;
