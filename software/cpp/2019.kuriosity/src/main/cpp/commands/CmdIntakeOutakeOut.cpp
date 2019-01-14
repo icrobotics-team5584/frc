@@ -11,11 +11,13 @@
 CmdIntakeOutakeOut::CmdIntakeOutakeOut() {
   // Use Requires() here to declare subsystem dependencies
   Requires(Robot::subIntakeOutake.get());
+  Requires(&(*Robot::subRollerIntake));
 }
 
 // Called just before this Command runs the first time
 void CmdIntakeOutakeOut::Initialize() {
     Robot::subIntakeOutake->Outake();
+    Robot::subRollerIntake->RollerOut();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -27,6 +29,7 @@ bool CmdIntakeOutakeOut::IsFinished() { return false; }
 // Called once after isFinished returns true
 void CmdIntakeOutakeOut::End() {
   Robot::subIntakeOutake->Stop();
+  Robot::subRollerIntake->Stop();
 }
 
 // Called when another command which requires one or more of the same
