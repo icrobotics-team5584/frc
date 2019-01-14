@@ -7,6 +7,7 @@
 
 #include "subsystems/SubIntakeOutake.h"
 #include "Robot.h"
+
 SubIntakeOutake::SubIntakeOutake() 
 : Subsystem("ExampleSubsystem") {
   _talLeft = Robot::_robotMap->talIntakeOutakeLeft;

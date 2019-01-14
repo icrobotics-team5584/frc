@@ -5,33 +5,30 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdIntakeOutakeIn.h"
+#include "subsystems/SubRollerIntake.h"
 #include "Robot.h"
 
-CmdIntakeOutakeIn::CmdIntakeOutakeIn() {
+SubRollerIntake::SubRollerIntake() {
   // Use Requires() here to declare subsystem dependencies
-  Requires(Robot::subIntakeOutake.get());
-  //Requires(Robot::subRollerIntake.get());
+  // eg. Requires(Robot::chassis.get());
 }
 
 // Called just before this Command runs the first time
-void CmdIntakeOutakeIn::Initialize() {
-  Robot::subIntakeOutake->Intake();
-}
+void SubRollerIntake::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void CmdIntakeOutakeIn::Execute() {}
+void SubRollerIntake::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdIntakeOutakeIn::IsFinished() { return false; }
+bool SubRollerIntake::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdIntakeOutakeIn::End() {
-  Robot::subIntakeOutake->Stop();
-}
+void SubRollerIntake::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdIntakeOutakeIn::Interrupted() {
-  End();
+void SubRollerIntake::Interrupted() {}
+
+void SubRollerIntake::RollerIn() {
+
 }
