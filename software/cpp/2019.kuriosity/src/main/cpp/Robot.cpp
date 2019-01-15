@@ -17,6 +17,7 @@ unique_ptr<SubTurret> Robot::subTurret;
 unique_ptr<SubPanelAffector> Robot::subPanelAffector;
 unique_ptr<SubIntakeOutake> Robot::subIntakeOutake;
 unique_ptr<SubRollerIntake> Robot::subRollerIntake;
+unique_ptr<SubGimble> Robot::subGimble;
 
 void Robot::RobotInit() {
   cout << "Run Robot init" << endl;
@@ -30,6 +31,7 @@ void Robot::RobotInit() {
   subIntakeOutake.reset(new SubIntakeOutake());
   subPanelAffector.reset(new SubPanelAffector());
   subRollerIntake.reset(new SubRollerIntake());
+  subGimble.reset(new SubGimble());
 
   //m_chooser.SetDefaultOption("Default Auto", &m_defaultAuto);
   //m_chooser.AddOption("My Auto", &m_myAuto);

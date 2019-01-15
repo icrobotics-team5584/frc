@@ -19,6 +19,7 @@
 #include "subsystems/SubIntakeOutake.h"
 #include "subsystems/SubPanelAffector.h"
 #include "subsystems/SubRollerIntake.h"
+#include "subsystems/SubGimble.h"
 #include "commands/CmdSeekCargoShip.h"
 
 #include <iostream>
@@ -35,6 +36,7 @@ class Robot : public frc::TimedRobot {
   static unique_ptr<SubIntakeOutake> subIntakeOutake;
   static unique_ptr<SubPanelAffector> subPanelAffector;
   static unique_ptr<SubRollerIntake> subRollerIntake;
+  static unique_ptr<SubGimble> subGimble;
   unique_ptr<CmdSeekCargoShip> cmdSeekCargoShip;
 
   void RobotInit() override;
