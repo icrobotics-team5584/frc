@@ -11,16 +11,18 @@
 
 CmdOutputPanel::CmdOutputPanel(bool autoHold) {
   // Use Requires() here to declare subsystem dependencies
-  double timeoutTime = 2.0;
-  SmartDashboard::PutNumber("Pneumatic hold", timeoutTime);
+  _autoHold = autoHold;
   Requires(Robot::subPanelAffector.get());
-  if (autoHold == true){
-    SetTimeout(SmartDashboard::GetNumber("Pneumatic hold", 0.0));
-  }
+  
 }
 
 // Called just before this Command runs the first time
 void CmdOutputPanel::Initialize() {
+  if (_autoHold == true){
+    SmartDashboard::PutNumber("Test", SmartDashboard::GetNumber("Pneumatic_hold", 0.0));
+    SetTimeout(SmartDashboard::GetNumber("Pneumatic_hold", 0.3));
+    SmartDashboard::PutNumber("Pneumatic_hold", timeoutTime);
+  }
   Robot::subPanelAffector->Deploy();
 }
 

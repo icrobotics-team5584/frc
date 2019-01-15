@@ -10,6 +10,9 @@
 #include <frc/commands/Command.h>
 
 class CmdOutputPanel : public frc::Command {
+  private:
+  double timeoutTime = 0.3;
+  bool _autoHold;
   public:
   CmdOutputPanel(bool autoHold);
   void Initialize() override;
