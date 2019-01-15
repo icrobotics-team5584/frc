@@ -16,16 +16,18 @@ unique_ptr<SubElevator> Robot::subElevator;
 unique_ptr<SubTurret> Robot::subTurret;
 unique_ptr<SubPanelAffector> Robot::subPanelAffector;
 unique_ptr<SubIntakeOutake> Robot::subIntakeOutake;
+unique_ptr<SubRollerIntake> Robot::subRollerIntake;
 
 void Robot::RobotInit() {
-    cout << "Run Robot init" << endl;
-    _robotMap.reset(new RobotMap);
+  
+  _robotMap.reset(new RobotMap);
 
     subDriveBase.reset(new SubDriveBase());
     subElevator.reset(new SubElevator());
     subTurret.reset(new SubTurret());
     subIntakeOutake.reset(new SubIntakeOutake());
     subPanelAffector.reset(new SubPanelAffector());
+    subRollerIntake.reset(new SubRollerIntake());
 
     _oi.reset(new OI);
     std::cout << "robot init finish" << std::endl;
@@ -74,6 +76,10 @@ void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
  * the if-else structure below with additional strings & commands.
  */
 void Robot::AutonomousInit() {
+
+    cmdSeekCargoShip.reset(new CmdSeekCargoShip());
+
+    cmdSeekCargoShip->Start();
     // std::string autoSelected = frc::SmartDashboard::GetString(
     //     "Auto Selector", "Default");
     // if (autoSelected == "My Auto") {
@@ -91,7 +97,6 @@ void Robot::AutonomousInit() {
 
 void Robot::AutonomousPeriodic() {
     frc::Scheduler::GetInstance()->Run();
-    subDriveBase->drive(-0.5, 0);
 }
 
 void Robot::TeleopInit() {
@@ -104,11 +109,7 @@ void Robot::TeleopInit() {
     //  m_autonomousCommand = nullptr;
     //}
 
-    cmdSeekCargoShip.reset(new CmdSeekCargoShip());
 
-    std::cout << "cmd about to run" << std::endl;
-    cmdSeekCargoShip->Start();
-    std::cout << "cmd has run" << std::endl;
 }
 
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }

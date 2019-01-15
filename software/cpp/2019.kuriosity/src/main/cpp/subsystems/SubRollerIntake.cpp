@@ -5,16 +5,15 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/SubIntakeOutake.h"
+#include "subsystems/SubRollerIntake.h"
 #include "Robot.h"
 
-SubIntakeOutake::SubIntakeOutake() 
+SubRollerIntake::SubRollerIntake() 
 : Subsystem("ExampleSubsystem") {
-  _talLeft = Robot::_robotMap->talIntakeOutakeLeft;
-  _talRight = Robot::_robotMap->talIntakeOutakeRight;
+  _spkRoller = Robot::_robotMap->spkRollerIntake;
 }
 
-void SubIntakeOutake::InitDefaultCommand() {
+void SubRollerIntake::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
 }
@@ -22,16 +21,14 @@ void SubIntakeOutake::InitDefaultCommand() {
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
 
-void SubIntakeOutake::Intake() {
-  _talLeft->Set(-inSpeed);
-  _talRight->Set(inSpeed);
+void SubRollerIntake::RollerIn() {
+  _spkRoller->Set(inSpeed);
 }
-void SubIntakeOutake::Outake() {
-  _talLeft->Set(-outSpeed);
-  _talRight->Set(outSpeed);
-}
-void SubIntakeOutake::Stop() {
-  _talRight->Set(0.0);
-  _talLeft->Set(0.0);
 
+void SubRollerIntake::RollerOut() {
+  _spkRoller->Set(outSpeed);
+}
+
+void SubRollerIntake::Stop() {
+    _spkRoller->Set(0.0);
 }

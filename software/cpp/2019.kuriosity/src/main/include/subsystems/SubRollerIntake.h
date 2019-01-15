@@ -7,20 +7,22 @@
 
 #pragma once
 
-#include <frc/commands/Subsystem.h>
 #include <frc/WPILib.h>
+#include <frc/commands/Subsystem.h>
+#include <ctre/Phoenix.h>
 
 using namespace std;
-using namespace frc;
-
-class SubPanelAffector : public frc::Subsystem {
+class SubRollerIntake : public frc::Subsystem {
  private:
-  shared_ptr<DoubleSolenoid> solTop; 
-  shared_ptr<DoubleSolenoid> solBottom;
-
+  // It's desirable that everything possible under private except
+  // for methods that implement subsystem capabilities
+  shared_ptr<frc::Spark> _spkRoller;
+  double inSpeed = 1.0;
+  double outSpeed = -1.0;
  public:
-  SubPanelAffector();
+  SubRollerIntake();
+  void RollerIn();
+  void RollerOut();
+  void Stop();
   void InitDefaultCommand() override;
-  void Retract();
-  void Deploy();
 };
