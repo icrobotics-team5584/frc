@@ -34,6 +34,7 @@ void Robot::RobotInit() {
   //m_chooser.SetDefaultOption("Default Auto", &m_defaultAuto);
   //m_chooser.AddOption("My Auto", &m_myAuto);
   //frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+  
 }
 
 /**
@@ -80,7 +81,6 @@ void Robot::AutonomousInit() {
 //  if (m_autonomousCommand != nullptr) {
  //   m_autonomousCommand->Start();
  // }
-
 }
 
 void Robot::AutonomousPeriodic() { frc::Scheduler::GetInstance()->Run(); }

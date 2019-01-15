@@ -7,10 +7,16 @@
 
 #include "commands/CmdOutputPanel.h"
 #include "Robot.h"
+#include <frc/WPILib.h>
 
 CmdOutputPanel::CmdOutputPanel(bool autoHold) {
   // Use Requires() here to declare subsystem dependencies
+  double timeoutTime = 2.0;
+  SmartDashboard::PutNumber("Pneumatic hold", timeoutTime);
   Requires(Robot::subPanelAffector.get());
+  if (autoHold == true){
+    SetTimeout(SmartDashboard::GetNumber("Pneumatic hold", 0.0));
+  }
 }
 
 // Called just before this Command runs the first time
@@ -22,7 +28,12 @@ void CmdOutputPanel::Initialize() {
 void CmdOutputPanel::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdOutputPanel::IsFinished() { return false; }
+bool CmdOutputPanel::IsFinished() { 
+ if(IsTimedOut()){
+   return true;
+ }
+  return false; 
+}
 
 // Called once after isFinished returns true
 void CmdOutputPanel::End() {
@@ -33,6 +44,5 @@ void CmdOutputPanel::End() {
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void CmdOutputPanel::Interrupted() {
-  
   End();
 }
