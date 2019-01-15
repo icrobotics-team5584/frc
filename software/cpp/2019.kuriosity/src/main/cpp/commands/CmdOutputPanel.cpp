@@ -8,7 +8,7 @@
 #include "commands/CmdOutputPanel.h"
 #include "Robot.h"
 
-CmdOutputPanel::CmdOutputPanel() {
+CmdOutputPanel::CmdOutputPanel(bool autoHold) {
   // Use Requires() here to declare subsystem dependencies
   Requires(Robot::subPanelAffector.get());
 }
@@ -26,11 +26,13 @@ bool CmdOutputPanel::IsFinished() { return false; }
 
 // Called once after isFinished returns true
 void CmdOutputPanel::End() {
+
   Robot::subPanelAffector->Retract();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void CmdOutputPanel::Interrupted() {
+  
   End();
 }
