@@ -22,47 +22,44 @@ void CmdSeekCargoShip::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void CmdSeekCargoShip::Execute() {
   //This is done so that you only need to change drivePower when changing speed. The drivePower default is 100%
-  Robot::subDriveBase->drive(-drivePower, 0);
   Robot::subDriveBase->getRange();
   if (Robot::subDriveBase->frontHasReachedLine()) {
-    frontClsDetected = true;
+    drivePower = 0.2;
   }
   if (Robot::subDriveBase->midHasReachedLine()) {
     midClsDetected = true;
+  }else if(midClsDetected)
+  {
+    midClsDetected = false;
+    drivePower = 0.6;
   }
-
+  Robot::subDriveBase->drive(drivePower, 0);
   SmartDashboard::PutNumber("frontClsDetected", frontClsDetected);
   SmartDashboard::PutNumber("midClsDetected", midClsDetected);
-
-
-  if (frontClsDetected) {
-    drivePower = 0.8;
-    midClsDetected = false;
-  }
-  if (midClsDetected) {
-    drivePower = 0.3;
-    frontClsDetected = false;
-  }
 }
+
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdSeekCargoShip::IsFinished() {
-  return Robot::subDriveBase->isBayEmpty(); 
+  return midClsDetected && Robot::subDriveBase->isBayEmpty(); 
 }
 
 // Called once after isFinished returns true
 void CmdSeekCargoShip::End() {
-  SmartDashboard::PutBoolean("started running End()", true);
-  frc::Timer timer;
-  timer.Start();
-   while(!Robot::subDriveBase->midHasReachedLine() or (!(timer.Get() > 0.5))) {
-    Robot::subDriveBase->getRange();
-    SmartDashboard::PutBoolean("started running backwards()", true);
-    Robot::subDriveBase->drive(0.5, 0);
+  Robot::subDriveBase->drive(0, 0);
 
-   }
-  Robot::subDriveBase->drive(0,0);
-  SmartDashboard::PutBoolean("finished running backwards()", true);
+  // SmartDashboard::PutBoolean("started running End()", true);
+  //frc::Timer timer;
+  //timer.Start();
+  //while (timer.Get() < 0.25) {}
+  //  while(!Robot::subDriveBase->midHasReachedLine() or (!(timer.Get() > 0.5))) {
+  //   Robot::subDriveBase->getRange();
+  //   SmartDashboard::PutBoolean("started running backwards()", true);
+  //   Robot::subDriveBase->drive(-0.4, 0);
+  //  }
+   
+  // Robot::subDriveBase->drive(0,0);
+  // SmartDashboard::PutBoolean("finished running backwards()", true);
 
   //run put cargo in bay here
 }

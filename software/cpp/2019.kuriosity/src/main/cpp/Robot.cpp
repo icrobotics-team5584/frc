@@ -89,7 +89,10 @@ void Robot::AutonomousInit() {
 
 }
 
-void Robot::AutonomousPeriodic() { frc::Scheduler::GetInstance()->Run(); }
+void Robot::AutonomousPeriodic() {
+   frc::Scheduler::GetInstance()->Run();
+   subDriveBase->drive(-0.5, 0);
+  }
 
 void Robot::TeleopInit() {
   // This makes sure that the autonomous stops running when
