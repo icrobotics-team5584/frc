@@ -18,26 +18,25 @@ unique_ptr<SubPanelAffector> Robot::subPanelAffector;
 unique_ptr<SubIntakeOutake> Robot::subIntakeOutake;
 
 void Robot::RobotInit() {
-  cout << "Run Robot init" << endl;
-  _robotMap.reset(new RobotMap);
+    cout << "Run Robot init" << endl;
+    _robotMap.reset(new RobotMap);
 
-  subDriveBase.reset(new SubDriveBase());
-  subElevator.reset(new SubElevator());
-  subTurret.reset(new SubTurret());
-  subIntakeOutake.reset(new SubIntakeOutake());
-  subPanelAffector.reset(new SubPanelAffector());
+    subDriveBase.reset(new SubDriveBase());
+    subElevator.reset(new SubElevator());
+    subTurret.reset(new SubTurret());
+    subIntakeOutake.reset(new SubIntakeOutake());
+    subPanelAffector.reset(new SubPanelAffector());
 
-  _oi.reset(new OI);
-  std::cout << "robot init finish" << std::endl;
+    _oi.reset(new OI);
+    std::cout << "robot init finish" << std::endl;
 
+    SmartDashboard::PutBoolean("started running End()", false);
+    SmartDashboard::PutBoolean("started running backwards()", false);
+    SmartDashboard::PutBoolean("finished running backwards()", false);
 
-  SmartDashboard::PutBoolean("started running End()", false);
-  SmartDashboard::PutBoolean("started running backwards()", false);
-  SmartDashboard::PutBoolean("finished running backwards()", false);
-
-  //m_chooser.SetDefaultOption("Default Auto", &m_defaultAuto);
-  //m_chooser.AddOption("My Auto", &m_myAuto);
-  //frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+    // m_chooser.SetDefaultOption("Default Auto", &m_defaultAuto);
+    // m_chooser.AddOption("My Auto", &m_myAuto);
+    // frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 }
 
 /**
@@ -49,7 +48,9 @@ void Robot::RobotInit() {
  * LiveWindow and SmartDashboard integrated updating.
  */
 void Robot::RobotPeriodic() {
-  subDriveBase->getRange();
+    subDriveBase->getRange();
+    SmartDashboard::PutBoolean("front sensor", subDriveBase->frontHasReachedLine());
+    SmartDashboard::PutBoolean("mid sensor", subDriveBase->midHasReachedLine());
 }
 
 /**
@@ -73,49 +74,44 @@ void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
  * the if-else structure below with additional strings & commands.
  */
 void Robot::AutonomousInit() {
-  // std::string autoSelected = frc::SmartDashboard::GetString(
-  //     "Auto Selector", "Default");
-  // if (autoSelected == "My Auto") {
-  //   m_autonomousCommand = &m_myAuto;
-  // } else {
-  //   m_autonomousCommand = &m_defaultAuto;
-  // }
+    // std::string autoSelected = frc::SmartDashboard::GetString(
+    //     "Auto Selector", "Default");
+    // if (autoSelected == "My Auto") {
+    //   m_autonomousCommand = &m_myAuto;
+    // } else {
+    //   m_autonomousCommand = &m_defaultAuto;
+    // }
 
- // m_autonomousCommand = m_chooser.GetSelected();
+    // m_autonomousCommand = m_chooser.GetSelected();
 
-//  if (m_autonomousCommand != nullptr) {
- //   m_autonomousCommand->Start();
- // }
-
+    //  if (m_autonomousCommand != nullptr) {
+    //   m_autonomousCommand->Start();
+    // }
 }
 
 void Robot::AutonomousPeriodic() {
-   frc::Scheduler::GetInstance()->Run();
-   subDriveBase->drive(-0.5, 0);
-  }
-
-void Robot::TeleopInit() {
-  // This makes sure that the autonomous stops running when
-  // teleop starts running. If you want the autonomous to
-  // continue until interrupted by another command, remove
-  // this line or comment it out.
-  // if (m_autonomousCommand != nullptr) {
-  //  m_autonomousCommand->Cancel();
-  //  m_autonomousCommand = nullptr;
-  //}
-
-  cmdSeekCargoShip.reset(new CmdSeekCargoShip());
-
-  std::cout << "cmd about to run" << std::endl;
-  cmdSeekCargoShip->Start();
-  std::cout << "cmd has run" << std::endl;
-
+    frc::Scheduler::GetInstance()->Run();
+    subDriveBase->drive(-0.5, 0);
 }
 
-void Robot::TeleopPeriodic() {
-  frc::Scheduler::GetInstance()->Run();
+void Robot::TeleopInit() {
+    // This makes sure that the autonomous stops running when
+    // teleop starts running. If you want the autonomous to
+    // continue until interrupted by another command, remove
+    // this line or comment it out.
+    // if (m_autonomousCommand != nullptr) {
+    //  m_autonomousCommand->Cancel();
+    //  m_autonomousCommand = nullptr;
+    //}
 
-}                           
+    cmdSeekCargoShip.reset(new CmdSeekCargoShip());
+
+    std::cout << "cmd about to run" << std::endl;
+    cmdSeekCargoShip->Start();
+    std::cout << "cmd has run" << std::endl;
+}
+
+void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::TestPeriodic() {}
 

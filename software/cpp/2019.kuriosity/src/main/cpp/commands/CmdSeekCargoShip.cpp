@@ -12,41 +12,73 @@
 CmdSeekCargoShip::CmdSeekCargoShip() {
   // Use Requires() here to declare subsystem dependencies
   Requires(Robot::subDriveBase.get());
+
 }
 
 // Called just before this Command runs the first time
 void CmdSeekCargoShip::Initialize() {
-  
+  driveState = SEARCHING_FOR_SHIP;
+  drivePower = 0.6;
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdSeekCargoShip::Execute() {
   //This is done so that you only need to change drivePower when changing speed. The drivePower default is 100%
   Robot::subDriveBase->getRange();
-  if (Robot::subDriveBase->frontHasReachedLine()) {
-    drivePower = 0.2;
-  }
-  if (Robot::subDriveBase->midHasReachedLine()) {
-    midClsDetected = true;
-  }else if(midClsDetected)
-  {
-    midClsDetected = false;
-    drivePower = 0.6;
-  }
+
+    if (driveState == SEARCHING_FOR_SHIP) {
+        if (Robot::subDriveBase->frontHasReachedLine()) {
+            drivePower = 0.2;
+            driveState = SEARCHING_FOR_HATCH;
+        }
+    } 
+
+    else if (driveState == SEARCHING_FOR_HATCH) {
+        if (Robot::subDriveBase->midHasReachedLine()) {
+            driveState = AT_HATCH;
+        }
+    }
+    
+    else if (driveState == AT_HATCH) {
+        if (Robot::subDriveBase->isBayEmpty()){
+            driveState = HOLE_FOUND;
+            timer.Start();
+            
+        } else {
+            driveState = SEARCHING_FOR_SHIP;
+        }
+    }
+    
+    else if (driveState == HOLE_FOUND) {
+        drivePower = 0;
+        if (timer.Get() > 0.5) {
+            timer.Reset();
+            timer.Start();
+            driveState = REVERSING_TO_HATCH;
+        }
+    } 
+    else if (driveState == REVERSING_TO_HATCH) {
+        drivePower = -0.5;
+        if (Robot::subDriveBase->midHasReachedLine()) {
+            drivePower = 0;
+            driveState = COMPLETE;
+        }
+    } 
+
   Robot::subDriveBase->drive(drivePower, 0);
-  SmartDashboard::PutNumber("frontClsDetected", frontClsDetected);
-  SmartDashboard::PutNumber("midClsDetected", midClsDetected);
+
+    SmartDashboard::PutNumber("driveState", driveState);
 }
 
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdSeekCargoShip::IsFinished() {
-  return midClsDetected && Robot::subDriveBase->isBayEmpty(); 
+  return driveState == COMPLETE; 
 }
 
 // Called once after isFinished returns true
 void CmdSeekCargoShip::End() {
-  Robot::subDriveBase->drive(0, 0);
+//   Robot::subDriveBase->drive(0, 0);
 
   // SmartDashboard::PutBoolean("started running End()", true);
   //frc::Timer timer;
