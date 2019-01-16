@@ -1,24 +1,25 @@
 #include "Config.h"
 
-nlohmann::Json jsnConfig;
-bool isInstantiated = false;
+unique_ptr<nlohmann::json> Config::jsnConfig;
+unique_ptr<ifstream> Config::ifsConfig;
+bool Config::isInstantiated = false;
 
 Config::Config(string subsystem) {
     if (not(isInstantiated)) {
         ifsConfig.reset(new std::ifstream("/lvuser/Config.json"));
-        ifsConfig >> jsnConfig;
+        (*ifsConfig) >> (*jsnConfig);
         isInstantiated = true;
     }
     _subsystem = subsystem;
 }
 
-Template<class type>
+template<class type>
 type Config::get(string key) {
-    return jsnConfig[_subsystem][key];
+    return (*jsnConfig)[_subsystem][key];
 }
 
-Template<class type>
+template<class type>
 void Config::set(string key, type value) {
-    jsnConfig[_subsystem][key] = value;
+    (*jsnConfig)[_subsystem][key] = value;
 }
 
