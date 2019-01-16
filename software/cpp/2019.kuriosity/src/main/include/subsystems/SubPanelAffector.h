@@ -16,11 +16,14 @@ using namespace frc;
 class SubPanelAffector : public frc::Subsystem {
  private:
   shared_ptr<DoubleSolenoid> solTop; 
-  shared_ptr<DoubleSolenoid> solBottom;
+  //shared_ptr<DoubleSolenoid> solBottom;
+  shared_ptr<DoubleSolenoid> solTopFinger;
 
  public:
   SubPanelAffector();
   void InitDefaultCommand() override;
   void Retract();
   void Deploy();
+  void DeployFingers();
+  void RetractFingers();
 };
