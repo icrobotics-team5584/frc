@@ -21,5 +21,5 @@ OI::OI() {
   btnCargoPodIn->WhileHeld(new CmdIntakeOutakeIn());
 
   btnDeployPanel.reset(new frc::JoystickButton(controller.get(), btn_DeployPanel));
-  btnDeployPanel->WhileHeld(new CmdOutputPanel);
+  btnDeployPanel->WhileHeld(new CmdOutputPanel(false));
 }

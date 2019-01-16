@@ -7,10 +7,12 @@
 
 #include "subsystems/SubPanelAffector.h"
 #include "Robot.h"
+#include "commands/CmdOutputPanel.h"
 
 SubPanelAffector::SubPanelAffector() : Subsystem("SubPanelAffector") {
   solTop = Robot::_robotMap->solPanelAffectorTop;
   solBottom = Robot::_robotMap->solPanelAffectorBottom;
+  SmartDashboard::PutData("Pneumatic Test", new CmdOutputPanel(true));
 
   Retract();
 }
