@@ -21,7 +21,9 @@ RobotMap::RobotMap(){
     ahrsNavXDriveBase.reset(new AHRS(SerialPort::kMXP));
     clsDriveBaseFront.reset(new DigitalInput(dio_clsDriveBaseFront));
     clsDriveBaseMid.reset(new DigitalInput(dio_clsDriveBaseMid));
-    ulsDriveBaseLeft.reset(new Ultrasonic(dio_ulsTriggerDriveBaseLeft, dio_ulsEchoDriveBaseLeft));
+    dioTriggerDriveBaseLeft.reset(new DigitalOutput(dio_ulsTriggerDriveBaseLeft));
+    dioEchoDriveBaseLeft.reset(new DigitalInput(dio_ulsEchoDriveBaseLeft));
+    ulsDriveBaseLeft.reset(new Ultrasonic(dioTriggerDriveBaseLeft, dioEchoDriveBaseLeft));
 
     // Panel Affector Actuators
     solPanelAffectorTop.reset(new DoubleSolenoid(pcm_solPanelAffectorTopForward, pcm_solPanelAffectorTopReverse));
