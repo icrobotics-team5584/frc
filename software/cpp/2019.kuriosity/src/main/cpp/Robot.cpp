@@ -96,7 +96,13 @@ void Robot::AutonomousInit() {
 }
 
 void Robot::AutonomousPeriodic() {
-    frc::Scheduler::GetInstance()->Run();
+  frc::Scheduler::GetInstance()->Run();
+  bool buttonPressed;
+  SmartDashboard::PutBoolean("Go back", buttonPressed);
+  SmartDashboard::GetBoolean("Go back", buttonPressed);
+  if (buttonPressed) {
+    Robot::subDriveBase->drive(-0.5, 0);
+  }
 }
 
 void Robot::TeleopInit() {

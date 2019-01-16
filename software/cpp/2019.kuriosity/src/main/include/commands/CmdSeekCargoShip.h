@@ -10,7 +10,9 @@
 #include <frc/commands/Command.h>
 #include <frc/WPILib.h>
 
-enum DriveStateType { SEARCHING_FOR_SHIP, SEARCHING_FOR_HATCH, AT_HATCH, HOLE_FOUND, REVERSING_TO_HATCH, COMPLETE };
+enum DriveStateType { SEARCHING_FOR_SHIP, SEARCHING_FOR_HATCH,
+                      AT_HATCH, HOLE_FOUND, REVERSING_TO_HATCH,
+                      COMPLETE };
 
 class CmdSeekCargoShip : public frc::Command {
    public:

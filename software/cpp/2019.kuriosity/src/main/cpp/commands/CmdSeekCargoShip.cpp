@@ -19,6 +19,7 @@ CmdSeekCargoShip::CmdSeekCargoShip() {
 void CmdSeekCargoShip::Initialize() {
   driveState = SEARCHING_FOR_SHIP;
   drivePower = 0.6;
+  SmartDashboard::PutBoolean("at hatch", false);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -28,46 +29,47 @@ void CmdSeekCargoShip::Execute() {
 
     if (driveState == SEARCHING_FOR_SHIP) {
         if (Robot::subDriveBase->frontHasReachedLine()) {
-            drivePower = 0.2;
-            driveState = SEARCHING_FOR_HATCH;
+          drivePower = 0.4;
+          driveState = SEARCHING_FOR_HATCH;
         }
     } 
 
     else if (driveState == SEARCHING_FOR_HATCH) {
         if (Robot::subDriveBase->midHasReachedLine()) {
-            driveState = AT_HATCH;
+          SmartDashboard::PutBoolean("at hatch", true);
+          driveState = AT_HATCH;
         }
     }
     
     else if (driveState == AT_HATCH) {
         if (Robot::subDriveBase->isBayEmpty()){
-            driveState = HOLE_FOUND;
-            timer.Start();
-            
-        } else {
-            driveState = SEARCHING_FOR_SHIP;
+          driveState = HOLE_FOUND;
+          timer.Start();    
+        } 
+        else {
+          driveState = SEARCHING_FOR_SHIP;
         }
     }
     
     else if (driveState == HOLE_FOUND) {
         drivePower = 0;
         if (timer.Get() > 0.5) {
-            timer.Reset();
-            timer.Start();
-            driveState = REVERSING_TO_HATCH;
+          timer.Reset();
+          timer.Start();
+          driveState = REVERSING_TO_HATCH;
         }
     } 
     else if (driveState == REVERSING_TO_HATCH) {
-        drivePower = -0.5;
+        drivePower = -0.45;
         if (Robot::subDriveBase->midHasReachedLine()) {
-            drivePower = 0;
-            driveState = COMPLETE;
+          drivePower = 0;
+          driveState = COMPLETE;
         }
     } 
 
   Robot::subDriveBase->drive(drivePower, 0);
 
-    SmartDashboard::PutNumber("driveState", driveState);
+  SmartDashboard::PutNumber("driveState", driveState);
 }
 
 
