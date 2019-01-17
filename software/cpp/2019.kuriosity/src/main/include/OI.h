@@ -34,5 +34,6 @@ class OI {
   OI();
 
 private:
+  unique_ptr<frc::JoystickButton> btnFollowLine;
   unique_ptr<frc::JoystickButton> btnDeployPanel;
 };

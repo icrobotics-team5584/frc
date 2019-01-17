@@ -50,9 +50,11 @@ void Robot::RobotInit() {
  * LiveWindow and SmartDashboard integrated updating.
  */
 void Robot::RobotPeriodic() {
-    subDriveBase->getRange();
+    SmartDashboard::PutNumber("Bottom Ultrasonic", subDriveBase->getDistanceToObstical());
     SmartDashboard::PutBoolean("front sensor", subDriveBase->frontHasReachedLine());
     SmartDashboard::PutBoolean("mid sensor", subDriveBase->midHasReachedLine());
+    SmartDashboard::PutBoolean("left sensor", subDriveBase->isLeftClsOnLine());
+    SmartDashboard::PutBoolean("right sensor", subDriveBase->isRightClsOnLine());
 }
 
 /**
