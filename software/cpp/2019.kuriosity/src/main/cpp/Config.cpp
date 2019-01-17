@@ -6,7 +6,7 @@ bool Config::isInstantiated = false;
 
 Config::Config(string subsystem) {
     if (not(isInstantiated)) {
-        ifsConfig.reset(new std::ifstream("/lvuser/Config.json"));
+        ifsConfig.reset(new std::ifstream("/lvuser/config.json"));
         (*ifsConfig) >> (*jsnConfig);
         isInstantiated = true;
     }

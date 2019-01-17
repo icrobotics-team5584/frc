@@ -2,7 +2,7 @@
 #include <AHRS.h>
 #include <iostream>
 
-RobotMap::RobotMap(){
+RobotMap::RobotMap() : config("SubDriveBase"){
     // DriveBase Actuators
     srxDriveBaseFrontRight.reset(new WPI_TalonSRX(can_srxDriveBaseFrontRight));
     srxDriveBaseFrontLeft.reset(new WPI_TalonSRX(can_srxDriveBaseFrontLeft));
@@ -26,4 +26,9 @@ RobotMap::RobotMap(){
     // Panel Affector Actuators
     solPanelAffectorTop.reset(new DoubleSolenoid(pcm_solPanelAffectorTopForward, pcm_solPanelAffectorTopReverse));
     solPanelAffectorBottom.reset(new DoubleSolenoid(pcm_solPanelAffectorBottomForward, pcm_solPanelAffectorBottomReverse));
+
+
+
+
+
 }
