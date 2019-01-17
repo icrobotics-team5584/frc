@@ -10,20 +10,25 @@
 #include "commands/CmdIntakeOutakeOut.h"
 #include "commands/CmdIntakeOutakeIn.h"
 #include "commands/CmdHatchLowRocket.h"
+#include "commands/CmdIntakePanel.h"
 
 OI::OI() {
   cout << "Run Robot OI" << endl;
 
   controller.reset(new frc::Joystick(0));
-  
+
   btnCargoPodOut.reset(new frc::JoystickButton(controller.get(), leftBtn));
-  btnCargoPodIn.reset(new frc::JoystickButton(controller.get(), rightBtn));
   btnCargoPodOut->WhileHeld(new CmdIntakeOutakeOut());
+
+  btnCargoPodIn.reset(new frc::JoystickButton(controller.get(), rightBtn));
   btnCargoPodIn->WhileHeld(new CmdIntakeOutakeIn());
 
   btnFollowLine.reset(new frc::JoystickButton(controller.get(), xBtn));
   btnFollowLine->WhenPressed(new CmdHatchLowRocket());
 
-  btnDeployPanel.reset(new frc::JoystickButton(controller.get(), btn_DeployPanel));
+  btnDeployPanel.reset(new frc::JoystickButton(controller.get(), aBtn));
   btnDeployPanel->WhileHeld(new CmdOutputPanel(false));
+
+  btnDeployFingers.reset(new frc::JoystickButton(controller.get(), bBtn));
+  btnDeployFingers->WhileHeld(new CmdIntakePanel());
 }

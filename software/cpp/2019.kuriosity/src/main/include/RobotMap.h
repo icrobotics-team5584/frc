@@ -41,6 +41,11 @@ enum Analog {
 };
 
 enum PCM {
+    pcm_solPanelAffectorTopFingerForward = 7,
+    pcm_solPanelAffectorTopFingerReverse = 6,
+    pcm_solPanelAffectorBottomFingerForward = 5,
+    pcm_solPanelAffectorBottomFingerReverse = 4,
+
     pcm_solPanelAffectorTopForward = 3,
     pcm_solPanelAffectorTopReverse = 2,
     pcm_solPanelAffectorBottomForward = 1,
@@ -78,6 +83,8 @@ public:
     // Panel Affector Actuators
     shared_ptr<DoubleSolenoid> solPanelAffectorTop;
     shared_ptr<DoubleSolenoid> solPanelAffectorBottom;
+    shared_ptr<DoubleSolenoid> solPanelAffectorTopFinger;
+    shared_ptr<DoubleSolenoid> solPanelAffectorBottomFinger;
 };
 
 /**

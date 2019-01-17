@@ -13,7 +13,7 @@
 using namespace std;
 
 enum Buttons {
-     btn_DeployPanel= 1,
+     aBtn= 1,
      bBtn= 2,
      xBtn = 3,
      yBtn = 4,
@@ -36,4 +36,5 @@ class OI {
 private:
   unique_ptr<frc::JoystickButton> btnFollowLine;
   unique_ptr<frc::JoystickButton> btnDeployPanel;
+  unique_ptr<frc::JoystickButton> btnDeployFingers; 
 };

@@ -8,11 +8,14 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include <frc/Timer.h>
 
 class CmdOutputPanel : public frc::Command {
   private:
   double timeoutTime = 0.3;
   bool _autoHold;
+  bool notDeployed;
+  frc::Timer _timer;
   public:
   CmdOutputPanel(bool autoHold);
   void Initialize() override;
