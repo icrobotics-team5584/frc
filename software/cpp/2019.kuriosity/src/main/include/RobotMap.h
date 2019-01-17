@@ -29,10 +29,10 @@ enum PWM {
 enum DIO {
     dio_clsDriveBaseFront = 0,
     dio_clsDriveBaseMid = 1,
-    dio_ulsTriggerDriveBaseLeft = 1,
-    dio_ulsEchoDriveBaseLeft = 2,
-    dio_ulsTriggerDriveBaseRight = 3,
-    dio_ulsEchoDriveBaseRight = 4
+    dio_ulsTriggerDriveBaseLeft = 2,
+    dio_ulsEchoDriveBaseLeft = 3,
+    dio_ulsTriggerDriveBaseRight = 4,
+    dio_ulsEchoDriveBaseRight = 5,
 };
 
 enum Analog {
@@ -64,6 +64,8 @@ public:
     shared_ptr<AHRS> ahrsNavXDriveBase;
     shared_ptr<DigitalInput> clsDriveBaseMid;
     shared_ptr<DigitalInput> clsDriveBaseFront;
+    shared_ptr<DigitalOutput> dioTriggerDriveBaseLeft;
+    shared_ptr<DigitalInput> dioEchoDriveBaseLeft;
     shared_ptr<Ultrasonic> ulsDriveBaseLeft;
     shared_ptr<Ultrasonic> ulsDriveBaseRight;
 
