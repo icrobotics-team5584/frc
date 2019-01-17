@@ -8,6 +8,7 @@
 #include "subsystems/SubPanelAffector.h"
 #include "Robot.h"
 #include "commands/CmdOutputPanel.h"
+#include "commands/CmdIntakePanel.h"
 
 SubPanelAffector::SubPanelAffector() : Subsystem("SubPanelAffector") {
   solTop = Robot::_robotMap->solPanelAffectorTop;

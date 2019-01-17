@@ -17,12 +17,14 @@ OI::OI() {
   controller.reset(new frc::Joystick(0));
 
   btnCargoPodOut.reset(new frc::JoystickButton(controller.get(), leftBtn));
-  btnCargoPodIn.reset(new frc::JoystickButton(controller.get(), rightBtn));
-  btnDeployPanel.reset(new frc::JoystickButton(controller.get(), aBtn));
-  btnIntakePanel.reset(new frc::JoystickButton(controller.get(), yBtn));
-
-  btnIntakePanel->WhileHeld(new CmdIntakePanel());
-  btnDeployPanel->WhileHeld(new CmdOutputPanel(false));
   btnCargoPodOut->WhileHeld(new CmdIntakeOutakeOut());
+
+  btnCargoPodIn.reset(new frc::JoystickButton(controller.get(), rightBtn));
   btnCargoPodIn->WhileHeld(new CmdIntakeOutakeIn());
+
+  btnDeployPanel.reset(new frc::JoystickButton(controller.get(), aBtn));
+  btnDeployPanel->WhileHeld(new CmdOutputPanel(false));
+
+  btnDeployFingers.reset(new frc::JoystickButton(controller.get(), bBtn));
+  btnDeployFingers->WhileHeld(new CmdIntakePanel());
 }

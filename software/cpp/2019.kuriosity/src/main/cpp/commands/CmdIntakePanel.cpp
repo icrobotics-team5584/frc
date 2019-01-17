@@ -7,6 +7,7 @@
 
 #include "commands/CmdIntakePanel.h"
 #include "Robot.h"
+#include <frc/WPILib.h>
 
 CmdIntakePanel::CmdIntakePanel() {
   // Use Requires() here to declare subsystem dependencies
@@ -14,11 +15,13 @@ CmdIntakePanel::CmdIntakePanel() {
 }
 
 // Called just before this Command runs the first time
-void CmdIntakePanel::Initialize() {}
+void CmdIntakePanel::Initialize() {
+  Robot::subPanelAffector->DeployFingers();
+}
 
 // Called repeatedly when this Command is scheduled to run
 void CmdIntakePanel::Execute() {
-  Robot::subPanelAffector->DeployFingers();
+
 }
 
 // Make this return true when this Command no longer needs to run execute()

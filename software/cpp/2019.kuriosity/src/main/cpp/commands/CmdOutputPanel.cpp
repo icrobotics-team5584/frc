@@ -27,7 +27,6 @@ void CmdOutputPanel::Initialize() {
   }
 
   Robot::subPanelAffector->DeployFingers();
-  cout << "Deploy Fingers" << endl;
   _timer.Reset();
   _timer.Start();	
 }
@@ -58,7 +57,6 @@ void CmdOutputPanel::End() {
   while(_timer.Get() < 1){
   }
   Robot::subPanelAffector->RetractFingers();
-  cout << "Retract Fingers" << endl;
 }
 
 // Called when another command which requires one or more of the same

@@ -35,5 +35,5 @@ class OI {
 
 private:
   unique_ptr<frc::JoystickButton> btnDeployPanel;
-  unique_ptr<frc::JoystickButton> btnIntakePanel;
+  unique_ptr<frc::JoystickButton> btnDeployFingers; 
 };
