@@ -33,7 +33,7 @@ void CmdOutputPanel::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdOutputPanel::Execute() {
-  if((_timer.Get() > 1) && notDeployed){
+  if((_timer.Get() > 0.2) && notDeployed){
     Robot::subPanelAffector->Deploy();
     cout << "Deploy Hatch" << endl;
     notDeployed = false;
@@ -54,7 +54,7 @@ void CmdOutputPanel::End() {
   cout << "Retract Hatch" << endl;
   _timer.Reset();
   _timer.Start();	
-  while(_timer.Get() < 1){
+  while(_timer.Get() < 0.2){
   }
   Robot::subPanelAffector->RetractFingers();
 }

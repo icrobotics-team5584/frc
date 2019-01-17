@@ -10,6 +10,8 @@
 #include <frc/commands/Command.h>
 
 class CmdIntakePanel : public frc::Command {
+ private:
+   bool seekFinished = false;
  public:
   CmdIntakePanel();
   void Initialize() override;
@@ -17,4 +19,6 @@ class CmdIntakePanel : public frc::Command {
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+  void autoSeekFinished();
+
 };

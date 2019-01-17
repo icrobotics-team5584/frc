@@ -27,13 +27,13 @@ void SubPanelAffector::InitDefaultCommand() {
 
 void SubPanelAffector::Retract() {
   solTop->Set(DoubleSolenoid::kReverse);  
-  //solBottom->Set(DoubleSolenoid::kReverse);
+  solBottom->Set(DoubleSolenoid::kReverse);
   
 }
 
 void SubPanelAffector::Deploy() {
   solTop->Set(DoubleSolenoid::kForward);
-  //solBottom->Set(DoubleSolenoid::kForward);
+  solBottom->Set(DoubleSolenoid::kForward);
 }
 
 void SubPanelAffector::DeployFingers() {
