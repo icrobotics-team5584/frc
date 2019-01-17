@@ -16,14 +16,23 @@ RobotMap::RobotMap(){
     talIntakeOutakeLeft.reset(new frc::Talon(pwm_talIntakeOutakeLeft));
     spkRollerIntake.reset(new frc::Spark(pwm_spkRollerIntake));
 
-
     // DriveBase Sensors
     ahrsNavXDriveBase.reset(new AHRS(SerialPort::kMXP));
+
     clsDriveBaseFront.reset(new DigitalInput(dio_clsDriveBaseFront));
     clsDriveBaseMid.reset(new DigitalInput(dio_clsDriveBaseMid));
-    dioTriggerDriveBaseLeft.reset(new DigitalOutput(dio_ulsTriggerDriveBaseLeft));
-    dioEchoDriveBaseLeft.reset(new DigitalInput(dio_ulsEchoDriveBaseLeft));
-    ulsDriveBaseLeft.reset(new Ultrasonic(dioTriggerDriveBaseLeft, dioEchoDriveBaseLeft));
+    clsLineDriveBaseLeft.reset(new DigitalInput(dio_clsLineDriveBaseLeft));
+    clsLineDriveBaseRight.reset(new DigitalInput(dio_clsLineDriveBaseRight));
+    
+    dioTriggerDriveBaseGimble.reset(new DigitalOutput(dio_ulsTriggerDriveBaseGimble));
+    dioEchoDriveBaseGimble.reset(new DigitalInput(dio_ulsEchoDriveBaseGimble));
+    dioTriggerDriveBaseBottom.reset(new DigitalOutput(dio_ulsTriggerDriveBaseBottom));
+    dioEchoDriveBaseBottom.reset(new DigitalInput(dio_ulsEchoDriveBaseBottom));
+    
+    ulsDriveBaseGimble.reset(new Ultrasonic(dioTriggerDriveBaseGimble, dioEchoDriveBaseGimble));
+    ulsDriveBaseBottom.reset(new Ultrasonic(dioTriggerDriveBaseBottom, dioEchoDriveBaseBottom));
+    
+    
 
     // Panel Affector Actuators
     solPanelAffectorTop.reset(new DoubleSolenoid(pcm_solPanelAffectorTopForward, pcm_solPanelAffectorTopReverse));
