@@ -9,6 +9,7 @@
 #include "commands/CmdOutputPanel.h"
 #include "commands/CmdIntakeOutakeOut.h"
 #include "commands/CmdIntakeOutakeIn.h"
+#include "commands/CmdHatchLowRocket.h"
 #include "commands/CmdIntakePanel.h"
 
 OI::OI() {
@@ -21,6 +22,9 @@ OI::OI() {
 
   btnCargoPodIn.reset(new frc::JoystickButton(controller.get(), rightBtn));
   btnCargoPodIn->WhileHeld(new CmdIntakeOutakeIn());
+
+  btnFollowLine.reset(new frc::JoystickButton(controller.get(), xBtn));
+  btnFollowLine->WhenPressed(new CmdHatchLowRocket());
 
   btnDeployPanel.reset(new frc::JoystickButton(controller.get(), aBtn));
   btnDeployPanel->WhileHeld(new CmdOutputPanel(false));

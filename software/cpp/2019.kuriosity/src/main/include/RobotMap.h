@@ -29,10 +29,12 @@ enum PWM {
 enum DIO {
     dio_clsDriveBaseFront = 0,
     dio_clsDriveBaseMid = 1,
-    dio_ulsTriggerDriveBaseLeft = 2,
-    dio_ulsEchoDriveBaseLeft = 3,
-    dio_ulsTriggerDriveBaseRight = 4,
-    dio_ulsEchoDriveBaseRight = 5,
+    dio_ulsTriggerDriveBaseGimble = 2,
+    dio_ulsEchoDriveBaseGimble = 3,
+    dio_ulsTriggerDriveBaseBottom = 4,
+    dio_ulsEchoDriveBaseBottom = 5,
+    dio_clsLineDriveBaseLeft = 6,
+    dio_clsLineDriveBaseRight = 7,
 };
 
 enum Analog {
@@ -64,10 +66,14 @@ public:
     shared_ptr<AHRS> ahrsNavXDriveBase;
     shared_ptr<DigitalInput> clsDriveBaseMid;
     shared_ptr<DigitalInput> clsDriveBaseFront;
-    shared_ptr<DigitalOutput> dioTriggerDriveBaseLeft;
-    shared_ptr<DigitalInput> dioEchoDriveBaseLeft;
-    shared_ptr<Ultrasonic> ulsDriveBaseLeft;
-    shared_ptr<Ultrasonic> ulsDriveBaseRight;
+    shared_ptr<DigitalOutput> dioTriggerDriveBaseGimble;
+    shared_ptr<DigitalInput> dioEchoDriveBaseGimble;
+    shared_ptr<DigitalOutput> dioTriggerDriveBaseBottom;
+    shared_ptr<DigitalInput> dioEchoDriveBaseBottom;
+    shared_ptr<Ultrasonic> ulsDriveBaseGimble;
+    shared_ptr<Ultrasonic> ulsDriveBaseBottom;
+    shared_ptr<DigitalInput> clsLineDriveBaseLeft;
+    shared_ptr<DigitalInput> clsLineDriveBaseRight;
 
     //Intake and outake
     shared_ptr<frc::Talon> talIntakeOutakeRight;
