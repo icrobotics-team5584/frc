@@ -2,7 +2,7 @@
 #include <AHRS.h>
 #include <iostream>
 
-RobotMap::RobotMap() : config("SubDriveBase"){
+RobotMap::RobotMap(){
     // DriveBase Actuators
     srxDriveBaseFrontRight.reset(new WPI_TalonSRX(can_srxDriveBaseFrontRight));
     srxDriveBaseFrontLeft.reset(new WPI_TalonSRX(can_srxDriveBaseFrontLeft));

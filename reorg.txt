@@ -1,0 +1,75 @@
+A: delete empty directory structures ...
+
+      business support/...
+      hardware/...
+      integration testing/...
+      operations/...
+      software/python/...
+
+License.txt
+project.json
+README.md
+
+C: reorganise software directory
+
+use sub modules??? one for each FRC project and a hack module???
+
+MOVE frc/software/icrobotics.stronghold.20160113.png
+TO   frc/software/cpp/
+
+software/arduino/Display_And_UltraSonic/
+software/arduino/int to bin bin to int/
+
+software/cpp/2018.Luigi/
+software/cpp/2018.Luigi.Dashboard/
+software/cpp/2018.Luigi.VSCode/
+software/cpp/2018.Waluigi/
+software/cpp/Chunky.Wantirna/
+software/cpp/Chunky.Wantirna.ImageProcessing/
+software/cpp/Chunky.Wantirna.RobotBuilder/
+software/cpp/Chunky.Wantirna.SmartDashboard/
+software/cpp/CPP_MotionProfileExample/
+software/cpp/CPP_MotionProfileExample2018/
+software/cpp/CPP_PositionClosedLoopExample2018/
+software/cpp/Getting Started/
+software/cpp/Jetty.Boronia/
+software/cpp/Morse/
+software/cpp/Morse.RobotBuilder/
+software/cpp/Puffy.Boronia/
+software/cpp/Puffy.Boronia.RobotBuilder/
+software/cpp/Puffy.Boronia.WiringList/
+software/cpp/RemoteSystemsTempFiles/
+software/cpp/Turdy.Boronia/
+software/cpp/Turdy.Boronia.RobotBuilder/
+
+software/java/Getting Started/
+software/java/Motion Profile Generator v1.2.0/
+
+software/labview/Cushy/
+software/labview/Dashy.Sydney/
+software/labview/Desmondy.Sydney/
+software/labview/Henry.Sydney/
+software/labview/ImageProcessing.Sample/
+software/labview/Murphy.Sydney/
+software/labview/Murphy.Sydney.backup.20150107.1258/
+software/labview/Puffy.Colour/
+software/labview/Puffy.Dashboard/
+software/labview/Puffy.Shoot/
+software/labview/Puffy.Sydney/
+software/labview/readme.txt
+
+software/Motion Profiles/Field Images/
+software/Motion Profiles/Left-Scale-Left/
+software/Motion Profiles/Left-Scale-Right/
+software/Motion Profiles/Left-Scale-Right-pt1/
+software/Motion Profiles/Left-Switch-Left/
+software/Motion Profiles/Middle-Switch-Left/
+software/Motion Profiles/Middle-Switch-Right/
+software/Motion Profiles/Motion Variables.txt
+software/Motion Profiles/Old Wheels/
+software/Motion Profiles/Right-Scale-Right/
+software/Motion Profiles/Right-Switch-Right/
+
+software/perl/utils/
+
+readme.txt

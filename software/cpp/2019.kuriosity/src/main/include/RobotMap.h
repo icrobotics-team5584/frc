@@ -9,7 +9,6 @@
 #include <ctre/Phoenix.h>
 #include <AHRS.h>
 #include <frc/WPILib.h>
-#include "Config.h"
 
 using namespace std;
 using namespace frc;
@@ -55,7 +54,6 @@ enum PCM {
 
 class RobotMap {
 private: 
-    Config config;
 public:
     RobotMap();
 
