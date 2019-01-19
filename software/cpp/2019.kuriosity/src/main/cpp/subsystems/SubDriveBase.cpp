@@ -29,7 +29,14 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
 
   _ulsGimble->SetAutomaticMode(true);
   _ulsBottom->SetAutomaticMode(true);
+
+  //data
+  auto inst = nt::NetworkTableInstance::GetDefault();
+  auto table = inst.GetTable("JETSON");
+  tgtY.reset(new nt::NetworkTableEntry());
+  *tgtY = table->GetEntry("tgty");
 }
+
 void SubDriveBase::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   SetDefaultCommand(new CmdJoystickDrive());
@@ -37,6 +44,10 @@ void SubDriveBase::InitDefaultCommand() {
 
 void SubDriveBase::drive(double speed, double rotation) {
   difDrive->ArcadeDrive(speed, rotation);
+}
+
+void SubDriveBase::stop() {
+  difDrive->ArcadeDrive(0,0);
 }
 
 void SubDriveBase::resetYaw(){
@@ -65,6 +76,11 @@ double SubDriveBase::getDistanceToObstical() {
   SmartDashboard::PutNumber("Bottom Ultrasonic Range", _ulsBottom->GetRangeMM());
   SmartDashboard::PutBoolean("Bottom Ultrasonic range valid?", _ulsBottom->IsRangeValid());
   return _ulsBottom->GetRangeMM();
+}
+
+//network tables data management
+double SubDriveBase::getTgtY() {
+  return tgtY->GetDouble(0.0);
 }
 
 //uses the ultrasonic sensor to check whether the cargo ship bay has a hatch panel on it

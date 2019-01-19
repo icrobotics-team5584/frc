@@ -11,6 +11,7 @@
 #include "commands/CmdIntakeOutakeIn.h"
 #include "commands/CmdHatchLowRocket.h"
 #include "commands/CmdIntakePanel.h"
+#include "commands/CmdVisionDrive.h"
 
 OI::OI() {
   cout << "Run Robot OI" << endl;
@@ -31,4 +32,7 @@ OI::OI() {
 
   btnDeployFingers.reset(new frc::JoystickButton(controller.get(), bBtn));
   btnDeployFingers->WhileHeld(new CmdIntakePanel());
+
+  btnVisionDrive.reset(new frc::JoystickButton(controller.get(), yBtn));
+  btnVisionDrive->WhileHeld(new CmdVisionDrive());
 }

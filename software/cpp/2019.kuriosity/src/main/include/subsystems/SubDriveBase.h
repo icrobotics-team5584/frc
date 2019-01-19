@@ -11,6 +11,9 @@
 #include <frc/commands/Subsystem.h>
 #include <ctre/Phoenix.h>
 #include <AHRS.h>
+#include <networktables/NetworkTable.h>
+#include <networktables/NetworkTableInstance.h>
+#include <networktables/NetworkTableEntry.h>
 
 using namespace std;
 using namespace frc;
@@ -33,12 +36,16 @@ class SubDriveBase : public frc::Subsystem {
   shared_ptr<DigitalInput> _clsLineLeft;
   shared_ptr<DigitalInput> _clsLineRight;
 
+  // Data
+  unique_ptr<nt::NetworkTableEntry> tgtY;
+
  public:
   SubDriveBase();
   void InitDefaultCommand() override;
 
   // Drive functions
   void drive(double speed, double rotation);
+  void stop();
   void brakeRobot();
 
   // Gyro functions
@@ -54,4 +61,7 @@ class SubDriveBase : public frc::Subsystem {
   // Ultrasonic functions
   double getDistanceToObstical();
   bool isBayEmpty();
+
+  // Vision functions
+  double getTgtY();
 };
