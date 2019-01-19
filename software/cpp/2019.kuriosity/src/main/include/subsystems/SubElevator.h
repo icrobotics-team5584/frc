@@ -19,7 +19,7 @@ class SubElevator : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
-
+  shared_ptr<WPI_TalonSRX> _srxElevator;
  public:
   SubElevator();
   void InitDefaultCommand() override;
