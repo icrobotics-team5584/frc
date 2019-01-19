@@ -10,17 +10,26 @@
 #include "commands/CmdJoystickDrive.h"
 
 SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
+
+  //motors
   _srxBackLeft = Robot::_robotMap->srxDriveBaseBackLeft;
   _srxBackRight = Robot::_robotMap->srxDriveBaseBackRight;
   _srxFrontRight = Robot::_robotMap->srxDriveBaseFrontRight;
   _srxFrontLeft = Robot::_robotMap->srxDriveBaseFrontLeft;
   difDrive.reset(new frc::DifferentialDrive(*_srxFrontLeft, *_srxFrontRight));
 
+  //sensors
   _ahrsNavXGyro = Robot::_robotMap->ahrsNavXDriveBase;
   _clsMid = Robot::_robotMap->clsDriveBaseMid;
   _clsFront = Robot::_robotMap->clsDriveBaseFront;
-  }
+  _ulsGimble = Robot::_robotMap->ulsDriveBaseGimble;
+  _ulsBottom = Robot::_robotMap->ulsDriveBaseBottom;
+  _clsLineLeft = Robot::_robotMap->clsLineDriveBaseLeft;
+  _clsLineRight = Robot::_robotMap->clsLineDriveBaseRight;
 
+  _ulsGimble->SetAutomaticMode(true);
+  _ulsBottom->SetAutomaticMode(true);
+}
 void SubDriveBase::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   SetDefaultCommand(new CmdJoystickDrive());
@@ -37,25 +46,41 @@ void SubDriveBase::resetYaw(){
 double SubDriveBase::getYaw() {
   return _ahrsNavXGyro->GetYaw();
 }
+
 bool SubDriveBase::frontHasReachedLine() {
+  SmartDashboard::PutNumber("frontHasReachedLine", not(_clsFront->Get()));
   return not(_clsFront->Get());
 }
+
 bool SubDriveBase::midHasReachedLine() {
+  SmartDashboard::PutNumber("midHasReachedLine", not(_clsMid->Get()));
   return not(_clsMid->Get());
 }
+
 void SubDriveBase::brakeRobot() {
     difDrive->ArcadeDrive(-0.4, 0.2);
 }
-void SubDriveBase::getRange() {
-  SmartDashboard::PutNumber("Ultrasonic Range", _ulsLeft->GetRangeMM());
-  SmartDashboard::PutBoolean("Is range valid", _ulsLeft->IsRangeValid());
+
+double SubDriveBase::getDistanceToObstical() {
+  SmartDashboard::PutNumber("Bottom Ultrasonic Range", _ulsBottom->GetRangeMM());
+  SmartDashboard::PutBoolean("Bottom Ultrasonic range valid?", _ulsBottom->IsRangeValid());
+  return _ulsBottom->GetRangeMM();
 }
+
 //uses the ultrasonic sensor to check whether the cargo ship bay has a hatch panel on it
 bool SubDriveBase::isBayEmpty() {
-  if (_ulsLeft->GetRangeMM() < 500) {
+  if (_ulsGimble->GetRangeMM() < 500) {
     return false;
   }
   else {
     return true;
   }
+}
+
+bool SubDriveBase::isLeftClsOnLine() {
+  return not(_clsLineLeft->Get());
+}
+
+bool SubDriveBase::isRightClsOnLine() {
+  return not(_clsLineRight->Get());
 }

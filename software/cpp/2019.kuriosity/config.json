@@ -1,0 +1,45 @@
+{
+    "DriveBase": {
+        "can" : {
+            "srxFrontRight" : 0,
+            "srxFrontLeft" : 1,
+            "srxBackRight" : 2,
+            "srxBackLeft" : 3
+        },
+        "dio" : {
+            "clsFront" : 0, 
+            "clsMidRight" : 1,
+            "clsMidLeft" : 2
+        },
+        "speeds" : {
+            "fastSeek" : 0.7,
+            "slowSeek" : 0.2,
+            "reverseSeek" : -0.5
+        }
+    },
+
+    "PanelAffector" : {
+        "pcm" : {
+            "solFrontRightForward" : 0,
+            "solFrontRightReverse" : 1,
+            "solFrontLeftForward" : 2,
+            "solFrontLeftReverse" : 3,
+            "solBackRightForward" : 4,
+            "solBackRightReverse" : 5,
+            "solBackLeftForward" : 6,
+            "solBackLeftReverse" : 7
+        }
+    },
+
+    "IntakeOuttake" : {
+        "can" : {
+            "srxLeft" : 4,
+            "srxRight" : 5,
+            "srxCargoIntake" : 6
+        },
+        "speeds" : {
+            "cargoIntakeSpeed" : 1,
+            "cargoOuttakeSpeed" : 1
+        }
+    }
+}

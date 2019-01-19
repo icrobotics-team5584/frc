@@ -29,16 +29,23 @@ enum PWM {
 enum DIO {
     dio_clsDriveBaseFront = 0,
     dio_clsDriveBaseMid = 1,
-    dio_ulsTriggerDriveBaseLeft = 1,
-    dio_ulsEchoDriveBaseLeft = 2,
-    dio_ulsTriggerDriveBaseRight = 3,
-    dio_ulsEchoDriveBaseRight = 4
+    dio_ulsTriggerDriveBaseGimble = 2,
+    dio_ulsEchoDriveBaseGimble = 3,
+    dio_ulsTriggerDriveBaseBottom = 4,
+    dio_ulsEchoDriveBaseBottom = 5,
+    dio_clsLineDriveBaseLeft = 6,
+    dio_clsLineDriveBaseRight = 7,
 };
 
 enum Analog {
 };
 
 enum PCM {
+    pcm_solPanelAffectorTopFingerForward = 7,
+    pcm_solPanelAffectorTopFingerReverse = 6,
+    pcm_solPanelAffectorBottomFingerForward = 5,
+    pcm_solPanelAffectorBottomFingerReverse = 4,
+
     pcm_solPanelAffectorTopForward = 3,
     pcm_solPanelAffectorTopReverse = 2,
     pcm_solPanelAffectorBottomForward = 1,
@@ -46,6 +53,7 @@ enum PCM {
 };
 
 class RobotMap {
+private: 
 public:
     RobotMap();
 
@@ -59,8 +67,14 @@ public:
     shared_ptr<AHRS> ahrsNavXDriveBase;
     shared_ptr<DigitalInput> clsDriveBaseMid;
     shared_ptr<DigitalInput> clsDriveBaseFront;
-    shared_ptr<Ultrasonic> ulsDriveBaseLeft;
-    shared_ptr<Ultrasonic> ulsDriveBaseRight;
+    shared_ptr<DigitalOutput> dioTriggerDriveBaseGimble;
+    shared_ptr<DigitalInput> dioEchoDriveBaseGimble;
+    shared_ptr<DigitalOutput> dioTriggerDriveBaseBottom;
+    shared_ptr<DigitalInput> dioEchoDriveBaseBottom;
+    shared_ptr<Ultrasonic> ulsDriveBaseGimble;
+    shared_ptr<Ultrasonic> ulsDriveBaseBottom;
+    shared_ptr<DigitalInput> clsLineDriveBaseLeft;
+    shared_ptr<DigitalInput> clsLineDriveBaseRight;
 
     //Intake and outake
     shared_ptr<frc::Talon> talIntakeOutakeRight;
@@ -70,6 +84,8 @@ public:
     // Panel Affector Actuators
     shared_ptr<DoubleSolenoid> solPanelAffectorTop;
     shared_ptr<DoubleSolenoid> solPanelAffectorBottom;
+    shared_ptr<DoubleSolenoid> solPanelAffectorTopFinger;
+    shared_ptr<DoubleSolenoid> solPanelAffectorBottomFinger;
 };
 
 /**

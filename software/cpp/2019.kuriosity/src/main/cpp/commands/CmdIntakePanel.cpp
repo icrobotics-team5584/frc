@@ -5,62 +5,38 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdOutputPanel.h"
+#include "commands/CmdIntakePanel.h"
 #include "Robot.h"
 #include <frc/WPILib.h>
 
-
-CmdOutputPanel::CmdOutputPanel(bool autoHold) {
+CmdIntakePanel::CmdIntakePanel() {
   // Use Requires() here to declare subsystem dependencies
-  _autoHold = autoHold;
   Requires(Robot::subPanelAffector.get());
-  
 }
 
 // Called just before this Command runs the first time
-void CmdOutputPanel::Initialize() {
-  notDeployed = true;
-  if (_autoHold == true){
-    SmartDashboard::PutNumber("Test", SmartDashboard::GetNumber("Pneumatic_hold", 0.0));
-    SetTimeout(SmartDashboard::GetNumber("Pneumatic_hold", 0.3));
-    SmartDashboard::PutNumber("Pneumatic_hold", timeoutTime);
-  }
-
+void CmdIntakePanel::Initialize() {
   Robot::subPanelAffector->DeployFingers();
-  _timer.Reset();
-  _timer.Start();	
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdOutputPanel::Execute() {
-  if((_timer.Get() > 0.2) && notDeployed){
-    Robot::subPanelAffector->Deploy();
-    cout << "Deploy Hatch" << endl;
-    notDeployed = false;
-  }
-}
+void CmdIntakePanel::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdOutputPanel::IsFinished() { 
- if(IsTimedOut()){
-   return true;
- }
-  return false; 
-}
+bool CmdIntakePanel::IsFinished() { return seekFinished; }
 
 // Called once after isFinished returns true
-void CmdOutputPanel::End() {
-  Robot::subPanelAffector->Retract();
-  cout << "Retract Hatch" << endl;
-  _timer.Reset();
-  _timer.Start();	
-  while(_timer.Get() < 0.2){
-  }
+void CmdIntakePanel::End() {
   Robot::subPanelAffector->RetractFingers();
+  seekFinished = false;
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdOutputPanel::Interrupted() {
+void CmdIntakePanel::Interrupted() {
   End();
+}
+
+void autoSeekFinished() {
+  //seekFinished = true;
 }
