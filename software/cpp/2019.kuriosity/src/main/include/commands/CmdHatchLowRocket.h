@@ -7,24 +7,9 @@
 
 #pragma once
 
-#include <frc/commands/Subsystem.h>
-#include <frc/WPILib.h>
+#include <frc/commands/CommandGroup.h>
 
-using namespace std;
-using namespace frc;
-
-class SubPanelAffector : public frc::Subsystem {
- private:
-  shared_ptr<DoubleSolenoid> solTop; 
-  shared_ptr<DoubleSolenoid> solBottom;
-  shared_ptr<DoubleSolenoid> solTopFinger;
-  shared_ptr<DoubleSolenoid> solBottomFinger;
-
+class CmdHatchLowRocket : public frc::CommandGroup {
  public:
-  SubPanelAffector();
-  void InitDefaultCommand() override;
-  void Retract();
-  void Deploy();
-  void DeployFingers();
-  void RetractFingers();
+  CmdHatchLowRocket();
 };
