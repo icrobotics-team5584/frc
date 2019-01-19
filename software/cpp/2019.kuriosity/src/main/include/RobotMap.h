@@ -10,6 +10,7 @@
 #include <AHRS.h>
 #include <frc/WPILib.h>
 
+
 using namespace std;
 using namespace frc;
 
@@ -17,7 +18,8 @@ enum Can {
     can_srxDriveBaseFrontRight = 1,
     can_srxDriveBaseFrontLeft = 3,
     can_srxDriveBaseBackRight = 2,
-    can_srxDriveBaseBackLeft = 4
+    can_srxDriveBaseBackLeft = 4,
+    can_srxElevator = 5
 };
 
 enum PWM {
@@ -52,6 +54,11 @@ enum PCM {
     pcm_solPanelAffectorBottomReverse = 0
 };
 
+enum LMT {
+    lmt_subElevatorLimitBottom = 1,
+    lmt_subElevatorLimitTop = 2
+};
+
 class RobotMap {
 private: 
 public:
@@ -62,6 +69,9 @@ public:
 	shared_ptr<WPI_TalonSRX> srxDriveBaseFrontLeft;
     shared_ptr<WPI_TalonSRX> srxDriveBaseBackLeft;
 	shared_ptr<WPI_TalonSRX> srxDriveBaseBackRight;
+
+    //Elevator
+    shared_ptr<WPI_TalonSRX> srxElevator;
 
     // DriveBase Sensors
     shared_ptr<AHRS> ahrsNavXDriveBase;
@@ -86,6 +96,10 @@ public:
     shared_ptr<DoubleSolenoid> solPanelAffectorBottom;
     shared_ptr<DoubleSolenoid> solPanelAffectorTopFinger;
     shared_ptr<DoubleSolenoid> solPanelAffectorBottomFinger;
+
+    //Elevator Sensors
+    shared_ptr<DigitalInput> subElevatorLimitBottom;
+    shared_ptr<DigitalInput> subElevatorLimitTop;   
 };
 
 /**
