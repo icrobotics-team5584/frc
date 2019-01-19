@@ -39,6 +39,18 @@ void SubDriveBase::drive(double speed, double rotation) {
   difDrive->ArcadeDrive(speed, rotation);
 }
 
+void SubDriveBase::tankDrive(double leftSpeed, double rightSpeed) {
+  difDrive->TankDrive(leftSpeed, rightSpeed);
+}
+
+double SubDriveBase::getRawLeftEncoder() {
+  return _srxFrontLeft->GetSelectedSensorPosition(0);
+}
+
+double SubDriveBase::getRawRightEncoder() {
+  return _srxFrontRight->GetSelectedSensorPosition(0);
+}
+
 void SubDriveBase::resetYaw(){
   _ahrsNavXGyro->ZeroYaw();
 }

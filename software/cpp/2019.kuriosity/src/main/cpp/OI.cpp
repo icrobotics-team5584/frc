@@ -11,6 +11,7 @@
 #include "commands/CmdIntakeOutakeIn.h"
 #include "commands/CmdHatchLowRocket.h"
 #include "commands/CmdIntakePanel.h"
+#include "commands/CmdFollowPath.h"
 
 OI::OI() {
   cout << "Run Robot OI" << endl;
@@ -25,6 +26,9 @@ OI::OI() {
 
   btnFollowLine.reset(new frc::JoystickButton(controller.get(), xBtn));
   btnFollowLine->WhenPressed(new CmdHatchLowRocket());
+
+  btnFollowPath.reset(new frc::JoystickButton(controller.get(), yBtn));
+  btnFollowPath->WhileHeld(new CmdFollowPath());
 
   btnDeployPanel.reset(new frc::JoystickButton(controller.get(), aBtn));
   btnDeployPanel->WhileHeld(new CmdOutputPanel(false));

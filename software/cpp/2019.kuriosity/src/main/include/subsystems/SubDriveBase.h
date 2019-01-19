@@ -39,7 +39,12 @@ class SubDriveBase : public frc::Subsystem {
 
   // Drive functions
   void drive(double speed, double rotation);
+  void tankDrive(double leftSpeed, double rightSpeed);
   void brakeRobot();
+
+  // Encoder functions
+  double getRawLeftEncoder();
+  double getRawRightEncoder();
 
   // Gyro functions
   void resetYaw();

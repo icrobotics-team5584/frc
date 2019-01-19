@@ -50,6 +50,7 @@ void Robot::RobotInit() {
  * LiveWindow and SmartDashboard integrated updating.
  */
 void Robot::RobotPeriodic() {
+    SmartDashboard::PutNumber("Navx Yaw", subDriveBase->getYaw());
     SmartDashboard::PutNumber("Bottom Ultrasonic", subDriveBase->getDistanceToObstical());
     SmartDashboard::PutBoolean("front sensor", subDriveBase->frontHasReachedLine());
     SmartDashboard::PutBoolean("mid sensor", subDriveBase->midHasReachedLine());
@@ -108,16 +109,7 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
-    // This makes sure that the autonomous stops running when
-    // teleop starts running. If you want the autonomous to
-    // continue until interrupted by another command, remove
-    // this line or comment it out.
-    // if (m_autonomousCommand != nullptr) {
-    //  m_autonomousCommand->Cancel();
-    //  m_autonomousCommand = nullptr;
-    //}
-
-
+    subDriveBase->resetYaw();
 }
 
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
