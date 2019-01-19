@@ -6,8 +6,11 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/SubGimble.h"
+#include "Robot.h"
 
-SubGimble::SubGimble() : Subsystem("ExampleSubsystem") {}
+SubGimble::SubGimble() : Subsystem("ExampleSubsystem") {
+  _srxGimble = Robot::_robotMap->srxGimble;
+}
 
 void SubGimble::InitDefaultCommand() {
   // Set the default command for a subsystem here.

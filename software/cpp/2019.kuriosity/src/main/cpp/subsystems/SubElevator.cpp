@@ -7,7 +7,8 @@
 
 #include "subsystems/SubElevator.h"
 
-SubElevator::SubElevator() : Subsystem("ExampleSubsystem") {}
+SubElevator::SubElevator() : Subsystem("ExampleSubsystem") {
+}
 
 void SubElevator::InitDefaultCommand() {
   // Set the default command for a subsystem here.

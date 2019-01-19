@@ -7,7 +7,13 @@
 
 #pragma once
 
+#include <frc/WPILib.h>
 #include <frc/commands/Subsystem.h>
+#include <ctre/Phoenix.h>
+#include <AHRS.h>
+
+using namespace std;
+using namespace frc;
 
 class SubElevator : public frc::Subsystem {
  private:

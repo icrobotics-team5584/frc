@@ -17,7 +17,8 @@ enum Can {
     can_srxDriveBaseFrontRight = 1,
     can_srxDriveBaseFrontLeft = 3,
     can_srxDriveBaseBackRight = 2,
-    can_srxDriveBaseBackLeft = 4
+    can_srxDriveBaseBackLeft = 4,
+    can_srxGimble = 5
 };
 
 enum PWM {
@@ -86,6 +87,9 @@ public:
     shared_ptr<DoubleSolenoid> solPanelAffectorBottom;
     shared_ptr<DoubleSolenoid> solPanelAffectorTopFinger;
     shared_ptr<DoubleSolenoid> solPanelAffectorBottomFinger;
+
+    //Gimble
+    shared_ptr<WPI_TalonSRX> srxGimble;
 };
 
 /**
