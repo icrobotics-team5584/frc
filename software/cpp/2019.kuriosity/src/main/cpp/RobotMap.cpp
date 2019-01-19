@@ -47,4 +47,6 @@ RobotMap::RobotMap(){
 
     //Gimble
     srxGimble.reset(new WPI_TalonSRX(can_srxGimble));
+    subGimbleLimitLeft.reset(new DigitalInput(lmt_subGimbleLimitLeft));
+    subGimbleLimitRight.reset(new DigitalInput(lmt_subGimbleLimitRight));
 }

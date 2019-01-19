@@ -19,8 +19,8 @@ enum Can {
     can_srxDriveBaseFrontLeft = 3,
     can_srxDriveBaseBackRight = 2,
     can_srxDriveBaseBackLeft = 4,
-    can_srxGimble = 5
-    can_srxElevator = 5
+    can_srxGimble = 5,
+    can_srxElevator = 6
 };
 
 enum PWM {
@@ -57,7 +57,9 @@ enum PCM {
 
 enum LMT {
     lmt_subElevatorLimitBottom = 1,
-    lmt_subElevatorLimitTop = 2
+    lmt_subElevatorLimitTop = 2,
+    lmt_subGimbleLimitLeft = 3,
+    lmt_subGimbleLimitRight = 4,
 };
 
 class RobotMap {
@@ -73,6 +75,15 @@ public:
 
     //Elevator
     shared_ptr<WPI_TalonSRX> srxElevator;
+
+    std::shared_ptr<DigitalInput> subElevatorLimitTop;
+    std::shared_ptr<DigitalInput> subElevatorLimitBottom;
+
+    //Gimble
+    shared_ptr<WPI_TalonSRX> srxGimble;
+
+    std::shared_ptr<DigitalInput> subGimbleLimitLeft;
+    std::shared_ptr<DigitalInput> subGimbleLimitRight;
 
     // DriveBase Sensors
     shared_ptr<AHRS> ahrsNavXDriveBase;
