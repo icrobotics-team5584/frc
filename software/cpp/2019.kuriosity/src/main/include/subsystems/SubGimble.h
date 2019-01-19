@@ -5,17 +5,22 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/SubElevator.h"
-#include "Robot.h"
+#pragma once
 
-SubElevator::SubElevator() : Subsystem("ExampleSubsystem") {
-  _srxElevator = Robot::_robotMap->srxElevator;
-}
+#include <frc/WPILib.h>
+#include <frc/commands/Subsystem.h>
+#include <ctre/Phoenix.h>
+#include <AHRS.h>
 
-void SubElevator::InitDefaultCommand() {
-  // Set the default command for a subsystem here.
-  // SetDefaultCommand(new MySpecialCommand());
-}
+using namespace std;
+using namespace frc;
 
-// Put methods for controlling this subsystem
-// here. Call these from Commands.
+class SubGimble : public frc::Subsystem {
+ private:
+  // It's desirable that everything possible under private except
+  // for methods that implement subsystem capabilities
+  shared_ptr<WPI_TalonSRX> _srxGimble; 
+  public:
+  SubGimble();
+  void InitDefaultCommand() override;
+};

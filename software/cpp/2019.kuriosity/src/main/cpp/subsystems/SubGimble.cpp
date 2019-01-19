@@ -5,14 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/SubElevator.h"
+#include "subsystems/SubGimble.h"
 #include "Robot.h"
 
-SubElevator::SubElevator() : Subsystem("ExampleSubsystem") {
-  _srxElevator = Robot::_robotMap->srxElevator;
+SubGimble::SubGimble() : Subsystem("ExampleSubsystem") {
+  _srxGimble = Robot::_robotMap->srxGimble;
 }
 
-void SubElevator::InitDefaultCommand() {
+void SubGimble::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
 }

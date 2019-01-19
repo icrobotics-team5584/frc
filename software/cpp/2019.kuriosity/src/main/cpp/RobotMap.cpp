@@ -11,6 +11,11 @@ RobotMap::RobotMap(){
     srxDriveBaseBackRight->Set(ControlMode::Follower, can_srxDriveBaseFrontRight);
     srxDriveBaseBackLeft->Set(ControlMode::Follower, can_srxDriveBaseFrontLeft);
 
+    //Elevator
+    srxElevator.reset(new WPI_TalonSRX(can_srxElevator));
+    subElevatorLimitBottom.reset(new DigitalInput(lmt_subElevatorLimitBottom));
+    subElevatorLimitTop.reset(new DigitalInput(lmt_subElevatorLimitTop));
+    
     // Intake and Outake
     talIntakeOutakeRight.reset(new frc::Talon(pwm_talIntakeOutakeRight));
     talIntakeOutakeLeft.reset(new frc::Talon(pwm_talIntakeOutakeLeft));
@@ -39,4 +44,9 @@ RobotMap::RobotMap(){
     solPanelAffectorBottom.reset(new DoubleSolenoid(pcm_solPanelAffectorBottomForward, pcm_solPanelAffectorBottomReverse));
     solPanelAffectorTopFinger.reset(new DoubleSolenoid(pcm_solPanelAffectorTopFingerForward, pcm_solPanelAffectorTopFingerReverse));
     solPanelAffectorBottomFinger.reset(new DoubleSolenoid(pcm_solPanelAffectorBottomFingerForward, pcm_solPanelAffectorBottomFingerReverse));
+
+    //Gimble
+    srxGimble.reset(new WPI_TalonSRX(can_srxGimble));
+    subGimbleLimitLeft.reset(new DigitalInput(lmt_subGimbleLimitLeft));
+    subGimbleLimitRight.reset(new DigitalInput(lmt_subGimbleLimitRight));
 }
