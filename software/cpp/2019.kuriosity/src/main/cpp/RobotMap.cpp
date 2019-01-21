@@ -20,6 +20,7 @@ RobotMap::RobotMap(){
     talIntakeOutakeRight.reset(new frc::Talon(pwm_talIntakeOutakeRight));
     talIntakeOutakeLeft.reset(new frc::Talon(pwm_talIntakeOutakeLeft));
     spkRollerIntake.reset(new frc::Spark(pwm_spkRollerIntake));
+    subIntakeOutakeCargo.reset(new DigitalInput(lmt_subIntakeOutakeCargo));
 
     // DriveBase Sensors
     ahrsNavXDriveBase.reset(new AHRS(SerialPort::kMXP));

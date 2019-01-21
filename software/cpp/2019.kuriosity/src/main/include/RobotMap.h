@@ -60,6 +60,7 @@ enum LMT {
     lmt_subElevatorLimitTop = 2,
     lmt_subGimbleLimitLeft = 3,
     lmt_subGimbleLimitRight = 4,
+    lmt_subIntakeOutakeCargo = 5
 };
 
 class RobotMap {
@@ -102,6 +103,8 @@ public:
     shared_ptr<frc::Talon> talIntakeOutakeRight;
     shared_ptr<frc::Talon> talIntakeOutakeLeft;
     shared_ptr<frc::Spark> spkRollerIntake;
+
+    shared_ptr<DigitalInput> subIntakeOutakeCargo;
 
     // Panel Affector Actuators
     shared_ptr<DoubleSolenoid> solPanelAffectorTop;
