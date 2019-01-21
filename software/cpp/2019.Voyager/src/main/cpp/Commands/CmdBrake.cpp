@@ -5,27 +5,33 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/MyAutoCommand.h"
-
+#include "Commands/CmdBrake.h"
 #include "Robot.h"
 
-MyAutoCommand::MyAutoCommand() {
+CmdBrake::CmdBrake() {
   // Use Requires() here to declare subsystem dependencies
-  Requires(&Robot::m_subsystem);
+  // eg. Requires(Robot::chassis.get());
+// Use Requires() here to declare subsystem dependencies
+  // eg. Requires(Robot::chassis.get());
+  Requires(Robot::subDriveBase.get());
 }
 
 // Called just before this Command runs the first time
-void MyAutoCommand::Initialize() {}
+void CmdBrake::Initialize() {
+}
 
 // Called repeatedly when this Command is scheduled to run
-void MyAutoCommand::Execute() {}
+void CmdBrake::Execute() {
+  Robot::subDriveBase->brakeRobot();
+}
+bool CmdBrake::IsFinished() {}
 
-// Make this return true when this Command no longer needs to run execute()
-bool MyAutoCommand::IsFinished() { return false; }
-
-// Called once after isFinished returns true
-void MyAutoCommand::End() {}
+// Called once after command times out
+void CmdBrake::End() {
+  Robot::subDriveBase->drive(0, 0);
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void MyAutoCommand::Interrupted() {}
+void CmdBrake::Interrupted() {}
+

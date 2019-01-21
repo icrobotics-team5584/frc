@@ -12,14 +12,15 @@
 #include <frc/smartdashboard/SendableChooser.h>
 
 #include "OI.h"
-#include "commands/ExampleCommand.h"
-#include "commands/MyAutoCommand.h"
 #include "RobotMap.h"
-#include "subsystems/ExampleSubsystem.h"
 #include "subsystems/SubDriveBase.h"
 #include "subsystems/SubElevator.h"
 #include "subsystems/SubTurret.h"
 #include "subsystems/SubIntakeOutake.h"
+#include "subsystems/SubPanelAffector.h"
+#include "subsystems/SubRollerIntake.h"
+#include "subsystems/SubGimble.h"
+#include "commands/CmdSeekCargoShip.h"
 
 #include <iostream>
 
@@ -27,13 +28,16 @@ using namespace std;
 
 class Robot : public frc::TimedRobot {
  public:
-  static ExampleSubsystem m_subsystem;
   static unique_ptr<OI> _oi;
   static unique_ptr<RobotMap> _robotMap;
   static unique_ptr<SubDriveBase> subDriveBase;
   static unique_ptr<SubElevator> subElevator;
   static unique_ptr<SubTurret> subTurret;
   static unique_ptr<SubIntakeOutake> subIntakeOutake;
+  static unique_ptr<SubPanelAffector> subPanelAffector;
+  static unique_ptr<SubRollerIntake> subRollerIntake;
+  static unique_ptr<SubGimble> subGimble;
+  unique_ptr<CmdSeekCargoShip> cmdSeekCargoShip;
 
   void RobotInit() override;
   void RobotPeriodic() override;

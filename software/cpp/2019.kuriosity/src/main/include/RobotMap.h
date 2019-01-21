@@ -7,31 +7,107 @@
 
 #pragma once
 #include <ctre/Phoenix.h>
+#include <AHRS.h>
 #include <frc/WPILib.h>
 
+
 using namespace std;
+using namespace frc;
 
 enum Can {
     can_srxDriveBaseFrontRight = 1,
     can_srxDriveBaseFrontLeft = 3,
     can_srxDriveBaseBackRight = 2,
     can_srxDriveBaseBackLeft = 4,
-    can_talIntakeOutakeRight = 1, //pwn
-    can_talIntakeOutakeLeft = 0   //pwn
+    can_srxGimble = 5,
+    can_srxElevator = 6
+};
+
+enum PWM {
+    pwm_talIntakeOutakeRight = 1, 
+    pwm_talIntakeOutakeLeft = 0,   
+    pwm_spkRollerIntake = 2
+};
+
+enum DIO {
+    dio_clsDriveBaseFront = 0,
+    dio_clsDriveBaseMid = 1,
+    dio_ulsTriggerDriveBaseGimble = 2,
+    dio_ulsEchoDriveBaseGimble = 3,
+    dio_ulsTriggerDriveBaseBottom = 4,
+    dio_ulsEchoDriveBaseBottom = 5,
+    dio_clsLineDriveBaseLeft = 6,
+    dio_clsLineDriveBaseRight = 7,
+};
+
+enum Analog {
+};
+
+enum PCM {
+    pcm_solPanelAffectorTopFingerForward = 7,
+    pcm_solPanelAffectorTopFingerReverse = 6,
+    pcm_solPanelAffectorBottomFingerForward = 5,
+    pcm_solPanelAffectorBottomFingerReverse = 4,
+
+    pcm_solPanelAffectorTopForward = 3,
+    pcm_solPanelAffectorTopReverse = 2,
+    pcm_solPanelAffectorBottomForward = 1,
+    pcm_solPanelAffectorBottomReverse = 0
+};
+
+enum LMT {
+    lmt_subElevatorLimitBottom = 1,
+    lmt_subElevatorLimitTop = 2,
+    lmt_subGimbleLimitLeft = 3,
+    lmt_subGimbleLimitRight = 4,
 };
 
 class RobotMap {
+private: 
 public:
+    RobotMap();
+
+    // DriveBase Actuators
     shared_ptr<WPI_TalonSRX> srxDriveBaseFrontRight;
 	shared_ptr<WPI_TalonSRX> srxDriveBaseFrontLeft;
     shared_ptr<WPI_TalonSRX> srxDriveBaseBackLeft;
 	shared_ptr<WPI_TalonSRX> srxDriveBaseBackRight;
 
+    //Elevator
+    shared_ptr<WPI_TalonSRX> srxElevator;
+
+    std::shared_ptr<DigitalInput> subElevatorLimitTop;
+    std::shared_ptr<DigitalInput> subElevatorLimitBottom;
+
+    //Gimble
+    shared_ptr<WPI_TalonSRX> srxGimble;
+
+    std::shared_ptr<DigitalInput> subGimbleLimitLeft;
+    std::shared_ptr<DigitalInput> subGimbleLimitRight;
+
+    // DriveBase Sensors
+    shared_ptr<AHRS> ahrsNavXDriveBase;
+    shared_ptr<DigitalInput> clsDriveBaseMid;
+    shared_ptr<DigitalInput> clsDriveBaseFront;
+    shared_ptr<DigitalOutput> dioTriggerDriveBaseGimble;
+    shared_ptr<DigitalInput> dioEchoDriveBaseGimble;
+    shared_ptr<DigitalOutput> dioTriggerDriveBaseBottom;
+    shared_ptr<DigitalInput> dioEchoDriveBaseBottom;
+    shared_ptr<Ultrasonic> ulsDriveBaseGimble;
+    shared_ptr<Ultrasonic> ulsDriveBaseBottom;
+    shared_ptr<DigitalInput> clsLineDriveBaseLeft;
+    shared_ptr<DigitalInput> clsLineDriveBaseRight;
+
+    //Intake and outake
     shared_ptr<frc::Talon> talIntakeOutakeRight;
     shared_ptr<frc::Talon> talIntakeOutakeLeft;
+    shared_ptr<frc::Spark> spkRollerIntake;
 
-    RobotMap();
-
+    // Panel Affector Actuators
+    shared_ptr<DoubleSolenoid> solPanelAffectorTop;
+    shared_ptr<DoubleSolenoid> solPanelAffectorBottom;
+    shared_ptr<DoubleSolenoid> solPanelAffectorTopFinger;
+    shared_ptr<DoubleSolenoid> solPanelAffectorBottomFinger;
 };
 
 /**

@@ -16,6 +16,7 @@
 #include "OI.h"
 #include "Subsystems/ExampleSubsystem.h"
 #include "Subsystems/SubDriveBase.h"
+#include "Commands/UlsTest.h"
 
 using namespace std;
 
@@ -43,4 +44,6 @@ class Robot : public frc::TimedRobot {
   // ExampleCommand m_defaultAuto;
   // MyAutoCommand m_myAuto;
   // frc::SendableChooser<frc::Command*> m_chooser;
+  Timer timer;
+  unique_ptr<UlsTest> _ulsTest;
 };

@@ -9,12 +9,15 @@
 
 #include <frc/commands/Command.h>
 
-class MyAutoCommand : public frc::Command {
+class CmdFollowLine : public frc::Command {
  public:
-  MyAutoCommand();
+  CmdFollowLine();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+ private:
+  double drivePower = -0.45;
+  double angle = 0;
 };

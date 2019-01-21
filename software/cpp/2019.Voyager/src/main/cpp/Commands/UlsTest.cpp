@@ -5,35 +5,36 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdIntakeOutakeIn.h"
+#include "Commands/UlsTest.h"
 #include "Robot.h"
+#include <iostream>
 
-CmdIntakeOutakeIn::CmdIntakeOutakeIn() {
+UlsTest::UlsTest() {
   // Use Requires() here to declare subsystem dependencies
-  Requires(Robot::subIntakeOutake.get());
-  //Requires(Robot::subRollerIntake.get());
+  // eg. Requires(Robot::chassis.get());
+  Requires(Robot::subDriveBase.get());
 }
 
 // Called just before this Command runs the first time
-void CmdIntakeOutakeIn::Initialize() {
-  Robot::subIntakeOutake->Intake();
-  Robot::subRollerIntake->RollerIn();
-}
+void UlsTest::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void CmdIntakeOutakeIn::Execute() {}
+void UlsTest::Execute() {
+  //double angle = Robot::subDriveBase->getYaw();
+  //Robot::subDriveBase->drive(0.7, -0.2);
+  Robot::subDriveBase->getRange();
+}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdIntakeOutakeIn::IsFinished() { return false; }
-
+bool UlsTest::IsFinished() { 
+  // frc::SmartDashboard::PutBoolean("Has ended", Robot::subDriveBase->hasReachedLine());
+  // return Robot::subDriveBase->hasReachedLine();
+  return false;
+}
 // Called once after isFinished returns true
-void CmdIntakeOutakeIn::End() {
-  Robot::subIntakeOutake->Stop();
-  Robot::subRollerIntake->Stop();
+void UlsTest::End() {
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdIntakeOutakeIn::Interrupted() {
-  End();
-}
+void UlsTest::Interrupted() {}

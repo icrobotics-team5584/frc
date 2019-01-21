@@ -5,17 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/SubElevator.h"
-#include "Robot.h"
+#pragma once
 
-SubElevator::SubElevator() : Subsystem("ExampleSubsystem") {
-  _srxElevator = Robot::_robotMap->srxElevator;
-}
+#include <Commands/Command.h>
 
-void SubElevator::InitDefaultCommand() {
-  // Set the default command for a subsystem here.
-  // SetDefaultCommand(new MySpecialCommand());
-}
-
-// Put methods for controlling this subsystem
-// here. Call these from Commands.
+class CmdBrake : public frc::Command {
+ public:
+  CmdBrake();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
+};

@@ -7,14 +7,24 @@
 
 #pragma once
 
-#include <frc/commands/Command.h>
+#include <frc/commands/Subsystem.h>
+#include <frc/WPILib.h>
 
-class ExampleCommand : public frc::Command {
+using namespace std;
+using namespace frc;
+
+class SubPanelAffector : public frc::Subsystem {
+ private:
+  shared_ptr<DoubleSolenoid> solTop; 
+  shared_ptr<DoubleSolenoid> solBottom;
+  shared_ptr<DoubleSolenoid> solTopFinger;
+  shared_ptr<DoubleSolenoid> solBottomFinger;
+
  public:
-  ExampleCommand();
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
+  SubPanelAffector();
+  void InitDefaultCommand() override;
+  void Retract();
+  void Deploy();
+  void DeployFingers();
+  void RetractFingers();
 };

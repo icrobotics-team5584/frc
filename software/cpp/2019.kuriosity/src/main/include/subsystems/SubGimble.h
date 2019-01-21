@@ -7,14 +7,20 @@
 
 #pragma once
 
+#include <frc/WPILib.h>
 #include <frc/commands/Subsystem.h>
+#include <ctre/Phoenix.h>
+#include <AHRS.h>
 
-class ExampleSubsystem : public frc::Subsystem {
- public:
-  ExampleSubsystem();
-  void InitDefaultCommand() override;
+using namespace std;
+using namespace frc;
 
+class SubGimble : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
+  shared_ptr<WPI_TalonSRX> _srxGimble; 
+  public:
+  SubGimble();
+  void InitDefaultCommand() override;
 };
