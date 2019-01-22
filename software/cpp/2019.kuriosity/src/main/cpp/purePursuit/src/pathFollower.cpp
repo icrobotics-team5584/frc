@@ -288,7 +288,7 @@ std::vector<Point> PathFollower::constructVectorPathCSV(string csvPath) {
     return xyPath;
 }
 
-std::vector<Point> constructVectorPathSeg(Segment *seg, int length) {
+std::vector<Point> PathFollower::constructVectorPathSeg(Segment *seg, int length) {
     double pointX;
     double pointY;
     double velocity;
