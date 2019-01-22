@@ -15,7 +15,6 @@
 #include "RobotMap.h"
 #include "subsystems/SubDriveBase.h"
 #include "subsystems/SubElevator.h"
-#include "subsystems/SubTurret.h"
 #include "subsystems/SubIntakeOutake.h"
 #include "subsystems/SubPanelAffector.h"
 #include "subsystems/SubRollerIntake.h"
@@ -32,7 +31,6 @@ class Robot : public frc::TimedRobot {
   static unique_ptr<RobotMap> _robotMap;
   static unique_ptr<SubDriveBase> subDriveBase;
   static unique_ptr<SubElevator> subElevator;
-  static unique_ptr<SubTurret> subTurret;
   static unique_ptr<SubIntakeOutake> subIntakeOutake;
   static unique_ptr<SubPanelAffector> subPanelAffector;
   static unique_ptr<SubRollerIntake> subRollerIntake;
