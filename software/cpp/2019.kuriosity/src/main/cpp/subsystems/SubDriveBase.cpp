@@ -8,6 +8,7 @@
 #include "subsystems/SubDriveBase.h"
 #include "Robot.h"
 #include "commands/CmdJoystickDrive.h"
+#include "pathfinder.h"
 
 SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   //motors
@@ -121,4 +122,49 @@ bool SubDriveBase::isLeftClsOnLine() {
 
 bool SubDriveBase::isRightClsOnLine() {
   return not(_clsLineRight->Get());
+}
+
+Segment* SubDriveBase::generatePath(){
+  frc::Timer timer;
+  timer.Start();
+  const int POINT_LENGTH = 2;
+  Waypoint points[POINT_LENGTH];
+  Waypoint p1 = {0, 0, d2r(0)};
+  Waypoint p2 = {1, 1, d2r(0)};
+  points[0] = p1;
+  points [1] = p2;
+
+  TrajectoryCandidate candidate;
+  // Prepare the Trajectory for Generation.
+  //
+  // Arguments: 
+  // Fit Function:        FIT_HERMITE_CUBIC or FIT_HERMITE_QUINTIC
+  // Sample Count:        PATHFINDER_SAMPLES_HIGH (100 000)
+  //                      PATHFINDER_SAMPLES_LOW  (10 000)
+  //                      PATHFINDER_SAMPLES_FAST (1 000)
+  // Time Step:           0.001 Seconds
+  // Max Velocity:        15 m/s
+  // Max Acceleration:    10 m/s/s
+  // Max Jerk:            60 m/s/s/s
+  // Change the sample count and/or the time step to generate the trajectory faster
+  double max_velocity = 4.2;
+  double time_step = 0.01;
+  double max_accel = 2.0;
+  double max_jerk= 30.0;
+  pathfinder_prepare(points, POINT_LENGTH, FIT_HERMITE_CUBIC, PATHFINDER_SAMPLES_FAST, time_step, max_velocity, max_accel, max_jerk, &candidate);
+  pathLength = candidate.length;
+
+  // Array of Segments (the trajectory points) to store the trajectory in
+  Segment * seg = new Segment[pathLength];
+  SmartDashboard::PutNumber("Before generation time", timer.Get());
+  // Generate the trajectory
+  int result = pathfinder_generate(&candidate, seg);
+
+  SmartDashboard::PutNumber("Time taken to generate path", timer.Get());
+  timer.Stop();
+  return seg;
+}
+
+int SubDriveBase::getPathLength() {
+  return pathLength;
 }

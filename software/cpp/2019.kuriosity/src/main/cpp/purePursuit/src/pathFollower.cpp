@@ -23,7 +23,7 @@ PathFollower::PathFollower(string csvPath, shared_ptr<PositionSource> source,
     _source->setPosition(path[0].position.x, path[0].position.y);
 }
 
-PathFollower::PathFollower(Segment seg[], int pathLength, shared_ptr<PositionSource> source, shared_ptr<DriveOutput> output) {
+PathFollower::PathFollower(Segment* seg, int pathLength, shared_ptr<PositionSource> source, shared_ptr<DriveOutput> output) {
     ImplimentRobotFunctions(source, output);
     path = constructVectorPathSeg(seg, pathLength);
     _source->setPosition(path[0].position.x, path[0].position.y);
@@ -223,10 +223,8 @@ double PathFollower::generateDriveCurve() {
     double c = tangent * (currentPosition.x - currentPosition.y); // Details at Team 1712's paper
     Point lookAheadPoint = findLookaheadPoint();
     double error = abs(tangent * lookAheadPoint.position.x +
-                       lookAheadPoint.position.y + c) /
-                   sqrt(pow(tangent,2) + 1);
-    
-
+                       lookAheadPoint.position.y + c) / sqrt(pow(tangent,2) + 1);
+                       
     // Determine drive absolute curve (direction to come after)
     double curve = 2 * error / pow(lookaheadDistance, 2);
 
@@ -290,7 +288,7 @@ std::vector<Point> PathFollower::constructVectorPathCSV(string csvPath) {
     return xyPath;
 }
 
-std::vector<Point> constructVectorPathSeg(Segment seg[], int length) {
+std::vector<Point> constructVectorPathSeg(Segment *seg, int length) {
     double pointX;
     double pointY;
     double velocity;

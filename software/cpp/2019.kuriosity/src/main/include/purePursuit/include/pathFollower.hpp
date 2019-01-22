@@ -14,7 +14,7 @@ using namespace std;
 class PathFollower {
 public:
     PathFollower(string csvPath, shared_ptr<PositionSource> source, shared_ptr<DriveOutput> output);
-    PathFollower(Segment seg[], int pathLength, shared_ptr<PositionSource> source, shared_ptr<DriveOutput> output);    
+    PathFollower(Segment *seg, int pathLength, shared_ptr<PositionSource> source, shared_ptr<DriveOutput> output);    
     void printPathHead();        
     int getPathSize();
     void setLookaheadDistance(double meters);
@@ -45,6 +45,6 @@ private:
     void updatePosition();
     int getSign(double side);
     vector<Point> constructVectorPathCSV(string csvPath);   
-    vector<Point> constructVectorPathSeg(Segment * seg, int length); //Segment is the trajectory that pathfinder returns
-                                                                     //Length is the number of points in the segment                   
+    vector<Point> constructVectorPathSeg(Segment * seg, int pathLength); //Segment is the trajectory that pathfinder returns
+                                                                         //Length is the number of points in the segment                   
 };

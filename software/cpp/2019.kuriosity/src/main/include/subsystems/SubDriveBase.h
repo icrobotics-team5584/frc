@@ -9,6 +9,8 @@
 
 #include <frc/WPILib.h>
 #include <frc/commands/Subsystem.h>
+#include <pathfinder.h>
+
 #include <ctre/Phoenix.h>
 #include <AHRS.h>
 
@@ -38,6 +40,8 @@ class SubDriveBase : public frc::Subsystem {
   const int ENCODER_TICS_PER_ROTATION = 4096; // (214 for dizzy)
   double metersPerRotation; // calculated in constructor
 
+  int pathLength; //path length
+
  public:
   SubDriveBase();
   void InitDefaultCommand() override;
@@ -46,6 +50,8 @@ class SubDriveBase : public frc::Subsystem {
   void drive(double speed, double rotation);
   void tankDrive(double leftSpeed, double rightSpeed);
   void brakeRobot();
+  Segment* generatePath();
+  int getPathLength();
 
   // Encoder functions
   void zeroEncoders();

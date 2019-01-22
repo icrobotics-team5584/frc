@@ -7,6 +7,7 @@
 
 #include "commands/CmdSeekPath.h"
 #include "Robot.h"
+#include "pathfinder.h"
 
 CmdSeekPath::CmdSeekPath() {
   // Use Requires() here to declare subsystem dependencies
@@ -14,7 +15,9 @@ CmdSeekPath::CmdSeekPath() {
   Requires(Robot::subDriveBase.get());
   posEncoderGyro.reset(new PosEncoderGyro);
   dvoTank.reset(new DvoTank);
-  pathFollower.reset(new PathFollower("", posEncoderGyro, dvoTank));
+  Segment * seg = Robot::subDriveBase->generatePath();
+  int pathLength = Robot::subDriveBase->getPathLength();
+  pathFollower.reset(new PathFollower(seg, pathLength, posEncoderGyro, dvoTank));
 }
 
 // Called just before this Command runs the first time
