@@ -12,8 +12,8 @@ PosEncoderGyro::PosEncoderGyro() {
  */
 Position PosEncoderGyro::getPosition() {
     // Get relevant values
-    double currentAngle = Robot::subDriveBase->getAngle() * 0.01745329251;  // Convert to radians
-    double currentDistance = Robot::subDriveBase->getDistance();
+    double currentAngle = Robot::subDriveBase->getYaw() * 0.01745329251;  // Convert to radians
+    double currentDistance = Robot::subDriveBase->getDistanceTravelled();
     double distanceDelta = currentDistance - prevDistance;
 
     // Determine current position
@@ -28,7 +28,7 @@ Position PosEncoderGyro::getPosition() {
 }
 
 double PosEncoderGyro::getAngle() {
-    return Robot::subDriveBase->getAngle();
+    return Robot::subDriveBase->getYaw();
 }
 
 void PosEncoderGyro::setPosition(double x, double y) {

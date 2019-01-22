@@ -21,10 +21,10 @@ CmdFollowPath::CmdFollowPath() {
 void CmdFollowPath::Initialize() {
   frc::Timer timer;
   timer.Start();
-  int POINT_LENGTH = 2;
+  const int POINT_LENGTH = 2;
   Waypoint points[POINT_LENGTH];
-  Waypoint p1 = {1, 1, d2r(0)};
-  Waypoint p2 = {2, 3, d2r(0)};
+  Waypoint p1 = {0, 0, d2r(0)};
+  Waypoint p2 = {1, 1, d2r(0)};
   points[0] = p1;
   points [1] = p2;
 
@@ -41,7 +41,7 @@ void CmdFollowPath::Initialize() {
   // Max Acceleration:    10 m/s/s
   // Max Jerk:            60 m/s/s/s
   // Change the sample count and/or the time step to generate the trajectory faster
-  pathfinder_prepare(points, POINT_LENGTH, FIT_HERMITE_CUBIC, PATHFINDER_SAMPLES_FAST, 0.001, 10.0, 5.0, 60.0, &candidate);
+  pathfinder_prepare(points, POINT_LENGTH, FIT_HERMITE_CUBIC, PATHFINDER_SAMPLES_FAST, 0.01, max_velocity, 2.0, 30.0, &candidate);
   length = candidate.length;
 
   // Array of Segments (the trajectory points) to store the trajectory in
@@ -52,21 +52,6 @@ void CmdFollowPath::Initialize() {
   // Generate the trajectory
   int result = pathfinder_generate(&candidate, seg);
 
-  std::ofstream file("/home/lvuser/output.txt");
-  int i;
-  for (i = 0; i < length; i++) {
-    Segment s = seg[i];
-    file << "Time Step: %f\n" << s.dt << std::endl; 
-    file << "Coords: (%f, %f)\n" << s.x << s.y << std::endl;
-    // printf("Time Step: %f\n", s.dt);
-    // printf("Coords: (%f, %f)\n", s.x, s.y);
-    // printf("Position (Distance): %f\n", s.position);
-    // printf("Velocity: %f\n", s.velocity);
-    // printf("Acceleration: %f\n", s.acceleration);
-    // printf("Jerk (Acceleration per Second): %f\n", s.jerk);
-    // printf("Heading (radians): %f\n", s.heading);
-  }
-  file.close();
   SmartDashboard::PutNumber("Time taken to generate path", timer.Get());
   leftTrajectory = new Segment[length];
   rightTrajectory = new Segment[length];
@@ -77,24 +62,40 @@ void CmdFollowPath::Initialize() {
   // Generate the Left and Right trajectories of the wheelbase using the 
   // originally generated trajectory
   pathfinder_modify_tank(seg, length, leftTrajectory, rightTrajectory, wheelbase_width);
-
+  std::ofstream file("/home/lvuser/output.txt");
+  file << "x, y, velcoity" << std::endl;
+  int i;
+  for (i = 0; i < length; i++) {
+    Segment s = seg[i];
+    file << s.x << ", "<< s.y << ", " << s.velocity << std::endl;
+    // printf("Time Step: %f\n", s.dt);
+    // printf("Coords: (%f, %f)\n", s.x, s.y);
+    // printf("Position (Distance): %f\n", s.position);
+    // printf("Velocity: %f\n", s.velocity);
+    // printf("Acceleration: %f\n", s.acceleration);
+    // printf("Jerk (Acceleration per Second): %f\n", s.jerk);
+    // printf("Heading (radians): %f\n", s.heading);
+  }
+  file.close();
   rightFollower = (EncoderFollower*)malloc(sizeof(EncoderFollower));
   rightFollower->last_error = 0; rightFollower->segment = 0; rightFollower->finished = 0;     // Just in case!
 
   leftFollower = (EncoderFollower*)malloc(sizeof(EncoderFollower));
   leftFollower->last_error = 0; leftFollower->segment = 0; leftFollower->finished = 0;     // Just in case!
   
-  double leftEncoderPosition = 0;
-  double wheel_circumference = 20.32;
-  double max_velocity = 10.0;
+  double wheel_circumference = 0.1016 * 3.14158;
+  int leftEncoderPosition = 0;
   leftConfig = {leftEncoderPosition, 4096, wheel_circumference,      // Position, Ticks per Rev, Wheel Circumference
-               1.0, 0.0, 0.0, 1.0 / max_velocity, 0.0};              // Kp, Ki, Kd and Kv, Ka
+               1.0, 0.0, 0.0, 0.01 / max_velocity, 0.0};              // Kp, Ki, Kd and Kv, Ka
   
-  double rightEncoderPosition = 0;
+  int rightEncoderPosition = 0;
   rightConfig = {rightEncoderPosition, 4096, wheel_circumference,
-                1.0, 0.0, 0.0, 1.0/ max_velocity, 0.0};
+                0.2, 0.0, 0.0, 0.01/ max_velocity, 0.0};
   timer.Stop();
+  SmartDashboard::PutBoolean("Ended", false);
   SmartDashboard::PutNumber("Time taken to run everything", timer.Get());
+  Robot::subDriveBase->resetYaw();
+  Robot::subDriveBase->zeroEncoders();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -104,6 +105,7 @@ void CmdFollowPath::Execute() {
   // // Arg 3: The Trajectory generated from `pathfinder_modify_tank`
   // // Arg 4: The Length of the Trajectory (length used in Segment seg[length];)
   // // Arg 5: The current value of your encoder
+  SmartDashboard::PutBoolean("start of exe", true);
   double leftEncoderValue = Robot::subDriveBase->getRawLeftEncoder(); 
   double rightEncoderValue = Robot::subDriveBase->getRawRightEncoder(); 
   double l = pathfinder_follow_encoder(leftConfig, leftFollower, leftTrajectory, length, leftEncoderValue);
@@ -118,7 +120,8 @@ void CmdFollowPath::Execute() {
 
   double leftPower = l + turn;
   double rightPower = r - turn;
- // Robot::subDriveBase->tankDrive(leftPower, rightPower);
+  SmartDashboard::PutNumber("Left Power", leftPower);
+  //Robot::subDriveBase->tankDrive(leftPower, rightPower);
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -127,7 +130,9 @@ bool CmdFollowPath::IsFinished() {
 }
 
 // Called once after isFinished returns true
-void CmdFollowPath::End() {}
+void CmdFollowPath::End() {
+  SmartDashboard::PutBoolean("Ended", true);
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run

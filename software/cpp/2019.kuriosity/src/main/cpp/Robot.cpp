@@ -19,7 +19,6 @@ unique_ptr<SubIntakeOutake> Robot::subIntakeOutake;
 unique_ptr<SubRollerIntake> Robot::subRollerIntake;
 
 void Robot::RobotInit() {
-  
   _robotMap.reset(new RobotMap);
 
     subDriveBase.reset(new SubDriveBase());
@@ -35,6 +34,11 @@ void Robot::RobotInit() {
     SmartDashboard::PutBoolean("started running End()", false);
     SmartDashboard::PutBoolean("started running backwards()", false);
     SmartDashboard::PutBoolean("finished running backwards()", false);
+
+    cam = CameraServer::GetInstance()->StartAutomaticCapture(0);
+    cam.SetResolution(320,240);
+    cam.SetFPS(10);
+    CameraServer::GetInstance()->GetServer();
 
     // m_chooser.SetDefaultOption("Default Auto", &m_defaultAuto);
     // m_chooser.AddOption("My Auto", &m_myAuto);
@@ -56,6 +60,9 @@ void Robot::RobotPeriodic() {
     SmartDashboard::PutBoolean("mid sensor", subDriveBase->midHasReachedLine());
     SmartDashboard::PutBoolean("left sensor", subDriveBase->isLeftClsOnLine());
     SmartDashboard::PutBoolean("right sensor", subDriveBase->isRightClsOnLine());
+    SmartDashboard::PutNumber("Right encoder", subDriveBase->getRawRightEncoder());
+    SmartDashboard::PutNumber("Left encoder", subDriveBase->getRawLeftEncoder());
+
 }
 
 /**
@@ -104,7 +111,7 @@ void Robot::AutonomousPeriodic() {
   SmartDashboard::PutBoolean("Go back", buttonPressed);
   SmartDashboard::GetBoolean("Go back", buttonPressed);
   if (buttonPressed) {
-    Robot::subDriveBase->drive(-0.5, 0);
+    Robot::subDriveBase->drive(-1, 0);
   }
 }
 

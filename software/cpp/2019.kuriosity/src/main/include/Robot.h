@@ -20,7 +20,7 @@
 #include "subsystems/SubPanelAffector.h"
 #include "subsystems/SubRollerIntake.h"
 #include "commands/CmdSeekCargoShip.h"
-
+#include <cscore_oo.h>
 #include <iostream>
 
 using namespace std;
@@ -48,6 +48,9 @@ class Robot : public frc::TimedRobot {
   void TestPeriodic() override;
 
  private:
+  cs::VideoSink server;
+  cs::UsbCamera cam;
+
   // Have it null by default so that if testing teleop it
   // doesn't have undefined behavior and potentially crash.
   //frc::Command* m_autonomousCommand = nullptr;

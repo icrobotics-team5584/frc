@@ -2,7 +2,7 @@
 
 #include "PositionSource.hpp"
 #include "purePursuit/include/Position.h"
-#include <WPILib.h>
+#include <frc/WPILib.h>
 using namespace std;
 
 class PosEncoderGyro : public PositionSource {

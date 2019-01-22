@@ -6,7 +6,7 @@
 #include <sstream>
 #include <typeinfo>
 #include <utility>
-#include <WPILib.h>
+#include <frc/WPILib.h>
 
 /*
  * Instantiate a PathFollower object with a given robot path represented by a
@@ -18,14 +18,23 @@
 PathFollower::PathFollower(string csvPath, shared_ptr<PositionSource> source,
                            shared_ptr<DriveOutput> output) {
     // Save objects locally
+    ImplimentRobotFunctions(source, output);
+    path = constructVectorPathCSV(csvPath);
+    _source->setPosition(path[0].position.x, path[0].position.y);
+}
+
+PathFollower::PathFollower(Segment seg[], int pathLength, shared_ptr<PositionSource> source, shared_ptr<DriveOutput> output) {
+    ImplimentRobotFunctions(source, output);
+    path = constructVectorPathSeg(seg, pathLength);
+    _source->setPosition(path[0].position.x, path[0].position.y);
+}
+
+void PathFollower::ImplimentRobotFunctions(shared_ptr<PositionSource> source, shared_ptr<DriveOutput> output) {
     _source = source;
     _output = output;
-    path = constructVectorPath(csvPath);
+}
 
-    // Set robot position to start of path
-    _source->setPosition(path[0].position.x, path[0].position.y);
-
-    // Output debug information
+void PathFollower::printPathHead() {
     if (getPathSize() > 0) {
         cout << "path of size " << getPathSize() << " created." << endl;
         cout << "first points:" << endl;
@@ -51,9 +60,9 @@ void PathFollower::setPointRadius(double meters) {
 // Drives the robot along the path as long as this is continuously called. 
 void PathFollower::followPath() { 
     double driveCurve = generateDriveCurve();
-    SmartDashboard::PutNumber("driveCurve", driveCurve);
+    frc::SmartDashboard::PutNumber("driveCurve", driveCurve);
 
-    _output->set(driveCurve);
+    //_output->set(driveCurve);
 }
 
 bool PathFollower::isFinished() { return false; }
@@ -65,7 +74,7 @@ void PathFollower::reset() {
 /*
  * This function returns the 'closest' point. However, it only works under
  * certain circumstances. It is designed for a path following robot that begins
- * at the START of its csv path. It looks at when its distance to path points
+ * at the START of its vector path. It looks at when its distance to path points
  * begin to increase, and by doing that it knows that the points are becoming
  * further away. Through this technique, we are able to know what our closest
  * point is by telling it that when the distance to points increase, then the
@@ -111,7 +120,7 @@ Point PathFollower::findClosestPoint() {
                 closestPointIndex = 0;
             }
             Point closestPoint = path.at(closestPointIndex); 
-            SmartDashboard::PutNumberArray("closest point", {closestPoint.position.x, closestPoint.position.y, closestPoint.velocity});
+            frc::SmartDashboard::PutNumberArray("closest point", {closestPoint.position.x, closestPoint.position.y, closestPoint.velocity});
             return closestPoint;
 
         } else {
@@ -199,7 +208,7 @@ Point PathFollower::findLookaheadPoint() {
         cout << "ERROR: Could not find lookahead point. Using 0, 0" << endl;
     }
 
-    SmartDashboard::PutNumberArray("lookahead point", {xPoint, yPoint});
+    frc::SmartDashboard::PutNumberArray("lookahead point", {xPoint, yPoint});
     return pathPoints;
 }
 
@@ -249,7 +258,8 @@ void PathFollower::updatePosition() { currentPosition = _source->getPosition(); 
  * x position, y position, velocity
  * etc..
  */
-std::vector<Point> PathFollower::constructVectorPath(string csvPath) {
+
+std::vector<Point> PathFollower::constructVectorPathCSV(string csvPath) {
     // open the file
     cout << "Constructing path: " << csvPath << endl;
     std::ifstream data("home/lvuser/paths/" + csvPath + ".csv");
@@ -276,6 +286,28 @@ std::vector<Point> PathFollower::constructVectorPath(string csvPath) {
         // cout for debugging in the future
         //      std::cout << "x: " << point.x << " | y: " << point.y << " |
         //      velcoity: " << point.velocity << std::endl;
+    }
+    return xyPath;
+}
+
+std::vector<Point> constructVectorPathSeg(Segment seg[], int length) {
+    double pointX;
+    double pointY;
+    double velocity;
+    std::vector<Point> xyPath;
+    int i = 0;
+    for (i = 0; i < length; i++) {
+        Segment s = seg[i];
+
+        pointX = s.x;
+        pointY = s.y;
+        velocity = s.velocity;
+
+        Point point;
+        point.position.x = pointX;
+        point.position.y = pointY;
+        point.velocity = velocity;
+        xyPath.push_back(point);
     }
     return xyPath;
 }

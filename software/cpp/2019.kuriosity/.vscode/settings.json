@@ -56,6 +56,9 @@
     "tuple": "cpp",
     "typeinfo": "cpp",
     "utility": "cpp",
-    "*.inc": "cpp"
+    "*.inc": "cpp",
+    "complex": "cpp",
+    "list": "cpp",
+    "iomanip": "cpp"
   }
 }

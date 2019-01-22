@@ -7,12 +7,15 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <pathfinder.h>
 
 using namespace std;
 
 class PathFollower {
 public:
     PathFollower(string csvPath, shared_ptr<PositionSource> source, shared_ptr<DriveOutput> output);
+    PathFollower(Segment seg[], int pathLength, shared_ptr<PositionSource> source, shared_ptr<DriveOutput> output);    
+    void printPathHead();        
     int getPathSize();
     void setLookaheadDistance(double meters);
     void setPointRadius(double meters);
@@ -31,6 +34,7 @@ private:
     int closestPointIndex = 0;
     int xyPathPointCount = -1;
 
+    void ImplimentRobotFunctions(shared_ptr<PositionSource> source, shared_ptr<DriveOutput> output);
     Point findClosestPoint();
     int findClosestPointIndex();
     double distanceToPoint(double xPoint, double yPoint);
@@ -39,6 +43,8 @@ private:
     double generateDriveCurve();
     double generateSignedCurve();
     void updatePosition();
-    int getSign(double);
-    vector<Point> constructVectorPath(string csvPath);    
+    int getSign(double side);
+    vector<Point> constructVectorPathCSV(string csvPath);   
+    vector<Point> constructVectorPathSeg(Segment * seg, int length); //Segment is the trajectory that pathfinder returns
+                                                                     //Length is the number of points in the segment                   
 };

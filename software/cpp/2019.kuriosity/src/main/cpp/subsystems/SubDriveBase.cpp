@@ -10,7 +10,6 @@
 #include "commands/CmdJoystickDrive.h"
 
 SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
-
   //motors
   _srxBackLeft = Robot::_robotMap->srxDriveBaseBackLeft;
   _srxBackRight = Robot::_robotMap->srxDriveBaseBackRight;
@@ -27,8 +26,17 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   _clsLineLeft = Robot::_robotMap->clsLineDriveBaseLeft;
   _clsLineRight = Robot::_robotMap->clsLineDriveBaseRight;
 
+  //encoders
+  _srxBackRight->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
+  _srxBackLeft->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
+  _srxFrontRight->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
+  _srxFrontLeft->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
+
   _ulsGimble->SetAutomaticMode(true);
   _ulsBottom->SetAutomaticMode(true);
+
+  // Robot constants
+  metersPerRotation = 3.14159265359 * WHEEL_DIAMETER;
 }
 void SubDriveBase::InitDefaultCommand() {
   // Set the default command for a subsystem here.
@@ -36,7 +44,7 @@ void SubDriveBase::InitDefaultCommand() {
 }
 
 void SubDriveBase::drive(double speed, double rotation) {
-  difDrive->ArcadeDrive(speed, rotation);
+  difDrive->ArcadeDrive(-speed, rotation);
 }
 
 void SubDriveBase::tankDrive(double leftSpeed, double rightSpeed) {
@@ -44,11 +52,29 @@ void SubDriveBase::tankDrive(double leftSpeed, double rightSpeed) {
 }
 
 double SubDriveBase::getRawLeftEncoder() {
-  return _srxFrontLeft->GetSelectedSensorPosition(0);
+  SmartDashboard::PutNumber("Left Encoder", _srxBackLeft->GetSelectedSensorPosition());
+  return _srxBackLeft->GetSelectedSensorPosition(0);
 }
 
 double SubDriveBase::getRawRightEncoder() {
-  return _srxFrontRight->GetSelectedSensorPosition(0);
+  SmartDashboard::PutNumber("Right Encoder", _srxFrontRight->GetSelectedSensorPosition());
+  return -(_srxBackRight->GetSelectedSensorPosition(0));
+}
+
+double SubDriveBase::getVelocity() {
+ return _srxBackLeft->GetSelectedSensorVelocity() * metersPerRotation;
+}
+
+void SubDriveBase::zeroEncoders() {
+  _srxBackLeft->SetSelectedSensorPosition(0, 0);
+  _srxBackRight->SetSelectedSensorPosition(0, 0);
+}
+
+double SubDriveBase::getDistanceTravelled() {
+  double encoderTics = (getRawLeftEncoder() + getRawRightEncoder()) / 2;
+  double wheelRotations = encoderTics / ENCODER_TICS_PER_ROTATION;
+  double distance = wheelRotations * metersPerRotation;
+  return distance;  
 }
 
 void SubDriveBase::resetYaw(){

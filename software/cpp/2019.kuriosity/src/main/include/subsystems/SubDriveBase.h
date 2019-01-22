@@ -33,6 +33,11 @@ class SubDriveBase : public frc::Subsystem {
   shared_ptr<DigitalInput> _clsLineLeft;
   shared_ptr<DigitalInput> _clsLineRight;
 
+  // Robot constants
+  const double WHEEL_DIAMETER = 0.1016; // in meters (0.2032 for dizzy)
+  const int ENCODER_TICS_PER_ROTATION = 4096; // (214 for dizzy)
+  double metersPerRotation; // calculated in constructor
+
  public:
   SubDriveBase();
   void InitDefaultCommand() override;
@@ -43,8 +48,11 @@ class SubDriveBase : public frc::Subsystem {
   void brakeRobot();
 
   // Encoder functions
+  void zeroEncoders();
   double getRawLeftEncoder();
   double getRawRightEncoder();
+  double getDistanceTravelled();
+  double getVelocity();
 
   // Gyro functions
   void resetYaw();

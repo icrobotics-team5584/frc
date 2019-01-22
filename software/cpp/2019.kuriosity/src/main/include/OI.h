@@ -38,4 +38,5 @@ private:
   unique_ptr<frc::JoystickButton> btnDeployPanel;
   unique_ptr<frc::JoystickButton> btnDeployFingers; 
   unique_ptr<frc::JoystickButton> btnFollowPath;
+  unique_ptr<frc::JoystickButton> btnFindDtData;
 };

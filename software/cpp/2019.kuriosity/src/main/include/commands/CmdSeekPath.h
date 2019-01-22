@@ -8,26 +8,21 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-#include <pathfinder-frc.h>
+#include "purePursuit/include/pathFollower.hpp"
+#include "purePursuit/include/PosEncoderGyro.h"
+#include "purePursuit/include/DvoTank.h"
 
-class CmdFollowPath : public frc::Command {
+class CmdSeekPath : public frc::Command {
+ private:
+  unique_ptr<PathFollower> pathFollower;
+  shared_ptr<PosEncoderGyro> posEncoderGyro;
+  shared_ptr<DvoTank> dvoTank;
+
  public:
-  CmdFollowPath();
+  CmdSeekPath();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
- private:
-    int length;
-    double max_velocity = 4.2;
-    Segment * seg;
-    Segment * leftTrajectory;
-    Segment * rightTrajectory;
-
-    EncoderConfig leftConfig;
-    EncoderConfig rightConfig;
-
-    EncoderFollower * leftFollower;
-    EncoderFollower * rightFollower;
 };

@@ -8,13 +8,32 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include <fstream>
+#include <frc/WPILib.h>
 
-class pathWeaver : public frc::Command {
+class CmdFindDtData : public frc::Command {
  public:
-  pathWeaver();
+  CmdFindDtData();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+ private:
+  std::ofstream file;
+  frc::Timer timer;
+
+  double currentTime;
+  double oldTime = 0;
+
+  double currentDisplacement;
+  double oldDisplacement = 0;
+
+  double currentVelocity;
+  double oldVelocity = 0;
+
+  double currentAcceleration;
+  double oldAcceleration = 0;
+
+  double jerk;
 };

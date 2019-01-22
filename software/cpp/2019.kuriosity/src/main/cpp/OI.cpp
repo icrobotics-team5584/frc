@@ -12,6 +12,7 @@
 #include "commands/CmdHatchLowRocket.h"
 #include "commands/CmdIntakePanel.h"
 #include "commands/CmdFollowPath.h"
+#include "commands/CmdFindDtData.h"
 
 OI::OI() {
   cout << "Run Robot OI" << endl;
@@ -28,11 +29,14 @@ OI::OI() {
   btnFollowLine->WhenPressed(new CmdHatchLowRocket());
 
   btnFollowPath.reset(new frc::JoystickButton(controller.get(), yBtn));
-  btnFollowPath->WhileHeld(new CmdFollowPath());
+  btnFollowPath->WhenPressed(new CmdFollowPath());
 
   btnDeployPanel.reset(new frc::JoystickButton(controller.get(), aBtn));
   btnDeployPanel->WhileHeld(new CmdOutputPanel(false));
 
   btnDeployFingers.reset(new frc::JoystickButton(controller.get(), bBtn));
   btnDeployFingers->WhileHeld(new CmdIntakePanel());
+
+  btnFindDtData.reset(new frc::JoystickButton(controller.get(), startBtn));
+  btnFindDtData->WhileHeld(new CmdFindDtData());
 }
