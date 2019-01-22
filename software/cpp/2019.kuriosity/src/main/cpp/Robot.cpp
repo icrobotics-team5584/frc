@@ -22,6 +22,8 @@ void Robot::RobotInit() {
   
   _robotMap.reset(new RobotMap);
 
+    CameraServer::GetInstance()->StartAutomaticCapture();
+
     subDriveBase.reset(new SubDriveBase());
     subElevator.reset(new SubElevator());
     subTurret.reset(new SubTurret());
