@@ -21,7 +21,7 @@ unique_ptr<SubGimble> Robot::subGimble;
 void Robot::RobotInit() {
   cout << "Run Robot init" << endl;
   _robotMap.reset(new RobotMap);
-  _oi.reset(new OI);
+
   
   cmdSeekCargoShip.reset(new CmdSeekCargoShip());
   subDriveBase.reset(new SubDriveBase());
@@ -31,17 +31,7 @@ void Robot::RobotInit() {
   subRollerIntake.reset(new SubRollerIntake());
   subGimble.reset(new SubGimble());
 
-  //m_chooser.SetDefaultOption("Default Auto", &m_defaultAuto);
-  //m_chooser.AddOption("My Auto", &m_myAuto);
-  //frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
-  
-  _robotMap.reset(new RobotMap);
 
-    subDriveBase.reset(new SubDriveBase());
-    subElevator.reset(new SubElevator());
-    subIntakeOutake.reset(new SubIntakeOutake());
-    subPanelAffector.reset(new SubPanelAffector());
-    subRollerIntake.reset(new SubRollerIntake());
 
     _oi.reset(new OI);
     std::cout << "robot init finish" << std::endl;
