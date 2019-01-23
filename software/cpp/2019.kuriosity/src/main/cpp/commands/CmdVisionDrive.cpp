@@ -25,9 +25,10 @@ void CmdVisionDrive::Initialize() {
 void CmdVisionDrive::Execute() {
   //Set direction and power
   double direction = Robot::subDriveBase->getTgtY(); 
-  double power = 0.7;
+  double tgtRange = Robot::subDriveBase->getTgtRange();
+  double power = 0.0;
   //Invert for backwards driving
-  power *= -1;
+  
   direction *= -1;
   // cap direction to avoid excessive turning
   if( direction > 0.5 ) {
@@ -36,6 +37,19 @@ void CmdVisionDrive::Execute() {
   if( direction < -0.5 ) {
       direction = -0.5;
   }  
+  // cap speed depending on range
+  if( tgtRange > 500 ) {
+    power = 0.7;
+  }
+  if( tgtRange < 500 ) {
+    power = 0.3;
+  }
+  if( tgtRange < 300 ) {
+    power = 0.0;
+  }
+
+  power *= -1;
+
   cout << "CmdVisionDrive: power: " << power << endl;
   cout << "CmdVisionDrive: direction: " << direction << endl;
   //Drive

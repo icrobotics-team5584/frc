@@ -35,6 +35,8 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   auto table = inst.GetTable("JETSON");
   tgtY.reset(new nt::NetworkTableEntry());
   *tgtY = table->GetEntry("tgty");
+  tgtRange.reset(new nt::NetworkTableEntry());
+  *tgtRange = table->GetEntry("tgtrange");
 }
 
 void SubDriveBase::InitDefaultCommand() {
@@ -81,6 +83,10 @@ double SubDriveBase::getDistanceToObstical() {
 //network tables data management
 double SubDriveBase::getTgtY() {
   return tgtY->GetDouble(0.0);
+}
+
+double SubDriveBase::getTgtRange() {
+  return tgtRange->GetDouble(0.0);
 }
 
 //uses the ultrasonic sensor to check whether the cargo ship bay has a hatch panel on it

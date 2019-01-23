@@ -38,6 +38,7 @@ class SubDriveBase : public frc::Subsystem {
 
   // Data
   unique_ptr<nt::NetworkTableEntry> tgtY;
+  unique_ptr<nt::NetworkTableEntry> tgtRange;
 
  public:
   SubDriveBase();
@@ -64,4 +65,5 @@ class SubDriveBase : public frc::Subsystem {
 
   // Vision functions
   double getTgtY();
+  double getTgtRange();
 };

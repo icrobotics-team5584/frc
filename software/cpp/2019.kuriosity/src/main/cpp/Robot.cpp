@@ -18,8 +18,13 @@ unique_ptr<SubPanelAffector> Robot::subPanelAffector;
 unique_ptr<SubIntakeOutake> Robot::subIntakeOutake;
 unique_ptr<SubRollerIntake> Robot::subRollerIntake;
 
+
+
 void Robot::RobotInit() {
-  
+
+  cam = CameraServer::GetInstance()->StartAutomaticCapture();
+  cam.SetResolution(320,240);
+  cam.SetFPS(10);
   _robotMap.reset(new RobotMap);
 
     subDriveBase.reset(new SubDriveBase());
@@ -50,11 +55,15 @@ void Robot::RobotInit() {
  * LiveWindow and SmartDashboard integrated updating.
  */
 void Robot::RobotPeriodic() {
+    //Sensors values on SmartDashboard
     SmartDashboard::PutNumber("Bottom Ultrasonic", subDriveBase->getDistanceToObstical());
     SmartDashboard::PutBoolean("front sensor", subDriveBase->frontHasReachedLine());
     SmartDashboard::PutBoolean("mid sensor", subDriveBase->midHasReachedLine());
     SmartDashboard::PutBoolean("left sensor", subDriveBase->isLeftClsOnLine());
     SmartDashboard::PutBoolean("right sensor", subDriveBase->isRightClsOnLine());
+    //Vision values on SmartDashboard
+    SmartDashboard::PutNumber("tgtY", subDriveBase->getTgtY());
+    SmartDashboard::PutNumber("tgtRange", subDriveBase->getTgtRange());
 }
 
 /**
