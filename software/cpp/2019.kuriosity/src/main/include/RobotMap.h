@@ -24,9 +24,8 @@ enum Can {
 };
 
 enum PWM {
-    pwm_talIntakeOutakeRight = 1, 
-    pwm_talIntakeOutakeLeft = 0,   
-    pwm_spkRollerIntake = 2
+    pwm_talIntakeOutake = 0, 
+    pwm_spkRollerIntake = 9999
 };
 
 enum DIO {
@@ -100,8 +99,7 @@ public:
     shared_ptr<DigitalInput> clsLineDriveBaseRight;
 
     //Intake and outake
-    shared_ptr<frc::Talon> talIntakeOutakeRight;
-    shared_ptr<frc::Talon> talIntakeOutakeLeft;
+    shared_ptr<frc::Talon> talIntakeOutake;
     shared_ptr<frc::Spark> spkRollerIntake;
 
     shared_ptr<DigitalInput> subIntakeOutakeCargo;
