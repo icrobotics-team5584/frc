@@ -13,7 +13,6 @@ unique_ptr<OI> Robot::_oi;
 unique_ptr<RobotMap> Robot::_robotMap;
 unique_ptr<SubDriveBase> Robot::subDriveBase;
 unique_ptr<SubElevator> Robot::subElevator;
-unique_ptr<SubTurret> Robot::subTurret;
 unique_ptr<SubPanelAffector> Robot::subPanelAffector;
 unique_ptr<SubIntakeOutake> Robot::subIntakeOutake;
 unique_ptr<SubRollerIntake> Robot::subRollerIntake;
@@ -22,29 +21,17 @@ unique_ptr<SubGimble> Robot::subGimble;
 void Robot::RobotInit() {
   cout << "Run Robot init" << endl;
   _robotMap.reset(new RobotMap);
-  _oi.reset(new OI);
+
   
   cmdSeekCargoShip.reset(new CmdSeekCargoShip());
   subDriveBase.reset(new SubDriveBase());
   subElevator.reset(new SubElevator());
-  subTurret.reset(new SubTurret());
   subIntakeOutake.reset(new SubIntakeOutake());
   subPanelAffector.reset(new SubPanelAffector());
   subRollerIntake.reset(new SubRollerIntake());
   subGimble.reset(new SubGimble());
 
-  //m_chooser.SetDefaultOption("Default Auto", &m_defaultAuto);
-  //m_chooser.AddOption("My Auto", &m_myAuto);
-  //frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
-  
-  _robotMap.reset(new RobotMap);
 
-    subDriveBase.reset(new SubDriveBase());
-    subElevator.reset(new SubElevator());
-    subTurret.reset(new SubTurret());
-    subIntakeOutake.reset(new SubIntakeOutake());
-    subPanelAffector.reset(new SubPanelAffector());
-    subRollerIntake.reset(new SubRollerIntake());
 
     _oi.reset(new OI);
     std::cout << "robot init finish" << std::endl;
