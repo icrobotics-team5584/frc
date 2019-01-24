@@ -19,8 +19,13 @@ class SubGimble : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
-  shared_ptr<WPI_TalonSRX> _srxGimble; 
+  shared_ptr<frc::Talon> _talGimble; 
+  private:
+  double rotateSpeed = 0.5;
   public:
   SubGimble();
   void InitDefaultCommand() override;
+  void rotateLeft();
+  void rotateRight();
+  void stop();
 };

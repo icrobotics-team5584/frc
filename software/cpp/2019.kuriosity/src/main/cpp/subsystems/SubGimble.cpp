@@ -9,7 +9,7 @@
 #include "Robot.h"
 
 SubGimble::SubGimble() : Subsystem("ExampleSubsystem") {
-  _srxGimble = Robot::_robotMap->srxGimble;
+  _talGimble = Robot::_robotMap->talGimble;
 }
 
 void SubGimble::InitDefaultCommand() {
@@ -19,3 +19,12 @@ void SubGimble::InitDefaultCommand() {
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
+void SubGimble::rotateLeft() {
+  _talGimble->Set(rotateSpeed);
+}
+void SubGimble::rotateRight() {
+  _talGimble->Set(-rotateSpeed);
+}
+void SubGimble::stop() {
+  _talGimble->Set(0.0);
+}
