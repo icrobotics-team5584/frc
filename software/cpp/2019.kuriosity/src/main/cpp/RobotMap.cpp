@@ -49,5 +49,5 @@ RobotMap::RobotMap(){
     talGimble.reset(new frc::Talon(pwn_talGimble));
     subGimbleLimitLeft.reset(new DigitalInput(lmt_subGimbleLimitLeft));
     subGimbleLimitRight.reset(new DigitalInput(lmt_subGimbleLimitRight));
-    anaGimblePot.reset(new AnalogInput(ana_potGimble));
+    subGimblePot.reset(new AnalogInput(ana_potGimble));
 }

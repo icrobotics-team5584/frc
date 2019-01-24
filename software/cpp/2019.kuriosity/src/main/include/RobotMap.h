@@ -56,11 +56,11 @@ enum PCM {
 };
 
 enum LMT {
-    lmt_subElevatorLimitBottom = 1,
-    lmt_subElevatorLimitTop = 2,
-    lmt_subGimbleLimitLeft = 3,
-    lmt_subGimbleLimitRight = 4,
-    lmt_subIntakeOutakeCargo = 5
+    lmt_subElevatorLimitBottom = 0,
+    lmt_subElevatorLimitTop = 1,
+    lmt_subGimbleLimitLeft = 2,
+    lmt_subGimbleLimitRight = 3,
+    lmt_subIntakeOutakeCargo = 4
 };
 
 
@@ -87,7 +87,7 @@ public:
     std::shared_ptr<DigitalInput> subGimbleLimitLeft;
     std::shared_ptr<DigitalInput> subGimbleLimitRight;
 
-    std::shared_ptr<AnalogInput> anaGimblePot;
+    std::shared_ptr<AnalogInput> subGimblePot;
 
     // DriveBase Sensors
     shared_ptr<AHRS> ahrsNavXDriveBase;
