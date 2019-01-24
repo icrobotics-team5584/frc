@@ -33,10 +33,12 @@ class SubGimble : public frc::Subsystem {
 	double PIDp = 0.0;
 	double PIDi = 0.0;
 	double PIDd = 0.0;
+	int  lc = 0;
 
 
   public:
   SubGimble();
+  void Periodic();
   void InitDefaultCommand() override;
   void rotateLeft();
   void rotateRight();

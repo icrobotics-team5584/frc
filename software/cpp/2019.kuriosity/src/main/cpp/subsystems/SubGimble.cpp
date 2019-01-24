@@ -23,9 +23,19 @@ SubGimble::SubGimble() : Subsystem("ExampleSubsystem") {
 	gimbleController->SetOutputRange(0.5, -0.5);
 	gimbleController->SetContinuous(false);
 	gimbleController->Disable();
-//	frc::SmartDashboard::PutData("Arm PID Controls", armController);  
+	frc::SmartDashboard::PutData("Arm PID Controls", gimbleController);  
 }
+void SubGimble::Periodic() {
+  lc++;
+	if( lc > 10){
+    SmartDashboard::PutNumber("ARM PID OUTPUT", gimbleController->Get());
+	  SmartDashboard::PutNumber("POT Value Average", _anaGimblePot->GetAverageValue());
+	  SmartDashboard::PutNumber("The custom value thing", _potSourcePID->PIDGet());
+	  SmartDashboard::PutNumber("ARM TALON OUTPUT %", _talGimble->Get());
+    lc = 0;
+  }
 
+}
 void SubGimble::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
