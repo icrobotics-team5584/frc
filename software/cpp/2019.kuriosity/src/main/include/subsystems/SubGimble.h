@@ -20,7 +20,7 @@ class SubGimble : public frc::Subsystem {
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
   shared_ptr<frc::Talon> _talGimble; 
-  private:
+  shared_ptr<AnalogInput> _anaGimblePot;
   double rotateSpeed = 0.5;
   public:
   SubGimble();

@@ -40,6 +40,7 @@ enum DIO {
 };
 
 enum Analog {
+    ana_potGimble = 0,
 };
 
 enum PCM {
@@ -61,6 +62,7 @@ enum LMT {
     lmt_subGimbleLimitRight = 4,
     lmt_subIntakeOutakeCargo = 5
 };
+
 
 class RobotMap {
 private: 
@@ -84,6 +86,8 @@ public:
 
     std::shared_ptr<DigitalInput> subGimbleLimitLeft;
     std::shared_ptr<DigitalInput> subGimbleLimitRight;
+
+    std::shared_ptr<AnalogInput> anaGimblePot;
 
     // DriveBase Sensors
     shared_ptr<AHRS> ahrsNavXDriveBase;
