@@ -22,18 +22,19 @@ Position PosEncoderGyro::getPosition() {
 
     // Save values for next iteration
     prevDistance = currentDistance;
-
     SmartDashboard::PutNumberArray("current pos", {currentPosition.x, currentPosition.y});
     return currentPosition;
 }
 
 double PosEncoderGyro::getAngle() {
-    return Robot::subDriveBase->getYaw();
+    return Robot::subDriveBase->getYaw() * 0.01745329251;
 }
 
 void PosEncoderGyro::setPosition(double x, double y) {
     currentPosition.x = x;
     currentPosition.y = y;
+    // currentPosition.x = 1.2;
+    // currentPosition.y = 1;
 }
 
 void PosEncoderGyro::reset() {

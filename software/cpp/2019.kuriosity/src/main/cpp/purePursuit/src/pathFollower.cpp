@@ -64,36 +64,37 @@ void PathFollower::setPointRadius(double meters) {
 // Drives the robot along the path as long as this is continuously called. 
 void PathFollower::followPath() { 
     updatePosition();
-    Point closestPoint = findClosestPoint();
-    Point pathPoints = findLookaheadPoint();
+    //Point closestPoint = findClosestPoint();
+    //Point pathPoints = findLookaheadPoint();
     double driveCurve = generateSignedCurve();
-    DriveOutput::MotorVelocities motorVelocities = generateWheelVelocities(driveCurve, closestPoint.velocity);
+    DriveOutput::MotorVelocities motorVelocities = generateWheelVelocities(driveCurve, _source->getAngle());
     frc::SmartDashboard::PutNumber("driveCurve", driveCurve);
-    velocityFile << closestPoint.velocity << ", " << motorVelocities.first << ", " << motorVelocities.second << std::endl;
-    curveFile << pathPoints.position.x << "," << pathPoints.position.y << "," << currentPosition.x << "," << currentPosition.y << ","<< _source->getAngle() << "," << driveCurve << std::endl;
-    frc::SmartDashboard::PutNumber("Left power", motorVelocities.first);
-    frc::SmartDashboard::PutNumber("Right power", motorVelocities.second);
-    frc::SmartDashboard::PutNumber("curvature", driveCurve);
-    frc::SmartDashboard::PutNumber("closest point x", closestPoint.position.x);
-    frc::SmartDashboard::PutNumber("closest point y", closestPoint.position.y);
-    frc::SmartDashboard::PutNumber("closest point vel",closestPoint.velocity);
-    frc::SmartDashboard::PutNumber("Path progress", closestPointIndex);
-    frc::SmartDashboard::PutNumber("lookahead point x", pathPoints.position.x);
-    frc::SmartDashboard::PutNumber("lookahead point y", pathPoints.position.y);
-    frc::SmartDashboard::PutNumber("path length", getPathSize());
-    //_output->set(driveCurve);
+    // velocityFile << closestPoint.velocity << ", " << motorVelocities.first << ", " << motorVelocities.second << std::endl;
+    // curveFile << pathPoints.position.x << "," << pathPoints.position.y << "," << currentPosition.x << "," << currentPosition.y << ","<< _source->getAngle() << "," << driveCurve << std::endl;
+    // frc::SmartDashboard::PutNumber("Left power", motorVelocities.first);
+    // frc::SmartDashboard::PutNumber("Right power", motorVelocities.second);
+    // frc::SmartDashboard::PutNumber("curvature", driveCurve);
+    // frc::SmartDashboard::PutNumber("closest point x", closestPoint.position.x);
+    // frc::SmartDashboard::PutNumber("closest point y", closestPoint.position.y);
+    // frc::SmartDashboard::PutNumber("closest point vel",closestPoint.velocity);
+    // frc::SmartDashboard::PutNumber("Path progress", closestPointIndex);
+    // frc::SmartDashboard::PutNumber("lookahead point x", pathPoints.position.x);
+    // frc::SmartDashboard::PutNumber("lookahead point y", pathPoints.position.y);
+    // frc::SmartDashboard::PutNumber("path length", getPathSize());
+    //_output->set(motorVelocities);
 }
 
 bool PathFollower::isFinished() { 
-    if(closestPointIndex == getPathSize()) {
-        velocityFile.close();
-        curveFile.close();
-        return true;
-    }
+    // if(closestPointIndex == getPathSize()) {
+    //     velocityFile.close();
+    //     curveFile.close();
+    //     return true;
+    // }
     return false; }
-    
+
 void PathFollower::reset() {
     _source->setPosition(path[0].position.x, path[0].position.y);
+    //_source->setPosition(1.2, 1);
 }
 
 /*
@@ -132,6 +133,7 @@ Point PathFollower::findClosestPoint() {
     while (true) {
         // Get data of next point on path
         closestPointIndex++;
+        cout << closestPointIndex << endl;
         newClosestPointX = path.at(closestPointIndex).position.x;
         newClosestPointY = path.at(closestPointIndex).position.y;
         newDistance = distanceToPoint(newClosestPointX, newClosestPointY);
@@ -144,6 +146,7 @@ Point PathFollower::findClosestPoint() {
             } else {
                 closestPointIndex = 0;
             }
+            cout << closestPointIndex << endl;
             Point closestPoint = path.at(closestPointIndex); 
             frc::SmartDashboard::PutNumberArray("closest point", {closestPoint.position.x, closestPoint.position.y, closestPoint.velocity});
             return closestPoint;
@@ -235,6 +238,7 @@ Point PathFollower::findLookaheadPoint() {
     }
 
     frc::SmartDashboard::PutNumberArray("lookahead point", {xPoint, yPoint});
+
     return pathPoints;
 }
 
@@ -246,8 +250,11 @@ Point PathFollower::findLookaheadPoint() {
 double PathFollower::generateDriveCurve() {
     // Determine error between LA point and expected robot position
     double tangent = -tan(_source->getAngle());
-    double c = tan(_source->getAngle()) * (currentPosition.x - currentPosition.y); // Details at Team 1712's paper
+
+    double c = tan(_source->getAngle()) * currentPosition.x - currentPosition.y; // Details at Team 1712's paper
+   
     Point lookAheadPoint = findLookaheadPoint();
+
     double error = abs(tangent * lookAheadPoint.position.x +
                        lookAheadPoint.position.y + c) / sqrt(pow(tangent,2) + 1);
                        
@@ -257,8 +264,7 @@ double PathFollower::generateDriveCurve() {
     // Determine whether to curve left or right 
     double distToLAPoint = 0;
     double distToExpectedRobotPos = 0;
-
-    return 0;
+    return curve;
 }
 double PathFollower::generateSignedCurve() {
     Point lookAheadPoint = findLookaheadPoint();
@@ -267,6 +273,12 @@ double PathFollower::generateSignedCurve() {
     //foward is supposed to be 90
     //gets the sign of the curvature (1 is right, 0 is foward, -1 is left)
     double robotAngle = _source->getAngle();
+
+    frc::SmartDashboard::PutNumber("side", sin(robotAngle) * 
+    (lookAheadPoint.position.x - currentPosition.x) - cos(robotAngle) *
+    (lookAheadPoint.position.y - currentPosition.y));
+
+
     int side = getSign(sin(robotAngle) * 
     (lookAheadPoint.position.x - currentPosition.x) - cos(robotAngle) *
     (lookAheadPoint.position.y - currentPosition.y));

@@ -11,7 +11,7 @@
 #include "commands/CmdIntakeOutakeIn.h"
 #include "commands/CmdHatchLowRocket.h"
 #include "commands/CmdIntakePanel.h"
-#include "commands/CmdFollowPath.h"
+#include "commands/CmdSeekPath.h"
 #include "commands/CmdFindDtData.h"
 
 OI::OI() {
@@ -28,8 +28,8 @@ OI::OI() {
   btnFollowLine.reset(new frc::JoystickButton(controller.get(), xBtn));
   btnFollowLine->WhenPressed(new CmdHatchLowRocket());
 
-  btnFollowPath.reset(new frc::JoystickButton(controller.get(), yBtn));
-  btnFollowPath->WhenPressed(new CmdFollowPath());
+  btnSeekPath.reset(new frc::JoystickButton(controller.get(), yBtn));
+  btnSeekPath->WhenPressed(new CmdSeekPath());
 
   btnDeployPanel.reset(new frc::JoystickButton(controller.get(), aBtn));
   btnDeployPanel->WhileHeld(new CmdOutputPanel(false));

@@ -37,6 +37,6 @@ private:
   unique_ptr<frc::JoystickButton> btnFollowLine;
   unique_ptr<frc::JoystickButton> btnDeployPanel;
   unique_ptr<frc::JoystickButton> btnDeployFingers; 
-  unique_ptr<frc::JoystickButton> btnFollowPath;
+  unique_ptr<frc::JoystickButton> btnSeekPath;
   unique_ptr<frc::JoystickButton> btnFindDtData;
 };
