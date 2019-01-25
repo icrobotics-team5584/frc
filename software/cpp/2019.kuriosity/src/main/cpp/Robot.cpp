@@ -24,21 +24,16 @@ void Robot::RobotInit() {
 
  cout << "Run Robot init" << endl;
 
-  cam = CameraServer::GetInstance()->StartAutomaticCapture();
-  cam.SetResolution(320,240);
-  cam.SetFPS(10);
-  _robotMap.reset(new RobotMap);
+    _robotMap.reset(new RobotMap);
 
-  
-  cmdSeekCargoShip.reset(new CmdSeekCargoShip());
-  subDriveBase.reset(new SubDriveBase());
-  subElevator.reset(new SubElevator());
-  subIntakeOutake.reset(new SubIntakeOutake());
-  subPanelAffector.reset(new SubPanelAffector());
-  subRollerIntake.reset(new SubRollerIntake());
-  subGimble.reset(new SubGimble());
+    CameraServer::GetInstance()->StartAutomaticCapture();
 
-
+    subDriveBase.reset(new SubDriveBase());
+    subElevator.reset(new SubElevator());
+    subIntakeOutake.reset(new SubIntakeOutake());
+    subPanelAffector.reset(new SubPanelAffector());
+    subRollerIntake.reset(new SubRollerIntake());
+    subGimble.reset(new SubGimble());
 
     _oi.reset(new OI);
     std::cout << "robot init finish" << std::endl;
