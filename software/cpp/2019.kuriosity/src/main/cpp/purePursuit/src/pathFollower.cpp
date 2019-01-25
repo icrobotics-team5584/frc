@@ -173,27 +173,28 @@ double PathFollower::distanceToPoint(double xPoint, double yPoint) {
  */
 bool PathFollower::isLookaheadPoint(double x1, double y1, double x2, double y2,
                                     double r1, double r2) {
-    double distSq = (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1);
-    double radSumSq = (r1 + r2) * (r1 + r2);
+     double dist = sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+
+    double radSum = (r1 + r2);
 
     //cout << "point x: " << x1 << ". point y: " << y1 << ". radius: " << pointRadius << endl;
     //cout << "dist   : " << sqrt(distSq) << ". radSum : " << sqrt(radSumSq) << endl;
 
     // if the distance is greater than the sum of the two triangles, they are
     // not touching
-    if (distSq > radSumSq) {
+    if (dist > radSum) {
         return false;
     }
     // this checks whether it circle is inside the other
-    else if (distSq < std::abs(r1 - r2)) {
+    else if (dist < std::abs(r1 - r2)) {
         return false;
     }
     // check whether they are the same circle (will not happen in our current
     // situation, since the radiuses are different, but just in case)
-    else if ((distSq == 0) && (r1 = r2)) {
+    else if ((dist == 0) && (r1 = r2)) {
         return false;
     }
-    else if (distSq < radSumSq) {
+    else if (dist < radSum) {
         return true;
     }
     else {
@@ -239,7 +240,7 @@ Point PathFollower::findLookaheadPoint() {
 double PathFollower::generateDriveCurve() {
     // Determine error between LA point and expected robot position
     double tangent = -tan(_source->getAngle());
-    double c = tangent * (currentPosition.x - currentPosition.y); // Details at Team 1712's paper
+    double c = tan(_source->getAngle()) * (currentPosition.x - currentPosition.y); // Details at Team 1712's paper
     Point lookAheadPoint = findLookaheadPoint();
     double error = abs(tangent * lookAheadPoint.position.x +
                        lookAheadPoint.position.y + c) / sqrt(pow(tangent,2) + 1);
