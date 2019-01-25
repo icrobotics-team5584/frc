@@ -33,7 +33,10 @@ class SubGimble : public frc::Subsystem {
 	double PIDp = 0.0;
 	double PIDi = 0.0;
 	double PIDd = 0.0;
+  int potRange;
+  int target;
 	int  lc = 0;
+  int totalAngle = 180;
 
 
   public:
@@ -43,5 +46,7 @@ class SubGimble : public frc::Subsystem {
   void rotateLeft();
   void rotateRight();
   void stop();
-  
+  void enable();
+  void disable();
+  void PIDGimbleTo(int angle);  
 };

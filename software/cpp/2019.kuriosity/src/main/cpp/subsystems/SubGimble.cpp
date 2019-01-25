@@ -43,6 +43,13 @@ void SubGimble::InitDefaultCommand() {
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
+void SubGimble::enable() {
+  gimbleController->Enable();
+}
+void SubGimble::disable() {
+  gimbleController->Disable();
+  _talGimble->Set(0);
+}
 void SubGimble::rotateLeft() {
   _talGimble->Set(rotateSpeed);
 }
@@ -51,4 +58,13 @@ void SubGimble::rotateRight() {
 }
 void SubGimble::stop() {
   _talGimble->Set(0.0);
+}
+void SubGimble::PIDGimbleTo(int angle) {
+  potRange = PotLeft - PotRight;
+
+  double target = potRange * ((angle + (totalAngle/2))/totalAngle) + PotRight;
+
+	SmartDashboard::PutNumber("TARGET Value", target);
+
+	gimbleController->SetSetpoint(target);
 }
