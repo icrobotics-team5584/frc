@@ -20,7 +20,7 @@ SubGimble::SubGimble() : Subsystem("ExampleSubsystem") {
   gimbleController = new PIDController(PIDp, PIDi, PIDd, _potSourcePID, _talGimble.get());
   gimbleController->SetSetpoint(PotCentre);
 	gimbleController->SetInputRange(PotLeft, PotRight);
-	gimbleController->SetOutputRange(0.5, -0.5);
+	gimbleController->SetOutputRange(-0.1, 0.1);
 	gimbleController->SetContinuous(false);
 	gimbleController->Disable();
 	frc::SmartDashboard::PutData("Arm PID Controls", gimbleController);  

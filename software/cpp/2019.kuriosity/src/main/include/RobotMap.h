@@ -44,15 +44,15 @@ enum Analog {
 };
 
 enum PCM {
-    pcm_solPanelAffectorTopFingerForward = 7,
-    pcm_solPanelAffectorTopFingerReverse = 6,
-    pcm_solPanelAffectorBottomFingerForward = 5,
-    pcm_solPanelAffectorBottomFingerReverse = 4,
+    pcm_solPanelAffectorTopFingerForward = 1,
+    pcm_solPanelAffectorTopFingerReverse = 0,
+    pcm_solPanelAffectorBottomFingerForward = 9999,
+    pcm_solPanelAffectorBottomFingerReverse = 9999,
 
-    pcm_solPanelAffectorTopForward = 3,
-    pcm_solPanelAffectorTopReverse = 2,
-    pcm_solPanelAffectorBottomForward = 1,
-    pcm_solPanelAffectorBottomReverse = 0
+    pcm_solPanelAffectorTopForward = 7,
+    pcm_solPanelAffectorTopReverse = 6,
+    pcm_solPanelAffectorBottomForward = 5,
+    pcm_solPanelAffectorBottomReverse = 4
 };
 
 enum LMT {

@@ -27,9 +27,9 @@ class SubGimble : public frc::Subsystem {
   PIDController* gimbleController;
   PIDPot* _potSourcePID;
 
-  double PotLeft = 9999;
-	double PotRight = 9999;
-	double PotCentre = 9999;
+  double PotLeft = 2500;
+	double PotRight = 800;
+	double PotCentre = 1000;
 	double PIDp = 0.0;
 	double PIDi = 0.0;
 	double PIDd = 0.0;
