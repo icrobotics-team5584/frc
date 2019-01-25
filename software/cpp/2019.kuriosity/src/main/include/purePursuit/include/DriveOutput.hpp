@@ -1,9 +1,10 @@
 #pragma once
+#include <utility>
+using namespace std;
 
 class DriveOutput {
 
 public:
-
-    virtual void set(double curve) = 0;
-
+    typedef pair<double, double> MotorVelocities;  
+    virtual void set(MotorVelocities motorVelocities) = 0;
 };

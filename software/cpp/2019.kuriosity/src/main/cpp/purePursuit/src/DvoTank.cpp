@@ -1,6 +1,6 @@
 #include "purePursuit/include/DvoTank.h"
 #include "Robot.h"
 
-void DvoTank::set(double curve) {
-    Robot::subDriveBase->drive(0, curve);
+void DvoTank::set(DriveOutput::MotorVelocities motorVelocities) {
+    Robot::subDriveBase->tankDriveVelocity(motorVelocities.first, motorVelocities.second);
 }

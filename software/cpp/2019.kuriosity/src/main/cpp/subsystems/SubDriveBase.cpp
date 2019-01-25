@@ -48,8 +48,15 @@ void SubDriveBase::drive(double speed, double rotation) {
   difDrive->ArcadeDrive(-speed, rotation);
 }
 
-void SubDriveBase::tankDrive(double leftSpeed, double rightSpeed) {
-  difDrive->TankDrive(leftSpeed, rightSpeed);
+void SubDriveBase::setTalControlMode(ControlMode controlMode) {
+  _srxFrontRight->Set(controlMode, 0);
+  _srxFrontLeft->Set(controlMode, 0);
+}
+void SubDriveBase::tankDriveVelocity(double leftVelocity, double rightVelocity) {
+  leftVelocity = leftVelocity * VELOCITY_CONVERSION_FACTOR;
+  rightVelocity = rightVelocity * VELOCITY_CONVERSION_FACTOR;
+  _srxFrontRight->Set(ControlMode::Velocity, leftVelocity);
+  _srxFrontLeft->Set(ControlMode::Velocity, rightVelocity);
 }
 
 double SubDriveBase::getRawLeftEncoder() {

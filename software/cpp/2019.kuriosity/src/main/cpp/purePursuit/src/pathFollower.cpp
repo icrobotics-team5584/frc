@@ -23,10 +23,14 @@ PathFollower::PathFollower(string csvPath, shared_ptr<PositionSource> source,
     _source->setPosition(path[0].position.x, path[0].position.y);
 }
 
-PathFollower::PathFollower(Segment* seg, int pathLength, shared_ptr<PositionSource> source, shared_ptr<DriveOutput> output) {
+PathFollower::PathFollower(Segment* seg, int pathLength, shared_ptr<PositionSource> source, shared_ptr<DriveOutput> output): velocityFile("home/lvuser/velocitydata.txt"), curveFile("home/lvuser/curvedata.txt") {
     ImplimentRobotFunctions(source, output);
     path = constructVectorPathSeg(seg, pathLength);
     _source->setPosition(path[0].position.x, path[0].position.y);
+    velocityFile << "desired velocity, left velocity, right velocity" << std::endl;
+    curveFile << "Lookaheadx, Lookaheady, currentx, currenty, gyro, curvature" << std::endl;
+    velocityFile.close();
+    curveFile.close();
 }
 
 void PathFollower::ImplimentRobotFunctions(shared_ptr<PositionSource> source, shared_ptr<DriveOutput> output) {
@@ -59,9 +63,24 @@ void PathFollower::setPointRadius(double meters) {
 
 // Drives the robot along the path as long as this is continuously called. 
 void PathFollower::followPath() { 
-    double driveCurve = generateDriveCurve();
+    updatePosition();
+    Point closestPoint = findClosestPoint();
+    Point pathPoints = findLookaheadPoint();
+    double driveCurve = generateSignedCurve();
+    DriveOutput::MotorVelocities motorVelocities = generateWheelVelocities(driveCurve, closestPoint.velocity);
     frc::SmartDashboard::PutNumber("driveCurve", driveCurve);
-
+    velocityFile << closestPoint.velocity << ", " << motorVelocities.first << ", " << motorVelocities.second << std::endl;
+    curveFile << pathPoints.position.x << "," << pathPoints.position.y << "," << currentPosition.x << "," << currentPosition.y << ","<< _source->getAngle() << "," << driveCurve << std::endl;
+    frc::SmartDashboard::PutNumber("Left power", motorVelocities.first);
+    frc::SmartDashboard::PutNumber("Right power", motorVelocities.second);
+    frc::SmartDashboard::PutNumber("curvature", driveCurve);
+    frc::SmartDashboard::PutNumber("closest point x", closestPoint.position.x);
+    frc::SmartDashboard::PutNumber("closest point y", closestPoint.position.y);
+    frc::SmartDashboard::PutNumber("closest point vel",closestPoint.velocity);
+    frc::SmartDashboard::PutNumber("Path progress", closestPointIndex);
+    frc::SmartDashboard::PutNumber("lookahead point x", pathPoints.position.x);
+    frc::SmartDashboard::PutNumber("lookahead point y", pathPoints.position.y);
+    frc::SmartDashboard::PutNumber("path length", getPathSize());
     //_output->set(driveCurve);
 }
 
@@ -322,4 +341,12 @@ int PathFollower::getSign(double side){
         sign = 0;
     }
     return sign;
+}
+DriveOutput::MotorVelocities PathFollower::generateWheelVelocities(double driveCurve, double targetVelocity) {
+    double leftPower = targetVelocity * (2 + driveCurve * TRACK_WIDTH) / 2;
+    double rightPower = -(targetVelocity * (2 - driveCurve * TRACK_WIDTH) / 2);
+    DriveOutput::MotorVelocities motorVelocities;
+    motorVelocities.first = leftPower;
+    motorVelocities.second = rightPower;
+    return motorVelocities;
 }

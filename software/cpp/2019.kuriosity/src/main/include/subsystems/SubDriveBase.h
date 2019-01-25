@@ -42,11 +42,15 @@ class SubDriveBase : public frc::Subsystem {
 
   int pathLength; //path length
 
+  void setTalControlMode(ControlMode controlMode);
+  const double VELOCITY_CONVERSION_FACTOR = 1280.4; //for when converting m/s to p/100ms
+ 
  public:
   SubDriveBase();
   void InitDefaultCommand() override;
 
   // Drive functions
+  void tankDriveVelocity(double leftVelocity, double rightVelocity);
   void drive(double speed, double rotation);
   void tankDrive(double leftSpeed, double rightSpeed);
   void brakeRobot();

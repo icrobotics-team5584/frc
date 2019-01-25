@@ -8,6 +8,8 @@
 #include <string>
 #include <memory>
 #include <pathfinder.h>
+#include <fstream>
+
 
 using namespace std;
 
@@ -29,10 +31,12 @@ private:
     vector<Point> path;
     shared_ptr<PositionSource> _source;
     shared_ptr<DriveOutput> _output;
-
+    std::ofstream velocityFile;
+    std::ofstream curveFile;
     Position currentPosition;
     int closestPointIndex = 0;
     int xyPathPointCount = -1;
+    const double TRACK_WIDTH = 0.64; //distance between wheels in meters
 
     void ImplimentRobotFunctions(shared_ptr<PositionSource> source, shared_ptr<DriveOutput> output);
     Point findClosestPoint();
@@ -46,5 +50,5 @@ private:
     int getSign(double side);
     vector<Point> constructVectorPathCSV(string csvPath);   
     vector<Point> constructVectorPathSeg(Segment * seg, int pathLength); //Segment is the trajectory that pathfinder returns
-                                                                         //Length is the number of points in the segment                   
+    DriveOutput::MotorVelocities generateWheelVelocities(double driveCurve, double targetVelocity);                                                                    //Length is the number of points in the segment                   
 };
