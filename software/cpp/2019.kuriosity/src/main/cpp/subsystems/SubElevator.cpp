@@ -10,6 +10,8 @@
 
 SubElevator::SubElevator() : Subsystem("ExampleSubsystem") {
   _srxElevator = Robot::_robotMap->srxElevator;
+  _subElevatorLimitBottom = Robot::_robotMap->subElevatorLimitBottom;
+  _subElevatorLimitTop = Robot::_robotMap->subElevatorLimitTop;
 }
 
 void SubElevator::InitDefaultCommand() {
