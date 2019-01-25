@@ -5,11 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/SubTurret.h"
+#include "subsystems/SubGimble.h"
+#include "Robot.h"
 
-SubTurret::SubTurret() : Subsystem("ExampleSubsystem") {}
+SubGimble::SubGimble() : Subsystem("ExampleSubsystem") {
+  _srxGimble = Robot::_robotMap->srxGimble;
+}
 
-void SubTurret::InitDefaultCommand() {
+void SubGimble::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
 }
