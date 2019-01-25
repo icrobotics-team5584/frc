@@ -23,6 +23,7 @@ CmdSeekPath::CmdSeekPath() {
 // Called just before this Command runs the first time
 void CmdSeekPath::Initialize() {
   pathFollower->reset();
+  Robot::subDriveBase->zeroEncoders();
 
 }
 
@@ -32,7 +33,10 @@ void CmdSeekPath::Execute() {
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdSeekPath::IsFinished() { return false; }
+bool CmdSeekPath::IsFinished() { 
+
+return pathFollower->isFinished();
+}
 
 // Called once after isFinished returns true
 void CmdSeekPath::End() {}

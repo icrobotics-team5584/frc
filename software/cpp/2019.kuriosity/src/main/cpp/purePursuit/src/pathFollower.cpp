@@ -84,8 +84,14 @@ void PathFollower::followPath() {
     //_output->set(driveCurve);
 }
 
-bool PathFollower::isFinished() { return false; }
-
+bool PathFollower::isFinished() { 
+    if(closestPointIndex == getPathSize()) {
+        velocityFile.close();
+        curveFile.close();
+        return true;
+    }
+    return false; }
+    
 void PathFollower::reset() {
     _source->setPosition(path[0].position.x, path[0].position.y);
 }
