@@ -10,6 +10,7 @@
 #include <AHRS.h>
 #include <frc/WPILib.h>
 
+
 using namespace std;
 using namespace frc;
 
@@ -17,13 +18,14 @@ enum Can {
     can_srxDriveBaseFrontRight = 1,
     can_srxDriveBaseFrontLeft = 3,
     can_srxDriveBaseBackRight = 2,
-    can_srxDriveBaseBackLeft = 4
+    can_srxDriveBaseBackLeft = 4,
+    can_srxGimble = 5,
+    can_srxElevator = 6
 };
 
 enum PWM {
-    pwm_talIntakeOutakeRight = 1, 
-    pwm_talIntakeOutakeLeft = 0,   
-    pwm_spkRollerIntake = 2
+    pwm_talIntakeOutake = 0, 
+    pwm_spkRollerIntake = 9999
 };
 
 enum DIO {
@@ -52,7 +54,16 @@ enum PCM {
     pcm_solPanelAffectorBottomReverse = 0
 };
 
+enum LMT {
+    lmt_subElevatorLimitBottom = 1,
+    lmt_subElevatorLimitTop = 2,
+    lmt_subGimbleLimitLeft = 3,
+    lmt_subGimbleLimitRight = 4,
+    lmt_subIntakeOutakeCargo = 5
+};
+
 class RobotMap {
+private: 
 public:
     RobotMap();
 
@@ -61,6 +72,18 @@ public:
 	shared_ptr<WPI_TalonSRX> srxDriveBaseFrontLeft;
     shared_ptr<WPI_TalonSRX> srxDriveBaseBackLeft;
 	shared_ptr<WPI_TalonSRX> srxDriveBaseBackRight;
+
+    //Elevator
+    shared_ptr<WPI_TalonSRX> srxElevator;
+
+    std::shared_ptr<DigitalInput> subElevatorLimitTop;
+    std::shared_ptr<DigitalInput> subElevatorLimitBottom;
+
+    //Gimble
+    shared_ptr<WPI_TalonSRX> srxGimble;
+
+    std::shared_ptr<DigitalInput> subGimbleLimitLeft;
+    std::shared_ptr<DigitalInput> subGimbleLimitRight;
 
     // DriveBase Sensors
     shared_ptr<AHRS> ahrsNavXDriveBase;
@@ -76,9 +99,10 @@ public:
     shared_ptr<DigitalInput> clsLineDriveBaseRight;
 
     //Intake and outake
-    shared_ptr<frc::Talon> talIntakeOutakeRight;
-    shared_ptr<frc::Talon> talIntakeOutakeLeft;
+    shared_ptr<frc::Talon> talIntakeOutake;
     shared_ptr<frc::Spark> spkRollerIntake;
+
+    shared_ptr<DigitalInput> subIntakeOutakeCargo;
 
     // Panel Affector Actuators
     shared_ptr<DoubleSolenoid> solPanelAffectorTop;
