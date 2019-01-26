@@ -62,7 +62,7 @@ void Robot::RobotPeriodic() {
     SmartDashboard::PutBoolean("right sensor", subDriveBase->isRightClsOnLine());
     SmartDashboard::PutNumber("Right encoder", subDriveBase->getRawRightEncoder());
     SmartDashboard::PutNumber("Left encoder", subDriveBase->getRawLeftEncoder());
-
+    SmartDashboard::PutNumber("Right Velocity", subDriveBase->getRightVelocity());
 }
 
 /**
@@ -117,6 +117,7 @@ void Robot::AutonomousPeriodic() {
 
 void Robot::TeleopInit() {
     subDriveBase->resetYaw();
+
 }
 
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }

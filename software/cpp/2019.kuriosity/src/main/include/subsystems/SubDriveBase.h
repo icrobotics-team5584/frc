@@ -43,7 +43,10 @@ class SubDriveBase : public frc::Subsystem {
   int pathLength; //path length
 
   void setTalControlMode(ControlMode controlMode);
-  const double VELOCITY_CONVERSION_FACTOR = 1280.4; //for when converting m/s to p/100ms
+
+	double kTimeoutMs = 30;
+  double kPIDLoopIdx = 0;
+  double kSlotIdx = 0;
  
  public:
   SubDriveBase();
@@ -62,7 +65,9 @@ class SubDriveBase : public frc::Subsystem {
   double getRawLeftEncoder();
   double getRawRightEncoder();
   double getDistanceTravelled();
-  double getVelocity();
+  double getRightVelocity();
+  double getLeftVelocity();
+  void velocityPIDConfig();
 
   // Gyro functions
   void resetYaw();

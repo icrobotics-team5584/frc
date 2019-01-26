@@ -28,10 +28,13 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   _clsLineRight = Robot::_robotMap->clsLineDriveBaseRight;
 
   //encoders
-  _srxBackRight->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
-  _srxBackLeft->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
   _srxFrontRight->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
   _srxFrontLeft->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
+
+
+  //not in use
+  // _srxBackRight->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
+  // _srxBackLeft->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
 
   _ulsGimble->SetAutomaticMode(true);
   _ulsBottom->SetAutomaticMode(true);
@@ -53,29 +56,67 @@ void SubDriveBase::setTalControlMode(ControlMode controlMode) {
   _srxFrontLeft->Set(controlMode, 0);
 }
 void SubDriveBase::tankDriveVelocity(double leftVelocity, double rightVelocity) {
-  leftVelocity = leftVelocity * VELOCITY_CONVERSION_FACTOR;
-  rightVelocity = rightVelocity * VELOCITY_CONVERSION_FACTOR;
-  _srxFrontRight->Set(ControlMode::Velocity, leftVelocity);
-  _srxFrontLeft->Set(ControlMode::Velocity, rightVelocity);
+  //change target velocities from m/s to u/100ms
+  double leftTargetVelocity = leftVelocity / 0.000078 / 10;
+  double rightTargetVelocity = rightVelocity / 0.000078 / 10;
+  SmartDashboard::PutNumber("Left target vel", leftTargetVelocity);
+  SmartDashboard::PutNumber("Right target vel", rightTargetVelocity);
+  SmartDashboard::PutNumber("Right actual vel", _srxFrontRight->GetSelectedSensorVelocity(0));
+  _srxFrontRight->Set(ControlMode::Velocity, rightTargetVelocity);
+  _srxFrontLeft->Set(ControlMode::Velocity, leftTargetVelocity);
+
 }
 
 double SubDriveBase::getRawLeftEncoder() {
-  SmartDashboard::PutNumber("Left Encoder", _srxBackLeft->GetSelectedSensorPosition());
-  return _srxBackLeft->GetSelectedSensorPosition(0);
+  SmartDashboard::PutNumber("Left Encoder", _srxFrontLeft->GetSelectedSensorPosition());
+  return _srxFrontLeft->GetSelectedSensorPosition(0);
 }
 
 double SubDriveBase::getRawRightEncoder() {
   SmartDashboard::PutNumber("Right Encoder", _srxFrontRight->GetSelectedSensorPosition());
-  return -(_srxBackRight->GetSelectedSensorPosition(0));
+  return _srxFrontRight->GetSelectedSensorPosition(0);
 }
 
-double SubDriveBase::getVelocity() {
- return _srxBackLeft->GetSelectedSensorVelocity() * metersPerRotation;
+//returns velocity in m/s
+double SubDriveBase::getRightVelocity() {
+  double velocity = _srxFrontRight->GetSelectedSensorVelocity(0);
+  velocity = velocity * 0.000078 * 10;
+  return velocity;
+}
+
+double SubDriveBase::getLeftVelocity() {
+  double velocity = _srxFrontLeft->GetSelectedSensorVelocity(0);
+  velocity = velocity * 0.000078 * 10;
+  return velocity;
+}
+
+void SubDriveBase::velocityPIDConfig() {
+  //left talon
+  _srxFrontLeft->ConfigNominalOutputForward(0, kTimeoutMs);
+  _srxFrontLeft->ConfigNominalOutputReverse(0, kTimeoutMs);
+  _srxFrontLeft->ConfigPeakOutputForward(1, kTimeoutMs);
+  _srxFrontLeft->ConfigPeakOutputReverse(-1, kTimeoutMs);
+
+  _srxFrontLeft->Config_kF(kPIDLoopIdx, 0, kTimeoutMs);
+  _srxFrontLeft->Config_kP(kPIDLoopIdx, 0.22, kTimeoutMs);
+  _srxFrontLeft->Config_kI(kPIDLoopIdx, 0.0, kTimeoutMs);
+  _srxFrontLeft->Config_kD(kPIDLoopIdx, 0.0, kTimeoutMs);
+
+  //right srx
+  _srxFrontRight->ConfigNominalOutputForward(0, kTimeoutMs);
+  _srxFrontRight->ConfigNominalOutputReverse(0, kTimeoutMs);
+  _srxFrontRight->ConfigPeakOutputForward(1, kTimeoutMs);
+  _srxFrontRight->ConfigPeakOutputReverse(-1, kTimeoutMs);
+
+  _srxFrontRight->Config_kF(kPIDLoopIdx, 0, kTimeoutMs);
+  _srxFrontRight->Config_kP(kPIDLoopIdx, 0.22, kTimeoutMs);
+  _srxFrontRight->Config_kI(kPIDLoopIdx, 0.0, kTimeoutMs);
+  _srxFrontRight->Config_kD(kPIDLoopIdx, 0.0, kTimeoutMs);
 }
 
 void SubDriveBase::zeroEncoders() {
-  _srxBackLeft->SetSelectedSensorPosition(0, 0);
-  _srxBackRight->SetSelectedSensorPosition(0, 0);
+  _srxFrontLeft->SetSelectedSensorPosition(0, 0);
+  _srxFrontRight->SetSelectedSensorPosition(0, 0);
 }
 
 double SubDriveBase::getDistanceTravelled() {
