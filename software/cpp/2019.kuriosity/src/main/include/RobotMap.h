@@ -19,12 +19,12 @@ enum Can {
     can_srxDriveBaseFrontLeft = 3,
     can_srxDriveBaseBackRight = 2,
     can_srxDriveBaseBackLeft = 4,
-    can_srxGimble = 5,
-    can_srxElevator = 6
+    can_srxElevator = 5
 };
 
 enum PWM {
     pwm_talIntakeOutake = 0, 
+    pwn_talGimble = 1,
     pwm_spkRollerIntake = 9999
 };
 
@@ -40,27 +40,29 @@ enum DIO {
 };
 
 enum Analog {
+    ana_potGimble = 0,
 };
 
 enum PCM {
-    pcm_solPanelAffectorTopFingerForward = 7,
-    pcm_solPanelAffectorTopFingerReverse = 6,
-    pcm_solPanelAffectorBottomFingerForward = 5,
-    pcm_solPanelAffectorBottomFingerReverse = 4,
+    pcm_solPanelAffectorTopFingerForward = 1,
+    pcm_solPanelAffectorTopFingerReverse = 0,
+    pcm_solPanelAffectorBottomFingerForward = 9999,
+    pcm_solPanelAffectorBottomFingerReverse = 9999,
 
-    pcm_solPanelAffectorTopForward = 3,
-    pcm_solPanelAffectorTopReverse = 2,
-    pcm_solPanelAffectorBottomForward = 1,
-    pcm_solPanelAffectorBottomReverse = 0
+    pcm_solPanelAffectorTopForward = 7,
+    pcm_solPanelAffectorTopReverse = 6,
+    pcm_solPanelAffectorBottomForward = 5,
+    pcm_solPanelAffectorBottomReverse = 4
 };
 
 enum LMT {
-    lmt_subElevatorLimitBottom = 1,
-    lmt_subElevatorLimitTop = 2,
-    lmt_subGimbleLimitLeft = 3,
-    lmt_subGimbleLimitRight = 4,
-    lmt_subIntakeOutakeCargo = 5
+    lmt_subElevatorLimitBottom = 0,
+    lmt_subElevatorLimitTop = 1,
+    lmt_subGimbleLimitLeft = 2,
+    lmt_subGimbleLimitRight = 3,
+    lmt_subIntakeOutakeCargo = 4
 };
+
 
 class RobotMap {
 private: 
@@ -80,10 +82,12 @@ public:
     std::shared_ptr<DigitalInput> subElevatorLimitBottom;
 
     //Gimble
-    shared_ptr<WPI_TalonSRX> srxGimble;
+    shared_ptr<frc::Talon> talGimble;
 
     std::shared_ptr<DigitalInput> subGimbleLimitLeft;
     std::shared_ptr<DigitalInput> subGimbleLimitRight;
+
+    std::shared_ptr<AnalogInput> subGimblePot;
 
     // DriveBase Sensors
     shared_ptr<AHRS> ahrsNavXDriveBase;
