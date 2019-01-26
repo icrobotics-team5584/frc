@@ -13,6 +13,7 @@
 #include "commands/CmdIntakePanel.h"
 #include "commands/CmdGimbleRotateLeft.h"
 #include "commands/CmdGimbleRotateRight.h"
+#include "commands/CmdOverrideTurret.h"
 
 OI::OI() {
   cout << "Run Robot OI" << endl;
@@ -39,4 +40,10 @@ OI::OI() {
 
   btnGimbleRotateRight.reset(new frc::JoystickButton(controller.get(), startBtn));
   btnGimbleRotateRight->WhileHeld(new CmdGimbleRotateRight());
+
+  btnOverride.reset(new frc::JoystickButton(controller.get(), rightStickBtn));
+  btnOverride->WhileHeld(new CmdOverrideTurret());
+}
+std::shared_ptr<frc::Joystick> OI::getJoystick0() {
+   return joystick0;
 }

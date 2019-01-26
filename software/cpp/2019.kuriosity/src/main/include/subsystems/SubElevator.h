@@ -22,7 +22,14 @@ class SubElevator : public frc::Subsystem {
   shared_ptr<WPI_TalonSRX> _srxElevator;
   shared_ptr<DigitalInput> _subElevatorLimitBottom;
   shared_ptr<DigitalInput> _subElevatorLimitTop;
+  double targetPosRotations;
+  double _axis5 = 0;
+  double targetPositionRotations;
+	int overrideSpeed = 0;
  public:
   SubElevator();
   void InitDefaultCommand() override;
+  void ElevatorToPos(double rotations);
+  void Override(std::shared_ptr<Joystick>);
+  void Stop();
 };
