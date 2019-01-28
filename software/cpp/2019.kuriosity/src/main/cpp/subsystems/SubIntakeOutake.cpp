@@ -22,11 +22,11 @@ void SubIntakeOutake::InitDefaultCommand() {
 // here. Call these from Commands.
 
 void SubIntakeOutake::Intake() {
-  _talIntakeOutake->Set(inSpeed);
+  _srxIntakeOutake->Set(inSpeed);
 }
 void SubIntakeOutake::Outake() {
-  _talIntakeOutake->Set(outSpeed);
+  _srxIntakeOutake->Set(outSpeed);
 }
 void SubIntakeOutake::Stop() {
-  _talIntakeOutake->Set(0.0);
+  _srxIntakeOutake->Set(0.0);
 }
