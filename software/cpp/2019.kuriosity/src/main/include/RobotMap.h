@@ -20,11 +20,11 @@ enum Can {
     can_srxDriveBaseBackRight = 2,
     can_srxDriveBaseBackLeft = 4,
     can_srxGimble = 5,
-    can_srxElevator = 6
+    can_srxElevator = 6,
+    can_srxIntakeOutake = 0
 };
 
 enum PWM {
-    pwm_talIntakeOutake = 0, 
     pwm_spkRollerIntake = 9999
 };
 
@@ -99,7 +99,7 @@ public:
     shared_ptr<DigitalInput> clsLineDriveBaseRight;
 
     //Intake and outake
-    shared_ptr<frc::Talon> talIntakeOutake;
+    shared_ptr<WPI_TalonSRX> srxIntakeOutake;
     shared_ptr<frc::Spark> spkRollerIntake;
 
     shared_ptr<DigitalInput> subIntakeOutakeCargo;
