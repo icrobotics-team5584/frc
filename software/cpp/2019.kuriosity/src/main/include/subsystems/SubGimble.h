@@ -19,7 +19,7 @@ class SubGimble : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
-  shared_ptr<frc::Talon> _talGimble; 
+  shared_ptr<WPI_TalonSRX> _srxGimble; 
   shared_ptr<AnalogInput> _anaGimblePot;
   shared_ptr<DigitalInput> _LimitLeft;
   shared_ptr<DigitalInput> _LimitRight;

@@ -46,7 +46,7 @@ RobotMap::RobotMap(){
     solPanelAffectorBottomFinger.reset(new DoubleSolenoid(pcm_solPanelAffectorBottomFingerForward, pcm_solPanelAffectorBottomFingerReverse));
 
     //Gimble
-    talGimble.reset(new frc::Talon(pwn_talGimble));
+    srxGimble.reset(new WPI_TalonSRX(can_srxGimble));
     subGimbleLimitLeft.reset(new DigitalInput(lmt_subGimbleLimitLeft));
     subGimbleLimitRight.reset(new DigitalInput(lmt_subGimbleLimitRight));
     subGimblePot.reset(new AnalogInput(ana_potGimble));

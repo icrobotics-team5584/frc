@@ -19,12 +19,12 @@ enum Can {
     can_srxDriveBaseFrontLeft = 3,
     can_srxDriveBaseBackRight = 2,
     can_srxDriveBaseBackLeft = 4,
-    can_srxElevator = 5
+    can_srxElevator = 5,
+    can_srxGimble = 6,
 };
 
 enum PWM {
     pwm_talIntakeOutake = 0, 
-    pwn_talGimble = 1,
     pwm_spkRollerIntake = 9999
 };
 
@@ -82,7 +82,7 @@ public:
     std::shared_ptr<DigitalInput> subElevatorLimitBottom;
 
     //Gimble
-    shared_ptr<frc::Talon> talGimble;
+    shared_ptr<WPI_TalonSRX> srxGimble;
 
     std::shared_ptr<DigitalInput> subGimbleLimitLeft;
     std::shared_ptr<DigitalInput> subGimbleLimitRight;

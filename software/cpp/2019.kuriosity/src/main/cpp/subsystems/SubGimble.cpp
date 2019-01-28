@@ -10,14 +10,14 @@
 
 SubGimble::SubGimble() : Subsystem("ExampleSubsystem") {
 
-  _talGimble = Robot::_robotMap->talGimble;
+  _srxGimble = Robot::_robotMap->srxGimble;
   _anaGimblePot = Robot::_robotMap->subGimblePot;
   _LimitLeft = Robot::_robotMap->subGimbleLimitLeft;  
   _LimitRight = Robot::_robotMap->subGimbleLimitRight;
 
   _potSourcePID = new PIDPot();
 
-  gimbleController = new PIDController(PIDp, PIDi, PIDd, _potSourcePID, _talGimble.get());
+  gimbleController = new PIDController(PIDp, PIDi, PIDd, _potSourcePID, _srxGimble.get());
   gimbleController->SetSetpoint(PotCentre);
 	gimbleController->SetInputRange(PotLeft, PotRight);
 	gimbleController->SetOutputRange(-0.1, 0.1);
@@ -31,7 +31,7 @@ void SubGimble::Periodic() {
     SmartDashboard::PutNumber("ARM PID OUTPUT", gimbleController->Get());
 	  SmartDashboard::PutNumber("POT Value Average", _anaGimblePot->GetAverageValue());
 	  SmartDashboard::PutNumber("The custom value thing", _potSourcePID->PIDGet());
-	  SmartDashboard::PutNumber("ARM TALON OUTPUT %", _talGimble->Get());
+	  SmartDashboard::PutNumber("ARM TALON OUTPUT %", _srxGimble->Get());
     lc = 0;
   }
 
@@ -48,16 +48,16 @@ void SubGimble::enable() {
 }
 void SubGimble::disable() {
   gimbleController->Disable();
-  _talGimble->Set(0);
+  _srxGimble->Set(0);
 }
 void SubGimble::rotateLeft() {
-  _talGimble->Set(rotateSpeed);
+  _srxGimble->Set(rotateSpeed);
 }
 void SubGimble::rotateRight() {
-  _talGimble->Set(-rotateSpeed);
+  _srxGimble->Set(-rotateSpeed);
 }
 void SubGimble::stop() {
-  _talGimble->Set(0.0);
+  _srxGimble->Set(0.0);
 }
 void SubGimble::PIDGimbleTo(int angle) {
   potRange = PotLeft - PotRight;
