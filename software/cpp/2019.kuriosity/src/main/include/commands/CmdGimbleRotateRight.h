@@ -7,23 +7,14 @@
 
 #pragma once
 
-#include <frc/WPILib.h>
-#include <frc/commands/Subsystem.h>
-#include <ctre/Phoenix.h>
+#include <frc/commands/Command.h>
 
-using namespace std;
-class SubIntakeOutake : public frc::Subsystem {
- private:
-  // It's desirable that everything possible under private except
-  // for methods that implement subsystem capabilities
-  shared_ptr<WPI_TalonSRX> _srxIntakeOutake;
-  double outSpeed = -1;
-  double inSpeed = 0.5;
-
+class CmdGimbleRotateRight : public frc::Command {
  public:
-  SubIntakeOutake();
-  void InitDefaultCommand() override;
-  void Intake();
-  void Outake();
-  void Stop();
+  CmdGimbleRotateRight();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
 };

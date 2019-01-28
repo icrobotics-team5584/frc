@@ -12,10 +12,10 @@
 SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
 
   //motors
-  _srxBackLeft = Robot::_robotMap->srxDriveBaseBackLeft;
-  _srxBackRight = Robot::_robotMap->srxDriveBaseBackRight;
-  _srxFrontRight = Robot::_robotMap->srxDriveBaseFrontRight;
   _srxFrontLeft = Robot::_robotMap->srxDriveBaseFrontLeft;
+  _srxBackLeft = Robot::_robotMap->srxDriveBaseBackLeft;
+  _srxFrontRight = Robot::_robotMap->srxDriveBaseFrontRight;
+  _srxBackRight = Robot::_robotMap->srxDriveBaseBackRight;
   difDrive.reset(new frc::DifferentialDrive(*_srxFrontLeft, *_srxFrontRight));
 
   //sensors
@@ -36,7 +36,7 @@ void SubDriveBase::InitDefaultCommand() {
 }
 
 void SubDriveBase::drive(double speed, double rotation) {
-  difDrive->ArcadeDrive(speed, rotation);
+  difDrive->ArcadeDrive(-speed, rotation);
 }
 
 void SubDriveBase::resetYaw(){

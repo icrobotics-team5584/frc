@@ -11,6 +11,8 @@
 #include "commands/CmdIntakeOutakeIn.h"
 #include "commands/CmdHatchLowRocket.h"
 #include "commands/CmdIntakePanel.h"
+#include "commands/CmdGimbleRotateLeft.h"
+#include "commands/CmdGimbleRotateRight.h"
 
 OI::OI() {
   cout << "Run Robot OI" << endl;
@@ -31,4 +33,10 @@ OI::OI() {
 
   btnDeployFingers.reset(new frc::JoystickButton(controller.get(), bBtn));
   btnDeployFingers->WhileHeld(new CmdIntakePanel());
+
+  btnGimbleRotateLeft.reset(new frc::JoystickButton(controller.get(), backBtn));
+  btnGimbleRotateLeft->WhileHeld(new CmdGimbleRotateLeft());
+
+  btnGimbleRotateRight.reset(new frc::JoystickButton(controller.get(), startBtn));
+  btnGimbleRotateRight->WhileHeld(new CmdGimbleRotateRight());
 }
