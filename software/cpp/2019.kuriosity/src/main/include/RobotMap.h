@@ -14,8 +14,8 @@ using namespace std;
 using namespace frc;
 
 enum Can {
-    can_srxDriveBaseFrontRight = 1,
-    can_srxDriveBaseFrontLeft = 3,
+    can_srxDriveBaseFrontRight = 3,
+    can_srxDriveBaseFrontLeft = 1,
     can_srxDriveBaseBackRight = 2,
     can_srxDriveBaseBackLeft = 4
 };

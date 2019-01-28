@@ -50,7 +50,7 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
 }
 void SubDriveBase::InitDefaultCommand() {
   // Set the default command for a subsystem here.
-  //SetDefaultCommand(new CmdJoystickDrive());
+  SetDefaultCommand(new CmdJoystickDrive());
 }
 
 void SubDriveBase::drive(double speed, double rotation) {
@@ -179,8 +179,8 @@ Segment* SubDriveBase::generatePath(){
   timer.Start();
   const int POINT_LENGTH = 2;
   Waypoint points[POINT_LENGTH];
-  Waypoint p1 = {0, 0, d2r(0)};
-  Waypoint p2 = {0.2, 5, d2r(0)};
+  Waypoint p1 = {0, 0, d2r(90)};
+  Waypoint p2 = {0.2, 5, d2r(90)};
   points[0] = p1;
   points [1] = p2;
   TrajectoryCandidate candidate;

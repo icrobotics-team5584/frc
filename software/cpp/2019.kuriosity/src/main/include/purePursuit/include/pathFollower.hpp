@@ -29,8 +29,8 @@ public:
     double getLeftSpeedVoltage();
 
 private:
-    double lookaheadDistance = 0.5;   // Measured in meters
-    double pointRadius = 0.3;       // Measured in meters
+    double lookaheadDistance = 0.6;   // Measured in meters
+    double pointRadius = 0.1;       // Measured in meters
     vector<Point> path;
     shared_ptr<PositionSource> _source;
     shared_ptr<DriveOutput> _output;
