@@ -16,7 +16,7 @@ class SubIntakeOutake : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
-  shared_ptr<frc::Talon> _talIntakeOutake;
+  shared_ptr<WPI_TalonSRX> _srxIntakeOutake;
   double outSpeed = -1;
   double inSpeed = 0.5;
 
