@@ -9,13 +9,14 @@
 #include "Robot.h"
 #include "commands/CmdOutputPanel.h"
 #include "commands/CmdIntakePanel.h"
+#include <frc/WPILib.h>
 
 SubPanelAffector::SubPanelAffector() : Subsystem("SubPanelAffector") {
   solTop = Robot::_robotMap->solPanelAffectorTop;
   solBottom = Robot::_robotMap->solPanelAffectorBottom;
   solTopFinger = Robot::_robotMap->solPanelAffectorTopFinger;
   solBottomFinger = Robot::_robotMap->solPanelAffectorBottomFinger;
-  
+  _controller = Robot::_oi->controller;
   SmartDashboard::PutData("Pneumatic Test", new CmdOutputPanel(true));
 
   Retract();
@@ -46,6 +47,11 @@ void SubPanelAffector::RetractFingers() {
   solTopFinger->Set(DoubleSolenoid::kReverse);
   solBottomFinger->Set(DoubleSolenoid::kReverse);
 }
-void SubPanelAffector::Rumble() {
-
+void SubPanelAffector::StartRumble() {
+  _controller->SetRumble(kRightRumble, 1);
+  _controller->SetRumble(kLeftRumble, 1);
+}
+void SubPanelAffector::StopRumble() {
+  _controller->SetRumble(kRightRumble, 0);
+  _controller->SetRumble(kLeftRumble, 0);
 }

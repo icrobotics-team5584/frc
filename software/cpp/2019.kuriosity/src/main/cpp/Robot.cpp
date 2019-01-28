@@ -59,6 +59,8 @@ void Robot::RobotPeriodic() {
     SmartDashboard::PutBoolean("mid sensor", subDriveBase->midHasReachedLine());
     SmartDashboard::PutBoolean("left sensor", subDriveBase->isLeftClsOnLine());
     SmartDashboard::PutBoolean("right sensor", subDriveBase->isRightClsOnLine());
+
+    SmartDashboard::PutNumber("Yaw", subDriveBase->getYaw());
 }
 
 /**
