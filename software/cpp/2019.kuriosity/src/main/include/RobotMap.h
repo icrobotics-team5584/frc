@@ -20,8 +20,8 @@ enum Can {
     can_srxDriveBaseBackRight = 2,
     can_srxDriveBaseBackLeft = 4,
     can_srxGimble = 5,
-    can_srxElevator = 6,
-    can_srxIntakeOutake = 0
+    can_srxElevator = 77777,
+    can_srxIntakeOutake = 6
 };
 
 enum PWM {
