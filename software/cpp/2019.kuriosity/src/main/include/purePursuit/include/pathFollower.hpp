@@ -9,6 +9,7 @@
 #include <memory>
 #include <pathfinder.h>
 #include <fstream>
+#include "Robot.h"
 
 
 using namespace std;
@@ -24,8 +25,8 @@ public:
     void followPath();
     bool isFinished();
     void reset();
-    double getRightSpeedVoltage(double rightPower);
-    double getLeftSpeedVoltage(double leftPower);
+    double getRightSpeedVoltage();
+    double getLeftSpeedVoltage();
 
 private:
     double lookaheadDistance = 0.5;   // Measured in meters
@@ -39,6 +40,8 @@ private:
     int closestPointIndex = 0;
     int xyPathPointCount = -1;
     const double TRACK_WIDTH = 0.75; //distance between wheels in meters
+    double lastRightSpeed = 0;
+    double lastLeftSpeed = 0;
 
     void ImplimentRobotFunctions(shared_ptr<PositionSource> source, shared_ptr<DriveOutput> output);
     Point findClosestPoint();

@@ -24,20 +24,18 @@ CmdSeekPath::CmdSeekPath() {
 void CmdSeekPath::Initialize() {
   pathFollower->reset();
   Robot::subDriveBase->zeroEncoders();
-  Robot::subDriveBase->velocityPIDConfig();
-  SmartDashboard::PutBoolean("Running CmdSeekpath", true);
+  // //Robot::subDriveBase->velocityPIDConfig();
+  // SmartDashboard::PutBoolean("Running CmdSeekpath", true);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdSeekPath::Execute() {
-  //pathFollower->followPath();
-  Robot::subDriveBase->tankDriveVelocity(0.5, 0.5);
+  pathFollower->followPath();
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdSeekPath::IsFinished() { 
-  return false;
-//return pathFollower->isFinished();
+  return pathFollower->isFinished();
 }
 
 // Called once after isFinished returns true

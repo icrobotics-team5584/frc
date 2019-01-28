@@ -17,8 +17,8 @@ Position PosEncoderGyro::getPosition() {
     double distanceDelta = currentDistance - prevDistance;
 
     // Determine current position
-    currentPosition.x += distanceDelta * cos(currentAngle);
-    currentPosition.y += distanceDelta * sin(currentAngle);
+    currentPosition.x += distanceDelta * sin(currentAngle);
+    currentPosition.y += distanceDelta * cos(currentAngle);
 
     // Save values for next iteration
     prevDistance = currentDistance;

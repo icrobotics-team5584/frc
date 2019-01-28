@@ -54,15 +54,11 @@ void Robot::RobotInit() {
  * LiveWindow and SmartDashboard integrated updating.
  */
 void Robot::RobotPeriodic() {
-    SmartDashboard::PutNumber("Navx Yaw", subDriveBase->getYaw());
-    SmartDashboard::PutNumber("Bottom Ultrasonic", subDriveBase->getDistanceToObstical());
-    SmartDashboard::PutBoolean("front sensor", subDriveBase->frontHasReachedLine());
-    SmartDashboard::PutBoolean("mid sensor", subDriveBase->midHasReachedLine());
-    SmartDashboard::PutBoolean("left sensor", subDriveBase->isLeftClsOnLine());
-    SmartDashboard::PutBoolean("right sensor", subDriveBase->isRightClsOnLine());
-    SmartDashboard::PutNumber("Right encoder", subDriveBase->getRawRightEncoder());
-    SmartDashboard::PutNumber("Left encoder", subDriveBase->getRawLeftEncoder());
     SmartDashboard::PutNumber("Right Velocity", subDriveBase->getRightVelocity());
+    SmartDashboard::PutNumber("Left Velocity", subDriveBase->getLeftVelocity());
+    SmartDashboard::PutNumber("Right Encoder", subDriveBase->getRawRightEncoder());
+    SmartDashboard::PutNumber("Left Encoder", subDriveBase->getRawLeftEncoder());
+    SmartDashboard::PutNumber("NavX Yaw", subDriveBase->getYaw());
 }
 
 /**
@@ -106,13 +102,7 @@ void Robot::AutonomousInit() {
 }
 
 void Robot::AutonomousPeriodic() {
-  frc::Scheduler::GetInstance()->Run();
-  bool buttonPressed;
-  SmartDashboard::PutBoolean("Go back", buttonPressed);
-  SmartDashboard::GetBoolean("Go back", buttonPressed);
-  if (buttonPressed) {
-    Robot::subDriveBase->drive(-1, 0);
-  }
+
 }
 
 void Robot::TeleopInit() {

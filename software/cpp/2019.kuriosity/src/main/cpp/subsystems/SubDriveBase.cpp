@@ -9,6 +9,7 @@
 #include "Robot.h"
 #include "commands/CmdJoystickDrive.h"
 #include "pathfinder.h"
+#include <fstream>
 
 SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   //motors
@@ -30,7 +31,12 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   //encoders
   _srxFrontRight->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
   _srxFrontLeft->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
+  _srxFrontRight->SetSensorPhase(true);
 
+  rightVelocitySource = new RightVelocitySource();
+  leftVelocitySource = new LeftVelocitySource();
+  leftVelocityController.reset(new PIDController(0.3, 0.0, 0.0, leftVelocitySource, _srxFrontLeft.get()));
+  rightVelocityController.reset(new PIDController(0.3, 0.0, 0.0, rightVelocitySource, _srxFrontRight.get()));
 
   //not in use
   // _srxBackRight->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
@@ -44,7 +50,7 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
 }
 void SubDriveBase::InitDefaultCommand() {
   // Set the default command for a subsystem here.
-  SetDefaultCommand(new CmdJoystickDrive());
+  //SetDefaultCommand(new CmdJoystickDrive());
 }
 
 void SubDriveBase::drive(double speed, double rotation) {
@@ -56,15 +62,8 @@ void SubDriveBase::setTalControlMode(ControlMode controlMode) {
   _srxFrontLeft->Set(controlMode, 0);
 }
 void SubDriveBase::tankDriveVelocity(double leftVelocity, double rightVelocity) {
-  //change target velocities from m/s to u/100ms
-  double leftTargetVelocity = leftVelocity / 0.000078 / 10;
-  double rightTargetVelocity = rightVelocity / 0.000078 / 10;
-  SmartDashboard::PutNumber("Left target vel", leftTargetVelocity);
-  SmartDashboard::PutNumber("Right target vel", rightTargetVelocity);
-  SmartDashboard::PutNumber("Right actual vel", _srxFrontRight->GetSelectedSensorVelocity(0));
-  _srxFrontRight->Set(ControlMode::Velocity, rightTargetVelocity);
-  _srxFrontLeft->Set(ControlMode::Velocity, leftTargetVelocity);
-
+  _srxFrontLeft->Set(-leftVelocity);
+  _srxFrontRight->Set(rightVelocity);
 }
 
 double SubDriveBase::getRawLeftEncoder() {
@@ -76,7 +75,10 @@ double SubDriveBase::getRawRightEncoder() {
   SmartDashboard::PutNumber("Right Encoder", _srxFrontRight->GetSelectedSensorPosition());
   return _srxFrontRight->GetSelectedSensorPosition(0);
 }
-
+void SubDriveBase::disablePID() {
+  leftVelocityController->Disable();
+  rightVelocityController->Disable();
+}
 //returns velocity in m/s
 double SubDriveBase::getRightVelocity() {
   double velocity = _srxFrontRight->GetSelectedSensorVelocity(0);
@@ -178,10 +180,9 @@ Segment* SubDriveBase::generatePath(){
   const int POINT_LENGTH = 2;
   Waypoint points[POINT_LENGTH];
   Waypoint p1 = {0, 0, d2r(0)};
-  Waypoint p2 = {1, 1, d2r(0)};
+  Waypoint p2 = {0.2, 5, d2r(0)};
   points[0] = p1;
   points [1] = p2;
-
   TrajectoryCandidate candidate;
   // Prepare the Trajectory for Generation.
   //
@@ -207,7 +208,20 @@ Segment* SubDriveBase::generatePath(){
   SmartDashboard::PutNumber("Before generation time", timer.Get());
   // Generate the trajectory
   int result = pathfinder_generate(&candidate, seg);
-
+  std::ofstream file("/home/lvuser/output.txt");
+  file << "x, y, velcoity" << std::endl;
+  int i;
+  for (i = 0; i < pathLength; i++) {
+    Segment s = seg[i];
+    file << s.x << ", "<< s.y << ", " << s.velocity << std::endl;
+    // printf("Time Step: %f\n", s.dt);
+    // printf("Coords: (%f, %f)\n", s.x, s.y);
+    // printf("Position (Distance): %f\n", s.position);
+    // printf("Velocity: %f\n", s.velocity);
+    // printf("Acceleration: %f\n", s.acceleration);
+    // printf("Jerk (Acceleration per Second): %f\n", s.jerk);
+    // printf("Heading (radians): %f\n", s.heading);
+  }
   SmartDashboard::PutNumber("Time taken to generate path", timer.Get());
   timer.Stop();
   return seg;

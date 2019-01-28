@@ -14,6 +14,9 @@
 #include <ctre/Phoenix.h>
 #include <AHRS.h>
 
+#include "RightVelocitySource.h"
+#include "LeftVelocitySource.h"
+
 using namespace std;
 using namespace frc;
 
@@ -25,7 +28,11 @@ class SubDriveBase : public frc::Subsystem {
   shared_ptr<WPI_TalonSRX> _srxBackLeft;
   shared_ptr<WPI_TalonSRX> _srxBackRight;
   unique_ptr<frc::DifferentialDrive> difDrive;
-  
+  unique_ptr<PIDController> leftVelocityController;
+  unique_ptr<PIDController> rightVelocityController;
+  LeftVelocitySource* leftVelocitySource;
+  RightVelocitySource* rightVelocitySource;
+
   // Sensors
   shared_ptr<DigitalInput> _clsMid;
   shared_ptr<DigitalInput> _clsFront;
@@ -43,6 +50,7 @@ class SubDriveBase : public frc::Subsystem {
   int pathLength; //path length
 
   void setTalControlMode(ControlMode controlMode);
+  
 
 	double kTimeoutMs = 30;
   double kPIDLoopIdx = 0;
@@ -68,6 +76,8 @@ class SubDriveBase : public frc::Subsystem {
   double getRightVelocity();
   double getLeftVelocity();
   void velocityPIDConfig();
+
+  void disablePID();
 
   // Gyro functions
   void resetYaw();

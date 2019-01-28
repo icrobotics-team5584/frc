@@ -5,6 +5,7 @@
 #include <iostream>
 #include <sstream>
 #include <typeinfo>
+#include <algorithm>
 #include <utility>
 #include <frc/WPILib.h>
 
@@ -64,11 +65,10 @@ void PathFollower::setPointRadius(double meters) {
 // Drives the robot along the path as long as this is continuously called. 
 void PathFollower::followPath() { 
     updatePosition();
+    double leftPower = getLeftSpeedVoltage();
+    double rightPower = getRightSpeedVoltage();
     //Point closestPoint = findClosestPoint();
     //Point pathPoints = findLookaheadPoint();
-    double driveCurve = generateSignedCurve();
-    DriveOutput::MotorVelocities motorVelocities = generateWheelVelocities(driveCurve, _source->getAngle());
-    frc::SmartDashboard::PutNumber("driveCurve", driveCurve);
     // velocityFile << closestPoint.velocity << ", " << motorVelocities.first << ", " << motorVelocities.second << std::endl;
     // curveFile << pathPoints.position.x << "," << pathPoints.position.y << "," << currentPosition.x << "," << currentPosition.y << ","<< _source->getAngle() << "," << driveCurve << std::endl;
     // frc::SmartDashboard::PutNumber("Left power", motorVelocities.first);
@@ -81,7 +81,10 @@ void PathFollower::followPath() {
     // frc::SmartDashboard::PutNumber("lookahead point x", pathPoints.position.x);
     // frc::SmartDashboard::PutNumber("lookahead point y", pathPoints.position.y);
     // frc::SmartDashboard::PutNumber("path length", getPathSize());
-    //_output->set(motorVelocities);
+    DriveOutput::MotorVelocities motorVelocities;
+    motorVelocities.first = leftPower;
+    motorVelocities.second = rightPower;
+    _output->set(motorVelocities);
 }
 
 bool PathFollower::isFinished() { 
@@ -368,4 +371,30 @@ DriveOutput::MotorVelocities PathFollower::generateWheelVelocities(double driveC
     motorVelocities.first = leftPower;
     motorVelocities.second = rightPower;
     return motorVelocities;
+}
+double PathFollower::getRightSpeedVoltage() {
+    double kP = 0.01;
+    double kV = 0.002;
+    double kA = 0; // 1/maxvelocity
+    double targetAccel = (Robot::subDriveBase->getRightVelocity() - lastRightSpeed) / 0.02;
+    double lastRightSpeed = Robot::subDriveBase->getRightVelocity();
+    double targetVelocity =  findClosestPoint().velocity;
+    double driveCurve = generateSignedCurve();
+    DriveOutput::MotorVelocities motorVelocities = generateWheelVelocities(driveCurve, findClosestPoint().velocity);
+    
+    SmartDashboard::PutNumber("Right speed",std::max(0.3, kV * motorVelocities.second + kA * targetAccel + kP * (targetVelocity - Robot::subDriveBase->getRightVelocity())));
+
+    return std::max(0.3, kV * motorVelocities.second + kA * targetAccel + kP * (targetVelocity - Robot::subDriveBase->getRightVelocity()));
+}
+double PathFollower::getLeftSpeedVoltage() {
+    double kP = 0.01;
+    double kV = 0.002;
+    double kA = 0; // 1/maxvelocity
+    double targetAccel = (Robot::subDriveBase->getLeftVelocity() - lastLeftSpeed) / 0.02;
+    double lastLeftSpeed = Robot::subDriveBase->getLeftVelocity();
+    double targetVelocity =  findClosestPoint().velocity;
+    double driveCurve = generateSignedCurve();
+    DriveOutput::MotorVelocities motorVelocities = generateWheelVelocities(driveCurve, findClosestPoint().velocity);
+    SmartDashboard::PutNumber("Left speed", std::max(0.3, kV * motorVelocities.first + kA * targetAccel + kP * (targetVelocity - Robot::subDriveBase->getLeftVelocity())));
+    return std::max(0.3, kV * motorVelocities.first + kA * targetAccel + kP * (targetVelocity - Robot::subDriveBase->getLeftVelocity()));
 }
