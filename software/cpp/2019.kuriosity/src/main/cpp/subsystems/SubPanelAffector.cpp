@@ -48,10 +48,10 @@ void SubPanelAffector::RetractFingers() {
   solBottomFinger->Set(DoubleSolenoid::kReverse);
 }
 void SubPanelAffector::StartRumble() {
-  _controller->SetRumble(kRightRumble, 1);
-  _controller->SetRumble(kLeftRumble, 1);
+  _controller->SetRumble(GenericHID::kRightRumble, 1);
+  _controller->SetRumble(GenericHID::kLeftRumble, 1);
 }
 void SubPanelAffector::StopRumble() {
-  _controller->SetRumble(kRightRumble, 0);
-  _controller->SetRumble(kLeftRumble, 0);
+  _controller->SetRumble(GenericHID::kRightRumble, 0);
+  _controller->SetRumble(GenericHID::kLeftRumble, 0);
 }
