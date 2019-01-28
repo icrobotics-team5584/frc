@@ -36,7 +36,7 @@ void SubDriveBase::InitDefaultCommand() {
 }
 
 void SubDriveBase::drive(double speed, double rotation) {
-  difDrive->ArcadeDrive(speed, rotation);
+  difDrive->ArcadeDrive(-speed, rotation);
 }
 
 void SubDriveBase::resetYaw(){
