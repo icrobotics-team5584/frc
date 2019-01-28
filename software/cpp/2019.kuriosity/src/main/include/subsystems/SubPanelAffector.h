@@ -27,4 +27,5 @@ class SubPanelAffector : public frc::Subsystem {
   void Deploy();
   void DeployFingers();
   void RetractFingers();
+  void Rumble();
 };

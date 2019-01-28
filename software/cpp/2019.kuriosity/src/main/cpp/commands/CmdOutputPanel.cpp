@@ -35,6 +35,7 @@ void CmdOutputPanel::Initialize() {
 void CmdOutputPanel::Execute() {
   if((_timer.Get() > 0.2) && notDeployed){
     Robot::subPanelAffector->Deploy();
+    Robot::subPanelAffector->Rumble();
     cout << "Deploy Hatch" << endl;
     notDeployed = false;
   }

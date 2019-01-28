@@ -15,6 +15,7 @@ SubPanelAffector::SubPanelAffector() : Subsystem("SubPanelAffector") {
   solBottom = Robot::_robotMap->solPanelAffectorBottom;
   solTopFinger = Robot::_robotMap->solPanelAffectorTopFinger;
   solBottomFinger = Robot::_robotMap->solPanelAffectorBottomFinger;
+  
   SmartDashboard::PutData("Pneumatic Test", new CmdOutputPanel(true));
 
   Retract();
@@ -44,4 +45,7 @@ void SubPanelAffector::DeployFingers() {
 void SubPanelAffector::RetractFingers() {
   solTopFinger->Set(DoubleSolenoid::kReverse);
   solBottomFinger->Set(DoubleSolenoid::kReverse);
+}
+void SubPanelAffector::Rumble() {
+
 }
