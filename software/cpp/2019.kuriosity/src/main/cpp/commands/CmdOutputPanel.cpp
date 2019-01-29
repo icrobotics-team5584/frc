@@ -35,7 +35,6 @@ void CmdOutputPanel::Initialize() {
 void CmdOutputPanel::Execute() {
   if((_timer.Get() > 0.2) && notDeployed){
     Robot::subPanelAffector->Deploy();
-    Robot::subPanelAffector->StartRumble();
     cout << "Deploy Hatch" << endl;
     notDeployed = false;
   }
@@ -52,7 +51,6 @@ bool CmdOutputPanel::IsFinished() {
 // Called once after isFinished returns true
 void CmdOutputPanel::End() {
   Robot::subPanelAffector->Retract();
-  Robot::subPanelAffector->StopRumble();
   cout << "Retract Hatch" << endl;
   _timer.Reset();
   _timer.Start();	
