@@ -30,9 +30,9 @@ class SubGimble : public frc::Subsystem {
   double PotLeft = 2538;
 	double PotRight = 512;
 	double PotCentre = 1612;
-	double PIDp = 0.0033;
-	double PIDi = 0.0;
-	double PIDd = 0.0033;
+	double PIDp = 0.0035;
+	double PIDi = 0.00002;
+	double PIDd = 0.007;
   double humanOffset = 10.0;
   double overrideTarget = 0.0;
   int potRange;
