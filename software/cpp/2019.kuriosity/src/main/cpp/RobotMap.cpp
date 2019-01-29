@@ -17,7 +17,7 @@ RobotMap::RobotMap(){
     subElevatorLimitTop.reset(new DigitalInput(lmt_subElevatorLimitTop));
     
     // Intake and Outake
-    talIntakeOutake.reset(new frc::Talon(pwm_talIntakeOutake));
+    srxIntakeOutake.reset(new WPI_TalonSRX(can_srxIntakeOutake));
     spkRollerIntake.reset(new frc::Spark(pwm_spkRollerIntake));
     subIntakeOutakeCargo.reset(new DigitalInput(lmt_subIntakeOutakeCargo));
 
