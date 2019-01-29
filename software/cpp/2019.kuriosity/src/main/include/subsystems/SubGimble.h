@@ -27,12 +27,14 @@ class SubGimble : public frc::Subsystem {
   PIDController* gimbleController;
   PIDPot* _potSourcePID;
 
-  double PotLeft = 2500;
-	double PotRight = 800;
-	double PotCentre = 1000;
-	double PIDp = 0.0;
+  double PotLeft = 2538;
+	double PotRight = 512;
+	double PotCentre = 1612;
+	double PIDp = 0.0033;
 	double PIDi = 0.0;
-	double PIDd = 0.0;
+	double PIDd = 0.0033;
+  double humanOffset = 10.0;
+  double overrideTarget = 0.0;
   int potRange;
   int target;
 	int  lc = 0;
@@ -49,4 +51,5 @@ class SubGimble : public frc::Subsystem {
   void enable();
   void disable();
   void PIDGimbleTo(int angle);  
+  void OverridePID(bool leftRight);
 };
