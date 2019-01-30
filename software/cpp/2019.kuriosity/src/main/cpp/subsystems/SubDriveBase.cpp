@@ -31,8 +31,6 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   //encoders
   _srxFrontRight->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
   _srxFrontLeft->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
-  _srxFrontLeft->SetSensorPhase(true);
-  _srxFrontRight->SetSensorPhase(true);
 
   rightVelocitySource = new RightVelocitySource();
   leftVelocitySource = new LeftVelocitySource();
@@ -63,8 +61,8 @@ void SubDriveBase::setTalControlMode(ControlMode controlMode) {
   _srxFrontLeft->Set(controlMode, 0);
 }
 void SubDriveBase::tankDriveVelocity(double leftVelocity, double rightVelocity) {
-  _srxFrontLeft->Set(-leftVelocity);
-  _srxFrontRight->Set(rightVelocity);
+  _srxFrontLeft->Set(ControlMode::Velocity, leftVelocity);
+  _srxFrontRight->Set(ControlMode::Velocity, rightVelocity);
 }
 
 double SubDriveBase::getRawLeftEncoder() {
@@ -95,15 +93,16 @@ double SubDriveBase::getLeftVelocity() {
 
 void SubDriveBase::velocityPIDConfig() {
   //left talon
+  double kF = 1023/ (4.2/ 0.000078 / 10);
   _srxFrontLeft->ConfigNominalOutputForward(0, kTimeoutMs);
   _srxFrontLeft->ConfigNominalOutputReverse(0, kTimeoutMs);
   _srxFrontLeft->ConfigPeakOutputForward(1, kTimeoutMs);
   _srxFrontLeft->ConfigPeakOutputReverse(-1, kTimeoutMs);
 
-  _srxFrontLeft->Config_kF(kPIDLoopIdx, 0, kTimeoutMs);
-  _srxFrontLeft->Config_kP(kPIDLoopIdx, 0.22, kTimeoutMs);
+  _srxFrontLeft->Config_kF(kPIDLoopIdx, kF, kTimeoutMs);
+  _srxFrontLeft->Config_kP(kPIDLoopIdx, 0.045, kTimeoutMs);
   _srxFrontLeft->Config_kI(kPIDLoopIdx, 0.0, kTimeoutMs);
-  _srxFrontLeft->Config_kD(kPIDLoopIdx, 0.0, kTimeoutMs);
+  _srxFrontLeft->Config_kD(kPIDLoopIdx, 0, kTimeoutMs);
 
   //right srx
   _srxFrontRight->ConfigNominalOutputForward(0, kTimeoutMs);
@@ -111,8 +110,8 @@ void SubDriveBase::velocityPIDConfig() {
   _srxFrontRight->ConfigPeakOutputForward(1, kTimeoutMs);
   _srxFrontRight->ConfigPeakOutputReverse(-1, kTimeoutMs);
 
-  _srxFrontRight->Config_kF(kPIDLoopIdx, 0, kTimeoutMs);
-  _srxFrontRight->Config_kP(kPIDLoopIdx, 0.22, kTimeoutMs);
+  _srxFrontRight->Config_kF(kPIDLoopIdx, kF, kTimeoutMs);
+  _srxFrontRight->Config_kP(kPIDLoopIdx, 0.045, kTimeoutMs);
   _srxFrontRight->Config_kI(kPIDLoopIdx, 0.0, kTimeoutMs);
   _srxFrontRight->Config_kD(kPIDLoopIdx, 0.0, kTimeoutMs);
 }

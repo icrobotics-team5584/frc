@@ -4,12 +4,12 @@
 
 RobotMap::RobotMap(){
     // DriveBase Actuators
-    srxDriveBaseFrontRight.reset(new WPI_TalonSRX(can_srxDriveBaseFrontRight));
     srxDriveBaseFrontLeft.reset(new WPI_TalonSRX(can_srxDriveBaseFrontLeft));
     srxDriveBaseBackLeft.reset(new WPI_TalonSRX(can_srxDriveBaseBackLeft));
+    srxDriveBaseFrontRight.reset(new WPI_TalonSRX(can_srxDriveBaseFrontRight));
     srxDriveBaseBackRight.reset(new WPI_TalonSRX(can_srxDriveBaseBackRight));
-    srxDriveBaseBackRight->Set(ControlMode::Follower, can_srxDriveBaseFrontRight);
     srxDriveBaseBackLeft->Set(ControlMode::Follower, can_srxDriveBaseFrontLeft);
+    srxDriveBaseBackRight->Set(ControlMode::Follower, can_srxDriveBaseFrontRight);
 
     // Intake and Outake
     talIntakeOutakeRight.reset(new frc::Talon(pwm_talIntakeOutakeRight));

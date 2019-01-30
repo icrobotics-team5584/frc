@@ -49,7 +49,6 @@ class SubDriveBase : public frc::Subsystem {
 
   int pathLength; //path length
 
-  void setTalControlMode(ControlMode controlMode);
   
 
 	double kTimeoutMs = 30;
@@ -76,6 +75,7 @@ class SubDriveBase : public frc::Subsystem {
   double getRightVelocity();
   double getLeftVelocity();
   void velocityPIDConfig();
+  void setTalControlMode(ControlMode controlMode);
 
   void disablePID();
 

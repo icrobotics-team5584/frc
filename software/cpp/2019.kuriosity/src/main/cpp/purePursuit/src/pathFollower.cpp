@@ -363,35 +363,34 @@ int PathFollower::getSign(double side){
     return sign;
 }
 DriveOutput::MotorVelocities PathFollower::generateWheelVelocities(double driveCurve, double targetVelocity) {
-    driveCurve = 0.05;
+    driveCurve = 0;
     targetVelocity = 2;
     double leftPower = targetVelocity * (2 + driveCurve * TRACK_WIDTH) / 2;
-    double rightPower = (targetVelocity * (2 - driveCurve * TRACK_WIDTH) / 2);
+    double rightPower = -(targetVelocity * (2 - driveCurve * TRACK_WIDTH) / 2);
     DriveOutput::MotorVelocities motorVelocities;
     motorVelocities.first = leftPower;
     motorVelocities.second = rightPower;
     return motorVelocities;
 }
 double PathFollower::getRightSpeedVoltage() {
-    double kP = 0.04;
-    double kV = 1/4.2;
-    double kA = 0.002; // 1/maxvelocity
+    double kP = 0;
+    double kV = 0;
+    double kA = 0; // 1/maxvelocity
     double targetAccel = (Robot::subDriveBase->getRightVelocity() - lastRightSpeed) / 0.02;
     double lastRightSpeed = Robot::subDriveBase->getRightVelocity();
    // double targetVelocity =  findClosestPoint().velocity;
-    double targetVelocity = 2;
+    double targetVelocity = findClosestPoint().velocity;
     double driveCurve = generateSignedCurve();
     DriveOutput::MotorVelocities motorVelocities = generateWheelVelocities(driveCurve, findClosestPoint().velocity);
     
     SmartDashboard::PutNumber("Right speed", kV * motorVelocities.second + kA * targetAccel + kP * (targetVelocity - Robot::subDriveBase->getRightVelocity()));
     SmartDashboard::PutNumber("Desired right", motorVelocities.second);
-    return 0.5;
-    return kV * motorVelocities.second + kA * targetAccel + kP * (targetVelocity - Robot::subDriveBase->getRightVelocity());
+    return motorVelocities.second + kV * motorVelocities.second + kA * targetAccel + kP * (targetVelocity - Robot::subDriveBase->getRightVelocity());
 }
 double PathFollower::getLeftSpeedVoltage() {
-    double kP = 0.04;
-    double kV = 1/4.2;
-    double kA = 0.002; // 1/maxvelocity
+    double kP = 0;
+    double kV = 0;
+    double kA = 0; // 1/maxvelocity
     double targetAccel = (Robot::subDriveBase->getLeftVelocity() - lastLeftSpeed) / 0.02;
     double lastLeftSpeed = Robot::subDriveBase->getLeftVelocity();
     double targetVelocity =  findClosestPoint().velocity;
@@ -399,6 +398,5 @@ double PathFollower::getLeftSpeedVoltage() {
     DriveOutput::MotorVelocities motorVelocities = generateWheelVelocities(driveCurve, findClosestPoint().velocity);
     SmartDashboard::PutNumber("Desired left", motorVelocities.first);
     SmartDashboard::PutNumber("Left speed", kV * motorVelocities.first + kA * targetAccel + kP * (targetVelocity - Robot::subDriveBase->getLeftVelocity()));
-    return 0.5;
-    return kV * motorVelocities.first + kA * targetAccel + kP * (targetVelocity - Robot::subDriveBase->getLeftVelocity());
+    return motorVelocities.first + kV * motorVelocities.first + kA * targetAccel + kP * (targetVelocity - Robot::subDriveBase->getLeftVelocity());
 }
