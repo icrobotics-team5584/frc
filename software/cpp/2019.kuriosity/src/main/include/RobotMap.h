@@ -15,16 +15,16 @@ using namespace std;
 using namespace frc;
 
 enum Can {
-    can_srxDriveBaseFrontRight = 1,
-    can_srxDriveBaseFrontLeft = 3,
-    can_srxDriveBaseBackRight = 2,
-    can_srxDriveBaseBackLeft = 4,
-    can_srxElevator = 5
+     can_srxDriveBaseFrontLeft = 1,
+    can_srxDriveBaseBackLeft = 2,
+    can_srxDriveBaseFrontRight = 3,
+    can_srxDriveBaseBackRight = 4,
+    can_srxGimble = 5,
+    can_srxElevator = 77777,
+    can_srxIntakeOutake = 6
 };
 
 enum PWM {
-    pwm_talIntakeOutake = 0, 
-    pwn_talGimble = 1,
     pwm_spkRollerIntake = 9999
 };
 
@@ -82,7 +82,7 @@ public:
     std::shared_ptr<DigitalInput> subElevatorLimitBottom;
 
     //Gimble
-    shared_ptr<frc::Talon> talGimble;
+    shared_ptr<WPI_TalonSRX> srxGimble;
 
     std::shared_ptr<DigitalInput> subGimbleLimitLeft;
     std::shared_ptr<DigitalInput> subGimbleLimitRight;
@@ -103,7 +103,7 @@ public:
     shared_ptr<DigitalInput> clsLineDriveBaseRight;
 
     //Intake and outake
-    shared_ptr<frc::Talon> talIntakeOutake;
+    shared_ptr<WPI_TalonSRX> srxIntakeOutake;
     shared_ptr<frc::Spark> spkRollerIntake;
 
     shared_ptr<DigitalInput> subIntakeOutakeCargo;
