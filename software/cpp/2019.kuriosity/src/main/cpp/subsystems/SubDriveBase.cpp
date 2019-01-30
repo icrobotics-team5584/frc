@@ -31,6 +31,7 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   //encoders
   _srxFrontRight->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
   _srxFrontLeft->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
+  _srxFrontLeft->SetSensorPhase(true);
   _srxFrontRight->SetSensorPhase(true);
 
   rightVelocitySource = new RightVelocitySource();
@@ -180,7 +181,7 @@ Segment* SubDriveBase::generatePath(){
   const int POINT_LENGTH = 2;
   Waypoint points[POINT_LENGTH];
   Waypoint p1 = {0, 0, d2r(90)};
-  Waypoint p2 = {0.2, 5, d2r(90)};
+  Waypoint p2 = {0.2, 3, d2r(90)};
   points[0] = p1;
   points [1] = p2;
   TrajectoryCandidate candidate;
@@ -198,8 +199,8 @@ Segment* SubDriveBase::generatePath(){
   // Change the sample count and/or the time step to generate the trajectory faster
   double max_velocity = 4.2;
   double time_step = 0.01;
-  double max_accel = 2.0;
-  double max_jerk= 30.0;
+  double max_accel = 10.0;
+  double max_jerk= 60.0;
   pathfinder_prepare(points, POINT_LENGTH, FIT_HERMITE_CUBIC, PATHFINDER_SAMPLES_FAST, time_step, max_velocity, max_accel, max_jerk, &candidate);
   pathLength = candidate.length;
 

@@ -29,7 +29,7 @@ public:
     double getLeftSpeedVoltage();
 
 private:
-    double lookaheadDistance = 0.6;   // Measured in meters
+    double lookaheadDistance = 1.414213562;   // Measured in meters
     double pointRadius = 0.1;       // Measured in meters
     vector<Point> path;
     shared_ptr<PositionSource> _source;
@@ -53,6 +53,7 @@ private:
     double generateSignedCurve();
     void updatePosition();
     int getSign(double side);
+    double findDistance(double x1, double y1, double x2, double y2);
     vector<Point> constructVectorPathCSV(string csvPath);   
     vector<Point> constructVectorPathSeg(Segment * seg, int pathLength); //Segment is the trajectory that pathfinder returns
     DriveOutput::MotorVelocities generateWheelVelocities(double driveCurve, double targetVelocity);                                                                    //Length is the number of points in the segment                   
