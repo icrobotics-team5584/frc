@@ -43,4 +43,7 @@ private:
   unique_ptr<frc::JoystickButton> btnOverride;
 
   std::shared_ptr<frc::Joystick> joystick0;
+
+  unique_ptr<frc::JoystickButton> btnUpTest;
+  unique_ptr<frc::JoystickButton> btnDownTest;
 };

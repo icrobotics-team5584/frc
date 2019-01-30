@@ -19,7 +19,7 @@ class SubElevator : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
-  shared_ptr<WPI_TalonSRX> _srxElevator;
+  shared_ptr<WPI_TalonSRX> _srxElevatorMaster;
   shared_ptr<DigitalInput> _subElevatorLimitBottom;
   shared_ptr<DigitalInput> _subElevatorLimitTop;
   double targetPosRotations;
@@ -32,4 +32,7 @@ class SubElevator : public frc::Subsystem {
   void ElevatorToPos(double rotations);
   void Override(std::shared_ptr<Joystick>);
   void Stop();
+  void TestingUp();
+  void TestingDown();
+  void TestingStop();
 };

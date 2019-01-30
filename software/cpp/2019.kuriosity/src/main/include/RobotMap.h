@@ -15,12 +15,13 @@ using namespace std;
 using namespace frc;
 
 enum Can {
-     can_srxDriveBaseFrontLeft = 1,
+    can_srxDriveBaseFrontLeft = 1,
     can_srxDriveBaseBackLeft = 2,
     can_srxDriveBaseFrontRight = 3,
     can_srxDriveBaseBackRight = 4,
     can_srxGimble = 5,
-    can_srxElevator = 77777,
+    can_srxElevatorMaster = 9,
+    can_srxElevatorSlave = 10,
     can_srxIntakeOutake = 6
 };
 
@@ -76,8 +77,8 @@ public:
 	shared_ptr<WPI_TalonSRX> srxDriveBaseBackRight;
 
     //Elevator
-    shared_ptr<WPI_TalonSRX> srxElevator;
-
+    shared_ptr<WPI_TalonSRX> srxElevatorMaster;
+    shared_ptr<WPI_TalonSRX> srxElevatorSlave;
     std::shared_ptr<DigitalInput> subElevatorLimitTop;
     std::shared_ptr<DigitalInput> subElevatorLimitBottom;
 

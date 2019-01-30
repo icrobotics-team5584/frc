@@ -14,6 +14,8 @@
 #include "commands/CmdGimbleRotateLeft.h"
 #include "commands/CmdGimbleRotateRight.h"
 #include "commands/CmdOverrideTurret.h"
+#include "commands/CmdElevatorUpTest.h"
+#include "commands/CmdElevatorDownTest.h"
 
 OI::OI() {
   cout << "Run Robot OI" << endl;
@@ -35,14 +37,19 @@ OI::OI() {
   btnDeployFingers.reset(new frc::JoystickButton(controller.get(), bBtn));
   btnDeployFingers->WhileHeld(new CmdIntakePanel());
 
-  btnGimbleRotateLeft.reset(new frc::JoystickButton(controller.get(), backBtn));
-  btnGimbleRotateLeft->WhileHeld(new CmdGimbleRotateLeft());
-
-  btnGimbleRotateRight.reset(new frc::JoystickButton(controller.get(), startBtn));
-  btnGimbleRotateRight->WhileHeld(new CmdGimbleRotateRight());
+  //btnGimbleRotateLeft.reset(new frc::JoystickButton(controller.get(), backBtn));
+  //btnGimbleRotateLeft->WhileHeld(new CmdGimbleRotateLeft());
+//
+  //btnGimbleRotateRight.reset(new frc::JoystickButton(controller.get(), startBtn));
+  //btnGimbleRotateRight->WhileHeld(new CmdGimbleRotateRight());
 
   btnOverride.reset(new frc::JoystickButton(controller.get(), rightStickBtn));
   btnOverride->WhileHeld(new CmdOverrideTurret());
+
+  btnUpTest.reset(new frc::JoystickButton(controller.get(), backBtn));
+  btnUpTest->WhileHeld(new CmdElevatorUpTest());
+  btnDownTest.reset(new frc::JoystickButton(controller.get(), startBtn));
+  btnDownTest->WhileHeld(new CmdElevatorDownTest());
 }
 std::shared_ptr<frc::Joystick> OI::getJoystick0() {
    return joystick0;

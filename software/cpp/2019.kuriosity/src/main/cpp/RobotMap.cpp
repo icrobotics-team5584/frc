@@ -12,7 +12,10 @@ RobotMap::RobotMap(){
     srxDriveBaseBackRight->Set(ControlMode::Follower, can_srxDriveBaseFrontRight);
 
     //Elevator
-    srxElevator.reset(new WPI_TalonSRX(can_srxElevator));
+    srxElevatorMaster.reset(new WPI_TalonSRX(can_srxElevatorMaster));
+    srxElevatorSlave.reset(new WPI_TalonSRX(can_srxElevatorSlave));
+    srxElevatorSlave->Set(ControlMode::Follower, can_srxElevatorMaster);
+
     subElevatorLimitBottom.reset(new DigitalInput(lmt_subElevatorLimitBottom));
     subElevatorLimitTop.reset(new DigitalInput(lmt_subElevatorLimitTop));
     
