@@ -12,9 +12,6 @@ SubGimble::SubGimble() : Subsystem("ExampleSubsystem") {
 
   _srxGimble = Robot::_robotMap->srxGimble;
   _anaGimblePot = Robot::_robotMap->subGimblePot;
-  _LimitLeft = Robot::_robotMap->subGimbleLimitLeft;  
-  _LimitRight = Robot::_robotMap->subGimbleLimitRight;
-
   _potSourcePID = new PIDPot();
 
   gimbleController = new PIDController(PIDp, PIDi, PIDd, _potSourcePID, _srxGimble.get());
@@ -25,6 +22,7 @@ SubGimble::SubGimble() : Subsystem("ExampleSubsystem") {
 	gimbleController->Disable();
 	frc::SmartDashboard::PutData("Arm PID Controls", gimbleController);  
 }
+
 void SubGimble::Periodic() {
   lc++;
 	if( lc > 10){
@@ -46,6 +44,7 @@ void SubGimble::InitDefaultCommand() {
 void SubGimble::enable() {
   gimbleController->Enable();
 }
+
 void SubGimble::disable() {
   gimbleController->Disable();
   _srxGimble->Set(0);
@@ -64,6 +63,7 @@ void SubGimble::OverridePID(bool leftRight) { //true = left
 void SubGimble::stop() {
   gimbleController->SetSetpoint(_anaGimblePot->GetAverageValue());
 }
+
 void SubGimble::PIDGimbleTo(int angle) {
   potRange = PotLeft - PotRight;
 

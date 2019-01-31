@@ -17,12 +17,12 @@ unique_ptr<SubPanelAffector> Robot::subPanelAffector;
 unique_ptr<SubIntakeOutake> Robot::subIntakeOutake;
 unique_ptr<SubRollerIntake> Robot::subRollerIntake;
 unique_ptr<SubGimble> Robot::subGimble;
+unique_ptr<SubGimbleLimits> Robot::subGimbleLimits;
 
 void Robot::RobotInit() {
   cout << "Run Robot init" << endl;
   _robotMap.reset(new RobotMap);
 
-  
   cmdSeekCargoShip.reset(new CmdSeekCargoShip());
   subDriveBase.reset(new SubDriveBase());
   subElevator.reset(new SubElevator());
@@ -30,8 +30,7 @@ void Robot::RobotInit() {
   subPanelAffector.reset(new SubPanelAffector());
   subRollerIntake.reset(new SubRollerIntake());
   subGimble.reset(new SubGimble());
-
-
+  subGimbleLimits.reset(new SubGimbleLimits());
 
     _oi.reset(new OI);
     std::cout << "robot init finish" << std::endl;

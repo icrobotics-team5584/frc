@@ -10,45 +10,19 @@
 #include <frc/WPILib.h>
 #include <frc/commands/Subsystem.h>
 #include <ctre/Phoenix.h>
-#include <AHRS.h>
-#include "subsystems/PIDPot.h"
 
 using namespace std;
 using namespace frc;
 
-class SubGimble : public frc::Subsystem {
+class SubGimbleLimits : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
-  shared_ptr<WPI_TalonSRX> _srxGimble; 
-  shared_ptr<AnalogInput> _anaGimblePot;
-  PIDController* gimbleController;
-  PIDPot* _potSourcePID;
 
-  double rotateSpeed = 0.5;
-  double PotLeft = 2538;
-	double PotRight = 512;
-	double PotCentre = 1612;
-	double PIDp = 0.0035;
-	double PIDi = 0.00002;
-	double PIDd = 0.007;
-  double humanOffset = 10.0;
-  double overrideTarget = 0.0;
-  int potRange;
-  int target;
-	int lc = 0;
-  int totalAngle = 180;
+    shared_ptr<DigitalInput> _LimitLeft;
+    shared_ptr<DigitalInput> _LimitRight;
 
-
-  public:
-  SubGimble();
-  void Periodic();
+ public:
+  SubGimbleLimits();
   void InitDefaultCommand() override;
-  void rotateLeft();
-  void rotateRight();
-  void stop();
-  void enable();
-  void disable();
-  void PIDGimbleTo(int angle);  
-  void OverridePID(bool leftRight);
 };
