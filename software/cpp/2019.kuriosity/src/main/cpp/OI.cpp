@@ -29,7 +29,7 @@ OI::OI() {
   btnFollowLine->WhenPressed(new CmdHatchLowRocket());
 
   btnSeekPath.reset(new frc::JoystickButton(controller.get(), yBtn));
-  btnSeekPath->WhileHeld(new CmdSeekPath());
+  btnSeekPath->WhenPressed(new CmdSeekPath());
 
   btnDeployPanel.reset(new frc::JoystickButton(controller.get(), aBtn));
   btnDeployPanel->WhileHeld(new CmdOutputPanel(false));

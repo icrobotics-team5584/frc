@@ -63,6 +63,7 @@ void SubDriveBase::setTalControlMode(ControlMode controlMode) {
 void SubDriveBase::tankDriveVelocity(double leftVelocity, double rightVelocity) {
   _srxFrontLeft->Set(ControlMode::Velocity, leftVelocity);
   _srxFrontRight->Set(ControlMode::Velocity, rightVelocity);
+  
 }
 
 double SubDriveBase::getRawLeftEncoder() {
@@ -75,32 +76,33 @@ double SubDriveBase::getRawRightEncoder() {
   return _srxFrontRight->GetSelectedSensorPosition(0);
 }
 void SubDriveBase::disablePID() {
-  leftVelocityController->Disable();
-  rightVelocityController->Disable();
+  _srxFrontLeft->SetNeutralMode(NeutralMode::Brake);
+  _srxFrontRight->SetNeutralMode(NeutralMode::Brake);
 }
 //returns velocity in m/s
 double SubDriveBase::getRightVelocity() {
   double velocity = _srxFrontRight->GetSelectedSensorVelocity(0);
-  velocity = velocity * 0.000078 * 10;
+  velocity = velocity * scaleFactor * 10;
   return velocity;
 }
 
 double SubDriveBase::getLeftVelocity() {
   double velocity = _srxFrontLeft->GetSelectedSensorVelocity(0);
-  velocity = velocity * 0.000078 * 10;
+  velocity = velocity * scaleFactor * 10;
   return velocity;
 }
 
 void SubDriveBase::velocityPIDConfig() {
+  difDrive->SetSafetyEnabled(false);
   //left talon
-  double kF = 1023/ (4.2/ 0.000078 / 10);
+  double kF = 1023/ (3.6/ 0.000078 / 10) + 0.18;
   _srxFrontLeft->ConfigNominalOutputForward(0, kTimeoutMs);
   _srxFrontLeft->ConfigNominalOutputReverse(0, kTimeoutMs);
   _srxFrontLeft->ConfigPeakOutputForward(1, kTimeoutMs);
   _srxFrontLeft->ConfigPeakOutputReverse(-1, kTimeoutMs);
 
   _srxFrontLeft->Config_kF(kPIDLoopIdx, kF, kTimeoutMs);
-  _srxFrontLeft->Config_kP(kPIDLoopIdx, 0.045, kTimeoutMs);
+  _srxFrontLeft->Config_kP(kPIDLoopIdx, 0.025, kTimeoutMs); //0.046
   _srxFrontLeft->Config_kI(kPIDLoopIdx, 0.0, kTimeoutMs);
   _srxFrontLeft->Config_kD(kPIDLoopIdx, 0, kTimeoutMs);
 
@@ -111,9 +113,11 @@ void SubDriveBase::velocityPIDConfig() {
   _srxFrontRight->ConfigPeakOutputReverse(-1, kTimeoutMs);
 
   _srxFrontRight->Config_kF(kPIDLoopIdx, kF, kTimeoutMs);
-  _srxFrontRight->Config_kP(kPIDLoopIdx, 0.045, kTimeoutMs);
+  _srxFrontRight->Config_kP(kPIDLoopIdx, 0.025, kTimeoutMs); //0.035
   _srxFrontRight->Config_kI(kPIDLoopIdx, 0.0, kTimeoutMs);
   _srxFrontRight->Config_kD(kPIDLoopIdx, 0.0, kTimeoutMs);
+  _srxFrontRight->SetNeutralMode(NeutralMode::Coast);
+  _srxFrontLeft->SetNeutralMode(NeutralMode::Coast);
 }
 
 void SubDriveBase::zeroEncoders() {

@@ -18,6 +18,9 @@ class CmdSeekPath : public frc::Command {
   shared_ptr<PosEncoderGyro> posEncoderGyro;
   shared_ptr<DvoTank> dvoTank;
 
+  const double  wheelCircumference = 0.47877872; //(m)
+  double scaleFactor;
+
  public:
   CmdSeekPath();
   void Initialize() override;
