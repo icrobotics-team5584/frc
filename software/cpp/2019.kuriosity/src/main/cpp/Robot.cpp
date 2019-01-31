@@ -58,6 +58,10 @@ void Robot::RobotPeriodic() {
     SmartDashboard::PutBoolean("mid sensor", subDriveBase->midHasReachedLine());
     SmartDashboard::PutBoolean("left sensor", subDriveBase->isLeftClsOnLine());
     SmartDashboard::PutBoolean("right sensor", subDriveBase->isRightClsOnLine());
+
+    SmartDashboard::PutBoolean("2222222 GIMBLE LIMIT LEFT", subGimbleLimits->GetLeftLimit());
+    SmartDashboard::PutBoolean("2222222 GIMBLE LIMIT RIGHT", subGimbleLimits->GetRightLimit());
+    
 }
 
 /**

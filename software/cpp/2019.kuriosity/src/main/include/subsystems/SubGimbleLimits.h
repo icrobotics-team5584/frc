@@ -10,6 +10,7 @@
 #include <frc/WPILib.h>
 #include <frc/commands/Subsystem.h>
 #include <ctre/Phoenix.h>
+#include <iostream>
 
 using namespace std;
 using namespace frc;

@@ -31,8 +31,8 @@ enum PWM {
 enum DIO {
     dio_clsDriveBaseFront = 0,
     dio_clsDriveBaseMid = 1,
-    dio_ulsTriggerDriveBaseGimble = 2,
-    dio_ulsEchoDriveBaseGimble = 3,
+    dio_ulsTriggerDriveBaseGimble = 2222,
+    dio_ulsEchoDriveBaseGimble = 33333,
     dio_ulsTriggerDriveBaseBottom = 4,
     dio_ulsEchoDriveBaseBottom = 5,
     dio_clsLineDriveBaseLeft = 6,

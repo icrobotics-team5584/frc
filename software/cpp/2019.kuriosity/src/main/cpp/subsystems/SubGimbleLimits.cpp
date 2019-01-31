@@ -13,6 +13,7 @@ void SubGimbleLimits::InitDefaultCommand() {}
 void SubGimbleLimits::Periodic(){
   outCount++;
   if(outCount > 10){
+    cout << "GIMBLE LIMIT TO DASH" << endl;
     SmartDashboard::PutBoolean("GIMBLE Left Limit", GetLeftLimit());
     SmartDashboard::PutBoolean("GIMBLE Right Limit", GetRightLimit());
     outCount = 0;
@@ -20,13 +21,19 @@ void SubGimbleLimits::Periodic(){
 }
 
 bool SubGimbleLimits::GetBothLimits(){
-  if(limitLeft->Get() || limitRight->Get()){return true;}
+  if(limitLeft->Get() || limitRight->Get()){
+    return true;
+    }else{
+      return false;
+    }
 }
 
 bool SubGimbleLimits::GetLeftLimit(){
-  if(limitLeft->Get()){return true;}
+  cout << "GIMBLE LEFT LIMIT" << limitLeft->Get() <<  endl;
+  return limitLeft->Get();
 }
 
 bool SubGimbleLimits::GetRightLimit(){
-  if(limitRight->Get()){return true;}
+  cout << "GIMBLE RIGHT LIMIT" << limitRight->Get() << endl;
+  return limitRight->Get();
 }
