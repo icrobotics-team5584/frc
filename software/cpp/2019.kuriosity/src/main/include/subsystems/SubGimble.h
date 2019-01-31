@@ -47,6 +47,7 @@ class SubGimble : public frc::Subsystem {
   void rotateLeft();
   void rotateRight();
   void stop();
+  //void Reset();  Maybe in the future this can reset the left and right values?
   void enable();
   void disable();
   void PIDGimbleTo(int angle);  

@@ -1,24 +1,32 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 #include "subsystems/SubGimbleLimits.h"
 #include "Robot.h"
 
 SubGimbleLimits::SubGimbleLimits() : Subsystem("ExampleSubsystem") {
 
-  _LimitLeft = Robot::_robotMap->subGimbleLimitLeft;  
-  _LimitRight = Robot::_robotMap->subGimbleLimitRight;
+  limitLeft = Robot::_robotMap->subGimbleLimitLeft;  
+  limitRight = Robot::_robotMap->subGimbleLimitRight;
 
 }
 
-void SubGimbleLimits::InitDefaultCommand() {
-  // Set the default command for a subsystem here.
-  // SetDefaultCommand(new MySpecialCommand());
+void SubGimbleLimits::InitDefaultCommand() {}
+
+void SubGimbleLimits::Periodic(){
+  outCount++;
+  if(outCount > 10){
+    SmartDashboard::PutBoolean("GIMBLE Left Limit", GetLeftLimit());
+    SmartDashboard::PutBoolean("GIMBLE Right Limit", GetRightLimit());
+    outCount = 0;
+  }
 }
 
-// Put methods for controlling this subsystem
-// here. Call these from Commands.
+bool SubGimbleLimits::GetBothLimits(){
+  if(limitLeft->Get() || limitRight->Get()){return true;}
+}
+
+bool SubGimbleLimits::GetLeftLimit(){
+  if(limitLeft->Get()){return true;}
+}
+
+bool SubGimbleLimits::GetRightLimit(){
+  if(limitRight->Get()){return true;}
+}

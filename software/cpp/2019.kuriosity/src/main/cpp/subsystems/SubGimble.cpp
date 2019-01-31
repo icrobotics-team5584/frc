@@ -60,10 +60,6 @@ void SubGimble::OverridePID(bool leftRight) { //true = left
   gimbleController->SetSetpoint(overrideTarget);
 }
 
-void SubGimble::stop() {
-  gimbleController->SetSetpoint(_anaGimblePot->GetAverageValue());
-}
-
 void SubGimble::PIDGimbleTo(int angle) {
   potRange = PotLeft - PotRight;
 
@@ -72,4 +68,8 @@ void SubGimble::PIDGimbleTo(int angle) {
 	SmartDashboard::PutNumber("TARGET Value", target);
 
 	gimbleController->SetSetpoint(target);
+}
+
+void SubGimble::stop() {
+  gimbleController->SetSetpoint(_anaGimblePot->GetAverageValue());
 }
