@@ -13,6 +13,9 @@
 #include "commands/CmdIntakePanel.h"
 #include "commands/CmdGimbleRotateLeft.h"
 #include "commands/CmdGimbleRotateRight.h"
+#include "commands/CmdGimblePidLeft.h"
+#include "commands/CmdGimblePidCentre.h"
+#include "commands/CmdGimblePidRight.h"
 
 OI::OI() {
   cout << "Run Robot OI" << endl;
