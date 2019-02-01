@@ -25,6 +25,8 @@ class SubElevator : public frc::Subsystem {
   double targetPosRotations;
   double _axis5 = 0;
   double targetPositionRotations;
+  double elevatorUpSpeed = -0.3;
+  double elevatorDownSpeed = 0.2;
 	int overrideSpeed = 0;
  public:
   SubElevator();

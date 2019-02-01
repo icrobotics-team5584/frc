@@ -85,10 +85,12 @@ void SubElevator::Stop() {
 	_srxElevatorMaster->Set(ControlMode::Position, targetPositionRotations);
 }
 void SubElevator::TestingUp() {
-	_srxElevatorMaster->Set(-0.3);
+	SmartDashboard::PutNumber("Elevator Up Speed", elevatorUpSpeed);
+	_srxElevatorMaster->Set(elevatorUpSpeed);
 }
 void SubElevator::TestingDown() {
-	_srxElevatorMaster->Set(0.2);
+	SmartDashboard::PutNumber("Elevator Down Speed", elevatorDownSpeed);
+	_srxElevatorMaster->Set(elevatorDownSpeed);
 }
 void SubElevator::TestingStop() {
 	_srxElevatorMaster->Set(0.0);

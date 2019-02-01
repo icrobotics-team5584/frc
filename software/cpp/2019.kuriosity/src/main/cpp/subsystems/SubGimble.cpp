@@ -51,9 +51,11 @@ void SubGimble::disable() {
   _srxGimble->Set(0);
 }
 void SubGimble::rotateLeft() {
+  SmartDashboard::PutNumber("Elevator Speed", rotateSpeed);
   _srxGimble->Set(rotateSpeed);
 }
 void SubGimble::rotateRight() {
+  SmartDashboard::PutNumber("Elevator Speed", rotateSpeed);
   _srxGimble->Set(-rotateSpeed);
 }
 void SubGimble::stop() {
