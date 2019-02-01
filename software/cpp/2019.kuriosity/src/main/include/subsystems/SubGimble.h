@@ -25,17 +25,17 @@ class SubGimble : public frc::Subsystem {
   PIDController* gimbleController;
   PIDPot* _potSourcePID;
 
-  double rotateSpeed = 0.5;
+  double rotateSpeed = 0.5; //Max rotating power
   double PotLeft = 2538;
 	double PotRight = 512;
 	double PotCentre = 1612;
 	double PIDp = 0.0035;
 	double PIDi = 0.00002;
 	double PIDd = 0.007;
-  double humanOffset = 10.0;
+  double humanOffset = 10.0;  //Used for overide 
   double overrideTarget = 0.0;
-  int potRange;
-  int target;
+  int potRange = 0;
+  int target = 0;
 	int lc = 0;
   int totalAngle = 180;
 

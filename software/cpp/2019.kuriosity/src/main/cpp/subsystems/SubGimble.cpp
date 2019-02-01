@@ -17,9 +17,9 @@ SubGimble::SubGimble() : Subsystem("ExampleSubsystem") {
   gimbleController = new PIDController(PIDp, PIDi, PIDd, _potSourcePID, _srxGimble.get());
   gimbleController->SetSetpoint(PotCentre);
 	gimbleController->SetInputRange(PotLeft, PotRight);
-	gimbleController->SetOutputRange(-0.5, 0.5);
+	gimbleController->SetOutputRange(-rotateSpeed, rotateSpeed); //Gimble MAX power set here
 	gimbleController->SetContinuous(false);
-	gimbleController->Disable();
+	gimbleController->Disable();  //This must be set to true in future
 	frc::SmartDashboard::PutData("Arm PID Controls", gimbleController);  
 }
 
@@ -35,12 +35,9 @@ void SubGimble::Periodic() {
 
 }
 void SubGimble::InitDefaultCommand() {
-  // Set the default command for a subsystem here.
-  // SetDefaultCommand(new MySpecialCommand());
+ 
 }
 
-// Put methods for controlling this subsystem
-// here. Call these from Commands.
 void SubGimble::enable() {
   gimbleController->Enable();
 }
@@ -50,7 +47,7 @@ void SubGimble::disable() {
   _srxGimble->Set(0);
 }
 
-void SubGimble::OverridePID(bool leftRight) { //true = left
+void SubGimble::OverridePID(bool leftRight) { //true = left  ... rotate left
     if (leftRight){
     overrideTarget = _anaGimblePot->GetAverageValue() + humanOffset;
   }
