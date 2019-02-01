@@ -17,16 +17,15 @@ using namespace frc;
 
 class SubElevator : public frc::Subsystem {
  private:
-  // It's desirable that everything possible under private except
-  // for methods that implement subsystem capabilities
+
   shared_ptr<WPI_TalonSRX> _srxElevatorMaster;
-  shared_ptr<DigitalInput> _subElevatorLimitBottom;
-  shared_ptr<DigitalInput> _subElevatorLimitTop;
   double targetPosRotations;
   double _axis5 = 0;
   double targetPositionRotations;
 	int overrideSpeed = 0;
+
  public:
+ 
   SubElevator();
   void InitDefaultCommand() override;
   void ElevatorToPos(double rotations);
