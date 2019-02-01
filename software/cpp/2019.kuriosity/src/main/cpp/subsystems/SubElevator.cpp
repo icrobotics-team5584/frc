@@ -56,8 +56,8 @@ void SubElevator::InitDefaultCommand() {
 // here. Call these from Commands.
 
 void SubElevator::ElevatorToPos(double rotation) {
-  targetPosRotations = -(rotation * 4096);
-  _srxElevatorMaster->Set(ControlMode::Position, targetPosRotations);
+  targetPositionRotations = -(rotation * 4096);
+  _srxElevatorMaster->Set(ControlMode::Position, targetPositionRotations);
 }
 
 void SubElevator::Override(std::shared_ptr<Joystick> rightStick){
@@ -76,16 +76,22 @@ void SubElevator::Stop() {
 	targetPositionRotations = (_srxElevatorMaster->GetSelectedSensorPosition(0));
 	_srxElevatorMaster->Set(ControlMode::Position, targetPositionRotations);
 }
+
 void SubElevator::TestingUp() {
 	SmartDashboard::PutNumber("Elevator Up Speed", elevatorUpSpeed);
 	_srxElevatorMaster->Set(elevatorUpSpeed);
 }
+
 void SubElevator::TestingDown() {
 	SmartDashboard::PutNumber("Elevator Down Speed", elevatorDownSpeed);
 	_srxElevatorMaster->Set(elevatorDownSpeed);
 }
+
 void SubElevator::TestingStop() {
 	_srxElevatorMaster->Set(0.0);
 }
 
+int SubElevator::GetEncoderPosition() {
+	return _srxElevatorMaster->GetSelectedSensorPosition(0);
+}
 
