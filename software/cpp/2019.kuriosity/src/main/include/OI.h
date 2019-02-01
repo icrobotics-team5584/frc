@@ -38,5 +38,6 @@ private:
   unique_ptr<frc::JoystickButton> btnDeployPanel;
   unique_ptr<frc::JoystickButton> btnDeployFingers; 
   unique_ptr<frc::JoystickButton> btnGimbleRotateLeft;
-  unique_ptr<frc::JoystickButton> btnGimbleRotateRight;
+  unique_ptr<frc::JoystickButton> btnGimbleRotateRight; //Moved to overide stick (right stick with press)
+  //unique_ptr<> povBtnGimblePidLeft;
 };
