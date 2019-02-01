@@ -16,7 +16,8 @@ class ButtonPOV : Trigger {
 public:
 	ButtonPOV(GenericHID* joystick, int position);
 	bool Get();
-	void WhileHeld(Command* command);
+	void WhenPressed(Command* command);
+    void WhileHeld(Command* command);
 private:
 	GenericHID* _joystick;
 	int _position = 0;

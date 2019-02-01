@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <frc/WPILib.h>
+#include "ButtonPOV.h"
 
 using namespace std;
 
@@ -39,5 +40,7 @@ private:
   unique_ptr<frc::JoystickButton> btnDeployFingers; 
   unique_ptr<frc::JoystickButton> btnGimbleRotateLeft;
   unique_ptr<frc::JoystickButton> btnGimbleRotateRight; //Moved to overide stick (right stick with press)
-  //unique_ptr<> povBtnGimblePidLeft;
+  unique_ptr<ButtonPOV> povBtnGimblePidLeft;
+  unique_ptr<ButtonPOV> povBtnGimblePidCentre;
+  unique_ptr<ButtonPOV> povBtnGimblePidRight;
 };

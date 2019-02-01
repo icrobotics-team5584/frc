@@ -32,7 +32,11 @@ bool ButtonPOV::Get(){
     }
 }
 
-void ButtonPOV::WhileHeld(Command* command) {
-	WhileActive(command);
+void ButtonPOV::WhenPressed(Command* command) {
+	WhenActive(command);
+}
+
+void ButtonPOV::WhileHeld (Command* command){
+    WhileActive(command);
 }
 
