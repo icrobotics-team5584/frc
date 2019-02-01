@@ -26,7 +26,7 @@ bool CmdElevatorUpTest::IsFinished() { return false; }
 
 // Called once after isFinished returns true
 void CmdElevatorUpTest::End() {
-  Robot::subElevator->TestingStop();
+  Robot::subElevator->TestingUpStop();
 }
 
 // Called when another command which requires one or more of the same

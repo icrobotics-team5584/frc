@@ -75,18 +75,21 @@ void SubElevator::Stop() {
 
 void SubElevator::TestingUp() {
 	
-	_srxElevatorMaster->Set(-0.3);
+	_srxElevatorMaster->Set(-0.6);
 }
+
 
 void SubElevator::TestingDown() {
 	
-	_srxElevatorMaster->Set(-0.2);
+	_srxElevatorMaster->Set(0.2);
 }
 
 void SubElevator::TestingStop() {
 	_srxElevatorMaster->Set(0.0);
 }
-
+void SubElevator::TestingUpStop() {
+	_srxElevatorMaster->Set(-0.1);
+}
 int SubElevator::GetEncoderPosition() {
 	return _srxElevatorMaster->GetSelectedSensorPosition(0);
 }

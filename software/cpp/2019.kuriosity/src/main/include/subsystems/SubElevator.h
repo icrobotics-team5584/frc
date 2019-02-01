@@ -35,5 +35,6 @@ class SubElevator : public frc::Subsystem {
   void TestingUp();
   void TestingDown();
   void TestingStop();
+  void TestingUpStop();
   int GetEncoderPosition();
 };
