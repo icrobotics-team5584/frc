@@ -85,7 +85,7 @@ void SubElevator::Stop() {
 	_srxElevatorMaster->Set(ControlMode::Position, targetPositionRotations);
 }
 void SubElevator::TestingUp() {
-	_srxElevatorMaster->Set(-0.5);
+	_srxElevatorMaster->Set(-0.3);
 }
 void SubElevator::TestingDown() {
 	_srxElevatorMaster->Set(0.2);

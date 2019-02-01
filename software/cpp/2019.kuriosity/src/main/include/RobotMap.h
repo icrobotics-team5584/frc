@@ -20,8 +20,8 @@ enum Can {
     can_srxDriveBaseFrontRight = 3,
     can_srxDriveBaseBackRight = 4,
     can_srxGimble = 5,
-    can_srxElevatorMaster = 9,
-    can_srxElevatorSlave = 10,
+    can_srxElevatorMaster = 7,
+    can_srxElevatorSlave = 8,
     can_srxIntakeOutake = 6
 };
 
