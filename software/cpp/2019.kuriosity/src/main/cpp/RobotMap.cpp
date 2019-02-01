@@ -16,13 +16,13 @@ RobotMap::RobotMap(){
     srxElevatorSlave.reset(new WPI_TalonSRX(can_srxElevatorSlave));
     srxElevatorSlave->Set(ControlMode::Follower, can_srxElevatorMaster);
 
-    subElevatorLimitBottom.reset(new DigitalInput(lmt_subElevatorLimitBottom));
-    subElevatorLimitTop.reset(new DigitalInput(lmt_subElevatorLimitTop));
+    subElevatorLimitBottom.reset(new DigitalInput(dio_subElevatorLimitBottom));
+    subElevatorLimitTop.reset(new DigitalInput(dio_subElevatorLimitTop));
     
     // Intake and Outake
     srxIntakeOutake.reset(new WPI_TalonSRX(can_srxIntakeOutake));
     spkRollerIntake.reset(new frc::Spark(pwm_spkRollerIntake));
-    subIntakeOutakeCargo.reset(new DigitalInput(lmt_subIntakeOutakeCargo));
+    subIntakeOutakeCargo.reset(new DigitalInput(dio_subIntakeOutakeCargo));
 
     // DriveBase Sensors
     ahrsNavXDriveBase.reset(new AHRS(SerialPort::kMXP));
@@ -50,7 +50,7 @@ RobotMap::RobotMap(){
 
     //Gimble
     srxGimble.reset(new WPI_TalonSRX(can_srxGimble));
-    subGimbleLimitLeft.reset(new DigitalInput(lmt_subGimbleLimitLeft));
-    subGimbleLimitRight.reset(new DigitalInput(lmt_subGimbleLimitRight));
+    subGimbleLimitLeft.reset(new DigitalInput(dio_subGimbleLimitLeft));
+    subGimbleLimitRight.reset(new DigitalInput(dio_subGimbleLimitRight));
     subGimblePot.reset(new AnalogInput(ana_potGimble));
 }

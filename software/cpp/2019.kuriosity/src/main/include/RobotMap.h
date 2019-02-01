@@ -38,6 +38,11 @@ enum DIO {
     dio_ulsEchoDriveBaseBottom = 5,
     dio_clsLineDriveBaseLeft = 6,
     dio_clsLineDriveBaseRight = 7,
+    dio_subElevatorLimitBottom = 0000,
+    dio_subElevatorLimitTop = 1111,
+    dio_subGimbleLimitLeft = 8,
+    dio_subGimbleLimitRight = 9,
+    dio_subIntakeOutakeCargo = 4444
 };
 
 enum Analog {
@@ -55,15 +60,6 @@ enum PCM {
     pcm_solPanelAffectorBottomForward = 5,
     pcm_solPanelAffectorBottomReverse = 4
 };
-
-enum LMT {
-    lmt_subElevatorLimitBottom = 0,
-    lmt_subElevatorLimitTop = 1,
-    lmt_subGimbleLimitLeft = 2,
-    lmt_subGimbleLimitRight = 3,
-    lmt_subIntakeOutakeCargo = 4
-};
-
 
 class RobotMap {
 private: 
