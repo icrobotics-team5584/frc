@@ -15,12 +15,13 @@ using namespace std;
 using namespace frc;
 
 enum Can {
-     can_srxDriveBaseFrontLeft = 1,
+    can_srxDriveBaseFrontLeft = 1,
     can_srxDriveBaseBackLeft = 2,
     can_srxDriveBaseFrontRight = 3,
     can_srxDriveBaseBackRight = 4,
     can_srxGimble = 5,
-    can_srxElevator = 77777,
+    can_srxElevatorMaster = 7,
+    can_srxElevatorSlave = 8,
     can_srxIntakeOutake = 6
 };
 
@@ -37,6 +38,11 @@ enum DIO {
     dio_ulsEchoDriveBaseBottom = 5,
     dio_clsLineDriveBaseLeft = 6,
     dio_clsLineDriveBaseRight = 7,
+    dio_subElevatorLimitBottom = 0000,
+    dio_subElevatorLimitTop = 1111,
+    dio_subGimbleLimitLeft = 8,
+    dio_subGimbleLimitRight = 9,
+    dio_subIntakeOutakeCargo = 4444
 };
 
 enum Analog {
@@ -55,15 +61,6 @@ enum PCM {
     pcm_solPanelAffectorBottomReverse = 4
 };
 
-enum LMT {
-    lmt_subElevatorLimitBottom = 0,
-    lmt_subElevatorLimitTop = 1,
-    lmt_subGimbleLimitLeft = 2,
-    lmt_subGimbleLimitRight = 3,
-    lmt_subIntakeOutakeCargo = 4
-};
-
-
 class RobotMap {
 private: 
 public:
@@ -76,8 +73,8 @@ public:
 	shared_ptr<WPI_TalonSRX> srxDriveBaseBackRight;
 
     //Elevator
-    shared_ptr<WPI_TalonSRX> srxElevator;
-
+    shared_ptr<WPI_TalonSRX> srxElevatorMaster;
+    shared_ptr<WPI_TalonSRX> srxElevatorSlave;
     std::shared_ptr<DigitalInput> subElevatorLimitTop;
     std::shared_ptr<DigitalInput> subElevatorLimitBottom;
 
