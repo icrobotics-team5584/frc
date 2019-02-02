@@ -7,7 +7,7 @@
 
 #include "Robot.h"
 #include <cscore_oo.h>
-#include <CameraServer.h>
+#include <cameraserver/CameraServer.h>
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
@@ -37,8 +37,8 @@ void Robot::RobotInit() {
     cam.SetResolution(93, 70);
     cam.SetFPS(20);
 
-    server = CameraServer::GetInstance()->GetServer();
-    server.SetSource(cam);
+    // server = CameraServer::GetInstance()->GetServer();
+    // server.SetSource(cam);
     _oi.reset(new OI);
     std::cout << "robot init finish" << std::endl;
 
