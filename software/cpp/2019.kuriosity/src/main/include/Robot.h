@@ -20,6 +20,7 @@
 #include "subsystems/SubRollerIntake.h"
 #include "subsystems/SubGimble.h"
 #include "commands/CmdSeekCargoShip.h"
+#include <cscore_oo.h>
 #include "commands/CmdIntakePanel.h"
 #include "subsystems/ElevatorCmdChooser.h"
 
@@ -60,4 +61,6 @@ class Robot : public frc::TimedRobot {
   //ExampleCommand m_defaultAuto;
   //MyAutoCommand m_myAuto;
   //frc::SendableChooser<frc::Command*> m_chooser;
+  cs::UsbCamera cam;
+  cs::VideoSink server;
 };
