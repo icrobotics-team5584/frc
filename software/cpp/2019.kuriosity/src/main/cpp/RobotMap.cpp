@@ -11,10 +11,15 @@ RobotMap::RobotMap(){
     srxDriveBaseBackLeft->Set(ControlMode::Follower, can_srxDriveBaseFrontLeft);
     srxDriveBaseBackRight->Set(ControlMode::Follower, can_srxDriveBaseFrontRight);
 
+    //Elevator
+    srxElevator.reset(new WPI_TalonSRX(can_srxElevator));
+    subElevatorLimitBottom.reset(new DigitalInput(lmt_subElevatorLimitBottom));
+    subElevatorLimitTop.reset(new DigitalInput(lmt_subElevatorLimitTop));
+    
     // Intake and Outake
-    talIntakeOutakeRight.reset(new frc::Talon(pwm_talIntakeOutakeRight));
-    talIntakeOutakeLeft.reset(new frc::Talon(pwm_talIntakeOutakeLeft));
+    srxIntakeOutake.reset(new WPI_TalonSRX(can_srxIntakeOutake));
     spkRollerIntake.reset(new frc::Spark(pwm_spkRollerIntake));
+    subIntakeOutakeCargo.reset(new DigitalInput(lmt_subIntakeOutakeCargo));
 
     // DriveBase Sensors
     ahrsNavXDriveBase.reset(new AHRS(SerialPort::kMXP));
@@ -39,4 +44,10 @@ RobotMap::RobotMap(){
     solPanelAffectorBottom.reset(new DoubleSolenoid(pcm_solPanelAffectorBottomForward, pcm_solPanelAffectorBottomReverse));
     solPanelAffectorTopFinger.reset(new DoubleSolenoid(pcm_solPanelAffectorTopFingerForward, pcm_solPanelAffectorTopFingerReverse));
     solPanelAffectorBottomFinger.reset(new DoubleSolenoid(pcm_solPanelAffectorBottomFingerForward, pcm_solPanelAffectorBottomFingerReverse));
+
+    //Gimble
+    srxGimble.reset(new WPI_TalonSRX(can_srxGimble));
+    subGimbleLimitLeft.reset(new DigitalInput(lmt_subGimbleLimitLeft));
+    subGimbleLimitRight.reset(new DigitalInput(lmt_subGimbleLimitRight));
+    subGimblePot.reset(new AnalogInput(ana_potGimble));
 }

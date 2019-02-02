@@ -6,8 +6,11 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/SubElevator.h"
+#include "Robot.h"
 
-SubElevator::SubElevator() : Subsystem("ExampleSubsystem") {}
+SubElevator::SubElevator() : Subsystem("ExampleSubsystem") {
+  _srxElevator = Robot::_robotMap->srxElevator;
+}
 
 void SubElevator::InitDefaultCommand() {
   // Set the default command for a subsystem here.
