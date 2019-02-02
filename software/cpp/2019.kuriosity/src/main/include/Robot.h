@@ -20,11 +20,8 @@
 #include "subsystems/SubRollerIntake.h"
 #include "subsystems/SubGimble.h"
 #include "commands/CmdSeekCargoShip.h"
-<<<<<<< HEAD
 #include "commands/CmdIntakePanel.h"
-=======
 #include "subsystems/ElevatorCmdChooser.h"
->>>>>>> master
 
 #include <iostream>
 

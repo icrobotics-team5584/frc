@@ -59,12 +59,9 @@ void Robot::RobotPeriodic() {
     SmartDashboard::PutBoolean("mid sensor", subDriveBase->midHasReachedLine());
     SmartDashboard::PutBoolean("left sensor", subDriveBase->isLeftClsOnLine());
     SmartDashboard::PutBoolean("right sensor", subDriveBase->isRightClsOnLine());
-<<<<<<< HEAD
 
     SmartDashboard::PutNumber("Yaw", subDriveBase->getYaw());
-=======
     SmartDashboard::PutNumber("Elevator encoder", subElevator->GetEncoderPosition());
->>>>>>> master
 }
 
 /**
