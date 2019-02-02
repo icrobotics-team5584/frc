@@ -50,6 +50,15 @@ enum Analog {
 };
 
 enum PCM {
+    pcm_lower = 0,
+    pcm_upper = 1
+};
+
+enum PCM_0{
+
+};
+
+enum PCM_1 {
     pcm_solPanelAffectorTopFingerForward = 1,
     pcm_solPanelAffectorTopFingerReverse = 0,
     pcm_solPanelAffectorBottomFingerForward = 9999,
