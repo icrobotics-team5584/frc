@@ -6,6 +6,8 @@
 /*----------------------------------------------------------------------------*/
 
 #include "Robot.h"
+#include <cscore_oo.h>
+#include <CameraServer.h>
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
@@ -19,20 +21,24 @@ unique_ptr<SubRollerIntake> Robot::subRollerIntake;
 unique_ptr<SubGimble> Robot::subGimble;
 
 void Robot::RobotInit() {
-  cout << "Run Robot init" << endl;
-  _robotMap.reset(new RobotMap);
+    cout << "Run Robot init" << endl;
+    _robotMap.reset(new RobotMap);
 
-  
-  cmdSeekCargoShip.reset(new CmdSeekCargoShip());
-  subDriveBase.reset(new SubDriveBase());
-  subElevator.reset(new SubElevator());
-  subIntakeOutake.reset(new SubIntakeOutake());
-  subPanelAffector.reset(new SubPanelAffector());
-  subRollerIntake.reset(new SubRollerIntake());
-  subGimble.reset(new SubGimble());
+    
+    cmdSeekCargoShip.reset(new CmdSeekCargoShip());
+    subDriveBase.reset(new SubDriveBase());
+    subElevator.reset(new SubElevator());
+    subIntakeOutake.reset(new SubIntakeOutake());
+    subPanelAffector.reset(new SubPanelAffector());
+    subRollerIntake.reset(new SubRollerIntake());
+    subGimble.reset(new SubGimble());
 
+    cam = CameraServer::GetInstance()->StartAutomaticCapture();
+    cam.SetResolution(93, 70);
+    cam.SetFPS(20);
 
-
+    server = CameraServer::GetInstance()->GetServer();
+    server.SetSource(cam);
     _oi.reset(new OI);
     std::cout << "robot init finish" << std::endl;
 

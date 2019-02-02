@@ -20,7 +20,7 @@
 #include "subsystems/SubRollerIntake.h"
 #include "subsystems/SubGimble.h"
 #include "commands/CmdSeekCargoShip.h"
-
+#include <cscore_oo.h>
 #include <iostream>
 
 using namespace std;
@@ -54,4 +54,6 @@ class Robot : public frc::TimedRobot {
   //ExampleCommand m_defaultAuto;
   //MyAutoCommand m_myAuto;
   //frc::SendableChooser<frc::Command*> m_chooser;
+  cs::UsbCamera cam;
+  cs::VideoSink server;
 };
