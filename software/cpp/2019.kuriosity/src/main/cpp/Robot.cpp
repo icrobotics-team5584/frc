@@ -7,7 +7,7 @@
 
 #include "Robot.h"
 #include <cscore_oo.h>
-#include <CameraServer.h>
+#include <cameraserver/CameraServer.h>
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
@@ -32,10 +32,9 @@ void Robot::RobotInit() {
     subPanelAffector.reset(new SubPanelAffector());
     subRollerIntake.reset(new SubRollerIntake());
     subGimble.reset(new SubGimble());
-
     cam = CameraServer::GetInstance()->StartAutomaticCapture();
-    cam.SetResolution(93, 70);
-    cam.SetFPS(20);
+    cam.SetResolution(90, 80);
+    // cam.SetFPS(20);
 
     server = CameraServer::GetInstance()->GetServer();
     server.SetSource(cam);
