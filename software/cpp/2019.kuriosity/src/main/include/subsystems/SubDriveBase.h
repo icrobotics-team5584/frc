@@ -56,7 +56,7 @@ class SubDriveBase : public frc::Subsystem {
   double kSlotIdx = 0;
  
  public:
-  const double WHEEL_BASE_WIDTH = 1; // TODO: make this the real size
+  const double WHEEL_BASE_WIDTH =  0.6;
   SubDriveBase();
   void InitDefaultCommand() override;
 
