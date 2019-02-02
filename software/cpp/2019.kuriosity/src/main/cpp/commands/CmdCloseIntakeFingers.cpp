@@ -5,33 +5,30 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdIntakePanel.h"
+#include "commands/CmdCloseIntakeFingers.h"
 #include "Robot.h"
 #include <frc/WPILib.h>
 
-CmdIntakePanel::CmdIntakePanel() {
+CmdCloseIntakeFingers::CmdCloseIntakeFingers() {
   // Use Requires() here to declare subsystem dependencies
+  // eg. Requires(Robot::chassis.get());
   Requires(Robot::subPanelAffector.get());
 }
 
 // Called just before this Command runs the first time
-void CmdIntakePanel::Initialize() {
-  Robot::subPanelAffector->DeployFingers();
-}
-
-// Called repeatedly when this Command is scheduled to run
-void CmdIntakePanel::Execute() {}
-
-// Make this return true when this Command no longer needs to run execute()
-bool CmdIntakePanel::IsFinished() { return false; }
-
-// Called once after isFinished returns true
-void CmdIntakePanel::End() {
+void CmdCloseIntakeFingers::Initialize() {
   Robot::subPanelAffector->RetractFingers();
 }
 
+// Called repeatedly when this Command is scheduled to run
+void CmdCloseIntakeFingers::Execute() {}
+
+// Make this return true when this Command no longer needs to run execute()
+bool CmdCloseIntakeFingers::IsFinished() { return false; }
+
+// Called once after isFinished returns true
+void CmdCloseIntakeFingers::End() {}
+
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdIntakePanel::Interrupted() {
-  End();
-}
+void CmdCloseIntakeFingers::Interrupted() {}
