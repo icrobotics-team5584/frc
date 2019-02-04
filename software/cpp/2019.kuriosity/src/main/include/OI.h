@@ -39,6 +39,7 @@ private:
   unique_ptr<frc::JoystickButton> btnDeployFingers; 
   unique_ptr<frc::JoystickButton> btnGimbleRotateLeft;
   unique_ptr<frc::JoystickButton> btnGimbleRotateRight;
+  unique_ptr<frc::JoystickButton> btnDriveBaseSlow;
 
   unique_ptr<frc::JoystickButton> btnOverride;
 
