@@ -21,7 +21,7 @@ RobotMap::RobotMap(){
     
     // Intake and Outake
     srxIntakeOutake.reset(new WPI_TalonSRX(can_srxIntakeOutake));
-    spkRollerIntake.reset(new frc::Spark(pwm_spkRollerIntake));
+    srxRollerIntake.reset(new WPI_TalonSRX(can_srxRollerIntake));
     subIntakeOutakeCargo.reset(new DigitalInput(dio_subIntakeOutakeCargo));
 
     // DriveBase Sensors
