@@ -26,7 +26,9 @@ void CmdIntakeOutakeIn::Initialize() {
 void CmdIntakeOutakeIn::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdIntakeOutakeIn::IsFinished() { return false; }
+bool CmdIntakeOutakeIn::IsFinished() { 
+  return Robot::subIntakeOutake->GetCargoLimitSwitch(); 
+}
 
 // Called once after isFinished returns true
 void CmdIntakeOutakeIn::End() {
