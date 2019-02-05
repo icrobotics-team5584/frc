@@ -5,33 +5,32 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdIntakePanel.h"
-#include "Robot.h"
-#include <frc/WPILib.h>
+#include "commands/CmdElevatorDownTest.h"
 
-CmdIntakePanel::CmdIntakePanel() {
+CmdElevatorDownTest::CmdElevatorDownTest() {
   // Use Requires() here to declare subsystem dependencies
-  Requires(Robot::subPanelAffector.get());
+  // eg. Requires(Robot::chassis.get());
+  Requires(Robot::subElevator.get());
 }
 
 // Called just before this Command runs the first time
-void CmdIntakePanel::Initialize() {
-  Robot::subPanelAffector->DeployFingers();
+void CmdElevatorDownTest::Initialize() {
+  Robot::subElevator->TestingDown();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdIntakePanel::Execute() {}
+void CmdElevatorDownTest::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdIntakePanel::IsFinished() { return false; }
+bool CmdElevatorDownTest::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdIntakePanel::End() {
-  Robot::subPanelAffector->RetractFingers();
+void CmdElevatorDownTest::End() {
+  Robot::subElevator->TestingStop();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdIntakePanel::Interrupted() {
+void CmdElevatorDownTest::Interrupted() {
   End();
 }

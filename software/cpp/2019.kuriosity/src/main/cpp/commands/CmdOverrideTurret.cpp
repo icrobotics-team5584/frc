@@ -5,33 +5,34 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdIntakePanel.h"
+#include "commands/CmdOverrideTurret.h"
 #include "Robot.h"
 #include <frc/WPILib.h>
 
-CmdIntakePanel::CmdIntakePanel() {
+CmdOverrideTurret::CmdOverrideTurret() {
   // Use Requires() here to declare subsystem dependencies
-  Requires(Robot::subPanelAffector.get());
+  Requires(Robot::subElevator.get());
+//  Requires(Robot::SubGimble.get());
 }
 
 // Called just before this Command runs the first time
-void CmdIntakePanel::Initialize() {
-  Robot::subPanelAffector->DeployFingers();
-}
+void CmdOverrideTurret::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void CmdIntakePanel::Execute() {}
+void CmdOverrideTurret::Execute() {
+  	Robot::subElevator->Override(Robot::_oi->getJoystick0());
+}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdIntakePanel::IsFinished() { return false; }
+bool CmdOverrideTurret::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdIntakePanel::End() {
-  Robot::subPanelAffector->RetractFingers();
+void CmdOverrideTurret::End() {
+  Robot::subElevator->Stop();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdIntakePanel::Interrupted() {
+void CmdOverrideTurret::Interrupted() {
   End();
 }

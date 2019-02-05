@@ -21,6 +21,9 @@
 #include "subsystems/SubGimble.h"
 #include "commands/CmdSeekCargoShip.h"
 #include <cscore_oo.h>
+#include "commands/CmdIntakePanel.h"
+#include "subsystems/ElevatorCmdChooser.h"
+
 #include <iostream>
 
 using namespace std;
@@ -35,7 +38,11 @@ class Robot : public frc::TimedRobot {
   static unique_ptr<SubPanelAffector> subPanelAffector;
   static unique_ptr<SubRollerIntake> subRollerIntake;
   static unique_ptr<SubGimble> subGimble;
+
+  static unique_ptr<ElevatorCmdChooser> elevatorCmdChooser;
+
   unique_ptr<CmdSeekCargoShip> cmdSeekCargoShip;
+  unique_ptr<CmdIntakePanel> cmdIntakePanel;
 
   void RobotInit() override;
   void RobotPeriodic() override;

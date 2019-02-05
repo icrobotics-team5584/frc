@@ -6,6 +6,8 @@
 /*----------------------------------------------------------------------------*/
 
 #include "Robot.h"
+#include <cscore_oo.h>
+#include <cameraserver/CameraServer.h>
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
@@ -21,17 +23,20 @@ unique_ptr<SubGimble> Robot::subGimble;
 void Robot::RobotInit() {
   _robotMap.reset(new RobotMap);
 
-  
-  cmdSeekCargoShip.reset(new CmdSeekCargoShip());
-  subDriveBase.reset(new SubDriveBase());
-  subElevator.reset(new SubElevator());
-  subIntakeOutake.reset(new SubIntakeOutake());
-  subPanelAffector.reset(new SubPanelAffector());
-  subRollerIntake.reset(new SubRollerIntake());
-  subGimble.reset(new SubGimble());
+    
+    cmdSeekCargoShip.reset(new CmdSeekCargoShip());
+    subDriveBase.reset(new SubDriveBase());
+    subElevator.reset(new SubElevator());
+    subIntakeOutake.reset(new SubIntakeOutake());
+    subPanelAffector.reset(new SubPanelAffector());
+    subRollerIntake.reset(new SubRollerIntake());
+    subGimble.reset(new SubGimble());
+    cam = CameraServer::GetInstance()->StartAutomaticCapture();
+    cam.SetResolution(90, 80);
+    // cam.SetFPS(20);
 
-
-
+    // server = CameraServer::GetInstance()->GetServer();
+    // server.SetSource(cam);
     _oi.reset(new OI);
     std::cout << "robot init finish" << std::endl;
 
@@ -58,11 +63,14 @@ void Robot::RobotInit() {
  * LiveWindow and SmartDashboard integrated updating.
  */
 void Robot::RobotPeriodic() {
-    SmartDashboard::PutNumber("Right Velocity", subDriveBase->getRightVelocity());
-    SmartDashboard::PutNumber("Left Velocity", subDriveBase->getLeftVelocity());
-    SmartDashboard::PutNumber("Right Encoder", subDriveBase->getRawRightEncoder());
-    SmartDashboard::PutNumber("Left Encoder", subDriveBase->getRawLeftEncoder());
-    SmartDashboard::PutNumber("NavX Yaw", subDriveBase->getYaw());
+    SmartDashboard::PutNumber("Bottom Ultrasonic", subDriveBase->getDistanceToObstical());
+    SmartDashboard::PutBoolean("front sensor", subDriveBase->frontHasReachedLine());
+    SmartDashboard::PutBoolean("mid sensor", subDriveBase->midHasReachedLine());
+    SmartDashboard::PutBoolean("left sensor", subDriveBase->isLeftClsOnLine());
+    SmartDashboard::PutBoolean("right sensor", subDriveBase->isRightClsOnLine());
+
+    SmartDashboard::PutNumber("Yaw", subDriveBase->getYaw());
+    SmartDashboard::PutNumber("Elevator encoder", subElevator->GetEncoderPosition());
 }
 
 /**

@@ -58,7 +58,9 @@
     "utility": "cpp",
     "*.inc": "cpp",
     "complex": "cpp",
+    "forward_list": "cpp",
     "list": "cpp",
-    "iomanip": "cpp"
+    "numeric": "cpp",
+    "valarray": "cpp"
   }
 }

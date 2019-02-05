@@ -8,15 +8,14 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include "Robot.h"
 
-class CmdIntakePanel : public frc::Command {
- private:
+class CmdElevatorUpTest : public frc::Command {
  public:
-  CmdIntakePanel();
+  CmdElevatorUpTest();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
-
 };
