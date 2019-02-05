@@ -30,6 +30,10 @@ enum Axis {
   leftAxisTrigger = 2
 };
 
+enum ElevatorHeight {
+  bottom = 0,
+  testHeight = 1
+};
 
 class OI {
  public:
@@ -45,6 +49,7 @@ private:
   unique_ptr<frc::JoystickButton> btnGimbleRotateLeft;
   unique_ptr<frc::JoystickButton> btnGimbleRotateRight;
   unique_ptr<AxisButton> btnDriveBaseSlow;
+  unique_ptr<frc::JoystickButton> btnElevatorToPos;
 
   unique_ptr<frc::JoystickButton> btnOverride;
 

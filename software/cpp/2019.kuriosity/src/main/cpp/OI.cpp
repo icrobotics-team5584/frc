@@ -17,6 +17,7 @@
 #include "commands/CmdElevatorUpTest.h"
 #include "commands/CmdElevatorDownTest.h"
 #include "commands/CmdDriveBaseSlow.h"
+#include "commands/CmdElevatorToPosition.h"
 
 OI::OI() {
   cout << "Run Robot OI" << endl;
@@ -55,10 +56,12 @@ OI::OI() {
   btnOverride->WhileHeld(new CmdOverrideTurret());
 
   //Elevator
-  btnUpTest.reset(new frc::JoystickButton(controller.get(), yBtn));
-  btnUpTest->WhileHeld(new CmdElevatorUpTest());
-  btnDownTest.reset(new frc::JoystickButton(controller.get(), aBtn));
-  btnDownTest->WhileHeld(new CmdElevatorDownTest());
+  //btnUpTest.reset(new frc::JoystickButton(controller.get(), yBtn));
+  //btnUpTest->WhileHeld(new CmdElevatorUpTest());
+  //btnDownTest.reset(new frc::JoystickButton(controller.get(), aBtn));
+  //btnDownTest->WhileHeld(new CmdElevatorDownTest());
+  btnElevatorToPos.reset(new frc::JoystickButton(controller.get(), yBtn));
+  btnElevatorToPos->WhenPressed(new CmdElevatorToPosition(testHeight));
 }
 std::shared_ptr<frc::Joystick> OI::getJoystick0() {
    return joystick0;

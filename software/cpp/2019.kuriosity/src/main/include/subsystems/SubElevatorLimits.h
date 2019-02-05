@@ -22,4 +22,5 @@ class SubElevatorLimits : public frc::Subsystem {
   void AutoStopBottom();
   bool GetBottomLimit();
   bool GetTopLimit();
+  bool GetBothLimits();
 };
