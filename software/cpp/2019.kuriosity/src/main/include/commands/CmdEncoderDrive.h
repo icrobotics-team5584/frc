@@ -10,10 +10,11 @@
 #include <frc/commands/Command.h>
 #include <frc/WPILib.h>
 #include "pidControllers/PidsrcEncoderDrive.h"
+#include "pidControllers/PidoutEncoderDrive.h"
 
 class CmdEncoderDrive : public frc::Command {
  public:
-  CmdEncoderDrive();
+  CmdEncoderDrive(double distance);
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
@@ -22,7 +23,8 @@ class CmdEncoderDrive : public frc::Command {
 private:
   std::unique_ptr<frc::PIDController> driveController;
   std::unique_ptr<PidsrcEncoderDrive> pidsrcEncoder;
-  const double kP = 0;
+  std::unique_ptr<PidoutEncoderDrive> pidoutEncoder;
+  const double kP = 1.4;
   const double kI = 0;
   const double kD = 0;
 };

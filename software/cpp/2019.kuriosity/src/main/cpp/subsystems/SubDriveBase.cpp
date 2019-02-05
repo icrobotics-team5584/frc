@@ -53,6 +53,8 @@ void SubDriveBase::InitDefaultCommand() {
 }
 
 void SubDriveBase::drive(double speed, double rotation) {
+  frc::SmartDashboard::PutNumber("drive(speed)", -speed);
+  frc::SmartDashboard::PutNumber("drive(rotation)", rotation);
   difDrive->ArcadeDrive(-speed, rotation);
 }
 
@@ -127,7 +129,7 @@ void SubDriveBase::zeroEncoders() {
 }
 
 double SubDriveBase::getDistanceTravelled() {
-  double encoderTics = (getRawLeftEncoder() + getRawRightEncoder()) / 2;
+  double encoderTics = (getRawLeftEncoder() - getRawRightEncoder()) / 2;
   double wheelRotations = encoderTics / ENCODER_TICS_PER_ROTATION;
   double distance = wheelRotations * metersPerRotation;
   return distance;  

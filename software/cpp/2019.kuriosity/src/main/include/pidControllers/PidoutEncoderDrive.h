@@ -7,7 +7,10 @@
 
 #pragma once
 
-class PidoutEncoderDrive {
+#include <frc/WPILib.h>
+
+class PidoutEncoderDrive : public frc::PIDOutput {
  public:
   PidoutEncoderDrive();
+  void PIDWrite(double output);
 };
