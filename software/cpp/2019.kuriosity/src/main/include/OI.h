@@ -35,6 +35,8 @@ class OI {
   std::shared_ptr<frc::Joystick> getJoystick0();
 private:
   unique_ptr<frc::JoystickButton> btnFollowLine;
+  unique_ptr<frc::JoystickButton> btnMotionProfile;
+
   unique_ptr<frc::JoystickButton> btnDeployPanel;
   unique_ptr<frc::JoystickButton> btnDeployFingers; 
   unique_ptr<frc::JoystickButton> btnSeekPath;

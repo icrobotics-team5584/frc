@@ -46,7 +46,7 @@ void MotionProfileData::ReadMotionProfile(Segment *path, int length, double whee
 	pathfinder_modify_tank(path, length, leftTrajectory, rightTrajectory, wheelBaseWidth);
 
 	ReadSegment(0, leftTrajectory, length);
-	ReadSegment(0, rightTrajectory, length);
+	ReadSegment(1, rightTrajectory, length);
 	delete leftTrajectory;
 	delete rightTrajectory;
 }

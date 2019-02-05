@@ -15,4 +15,6 @@ class CmdMotionProfile : public frc::Command {
 private:
   std::shared_ptr<MotionProfileData> mpData;
   std::unique_ptr<MotionProfileControl> mpControl;
+  std::shared_ptr<WPI_TalonSRX> _srxLeft;
+  std::shared_ptr<WPI_TalonSRX> _srxRight;
 };

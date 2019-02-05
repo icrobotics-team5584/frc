@@ -65,6 +65,7 @@ class SubDriveBase : public frc::Subsystem {
   void drive(double speed, double rotation);
   void tankDrive(double leftSpeed, double rightSpeed);
   void brakeRobot();
+  void setMotorSaftey(bool enabled);
   Segment* generatePath();
   int getPathLength();
 

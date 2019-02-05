@@ -18,6 +18,7 @@
 #include "commands/CmdElevatorDownTest.h"
 #include "commands/CmdDriveBaseSlow.h"
 #include "commands/CmdSeekPath.h"
+#include "commands/CmdMotionProfile.h"
 
 OI::OI() {
   cout << "Run Robot OI" << endl;
@@ -27,6 +28,9 @@ OI::OI() {
   //Drive Base
   btnDriveBaseSlow.reset(new frc::JoystickButton(controller.get(), leftStickBtn));
   btnDriveBaseSlow->WhileHeld(new CmdDriveBaseSlow());
+
+  btnMotionProfile.reset(new frc::JoystickButton(controller.get(), aBtn));
+  btnMotionProfile->WhenPressed(new CmdMotionProfile());
 
   //Intake Outake
   btnCargoPodOut.reset(new frc::JoystickButton(controller.get(), leftBtn));
@@ -56,10 +60,10 @@ OI::OI() {
   btnOverride->WhileHeld(new CmdOverrideTurret());
 
   //Elevator
-  btnUpTest.reset(new frc::JoystickButton(controller.get(), yBtn));
-  btnUpTest->WhileHeld(new CmdElevatorUpTest());
-  btnDownTest.reset(new frc::JoystickButton(controller.get(), aBtn));
-  btnDownTest->WhileHeld(new CmdElevatorDownTest());
+  // btnUpTest.reset(new frc::JoystickButton(controller.get(), yBtn));
+  // btnUpTest->WhileHeld(new CmdElevatorUpTest());
+  // btnDownTest.reset(new frc::JoystickButton(controller.get(), aBtn));
+  // btnDownTest->WhileHeld(new CmdElevatorDownTest());
 }
 std::shared_ptr<frc::Joystick> OI::getJoystick0() {
    return joystick0;

@@ -34,9 +34,9 @@ public:
 	{
 		std::cout << "NOPROGRESS\n";
 	}
-	static void OnUnderrun()
+	static void OnUnderrun(char talonLetter)
 	{
-		std::cout << "UNDERRUN\n";
+		std::cout << "UNDERRUN " << talonLetter << std::endl;
 	}
 	static const char * StrOutputEnable(unsigned int value)
 	{

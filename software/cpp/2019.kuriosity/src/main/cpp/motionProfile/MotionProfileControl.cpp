@@ -76,8 +76,6 @@ void MotionProfileControl::PeriodicTask(){
 
 void MotionProfileControl::reset(){
 
-	std::cout << "MotionProfileControl: reset" << std::endl;
-
 	//clean buffer
 	_leftTalon->ClearMotionProfileTrajectories();
 	_rightTalon->ClearMotionProfileTrajectories();
@@ -168,6 +166,8 @@ void MotionProfileControl::control(){
 
 		// _headingA = _leftTalon->GetActiveTrajectoryHeading(); // GetActiveTrajectoryHeading was deprecated after 2018
 		// _headingB = _rightTalon->GetActiveTrajectoryHeading(); // GetActiveTrajectoryHeading was deprecated after 2018
+		_headingA = 0;
+		_headingB = 0;
 		_posA = _leftTalon->GetActiveTrajectoryPosition();
 		_posB = _rightTalon->GetActiveTrajectoryPosition();
 		_velA = _leftTalon->GetActiveTrajectoryVelocity();
@@ -175,8 +175,8 @@ void MotionProfileControl::control(){
 
 		// printfs and/or logging ... we really need to process statuses in a better
 		// way as they will appear jumbled in the console when we do it like this
-//		Instrumentation::Process(_statusA, _posA, _velA, _headingA);
-//		Instrumentation::Process(_statusB, _posB, _velB, _headingB);
+		Instrumentation::Process(_statusA, _posA, _velA, _headingA);
+		Instrumentation::Process(_statusB, _posB, _velB, _headingB);
 
 }
 
@@ -196,7 +196,7 @@ void MotionProfileControl::streamToTopBuffer( bool firstpass ){
 	//Check if talons have run out of points
 	if(_statusA.hasUnderrun){
 		// Log it in the console
-		Instrumentation::OnUnderrun();
+		Instrumentation::OnUnderrun('a');
 		 /*
 		  * Clear the error. This is what seperates "has underrun" from
 		  * "is underrun", because the former is cleared by the application.
@@ -206,7 +206,7 @@ void MotionProfileControl::streamToTopBuffer( bool firstpass ){
 	}
 	if(_statusB.hasUnderrun ){
 		// Log it in the console
-		Instrumentation::OnUnderrun();
+		Instrumentation::OnUnderrun('b');
 		/*
 		 * Clear the error. This is what seperates "has underrun" from
 		 * "is underrun", because the former is cleared by the application.
@@ -229,13 +229,13 @@ void MotionProfileControl::streamToTopBuffer( bool firstpass ){
 		_blocks = ( _minTopBufferRem > kBlockSize ) ? 1 : 0;
 	}
 
-//	std::cout << "INFO: processing " << _blocks << " blocks" << std::endl;
+	// std::cout << "INFO: processing " << _blocks << " blocks" << std::endl;
 
 	// no process the zero or more blocks
 	while( _blocks > 0 ) {
 		int mpsize = _mpData->GetNumberOfPoints();
 		int start = _pointsprocessed;
-//		std::cout << "INFO: points processed (before): " << _pointsprocessed << "/" << mpsize << std::endl;
+		// std::cout << "INFO: points processed (before): " << _pointsprocessed << "/" << mpsize << std::endl;
 		int finish;
 		int remaining = mpsize - _pointsprocessed;
 		if( remaining > kBlockSize ) {
@@ -248,7 +248,7 @@ void MotionProfileControl::streamToTopBuffer( bool firstpass ){
 			PushToTalon(_mpData->GetPoint(1, i), _rightTalon, 1);
 		}
 		_pointsprocessed = finish;
-//		std::cout << "INFO: points processed (after): " << _pointsprocessed << "/" << mpsize << std::endl;
+		// std::cout << "INFO: points processed (after): " << _pointsprocessed << "/" << mpsize << std::endl;
 		_blocks--;
 	}
 }
@@ -297,13 +297,10 @@ void MotionProfileControl::stop(){
 }
 
 void MotionProfileControl::load(){
-	std::cout << "MotionProfileControl: load" << std::endl;
 	_mpData->ReadMotionProfile(_profile);
 }
 
 void MotionProfileControl::initialise(){
-
-	std::cout << "MotionProfileControl: initialise" << std::endl;
 	//Put Talons in MP mode
 	_rightTalon->Set(ControlMode::MotionProfile, 0);
 	_leftTalon->Set(ControlMode::MotionProfile, 0);
@@ -317,7 +314,6 @@ void MotionProfileControl::initialise(){
 void MotionProfileControl::execute(){
 	//Determine what to do based on state
 	control();
-	SmartDashboard::PutNumber("_loopTimeout", _loopTimeout);
 
 	//Set talons to take motion profile points
 	SetValueMotionProfile setOutput = GetSetValue();

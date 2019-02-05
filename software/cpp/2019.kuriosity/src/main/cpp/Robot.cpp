@@ -24,7 +24,6 @@ void Robot::RobotInit() {
   _robotMap.reset(new RobotMap);
 
     
-    cmdSeekCargoShip.reset(new CmdSeekCargoShip());
     subDriveBase.reset(new SubDriveBase());
     subElevator.reset(new SubElevator());
     subIntakeOutake.reset(new SubIntakeOutake());
@@ -95,9 +94,7 @@ void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
  */
 void Robot::AutonomousInit() {
 
-    cmdSeekCargoShip.reset(new CmdSeekCargoShip());
 
-    cmdSeekCargoShip->Start();
     // std::string autoSelected = frc::SmartDashboard::GetString(
     //     "Auto Selector", "Default");
     // if (autoSelected == "My Auto") {

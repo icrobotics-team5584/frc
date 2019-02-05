@@ -60,9 +60,14 @@ void SubDriveBase::setTalControlMode(ControlMode controlMode) {
   _srxFrontRight->Set(controlMode, 0);
   _srxFrontLeft->Set(controlMode, 0);
 }
+
 void SubDriveBase::tankDriveVelocity(double leftVelocity, double rightVelocity) {
   _srxFrontLeft->Set(ControlMode::Velocity, leftVelocity);
   _srxFrontRight->Set(ControlMode::Velocity, rightVelocity);
+}
+
+void SubDriveBase::setMotorSaftey(bool enabled){
+  difDrive->SetSafetyEnabled(enabled);
 }
 
 double SubDriveBase::getRawLeftEncoder() {

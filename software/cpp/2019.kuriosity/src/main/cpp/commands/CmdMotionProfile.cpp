@@ -6,7 +6,8 @@ CmdMotionProfile::CmdMotionProfile() {
   // Use Requires() here to declare subsystem dependencies
   Requires(Robot::subDriveBase.get());
   mpData.reset(new MotionProfileData());
-
+  _srxLeft = Robot::_robotMap->srxDriveBaseFrontLeft;
+  _srxRight = Robot::_robotMap->srxDriveBaseFrontRight;
 }
 
 // Called just before this Command runs the first time
@@ -14,10 +15,10 @@ void CmdMotionProfile::Initialize() {
   Segment *segment = Robot::subDriveBase->generatePath();
   int pathLength = Robot::subDriveBase->getPathLength();
   double wheelBaseWidth = Robot::subDriveBase->WHEEL_BASE_WIDTH; 
+  Robot::subDriveBase->setMotorSaftey(false);
+
   mpData->ReadMotionProfile(segment, pathLength, wheelBaseWidth);
-  std::shared_ptr<WPI_TalonSRX> srxLeft = Robot::_robotMap->srxDriveBaseFrontLeft;
-  std::shared_ptr<WPI_TalonSRX> srxRight = Robot::_robotMap->srxDriveBaseFrontRight;
-  mpControl.reset(new MotionProfileControl(srxLeft, srxRight, mpData, 10));
+  mpControl.reset(new MotionProfileControl(_srxLeft, _srxRight, mpData, 10));
   mpControl->initialise();
   delete segment;
 }
@@ -36,6 +37,7 @@ bool CmdMotionProfile::IsFinished() {
 // Called once after isFinished returns true
 void CmdMotionProfile::End() {
   mpControl->stop();
+  Robot::subDriveBase->setMotorSaftey(true);
 }
 
 // Called when another command which requires one or more of the same
