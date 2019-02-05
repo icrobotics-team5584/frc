@@ -3,8 +3,11 @@
 
 SubElevator::SubElevator() : Subsystem("ExampleSubsystem") {
   _srxElevatorMaster = Robot::_robotMap->srxElevatorMaster;
-  
-   enum Constants
+  SmartDashboard::PutNumber("Elevator PIDP", PIDP);
+  SmartDashboard::PutNumber("Elevator PIDI", PIDI);
+  SmartDashboard::PutNumber("Elevator PIDD", PIDD);
+  SmartDashboard::PutNumber("Elevator PID target", targetPositionRotations);
+   enum Constants 
     {
     	/**
     	 * Which PID slot to pull gains from.  Starting 2018, you can choose
@@ -40,13 +43,17 @@ SubElevator::SubElevator() : Subsystem("ExampleSubsystem") {
 
   /* set closed loop gains in slot0 */
 	_srxElevatorMaster->Config_kF(kPIDLoopIdx, 0.0, kTimeoutMs);
-	_srxElevatorMaster->Config_kP(kPIDLoopIdx, 2.0, kTimeoutMs);
-	_srxElevatorMaster->Config_kI(kPIDLoopIdx, 0.0, kTimeoutMs);
-	_srxElevatorMaster->Config_kD(kPIDLoopIdx, 0.0, kTimeoutMs);
+	_srxElevatorMaster->Config_kP(kPIDLoopIdx, PIDP, kTimeoutMs);
+	_srxElevatorMaster->Config_kI(kPIDLoopIdx, PIDI, kTimeoutMs);
+	_srxElevatorMaster->Config_kD(kPIDLoopIdx, PIDD, kTimeoutMs);
 }
 
 void SubElevator::Periodic() {
 	SmartDashboard::PutNumber("ELEVATOR", _srxElevatorMaster->GetSelectedSensorPosition(0));
+	SmartDashboard::GetNumber("Elevator PIDP", 0.0);
+	SmartDashboard::GetNumber("Elevator PIDI", 0.0);
+	SmartDashboard::GetNumber("Elevator PIDD", 0.0);
+	SmartDashboard::GetNumber("Elevator PID target", 0.0);
 }
 
 void SubElevator::InitDefaultCommand() {
@@ -113,6 +120,10 @@ void SubElevator::EncoderReset() {
 	_srxElevatorMaster->SetSelectedSensorPosition(0, 0, 10);
 	targetPositionRotations = 0;
 	_srxElevatorMaster->Set(ControlMode::Position, targetPositionRotations);
+}
+
+void SubElevator::TestingPID() {
+	_srxElevatorMaster->Set(ControlMode::Position, (targetPositionRotations * 4096));
 }
 
 

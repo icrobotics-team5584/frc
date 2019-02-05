@@ -21,9 +21,12 @@ class SubElevator : public frc::Subsystem {
 
   shared_ptr<WPI_TalonSRX> _srxElevatorMaster;
   double _axis5 = 0;
-  double targetPositionRotations;
+  double targetPositionRotations = 0.0;
   double elevatorUpSpeed = -0.3;
   double elevatorDownSpeed = 0.2;
+  double PIDP = 0.0;
+  double PIDI = 0.0;
+  double PIDD = 0.0;
 	int overrideSpeed = 0;
 
  public:
@@ -41,5 +44,6 @@ class SubElevator : public frc::Subsystem {
   void TestingDown();
   void TestingStop();
   void TestingUpStop();
+  void TestingPID();
   int GetEncoderPosition();
 };
