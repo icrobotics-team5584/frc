@@ -42,7 +42,6 @@ void CmdFollowLine::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdFollowLine::IsFinished() {
-  std::cout << "Running isFinished()" << std::endl;
   double range = Robot::subDriveBase->getDistanceToObstical();
   std::cout << "range " << range << std::endl;
   return (range < 100) or (range > 1700);
@@ -50,7 +49,6 @@ bool CmdFollowLine::IsFinished() {
 
 // Called once after isFinished returns true
 void CmdFollowLine::End() {
-  std::cout << "Ending CmdFollowLine" << std::endl;
   Robot::subDriveBase->drive(0, 0);
 }
 

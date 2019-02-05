@@ -6,7 +6,6 @@
 /*----------------------------------------------------------------------------*/
 
 #include "Robot.h"
-#include <cscore_oo.h>
 #include <cameraserver/CameraServer.h>
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
@@ -21,11 +20,9 @@ unique_ptr<SubRollerIntake> Robot::subRollerIntake;
 unique_ptr<SubGimble> Robot::subGimble;
 
 void Robot::RobotInit() {
-    cout << "Run Robot init" << endl;
-    _robotMap.reset(new RobotMap);
+  _robotMap.reset(new RobotMap);
 
     
-    cmdSeekCargoShip.reset(new CmdSeekCargoShip());
     subDriveBase.reset(new SubDriveBase());
     subElevator.reset(new SubElevator());
     subIntakeOutake.reset(new SubIntakeOutake());
@@ -91,9 +88,7 @@ void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
  */
 void Robot::AutonomousInit() {
 
-    cmdSeekCargoShip.reset(new CmdSeekCargoShip());
 
-    cmdSeekCargoShip->Start();
     // std::string autoSelected = frc::SmartDashboard::GetString(
     //     "Auto Selector", "Default");
     // if (autoSelected == "My Auto") {
@@ -110,25 +105,11 @@ void Robot::AutonomousInit() {
 }
 
 void Robot::AutonomousPeriodic() {
-  frc::Scheduler::GetInstance()->Run();
-  bool buttonPressed;
-  SmartDashboard::PutBoolean("Go back", buttonPressed);
-  SmartDashboard::GetBoolean("Go back", buttonPressed);
-  if (buttonPressed) {
-    Robot::subDriveBase->drive(-0.5, 0);
-  }
+
 }
 
 void Robot::TeleopInit() {
-    // This makes sure that the autonomous stops running when
-    // teleop starts running. If you want the autonomous to
-    // continue until interrupted by another command, remove
-    // this line or comment it out.
-    // if (m_autonomousCommand != nullptr) {
-    //  m_autonomousCommand->Cancel();
-    //  m_autonomousCommand = nullptr;
-    //}
-
+    subDriveBase->resetYaw();
 
 }
 
