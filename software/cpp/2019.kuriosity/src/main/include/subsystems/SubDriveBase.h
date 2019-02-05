@@ -9,8 +9,13 @@
 
 #include <frc/WPILib.h>
 #include <frc/commands/Subsystem.h>
+#include <pathfinder.h>
+
 #include <ctre/Phoenix.h>
 #include <AHRS.h>
+
+#include "RightVelocitySource.h"
+#include "LeftVelocitySource.h"
 
 using namespace std;
 using namespace frc;
@@ -23,7 +28,11 @@ class SubDriveBase : public frc::Subsystem {
   shared_ptr<WPI_TalonSRX> _srxBackLeft;
   shared_ptr<WPI_TalonSRX> _srxBackRight;
   unique_ptr<frc::DifferentialDrive> difDrive;
-  
+  unique_ptr<PIDController> leftVelocityController;
+  unique_ptr<PIDController> rightVelocityController;
+  LeftVelocitySource* leftVelocitySource;
+  RightVelocitySource* rightVelocitySource;
+
   // Sensors
   shared_ptr<DigitalInput> _clsMid;
   shared_ptr<DigitalInput> _clsFront;
@@ -33,13 +42,41 @@ class SubDriveBase : public frc::Subsystem {
   shared_ptr<DigitalInput> _clsLineLeft;
   shared_ptr<DigitalInput> _clsLineRight;
 
+  // Robot constants
+  const double WHEEL_DIAMETER = 0.1524; // in meters (0.2032 for dizzy)
+  const int ENCODER_TICS_PER_ROTATION = 4096; // (214 for dizzy)
+  double metersPerRotation; // calculated in constructor
+
+  int pathLength; //path length
+  double scaleFactor = (WHEEL_DIAMETER * 3.1459265)/4096;
+  
+	double kTimeoutMs = 30;
+  double kPIDLoopIdx = 0;
+  double kSlotIdx = 0;
+ 
  public:
   SubDriveBase();
   void InitDefaultCommand() override;
 
   // Drive functions
+  void tankDriveVelocity(double leftVelocity, double rightVelocity);
   void drive(double speed, double rotation);
+  void tankDrive(double leftSpeed, double rightSpeed);
   void brakeRobot();
+  Segment* generatePath();
+  int getPathLength();
+
+  // Encoder functions
+  void zeroEncoders();
+  double getRawLeftEncoder();
+  double getRawRightEncoder();
+  double getDistanceTravelled();
+  double getRightVelocity();
+  double getLeftVelocity();
+  void velocityPIDConfig();
+  void setTalControlMode(ControlMode controlMode);
+
+  void disablePID();
 
   // Gyro functions
   void resetYaw();

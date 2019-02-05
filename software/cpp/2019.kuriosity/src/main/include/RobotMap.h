@@ -71,7 +71,6 @@ enum PCM_1 {
 };
 
 class RobotMap {
-private: 
 public:
     RobotMap();
 
