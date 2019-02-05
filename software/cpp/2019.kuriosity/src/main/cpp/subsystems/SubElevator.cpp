@@ -44,6 +44,11 @@ SubElevator::SubElevator() : Subsystem("ExampleSubsystem") {
 	_srxElevatorMaster->Config_kI(kPIDLoopIdx, 0.0, kTimeoutMs);
 	_srxElevatorMaster->Config_kD(kPIDLoopIdx, 0.0, kTimeoutMs);
 }
+
+void SubElevator::Periodic() {
+	SmartDashboard::PutNumber("ELEVATOR", _srxElevatorMaster->GetSelectedSensorPosition(0));
+}
+
 void SubElevator::InitDefaultCommand() {
 // Set the default command for a subsystem here.
 // SetDefaultCommand(new MySpecialCommand());
@@ -51,6 +56,7 @@ void SubElevator::InitDefaultCommand() {
  //Put methods for controlling this subsystem
  //here. Call these from Commands.
 }
+
 void SubElevator::ElevatorToPos(double rotation) {
   targetPositionRotations = -(rotation * 4096);
   _srxElevatorMaster->Set(ControlMode::Position, targetPositionRotations);
@@ -67,6 +73,7 @@ void SubElevator::Override(std::shared_ptr<Joystick> rightStick){
 
 	_srxElevatorMaster->Set(ControlMode::Position, targetPositionRotations);
 }
+
 void SubElevator::PIDEnable() {
 	cout << "Elevator PID go" << endl;
 
@@ -75,25 +82,25 @@ void SubElevator::PIDDisable() {
 	cout << "Elevator PID stop" << endl;
 	_srxElevatorMaster->Set(ControlMode::PercentOutput, 0.0);
 }
+
 void SubElevator::Stop() {
 	targetPositionRotations = (_srxElevatorMaster->GetSelectedSensorPosition(0));
 	_srxElevatorMaster->Set(ControlMode::Position, targetPositionRotations);
 }
 
 void SubElevator::TestingUp() {
-	
 	_srxElevatorMaster->Set(-0.6);
 }
 
 
 void SubElevator::TestingDown() {
-	
 	_srxElevatorMaster->Set(0.2);
 }
 
 void SubElevator::TestingStop() {
 	_srxElevatorMaster->Set(0.0);
 }
+
 void SubElevator::TestingUpStop() {
 	_srxElevatorMaster->Set(-0.1);
 }
@@ -101,5 +108,12 @@ void SubElevator::TestingUpStop() {
 int SubElevator::GetEncoderPosition() {
 	return _srxElevatorMaster->GetSelectedSensorPosition(0);
 }
+
+void SubElevator::EncoderReset() {
+	_srxElevatorMaster->SetSelectedSensorPosition(0, 0, 10);
+	targetPositionRotations = 0;
+	_srxElevatorMaster->Set(ControlMode::Position, targetPositionRotations);
+}
+
 
 

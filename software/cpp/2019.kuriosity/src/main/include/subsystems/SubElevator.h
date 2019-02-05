@@ -29,11 +29,13 @@ class SubElevator : public frc::Subsystem {
  public:
  
   SubElevator();
+  void Periodic();
   void InitDefaultCommand() override;
   void ElevatorToPos(double rotations);
   void Override(std::shared_ptr<Joystick>);
   void PIDEnable();
   void PIDDisable();
+  void EncoderReset();
   void Stop();
   void TestingUp();
   void TestingDown();
