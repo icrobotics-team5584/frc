@@ -123,7 +123,7 @@ void SubElevator::EncoderReset() {
 }
 
 void SubElevator::TestingPID() {
-	_srxElevatorMaster->Set(ControlMode::Position, (targetPositionRotations * 4096));
+	_srxElevatorMaster->Set(ControlMode::Position, (targetPositionRotations * -4096));
 }
 
 
