@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <frc/WPILib.h>
+#include "AxisButton.h"
 
 using namespace std;
 
@@ -25,6 +26,10 @@ enum Buttons {
      rightStickBtn =10
 };
 
+enum Axis {
+  leftAxisTrigger = 2
+};
+
 
 class OI {
  public:
@@ -39,6 +44,7 @@ private:
   unique_ptr<frc::JoystickButton> btnDeployFingers; 
   unique_ptr<frc::JoystickButton> btnGimbleRotateLeft;
   unique_ptr<frc::JoystickButton> btnGimbleRotateRight;
+  unique_ptr<AxisButton> btnDriveBaseSlow;
 
   unique_ptr<frc::JoystickButton> btnOverride;
 

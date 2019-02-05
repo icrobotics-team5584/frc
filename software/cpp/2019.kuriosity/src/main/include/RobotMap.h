@@ -20,13 +20,13 @@ enum Can {
     can_srxDriveBaseFrontRight = 3,
     can_srxDriveBaseBackRight = 4,
     can_srxGimble = 5,
+    can_srxIntakeOutake = 6,
     can_srxElevatorMaster = 7,
     can_srxElevatorSlave = 8,
-    can_srxIntakeOutake = 6
+    can_srxRollerIntake = 9,
 };
 
 enum PWM {
-    pwm_spkRollerIntake = 9999
 };
 
 enum DIO {
@@ -50,15 +50,33 @@ enum Analog {
 };
 
 enum PCM {
+    pcm_lower = 0,
+    pcm_upper = 1
+};
+
+enum PCM_0{
     pcm_solPanelAffectorTopFingerForward = 1,
     pcm_solPanelAffectorTopFingerReverse = 0,
+
     pcm_solPanelAffectorBottomFingerForward = 9999,
     pcm_solPanelAffectorBottomFingerReverse = 9999,
-
+    
     pcm_solPanelAffectorTopForward = 7,
     pcm_solPanelAffectorTopReverse = 6,
     pcm_solPanelAffectorBottomForward = 5,
     pcm_solPanelAffectorBottomReverse = 4
+};
+
+enum PCM_1 {
+   // pcm_solPanelAffectorTopFingerForward = 1,
+   // pcm_solPanelAffectorTopFingerReverse = 0,
+   // pcm_solPanelAffectorBottomFingerForward = 9999,
+   // pcm_solPanelAffectorBottomFingerReverse = 9999,
+//
+   // pcm_solPanelAffectorTopForward = 7,
+   // pcm_solPanelAffectorTopReverse = 6,
+   // pcm_solPanelAffectorBottomForward = 5,
+   // pcm_solPanelAffectorBottomReverse = 4
 };
 
 class RobotMap {
@@ -101,7 +119,7 @@ public:
 
     //Intake and outake
     shared_ptr<WPI_TalonSRX> srxIntakeOutake;
-    shared_ptr<frc::Spark> spkRollerIntake;
+    shared_ptr<WPI_TalonSRX> srxRollerIntake;
 
     shared_ptr<DigitalInput> subIntakeOutakeCargo;
 

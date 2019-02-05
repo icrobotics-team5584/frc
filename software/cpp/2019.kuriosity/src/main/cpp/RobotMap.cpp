@@ -21,7 +21,7 @@ RobotMap::RobotMap(){
     
     // Intake and Outake
     srxIntakeOutake.reset(new WPI_TalonSRX(can_srxIntakeOutake));
-    spkRollerIntake.reset(new frc::Spark(pwm_spkRollerIntake));
+    srxRollerIntake.reset(new WPI_TalonSRX(can_srxRollerIntake));
     subIntakeOutakeCargo.reset(new DigitalInput(dio_subIntakeOutakeCargo));
 
     // DriveBase Sensors
@@ -43,10 +43,10 @@ RobotMap::RobotMap(){
     
 
     // Panel Affector Actuators
-    solPanelAffectorTop.reset(new DoubleSolenoid(pcm_solPanelAffectorTopForward, pcm_solPanelAffectorTopReverse));
-    solPanelAffectorBottom.reset(new DoubleSolenoid(pcm_solPanelAffectorBottomForward, pcm_solPanelAffectorBottomReverse));
-    solPanelAffectorTopFinger.reset(new DoubleSolenoid(pcm_solPanelAffectorTopFingerForward, pcm_solPanelAffectorTopFingerReverse));
-    solPanelAffectorBottomFinger.reset(new DoubleSolenoid(pcm_solPanelAffectorBottomFingerForward, pcm_solPanelAffectorBottomFingerReverse));
+    solPanelAffectorTop.reset(new DoubleSolenoid(pcm_lower, pcm_solPanelAffectorTopForward, pcm_solPanelAffectorTopReverse));
+    solPanelAffectorBottom.reset(new DoubleSolenoid(pcm_lower, pcm_solPanelAffectorBottomForward, pcm_solPanelAffectorBottomReverse));
+    solPanelAffectorTopFinger.reset(new DoubleSolenoid(pcm_lower, pcm_solPanelAffectorTopFingerForward, pcm_solPanelAffectorTopFingerReverse));
+    solPanelAffectorBottomFinger.reset(new DoubleSolenoid(pcm_lower, pcm_solPanelAffectorBottomFingerForward, pcm_solPanelAffectorBottomFingerReverse));
 
     //Gimble
     srxGimble.reset(new WPI_TalonSRX(can_srxGimble));

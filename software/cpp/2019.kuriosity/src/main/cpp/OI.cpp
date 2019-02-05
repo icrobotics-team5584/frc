@@ -16,11 +16,17 @@
 #include "commands/CmdOverrideTurret.h"
 #include "commands/CmdElevatorUpTest.h"
 #include "commands/CmdElevatorDownTest.h"
+#include "commands/CmdDriveBaseSlow.h"
 
 OI::OI() {
   cout << "Run Robot OI" << endl;
 
   controller.reset(new frc::Joystick(0));
+
+  //Drive Base
+  btnDriveBaseSlow.reset(new AxisButton(controller.get(), leftAxisTrigger));
+  btnDriveBaseSlow->WhileHeld(new CmdDriveBaseSlow());
+
   //Intake Outake
   btnCargoPodOut.reset(new frc::JoystickButton(controller.get(), leftBtn));
   btnCargoPodOut->WhileHeld(new CmdIntakeOutakeOut());

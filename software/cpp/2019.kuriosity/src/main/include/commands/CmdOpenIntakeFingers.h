@@ -9,14 +9,12 @@
 
 #include <frc/commands/Command.h>
 
-class CmdIntakePanel : public frc::Command {
- private:
+class CmdOpenIntakeFingers : public frc::Command {
  public:
-  CmdIntakePanel();
+  CmdOpenIntakeFingers();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
-
 };
