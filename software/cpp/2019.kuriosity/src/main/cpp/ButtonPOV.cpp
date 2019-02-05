@@ -13,23 +13,24 @@ ButtonPOV::ButtonPOV(GenericHID* joystick, int position) {
 }
 
 bool ButtonPOV::Get(){
+    frc::SmartDashboard::PutNumber("POV position", _position);
+    frc::SmartDashboard::PutNumber("POV position 2.0", _joystick->GetPOV());
+   //if((_position - _extraZone) < 0){
+   //    
+   //    _lower = _position + _extraZone;
+   //    _upper = 360 - (abs(_position - _extraZone));
 
-    if((_position - _extraZone) < 0){
-        
-        _lower = _position + _extraZone;
-        _upper = 360 - (abs(_position - _extraZone));
+   //}else{
 
-    }else{
+     _upper = _position + _extraZone;
+     _lower = _position - _extraZone; 
+     if (_joystick->GetPOV() == _position) {
+    return true;
+	 } else {
+    return false;
+	 }
 
-        _upper = _position + _extraZone;
-        _lower = _position - _extraZone; 
-        if ((_joystick->GetPOV() > _lower) && (_joystick->GetPOV() < _upper )) {
-		    return true;
-	    } else {
-		    return false;
-	    }
-
-    }
+    //}
 }
 
 void ButtonPOV::WhenPressed(Command* command) {

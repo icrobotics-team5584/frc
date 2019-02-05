@@ -7,7 +7,9 @@ CmdGimblePidLeft::CmdGimblePidLeft() {
 }
 
 // Called just before this Command runs the first time
-void CmdGimblePidLeft::Initialize() {}
+void CmdGimblePidLeft::Initialize() {
+  Robot::subGimble->PIDGimbleTo(90);
+}
 
 // Called repeatedly when this Command is scheduled to run
 void CmdGimblePidLeft::Execute() {}

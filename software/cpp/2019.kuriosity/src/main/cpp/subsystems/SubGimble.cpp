@@ -9,11 +9,12 @@ SubGimble::SubGimble() : Subsystem("ExampleSubsystem") {
 
   gimbleController = new PIDController(PIDp, PIDi, PIDd, _potSourcePID, _srxGimble.get());
   gimbleController->SetSetpoint(PotCentre);
-	gimbleController->SetInputRange(PotLeft, PotRight);
+	gimbleController->SetInputRange(PotRight, PotLeft);
 	gimbleController->SetOutputRange(-rotateSpeed, rotateSpeed); //Gimble MAX power set here
 	gimbleController->SetContinuous(false);
 	gimbleController->Disable();  //This must be set to true in future
 	frc::SmartDashboard::PutData("Arm PID Controls", gimbleController);  
+  
 }
 
 void SubGimble::Periodic() {
@@ -23,6 +24,7 @@ void SubGimble::Periodic() {
 	  SmartDashboard::PutNumber("POT Value Average", _anaGimblePot->GetAverageValue());
 	  SmartDashboard::PutNumber("The custom value thing", _potSourcePID->PIDGet());
 	  SmartDashboard::PutNumber("ARM TALON OUTPUT %", _srxGimble->Get());
+    
     lc = 0;
   }
 }
@@ -39,19 +41,21 @@ void SubGimble::disable() {
 }
 
 void SubGimble::OverridePID(bool leftRight) { //true = left  ... rotate left
-    if (leftRight){
-    overrideTarget = _anaGimblePot->GetAverageValue() + humanOffset;
-  }
-  else{
-    overrideTarget = _anaGimblePot->GetAverageValue() - humanOffset;
-  }
-  gimbleController->SetSetpoint(overrideTarget);
+  //  if (leftRight){
+  //  overrideSpeed = overrideSpeed + humanOffset;
+  //}
+  //else{
+  //  overrideSpeed = overrideSpeed + - humanOffset;
+  //}
+  //gimbleController->SetSetpoint(overrideTarget);
 }
 
-void SubGimble::PIDGimbleTo(int angle) {
-  potRange = PotLeft - PotRight;
-
-  double target = potRange * ((angle + (totalAngle/2))/totalAngle) + PotRight;
+void SubGimble::PIDGimbleTo(double angle) {
+  
+  potRange = PotRight - PotLeft;
+  angle = angle + 90 + overrideSpeed; // converts -90, 0, 90 to 0, 90, 180
+  double conversion = potRange/180;
+  double target = (angle * conversion) + PotLeft;
 
 	SmartDashboard::PutNumber("TARGET Value", target);
 

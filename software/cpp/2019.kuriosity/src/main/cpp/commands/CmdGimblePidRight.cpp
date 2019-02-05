@@ -7,7 +7,9 @@ CmdGimblePidRight::CmdGimblePidRight() {
 }
 
 // Called just before this Command runs the first time
-void CmdGimblePidRight::Initialize() {}
+void CmdGimblePidRight::Initialize() {
+  Robot::subGimble->PIDGimbleTo(-90);
+}
 
 // Called repeatedly when this Command is scheduled to run
 void CmdGimblePidRight::Execute() {}
