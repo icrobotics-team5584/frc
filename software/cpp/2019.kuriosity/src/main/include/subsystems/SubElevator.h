@@ -11,6 +11,7 @@
 #include <frc/commands/Subsystem.h>
 #include <ctre/Phoenix.h>
 #include <AHRS.h>
+#include <iostream>
 
 using namespace std;
 using namespace frc;
@@ -31,6 +32,8 @@ class SubElevator : public frc::Subsystem {
   void InitDefaultCommand() override;
   void ElevatorToPos(double rotations);
   void Override(std::shared_ptr<Joystick>);
+  void PIDEnable();
+  void PIDDisable();
   void Stop();
   void TestingUp();
   void TestingDown();

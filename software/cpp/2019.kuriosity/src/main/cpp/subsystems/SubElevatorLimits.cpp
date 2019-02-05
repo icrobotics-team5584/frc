@@ -13,8 +13,10 @@ SubElevatorLimits::SubElevatorLimits() : Subsystem("ExampleSubsystem") {
 void SubElevatorLimits::InitDefaultCommand() {}
 
 void SubElevatorLimits::Periodic(){
-  //Limit testing
   cout << "ELEVATOR LIMITS PERIODIC" << endl;
+  AutoStopBottom();
+  AutoStopTop();
+  //Limit testing
   outCount++;
   if(outCount > 10){
     SmartDashboard::PutBoolean("ELEVATOR Top Limit", GetTopLimit());
@@ -30,5 +32,16 @@ bool SubElevatorLimits::GetBottomLimit(){
 bool SubElevatorLimits::GetTopLimit(){
     return limitTop->Get();
 }
-
+void SubElevatorLimits::AutoStopTop() {
+  if (GetTopLimit()){
+    cout << "top" << endl;
+    Robot::subElevator->PIDDisable();
+  }
+}
+void SubElevatorLimits::AutoStopBottom() {
+  if (GetBottomLimit()){
+    cout << "bottom" << endl;
+    Robot::subElevator->PIDDisable();
+  }
+}
 

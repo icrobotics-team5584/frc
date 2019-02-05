@@ -67,7 +67,12 @@ void SubElevator::Override(std::shared_ptr<Joystick> rightStick){
 
 	_srxElevatorMaster->Set(ControlMode::Position, targetPositionRotations);
 }
-
+void SubElevator::PIDEnable() {
+	cout << "Elevator PID go" << endl;
+}
+void SubElevator::PIDDisable() {
+	cout << "Elevator PID stop" << endl;
+}
 void SubElevator::Stop() {
 	targetPositionRotations = (_srxElevatorMaster->GetSelectedSensorPosition(0));
 	_srxElevatorMaster->Set(ControlMode::Position, targetPositionRotations);
@@ -90,7 +95,9 @@ void SubElevator::TestingStop() {
 void SubElevator::TestingUpStop() {
 	_srxElevatorMaster->Set(-0.1);
 }
+
 int SubElevator::GetEncoderPosition() {
 	return _srxElevatorMaster->GetSelectedSensorPosition(0);
 }
+
 

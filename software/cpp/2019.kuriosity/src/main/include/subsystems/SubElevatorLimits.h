@@ -18,6 +18,8 @@ class SubElevatorLimits : public frc::Subsystem {
   SubElevatorLimits();
   void InitDefaultCommand() override;
   void Periodic();
+  void AutoStopTop();
+  void AutoStopBottom();
   bool GetBottomLimit();
   bool GetTopLimit();
 };
