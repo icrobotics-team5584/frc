@@ -25,8 +25,6 @@ void CmdSeekCargoShip::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void CmdSeekCargoShip::Execute() {
   //This is done so that you only need to change drivePower when changing speed. The drivePower default is 100%
-  Robot::subDriveBase->getRange();
-
     if (driveState == SEARCHING_FOR_SHIP) {
         if (Robot::subDriveBase->frontHasReachedLine()) {
           drivePower = 0.4;

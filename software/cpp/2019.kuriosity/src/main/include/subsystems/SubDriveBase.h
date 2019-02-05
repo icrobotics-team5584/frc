@@ -27,19 +27,32 @@ class SubDriveBase : public frc::Subsystem {
   // Sensors
   shared_ptr<DigitalInput> _clsMid;
   shared_ptr<DigitalInput> _clsFront;
-  shared_ptr<Ultrasonic> _ulsLeft;
-  shared_ptr<Ultrasonic> _ulsRight;
+  shared_ptr<Ultrasonic> _ulsGimble;
+  shared_ptr<Ultrasonic> _ulsBottom;
   shared_ptr<AHRS> _ahrsNavXGyro;
+  shared_ptr<DigitalInput> _clsLineLeft;
+  shared_ptr<DigitalInput> _clsLineRight;
 
  public:
   SubDriveBase();
+  void InitDefaultCommand() override;
+
+  // Drive functions
   void drive(double speed, double rotation);
+  void brakeRobot();
+
+  // Gyro functions
   void resetYaw();
   double getYaw();
+
+  // Colour Sensor functions
   bool frontHasReachedLine();
   bool midHasReachedLine();
-  void brakeRobot();
-  void getRange();
+  bool isLeftClsOnLine();
+  bool isRightClsOnLine();
+
+  // Ultrasonic functions
+  double getDistanceToObstical();
   bool isBayEmpty();
   double positionPID(double distance);
   void pidPositionConfig();

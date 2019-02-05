@@ -7,15 +7,34 @@
 
 #pragma once
 
+#include <frc/WPILib.h>
 #include <frc/commands/Subsystem.h>
+#include <ctre/Phoenix.h>
+#include <AHRS.h>
+
+using namespace std;
+using namespace frc;
 
 class SubElevator : public frc::Subsystem {
  private:
-  // It's desirable that everything possible under private except
-  // for methods that implement subsystem capabilities
+
+  shared_ptr<WPI_TalonSRX> _srxElevatorMaster;
+  double _axis5 = 0;
+  double targetPositionRotations;
+  double elevatorUpSpeed = -0.3;
+  double elevatorDownSpeed = 0.2;
+	int overrideSpeed = 0;
 
  public:
+ 
   SubElevator();
   void InitDefaultCommand() override;
-
+  void ElevatorToPos(double rotations);
+  void Override(std::shared_ptr<Joystick>);
+  void Stop();
+  void TestingUp();
+  void TestingDown();
+  void TestingStop();
+  void TestingUpStop();
+  int GetEncoderPosition();
 };

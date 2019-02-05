@@ -15,11 +15,13 @@
 #include "RobotMap.h"
 #include "subsystems/SubDriveBase.h"
 #include "subsystems/SubElevator.h"
-#include "subsystems/SubTurret.h"
 #include "subsystems/SubIntakeOutake.h"
 #include "subsystems/SubPanelAffector.h"
 #include "subsystems/SubRollerIntake.h"
+#include "subsystems/SubGimble.h"
 #include "commands/CmdSeekCargoShip.h"
+#include <cscore_oo.h>
+#include "subsystems/ElevatorCmdChooser.h"
 
 #include <iostream>
 
@@ -31,10 +33,13 @@ class Robot : public frc::TimedRobot {
   static unique_ptr<RobotMap> _robotMap;
   static unique_ptr<SubDriveBase> subDriveBase;
   static unique_ptr<SubElevator> subElevator;
-  static unique_ptr<SubTurret> subTurret;
   static unique_ptr<SubIntakeOutake> subIntakeOutake;
   static unique_ptr<SubPanelAffector> subPanelAffector;
   static unique_ptr<SubRollerIntake> subRollerIntake;
+  static unique_ptr<SubGimble> subGimble;
+
+  static unique_ptr<ElevatorCmdChooser> elevatorCmdChooser;
+
   unique_ptr<CmdSeekCargoShip> cmdSeekCargoShip;
 
   void RobotInit() override;
@@ -54,4 +59,6 @@ class Robot : public frc::TimedRobot {
   //ExampleCommand m_defaultAuto;
   //MyAutoCommand m_myAuto;
   //frc::SendableChooser<frc::Command*> m_chooser;
+  cs::UsbCamera cam;
+  cs::VideoSink server;
 };
