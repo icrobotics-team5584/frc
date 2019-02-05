@@ -15,6 +15,7 @@ unique_ptr<OI> Robot::_oi;
 unique_ptr<RobotMap> Robot::_robotMap;
 unique_ptr<SubDriveBase> Robot::subDriveBase;
 unique_ptr<SubElevator> Robot::subElevator;
+unique_ptr<SubElevatorLimits> Robot::subElevatorLimits;
 unique_ptr<SubPanelAffector> Robot::subPanelAffector;
 unique_ptr<SubIntakeOutake> Robot::subIntakeOutake;
 unique_ptr<SubRollerIntake> Robot::subRollerIntake;
@@ -28,6 +29,7 @@ void Robot::RobotInit() {
     cmdSeekCargoShip.reset(new CmdSeekCargoShip());
     subDriveBase.reset(new SubDriveBase());
     subElevator.reset(new SubElevator());
+    subElevatorLimits.reset(new SubElevatorLimits());
     subIntakeOutake.reset(new SubIntakeOutake());
     subPanelAffector.reset(new SubPanelAffector());
     subRollerIntake.reset(new SubRollerIntake());

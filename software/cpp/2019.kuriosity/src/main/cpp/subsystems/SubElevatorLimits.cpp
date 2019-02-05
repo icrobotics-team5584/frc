@@ -1,5 +1,7 @@
 #include "subsystems/SubElevatorLimits.h"
 #include "Robot.h"
+#include <iostream>
+
 
 SubElevatorLimits::SubElevatorLimits() : Subsystem("ExampleSubsystem") {
 
@@ -12,16 +14,17 @@ void SubElevatorLimits::InitDefaultCommand() {}
 
 void SubElevatorLimits::Periodic(){
   //Limit testing
+  cout << "ELEVATOR LIMITS PERIODIC" << endl;
   outCount++;
   if(outCount > 10){
-    SmartDashboard::PutBoolean("ELEVATOR Left Limit", GetTopLimit());
-    SmartDashboard::PutBoolean("ELEVATOR Right Limit", GetBottomLimit());
+    SmartDashboard::PutBoolean("ELEVATOR Top Limit", GetTopLimit());
+    SmartDashboard::PutBoolean("ELEVATOR Bottom Limit", GetBottomLimit());
     outCount = 0;
   }
 }
 
 bool SubElevatorLimits::GetBottomLimit(){
-    return limitBottom->Get();
+    return not(limitBottom->Get());
 }
 
 bool SubElevatorLimits::GetTopLimit(){
