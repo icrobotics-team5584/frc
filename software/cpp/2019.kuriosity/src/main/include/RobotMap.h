@@ -32,16 +32,16 @@ enum PWM {
 enum DIO {
     dio_clsDriveBaseFront = 0,
     dio_clsDriveBaseMid = 1,
-    dio_ulsTriggerDriveBaseGimble = 2,
-    dio_ulsEchoDriveBaseGimble = 3,
+    dio_ulsTriggerDriveBaseGimble = 2222,
+    dio_ulsEchoDriveBaseGimble = 3333,
     dio_ulsTriggerDriveBaseBottom = 4,
     dio_ulsEchoDriveBaseBottom = 5,
     dio_clsLineDriveBaseLeft = 6,
     dio_clsLineDriveBaseRight = 7,
-    dio_subElevatorLimitBottom = 0000,
-    dio_subElevatorLimitTop = 1111,
-    dio_subGimbleLimitLeft = 8,
-    dio_subGimbleLimitRight = 9,
+    dio_subElevatorLimitBottom = 8,
+    dio_subElevatorLimitTop = 9,
+    dio_subGimbleLimitLeft = 2,
+    dio_subGimbleLimitRight = 3,
     dio_subIntakeOutakeCargo = 4444
 };
 
