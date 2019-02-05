@@ -30,4 +30,6 @@ class CmdSeekCargoShip : public frc::Command {
     bool frontClsDetected = false;
     bool midClsDetected = false;
     double drivePower = 0.6;
+
+    double initialEncoderPos = 0;
 };

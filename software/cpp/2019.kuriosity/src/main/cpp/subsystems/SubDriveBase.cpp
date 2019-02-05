@@ -25,6 +25,7 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   _ulsLeft = Robot::_robotMap->ulsDriveBaseLeft;
 
   _ulsLeft->SetAutomaticMode(true);
+  
 }
 void SubDriveBase::InitDefaultCommand() {
   // Set the default command for a subsystem here.
@@ -66,3 +67,32 @@ bool SubDriveBase::isBayEmpty() {
     return true;
   }
 }
+void SubDriveBase::pidPositionConfig() {
+  double kPIDLoopIdx = 0;
+  double kTimeoutMs = 0;
+   _srxFrontLeft->ConfigNominalOutputForward(0, kTimeoutMs);
+  _srxFrontLeft->ConfigNominalOutputReverse(0, kTimeoutMs);
+  _srxFrontLeft->ConfigPeakOutputForward(1, kTimeoutMs);
+  _srxFrontLeft->ConfigPeakOutputReverse(-1, kTimeoutMs);
+
+  _srxFrontLeft->Config_kP(kPIDLoopIdx, 0.0, kTimeoutMs); //0.046
+  _srxFrontLeft->Config_kI(kPIDLoopIdx, 0.0, kTimeoutMs);
+  _srxFrontLeft->Config_kD(kPIDLoopIdx, 0, kTimeoutMs);
+
+  //right srx
+  _srxFrontRight->ConfigNominalOutputForward(0, kTimeoutMs);
+  _srxFrontRight->ConfigNominalOutputReverse(0, kTimeoutMs);
+  _srxFrontRight->ConfigPeakOutputForward(1, kTimeoutMs);
+  _srxFrontRight->ConfigPeakOutputReverse(-1, kTimeoutMs);
+
+  _srxFrontRight->Config_kP(kPIDLoopIdx, 0.0, kTimeoutMs); //0.035
+  _srxFrontRight->Config_kI(kPIDLoopIdx, 0.0, kTimeoutMs);
+  _srxFrontRight->Config_kD(kPIDLoopIdx, 0.0, kTimeoutMs);
+  _srxFrontRight->SetNeutralMode(NeutralMode::Brake);
+  _srxFrontLeft->SetNeutralMode(NeutralMode::Brake);
+}
+
+double SubDriveBase::positionPID(double distance) {
+  _srxFrontLeft->Set(ControlMode::Position, distance);
+  _srxFrontRight->Set(ControlMode::Position, distance);
+} 

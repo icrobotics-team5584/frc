@@ -41,8 +41,11 @@ class SubDriveBase : public frc::Subsystem {
   void brakeRobot();
   void getRange();
   bool isBayEmpty();
+  double positionPID(double distance);
+  void pidPositionConfig();
 //   void setPIDSetPoint();
 //   void enablePID();
 //   bool isAtPIDSetPoint();
-  void InitDefaultCommand() override;
+void InitDefaultCommand() override;
+
 };

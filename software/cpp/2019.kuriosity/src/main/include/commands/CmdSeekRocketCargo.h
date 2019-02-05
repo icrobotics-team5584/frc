@@ -7,15 +7,23 @@
 
 #pragma once
 
-#include <frc/commands/Subsystem.h>
+#include <frc/commands/Command.h>
+#include "Robot.h"
 
-class SubElevator : public frc::Subsystem {
- private:
-  // It's desirable that everything possible under private except
-  // for methods that implement subsystem capabilities
+enum DriveStateTypeR {SEARCHING, LINE_DETECTED, REVERSING_TO_LINE, RAISING_ELEVATOR, SHOOTING_CARGO};
 
+class CmdSeekRocketCargo : public frc::Command {
  public:
-  SubElevator();
-  void InitDefaultCommand() override;
-
+  CmdSeekRocketCargo();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
+ private:
+  DriveStateTypeR driveStateRocket;
+  double drivePower;
+  double frontClsDetected;
+  double midClsDetected;
+  bool finishStage;
 };
