@@ -47,6 +47,9 @@ private:
 
   unique_ptr<frc::JoystickButton> btnOverride;
 
+  unique_ptr<LimitButton> lmtPIDTop;
+  unique_ptr<LimitButton> lmtPIDBottom;
+
   std::shared_ptr<frc::Joystick> joystick0;
 
   unique_ptr<frc::JoystickButton> btnUpTest;

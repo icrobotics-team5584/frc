@@ -19,6 +19,8 @@
 #include "commands/CmdDriveBaseSlow.h"
 #include "commands/CmdElevatorToPosition.h"
 #include "commands/CmdElevatorLimit.h"
+#include "commands/CmdElevatorPIDBottomStop.h"
+#include "commands/CmdElevatorPIDTopStop.h"
 
 OI::OI() {
   cout << "Run Robot OI" << endl;
@@ -55,6 +57,11 @@ OI::OI() {
 
   btnOverride.reset(new frc::JoystickButton(controller.get(), rightStickBtn));
   btnOverride->WhileHeld(new CmdOverrideTurret());
+
+  lmtPIDTop.reset(new LimitButton(Robot::_robotMap->subElevatorLimitTop.get(), false));
+  lmtPIDTop->WhenPressed(new CmdElevatorPIDTopStop());
+  lmtPIDBottom.reset(new LimitButton(Robot::_robotMap->subElevatorLimitBottom.get(), true));
+  lmtPIDBottom->WhenPressed(new CmdElevatorPIDBottomStop());
 
   //Elevator
   //btnUpTest.reset(new frc::JoystickButton(controller.get(), yBtn));
