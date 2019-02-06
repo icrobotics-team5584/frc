@@ -18,6 +18,7 @@
 #include "commands/CmdElevatorDownTest.h"
 #include "commands/CmdDriveBaseSlow.h"
 #include "commands/CmdElevatorToPosition.h"
+#include "commands/CmdElevatorLimit.h"
 
 OI::OI() {
   cout << "Run Robot OI" << endl;
