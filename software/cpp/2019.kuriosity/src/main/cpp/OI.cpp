@@ -58,10 +58,10 @@ OI::OI() {
   btnOverride.reset(new frc::JoystickButton(controller.get(), rightStickBtn));
   btnOverride->WhileHeld(new CmdOverrideTurret());
 
-  //lmtPIDTop.reset(new LimitButton(Robot::_robotMap->subElevatorLimitTop.get(), false));
-  //lmtPIDTop->WhenPressed(new CmdElevatorPIDTopStop());
-  //lmtPIDBottom.reset(new LimitButton(Robot::_robotMap->subElevatorLimitBottom.get(), true));
-  //lmtPIDBottom->WhenPressed(new CmdElevatorPIDBottomStop());
+  lmtPIDTop.reset(new LimitButton(Robot::_robotMap->subElevatorLimitTop.get(), false));
+  lmtPIDTop->WhenPressed(new CmdElevatorPIDTopStop());
+  lmtPIDBottom.reset(new LimitButton(Robot::_robotMap->subElevatorLimitBottom.get(), true));
+  lmtPIDBottom->WhenPressed(new CmdElevatorPIDBottomStop());
 
   //Elevator
   //btnUpTest.reset(new frc::JoystickButton(controller.get(), yBtn));
