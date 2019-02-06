@@ -7,25 +7,6 @@ SubElevator::SubElevator() : Subsystem("ExampleSubsystem") {
   SmartDashboard::PutNumber("Elevator PIDI", PIDI);
   SmartDashboard::PutNumber("Elevator PIDD", PIDD);
   SmartDashboard::PutNumber("Elevator PID target", targetPositionRotations);
-   enum Constants 
-    {
-    	/**
-    	 * Which PID slot to pull gains from.  Starting 2018, you can choose
-    	 * from 0,1,2 or 3.  Only the first two (0,1) are visible in web-based configuration.
-    	 */
-    	 kSlotIdx = 0,
-
-    	/* Talon SRX/ Victor SPX will supported multiple (cascaded) PID loops.
-    	 * For now we just want the primary one.
-    	 */
-    	 kPIDLoopIdx = 0,
-
-    	/*
-    	 * set to zero to skip waiting for confirmation, set to nonzero to wait
-    	 * and report to DS if action fails.
-    	 */
-    	 kTimeoutMs = 10
-    };
 
 	/* lets grab the 360 degree position of the MagEncoder's absolute position */
 	int absolutePosition = _srxElevatorMaster->GetSelectedSensorPosition(0) & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */
@@ -50,10 +31,15 @@ SubElevator::SubElevator() : Subsystem("ExampleSubsystem") {
 
 void SubElevator::Periodic() {
 	SmartDashboard::PutNumber("ELEVATOR", _srxElevatorMaster->GetSelectedSensorPosition(0));
-	SmartDashboard::GetNumber("Elevator PIDP", 0.0);
-	SmartDashboard::GetNumber("Elevator PIDI", 0.0);
-	SmartDashboard::GetNumber("Elevator PIDD", 0.0);
-	SmartDashboard::GetNumber("Elevator PID target", 0.0);
+	PIDP = SmartDashboard::GetNumber("Elevator PIDP", 0.0);
+	PIDI = SmartDashboard::GetNumber("Elevator PIDI", 0.0);
+	PIDD = SmartDashboard::GetNumber("Elevator PIDD", 0.0);
+	targetPositionRotations = SmartDashboard::GetNumber("Elevator PID target", 0.0);
+
+	_srxElevatorMaster->Config_kF(kPIDLoopIdx, 0.0, kTimeoutMs);
+	_srxElevatorMaster->Config_kP(kPIDLoopIdx, PIDP, kTimeoutMs);
+	_srxElevatorMaster->Config_kI(kPIDLoopIdx, PIDI, kTimeoutMs);
+	_srxElevatorMaster->Config_kD(kPIDLoopIdx, PIDD, kTimeoutMs);
 }
 
 void SubElevator::InitDefaultCommand() {
@@ -126,6 +112,7 @@ void SubElevator::EncoderReset() {
 void SubElevator::TestingPID() {
 	cout << "ELEVATOR PID" << endl;
 	_srxElevatorMaster->Set(ControlMode::Position, (targetPositionRotations * -4096));
+	cout << "Sub Elevater PID target" << targetPositionRotations << endl;
 }
 
 

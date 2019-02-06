@@ -6,7 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/CmdElevatorPIDTopStop.h"
-
+#include <iostream>
 CmdElevatorPIDTopStop::CmdElevatorPIDTopStop() {
   // Use Requires() here to declare subsystem dependencies
   Requires(Robot::subElevator.get());
@@ -14,6 +14,7 @@ CmdElevatorPIDTopStop::CmdElevatorPIDTopStop() {
 
 // Called just before this Command runs the first time
 void CmdElevatorPIDTopStop::Initialize() {
+  cout << "Top Stop" << endl;
   Robot::subElevator->Stop();
 }
 
