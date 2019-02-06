@@ -7,7 +7,7 @@ using namespace frc;
 
 class LimitButton : Trigger {
 public:
-	LimitButton(DigitalInput* _limitSwitch, bool _invert);
+	LimitButton(DigitalInput* limitSwitch, bool invert);
 	bool Get();
 	void WhileHeld(Command* command);
     void WhenPressed(Command* command);
