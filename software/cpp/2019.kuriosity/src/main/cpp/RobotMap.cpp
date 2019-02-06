@@ -10,7 +10,7 @@ RobotMap::RobotMap(){
     srxDriveBaseBackRight.reset(new WPI_TalonSRX(can_srxDriveBaseBackRight));
     srxDriveBaseBackLeft->Set(ControlMode::Follower, can_srxDriveBaseFrontLeft);
     srxDriveBaseBackRight->Set(ControlMode::Follower, can_srxDriveBaseFrontRight);
-    //Elevator
+        //Elevator
     srxElevatorMaster.reset(new WPI_TalonSRX(can_srxElevatorMaster));
     srxElevatorSlave.reset(new WPI_TalonSRX(can_srxElevatorSlave));
     srxElevatorSlave->Set(ControlMode::Follower, can_srxElevatorMaster);

@@ -15,7 +15,6 @@ void CmdMotionProfile::Initialize() {
   Segment *segment = Robot::subDriveBase->generatePath();
   int pathLength = Robot::subDriveBase->getPathLength();
   double wheelBaseWidth = Robot::subDriveBase->WHEEL_BASE_WIDTH; 
-  Robot::subDriveBase->setMotorSaftey(false);
 
   mpData->ReadMotionProfile(segment, pathLength, wheelBaseWidth);
   mpControl.reset(new MotionProfileControl(_srxLeft, _srxRight, mpData, 10));
@@ -37,7 +36,6 @@ bool CmdMotionProfile::IsFinished() {
 // Called once after isFinished returns true
 void CmdMotionProfile::End() {
   mpControl->stop();
-  Robot::subDriveBase->setMotorSaftey(true);
 }
 
 // Called when another command which requires one or more of the same

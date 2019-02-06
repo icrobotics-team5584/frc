@@ -20,7 +20,7 @@
 #include "commands/CmdSeekPath.h"
 #include "commands/CmdMotionProfile.h"
 #include "commands/CmdEncoderDrive.h"
-#include "commands/CmdSeekRocketCargo.h"
+#include "commands/CmdSeekRocketSide.h"
 
 OI::OI() {
   cout << "Run Robot OI" << endl;
@@ -31,9 +31,6 @@ OI::OI() {
   btnDriveBaseSlow.reset(new AxisButton(controller.get(), leftAxisTrigger));
   btnDriveBaseSlow->WhileHeld(new CmdDriveBaseSlow());
 
-  btnEncoderDrive.reset(new frc::JoystickButton(controller.get(), yBtn));
-  btnEncoderDrive->WhenPressed(new CmdEncoderDrive(1));
-
   //Intake Outake
   btnCargoPodOut.reset(new frc::JoystickButton(controller.get(), leftBtn));
   btnCargoPodOut->WhileHeld(new CmdIntakeOutakeOut());
@@ -42,7 +39,7 @@ OI::OI() {
   btnCargoPodIn->WhileHeld(new CmdIntakeOutakeIn());
 
   btnSeekRocketSide.reset(new frc::JoystickButton(controller.get(), yBtn));
-  btnSeekRocketSide->WhenPressed(new CmdSeekRocketCargo());
+  btnSeekRocketSide->WhenPressed(new CmdSeekRocketSide());
   //btnFollowLine.reset(new frc::JoystickButton(controller.get(), xBtn));
   //btnFollowLine->WhenPressed(new CmdHatchLowRocket());
 

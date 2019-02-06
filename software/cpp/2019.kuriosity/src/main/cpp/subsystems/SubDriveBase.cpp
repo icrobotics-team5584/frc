@@ -70,10 +70,6 @@ void SubDriveBase::tankDriveVelocity(double leftVelocity, double rightVelocity) 
   
 }
 
-void SubDriveBase::setMotorSaftey(bool enabled){
-  difDrive->SetSafetyEnabled(enabled);
-}
-
 double SubDriveBase::getRawLeftEncoder() {
   SmartDashboard::PutNumber("Left Encoder", _srxFrontLeft->GetSelectedSensorPosition());
   return _srxFrontLeft->GetSelectedSensorPosition(0);

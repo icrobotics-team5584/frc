@@ -66,7 +66,7 @@ void Robot::RobotPeriodic() {
     SmartDashboard::PutNumber("Elevator encoder", subElevator->GetEncoderPosition());
     SmartDashboard::PutNumber("Left encoder", subDriveBase->getRawLeftEncoder());
     SmartDashboard::PutNumber("Right encoder", subDriveBase->getRawRightEncoder());
-
+    SmartDashboard::PutNumber("Distance Travelled", subDriveBase->getDistanceTravelled());
 }
 
 /**
