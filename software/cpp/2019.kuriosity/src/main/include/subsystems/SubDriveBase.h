@@ -49,6 +49,7 @@ class SubDriveBase : public frc::Subsystem {
 
   int pathLength; //path length
   double scaleFactor = (WHEEL_DIAMETER * 3.1459265)/4096;
+  Timer timer;
   
 	double kTimeoutMs = 30;
   double kPIDLoopIdx = 0;
@@ -96,6 +97,5 @@ class SubDriveBase : public frc::Subsystem {
 //   void setPIDSetPoint();
 //   void enablePID();
 //   bool isAtPIDSetPoint();
-void InitDefaultCommand() override;
 
 };

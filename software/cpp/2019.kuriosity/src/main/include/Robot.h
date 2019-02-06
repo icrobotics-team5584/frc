@@ -62,6 +62,4 @@ class Robot : public frc::TimedRobot {
   //ExampleCommand m_defaultAuto;
   //MyAutoCommand m_myAuto;
   //frc::SendableChooser<frc::Command*> m_chooser;
-  cs::UsbCamera cam;
-  cs::VideoSink server;
 };

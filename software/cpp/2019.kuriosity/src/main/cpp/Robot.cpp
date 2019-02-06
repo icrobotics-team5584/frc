@@ -69,6 +69,9 @@ void Robot::RobotPeriodic() {
     SmartDashboard::PutBoolean("left sensor", subDriveBase->isLeftClsOnLine());
     SmartDashboard::PutBoolean("right sensor", subDriveBase->isRightClsOnLine());
     SmartDashboard::PutNumber("Elevator encoder", subElevator->GetEncoderPosition());
+    SmartDashboard::PutNumber("Left encoder", subDriveBase->getRawLeftEncoder());
+    SmartDashboard::PutNumber("Right encoder", subDriveBase->getRawRightEncoder());
+
 }
 
 /**

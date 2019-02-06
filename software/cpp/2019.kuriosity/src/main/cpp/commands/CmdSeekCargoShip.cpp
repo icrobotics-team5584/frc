@@ -28,7 +28,6 @@ void CmdSeekCargoShip::Execute() {
     if (driveState == SEARCHING_FOR_SHIP) {
         if (Robot::subDriveBase->frontHasReachedLine()) {
           drivePower = 0.4;
-          initialEncoderPos = Robot::subDriveBase->Distance;
           driveState = SEARCHING_FOR_HATCH;
         }
     } 

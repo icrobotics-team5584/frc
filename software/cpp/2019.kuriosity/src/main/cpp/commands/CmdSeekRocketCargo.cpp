@@ -15,28 +15,24 @@ CmdSeekRocketCargo::CmdSeekRocketCargo() {
 
 // Called just before this Command runs the first time
 void CmdSeekRocketCargo::Initialize() {
-  driveStateRocket = SEARCHING;
   drivePower = 0.6;
-  Robot::subDriveBase->pidPositionConfig();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdSeekRocketCargo::Execute() {
-  switch (driveStateRocket) {
-    case SEARCHING:
-      if(Robot::subDriveBase->frontHasReachedLine()) {
-        driveStateRocket = REVERSING_TO_LINE;
-      }
-    case REVERSING_TO_LINE:
-    Robot::subDriveBase->positionPID();
-  }
+
+  Robot::subDriveBase->drive(drivePower, 0);
+  //Robot::subDriveBase->positionPID((1 - Robot::subDriveBase->getDistanceTravelled()) / 0.000078);
+  //frc::SmartDashboard::PutNumber("error value", (1 - Robot::subDriveBase->getDistanceTravelled()) / 0.000078);
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdSeekRocketCargo::IsFinished() { return Robot::subDriveBase->midHasReachedLine() and finishStage; }
+bool CmdSeekRocketCargo::IsFinished() { return Robot::subDriveBase->frontHasReachedLine(); }
 
 // Called once after isFinished returns true
-void CmdSeekRocketCargo::End() {}
+void CmdSeekRocketCargo::End() {
+  Robot::subDriveBase->drive(0, 0);
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run

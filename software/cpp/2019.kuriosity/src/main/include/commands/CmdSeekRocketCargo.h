@@ -26,4 +26,6 @@ class CmdSeekRocketCargo : public frc::Command {
   double frontClsDetected;
   double midClsDetected;
   bool finishStage;
+  double initialEncoderPos;
+  double distance;
 };

@@ -31,6 +31,7 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   //encoders
   _srxFrontRight->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
   _srxFrontLeft->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
+  _srxFrontRight->SetSensorPhase(true);
 
   rightVelocitySource = new RightVelocitySource();
   leftVelocitySource = new LeftVelocitySource();
@@ -78,6 +79,7 @@ double SubDriveBase::getRawRightEncoder() {
 void SubDriveBase::disablePID() {
   _srxFrontLeft->SetNeutralMode(NeutralMode::Brake);
   _srxFrontRight->SetNeutralMode(NeutralMode::Brake);
+  _srxFrontRight->SetInverted(false);
 }
 //returns velocity in m/s
 double SubDriveBase::getRightVelocity() {
@@ -170,12 +172,33 @@ bool SubDriveBase::isBayEmpty() {
   }
 }
 void SubDriveBase::pidPositionConfig() {
-  double kPIDLoopIdx = 0;
-  double kTimeoutMs = 0;
-   _srxFrontLeft->ConfigNominalOutputForward(0, kTimeoutMs);
+  _srxFrontLeft->ConfigNominalOutputForward(0, kTimeoutMs);
   _srxFrontLeft->ConfigNominalOutputReverse(0, kTimeoutMs);
-  _srxFrontLeft->ConfigPeakOutputForward(1, kTimeoutMs);
-  _srxFrontLeft->ConfigPeakOutputReverse(-1, kTimeoutMs);
+  _srxFrontLeft->ConfigPeakOutputForward(0.8, kTimeoutMs);
+  _srxFrontLeft->ConfigPeakOutputReverse(-0.8, kTimeoutMs);
+
+  _srxFrontLeft->Config_kF(kPIDLoopIdx, 0, kTimeoutMs);
+  _srxFrontLeft->Config_kP(kPIDLoopIdx, 0.3, kTimeoutMs); //0.046
+  _srxFrontLeft->Config_kI(kPIDLoopIdx, 0.0, kTimeoutMs);
+  _srxFrontLeft->Config_kD(kPIDLoopIdx, 0, kTimeoutMs);
+
+  //right srx
+  _srxFrontRight->ConfigNominalOutputForward(0, kTimeoutMs);
+  _srxFrontRight->ConfigNominalOutputReverse(0, kTimeoutMs);
+  _srxFrontRight->ConfigPeakOutputForward(0.8, kTimeoutMs);
+  _srxFrontRight->ConfigPeakOutputReverse(-0.8, kTimeoutMs);
+
+  _srxFrontRight->Config_kF(kPIDLoopIdx, 0, kTimeoutMs);
+  _srxFrontRight->Config_kP(kPIDLoopIdx, 0.3, kTimeoutMs); //0.035
+  _srxFrontRight->Config_kI(kPIDLoopIdx, 0.0, kTimeoutMs);
+  _srxFrontRight->Config_kD(kPIDLoopIdx, 0.0, kTimeoutMs);
+  _srxFrontRight->SetNeutralMode(NeutralMode::Brake);
+  _srxFrontLeft->SetNeutralMode(NeutralMode::Brake);
+}
+double SubDriveBase::positionPID(double distance) {
+  _srxFrontRight->Set(ControlMode::Position, -distance);
+  _srxFrontLeft->Set(ControlMode::Position, distance);
+}
 
 bool SubDriveBase::isLeftClsOnLine() {
   return not(_clsLineLeft->Get());
