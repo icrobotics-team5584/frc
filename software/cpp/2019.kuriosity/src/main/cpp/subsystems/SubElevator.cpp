@@ -19,8 +19,8 @@ SubElevator::SubElevator() : Subsystem("ExampleSubsystem") {
 	/* set the peak and nominal outputs, 12V means full */
 	_srxElevatorMaster->ConfigNominalOutputForward(0, kTimeoutMs);
 	_srxElevatorMaster->ConfigNominalOutputReverse(0, kTimeoutMs);
-	_srxElevatorMaster->ConfigPeakOutputForward(0.2, kTimeoutMs);
-	_srxElevatorMaster->ConfigPeakOutputReverse(-0.3, kTimeoutMs);
+	_srxElevatorMaster->ConfigPeakOutputForward(0.4, kTimeoutMs);
+	_srxElevatorMaster->ConfigPeakOutputReverse(-0.8, kTimeoutMs);
 
   /* set closed loop gains in slot0 */
 	_srxElevatorMaster->Config_kF(kPIDLoopIdx, 0.0, kTimeoutMs);
