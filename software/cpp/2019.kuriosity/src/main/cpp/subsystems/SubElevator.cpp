@@ -91,6 +91,7 @@ void SubElevator::PIDDisable() {
 }
 
 void SubElevator::Stop() {
+	cout << "ELEVATOR stop" << endl;
 	targetPositionRotations = (_srxElevatorMaster->GetSelectedSensorPosition(0));
 	_srxElevatorMaster->Set(ControlMode::Position, targetPositionRotations);
 }
@@ -123,6 +124,7 @@ void SubElevator::EncoderReset() {
 }
 
 void SubElevator::TestingPID() {
+	cout << "ELEVATOR PID" << endl;
 	_srxElevatorMaster->Set(ControlMode::Position, (targetPositionRotations * -4096));
 }
 
