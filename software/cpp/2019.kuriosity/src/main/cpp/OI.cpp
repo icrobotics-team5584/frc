@@ -16,12 +16,24 @@
 #include "commands/CmdOverrideTurret.h"
 #include "commands/CmdElevatorUpTest.h"
 #include "commands/CmdElevatorDownTest.h"
+#include "commands/CmdDriveBaseSlow.h"
+#include "commands/CmdSeekPath.h"
+#include "commands/CmdMotionProfile.h"
+#include "commands/CmdEncoderDrive.h"
 #include "commands/CmdSeekRocketCargo.h"
 
 OI::OI() {
   cout << "Run Robot OI" << endl;
 
   controller.reset(new frc::Joystick(0));
+
+  //Drive Base
+  btnDriveBaseSlow.reset(new AxisButton(controller.get(), leftAxisTrigger));
+  btnDriveBaseSlow->WhileHeld(new CmdDriveBaseSlow());
+
+  btnEncoderDrive.reset(new frc::JoystickButton(controller.get(), yBtn));
+  btnEncoderDrive->WhenPressed(new CmdEncoderDrive(1));
+
   //Intake Outake
   btnCargoPodOut.reset(new frc::JoystickButton(controller.get(), leftBtn));
   btnCargoPodOut->WhileHeld(new CmdIntakeOutakeOut());

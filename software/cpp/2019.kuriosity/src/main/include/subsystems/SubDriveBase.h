@@ -43,7 +43,7 @@ class SubDriveBase : public frc::Subsystem {
   shared_ptr<DigitalInput> _clsLineRight;
 
   // Robot constants
-  const double WHEEL_DIAMETER = 0.1524; // in meters (0.2032 for dizzy)
+  const double WHEEL_DIAMETER = 0.1524; // in meters (0.1016 for dizzy)
   const int ENCODER_TICS_PER_ROTATION = 4096; // (214 for dizzy)
   double metersPerRotation; // calculated in constructor
 
@@ -56,6 +56,7 @@ class SubDriveBase : public frc::Subsystem {
   double kSlotIdx = 0;
  
  public:
+  const double WHEEL_BASE_WIDTH =  0.6;
   SubDriveBase();
   void InitDefaultCommand() override;
 
@@ -64,6 +65,7 @@ class SubDriveBase : public frc::Subsystem {
   void drive(double speed, double rotation);
   void tankDrive(double leftSpeed, double rightSpeed);
   void brakeRobot();
+  void setMotorSaftey(bool enabled);
   Segment* generatePath();
   int getPathLength();
 

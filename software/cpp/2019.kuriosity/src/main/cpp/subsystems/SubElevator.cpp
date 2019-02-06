@@ -75,7 +75,7 @@ void SubElevator::Stop() {
 
 void SubElevator::TestingUp() {
 	
-	_srxElevatorMaster->Set(-0.6);
+	_srxElevatorMaster->Set(-0.4);
 }
 
 

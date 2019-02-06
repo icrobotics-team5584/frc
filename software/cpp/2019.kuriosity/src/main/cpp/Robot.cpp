@@ -6,7 +6,6 @@
 /*----------------------------------------------------------------------------*/
 
 #include "Robot.h"
-#include <cscore_oo.h>
 #include <cameraserver/CameraServer.h>
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
@@ -24,7 +23,6 @@ void Robot::RobotInit() {
   _robotMap.reset(new RobotMap);
 
     
-    cmdSeekCargoShip.reset(new CmdSeekCargoShip());
     subDriveBase.reset(new SubDriveBase());
     subElevator.reset(new SubElevator());
     subIntakeOutake.reset(new SubIntakeOutake());
@@ -35,19 +33,14 @@ void Robot::RobotInit() {
     cam.SetResolution(90, 80);
     // cam.SetFPS(20);
 
-    server = CameraServer::GetInstance()->GetServer();
-    server.SetSource(cam);
+    // server = CameraServer::GetInstance()->GetServer();
+    // server.SetSource(cam);
     _oi.reset(new OI);
     std::cout << "robot init finish" << std::endl;
 
     SmartDashboard::PutBoolean("started running End()", false);
     SmartDashboard::PutBoolean("started running backwards()", false);
     SmartDashboard::PutBoolean("finished running backwards()", false);
-
-    cam = CameraServer::GetInstance()->StartAutomaticCapture(0);
-    cam.SetResolution(320,240);
-    cam.SetFPS(10);
-    CameraServer::GetInstance()->GetServer();
 
     // m_chooser.SetDefaultOption("Default Auto", &m_defaultAuto);
     // m_chooser.AddOption("My Auto", &m_myAuto);
@@ -98,9 +91,7 @@ void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
  */
 void Robot::AutonomousInit() {
 
-    cmdSeekCargoShip.reset(new CmdSeekCargoShip());
 
-    cmdSeekCargoShip->Start();
     // std::string autoSelected = frc::SmartDashboard::GetString(
     //     "Auto Selector", "Default");
     // if (autoSelected == "My Auto") {
