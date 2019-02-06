@@ -12,8 +12,12 @@
 class CmdElevatorToPosition : public frc::Command {
  private:
  double _height;
+ bool bottom;
+ bool goTo;
+ int setTo;
+ int timeRound = 0;
  public:
-  CmdElevatorToPosition(int height);
+  CmdElevatorToPosition(bool bottom, bool goTo, int setTo);
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;

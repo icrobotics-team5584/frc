@@ -69,7 +69,10 @@ OI::OI() {
   //btnDownTest.reset(new frc::JoystickButton(controller.get(), aBtn));
   //btnDownTest->WhileHeld(new CmdElevatorDownTest());
   btnElevatorToPos.reset(new frc::JoystickButton(controller.get(), yBtn));
-  btnElevatorToPos->WhenPressed(new CmdElevatorToPosition(testHeight));
+  btnElevatorToPos->WhenPressed(new CmdElevatorToPosition(false, false, 0));
+
+  btnElevatorToBottom.reset(new frc::JoystickButton(controller.get(), aBtn));
+  btnElevatorToBottom->WhenPressed(new CmdElevatorToPosition(true, false, 0));
 }
 std::shared_ptr<frc::Joystick> OI::getJoystick0() {
    return joystick0;

@@ -43,7 +43,7 @@ class SubElevator : public frc::Subsystem {
   double targetPositionRotations = 0.0;
   double elevatorUpSpeed = -0.3;
   double elevatorDownSpeed = 0.2;
-  double PIDP = 0.0;
+  double PIDP = 0.3;
   double PIDI = 0.0;
   double PIDD = 0.0;
 	int overrideSpeed = 0;

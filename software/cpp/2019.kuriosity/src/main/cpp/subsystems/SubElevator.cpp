@@ -32,10 +32,10 @@ SubElevator::SubElevator() : Subsystem("ExampleSubsystem") {
 
 void SubElevator::Periodic() {
 	SmartDashboard::PutNumber("ELEVATOR", _srxElevatorMaster->GetSelectedSensorPosition(0));
-	PIDP = SmartDashboard::GetNumber("Elevator PIDP", 0.0);
+	//PIDP = SmartDashboard::GetNumber("Elevator PIDP", 0.0);
 	PIDI = SmartDashboard::GetNumber("Elevator PIDI", 0.0);
 	PIDD = SmartDashboard::GetNumber("Elevator PIDD", 0.0);
-	targetPositionRotations = SmartDashboard::GetNumber("Elevator PID target", 0.0);
+	//targetPositionRotations = SmartDashboard::GetNumber("Elevator PID target", 0.0);
 
 	_srxElevatorMaster->Config_kF(kPIDLoopIdx, 0.0, kTimeoutMs);
 	_srxElevatorMaster->Config_kP(kPIDLoopIdx, PIDP, kTimeoutMs);
@@ -52,7 +52,7 @@ void SubElevator::InitDefaultCommand() {
 }
 
 void SubElevator::ElevatorToPos(double rotation) {
-  targetPositionRotations = -(rotation * 4096);
+  targetPositionRotations = (rotation * -4096);
   _srxElevatorMaster->Set(ControlMode::Position, targetPositionRotations);
 }
 
