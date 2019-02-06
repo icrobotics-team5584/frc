@@ -6,7 +6,6 @@
 /*----------------------------------------------------------------------------*/
 
 #include "OI.h"
-#include "Robot.h"
 #include "commands/CmdOutputPanel.h"
 #include "commands/CmdIntakeOutakeOut.h"
 #include "commands/CmdIntakeOutakeIn.h"

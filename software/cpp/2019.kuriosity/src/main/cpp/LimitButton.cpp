@@ -1,4 +1,5 @@
 #include <LimitButton.h>
+#include <iostream>
 
 LimitButton::LimitButton(shared_ptr<DigitalInput> limitSwitch, bool invert) {
 	_limitSwitch = limitSwitch;
@@ -20,6 +21,7 @@ void LimitButton::WhileHeld(Command* command) {
 }
 
 void LimitButton::WhenPressed(Command* command){
+    cout << "LIMITBUTTON GET" << endl;
     WhenActive(command);
 }
 
