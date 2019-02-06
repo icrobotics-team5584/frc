@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "OI.h"
+#include "Robot.h"
 #include "commands/CmdOutputPanel.h"
 #include "commands/CmdIntakeOutakeOut.h"
 #include "commands/CmdIntakeOutakeIn.h"
@@ -58,9 +59,9 @@ OI::OI() {
   btnOverride.reset(new frc::JoystickButton(controller.get(), rightStickBtn));
   btnOverride->WhileHeld(new CmdOverrideTurret());
 
-  lmtPIDTop.reset(new LimitButton(Robot::_robotMap->subElevatorLimitTop.get(), false));
+  lmtPIDTop.reset(new LimitButton(Robot::_robotMap->subElevatorLimitTop, false));
   lmtPIDTop->WhenPressed(new CmdElevatorPIDTopStop());
-  lmtPIDBottom.reset(new LimitButton(Robot::_robotMap->subElevatorLimitBottom.get(), true));
+  lmtPIDBottom.reset(new LimitButton(Robot::_robotMap->subElevatorLimitBottom, true));
   lmtPIDBottom->WhenPressed(new CmdElevatorPIDBottomStop());
 
   //Elevator

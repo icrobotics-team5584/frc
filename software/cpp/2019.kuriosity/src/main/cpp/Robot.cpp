@@ -26,7 +26,6 @@ void Robot::RobotInit() {
     _robotMap.reset(new RobotMap);
 
     
-    cmdSeekCargoShip.reset(new CmdSeekCargoShip());
     subDriveBase.reset(new SubDriveBase());
     subElevator.reset(new SubElevator());
     subElevatorLimits.reset(new SubElevatorLimits());

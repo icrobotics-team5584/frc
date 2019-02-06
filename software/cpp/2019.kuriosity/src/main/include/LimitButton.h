@@ -4,14 +4,15 @@
 #include <frc/Buttons/Trigger.h>
 
 using namespace frc;
+using namespace std;
 
 class LimitButton : Trigger {
 public:
-	LimitButton(DigitalInput* limitSwitch, bool invert);
+	LimitButton(shared_ptr<DigitalInput> limitSwitch, bool invert);
 	bool Get();
 	void WhileHeld(Command* command);
     void WhenPressed(Command* command);
 private:
-	DigitalInput* _limitSwitch;
+	shared_ptr<DigitalInput> _limitSwitch;
     bool _invert;
 };

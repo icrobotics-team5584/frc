@@ -93,8 +93,8 @@ public:
     //Elevator
     shared_ptr<WPI_TalonSRX> srxElevatorMaster;
     shared_ptr<WPI_TalonSRX> srxElevatorSlave;
-    std::shared_ptr<DigitalInput> subElevatorLimitTop;
-    std::shared_ptr<DigitalInput> subElevatorLimitBottom;
+    shared_ptr<DigitalInput> subElevatorLimitTop;
+    shared_ptr<DigitalInput> subElevatorLimitBottom;
 
     //Gimble
     shared_ptr<WPI_TalonSRX> srxGimble;

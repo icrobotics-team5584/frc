@@ -1,8 +1,8 @@
 #include <LimitButton.h>
 
-LimitButton::LimitButton(DigitalInput* limitSwitch, bool invert) {
-	limitSwitch = _limitSwitch;
-    invert = _invert;
+LimitButton::LimitButton(shared_ptr<DigitalInput> limitSwitch, bool invert) {
+	_limitSwitch = limitSwitch;
+    _invert = invert;
 }
 
 bool LimitButton::Get(){
