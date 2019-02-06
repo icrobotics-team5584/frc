@@ -2,6 +2,7 @@
 #include "Robot.h"
 
 SubElevator::SubElevator() : Subsystem("ExampleSubsystem") {
+	
   _srxElevatorMaster = Robot::_robotMap->srxElevatorMaster;
   SmartDashboard::PutNumber("Elevator PIDP", PIDP);
   SmartDashboard::PutNumber("Elevator PIDI", PIDI);
@@ -11,7 +12,7 @@ SubElevator::SubElevator() : Subsystem("ExampleSubsystem") {
 	/* lets grab the 360 degree position of the MagEncoder's absolute position */
 	int absolutePosition = _srxElevatorMaster->GetSelectedSensorPosition(0) & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */
 		/* use the low level API to set the quad encoder signal */
-	_srxElevatorMaster->SetSelectedSensorPosition(absolutePosition, kPIDLoopIdx, kTimeoutMs);
+	_srxElevatorMaster->SetSelectedSensorPosition(0.0, kPIDLoopIdx, kTimeoutMs);
 
 	/* choose the sensor and sensor direction */
 	_srxElevatorMaster->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, kPIDLoopIdx, kTimeoutMs);	_srxElevatorMaster->SetSensorPhase(false);
