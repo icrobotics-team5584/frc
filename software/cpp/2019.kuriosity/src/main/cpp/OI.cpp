@@ -27,7 +27,7 @@ OI::OI() {
   controller.reset(new frc::Joystick(0));
 
   //Drive Base
-  btnDriveBaseSlow.reset(new frc::JoystickButton(controller.get(), leftStickBtn));
+  btnDriveBaseSlow.reset(new AxisButton(controller.get(), leftAxisTrigger));
   btnDriveBaseSlow->WhileHeld(new CmdDriveBaseSlow());
 
   btnEncoderDrive.reset(new frc::JoystickButton(controller.get(), yBtn));

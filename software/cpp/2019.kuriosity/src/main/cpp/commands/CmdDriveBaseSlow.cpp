@@ -12,7 +12,9 @@ void CmdDriveBaseSlow::Initialize() {}
 void CmdDriveBaseSlow::Execute() {
   double x = Robot::_oi->controller->GetX();
   double y = Robot::_oi->controller->GetY();
-  Robot::subDriveBase->drive(y/2,x/2);
+  double axis = Robot::_oi->controller->GetRawAxis(leftAxisTrigger);
+  SmartDashboard::PutNumber("axis test", axis);
+  Robot::subDriveBase->drive(y/(axis + 1),x/(axis + 1));
 }
 
 // Make this return true when this Command no longer needs to run execute()
