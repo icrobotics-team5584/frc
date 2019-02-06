@@ -38,7 +38,7 @@ enum DIO {
     dio_ulsEchoDriveBaseBottom = 5,
     dio_clsLineDriveBaseLeft = 6,
     dio_clsLineDriveBaseRight = 7,
-    dio_subElevatorLimitBottom = 0000,
+    dio_subElevatorLimitBottom = 9489,
     dio_subElevatorLimitTop = 1111,
     dio_subGimbleLimitLeft = 8,
     dio_subGimbleLimitRight = 9,
