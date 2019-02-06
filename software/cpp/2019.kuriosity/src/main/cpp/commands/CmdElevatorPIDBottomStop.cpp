@@ -16,7 +16,7 @@ CmdElevatorPIDBottomStop::CmdElevatorPIDBottomStop() {
 // Called just before this Command runs the first time
 void CmdElevatorPIDBottomStop::Initialize() {
   cout << "Bottom Stop" << endl;
-  Robot::subElevator->Stop();
+  Robot::subElevator->EncoderReset();
 }
 
 // Called repeatedly when this Command is scheduled to run
