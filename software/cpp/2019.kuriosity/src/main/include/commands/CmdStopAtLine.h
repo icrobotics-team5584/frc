@@ -30,5 +30,5 @@ class CmdStopAtLine : public frc::Command {
 
   double initialAngle;
   double currentAngle;
-  double kP = 0.03;
+  double kP = 0.05;
 };
