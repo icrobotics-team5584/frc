@@ -17,6 +17,10 @@
 #include "commands/CmdElevatorUpTest.h"
 #include "commands/CmdElevatorDownTest.h"
 #include "commands/CmdDriveBaseSlow.h"
+#include "commands/CmdElevatorToPosition.h"
+#include "commands/CmdElevatorLimit.h"
+#include "commands/CmdElevatorPIDBottomStop.h"
+#include "commands/CmdElevatorPIDTopStop.h"
 #include "commands/CmdSeekPath.h"
 #include "commands/CmdMotionProfile.h"
 #include "commands/CmdEncoderDrive.h"
@@ -61,11 +65,21 @@ OI::OI() {
   btnOverride.reset(new frc::JoystickButton(controller.get(), rightStickBtn));
   btnOverride->WhileHeld(new CmdOverrideTurret());
 
+  lmtPIDTop.reset(new LimitButton(Robot::_robotMap->subElevatorLimitTop, false));
+  lmtPIDTop->WhenPressed(new CmdElevatorPIDTopStop());
+  lmtPIDBottom.reset(new LimitButton(Robot::_robotMap->subElevatorLimitBottom, true));
+  lmtPIDBottom->WhenPressed(new CmdElevatorPIDBottomStop());
+
   //Elevator
-  // btnUpTest.reset(new frc::JoystickButton(controller.get(), yBtn));
-  // btnUpTest->WhileHeld(new CmdElevatorUpTest());
-  // btnDownTest.reset(new frc::JoystickButton(controller.get(), aBtn));
-  // btnDownTest->WhileHeld(new CmdElevatorDownTest());
+  //btnUpTest.reset(new frc::JoystickButton(controller.get(), yBtn));
+  //btnUpTest->WhileHeld(new CmdElevatorUpTest());
+  //btnDownTest.reset(new frc::JoystickButton(controller.get(), aBtn));
+  //btnDownTest->WhileHeld(new CmdElevatorDownTest());
+  btnElevatorToPos.reset(new frc::JoystickButton(controller.get(), yBtn));
+  btnElevatorToPos->WhenPressed(new CmdElevatorToPosition(false, false, 0));
+
+  btnElevatorToBottom.reset(new frc::JoystickButton(controller.get(), aBtn));
+  btnElevatorToBottom->WhenPressed(new CmdElevatorToPosition(true, false, 0));
 }
 std::shared_ptr<frc::Joystick> OI::getJoystick0() {
    return joystick0;

@@ -12,10 +12,15 @@ class SubElevatorLimits : public frc::Subsystem {
   
   shared_ptr<DigitalInput> limitTop;
   shared_ptr<DigitalInput> limitBottom;
+  int outCount = 0;
 
  public:
   SubElevatorLimits();
   void InitDefaultCommand() override;
+  void Periodic();
+  void AutoStopTop();
+  void AutoStopBottom();
   bool GetBottomLimit();
   bool GetTopLimit();
+  bool GetBothLimits();
 };

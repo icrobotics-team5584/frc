@@ -36,12 +36,12 @@ enum DIO {
     dio_clsDriveBaseMidLeft = 3,
     dio_ulsTriggerDriveBaseGimble = 4,
     dio_ulsEchoDriveBaseGimble = 5,
-    dio_ulsTriggerDriveBaseBottom = 6,
-    dio_ulsEchoDriveBaseBottom = 7,
-    dio_subElevatorLimitBottom = 9489,
-    dio_subElevatorLimitTop = 1111,
-    dio_subGimbleLimitLeft = 8,
-    dio_subGimbleLimitRight = 9,
+    //dio_ulsTriggerDriveBaseBottom = 6,
+    //dio_ulsEchoDriveBaseBottom = 7,
+    dio_subGimbleLimitLeft = 6,
+    dio_subGimbleLimitRight = 7,
+    dio_subElevatorLimitBottom = 8,
+    dio_subElevatorLimitTop = 9,
     dio_subIntakeOutakeCargo = 4444
 };
 
@@ -93,8 +93,8 @@ public:
     //Elevator
     shared_ptr<WPI_TalonSRX> srxElevatorMaster;
     shared_ptr<WPI_TalonSRX> srxElevatorSlave;
-    std::shared_ptr<DigitalInput> subElevatorLimitTop;
-    std::shared_ptr<DigitalInput> subElevatorLimitBottom;
+    shared_ptr<DigitalInput> subElevatorLimitTop;
+    shared_ptr<DigitalInput> subElevatorLimitBottom;
 
     //Gimble
     shared_ptr<WPI_TalonSRX> srxGimble;
