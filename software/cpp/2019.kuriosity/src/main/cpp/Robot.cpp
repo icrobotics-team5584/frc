@@ -32,6 +32,7 @@ void Robot::RobotInit() {
     subPanelAffector.reset(new SubPanelAffector());
     subRollerIntake.reset(new SubRollerIntake());
     subGimble.reset(new SubGimble());
+    subGimbleLimits.reset(new SubGimbleLimits());
     cam = CameraServer::GetInstance()->StartAutomaticCapture();
     cam.SetResolution(90, 80);
     // cam.SetFPS(20);
