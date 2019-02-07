@@ -30,15 +30,15 @@ enum PWM {
 };
 
 enum DIO {
-    dio_clsDriveBaseFront = 0,
-    dio_clsDriveBaseMid = 1,
-    dio_ulsTriggerDriveBaseGimble = 2,
-    dio_ulsEchoDriveBaseGimble = 3,
-    dio_ulsTriggerDriveBaseBottom = 4,
-    dio_ulsEchoDriveBaseBottom = 5,
-    dio_clsLineDriveBaseLeft = 6,
-    dio_clsLineDriveBaseRight = 7,
-    dio_subElevatorLimitBottom = 0000,
+    dio_clsDriveBaseBackRight = 0,
+    dio_clsDriveBaseBackLeft = 1,
+    dio_clsDriveBaseMidRight = 2,
+    dio_clsDriveBaseMidLeft = 3,
+    dio_ulsTriggerDriveBaseGimble = 4,
+    dio_ulsEchoDriveBaseGimble = 5,
+    dio_ulsTriggerDriveBaseBottom = 6,
+    dio_ulsEchoDriveBaseBottom = 7,
+    dio_subElevatorLimitBottom = 9489,
     dio_subElevatorLimitTop = 1111,
     dio_subGimbleLimitLeft = 8,
     dio_subGimbleLimitRight = 9,
@@ -106,16 +106,16 @@ public:
 
     // DriveBase Sensors
     shared_ptr<AHRS> ahrsNavXDriveBase;
-    shared_ptr<DigitalInput> clsDriveBaseMid;
-    shared_ptr<DigitalInput> clsDriveBaseFront;
+    shared_ptr<DigitalInput> clsDriveBaseBackLeft;
+    shared_ptr<DigitalInput> clsDriveBaseBackRight;
+    shared_ptr<DigitalInput> clsDriveBaseMidLeft;
+    shared_ptr<DigitalInput> clsDriveBaseMidRight;
     shared_ptr<DigitalOutput> dioTriggerDriveBaseGimble;
     shared_ptr<DigitalInput> dioEchoDriveBaseGimble;
     shared_ptr<DigitalOutput> dioTriggerDriveBaseBottom;
     shared_ptr<DigitalInput> dioEchoDriveBaseBottom;
     shared_ptr<Ultrasonic> ulsDriveBaseGimble;
     shared_ptr<Ultrasonic> ulsDriveBaseBottom;
-    shared_ptr<DigitalInput> clsLineDriveBaseLeft;
-    shared_ptr<DigitalInput> clsLineDriveBaseRight;
 
     //Intake and outake
     shared_ptr<WPI_TalonSRX> srxIntakeOutake;

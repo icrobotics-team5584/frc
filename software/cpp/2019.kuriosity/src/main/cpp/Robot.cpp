@@ -57,11 +57,6 @@ void Robot::RobotInit() {
  */
 void Robot::RobotPeriodic() {
     SmartDashboard::PutNumber("Bottom Ultrasonic", subDriveBase->getDistanceToObstical());
-    SmartDashboard::PutBoolean("front sensor", subDriveBase->frontHasReachedLine());
-    SmartDashboard::PutBoolean("mid sensor", subDriveBase->midHasReachedLine());
-    SmartDashboard::PutBoolean("left sensor", subDriveBase->isLeftClsOnLine());
-    SmartDashboard::PutBoolean("right sensor", subDriveBase->isRightClsOnLine());
-
     SmartDashboard::PutNumber("Yaw", subDriveBase->getYaw());
     SmartDashboard::PutNumber("Elevator encoder", subElevator->GetEncoderPosition());
 }

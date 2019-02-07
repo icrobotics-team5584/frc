@@ -20,6 +20,8 @@
 using namespace std;
 using namespace frc;
 
+enum ColourSensor {BACK_LEFT, BACK_RIGHT, MID_LEFT, MID_RIGHT};
+
 class SubDriveBase : public frc::Subsystem {
  private:
   // Actuators
@@ -34,13 +36,14 @@ class SubDriveBase : public frc::Subsystem {
   RightVelocitySource* rightVelocitySource;
 
   // Sensors
-  shared_ptr<DigitalInput> _clsMid;
-  shared_ptr<DigitalInput> _clsFront;
+  shared_ptr<DigitalInput> _clsBackLeft;
+  shared_ptr<DigitalInput> _clsBackRight;
+  shared_ptr<DigitalInput> _clsMidLeft;
+  shared_ptr<DigitalInput> _clsMidRight;
   shared_ptr<Ultrasonic> _ulsGimble;
   shared_ptr<Ultrasonic> _ulsBottom;
   shared_ptr<AHRS> _ahrsNavXGyro;
-  shared_ptr<DigitalInput> _clsLineLeft;
-  shared_ptr<DigitalInput> _clsLineRight;
+  
 
   // Robot constants
   const double WHEEL_DIAMETER = 0.1524; // in meters (0.1016 for dizzy)
@@ -86,10 +89,11 @@ class SubDriveBase : public frc::Subsystem {
   double getYaw();
 
   // Colour Sensor functions
-  bool frontHasReachedLine();
-  bool midHasReachedLine();
-  bool isLeftClsOnLine();
-  bool isRightClsOnLine();
+  bool getColourSensor(ColourSensor sensor);
+  bool clsBackLeftDetected();
+  bool clsMidLeftDetected();
+  bool clsBackRightDetected();
+  bool clsMidRightDetected();
 
   // Ultrasonic functions
   double getDistanceToObstical();

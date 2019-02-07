@@ -20,6 +20,7 @@
 #include "commands/CmdSeekPath.h"
 #include "commands/CmdMotionProfile.h"
 #include "commands/CmdEncoderDrive.h"
+#include "commands/CmdStopAtLine.h"
 
 OI::OI() {
   cout << "Run Robot OI" << endl;
@@ -30,8 +31,8 @@ OI::OI() {
   btnDriveBaseSlow.reset(new AxisButton(controller.get(), leftAxisTrigger));
   btnDriveBaseSlow->WhileHeld(new CmdDriveBaseSlow());
 
-  btnEncoderDrive.reset(new frc::JoystickButton(controller.get(), yBtn));
-  btnEncoderDrive->WhenPressed(new CmdEncoderDrive(1));
+  btnStopAtLine.reset(new AxisButton(controller.get(), rightAxisTrigger));
+  btnStopAtLine->WhileHeld(new CmdStopAtLine(0.4, BACK_RIGHT));
 
   //Intake Outake
   btnCargoPodOut.reset(new frc::JoystickButton(controller.get(), leftBtn));
