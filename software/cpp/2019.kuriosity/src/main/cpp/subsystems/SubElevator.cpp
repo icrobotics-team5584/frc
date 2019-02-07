@@ -56,6 +56,28 @@ void SubElevator::ElevatorToPos(double rotation) {
   _srxElevatorMaster->Set(ControlMode::Position, targetPositionRotations);
 }
 
+Heights SubElevator::GetHeight(){
+	return _currentHeight;
+}
+
+void SubElevator::SetHeight(Heights currentHeight){
+	_currentHeight = currentHeight;
+	switch(currentHeight){
+		case BOTTOM_HATCH:
+			ElevatorToPos(0.0);
+		break;
+		case BOTTOM_CARGO:
+			ElevatorToPos(1.4);
+		break;
+		case MID_HATCH:
+			ElevatorToPos(2.6);
+		break;
+		case MID_CARGO:
+			ElevatorToPos(3.3);
+		break;
+	}
+}
+
 void SubElevator::Override(std::shared_ptr<Joystick> rightStick){
 	_axis5 = rightStick->GetRawAxis(5); //up down control axis  
 

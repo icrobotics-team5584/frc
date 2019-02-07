@@ -9,15 +9,16 @@
 
 #include <frc/commands/Command.h>
 #include "Robot.h"
+#include "subsystems/SubElevator.h"
 class CmdElevatorToPosition : public frc::Command {
  private:
- double _height;
- bool bottom;
+ Heights _height = BOTTOM_CARGO;
+ bool bottom = true;
  bool goTo;
  int setTo;
  int timeRound = 0;
  public:
-  CmdElevatorToPosition(bool bottom, bool goTo, int setTo);
+  CmdElevatorToPosition(bool bottom1, bool goTo, int setTo);
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;

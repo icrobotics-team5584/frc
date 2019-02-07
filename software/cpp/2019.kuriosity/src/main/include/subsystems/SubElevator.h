@@ -16,6 +16,13 @@
 using namespace std;
 using namespace frc;
 
+enum Heights {
+      BOTTOM_HATCH,
+      BOTTOM_CARGO,
+      MID_HATCH,
+      MID_CARGO
+    };
+
 class SubElevator : public frc::Subsystem {
  private:
    enum Constants 
@@ -37,7 +44,8 @@ class SubElevator : public frc::Subsystem {
     	 */
     	 kTimeoutMs = 10
     };
-
+    
+  
   shared_ptr<WPI_TalonSRX> _srxElevatorMaster;
   double _axis5 = 0;
   double targetPositionRotations = 0.0;
@@ -65,4 +73,8 @@ class SubElevator : public frc::Subsystem {
   void TestingUpStop();
   void TestingPID();
   int GetEncoderPosition();
+  
+    Heights _currentHeight = BOTTOM_HATCH;
+  Heights GetHeight();
+  void SetHeight(Heights currentHeight);
 };
