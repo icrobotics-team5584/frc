@@ -15,32 +15,33 @@ using namespace std;
 using namespace frc;
 
 enum Can {
-     can_srxDriveBaseFrontLeft = 1,
+    can_srxDriveBaseFrontLeft = 1,
     can_srxDriveBaseBackLeft = 2,
     can_srxDriveBaseFrontRight = 3,
     can_srxDriveBaseBackRight = 4,
     can_srxGimble = 5,
-    can_srxElevator = 77777,
-    can_srxIntakeOutake = 6
+    can_srxIntakeOutake = 6,
+    can_srxElevatorMaster = 7,
+    can_srxElevatorSlave = 8,
+    can_srxRollerIntake = 9,
 };
 
 enum PWM {
-    pwm_spkRollerIntake = 9999
 };
 
 enum DIO {
-    dio_clsDriveBaseFront = 0,
-    dio_clsDriveBaseMid = 1,
-    dio_ulsTriggerDriveBaseGimble = 2,
-    dio_ulsEchoDriveBaseGimble = 3,
-    dio_ulsTriggerDriveBaseBottom = 4,
-    dio_ulsEchoDriveBaseBottom = 5,
-    dio_clsLineDriveBaseLeft = 6,
-    dio_clsLineDriveBaseRight = 7,
-    dio_subElevatorLimitBottom = 0000,
-    dio_subElevatorLimitTop = 1111,
-    dio_subGimbleLimitLeft = 8,
-    dio_subGimbleLimitRight = 9,
+    dio_clsDriveBaseBackRight = 0,
+    dio_clsDriveBaseBackLeft = 1,
+    dio_clsDriveBaseMidRight = 2,
+    dio_clsDriveBaseMidLeft = 3,
+    dio_ulsTriggerDriveBaseGimble = 4,
+    dio_ulsEchoDriveBaseGimble = 5,
+    dio_ulsTriggerDriveBaseBottom = 6666,
+    dio_ulsEchoDriveBaseBottom = 7777,
+    dio_subGimbleLimitLeft = 6,
+    dio_subGimbleLimitRight = 7,
+    dio_subElevatorLimitBottom = 8,
+    dio_subElevatorLimitTop = 9,
     dio_subIntakeOutakeCargo = 4444
 };
 
@@ -49,15 +50,33 @@ enum Analog {
 };
 
 enum PCM {
+    pcm_lower = 0,
+    pcm_upper = 1
+};
+
+enum PCM_0{
     pcm_solPanelAffectorTopFingerForward = 1,
     pcm_solPanelAffectorTopFingerReverse = 0,
+
     pcm_solPanelAffectorBottomFingerForward = 9999,
     pcm_solPanelAffectorBottomFingerReverse = 9999,
-
+    
     pcm_solPanelAffectorTopForward = 7,
     pcm_solPanelAffectorTopReverse = 6,
     pcm_solPanelAffectorBottomForward = 5,
     pcm_solPanelAffectorBottomReverse = 4
+};
+
+enum PCM_1 {
+   // pcm_solPanelAffectorTopFingerForward = 1,
+   // pcm_solPanelAffectorTopFingerReverse = 0,
+   // pcm_solPanelAffectorBottomFingerForward = 9999,
+   // pcm_solPanelAffectorBottomFingerReverse = 9999,
+//
+   // pcm_solPanelAffectorTopForward = 7,
+   // pcm_solPanelAffectorTopReverse = 6,
+   // pcm_solPanelAffectorBottomForward = 5,
+   // pcm_solPanelAffectorBottomReverse = 4
 };
 
 class RobotMap {
@@ -72,10 +91,10 @@ public:
 	shared_ptr<WPI_TalonSRX> srxDriveBaseBackRight;
 
     //Elevator
-    shared_ptr<WPI_TalonSRX> srxElevator;
-
-    std::shared_ptr<DigitalInput> subElevatorLimitTop;
-    std::shared_ptr<DigitalInput> subElevatorLimitBottom;
+    shared_ptr<WPI_TalonSRX> srxElevatorMaster;
+    shared_ptr<WPI_TalonSRX> srxElevatorSlave;
+    shared_ptr<DigitalInput> subElevatorLimitTop;
+    shared_ptr<DigitalInput> subElevatorLimitBottom;
 
     //Gimble
     shared_ptr<WPI_TalonSRX> srxGimble;
@@ -87,20 +106,20 @@ public:
 
     // DriveBase Sensors
     shared_ptr<AHRS> ahrsNavXDriveBase;
-    shared_ptr<DigitalInput> clsDriveBaseMid;
-    shared_ptr<DigitalInput> clsDriveBaseFront;
+    shared_ptr<DigitalInput> clsDriveBaseBackLeft;
+    shared_ptr<DigitalInput> clsDriveBaseBackRight;
+    shared_ptr<DigitalInput> clsDriveBaseMidLeft;
+    shared_ptr<DigitalInput> clsDriveBaseMidRight;
     shared_ptr<DigitalOutput> dioTriggerDriveBaseGimble;
     shared_ptr<DigitalInput> dioEchoDriveBaseGimble;
     shared_ptr<DigitalOutput> dioTriggerDriveBaseBottom;
     shared_ptr<DigitalInput> dioEchoDriveBaseBottom;
     shared_ptr<Ultrasonic> ulsDriveBaseGimble;
     shared_ptr<Ultrasonic> ulsDriveBaseBottom;
-    shared_ptr<DigitalInput> clsLineDriveBaseLeft;
-    shared_ptr<DigitalInput> clsLineDriveBaseRight;
 
     //Intake and outake
     shared_ptr<WPI_TalonSRX> srxIntakeOutake;
-    shared_ptr<frc::Spark> spkRollerIntake;
+    shared_ptr<WPI_TalonSRX> srxRollerIntake;
 
     shared_ptr<DigitalInput> subIntakeOutakeCargo;
 

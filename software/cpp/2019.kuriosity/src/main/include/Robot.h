@@ -15,12 +15,16 @@
 #include "RobotMap.h"
 #include "subsystems/SubDriveBase.h"
 #include "subsystems/SubElevator.h"
+#include "subsystems/SubElevatorLimits.h"
 #include "subsystems/SubIntakeOutake.h"
 #include "subsystems/SubPanelAffector.h"
 #include "subsystems/SubRollerIntake.h"
 #include "subsystems/SubGimble.h"
 #include "commands/CmdSeekCargoShip.h"
 #include "subsystems/SubGimbleLimits.h"
+#include <cscore_oo.h>
+#include "commands/CmdIntakePanel.h"
+#include "subsystems/ElevatorCmdChooser.h"
 
 #include <iostream>
 
@@ -32,12 +36,17 @@ class Robot : public frc::TimedRobot {
   static unique_ptr<RobotMap> _robotMap;
   static unique_ptr<SubDriveBase> subDriveBase;
   static unique_ptr<SubElevator> subElevator;
+  static unique_ptr<SubElevatorLimits> subElevatorLimits;
   static unique_ptr<SubIntakeOutake> subIntakeOutake;
   static unique_ptr<SubPanelAffector> subPanelAffector;
   static unique_ptr<SubRollerIntake> subRollerIntake;
   static unique_ptr<SubGimble> subGimble;
   static unique_ptr<SubGimbleLimits> subGimbleLimits;
+
+  static unique_ptr<ElevatorCmdChooser> elevatorCmdChooser;
+
   unique_ptr<CmdSeekCargoShip> cmdSeekCargoShip;
+  unique_ptr<CmdIntakePanel> cmdIntakePanel;
 
   void RobotInit() override;
   void RobotPeriodic() override;
@@ -50,6 +59,9 @@ class Robot : public frc::TimedRobot {
   void TestPeriodic() override;
 
  private:
+  cs::VideoSink server;
+  cs::UsbCamera cam;
+
   // Have it null by default so that if testing teleop it
   // doesn't have undefined behavior and potentially crash.
   //frc::Command* m_autonomousCommand = nullptr;

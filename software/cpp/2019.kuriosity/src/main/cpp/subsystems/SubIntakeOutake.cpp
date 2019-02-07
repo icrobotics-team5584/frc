@@ -11,6 +11,7 @@
 SubIntakeOutake::SubIntakeOutake() 
 : Subsystem("ExampleSubsystem") {
   _srxIntakeOutake = Robot::_robotMap->srxIntakeOutake;
+  _dinCargoLimit = Robot::_robotMap->subIntakeOutakeCargo;
 }
 
 void SubIntakeOutake::InitDefaultCommand() {
@@ -29,4 +30,8 @@ void SubIntakeOutake::Outake() {
 }
 void SubIntakeOutake::Stop() {
   _srxIntakeOutake->Set(0.0);
+}
+
+bool SubIntakeOutake::GetCargoLimitSwitch() {
+  return _dinCargoLimit->Get();
 }

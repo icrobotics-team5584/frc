@@ -8,6 +8,8 @@
 #include "commands/CmdHatchLowRocket.h"
 #include "commands/CmdFollowLine.h"
 #include "commands/CmdOutputPanel.h"
+#include "commands/CmdOpenIntakeFingers.h"
+#include "commands/CmdCloseIntakeFingers.h"
 CmdHatchLowRocket::CmdHatchLowRocket() {
   // Add Commands here:
   // e.g. AddSequential(new Command1());

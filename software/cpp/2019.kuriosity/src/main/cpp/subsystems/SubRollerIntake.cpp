@@ -10,7 +10,7 @@
 
 SubRollerIntake::SubRollerIntake() 
 : Subsystem("ExampleSubsystem") {
-  _spkRoller = Robot::_robotMap->spkRollerIntake;
+  _srxRoller = Robot::_robotMap->srxRollerIntake;
 }
 
 void SubRollerIntake::InitDefaultCommand() {
@@ -22,13 +22,13 @@ void SubRollerIntake::InitDefaultCommand() {
 // here. Call these from Commands.
 
 void SubRollerIntake::RollerIn() {
-  _spkRoller->Set(inSpeed);
+  _srxRoller->Set(-inSpeed);
 }
 
 void SubRollerIntake::RollerOut() {
-  _spkRoller->Set(outSpeed);
+  _srxRoller->Set(-outSpeed);
 }
 
 void SubRollerIntake::Stop() {
-    _spkRoller->Set(0.0);
+    _srxRoller->Set(0.0);
 }
