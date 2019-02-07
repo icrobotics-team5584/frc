@@ -129,7 +129,7 @@ void Robot::TeleopInit() {
     //  m_autonomousCommand->Cancel();
     //  m_autonomousCommand = nullptr;
     //}
-
+    Robot::subElevator->SetHeight(BOTTOM_HATCH);
 
 }
 

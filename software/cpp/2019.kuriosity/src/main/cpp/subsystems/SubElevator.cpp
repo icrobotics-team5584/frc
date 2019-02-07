@@ -70,7 +70,7 @@ void SubElevator::SetHeight(Heights currentHeight){
 			ElevatorToPos(1.4);
 		break;
 		case MID_HATCH:
-			ElevatorToPos(2.6);
+			ElevatorToPos(2.7);
 		break;
 		case MID_CARGO:
 			ElevatorToPos(3.3);
