@@ -32,10 +32,11 @@ enum ElevatorHeight {
 class OI {
  public:
   shared_ptr<frc::Joystick> controller;
+  shared_ptr<frc::Joystick> controllerReverse;
   shared_ptr<frc::JoystickButton> btnCargoPodOut;
   shared_ptr<frc::JoystickButton> btnCargoPodIn;
   OI();
-  std::shared_ptr<frc::Joystick> getJoystick0();
+  std::shared_ptr<frc::Joystick> getJoystick(int);
 private:
   unique_ptr<frc::JoystickButton> btnFollowLine;
   unique_ptr<frc::JoystickButton> btnMotionProfile;
@@ -56,8 +57,6 @@ private:
 
   unique_ptr<LimitButton> lmtPIDTop;
   unique_ptr<LimitButton> lmtPIDBottom;
-
-  std::shared_ptr<frc::Joystick> joystick0;
 
   unique_ptr<frc::JoystickButton> btnUpTest;
   unique_ptr<frc::JoystickButton> btnDownTest;
