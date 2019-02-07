@@ -28,7 +28,8 @@
 #include "commands/CmdMotionProfile.h"
 #include "commands/CmdEncoderDrive.h"
 #include "commands/CmdStopAtLine.h"
-
+#include "commands/CmdGimblePIDLeftStop.h"
+#include "commands/CmdGimblePIDRightStop.h"
 OI::OI() {
   cout << "Run Robot OI" << endl;
 
@@ -72,7 +73,7 @@ OI::OI() {
  
   povBtnGimblePidRight.reset(new ButtonPOV(controller.get(), 270));
   povBtnGimblePidRight->WhenPressed(new CmdGimblePidRight());
-   povBtnGimblePidCentre.reset(new ButtonPOV(controller.get(), 0));
+  povBtnGimblePidCentre.reset(new ButtonPOV(controller.get(), 0));
   povBtnGimblePidCentre->WhenPressed(new CmdGimblePidCentre());
   
   btnOverride.reset(new frc::JoystickButton(controller.get(), rightStickBtn));
@@ -82,6 +83,11 @@ OI::OI() {
   lmtPIDTop->WhenPressed(new CmdElevatorPIDTopStop());
   lmtPIDBottom.reset(new LimitButton(Robot::_robotMap->subElevatorLimitBottom, true));
   lmtPIDBottom->WhenPressed(new CmdElevatorPIDBottomStop());
+
+  lmtPIDLeft.reset(new LimitButton(Robot::_robotMap->subGimbleLimitLeft, false));
+  lmtPIDLeft->WhenPressed(new CmdGimblePIDLeftStop());
+  lmtPIDRight.reset(new LimitButton(Robot::_robotMap->subGimbleLimitRight, false));
+  lmtPIDRight->WhenPressed(new CmdGimblePIDRightStop());
 
   //Elevator
   //btnUpTest.reset(new frc::JoystickButton(controller.get(), yBtn));

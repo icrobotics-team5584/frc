@@ -56,10 +56,13 @@ private:
   unique_ptr<frc::JoystickButton> btnElevatorToPos;
   unique_ptr<frc::JoystickButton> btnElevatorToBottom;
 
+
   unique_ptr<frc::JoystickButton> btnOverride;
 
   unique_ptr<LimitButton> lmtPIDTop;
   unique_ptr<LimitButton> lmtPIDBottom;
+  unique_ptr<LimitButton> lmtPIDLeft;
+  unique_ptr<LimitButton> lmtPIDRight;
 
   std::shared_ptr<frc::Joystick> joystick0;
 
