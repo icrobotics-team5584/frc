@@ -8,8 +8,8 @@
 using namespace std;
 
 enum Buttons {
-     aBtn= 1,
-     bBtn= 2,
+     aBtn = 1,
+     bBtn = 2,
      xBtn = 3,
      yBtn = 4,
      leftBtn = 5,

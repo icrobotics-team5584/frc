@@ -24,16 +24,24 @@ void CmdJoystickDrive::Execute() {
   double yReverse = Robot::_oi->controllerReverse->GetY();
   double x;
   double y;
-  if(xForward > 0.2 || yForward > 0.2 || xForward < -0.2 || yForward < -0.2)
-  {
-    x = xForward;
-    y = yForward;
-  }
-  else
-  {
-    x = xReverse;
-    y = yReverse;
-  }
+  // if(xForward > 0.2 || yForward > 0.2 || xForward < -0.2 || yForward < -0.2)
+  // {
+  //   x = xForward;
+  //   y = yForward;
+  // }
+  // else
+  // {
+  //   x = xReverse;
+  //   y = -yReverse;
+  // }
+
+  x = xForward + xReverse;
+  y = yForward - yReverse;
+  if(x < -1.0){x = -1.0;}
+  if(x > 1.0){x = 1.0;}
+  if(y < -1.0){y = -1.0;}
+  if(y > 1.0){y = 1.0;}
+
   Robot::subDriveBase->drive(y,x);
 }
 
