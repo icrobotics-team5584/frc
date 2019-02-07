@@ -29,7 +29,7 @@ void CmdEncoderDrive::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdEncoderDrive::IsFinished() { 
-  return driveController->OnTarget();// or Robot::subDriveBase->isRightClsOnLine();
+  return driveController->OnTarget() or !Robot::_oi->btnSeekRocketSide->Get();// or Robot::subDriveBase->isRightClsOnLine();
 }
 
 // Called once after isFinished returns true

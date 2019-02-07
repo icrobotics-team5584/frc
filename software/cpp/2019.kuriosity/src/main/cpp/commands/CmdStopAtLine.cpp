@@ -18,12 +18,15 @@ CmdStopAtLine::CmdStopAtLine(double speed, ColourSensor colourSensor) {
 // Called just before this Command runs the first time
 void CmdStopAtLine::Initialize() {
   Robot::subDriveBase->setTalBrakeMode(NeutralMode::Brake);
+  initialAngle = Robot::subDriveBase->getYaw();
+
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdStopAtLine::Execute() {
+  currentAngle = Robot::subDriveBase->getYaw();
   if (!Robot::subDriveBase->getColourSensor(_colourSensor)) {
-    Robot::subDriveBase->drive(_speed, 0);
+    Robot::subDriveBase->drive(_speed, kP * (initialAngle - currentAngle));
   } else {
     Robot::subDriveBase->drive(0, 0);
   }
@@ -31,7 +34,7 @@ void CmdStopAtLine::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdStopAtLine::IsFinished() { 
-  return Robot::subDriveBase->getColourSensor(_colourSensor) or !Robot::_oi->btnStopAtLine->Get();
+  return Robot::subDriveBase->getColourSensor(_colourSensor) or !Robot::_oi->btnSeekRocketSide->Get();
 }
 
 // Called once after isFinished returns true

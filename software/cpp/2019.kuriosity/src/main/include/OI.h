@@ -35,6 +35,8 @@ class OI {
   shared_ptr<frc::JoystickButton> btnCargoPodOut;
   shared_ptr<frc::JoystickButton> btnCargoPodIn;
   unique_ptr<AxisButton> btnStopAtLine;
+  unique_ptr<AxisButton> btnSeekRocketSide;
+
   OI();
   std::shared_ptr<frc::Joystick> getJoystick0();
 private:
@@ -47,7 +49,6 @@ private:
   unique_ptr<frc::JoystickButton> btnSeekPath;
   unique_ptr<frc::JoystickButton> btnGimbleRotateLeft;
   unique_ptr<frc::JoystickButton> btnGimbleRotateRight;
-  unique_ptr<frc::JoystickButton> btnSeekRocketSide;
   unique_ptr<AxisButton> btnDriveBaseSlow;
   unique_ptr<frc::JoystickButton> btnElevatorToPos;
   unique_ptr<frc::JoystickButton> btnElevatorToBottom;

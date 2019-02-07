@@ -27,4 +27,8 @@ class CmdStopAtLine : public frc::Command {
   bool finishStage;
   double initialEncoderPos;
   double distance;
+
+  double initialAngle;
+  double currentAngle;
+  double kP = 0.03;
 };
