@@ -41,7 +41,6 @@ private:
   unique_ptr<frc::JoystickButton> btnFollowLine;
   unique_ptr<frc::JoystickButton> btnMotionProfile;
   unique_ptr<frc::JoystickButton> btnEncoderDrive;
-  unique_ptr<AxisButton> btnStopAtLine;
 
   unique_ptr<frc::JoystickButton> btnDeployPanel;
   unique_ptr<frc::JoystickButton> btnDeployFingers; 
