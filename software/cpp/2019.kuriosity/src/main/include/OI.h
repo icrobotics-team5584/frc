@@ -34,13 +34,13 @@ class OI {
   shared_ptr<frc::Joystick> controller;
   shared_ptr<frc::JoystickButton> btnCargoPodOut;
   shared_ptr<frc::JoystickButton> btnCargoPodIn;
+  unique_ptr<AxisButton> btnStopAtLine;
   OI();
   std::shared_ptr<frc::Joystick> getJoystick0();
 private:
   unique_ptr<frc::JoystickButton> btnFollowLine;
   unique_ptr<frc::JoystickButton> btnMotionProfile;
   unique_ptr<frc::JoystickButton> btnEncoderDrive;
-  unique_ptr<AxisButton> btnStopAtLine;
 
   unique_ptr<frc::JoystickButton> btnDeployPanel;
   unique_ptr<frc::JoystickButton> btnDeployFingers; 

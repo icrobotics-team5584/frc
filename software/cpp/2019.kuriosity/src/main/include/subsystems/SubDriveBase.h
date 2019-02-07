@@ -71,6 +71,7 @@ class SubDriveBase : public frc::Subsystem {
   void setMotorSaftey(bool enabled);
   Segment* generatePath();
   int getPathLength();
+  void setTalBrakeMode(NeutralMode neutralMode);
 
   // Encoder functions
   void zeroEncoders();

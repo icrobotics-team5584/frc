@@ -28,6 +28,10 @@ void AxisButton::WhileHeld(Command* command) {
 	WhileActive(command);
 }
 
+void AxisButton::WhenPressed(Command* command) {
+	WhenActive(command);
+}
+
 float AxisButton::GetAxis(){
 	return _joystick->GetRawAxis(_axisNumber);
 }

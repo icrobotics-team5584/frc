@@ -36,7 +36,7 @@ OI::OI() {
   btnDriveBaseSlow->WhileHeld(new CmdDriveBaseSlow());
 
   btnStopAtLine.reset(new AxisButton(controller.get(), rightAxisTrigger));
-  btnStopAtLine->WhileHeld(new CmdStopAtLine(0.4, BACK_RIGHT));
+  btnStopAtLine->WhenPressed(new CmdStopAtLine(0.6, BACK_RIGHT));
 
   //Intake Outake
   btnCargoPodOut.reset(new frc::JoystickButton(controller.get(), leftBtn));

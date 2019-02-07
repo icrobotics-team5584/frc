@@ -62,6 +62,10 @@ void SubDriveBase::setTalControlMode(ControlMode controlMode) {
   _srxFrontRight->Set(controlMode, 0);
   _srxFrontLeft->Set(controlMode, 0);
 }
+void SubDriveBase::setTalBrakeMode(NeutralMode neutralMode) {
+  _srxFrontRight->SetNeutralMode(neutralMode);
+  _srxFrontLeft->SetNeutralMode(neutralMode);
+}
 
 void SubDriveBase::tankDriveVelocity(double leftVelocity, double rightVelocity) {
   _srxFrontLeft->Set(ControlMode::Velocity, leftVelocity);
