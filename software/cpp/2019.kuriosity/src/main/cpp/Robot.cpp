@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "Robot.h"
+#include <cameraserver/CameraServer.h>
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
@@ -13,6 +14,7 @@ unique_ptr<OI> Robot::_oi;
 unique_ptr<RobotMap> Robot::_robotMap;
 unique_ptr<SubDriveBase> Robot::subDriveBase;
 unique_ptr<SubElevator> Robot::subElevator;
+unique_ptr<SubElevatorLimits> Robot::subElevatorLimits;
 unique_ptr<SubPanelAffector> Robot::subPanelAffector;
 unique_ptr<SubIntakeOutake> Robot::subIntakeOutake;
 unique_ptr<SubRollerIntake> Robot::subRollerIntake;
@@ -20,18 +22,22 @@ unique_ptr<SubGimble> Robot::subGimble;
 unique_ptr<SubGimbleLimits> Robot::subGimbleLimits;
 
 void Robot::RobotInit() {
-  cout << "Run Robot init" << endl;
   _robotMap.reset(new RobotMap);
 
-  cmdSeekCargoShip.reset(new CmdSeekCargoShip());
-  subDriveBase.reset(new SubDriveBase());
-  subElevator.reset(new SubElevator());
-  subIntakeOutake.reset(new SubIntakeOutake());
-  subPanelAffector.reset(new SubPanelAffector());
-  subRollerIntake.reset(new SubRollerIntake());
-  subGimble.reset(new SubGimble());
-  subGimbleLimits.reset(new SubGimbleLimits());
+    
+    subDriveBase.reset(new SubDriveBase());
+    subElevator.reset(new SubElevator());
+    subElevatorLimits.reset(new SubElevatorLimits());
+    subIntakeOutake.reset(new SubIntakeOutake());
+    subPanelAffector.reset(new SubPanelAffector());
+    subRollerIntake.reset(new SubRollerIntake());
+    subGimble.reset(new SubGimble());
+    cam = CameraServer::GetInstance()->StartAutomaticCapture();
+    cam.SetResolution(90, 80);
+    // cam.SetFPS(20);
 
+    // server = CameraServer::GetInstance()->GetServer();
+    // server.SetSource(cam);
     _oi.reset(new OI);
     std::cout << "robot init finish" << std::endl;
 
@@ -56,15 +62,18 @@ void Robot::RobotInit() {
  * LiveWindow and SmartDashboard integrated updating.
  */
 void Robot::RobotPeriodic() {
-    SmartDashboard::PutNumber("Bottom Ultrasonic", subDriveBase->getDistanceToObstical());
-    SmartDashboard::PutBoolean("front sensor", subDriveBase->frontHasReachedLine());
-    SmartDashboard::PutBoolean("mid sensor", subDriveBase->midHasReachedLine());
-    SmartDashboard::PutBoolean("left sensor", subDriveBase->isLeftClsOnLine());
-    SmartDashboard::PutBoolean("right sensor", subDriveBase->isRightClsOnLine());
+    //SmartDashboard::PutNumber("Bottom Ultrasonic", subDriveBase->getDistanceToObstical());
+    //SmartDashboard::PutBoolean("front sensor", subDriveBase->frontHasReachedLine());
+    //SmartDashboard::PutBoolean("mid sensor", subDriveBase->midHasReachedLine());
+    //SmartDashboard::PutBoolean("left sensor", subDriveBase->isLeftClsOnLine());
+    //SmartDashboard::PutBoolean("right sensor", subDriveBase->isRightClsOnLine());
 
     SmartDashboard::PutBoolean("2222222 GIMBLE LIMIT LEFT", subGimbleLimits->GetLeftLimit());
     SmartDashboard::PutBoolean("2222222 GIMBLE LIMIT RIGHT", subGimbleLimits->GetRightLimit());
     
+    SmartDashboard::PutNumber("Yaw", subDriveBase->getYaw());
+    SmartDashboard::PutNumber("Elevator encoder", subElevator->GetEncoderPosition());
+    SmartDashboard::PutBoolean("On Line", subDriveBase->clsBackRightDetected());
 }
 
 /**
@@ -89,9 +98,7 @@ void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
  */
 void Robot::AutonomousInit() {
 
-    cmdSeekCargoShip.reset(new CmdSeekCargoShip());
 
-    cmdSeekCargoShip->Start();
     // std::string autoSelected = frc::SmartDashboard::GetString(
     //     "Auto Selector", "Default");
     // if (autoSelected == "My Auto") {
@@ -108,25 +115,12 @@ void Robot::AutonomousInit() {
 }
 
 void Robot::AutonomousPeriodic() {
-  frc::Scheduler::GetInstance()->Run();
-  bool buttonPressed;
-  SmartDashboard::PutBoolean("Go back", buttonPressed);
-  SmartDashboard::GetBoolean("Go back", buttonPressed);
-  if (buttonPressed) {
-    Robot::subDriveBase->drive(-0.5, 0);
-  }
+
 }
 
 void Robot::TeleopInit() {
-    // This makes sure that the autonomous stops running when
-    // teleop starts running. If you want the autonomous to
-    // continue until interrupted by another command, remove
-    // this line or comment it out.
-    // if (m_autonomousCommand != nullptr) {
-    //  m_autonomousCommand->Cancel();
-    //  m_autonomousCommand = nullptr;
-    //}
-
+    Robot::subElevator->SetHeight(BOTTOM_HATCH);
+    subDriveBase->resetYaw();
 
 }
 

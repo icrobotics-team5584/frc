@@ -11,25 +11,30 @@
 CmdIntakeOutakeIn::CmdIntakeOutakeIn() {
   // Use Requires() here to declare subsystem dependencies
   Requires(Robot::subIntakeOutake.get());
-  //Requires(Robot::subRollerIntake.get());
+  Requires(Robot::subRollerIntake.get());
+  Requires(Robot::subPanelAffector.get());
 }
 
 // Called just before this Command runs the first time
 void CmdIntakeOutakeIn::Initialize() {
   Robot::subIntakeOutake->Intake();
   Robot::subRollerIntake->RollerIn();
+  Robot::subPanelAffector->DeployFingers(); // Turns out this makes it easier for the ball to enter
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdIntakeOutakeIn::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdIntakeOutakeIn::IsFinished() { return false; }
+bool CmdIntakeOutakeIn::IsFinished() { 
+  return Robot::subIntakeOutake->GetCargoLimitSwitch(); 
+}
 
 // Called once after isFinished returns true
 void CmdIntakeOutakeIn::End() {
   Robot::subIntakeOutake->Stop();
   Robot::subRollerIntake->Stop();
+  Robot::subPanelAffector->RetractFingers();
 }
 
 // Called when another command which requires one or more of the same

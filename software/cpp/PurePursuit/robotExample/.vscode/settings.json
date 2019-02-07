@@ -1,0 +1,33 @@
+{
+  "java.configuration.updateBuildConfiguration": "disabled",
+  "java.import.gradle.enabled": false,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "bin/": true,
+    ".classpath": true,
+    ".project": true
+  },
+  "wpilib.online": true,
+  "C_Cpp.configurationWarnings": "Disabled",
+  "files.associations": {
+    "vector": "cpp",
+    "memory": "cpp",
+    "array": "cpp",
+    "istream": "cpp",
+    "tuple": "cpp",
+    "type_traits": "cpp",
+    "utility": "cpp",
+    "xlocmes": "cpp",
+    "xlocmon": "cpp",
+    "xlocnum": "cpp",
+    "xloctime": "cpp",
+    "cmath": "cpp",
+    "ostream": "cpp",
+    "iostream": "cpp"
+},
+  "C_Cpp.default.configurationProvider": "vscode-wpilib"
+}
