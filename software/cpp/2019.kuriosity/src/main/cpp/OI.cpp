@@ -45,6 +45,8 @@ OI::OI() {
   btnCargoPodIn.reset(new frc::JoystickButton(controller.get(), rightBtn));
   btnCargoPodIn->WhileHeld(new CmdIntakeOutakeIn());
 
+  // btnSeekRocketSide.reset(new frc::JoystickButton(controller.get(), yBtn));
+  // btnSeekRocketSide->WhenPressed(new CmdSeekRocketSide());
   //btnFollowLine.reset(new frc::JoystickButton(controller.get(), xBtn));
   //btnFollowLine->WhenPressed(new CmdHatchLowRocket());
 

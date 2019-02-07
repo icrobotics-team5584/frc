@@ -46,14 +46,14 @@ class SubDriveBase : public frc::Subsystem {
   
 
   // Robot constants
-  const double WHEEL_DIAMETER = 0.1524; // in meters (0.1016 for dizzy)
+  const double WHEEL_DIAMETER = 0.1524; // in meters (0.1016 for dizzy)(0.1524 for lofty)
   const int ENCODER_TICS_PER_ROTATION = 4096; // (214 for dizzy)
   double metersPerRotation; // calculated in constructor
 
   int pathLength; //path length
-
+  double scaleFactor = (WHEEL_DIAMETER * 3.1459265)/4096;
+  Timer timer;
   
-
 	double kTimeoutMs = 30;
   double kPIDLoopIdx = 0;
   double kSlotIdx = 0;
@@ -68,7 +68,6 @@ class SubDriveBase : public frc::Subsystem {
   void drive(double speed, double rotation);
   void tankDrive(double leftSpeed, double rightSpeed);
   void brakeRobot();
-  void setMotorSaftey(bool enabled);
   Segment* generatePath();
   int getPathLength();
   void setTalBrakeMode(NeutralMode neutralMode);
@@ -99,4 +98,10 @@ class SubDriveBase : public frc::Subsystem {
   // Ultrasonic functions
   double getDistanceToObstical();
   bool isBayEmpty();
+  double positionPID(double distance);
+  void pidPositionConfig();
+//   void setPIDSetPoint();
+//   void enablePID();
+//   bool isAtPIDSetPoint();
+
 };

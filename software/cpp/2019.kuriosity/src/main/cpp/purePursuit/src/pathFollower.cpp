@@ -85,7 +85,7 @@ void PathFollower::followPath() {
     DriveOutput::MotorVelocities motorVelocities;
     motorVelocities.first = leftPower;
     motorVelocities.second = rightPower;
-    _output->set(motorVelocities);
+    //_output->set(motorVelocities);
 }
 
 bool PathFollower::isFinished() { 

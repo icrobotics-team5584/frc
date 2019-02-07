@@ -8,24 +8,24 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-#include "purePursuit/include/pathFollower.hpp"
-#include "purePursuit/include/PosEncoderGyro.h"
-#include "purePursuit/include/DvoTank.h"
+#include "Robot.h"
 
-class CmdSeekPath : public frc::Command {
- private:
-  unique_ptr<PathFollower> pathFollower;
-  shared_ptr<PosEncoderGyro> posEncoderGyro;
-  shared_ptr<DvoTank> dvoTank;
+enum DriveStateTypeR {SEARCHING, LINE_DETECTED, REVERSING_TO_LINE, RAISING_ELEVATOR, SHOOTING_CARGO};
 
-  const double  wheelCircumference = 0.47877872; //(m)
-  double scaleFactor;
-
+class CmdSeekRocketCargo : public frc::Command {
  public:
-  CmdSeekPath();
+  CmdSeekRocketCargo();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+ private:
+  DriveStateTypeR driveStateRocket;
+  double drivePower;
+  double frontClsDetected;
+  double midClsDetected;
+  bool finishStage;
+  double initialEncoderPos;
+  double distance;
 };

@@ -26,20 +26,22 @@ void CmdSeekPath::Initialize() {
   Robot::subDriveBase->zeroEncoders();
   Robot::subDriveBase->setTalControlMode(ControlMode::PercentOutput);
   Robot::subDriveBase->velocityPIDConfig();
+  scaleFactor = wheelCircumference/4096;
   // SmartDashboard::PutBoolean("Running CmdSeekpath", true);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdSeekPath::Execute() {
-  pathFollower->followPath();
-  double leftVelocity = 0.5 / 0.000078 / 10;
-  double rightVelocity = -0.5 / 0.000078 / 10;
+  //pathFollower->followPath();
+  double leftVelocity = 1.5 / scaleFactor / 10;
+  double rightVelocity = -1.5 / scaleFactor / 10;
   SmartDashboard::PutNumber("PID velocity", leftVelocity);
   Robot::subDriveBase->tankDriveVelocity(leftVelocity, rightVelocity);
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdSeekPath::IsFinished() { 
+  return false;
   return pathFollower->isFinished();
 }
 
