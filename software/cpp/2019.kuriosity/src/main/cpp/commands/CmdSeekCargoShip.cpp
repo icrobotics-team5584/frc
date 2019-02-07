@@ -26,14 +26,14 @@ void CmdSeekCargoShip::Initialize() {
 void CmdSeekCargoShip::Execute() {
   //This is done so that you only need to change drivePower when changing speed. The drivePower default is 100%
     if (driveState == SEARCHING_FOR_SHIP) {
-        if (Robot::subDriveBase->frontHasReachedLine()) {
+        if (Robot::subDriveBase->getColourSensor(BACK_RIGHT) or Robot::subDriveBase->getColourSensor(BACK_LEFT)) {
           drivePower = 0.4;
           driveState = SEARCHING_FOR_HATCH;
         }
     } 
 
     else if (driveState == SEARCHING_FOR_HATCH) {
-        if (Robot::subDriveBase->midHasReachedLine()) {
+        if (Robot::subDriveBase->getColourSensor(MID_RIGHT) or Robot::subDriveBase->getColourSensor(MID_LEFT)) {
           SmartDashboard::PutBoolean("at hatch", true);
           driveState = AT_HATCH;
         }
@@ -59,7 +59,7 @@ void CmdSeekCargoShip::Execute() {
     } 
     else if (driveState == REVERSING_TO_HATCH) {
         drivePower = -0.45;
-        if (Robot::subDriveBase->midHasReachedLine()) {
+        if (Robot::subDriveBase->getColourSensor(MID_RIGHT) or Robot::subDriveBase->getColourSensor(MID_LEFT)) {
           drivePower = 0;
           driveState = COMPLETE;
         }

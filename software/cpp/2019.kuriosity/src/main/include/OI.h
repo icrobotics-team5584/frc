@@ -1,15 +1,9 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 #pragma once
 
 #include <iostream>
 #include <frc/WPILib.h>
 #include "AxisButton.h"
+#include "LimitButton.h"
 
 using namespace std;
 
@@ -27,9 +21,13 @@ enum Buttons {
 };
 
 enum Axis {
-  leftAxisTrigger = 2
+  leftAxisTrigger = 2,
+  rightAxisTrigger = 3,
 };
 
+enum ElevatorHeight {
+  bottom = 0,
+};
 
 class OI {
  public:
@@ -42,6 +40,7 @@ private:
   unique_ptr<frc::JoystickButton> btnFollowLine;
   unique_ptr<frc::JoystickButton> btnMotionProfile;
   unique_ptr<frc::JoystickButton> btnEncoderDrive;
+  unique_ptr<AxisButton> btnStopAtLine;
 
   unique_ptr<frc::JoystickButton> btnDeployPanel;
   unique_ptr<frc::JoystickButton> btnDeployFingers; 
@@ -50,8 +49,14 @@ private:
   unique_ptr<frc::JoystickButton> btnGimbleRotateRight;
   unique_ptr<frc::JoystickButton> btnSeekRocketSide;
   unique_ptr<AxisButton> btnDriveBaseSlow;
+  unique_ptr<frc::JoystickButton> btnElevatorToPos;
+  unique_ptr<frc::JoystickButton> btnElevatorToBottom;
 
   unique_ptr<frc::JoystickButton> btnOverride;
+
+  unique_ptr<LimitButton> lmtPIDTop;
+  unique_ptr<LimitButton> lmtPIDBottom;
+
   std::shared_ptr<frc::Joystick> joystick0;
 
   unique_ptr<frc::JoystickButton> btnUpTest;

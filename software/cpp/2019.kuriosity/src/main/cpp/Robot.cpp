@@ -14,6 +14,7 @@ unique_ptr<OI> Robot::_oi;
 unique_ptr<RobotMap> Robot::_robotMap;
 unique_ptr<SubDriveBase> Robot::subDriveBase;
 unique_ptr<SubElevator> Robot::subElevator;
+unique_ptr<SubElevatorLimits> Robot::subElevatorLimits;
 unique_ptr<SubPanelAffector> Robot::subPanelAffector;
 unique_ptr<SubIntakeOutake> Robot::subIntakeOutake;
 unique_ptr<SubRollerIntake> Robot::subRollerIntake;
@@ -25,6 +26,7 @@ void Robot::RobotInit() {
     
     subDriveBase.reset(new SubDriveBase());
     subElevator.reset(new SubElevator());
+    subElevatorLimits.reset(new SubElevatorLimits());
     subIntakeOutake.reset(new SubIntakeOutake());
     subPanelAffector.reset(new SubPanelAffector());
     subRollerIntake.reset(new SubRollerIntake());
@@ -57,16 +59,9 @@ void Robot::RobotInit() {
  */
 void Robot::RobotPeriodic() {
     SmartDashboard::PutNumber("Bottom Ultrasonic", subDriveBase->getDistanceToObstical());
-    SmartDashboard::PutBoolean("front sensor", subDriveBase->frontHasReachedLine());
-    SmartDashboard::PutBoolean("mid sensor", subDriveBase->midHasReachedLine());
-    SmartDashboard::PutBoolean("left sensor", subDriveBase->isLeftClsOnLine());
-    SmartDashboard::PutBoolean("right sensor", subDriveBase->isRightClsOnLine());
-
     SmartDashboard::PutNumber("Yaw", subDriveBase->getYaw());
     SmartDashboard::PutNumber("Elevator encoder", subElevator->GetEncoderPosition());
-    SmartDashboard::PutNumber("Left encoder", subDriveBase->getRawLeftEncoder());
-    SmartDashboard::PutNumber("Right encoder", subDriveBase->getRawRightEncoder());
-    SmartDashboard::PutNumber("Distance Travelled", subDriveBase->getDistanceTravelled());
+    SmartDashboard::PutBoolean("On Line", subDriveBase->clsBackRightDetected());
 }
 
 /**
@@ -112,6 +107,7 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
+    Robot::subElevator->SetHeight(BOTTOM_HATCH);
     subDriveBase->resetYaw();
 
 }

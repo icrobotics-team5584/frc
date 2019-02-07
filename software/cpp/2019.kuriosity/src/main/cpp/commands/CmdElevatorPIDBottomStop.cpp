@@ -5,35 +5,31 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdSeekRocketCargo.h"
-
-CmdSeekRocketCargo::CmdSeekRocketCargo() {
+#include "commands/CmdElevatorPIDBottomStop.h"
+#include <iostream>
+CmdElevatorPIDBottomStop::CmdElevatorPIDBottomStop() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(Robot::subDriveBase.get());
+  Requires(Robot::subElevator.get());
 }
 
 // Called just before this Command runs the first time
-void CmdSeekRocketCargo::Initialize() {
-  drivePower = 0.6;
+void CmdElevatorPIDBottomStop::Initialize() {
+  cout << "Bottom Stop" << endl;
+  Robot::subElevator->EncoderReset();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdSeekRocketCargo::Execute() {
-
-  Robot::subDriveBase->drive(drivePower, 0);
-  //Robot::subDriveBase->positionPID((1 - Robot::subDriveBase->getDistanceTravelled()) / 0.000078);
-  //frc::SmartDashboard::PutNumber("error value", (1 - Robot::subDriveBase->getDistanceTravelled()) / 0.000078);
-}
+void CmdElevatorPIDBottomStop::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdSeekRocketCargo::IsFinished() { return Robot::subDriveBase->clsBackRightDetected(); }
+bool CmdElevatorPIDBottomStop::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdSeekRocketCargo::End() {
-  Robot::subDriveBase->drive(0, 0);
-}
+void CmdElevatorPIDBottomStop::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdSeekRocketCargo::Interrupted() {}
+void CmdElevatorPIDBottomStop::Interrupted() {
+  End();
+}

@@ -26,10 +26,10 @@ RobotMap::RobotMap(){
     // DriveBase Sensors
     ahrsNavXDriveBase.reset(new AHRS(SerialPort::kMXP));
 
-    clsDriveBaseFront.reset(new DigitalInput(dio_clsDriveBaseFront));
-    clsDriveBaseMid.reset(new DigitalInput(dio_clsDriveBaseMid));
-    clsLineDriveBaseLeft.reset(new DigitalInput(dio_clsLineDriveBaseLeft));
-    clsLineDriveBaseRight.reset(new DigitalInput(dio_clsLineDriveBaseRight));
+    clsDriveBaseBackRight.reset(new DigitalInput(dio_clsDriveBaseBackRight));
+    clsDriveBaseBackLeft.reset(new DigitalInput(dio_clsDriveBaseBackLeft));
+    clsDriveBaseMidRight.reset(new DigitalInput(dio_clsDriveBaseMidRight));
+    clsDriveBaseMidLeft.reset(new DigitalInput(dio_clsDriveBaseMidLeft));
     
     dioTriggerDriveBaseGimble.reset(new DigitalOutput(dio_ulsTriggerDriveBaseGimble));
     dioEchoDriveBaseGimble.reset(new DigitalInput(dio_ulsEchoDriveBaseGimble));

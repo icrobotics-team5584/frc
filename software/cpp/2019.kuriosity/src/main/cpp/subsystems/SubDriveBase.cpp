@@ -21,12 +21,12 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
 
   //sensors
   _ahrsNavXGyro = Robot::_robotMap->ahrsNavXDriveBase;
-  _clsMid = Robot::_robotMap->clsDriveBaseMid;
-  _clsFront = Robot::_robotMap->clsDriveBaseFront;
   _ulsGimble = Robot::_robotMap->ulsDriveBaseGimble;
   _ulsBottom = Robot::_robotMap->ulsDriveBaseBottom;
-  _clsLineLeft = Robot::_robotMap->clsLineDriveBaseLeft;
-  _clsLineRight = Robot::_robotMap->clsLineDriveBaseRight;
+  _clsBackRight = Robot::_robotMap->clsDriveBaseBackRight;
+  _clsBackLeft = Robot::_robotMap->clsDriveBaseBackLeft;
+  _clsMidRight = Robot::_robotMap->clsDriveBaseMidRight;
+  _clsMidLeft = Robot::_robotMap->clsDriveBaseMidLeft;
 
   //encoders
   _srxFrontRight->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
@@ -145,14 +145,43 @@ double SubDriveBase::getYaw() {
   return _ahrsNavXGyro->GetYaw();
 }
 
-bool SubDriveBase::frontHasReachedLine() {
-  SmartDashboard::PutNumber("frontHasReachedLine", not(_clsFront->Get()));
-  return not(_clsFront->Get());
+/*
+ * Gets the state of any one of the colour sensors attached to the drive base. Use the sensor
+ * paramater to choose the position of the sensor to get. Options are BACK_LEFT, BACK_RIGHT,
+ * MID_LEFT or MID_RIGHT. Make sure to #include "subsystems/SubDriveBase.h" to use these options.
+ */
+bool SubDriveBase::getColourSensor(ColourSensor sensor) {
+  switch (sensor) {
+    case BACK_LEFT:
+      return !_clsBackLeft->Get();
+      break;
+    case BACK_RIGHT:
+      return !_clsBackRight->Get();
+      break;
+    case MID_LEFT:
+      return !_clsMidLeft->Get();
+      break;
+    case MID_RIGHT:
+      return !_clsMidRight->Get();
+      break;
+  }
 }
 
-bool SubDriveBase::midHasReachedLine() {
-  SmartDashboard::PutNumber("midHasReachedLine", not(_clsMid->Get()));
-  return not(_clsMid->Get());
+bool SubDriveBase::clsBackLeftDetected() {
+  return not(_clsBackLeft->Get());
+}
+
+bool SubDriveBase::clsBackRightDetected() {
+  return not(_clsBackRight->Get());
+}
+
+bool SubDriveBase::clsMidLeftDetected() {
+  SmartDashboard::PutNumber("midLeftHasReachedLine", not(_clsMidLeft->Get()));
+  return not(_clsMidLeft->Get());
+}
+
+bool SubDriveBase::clsMidRightDetected() {
+  return not(_clsMidRight->Get());
 }
 
 void SubDriveBase::brakeRobot() {
@@ -201,14 +230,6 @@ void SubDriveBase::pidPositionConfig() {
 double SubDriveBase::positionPID(double distance) {
   _srxFrontRight->Set(ControlMode::Position, -distance);
   _srxFrontLeft->Set(ControlMode::Position, distance);
-}
-
-bool SubDriveBase::isLeftClsOnLine() {
-  return not(_clsLineLeft->Get());
-}
-
-bool SubDriveBase::isRightClsOnLine() {
-  return not(_clsLineRight->Get());
 }
 
 Segment* SubDriveBase::generatePath(){
