@@ -22,8 +22,8 @@ class SubGimble : public frc::Subsystem {
 	double PotRight = 3446;
 	double PotCentre = 2112;
 	double PIDp = -0.0025;
-	double PIDi = 0.0001;
-	double PIDd = -0.0015;
+	double PIDi = 0;
+	double PIDd = 0;
   double humanOffset = 0.001;  //Used for overide 
   double overrideSpeed = 0.0;
   int potRange = 0;

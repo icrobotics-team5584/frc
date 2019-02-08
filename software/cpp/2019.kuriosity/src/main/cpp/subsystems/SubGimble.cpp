@@ -12,7 +12,7 @@ SubGimble::SubGimble() : Subsystem("ExampleSubsystem") {
 	gimbleController->SetInputRange(PotRight, PotLeft);
 	gimbleController->SetOutputRange(-rotateSpeed, rotateSpeed); //Gimble MAX power set here
 	gimbleController->SetContinuous(false);
-	gimbleController->Disable();  //This must be set to true in future
+	gimbleController->Enable();  //This must be set to true in future
 	frc::SmartDashboard::PutData("Arm PID Controls", gimbleController);  
   
 }
@@ -53,7 +53,7 @@ void SubGimble::OverridePID(bool leftRight) { //true = left  ... rotate left
 void SubGimble::PIDGimbleTo(double angle) {
   
   potRange = PotRight - PotLeft;
-  angle = angle + 90 + overrideSpeed; // converts -90, 0, 90 to 0, 90, 180
+  angle = angle + 90; // converts -90, 0, 90 to 0, 90, 180
   double conversion = potRange/180;
   double target = (angle * conversion) + PotLeft;
 

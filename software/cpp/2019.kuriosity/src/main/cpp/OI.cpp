@@ -62,10 +62,10 @@ OI::OI() {
   btnDeployFingers->WhileHeld(new CmdIntakePanel());
 
   //Gimble
-  btnGimbleRotateLeft.reset(new frc::JoystickButton(controller.get(), backBtn));
-  btnGimbleRotateLeft->WhileHeld(new CmdGimbleRotateLeft());
-  btnGimbleRotateRight.reset(new frc::JoystickButton(controller.get(), startBtn));
-  btnGimbleRotateRight->WhileHeld(new CmdGimbleRotateRight());
+  //btnGimbleRotateLeft.reset(new frc::JoystickButton(controller.get(), backBtn));
+  //btnGimbleRotateLeft->WhileHeld(new CmdGimbleRotateLeft());
+  //btnGimbleRotateRight.reset(new frc::JoystickButton(controller.get(), startBtn));
+  //btnGimbleRotateRight->WhileHeld(new CmdGimbleRotateRight());
 
   //Gimble PID Controls 
   povBtnGimblePidLeft.reset(new ButtonPOV(controller.get(), 90));
