@@ -33,6 +33,16 @@ void Robot::RobotInit() {
     subGimble.reset(new SubGimble());
     cam = CameraServer::GetInstance()->StartAutomaticCapture();
     cam.SetResolution(90, 80);
+    cs::CvSink cvSink = CameraServer::GetInstance()->GetVideo();
+    cs::CvSource outputStreamStd = CameraServer::GetInstance()->PutVideo("Gray", 640, 480);
+    cv::Mat source;
+    cv::Mat output;
+    while(true) 
+    {
+        cvSink.GrabFrame(source);
+        cvtColor(source, output, cv::COLOR_BGR2GRAY);
+        outputStreamStd.PutFrame(output);
+    }
     // cam.SetFPS(20);
 
     // server = CameraServer::GetInstance()->GetServer();
