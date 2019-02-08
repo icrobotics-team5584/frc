@@ -60,8 +60,7 @@ class Robot : public frc::TimedRobot {
 
  private:
 
-  cs::VideoSink server;
-  cs::UsbCamera cam;
+  static void VisionThread();
 
   // Have it null by default so that if testing teleop it
   // doesn't have undefined behavior and potentially crash.

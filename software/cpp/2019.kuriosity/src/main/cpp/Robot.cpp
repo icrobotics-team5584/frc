@@ -31,22 +31,10 @@ void Robot::RobotInit() {
     subPanelAffector.reset(new SubPanelAffector());
     subRollerIntake.reset(new SubRollerIntake());
     subGimble.reset(new SubGimble());
-    cam = CameraServer::GetInstance()->StartAutomaticCapture();
-    cam.SetResolution(90, 80);
-    cs::CvSink cvSink = CameraServer::GetInstance()->GetVideo();
-    cs::CvSource outputStreamStd = CameraServer::GetInstance()->PutVideo("Gray", 640, 480);
-    cv::Mat source;
-    cv::Mat output;
-    while(true) 
-    {
-        cvSink.GrabFrame(source);
-        cvtColor(source, output, cv::COLOR_BGR2GRAY);
-        outputStreamStd.PutFrame(output);
-    }
-    // cam.SetFPS(20);
 
-    // server = CameraServer::GetInstance()->GetServer();
-    // server.SetSource(cam);
+    std::thread visionThread(VisionThread);
+    visionThread.detach();
+
     _oi.reset(new OI);
     std::cout << "robot init finish" << std::endl;
 
@@ -125,6 +113,32 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::TestPeriodic() {}
+
+void Robot::VisionThread() {
+    cs::UsbCamera camera = CameraServer::GetInstance()->StartAutomaticCapture();
+    camera.SetResolution(320, 240);
+    camera.SetFPS(20);
+    cs::CvSink cvSink = CameraServer::GetInstance()->GetVideo();
+    cs::CvSource outputStreamStd = CameraServer::GetInstance()->PutVideo("Gray", 640, 480);
+    cv::Mat source;
+    cv::Mat output;
+    int framecounter = 0;
+    while(true) {
+        cvSink.GrabFrame(source);
+        // We check for null image here to prevent assertion faults causing robot code to
+        // crash. This appears to be caused by the USB subsystem not detecting the camera.
+        // If the frame count displayed in the console at run time is not increasing then
+        // this indicates that USB camera is not providing frames - you seem to need to
+        // restart the roborio to resolve this problem - at least with this empty check 
+        // here the robot code is no longer crashing!
+        if(! source.empty()) {
+            framecounter++;
+            cvtColor(source, output, cv::COLOR_BGR2GRAY);
+            outputStreamStd.PutFrame(output);
+        }
+        std::cout << "INFO: frame count: " << framecounter << std::endl;
+    }
+}
 
 #ifndef RUNNING_FRC_TESTS
 int main() { return frc::StartRobot<Robot>(); }
