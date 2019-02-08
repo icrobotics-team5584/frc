@@ -34,10 +34,10 @@ enum DIO {
     dio_clsDriveBaseBackLeft = 1,
     dio_clsDriveBaseMidRight = 2,
     dio_clsDriveBaseMidLeft = 3,
-    dio_ulsTriggerDriveBaseGimble = 4,
-    dio_ulsEchoDriveBaseGimble = 5,
-    dio_ulsTriggerDriveBaseBottom = 6666,
-    dio_ulsEchoDriveBaseBottom = 7777,
+    dio_ulsTriggerLeft = 20,
+    dio_ulsEchoLeft = 19,
+    dio_ulsTriggerRight = 4,
+    dio_ulsEchoRight = 5,
     dio_subGimbleLimitLeft = 6,
     dio_subGimbleLimitRight = 7,
     dio_subElevatorLimitBottom = 8,
@@ -110,12 +110,12 @@ public:
     shared_ptr<DigitalInput> clsDriveBaseBackRight;
     shared_ptr<DigitalInput> clsDriveBaseMidLeft;
     shared_ptr<DigitalInput> clsDriveBaseMidRight;
-    shared_ptr<DigitalOutput> dioTriggerDriveBaseGimble;
-    shared_ptr<DigitalInput> dioEchoDriveBaseGimble;
-    shared_ptr<DigitalOutput> dioTriggerDriveBaseBottom;
-    shared_ptr<DigitalInput> dioEchoDriveBaseBottom;
-    shared_ptr<Ultrasonic> ulsDriveBaseGimble;
-    shared_ptr<Ultrasonic> ulsDriveBaseBottom;
+    shared_ptr<DigitalOutput> dioTriggerDriveBaseLeft;
+    shared_ptr<DigitalInput> dioEchoDriveBaseLeft;
+    shared_ptr<DigitalOutput> dioTriggerDriveBaseRight;
+    shared_ptr<DigitalInput> dioEchoDriveBaseRight;
+    shared_ptr<Ultrasonic> dioUlsDriveBaseLeft;
+    shared_ptr<Ultrasonic> dioUlsDriveBaseRight;
 
     //Intake and outake
     shared_ptr<WPI_TalonSRX> srxIntakeOutake;

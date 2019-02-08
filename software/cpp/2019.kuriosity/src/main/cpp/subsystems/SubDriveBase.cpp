@@ -21,8 +21,8 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
 
   //sensors
   _ahrsNavXGyro = Robot::_robotMap->ahrsNavXDriveBase;
-  _ulsGimble = Robot::_robotMap->ulsDriveBaseGimble;
-  _ulsBottom = Robot::_robotMap->ulsDriveBaseBottom;
+  _ulsLeft = Robot::_robotMap->dioUlsDriveBaseLeft;
+  _ulsRight = Robot::_robotMap->dioUlsDriveBaseRight;
   _clsBackRight = Robot::_robotMap->clsDriveBaseBackRight;
   _clsBackLeft = Robot::_robotMap->clsDriveBaseBackLeft;
   _clsMidRight = Robot::_robotMap->clsDriveBaseMidRight;
@@ -42,8 +42,8 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   // _srxBackRight->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
   // _srxBackLeft->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
 
-  _ulsGimble->SetAutomaticMode(true);
-  _ulsBottom->SetAutomaticMode(true);
+  _ulsLeft->SetAutomaticMode(true);
+  _ulsRight->SetAutomaticMode(true);
 
   // Robot constants
   metersPerRotation = 3.14159265359 * WHEEL_DIAMETER;
@@ -192,19 +192,32 @@ void SubDriveBase::brakeRobot() {
     difDrive->ArcadeDrive(-0.4, 0.2);
 }
 
-double SubDriveBase::getDistanceToObstical() {
-  SmartDashboard::PutNumber("Bottom Ultrasonic Range", _ulsBottom->GetRangeMM());
-  SmartDashboard::PutBoolean("Bottom Ultrasonic range valid?", _ulsBottom->IsRangeValid());
-  return _ulsBottom->GetRangeMM();
+double SubDriveBase::getUlsDistance(UltrasonicSensor ultrasonic) {
+  switch (ultrasonic) {
+  case RIGHT:
+    return _ulsRight->GetRangeMM();
+  case LEFT:
+    return _ulsLeft->GetRangeMM();
+  }
 }
 
 //uses the ultrasonic sensor to check whether the cargo ship bay has a hatch panel on it
-bool SubDriveBase::isBayEmpty() {
-  if (_ulsGimble->GetRangeMM() < 500) {
-    return false;
-  }
-  else {
-    return true;
+bool SubDriveBase::isBayEmpty(UltrasonicSensor ultrasonicSensor) {
+  switch (ultrasonicSensor) {
+    case RIGHT:
+      if (_ulsRight->GetRangeMM() < 500) {
+        return false;
+      }
+      else {
+        return true;
+      }
+    case LEFT:
+      if (_ulsRight->GetRangeMM() < 500) {
+          return false;
+        }
+        else {
+          return true;
+        }
   }
 }
 void SubDriveBase::pidPositionConfig() {
