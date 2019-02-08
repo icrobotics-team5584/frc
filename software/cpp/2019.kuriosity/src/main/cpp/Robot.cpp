@@ -23,8 +23,7 @@ unique_ptr<SubGimbleLimits> Robot::subGimbleLimits;
 
 void Robot::RobotInit() {
   _robotMap.reset(new RobotMap);
-
-    
+  
     subDriveBase.reset(new SubDriveBase());
     subElevator.reset(new SubElevator());
     subElevatorLimits.reset(new SubElevatorLimits());

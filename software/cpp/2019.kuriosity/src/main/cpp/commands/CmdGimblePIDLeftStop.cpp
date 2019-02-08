@@ -16,6 +16,7 @@ CmdGimblePIDLeftStop::CmdGimblePIDLeftStop() {
 // Called just before this Command runs the first time
 void CmdGimblePIDLeftStop::Initialize() {
   Robot::subGimble->stop();
+  std::cout << "GIMBLE PID LEFT STOP" << std::endl;
 }
 
 // Called repeatedly when this Command is scheduled to run

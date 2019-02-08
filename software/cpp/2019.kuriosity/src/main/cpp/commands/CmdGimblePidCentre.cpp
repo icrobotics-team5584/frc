@@ -9,7 +9,7 @@ CmdGimblePidCentre::CmdGimblePidCentre() {
 // Called just before this Command runs the first time
 void CmdGimblePidCentre::Initialize() {
   Robot::subGimble->PIDGimbleTo(0);
-  std::cout << "button press" << std::endl;
+  std::cout << "GIMBLE PID CENTRE" << std::endl;
 }
 
 // Called repeatedly when this Command is scheduled to run

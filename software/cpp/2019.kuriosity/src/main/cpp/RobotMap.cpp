@@ -52,7 +52,7 @@ RobotMap::RobotMap(){
     subGimbleLimitRight.reset(new DigitalInput(dio_subGimbleLimitRight));
     subGimblePot.reset(new AnalogInput(ana_potGimble));
 
-    //Gimble Limits 
-    subGimbleLimitLeft.reset(new DigitalInput(dio_subGimbleLimitLeft));
-    subGimbleLimitRight.reset(new DigitalInput(dio_subGimbleLimitRight));
+    
+    
+    
 }
