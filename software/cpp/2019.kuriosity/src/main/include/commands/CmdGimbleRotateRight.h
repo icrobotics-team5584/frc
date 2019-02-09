@@ -7,14 +7,14 @@
 
 #pragma once
 
-#include <frc/commands/Subsystem.h>
+#include <frc/commands/Command.h>
 
-class SubTurret : public frc::Subsystem {
- private:
-  // It's desirable that everything possible under private except
-  // for methods that implement subsystem capabilities
-
+class CmdGimbleRotateRight : public frc::Command {
  public:
-  SubTurret();
-  void InitDefaultCommand() override;
+  CmdGimbleRotateRight();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
 };

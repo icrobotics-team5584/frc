@@ -7,26 +7,56 @@
 
 #include "commands/CmdOutputPanel.h"
 #include "Robot.h"
+#include <frc/WPILib.h>
 
-CmdOutputPanel::CmdOutputPanel() {
+
+CmdOutputPanel::CmdOutputPanel(bool autoHold) {
   // Use Requires() here to declare subsystem dependencies
+  _autoHold = autoHold;
   Requires(Robot::subPanelAffector.get());
+  
 }
 
 // Called just before this Command runs the first time
 void CmdOutputPanel::Initialize() {
-  Robot::subPanelAffector->Deploy();
+  notDeployed = true;
+  if (_autoHold == true){
+    SmartDashboard::PutNumber("Test", SmartDashboard::GetNumber("Pneumatic_hold", 0.0));
+    SetTimeout(SmartDashboard::GetNumber("Pneumatic_hold", 0.3));
+    SmartDashboard::PutNumber("Pneumatic_hold", timeoutTime);
+  }
+
+  Robot::subPanelAffector->DeployFingers();
+  _timer.Reset();
+  _timer.Start();	
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdOutputPanel::Execute() {}
+void CmdOutputPanel::Execute() {
+  if((_timer.Get() > 0.2) && notDeployed){
+    Robot::subPanelAffector->Deploy();
+    cout << "Deploy Hatch" << endl;
+    notDeployed = false;
+  }
+}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdOutputPanel::IsFinished() { return false; }
+bool CmdOutputPanel::IsFinished() { 
+ if(IsTimedOut()){
+   return true;
+ }
+  return false; 
+}
 
 // Called once after isFinished returns true
 void CmdOutputPanel::End() {
   Robot::subPanelAffector->Retract();
+  cout << "Retract Hatch" << endl;
+  _timer.Reset();
+  _timer.Start();	
+  while(_timer.Get() < 0.2){
+  }
+  Robot::subPanelAffector->RetractFingers();
 }
 
 // Called when another command which requires one or more of the same

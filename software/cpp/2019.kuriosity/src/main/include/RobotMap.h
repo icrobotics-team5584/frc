@@ -10,42 +10,77 @@
 #include <AHRS.h>
 #include <frc/WPILib.h>
 
+
 using namespace std;
 using namespace frc;
 
 enum Can {
-    can_srxDriveBaseFrontRight = 1,
-    can_srxDriveBaseFrontLeft = 3,
-    can_srxDriveBaseBackRight = 2,
-    can_srxDriveBaseBackLeft = 4
+    can_srxDriveBaseFrontLeft = 1,
+    can_srxDriveBaseBackLeft = 2,
+    can_srxDriveBaseFrontRight = 3,
+    can_srxDriveBaseBackRight = 4,
+    can_srxGimble = 5,
+    can_srxIntakeOutake = 6,
+    can_srxElevatorMaster = 7,
+    can_srxElevatorSlave = 8,
+    can_srxRollerIntake = 9,
 };
 
 enum PWM {
-    pwm_talIntakeOutakeRight = 1, 
-    pwm_talIntakeOutakeLeft = 0,   
-    pwm_spkRollerIntake = 2
 };
 
 enum DIO {
-    dio_clsDriveBaseFront = 0,
-    dio_clsDriveBaseMid = 1,
-    dio_ulsTriggerDriveBaseLeft = 1,
-    dio_ulsEchoDriveBaseLeft = 2,
-    dio_ulsTriggerDriveBaseRight = 3,
-    dio_ulsEchoDriveBaseRight = 4
+    dio_clsDriveBaseBackRight = 0,
+    dio_clsDriveBaseBackLeft = 1,
+    dio_clsDriveBaseMidRight = 2,
+    dio_clsDriveBaseMidLeft = 3,
+    dio_ulsTriggerLeft = 20,
+    dio_ulsEchoLeft = 19,
+    dio_ulsTriggerRight = 4,
+    dio_ulsEchoRight = 5,
+    dio_subGimbleLimitLeft = 6,
+    dio_subGimbleLimitRight = 7,
+    dio_subElevatorLimitBottom = 8,
+    dio_subElevatorLimitTop = 9,
+    dio_subIntakeOutakeCargo = 4444
 };
 
 enum Analog {
+    ana_potGimble = 0,
 };
 
 enum PCM {
-    pcm_solPanelAffectorTopForward = 3,
-    pcm_solPanelAffectorTopReverse = 2,
-    pcm_solPanelAffectorBottomForward = 1,
-    pcm_solPanelAffectorBottomReverse = 0
+    pcm_lower = 0,
+    pcm_upper = 1
+};
+
+enum PCM_0{
+    pcm_solPanelAffectorTopFingerForward = 1,
+    pcm_solPanelAffectorTopFingerReverse = 0,
+
+    pcm_solPanelAffectorBottomFingerForward = 9999,
+    pcm_solPanelAffectorBottomFingerReverse = 9999,
+    
+    pcm_solPanelAffectorTopForward = 7,
+    pcm_solPanelAffectorTopReverse = 6,
+    pcm_solPanelAffectorBottomForward = 5,
+    pcm_solPanelAffectorBottomReverse = 4
+};
+
+enum PCM_1 {
+   // pcm_solPanelAffectorTopFingerForward = 1,
+   // pcm_solPanelAffectorTopFingerReverse = 0,
+   // pcm_solPanelAffectorBottomFingerForward = 9999,
+   // pcm_solPanelAffectorBottomFingerReverse = 9999,
+//
+   // pcm_solPanelAffectorTopForward = 7,
+   // pcm_solPanelAffectorTopReverse = 6,
+   // pcm_solPanelAffectorBottomForward = 5,
+   // pcm_solPanelAffectorBottomReverse = 4
 };
 
 class RobotMap {
+private: 
 public:
     RobotMap();
 
@@ -55,21 +90,44 @@ public:
     shared_ptr<WPI_TalonSRX> srxDriveBaseBackLeft;
 	shared_ptr<WPI_TalonSRX> srxDriveBaseBackRight;
 
+    //Elevator
+    shared_ptr<WPI_TalonSRX> srxElevatorMaster;
+    shared_ptr<WPI_TalonSRX> srxElevatorSlave;
+    shared_ptr<DigitalInput> subElevatorLimitTop;
+    shared_ptr<DigitalInput> subElevatorLimitBottom;
+
+    //Gimble
+    shared_ptr<WPI_TalonSRX> srxGimble;
+
+    std::shared_ptr<DigitalInput> subGimbleLimitLeft;
+    std::shared_ptr<DigitalInput> subGimbleLimitRight;
+
+    std::shared_ptr<AnalogInput> subGimblePot;
+
     // DriveBase Sensors
     shared_ptr<AHRS> ahrsNavXDriveBase;
-    shared_ptr<DigitalInput> clsDriveBaseMid;
-    shared_ptr<DigitalInput> clsDriveBaseFront;
-    shared_ptr<Ultrasonic> ulsDriveBaseLeft;
-    shared_ptr<Ultrasonic> ulsDriveBaseRight;
+    shared_ptr<DigitalInput> clsDriveBaseBackLeft;
+    shared_ptr<DigitalInput> clsDriveBaseBackRight;
+    shared_ptr<DigitalInput> clsDriveBaseMidLeft;
+    shared_ptr<DigitalInput> clsDriveBaseMidRight;
+    shared_ptr<DigitalOutput> dioTriggerDriveBaseLeft;
+    shared_ptr<DigitalInput> dioEchoDriveBaseLeft;
+    shared_ptr<DigitalOutput> dioTriggerDriveBaseRight;
+    shared_ptr<DigitalInput> dioEchoDriveBaseRight;
+    shared_ptr<Ultrasonic> dioUlsDriveBaseLeft;
+    shared_ptr<Ultrasonic> dioUlsDriveBaseRight;
 
     //Intake and outake
-    shared_ptr<frc::Talon> talIntakeOutakeRight;
-    shared_ptr<frc::Talon> talIntakeOutakeLeft;
-    shared_ptr<frc::Spark> spkRollerIntake;
+    shared_ptr<WPI_TalonSRX> srxIntakeOutake;
+    shared_ptr<WPI_TalonSRX> srxRollerIntake;
+
+    shared_ptr<DigitalInput> subIntakeOutakeCargo;
 
     // Panel Affector Actuators
     shared_ptr<DoubleSolenoid> solPanelAffectorTop;
     shared_ptr<DoubleSolenoid> solPanelAffectorBottom;
+    shared_ptr<DoubleSolenoid> solPanelAffectorTopFinger;
+    shared_ptr<DoubleSolenoid> solPanelAffectorBottomFinger;
 };
 
 /**

@@ -9,45 +9,66 @@
 #include "Robot.h"
 #include <iostream>
 
-CmdSeekCargoShip::CmdSeekCargoShip() {
+CmdSeekCargoShip::CmdSeekCargoShip(ColourSensor colourSensor, UltrasonicSensor ultrasonicSensor) {
   // Use Requires() here to declare subsystem dependencies
   Requires(Robot::subDriveBase.get());
+  _colourSensor = colourSensor;
+  _ultrasonicSensor = ultrasonicSensor;
 }
 
 // Called just before this Command runs the first time
 void CmdSeekCargoShip::Initialize() {
-  
+  driveState = SEARCHING_FOR_SHIP;
+  drivePower = 0.4;
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdSeekCargoShip::Execute() {
   //This is done so that you only need to change drivePower when changing speed. The drivePower default is 100%
-  Robot::subDriveBase->drive(drivePower, -0.2);
-  std::cout << Robot::subDriveBase->isBayEmpty() << std::endl;
-  if (Robot::subDriveBase->frontHasReachedLine()) {
-    frontClsDetected = true;
-  }
-  if (Robot::subDriveBase->midHasReachedLine()) {
-    midClsDetected = true;
-  }
-  if (frontClsDetected) {
-    drivePower = 0.4;
-    midClsDetected = false;
-  }
-  if (midClsDetected) {
-    drivePower = 1;
-    frontClsDetected = false;
-  }
+    if (driveState == SEARCHING_FOR_SHIP) {
+        if (Robot::subDriveBase->getColourSensor(_colourSensor)) {
+          drivePower = 0.4;
+          driveState = AT_HATCH;
+        }
+    } 
+    
+    else if (driveState == AT_HATCH) {
+        if (Robot::subDriveBase->isBayEmpty(_ultrasonicSensor)) {
+          drivePower = 0;
+          driveState = COMPLETE;
+          timer.Start();    
+        } 
+        else {
+          driveState = SEARCHING_FOR_SHIP;
+        }
+    }
+  Robot::subDriveBase->drive(drivePower, 0);
+
 }
+
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdSeekCargoShip::IsFinished() {
-  return Robot::subDriveBase->isBayEmpty(); 
+  return driveState == COMPLETE; 
 }
 
 // Called once after isFinished returns true
 void CmdSeekCargoShip::End() {
-  Robot::subDriveBase->drive(0,0);
+//   Robot::subDriveBase->drive(0, 0);
+
+  // SmartDashboard::PutBoolean("started running End()", true);
+  //frc::Timer timer;
+  //timer.Start();
+  //while (timer.Get() < 0.25) {}
+  //  while(!Robot::subDriveBase->midHasReachedLine() or (!(timer.Get() > 0.5))) {
+  //   Robot::subDriveBase->getRange();
+  //   SmartDashboard::PutBoolean("started running backwards()", true);
+  //   Robot::subDriveBase->drive(-0.4, 0);
+  //  }
+   
+  // Robot::subDriveBase->drive(0,0);
+  // SmartDashboard::PutBoolean("finished running backwards()", true);
+
   //run put cargo in bay here
 }
 

@@ -100,6 +100,7 @@ void RobotMap::init() {
     subEncodedArmLiftSrxMaster.reset(new WPI_TalonSRX(5));
     subEncodedArmLiftSrxSlave.reset(new WPI_TalonSRX(6));
     subEncodedArmLiftSrxSlave->Set( ctre::phoenix::motorcontrol::ControlMode::Follower, 5);
+	
     subEncodedArmLiftSwtTop.reset(new DigitalInput(3));
     subEncodedArmLiftSwtTopSecondary.reset(new DigitalInput(4));
     subEncodedArmLiftSwtBottom.reset(new DigitalInput(2));
