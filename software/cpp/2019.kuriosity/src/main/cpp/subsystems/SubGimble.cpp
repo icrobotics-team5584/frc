@@ -65,3 +65,6 @@ void SubGimble::PIDGimbleTo(double angle) {
 void SubGimble::stop() {
   gimbleController->SetSetpoint(_anaGimblePot->GetAverageValue());
 }
+void SubGimble::ToCentre(){
+  gimbleController->SetSetpoint(PotCentre);
+}

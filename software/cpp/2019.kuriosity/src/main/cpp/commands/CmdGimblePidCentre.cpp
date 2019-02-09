@@ -8,7 +8,8 @@ CmdGimblePidCentre::CmdGimblePidCentre() {
 
 // Called just before this Command runs the first time
 void CmdGimblePidCentre::Initialize() {
-  Robot::subGimble->PIDGimbleTo(0);
+  Robot::subGimble->ToCentre();
+  
   std::cout << "GIMBLE PID CENTRE" << std::endl;
 }
 

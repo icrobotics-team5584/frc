@@ -17,10 +17,10 @@ class SubGimble : public frc::Subsystem {
   PIDController* gimbleController;
   PIDPot* _potSourcePID;
 
-  double rotateSpeed = 0.5; //Max rotating power
-  double PotLeft = 778;
-	double PotRight = 3446;
-	double PotCentre = 2112;
+  double rotateSpeed = 0.65; //Max rotating power
+  double PotLeft = 783;
+	double PotRight = 3305;
+	double PotCentre = 1905;
 	double PIDp = -0.0025;
 	double PIDi = 0;
 	double PIDd = 0;
@@ -45,4 +45,5 @@ class SubGimble : public frc::Subsystem {
   void disable();
   void PIDGimbleTo(double angle);  
   void OverridePID(bool leftRight);
+  void ToCentre();
 };
