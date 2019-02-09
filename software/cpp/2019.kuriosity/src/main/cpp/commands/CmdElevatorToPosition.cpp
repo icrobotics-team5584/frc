@@ -52,7 +52,8 @@ void CmdElevatorToPosition::Initialize() {
       //}
       
       
-      
+      //Gets current height and moves up to the next height(Accept from top postion)
+      //From top postion it goes back to bottom postion
      switch(_height){
        case BOTTOM_HATCH: 
          Robot::subElevator->SetHeight(BOTTOM_CARGO);
@@ -64,8 +65,14 @@ void CmdElevatorToPosition::Initialize() {
          Robot::subElevator->SetHeight(MID_CARGO);
        break;
        case MID_CARGO:
-         Robot::subElevator->SetHeight(BOTTOM_HATCH);
+         Robot::subElevator->SetHeight(TOP_HATCH);
        break;
+       case TOP_HATCH:
+         Robot::subElevator->SetHeight(TOP_CARGO);
+       break;
+       case TOP_CARGO:
+         Robot::subElevator->SetHeight(BOTTOM_HATCH);
+       break; 
      }
      cout << "cccccaaaaasssssseeeeeeee" << endl;
      timeRound++;
