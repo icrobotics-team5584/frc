@@ -6,6 +6,7 @@ SubGimble::SubGimble() : Subsystem("ExampleSubsystem") {
   _srxGimble = Robot::_robotMap->srxGimble;
   _anaGimblePot = Robot::_robotMap->subGimblePot;
   _potSourcePID = new PIDPot();
+  _gimblePID = new gimblePID();
 
   gimbleController = new PIDController(PIDp, PIDi, PIDd, _potSourcePID, _srxGimble.get());
   gimbleController->SetSetpoint(PotCentre);
@@ -60,6 +61,10 @@ void SubGimble::PIDGimbleTo(double angle) {
 	SmartDashboard::PutNumber("TARGET Value", target);
 
 	gimbleController->SetSetpoint(target);
+}
+
+void SubGimble::VoltageControl(double percentage){
+  _srxGimble->Set(percentage);
 }
 
 void SubGimble::stop() {

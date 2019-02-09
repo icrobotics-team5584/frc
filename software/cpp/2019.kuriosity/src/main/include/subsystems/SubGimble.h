@@ -5,6 +5,7 @@
 #include <ctre/Phoenix.h>
 #include <AHRS.h>
 #include "subsystems/PIDPot.h"
+#include "subsystems/gimblePID.h"
 
 using namespace std;
 using namespace frc;
@@ -16,6 +17,7 @@ class SubGimble : public frc::Subsystem {
   shared_ptr<AnalogInput> _anaGimblePot;
   PIDController* gimbleController;
   PIDPot* _potSourcePID;
+  gimblePID* _gimblePID;
 
   double rotateSpeed = 0.5; //Max rotating power
   double PotLeft = 778;
@@ -39,6 +41,7 @@ class SubGimble : public frc::Subsystem {
   void InitDefaultCommand() override;
   void rotateLeft();
   void rotateRight();
+  void VoltageControl(double percentage);
   void stop();
   //void Reset();  Maybe in the future this can reset the left and right values?
   void enable();
