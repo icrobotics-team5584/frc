@@ -1,5 +1,6 @@
 #include "subsystems/SubElevator.h"
 #include "Robot.h"
+#include "commands/CmdElevatorLimit.h"
 
 SubElevator::SubElevator() : Subsystem("ExampleSubsystem") {
 	
@@ -8,6 +9,7 @@ SubElevator::SubElevator() : Subsystem("ExampleSubsystem") {
   SmartDashboard::PutNumber("Elevator PIDI", PIDI);
   SmartDashboard::PutNumber("Elevator PIDD", PIDD);
   SmartDashboard::PutNumber("Elevator PID target", targetPositionRotations);
+  SmartDashboard::PutData("Elevator go to entterd position", new CmdElevatorLimit());
 
 	/* lets grab the 360 degree position of the MagEncoder's absolute position */
 	int absolutePosition = _srxElevatorMaster->GetSelectedSensorPosition(0) & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */
@@ -33,9 +35,9 @@ SubElevator::SubElevator() : Subsystem("ExampleSubsystem") {
 void SubElevator::Periodic() {
 	SmartDashboard::PutNumber("ELEVATOR", _srxElevatorMaster->GetSelectedSensorPosition(0));
 	//PIDP = SmartDashboard::GetNumber("Elevator PIDP", 0.0);
-	PIDI = SmartDashboard::GetNumber("Elevator PIDI", 0.0);
-	PIDD = SmartDashboard::GetNumber("Elevator PIDD", 0.0);
-	//targetPositionRotations = SmartDashboard::GetNumber("Elevator PID target", 0.0);
+	//PIDI = SmartDashboard::GetNumber("Elevator PIDI", 0.0);
+	//PIDD = SmartDashboard::GetNumber("Elevator PIDD", 0.0);
+	targetPositionRotations = SmartDashboard::GetNumber("Elevator PID target", 0.0);
 
 	_srxElevatorMaster->Config_kF(kPIDLoopIdx, 0.0, kTimeoutMs);
 	_srxElevatorMaster->Config_kP(kPIDLoopIdx, PIDP, kTimeoutMs);
@@ -73,6 +75,12 @@ void SubElevator::SetHeight(Heights currentHeight){
 			ElevatorToPos(2.7);
 		break;
 		case MID_CARGO:
+			ElevatorToPos(3.3);
+		break;
+		case TOP_HATCH:
+			ElevatorToPos(3.3);
+		break;
+		case TOP_CARGO:
 			ElevatorToPos(3.3);
 		break;
 	}

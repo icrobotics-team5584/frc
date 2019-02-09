@@ -20,7 +20,9 @@ enum Heights {
       BOTTOM_HATCH,
       BOTTOM_CARGO,
       MID_HATCH,
-      MID_CARGO
+      MID_CARGO,
+      TOP_HATCH,
+      TOP_CARGO
     };
 
 class SubElevator : public frc::Subsystem {

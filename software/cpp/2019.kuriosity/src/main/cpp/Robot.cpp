@@ -39,11 +39,6 @@ void Robot::RobotInit() {
     // server = CameraServer::GetInstance()->GetServer();
     // server.SetSource(cam);
     _oi.reset(new OI);
-    std::cout << "robot init finish" << std::endl;
-
-    SmartDashboard::PutBoolean("started running End()", false);
-    SmartDashboard::PutBoolean("started running backwards()", false);
-    SmartDashboard::PutBoolean("finished running backwards()", false);
 
     // m_chooser.SetDefaultOption("Default Auto", &m_defaultAuto);
     // m_chooser.AddOption("My Auto", &m_myAuto);

@@ -13,4 +13,6 @@ class PidoutEncoderDrive : public frc::PIDOutput {
  public:
   PidoutEncoderDrive();
   void PIDWrite(double output);
+  double initialAngle;
+  double desiredAngle;
 };

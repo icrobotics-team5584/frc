@@ -20,7 +20,7 @@ void CmdOverrideTurret::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void CmdOverrideTurret::Execute() {
-  	Robot::subElevator->Override(Robot::_oi->getJoystick0());
+  	Robot::subElevator->Override(Robot::_oi->getJoystick(0));
 }
 
 // Make this return true when this Command no longer needs to run execute()

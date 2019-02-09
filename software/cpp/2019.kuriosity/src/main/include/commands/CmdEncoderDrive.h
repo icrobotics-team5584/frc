@@ -24,7 +24,7 @@ private:
   std::unique_ptr<frc::PIDController> driveController;
   std::unique_ptr<PidsrcEncoderDrive> pidsrcEncoder;
   std::unique_ptr<PidoutEncoderDrive> pidoutEncoder;
-  const double kP = 1.4;
+  const double kP = 5;
   const double kI = 0;
   const double kD = 0;
 };

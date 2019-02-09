@@ -28,19 +28,22 @@
 #include "commands/CmdMotionProfile.h"
 #include "commands/CmdEncoderDrive.h"
 #include "commands/CmdStopAtLine.h"
+#include "commands/CmdSeekRocketSide.h"
+
 #include "commands/CmdGimblePIDLeftStop.h"
 #include "commands/CmdGimblePIDRightStop.h"
 OI::OI() {
   cout << "Run Robot OI" << endl;
 
   controller.reset(new frc::Joystick(0));
+  controllerReverse.reset(new frc::Joystick(1));
 
   //Drive Base
   btnDriveBaseSlow.reset(new AxisButton(controller.get(), leftAxisTrigger));
   btnDriveBaseSlow->WhileHeld(new CmdDriveBaseSlow());
 
-  btnStopAtLine.reset(new AxisButton(controller.get(), rightAxisTrigger));
-  btnStopAtLine->WhileHeld(new CmdStopAtLine(0.4, BACK_RIGHT));
+  btnSeekRocketSide.reset(new AxisButton(controller.get(), rightAxisTrigger));
+  btnSeekRocketSide->WhenPressed(new CmdSeekRocketSide());
 
   //Intake Outake
   btnCargoPodOut.reset(new frc::JoystickButton(controller.get(), leftBtn));
@@ -100,6 +103,11 @@ OI::OI() {
   btnElevatorToBottom.reset(new frc::JoystickButton(controller.get(), aBtn));
   btnElevatorToBottom->WhenPressed(new CmdElevatorToPosition(true, false, 0));
 }
-std::shared_ptr<frc::Joystick> OI::getJoystick0() {
-   return joystick0;
+
+std::shared_ptr<frc::Joystick> OI::getJoystick(int id) {
+  if( id == 1 ) {
+    return controllerReverse;
+  } else {
+    return controller;
+  }
 }

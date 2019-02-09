@@ -9,8 +9,8 @@
 using namespace std;
 
 enum Buttons {
-     aBtn= 1,
-     bBtn= 2,
+     aBtn = 1,
+     bBtn = 2,
      xBtn = 3,
      yBtn = 4,
      leftBtn = 5,
@@ -33,15 +33,18 @@ enum ElevatorHeight {
 class OI {
  public:
   shared_ptr<frc::Joystick> controller;
+  shared_ptr<frc::Joystick> controllerReverse;
   shared_ptr<frc::JoystickButton> btnCargoPodOut;
   shared_ptr<frc::JoystickButton> btnCargoPodIn;
+  unique_ptr<AxisButton> btnStopAtLine;
+  unique_ptr<AxisButton> btnSeekRocketSide;
+
   OI();
-  std::shared_ptr<frc::Joystick> getJoystick0();
+  std::shared_ptr<frc::Joystick> getJoystick(int);
 private:
   unique_ptr<frc::JoystickButton> btnFollowLine;
   unique_ptr<frc::JoystickButton> btnMotionProfile;
   unique_ptr<frc::JoystickButton> btnEncoderDrive;
-  unique_ptr<AxisButton> btnStopAtLine;
 
   unique_ptr<frc::JoystickButton> btnDeployPanel;
   unique_ptr<frc::JoystickButton> btnDeployFingers; 
@@ -63,8 +66,6 @@ private:
   unique_ptr<LimitButton> lmtPIDBottom;
   unique_ptr<LimitButton> lmtPIDLeft;
   unique_ptr<LimitButton> lmtPIDRight;
-
-  std::shared_ptr<frc::Joystick> joystick0;
 
   unique_ptr<frc::JoystickButton> btnUpTest;
   unique_ptr<frc::JoystickButton> btnDownTest;
