@@ -42,7 +42,7 @@ void CmdFollowLine::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdFollowLine::IsFinished() {
-  double range = Robot::subDriveBase->getDistanceToObstical();
+  double range = Robot::subDriveBase->getUlsDistance(UltrasonicSensor::RIGHT);
   std::cout << "range " << range << std::endl;
   return (range < 100) or (range > 1700);
 }

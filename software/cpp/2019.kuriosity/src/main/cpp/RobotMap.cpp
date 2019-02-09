@@ -31,13 +31,13 @@ RobotMap::RobotMap(){
     clsDriveBaseMidRight.reset(new DigitalInput(dio_clsDriveBaseMidRight));
     clsDriveBaseMidLeft.reset(new DigitalInput(dio_clsDriveBaseMidLeft));
     
-    dioTriggerDriveBaseGimble.reset(new DigitalOutput(dio_ulsTriggerDriveBaseGimble));
-    dioEchoDriveBaseGimble.reset(new DigitalInput(dio_ulsEchoDriveBaseGimble));
-    dioTriggerDriveBaseBottom.reset(new DigitalOutput(dio_ulsTriggerDriveBaseBottom));
-    dioEchoDriveBaseBottom.reset(new DigitalInput(dio_ulsEchoDriveBaseBottom));
+    dioEchoDriveBaseLeft.reset(new DigitalInput(dio_ulsEchoLeft));
+    dioTriggerDriveBaseLeft.reset(new DigitalOutput(dio_ulsTriggerLeft));
+    dioEchoDriveBaseRight.reset(new DigitalInput(dio_ulsEchoRight));
+    dioTriggerDriveBaseRight.reset(new DigitalOutput(dio_ulsTriggerRight));
     
-    ulsDriveBaseGimble.reset(new Ultrasonic(dioTriggerDriveBaseGimble, dioEchoDriveBaseGimble));
-    ulsDriveBaseBottom.reset(new Ultrasonic(dioTriggerDriveBaseBottom, dioEchoDriveBaseBottom));
+    dioUlsDriveBaseLeft.reset(new Ultrasonic(dioTriggerDriveBaseLeft, dioEchoDriveBaseLeft));
+    dioUlsDriveBaseRight.reset(new Ultrasonic(dioTriggerDriveBaseRight, dioEchoDriveBaseRight));
     
     
 

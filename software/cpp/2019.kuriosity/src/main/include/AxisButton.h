@@ -19,6 +19,7 @@ public:
 	AxisButton(GenericHID* joystick, int axisNumber);
 	bool Get();
 	float GetAxis();
+	void WhenPressed(Command* command);
 	void WhileHeld(Command* command);
 private:
 	GenericHID* _joystick;
