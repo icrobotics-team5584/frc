@@ -24,7 +24,7 @@ SubRollerIntakeBar::SubRollerIntakeBar() : Subsystem("ExampleSubsystem") {
   positionController.reset(new PIDController(kP, kI, kD, pidsrcRoller.get(), pidoutRoller.get()));
   positionController->SetSetpoint(7);
   positionController->SetAbsoluteTolerance(5);
-  positionController->SetOutputRange(-0.8, 0.8);
+  positionController->SetOutputRange(-0.4, 0.4);
   frc::SmartDashboard::PutData("roller intake bar PID controller", positionController.get());
 
 
