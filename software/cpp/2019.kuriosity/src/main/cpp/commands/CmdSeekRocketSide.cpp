@@ -15,7 +15,7 @@ CmdSeekRocketSide::CmdSeekRocketSide() {
   // e.g. AddSequential(new Command1());
   //      AddSequential(new Command2());
   AddSequential(new CmdStopAtLine(0.7, BACK_RIGHT, BACK_LEFT));
-  AddSequential(new CmdEncoderDrive(-0.26));
+  AddSequential(new CmdEncoderDrive(-0.23));
   // these will run in order.
 
   // To run multiple commands at the same time,

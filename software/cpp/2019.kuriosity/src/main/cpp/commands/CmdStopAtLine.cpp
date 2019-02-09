@@ -27,9 +27,10 @@ void CmdStopAtLine::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void CmdStopAtLine::Execute() {
   currentAngle = Robot::subDriveBase->getYaw();
+  desiredAngle = initialAngle + Robot::_oi->controller->GetX() * 5;
   if (!Robot::subDriveBase->getColourSensor(_rightColourSensor) or !Robot::subDriveBase->getColourSensor(_leftColourSensor)) {
     frc::SmartDashboard::PutNumber("speed", _speed);
-    Robot::subDriveBase->drive(_speed, kP * (initialAngle - currentAngle));
+    Robot::subDriveBase->drive(_speed, kP * (desiredAngle - currentAngle));
   } else {
     Robot::subDriveBase->drive(0, 0);
     if(Robot::subDriveBase->getColourSensor(_rightColourSensor)) {
