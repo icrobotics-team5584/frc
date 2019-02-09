@@ -4,5 +4,5 @@
 PidsrcRoller::PidsrcRoller() {}
 
 double PidsrcRoller::PIDGet() {
-    return 0;
+    return Robot::subRollerIntakeBar->GetAngle();
 }

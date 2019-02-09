@@ -4,5 +4,5 @@
 PidoutRoller::PidoutRoller() {}
 
 void PidoutRoller::PIDWrite(double output) {
-    //Robot::subRollerInakeBar->MoveBar(output);
+    Robot::subRollerIntakeBar->MoveBar(output);
 }

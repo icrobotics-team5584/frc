@@ -7,19 +7,29 @@
 
 #include "subsystems/SubRollerIntakeBar.h"
 #include "Robot.h"
+#include "commands/CmdMoveRollerIntakeBar.h"
 
 SubRollerIntakeBar::SubRollerIntakeBar() : Subsystem("ExampleSubsystem") {
   // Set PID constants
-  const double kP = 0;
+  const double kP = 0.4;
   const double kI = 0;
   const double kD = 0;
   
   srxRollerBar = Robot::_robotMap->srxRollerIntakeBar;
+  srxRollerBar->SetSelectedSensorPosition(0);
 
   // Set up PIDController
   pidsrcRoller.reset(new PidsrcRoller());
   pidoutRoller.reset(new PidoutRoller());
   positionController.reset(new PIDController(kP, kI, kD, pidsrcRoller.get(), pidoutRoller.get()));
+  positionController->SetSetpoint(7);
+  positionController->SetAbsoluteTolerance(5);
+  positionController->SetOutputRange(-0.8, 0.8);
+  frc::SmartDashboard::PutData("roller intake bar PID controller", positionController.get());
+
+
+  // Place testing command to dashboard
+  frc::SmartDashboard::PutData("Move roller intake bar", new CmdMoveRollerIntakeBar(OUT));
 }
 
 void SubRollerIntakeBar::InitDefaultCommand() {
@@ -47,13 +57,13 @@ void SubRollerIntakeBar::SetSetpoint(double angle) {
 void SubRollerIntakeBar::SetSetpoint(RollerPosition rollerPosition) {
   switch (rollerPosition) {
     case OUT:
-      SetSetpoint(0);
+      SetSetpoint(7);
       break;
     case UP:
       SetSetpoint(90);
       break;
     case IN:
-      SetSetpoint(120);
+      SetSetpoint(160);
       break;
   }
 }
@@ -62,7 +72,14 @@ void SubRollerIntakeBar::SetSetpoint(RollerPosition rollerPosition) {
  * 
  */
 double SubRollerIntakeBar::GetAngle() {
-  return srxRollerBar->GetSelectedSensorPosition(0);
+  return -((-srxRollerBar->GetSelectedSensorPosition(0) / SENSOR_UNITS_PER_DEGREE) - SENSOR_OFFSET_FROM_ANGLE);
+}
+
+/*
+ * 
+ */
+bool SubRollerIntakeBar::OnTarget() {
+  return positionController->OnTarget();
 }
 
 /*
