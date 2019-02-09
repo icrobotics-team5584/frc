@@ -54,7 +54,7 @@ private:
   unique_ptr<ButtonPOV> povBtnGimblePidLeft;
   unique_ptr<ButtonPOV> povBtnGimblePidCentre;
   unique_ptr<ButtonPOV> povBtnGimblePidRight;
-  unique_ptr<frc::JoystickButton> btnSeekRocketSide;
+  //unique_ptr<frc::JoystickButton> btnSeekRocketSide;
   unique_ptr<AxisButton> btnDriveBaseSlow;
   unique_ptr<frc::JoystickButton> btnElevatorToPos;
   unique_ptr<frc::JoystickButton> btnElevatorToBottom;
