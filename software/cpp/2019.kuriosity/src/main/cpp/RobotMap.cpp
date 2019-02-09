@@ -14,7 +14,6 @@ RobotMap::RobotMap(){
     srxElevatorMaster.reset(new WPI_TalonSRX(can_srxElevatorMaster));
     srxElevatorSlave.reset(new WPI_TalonSRX(can_srxElevatorSlave));
     srxElevatorSlave->Set(ControlMode::Follower, can_srxElevatorMaster);
-
     subElevatorLimitBottom.reset(new DigitalInput(dio_subElevatorLimitBottom));
     subElevatorLimitTop.reset(new DigitalInput(dio_subElevatorLimitTop));
     
@@ -52,4 +51,8 @@ RobotMap::RobotMap(){
     subGimbleLimitLeft.reset(new DigitalInput(dio_subGimbleLimitLeft));
     subGimbleLimitRight.reset(new DigitalInput(dio_subGimbleLimitRight));
     subGimblePot.reset(new AnalogInput(ana_potGimble));
+
+    
+    
+    
 }

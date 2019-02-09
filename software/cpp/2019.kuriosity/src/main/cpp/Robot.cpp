@@ -19,11 +19,11 @@ unique_ptr<SubPanelAffector> Robot::subPanelAffector;
 unique_ptr<SubIntakeOutake> Robot::subIntakeOutake;
 unique_ptr<SubRollerIntake> Robot::subRollerIntake;
 unique_ptr<SubGimble> Robot::subGimble;
+unique_ptr<SubGimbleLimits> Robot::subGimbleLimits;
 
 void Robot::RobotInit() {
   _robotMap.reset(new RobotMap);
-
-    
+  
     subDriveBase.reset(new SubDriveBase());
     subElevator.reset(new SubElevator());
     subElevatorLimits.reset(new SubElevatorLimits());
@@ -31,6 +31,7 @@ void Robot::RobotInit() {
     subPanelAffector.reset(new SubPanelAffector());
     subRollerIntake.reset(new SubRollerIntake());
     subGimble.reset(new SubGimble());
+    subGimbleLimits.reset(new SubGimbleLimits());
     cam = CameraServer::GetInstance()->StartAutomaticCapture();
     cam.SetResolution(90, 80);
     // cam.SetFPS(20);
@@ -42,6 +43,9 @@ void Robot::RobotInit() {
     // m_chooser.SetDefaultOption("Default Auto", &m_defaultAuto);
     // m_chooser.AddOption("My Auto", &m_myAuto);
     // frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+
+
+
 }
 
 /**
@@ -53,6 +57,15 @@ void Robot::RobotInit() {
  * LiveWindow and SmartDashboard integrated updating.
  */
 void Robot::RobotPeriodic() {
+    //SmartDashboard::PutNumber("Bottom Ultrasonic", subDriveBase->getDistanceToObstical());
+    //SmartDashboard::PutBoolean("front sensor", subDriveBase->frontHasReachedLine());
+    //SmartDashboard::PutBoolean("mid sensor", subDriveBase->midHasReachedLine());
+    //SmartDashboard::PutBoolean("left sensor", subDriveBase->isLeftClsOnLine());
+    //SmartDashboard::PutBoolean("right sensor", subDriveBase->isRightClsOnLine());
+
+    SmartDashboard::PutBoolean("2222222 GIMBLE LIMIT LEFT", subGimbleLimits->GetLeftLimit());
+    SmartDashboard::PutBoolean("2222222 GIMBLE LIMIT RIGHT", subGimbleLimits->GetRightLimit());
+    
     SmartDashboard::PutNumber("Yaw", subDriveBase->getYaw());
     SmartDashboard::PutNumber("Elevator encoder", subElevator->GetEncoderPosition());
     SmartDashboard::PutBoolean("On Line", subDriveBase->clsBackRightDetected());
