@@ -24,7 +24,10 @@
 #include <cscore_oo.h>
 #include "commands/CmdIntakePanel.h"
 #include "subsystems/ElevatorCmdChooser.h"
+
 #include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgcodecs/imgcodecs.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
 #include <iostream>

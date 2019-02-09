@@ -23,7 +23,6 @@ unique_ptr<SubGimble> Robot::subGimble;
 void Robot::RobotInit() {
   _robotMap.reset(new RobotMap);
 
-    
     subDriveBase.reset(new SubDriveBase());
     subElevator.reset(new SubElevator());
     subElevatorLimits.reset(new SubElevatorLimits());
@@ -123,6 +122,9 @@ void Robot::VisionThread() {
     cv::Mat source;
     cv::Mat output;
     int framecounter = 0;
+    vector<int> compression_params;
+    compression_params.push_back(cv::IMWRITE_PNG_COMPRESSION);
+    compression_params.push_back(9);
     while(true) {
         cvSink.GrabFrame(source);
         // We check for null image here to prevent assertion faults causing robot code to
@@ -135,6 +137,8 @@ void Robot::VisionThread() {
             framecounter++;
             cvtColor(source, output, cv::COLOR_BGR2GRAY);
             outputStreamStd.PutFrame(output);
+            string imagepath = "/run/field." + to_string(framecounter) + ".png";
+            imwrite( imagepath.c_str(), output, compression_params );
         }
         std::cout << "INFO: frame count: " << framecounter << std::endl;
     }
