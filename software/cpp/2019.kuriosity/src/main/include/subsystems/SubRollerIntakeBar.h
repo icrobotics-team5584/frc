@@ -17,10 +17,6 @@ enum RollerPosition {OUT, UP, IN};
 
 class SubRollerIntakeBar : public frc::Subsystem {
 friend class PidoutRoller;
- private:
-  // It's desirable that everything possible under private except
-  // for methods that implement subsystem capabilities
-
  public:
   SubRollerIntakeBar();
   void InitDefaultCommand() override;
