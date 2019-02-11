@@ -67,8 +67,17 @@ void SubGimble::VoltageControl(double percentage){
   _srxGimble->Set(percentage);
 }
 
-void SubGimble::stop() {
-  gimbleController->SetSetpoint(_anaGimblePot->GetAverageValue());
+void SubGimble::stop(int side) {
+  switch(side){
+    case 0:
+      gimbleController->SetSetpoint((_anaGimblePot->GetAverageValue() + 0));
+    break;
+    case 1:
+      gimbleController->SetSetpoint((_anaGimblePot->GetAverageValue() - 50));
+    break;
+    case 2:
+      gimbleController->SetSetpoint((_anaGimblePot->GetAverageValue() + 50));
+  }
 }
 void SubGimble::ToCentre(){
   gimbleController->SetSetpoint(PotCentre);

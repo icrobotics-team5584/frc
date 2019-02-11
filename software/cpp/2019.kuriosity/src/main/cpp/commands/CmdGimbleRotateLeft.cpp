@@ -7,6 +7,7 @@
 
 #include "commands/CmdGimbleRotateLeft.h"
 #include "Robot.h"
+#include "subsystems/SubGimble.h"
 
 CmdGimbleRotateLeft::CmdGimbleRotateLeft() {
   // Use Requires() here to declare subsystem dependencies
@@ -27,7 +28,7 @@ bool CmdGimbleRotateLeft::IsFinished() { return false; }
 
 // Called once after isFinished returns true
 void CmdGimbleRotateLeft::End() {
-  Robot::subGimble->stop();
+  Robot::subGimble->stop(0);
 }
 
 // Called when another command which requires one or more of the same

@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/CmdGimblePIDLeftStop.h"
+#include "subsystems/SubGimble.h"
 
 CmdGimblePIDLeftStop::CmdGimblePIDLeftStop() {
   // Use Requires() here to declare subsystem dependencies
@@ -15,7 +16,7 @@ CmdGimblePIDLeftStop::CmdGimblePIDLeftStop() {
 
 // Called just before this Command runs the first time
 void CmdGimblePIDLeftStop::Initialize() {
-  Robot::subGimble->stop();
+  Robot::subGimble->stop(1);
   std::cout << "GIMBLE PID LEFT STOP" << std::endl;
 }
 

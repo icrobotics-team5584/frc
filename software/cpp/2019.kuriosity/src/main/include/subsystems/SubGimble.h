@@ -32,8 +32,6 @@ class SubGimble : public frc::Subsystem {
   int target = 0;
 	int lc = 0;
   int totalAngle = 180;
-  
-  
 
   public:
   SubGimble();
@@ -42,7 +40,7 @@ class SubGimble : public frc::Subsystem {
   void rotateLeft();
   void rotateRight();
   void VoltageControl(double percentage);
-  void stop();
+  void stop(int side);
   //void Reset();  Maybe in the future this can reset the left and right values?
   void enable();
   void disable();
