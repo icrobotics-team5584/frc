@@ -7,7 +7,7 @@
 
 #include "commands/CmdElevatortoIntakeHeight.h"
 #include "Robot.h"
-
+#include <cstdlib>
 CmdElevatortoIntakeHeight::CmdElevatortoIntakeHeight() {
   // Use Requires() here to declare subsystem dependencies
   Requires(Robot::subElevator.get());
@@ -24,9 +24,10 @@ void CmdElevatortoIntakeHeight::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdElevatortoIntakeHeight::IsFinished() {
-  elevatorRotations = Robot::subElevator->GetEncoderPosition() / -4096;
-  tolerance = 0.05;
-  error = desiredRotations - elevatorRotations;
+  elevatorPos = Robot::subElevator->GetEncoderPosition();
+  tolerance = 600;
+  error = desiredRotations * 4096 - std::abs(elevatorPos);
+  frc::SmartDashboard::PutNumber("elevator error", error);
   if (error < tolerance and error > -tolerance) {
     return true;
   }

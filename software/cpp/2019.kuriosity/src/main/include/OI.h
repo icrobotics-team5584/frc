@@ -37,6 +37,7 @@ class OI {
   shared_ptr<frc::JoystickButton> btnCargoPodIn;
   unique_ptr<AxisButton> btnStopAtLine;
   unique_ptr<AxisButton> btnSeekRocketSide;
+  unique_ptr<AxisButton> btnIntakeOut;
 
   OI();
   std::shared_ptr<frc::Joystick> getJoystick(int);
@@ -53,7 +54,6 @@ private:
   unique_ptr<AxisButton> btnDriveBaseSlow;
   unique_ptr<frc::JoystickButton> btnElevatorToPos;
   unique_ptr<frc::JoystickButton> btnElevatorToBottom;
-  unique_ptr<AxisButton> btnIntakeOut;
 
   unique_ptr<frc::JoystickButton> btnOverride;
 

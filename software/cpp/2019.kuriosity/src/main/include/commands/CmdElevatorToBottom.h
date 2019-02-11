@@ -9,9 +9,9 @@
 
 #include <frc/commands/Command.h>
 
-class CmdElevatortoIntakeHeight : public frc::Command {
+class CmdElevatorToBottom : public frc::Command {
  public:
-  CmdElevatortoIntakeHeight();
+  CmdElevatorToBottom();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
@@ -19,7 +19,6 @@ class CmdElevatortoIntakeHeight : public frc::Command {
   void Interrupted() override;
  private:
   double elevatorPos;
-  double tolerance;
-  double desiredRotations = 2;
   double error;
+  double tolerance;
 };

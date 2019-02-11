@@ -7,19 +7,9 @@
 
 #pragma once
 
-#include <frc/commands/Command.h>
+#include <frc/commands/CommandGroup.h>
 
-class CmdElevatortoIntakeHeight : public frc::Command {
+class CmdCargoIntakeOut : public frc::CommandGroup {
  public:
-  CmdElevatortoIntakeHeight();
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
- private:
-  double elevatorPos;
-  double tolerance;
-  double desiredRotations = 2;
-  double error;
+  CmdCargoIntakeOut();
 };

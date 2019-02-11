@@ -26,7 +26,7 @@
 #include "commands/CmdEncoderDrive.h"
 #include "commands/CmdStopAtLine.h"
 #include "commands/CmdSeekRocketSide.h"
-#include "commands/CmdElevatortoIntakeHeight.h"
+#include "commands/CmdCargoIntakeOut.h"
 
 OI::OI() {
   cout << "Run Robot OI" << endl;
@@ -39,7 +39,7 @@ OI::OI() {
   btnDriveBaseSlow->WhileHeld(new CmdDriveBaseSlow());
 
   btnIntakeOut.reset(new AxisButton(controller.get(), rightAxisTrigger));
-  btnIntakeOut->WhenPressed(new CmdElevatortoIntakeHeight());
+  btnIntakeOut->WhileHeld(new CmdCargoIntakeOut());
 
   //Intake Outake
   btnCargoPodOut.reset(new frc::JoystickButton(controller.get(), leftBtn));

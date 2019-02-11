@@ -56,6 +56,7 @@ void Robot::RobotPeriodic() {
     SmartDashboard::PutNumber("Yaw", subDriveBase->getYaw());
     SmartDashboard::PutNumber("Elevator encoder", subElevator->GetEncoderPosition());
     SmartDashboard::PutBoolean("On Line", subDriveBase->clsBackRightDetected());
+    SmartDashboard::PutNumber("Elevator pos", subElevator->GetEncoderPosition());
 }
 
 /**
