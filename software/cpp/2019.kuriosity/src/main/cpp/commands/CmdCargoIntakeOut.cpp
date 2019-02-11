@@ -16,7 +16,7 @@ CmdCargoIntakeOut::CmdCargoIntakeOut() {
   //      AddSequential(new Command2());
   // these will run in order.
 
-  //AddParallel(new GimblePidCentre());
+  //AddParallel(new CmdGimblePidCentre());
   AddSequential(new CmdElevatortoIntakeHeight());
   //AddSequential(new CmdMoveRollerIntakeBar(OUT));
   AddSequential(new CmdElevatorToBottom());

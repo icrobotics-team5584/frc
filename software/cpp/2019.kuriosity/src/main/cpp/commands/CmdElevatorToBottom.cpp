@@ -24,14 +24,7 @@ void CmdElevatorToBottom::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdElevatorToBottom::IsFinished() {
-  elevatorPos = Robot::subElevator->GetEncoderPosition();
-  tolerance = 100;
-  error = std::abs(elevatorPos);
-  frc::SmartDashboard::PutNumber("elevator error bottom", error);
-  if (error < tolerance and error > -tolerance) {
-    return true;
-  }
-  return false;
+  return Robot::subElevatorLimits->GetBottomLimit();
 }
 
 // Called once after isFinished returns true
