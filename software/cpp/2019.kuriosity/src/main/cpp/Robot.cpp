@@ -9,6 +9,7 @@
 #include <cameraserver/CameraServer.h>
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <gripPipeline/GripPipeline.h>
 
 unique_ptr<OI> Robot::_oi;
 unique_ptr<RobotMap> Robot::_robotMap;
