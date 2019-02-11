@@ -18,30 +18,27 @@ unique_ptr<SubElevatorLimits> Robot::subElevatorLimits;
 unique_ptr<SubPanelAffector> Robot::subPanelAffector;
 unique_ptr<SubIntakeOutake> Robot::subIntakeOutake;
 unique_ptr<SubRollerIntake> Robot::subRollerIntake;
+unique_ptr<SubRollerIntakeBar> Robot::subRollerIntakeBar;
 unique_ptr<SubGimble> Robot::subGimble;
 
 void Robot::RobotInit() {
   _robotMap.reset(new RobotMap);
 
-    
+    // Create Subsystems
     subDriveBase.reset(new SubDriveBase());
     subElevator.reset(new SubElevator());
     subElevatorLimits.reset(new SubElevatorLimits());
     subIntakeOutake.reset(new SubIntakeOutake());
     subPanelAffector.reset(new SubPanelAffector());
     subRollerIntake.reset(new SubRollerIntake());
+    subRollerIntakeBar.reset(new SubRollerIntakeBar());
     subGimble.reset(new SubGimble());
+
+    // Set up Camera
     cam = CameraServer::GetInstance()->StartAutomaticCapture();
     cam.SetResolution(90, 80);
-    // cam.SetFPS(20);
 
-    // server = CameraServer::GetInstance()->GetServer();
-    // server.SetSource(cam);
     _oi.reset(new OI);
-
-    // m_chooser.SetDefaultOption("Default Auto", &m_defaultAuto);
-    // m_chooser.AddOption("My Auto", &m_myAuto);
-    // frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 }
 
 /**
@@ -56,6 +53,7 @@ void Robot::RobotPeriodic() {
     SmartDashboard::PutNumber("Yaw", subDriveBase->getYaw());
     SmartDashboard::PutNumber("Elevator encoder", subElevator->GetEncoderPosition());
     SmartDashboard::PutBoolean("On Line", subDriveBase->clsBackRightDetected());
+    SmartDashboard::PutNumber("Roller bar position", subRollerIntakeBar->GetAngle());
     SmartDashboard::PutNumber("Elevator pos", subElevator->GetEncoderPosition());
 }
 
