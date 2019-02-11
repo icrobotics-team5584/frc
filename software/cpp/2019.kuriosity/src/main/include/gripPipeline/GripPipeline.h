@@ -20,6 +20,7 @@ namespace grip {
 */
 class Line {
 	public:
+	double MidX, MidY;
 	double x1, y1, x2, y2;
 	/**
 	* Creates a line with given (x, y) points 1 and 2.
@@ -34,6 +35,8 @@ class Line {
 		this->y1 = y1;
 		this->x2 = x2;
 		this->y2 = y2;
+		this->MidX = (x1 + x2)/2;
+		this->MidY = (y1 + y2)/2;
 		}
 
 	/**

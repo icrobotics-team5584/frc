@@ -126,6 +126,13 @@ void Robot::VisionThread() {
     vector<int> compression_params;
     compression_params.push_back(cv::IMWRITE_PNG_COMPRESSION);
     compression_params.push_back(9);
+//GripPipeLine Code
+    //Setup image pipeline
+    grip::GripPipeline ic_pipeline;
+
+    //Setup images
+    ic_pipeline.Process(cv::Mat& source0);
+
     while(true) {
         cvSink.GrabFrame(source);
         // We check for null image here to prevent assertion faults causing robot code to
