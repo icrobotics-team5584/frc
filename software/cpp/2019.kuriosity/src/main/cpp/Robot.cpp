@@ -165,15 +165,12 @@ void Robot::VisionThread() {
                 cv::line(img_lines, a, b, colour, 1);
             }
 
-            // STEP 4: output one stream to dashboard
-            // outputStreamStd.PutFrame( *img_resizeimage );
-            // outputStreamStd.PutFrame( *img_rgbthreshold );
-            outputStreamStd.PutFrame( img_lines );
-
-            // STEP 5: fetch filtered lines and further analyse
+            // STEP 4: fetch filtered lines and further analyse
             cout << "INFO: searching for longest line" << endl;
             double longest_line_length = 0;
-            int longest_line_index = -1;
+            int longest_line_index = 999999;
+            int longest_line_midx = 999999;
+            int longest_line_midy = 999999;
             int i = 0;
             for( grip::Line line: *img_filterlines )
             {
@@ -183,13 +180,32 @@ void Robot::VisionThread() {
                 {
                     longest_line_length = lineLength;
                     longest_line_index = i;
+                    longest_line_midx = line.MidX;
+                    longest_line_midy = line.MidY;
                 }
                 i++;
             }
-            cout << "INFO: Index of longest line" << endl;
-            cout << longest_line_index << " (" << longest_line_length << ")" << endl;
+            cout << "INFO: longest line details:" << endl;
+            cout << "  index: " << longest_line_index << endl;
+            cout << "  length: " << longest_line_length << endl;
+            cout << "  midpoint: (" << longest_line_midx << "," << longest_line_midy << ")" << endl;
 
-            // STEP 3: save images
+            // STEP 6: add midpoint of longest line to display
+            if( longest_line_index != 999999 )
+              {
+                    cv::Point center;
+                    center.x = longest_line_midx;
+                    center.y = longest_line_midy;
+                    cv::Scalar colour = cv::Scalar( 255, 0, 0 );
+                    cv::circle(img_lines, center, 5, colour, 2, 8);
+              }
+
+            // STEP 6: output one stream to dashboard
+            // outputStreamStd.PutFrame( *img_resizeimage );
+            // outputStreamStd.PutFrame( *img_rgbthreshold );
+            outputStreamStd.PutFrame( img_lines );
+
+            // STEP 7: save images
             // THIS IS NOT WORKING YET
             // string imagepath = "/home/lvuser/field.images/field." + to_string(framecounter) + ".png";
             // imwrite( imagepath.c_str(), *img_resizeimage, compression_params );
