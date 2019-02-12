@@ -30,6 +30,7 @@
 #include "commands/CmdStopAtLine.h"
 #include "commands/CmdSeekRocketSide.h"
 #include "commands/CmdCargoIntakeOut.h"
+#include "commands/CmdCargoIntakeIn.h"
 
 #include "commands/CmdGimblePIDLeftStop.h"
 #include "commands/CmdGimblePIDRightStop.h"
@@ -43,15 +44,14 @@ OI::OI() {
   btnDriveBaseSlow.reset(new AxisButton(controller.get(), leftAxisTrigger));
   btnDriveBaseSlow->WhileHeld(new CmdDriveBaseSlow());
 
-  btnIntakeOut.reset(new AxisButton(controller.get(), rightAxisTrigger));
-  btnIntakeOut->WhileHeld(new CmdCargoIntakeOut());
+  btnIntakeOut.reset(new frc::JoystickButton(controller.get(), rightBtn));
+  btnIntakeOut->WhenPressed(new CmdCargoIntakeOut());
+
+  btnIntakeOut->WhenReleased(new CmdCargoIntakeIn());
 
   //Intake Outake
   btnCargoPodOut.reset(new frc::JoystickButton(controller.get(), leftBtn));
   btnCargoPodOut->WhileHeld(new CmdIntakeOutakeOut());
-
-  btnCargoPodIn.reset(new frc::JoystickButton(controller.get(), rightBtn));
-  btnCargoPodIn->WhileHeld(new CmdIntakeOutakeIn());
 
   // btnSeekRocketSide.reset(new frc::JoystickButton(controller.get(), yBtn));
   // btnSeekRocketSide->WhenPressed(new CmdSeekRocketSide());

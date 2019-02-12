@@ -5,40 +5,33 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdElevatortoIntakeHeight.h"
+#include "commands/CmdIntakeOutakeStop.h"
 #include "Robot.h"
-#include <cstdlib>
-CmdElevatortoIntakeHeight::CmdElevatortoIntakeHeight() {
+
+CmdIntakeOutakeStop::CmdIntakeOutakeStop() {
   // Use Requires() here to declare subsystem dependencies
-  Requires(Robot::subElevator.get());
+  // eg. Requires(Robot::chassis.get());
+  Requires(Robot::subIntakeOutake.get());
+  Requires(Robot::subRollerIntake.get());
+  Requires(Robot::subPanelAffector.get());
 }
 
 // Called just before this Command runs the first time
-void CmdElevatortoIntakeHeight::Initialize() {
-  Robot::subElevator->ElevatorToPos(desiredRotations);
+void CmdIntakeOutakeStop::Initialize() {
+  Robot::subIntakeOutake->Stop();
+  Robot::subRollerIntake->Stop();
+  Robot::subPanelAffector->RetractFingers();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdElevatortoIntakeHeight::Execute() {
-}
+void CmdIntakeOutakeStop::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdElevatortoIntakeHeight::IsFinished() {
-  elevatorPos = Robot::subElevator->GetEncoderPosition();
-  tolerance = 650;
-  error = desiredRotations * 4096 - std::abs(elevatorPos);
-  frc::SmartDashboard::PutNumber("elevator error", error);
-  if (error < tolerance and error > -tolerance) {
-    return true;
-  }
-  return false;
-}
+bool CmdIntakeOutakeStop::IsFinished() { return true; }
 
 // Called once after isFinished returns true
-void CmdElevatortoIntakeHeight::End() {
-  frc::SmartDashboard::PutBoolean("Finished running elevator intake", true);
-}
+void CmdIntakeOutakeStop::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdElevatortoIntakeHeight::Interrupted() {}
+void CmdIntakeOutakeStop::Interrupted() {}

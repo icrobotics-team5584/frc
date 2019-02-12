@@ -27,8 +27,10 @@ friend class PidoutRoller;
   bool OnTarget();
 
  private:
-  const double SENSOR_UNITS_PER_DEGREE = 9.07272727272727;
-  const double SENSOR_OFFSET_FROM_ANGLE = 7.164;
+  const double SENSOR_UNITS_OUT = 1007;
+  const double SENSOR_UNITS_IN = -743;
+  const double DEGREES_OUT = 173;
+  const double SENSOR_UNITS_PER_DEGREE = (SENSOR_UNITS_OUT - SENSOR_UNITS_IN) / DEGREES_OUT;
   void MoveBar(double power);
   std::shared_ptr<WPI_TalonSRX> srxRollerBar;
   std::unique_ptr<frc::PIDController> positionController;

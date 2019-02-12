@@ -28,14 +28,14 @@ void CmdIntakeOutakeIn::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdIntakeOutakeIn::IsFinished() { 
-  return Robot::subIntakeOutake->GetCargoLimitSwitch() or !Robot::_oi->btnIntakeOut->Get(); 
+  return false; //Robot::subIntakeOutake->GetCargoLimitSwitch(); //or !Robot::_oi->btnIntakeOut->Get(); 
 }
 
 // Called once after isFinished returns true
 void CmdIntakeOutakeIn::End() {
-  Robot::subIntakeOutake->Stop();
-  Robot::subRollerIntake->Stop();
-  Robot::subPanelAffector->RetractFingers();
+  // Robot::subIntakeOutake->Stop();
+  // Robot::subRollerIntake->Stop();
+  // Robot::subPanelAffector->RetractFingers();
 }
 
 // Called when another command which requires one or more of the same

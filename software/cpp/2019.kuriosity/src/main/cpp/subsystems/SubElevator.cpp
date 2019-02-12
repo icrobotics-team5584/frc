@@ -9,7 +9,7 @@ SubElevator::SubElevator() : Subsystem("ExampleSubsystem") {
   SmartDashboard::PutNumber("Elevator PIDI", PIDI);
   SmartDashboard::PutNumber("Elevator PIDD", PIDD);
   SmartDashboard::PutNumber("Elevator PID target", targetPositionRotations);
-  SmartDashboard::PutData("Elevator go to entterd position", new CmdElevatorLimit());
+//   SmartDashboard::PutData("Elevator go to entterd position", new CmdElevatorLimit());
 
 	/* lets grab the 360 degree position of the MagEncoder's absolute position */
 	int absolutePosition = _srxElevatorMaster->GetSelectedSensorPosition(0) & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */

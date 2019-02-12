@@ -5,7 +5,7 @@
 
 SubRollerIntakeBar::SubRollerIntakeBar() : Subsystem("ExampleSubsystem") {
   // Set PID constants
-  const double kP = 0.4;
+  const double kP = 0.01;
   const double kI = 0;
   const double kD = 0;
   
@@ -18,11 +18,11 @@ SubRollerIntakeBar::SubRollerIntakeBar() : Subsystem("ExampleSubsystem") {
   positionController.reset(new PIDController(kP, kI, kD, pidsrcRoller.get(), pidoutRoller.get()));
   positionController->SetSetpoint(7); // Measured in degrees
   positionController->SetAbsoluteTolerance(5); // Measured in degrees
-  positionController->SetOutputRange(-0.4, 0.4);
+  positionController->SetOutputRange(-0.5, 0.5);
   frc::SmartDashboard::PutData("roller intake bar PID controller", positionController.get());
 
   // Place testing command to dashboard
-  frc::SmartDashboard::PutData("Move roller intake bar", new CmdMoveRollerIntakeBar(OUT));
+  // frc::SmartDashboard::PutData("Move roller intake bar", new CmdMoveRollerIntakeBar(OUT));
 }
 
 
@@ -65,13 +65,13 @@ void SubRollerIntakeBar::SetSetpoint(double angle) {
 void SubRollerIntakeBar::SetSetpoint(RollerPosition rollerPosition) {
   switch (rollerPosition) {
     case OUT:
-      SetSetpoint(7);
+      SetSetpoint(160);
       break;
     case UP:
       SetSetpoint(90);
       break;
     case IN:
-      SetSetpoint(160);
+      SetSetpoint(7);
       break;
   }
 }
@@ -83,7 +83,7 @@ void SubRollerIntakeBar::SetSetpoint(RollerPosition rollerPosition) {
  * sometimes results in the angle reading 7 degrees when stowed.
  */
 double SubRollerIntakeBar::GetAngle() {
-  return -((-srxRollerBar->GetSelectedSensorPosition(0) / SENSOR_UNITS_PER_DEGREE) - SENSOR_OFFSET_FROM_ANGLE);
+  return srxRollerBar->GetSelectedSensorPosition(0) / SENSOR_UNITS_PER_DEGREE;
 }
 
 

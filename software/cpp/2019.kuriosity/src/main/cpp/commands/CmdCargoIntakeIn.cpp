@@ -5,20 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdCargoIntakeOut.h"
+#include "commands/CmdCargoIntakeIn.h"
 #include "commands/CmdElevatortoIntakeHeight.h"
-#include "commands/CmdGimblePidCentre.h"
 #include "commands/CmdIntakeOutakeIn.h"
 #include "commands/CmdElevatorToBottom.h"
 #include "commands/CmdMoveRollerIntakeBar.h"
+#include "commands/CmdIntakeOutakeStop.h"
+#include "commands/CmdGimblePidCentre.h"
 #include "subsystems/SubRollerIntakeBar.h"
 
-CmdCargoIntakeOut::CmdCargoIntakeOut() {
-
+CmdCargoIntakeIn::CmdCargoIntakeIn() {
+  AddParallel(new CmdIntakeOutakeStop());
   AddParallel(new CmdGimblePidCentre());
   AddSequential(new CmdElevatortoIntakeHeight());
-  AddSequential(new CmdMoveRollerIntakeBar(OUT));
-  AddParallel(new CmdElevatorToBottom());
-  AddSequential(new CmdIntakeOutakeIn());
-  
+  AddSequential(new CmdMoveRollerIntakeBar(IN));
+  AddSequential(new CmdElevatorToBottom());
 }
