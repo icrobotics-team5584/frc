@@ -44,6 +44,9 @@ OI::OI() {
   btnDriveBaseSlow.reset(new AxisButton(controller.get(), leftAxisTrigger));
   btnDriveBaseSlow->WhileHeld(new CmdDriveBaseSlow());
 
+  btnSeekRocketSide.reset(new AxisButton(controller.get(), rightAxisTrigger));
+  btnSeekRocketSide->WhileHeld(new CmdSeekRocketSide());
+
   btnIntakeOut.reset(new frc::JoystickButton(controller.get(), rightBtn));
   btnIntakeOut->WhenPressed(new CmdCargoIntakeOut());
 
