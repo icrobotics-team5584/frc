@@ -100,10 +100,10 @@ public:
     //Gimble
     shared_ptr<WPI_TalonSRX> srxGimble;
 
-    std::shared_ptr<DigitalInput> subGimbleLimitLeft;
-    std::shared_ptr<DigitalInput> subGimbleLimitRight;
+    shared_ptr<DigitalInput> subGimbleLimitLeft;
+    shared_ptr<DigitalInput> subGimbleLimitRight;
 
-    std::shared_ptr<AnalogInput> subGimblePot;
+    shared_ptr<AnalogInput> subGimblePot;
 
     // DriveBase Sensors
     shared_ptr<AHRS> ahrsNavXDriveBase;

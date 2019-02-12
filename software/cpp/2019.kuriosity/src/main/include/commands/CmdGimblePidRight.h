@@ -1,11 +1,10 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-#include "Robot.h"
 
-class CmdElevatorLimit : public frc::Command {
+class CmdGimblePidRight : public frc::Command {
  public:
-  CmdElevatorLimit();
+  CmdGimblePidRight();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
