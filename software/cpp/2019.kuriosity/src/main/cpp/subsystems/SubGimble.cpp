@@ -56,7 +56,7 @@ void SubGimble::PIDGimbleTo(double angle) {
   potRange = PotRight - PotLeft;
   angle = angle + 90; // converts -90, 0, 90 to 0, 90, 180
   double conversion = potRange/180;
-  double target = (angle * conversion) + PotLeft;
+  target = (angle * conversion) + PotLeft;
 
 	SmartDashboard::PutNumber("TARGET Value", target);
 
@@ -81,4 +81,12 @@ void SubGimble::stop(int side) {
 }
 void SubGimble::ToCentre(){
   gimbleController->SetSetpoint(PotCentre);
+}
+
+double SubGimble::GetTarget(){
+  return target;
+}
+
+double SubGimble::POTPosition(){
+  return _anaGimblePot->GetAverageValue();
 }

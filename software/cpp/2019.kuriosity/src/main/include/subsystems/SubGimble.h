@@ -28,8 +28,8 @@ class SubGimble : public frc::Subsystem {
 	double PIDd = -0.001;
   double humanOffset = 0.001;  //Used for overide 
   double overrideSpeed = 0.0;
+  double target = 0.0;
   int potRange = 0;
-  int target = 0;
 	int lc = 0;
   int totalAngle = 180;
 
@@ -47,4 +47,6 @@ class SubGimble : public frc::Subsystem {
   void PIDGimbleTo(double angle);  
   void OverridePID(bool leftRight);
   void ToCentre();
+  double POTPosition();
+  double GetTarget();
 };
