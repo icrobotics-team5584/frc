@@ -5,41 +5,35 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdIntakeOutakeIn.h"
+#include "commands/CmdMoveRollerIntakeBar.h"
 #include "Robot.h"
 
-CmdIntakeOutakeIn::CmdIntakeOutakeIn() {
+CmdMoveRollerIntakeBar::CmdMoveRollerIntakeBar(RollerPosition rollerPosition) {
   // Use Requires() here to declare subsystem dependencies
-  Requires(Robot::subIntakeOutake.get());
-  Requires(Robot::subRollerIntake.get());
-  Requires(Robot::subPanelAffector.get());
+  Requires(Robot::subDriveBase.get());
+  _rollerPosition = rollerPosition;
 }
 
 // Called just before this Command runs the first time
-void CmdIntakeOutakeIn::Initialize() {
-  frc::SmartDashboard::PutBoolean("running intake", true);
-  Robot::subIntakeOutake->Intake();
-  Robot::subRollerIntake->RollerIn();
-  Robot::subPanelAffector->DeployFingers(); // Turns out this makes it easier for the ball to enter
+void CmdMoveRollerIntakeBar::Initialize() {
+  Robot::subRollerIntakeBar->SetSetpoint(_rollerPosition);
+  Robot::subRollerIntakeBar->SetPIDEnabled(true);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdIntakeOutakeIn::Execute() {}
+void CmdMoveRollerIntakeBar::Execute() {
+}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdIntakeOutakeIn::IsFinished() { 
-  return false; //Robot::subIntakeOutake->GetCargoLimitSwitch(); //or !Robot::_oi->btnIntakeOut->Get(); 
+bool CmdMoveRollerIntakeBar::IsFinished() { 
+  Robot::subRollerIntakeBar->OnTarget();
 }
 
 // Called once after isFinished returns true
-void CmdIntakeOutakeIn::End() {
-  // Robot::subIntakeOutake->Stop();
-  // Robot::subRollerIntake->Stop();
-  // Robot::subPanelAffector->RetractFingers();
+void CmdMoveRollerIntakeBar::End() {
+  Robot::subRollerIntakeBar->SetPIDEnabled(false);
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdIntakeOutakeIn::Interrupted() {
-  End();
-}
+void CmdMoveRollerIntakeBar::Interrupted() {}
