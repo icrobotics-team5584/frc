@@ -42,8 +42,9 @@ void GripPipeline::Process(cv::Mat& source0){
 	//Step Filter_Lines0:
 	//input
 	std::vector<Line> filterLinesLines = findLinesOutput;
-	double filterLinesMinLength = 50.0;  // default Double
-	double filterLinesAngle[] = {142.44604316546764, 209.48805460750853};
+	double filterLinesMinLength = 25.0;  // default Double
+	// double filterLinesAngle[] = {142.44604316546764, 209.48805460750853};
+	double filterLinesAngle[] = {170, 190};
 	filterLines(filterLinesLines, filterLinesMinLength, filterLinesAngle, this->filterLinesOutput);
 
 }

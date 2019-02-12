@@ -119,7 +119,7 @@ void Robot::VisionThread() {
     camera.SetResolution(320, 240);
     camera.SetFPS(20);
     cs::CvSink cvSink = CameraServer::GetInstance()->GetVideo();
-    cs::CvSource outputStreamStd = CameraServer::GetInstance()->PutVideo("Gray", 640, 480);
+    cs::CvSource outputStreamStd = CameraServer::GetInstance()->PutVideo("GripPipeline", 320, 240);
     cv::Mat source;
     int framecounter = 0;
     vector<int> compression_params;
@@ -140,20 +140,40 @@ void Robot::VisionThread() {
         if(! source.empty()) {
             framecounter++;
 
-            // process the image
+            // STEP 1: process the image
             ic_pipeline.Process(source);
 
-            // fetch the pre-processed image and display
+            // STEP 2: fetch references to intermediate pipeline data
             cv::Mat* img_rgbthreshold = ic_pipeline.GetRgbThresholdOutput();
-            outputStreamStd.PutFrame( *img_rgbthreshold );
-
-            // fetch filtered lines and further analyse
-            // (TBA)
+            cv::Mat* img_resizeimage = ic_pipeline.GetResizeImageOutput();
             std::vector<grip::Line>* img_filterlines = ic_pipeline.GetFilterLinesOutput();
+
+            // STEP 3: construct image to display filetered lines
+            cv::Mat img_lines = cv::Mat::zeros( img_resizeimage->size(), CV_8UC3 );
+            int img_width = img_resizeimage->size().width;
+            int img_height = img_resizeimage->size().height;
+            // for( size_t i = 0; i< img_filterlines->size(); i++ )
+            for( grip::Line line: *img_filterlines )
+            {
+                cv::Point a;
+                a.x = line.x1;
+                a.y = line.y1;
+                cv::Point b;
+                b.x = line.x2;
+                b.y = line.y2;
+                cv::Scalar colour = cv::Scalar( 0, 255, 255 );
+                cv::line(img_lines, a, b, colour, 1);
+            }
+
+            // STEP 4: output one stream to dashboard
+            // outputStreamStd.PutFrame( *img_resizeimage );
+            // outputStreamStd.PutFrame( *img_rgbthreshold );
+            outputStreamStd.PutFrame( img_lines );
+
+            // STEP 5: fetch filtered lines and further analyse
             cout << "INFO: searching for longest line" << endl;
             double longest_line_length = 0;
             int longest_line_index = -1;
-//            for( size_t i = 0; i< img_filterlines->size(); i++ ) // iterate through each line.
             int i = 0;
             for( grip::Line line: *img_filterlines )
             {
@@ -169,10 +189,11 @@ void Robot::VisionThread() {
             cout << "INFO: Index of longest line" << endl;
             cout << longest_line_index << " (" << longest_line_length << ")" << endl;
 
-            // fetch resized image to file for analysis during practice matches
-            cv::Mat* img_resizeimage = ic_pipeline.GetResizeImageOutput();
-            string imagepath = "/run/field." + to_string(framecounter) + ".png";
-            imwrite( imagepath.c_str(), *img_resizeimage, compression_params );
+            // STEP 3: save images
+            // THIS IS NOT WORKING YET
+            // string imagepath = "/home/lvuser/field.images/field." + to_string(framecounter) + ".png";
+            // imwrite( imagepath.c_str(), *img_resizeimage, compression_params );
+
         }
         std::cout << "INFO: frame count: " << framecounter << std::endl;
     }
