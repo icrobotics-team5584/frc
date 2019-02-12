@@ -71,10 +71,10 @@ OI::OI() {
   //btnGimbleRotateRight->WhileHeld(new CmdGimbleRotateRight());
 
   //Gimble PID Controls 
-  povBtnGimblePidLeft.reset(new ButtonPOV(controller.get(), 90));
+  povBtnGimblePidLeft.reset(new ButtonPOV(controller.get(), 270));
   povBtnGimblePidLeft->WhenPressed(new CmdGimblePidLeft());
  
-  povBtnGimblePidRight.reset(new ButtonPOV(controller.get(), 270));
+  povBtnGimblePidRight.reset(new ButtonPOV(controller.get(), 90));
   povBtnGimblePidRight->WhenPressed(new CmdGimblePidRight());
   povBtnGimblePidCentre.reset(new ButtonPOV(controller.get(), 0));
   povBtnGimblePidCentre->WhenPressed(new CmdGimblePidCentre());

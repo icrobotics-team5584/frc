@@ -63,6 +63,14 @@ void SubGimble::PIDGimbleTo(double angle) {
 	gimbleController->SetSetpoint(target);
 }
 
+void SubGimble::PIDGimbleToLeft(){
+  gimbleController->SetSetpoint(PotLeft);
+}
+
+void SubGimble::PIDGimbleToRight(){
+  gimbleController->SetSetpoint(PotRight);
+}
+
 void SubGimble::VoltageControl(double percentage){
   _srxGimble->Set(percentage);
 }
@@ -73,14 +81,15 @@ void SubGimble::stop(int side) {
       gimbleController->SetSetpoint((_anaGimblePot->GetAverageValue() + 0));
     break;
     case 1:
-      gimbleController->SetSetpoint((_anaGimblePot->GetAverageValue() - 50));
+      gimbleController->SetSetpoint((_anaGimblePot->GetAverageValue() - 80));
     break;
     case 2:
-      gimbleController->SetSetpoint((_anaGimblePot->GetAverageValue() + 50));
+      gimbleController->SetSetpoint((_anaGimblePot->GetAverageValue() - 200));
   }
 }
 void SubGimble::ToCentre(){
-  gimbleController->SetSetpoint(PotCentre);
+  target = PotCentre;
+  gimbleController->SetSetpoint(target);
 }
 
 double SubGimble::GetTarget(){

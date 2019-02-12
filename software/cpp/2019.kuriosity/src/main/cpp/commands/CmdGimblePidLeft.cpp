@@ -7,7 +7,7 @@ CmdGimblePidLeft::CmdGimblePidLeft() {
 
 // Called just before this Command runs the first time
 void CmdGimblePidLeft::Initialize() {
-  Robot::subGimble->PIDGimbleTo(90);
+  Robot::subGimble->PIDGimbleToLeft();
   std::cout << "GIMBLE PID LEFT" << std::endl;
 }
 
