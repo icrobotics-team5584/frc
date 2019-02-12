@@ -121,17 +121,13 @@ void Robot::VisionThread() {
     cs::CvSink cvSink = CameraServer::GetInstance()->GetVideo();
     cs::CvSource outputStreamStd = CameraServer::GetInstance()->PutVideo("Gray", 640, 480);
     cv::Mat source;
-    cv::Mat output;
     int framecounter = 0;
     vector<int> compression_params;
     compression_params.push_back(cv::IMWRITE_PNG_COMPRESSION);
     compression_params.push_back(9);
-//GripPipeLine Code
+
     //Setup image pipeline
     grip::GripPipeline ic_pipeline;
-
-    //Setup images
-    ic_pipeline.Process(cv::Mat& source0);
 
     while(true) {
         cvSink.GrabFrame(source);
@@ -143,10 +139,40 @@ void Robot::VisionThread() {
         // here the robot code is no longer crashing!
         if(! source.empty()) {
             framecounter++;
-            cvtColor(source, output, cv::COLOR_BGR2GRAY);
-            outputStreamStd.PutFrame(output);
+
+            // process the image
+            ic_pipeline.Process(source);
+
+            // fetch the pre-processed image and display
+            cv::Mat* img_rgbthreshold = ic_pipeline.GetRgbThresholdOutput();
+            outputStreamStd.PutFrame( *img_rgbthreshold );
+
+            // fetch filtered lines and further analyse
+            // (TBA)
+            std::vector<grip::Line>* img_filterlines = ic_pipeline.GetFilterLinesOutput();
+            cout << "INFO: searching for longest line" << endl;
+            double longest_line_length = 0;
+            int longest_line_index = -1;
+//            for( size_t i = 0; i< img_filterlines->size(); i++ ) // iterate through each line.
+            int i = 0;
+            for( grip::Line line: *img_filterlines )
+            {
+                double lineLength = line.length();
+                cout << i << ":" << lineLength << endl;
+                if(lineLength>longest_line_length)
+                {
+                    longest_line_length = lineLength;
+                    longest_line_index = i;
+                }
+                i++;
+            }
+            cout << "INFO: Index of longest line" << endl;
+            cout << longest_line_index << " (" << longest_line_length << ")" << endl;
+
+            // fetch resized image to file for analysis during practice matches
+            cv::Mat* img_resizeimage = ic_pipeline.GetResizeImageOutput();
             string imagepath = "/run/field." + to_string(framecounter) + ".png";
-            imwrite( imagepath.c_str(), output, compression_params );
+            imwrite( imagepath.c_str(), *img_resizeimage, compression_params );
         }
         std::cout << "INFO: frame count: " << framecounter << std::endl;
     }

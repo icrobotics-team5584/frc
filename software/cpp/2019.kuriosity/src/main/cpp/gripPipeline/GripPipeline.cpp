@@ -145,8 +145,6 @@ void GripPipeline::findLines(cv::Mat &input, std::vector<Line> &lineList) {
 
 void GripPipeline::filterLines(std::vector<Line> &inputs, double minLength, double angle[], std::vector<Line> &outputs) {
 	outputs.clear();
-	double LongestLineLength = 0;
-	double LongestLineMidX = 0;
 	for (Line line: inputs) {
 		if (line.length()>abs(minLength)) {
 			if ((line.angle() >= angle[0] && line.angle() <= angle[1]) ||
@@ -154,15 +152,7 @@ void GripPipeline::filterLines(std::vector<Line> &inputs, double minLength, doub
 				outputs.push_back(line);
 			}	
 		}
-		double CurrentLineLength = line.length();
-		if (CurrentLineLength > LongestLineLength)
-		{
-			LongestLineLength = CurrentLineLength;
-			LongestLineMidX = line.MidX;
-		}
 	}	
 }
-
-
 
 } // end grip namespace
