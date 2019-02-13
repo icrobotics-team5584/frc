@@ -10,7 +10,7 @@
 
 CmdMoveRollerIntakeBar::CmdMoveRollerIntakeBar(RollerPosition rollerPosition) {
   // Use Requires() here to declare subsystem dependencies
-  Requires(Robot::subDriveBase.get());
+  Requires(Robot::subRollerIntakeBar.get());
   _rollerPosition = rollerPosition;
 }
 
