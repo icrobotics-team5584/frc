@@ -105,3 +105,23 @@ double SubGimble::GetTarget(){
 double SubGimble::POTPosition(){
   return _anaGimblePot->GetAverageValue();
 }
+
+void SubGimble::OverrideMotorLeft(){
+  _srxGimble->Set(0.5);
+}
+
+void SubGimble::OverrideMotorRight(){
+  _srxGimble->Set(-0.5);
+}
+
+void SubGimble::MotorStop(){
+  _srxGimble->Set(0.0);
+}
+
+void SubGimble::PIDEnable(){
+  gimbleController->Enable();
+}
+
+void SubGimble::PIDDisable(){
+  gimbleController->Disable();
+}
