@@ -66,11 +66,11 @@ class Line {
 class GripPipeline {
 	private:
 		cv::Mat resizeImageOutput;
-		cv::Mat rgbThresholdOutput;
+		cv::Mat desaturateOutput;
 		std::vector<Line> findLinesOutput;
 		std::vector<Line> filterLinesOutput;
 		void resizeImage(cv::Mat &, double , double , int , cv::Mat &);
-		void rgbThreshold(cv::Mat &, double [], double [], double [], cv::Mat &);
+		void desaturate(cv::Mat &, cv::Mat &);
 		void findLines(cv::Mat &, std::vector<Line> &);
 		void filterLines(std::vector<Line> &, double , double [], std::vector<Line> &);
 
@@ -78,9 +78,10 @@ class GripPipeline {
 		GripPipeline();
 		void Process(cv::Mat& source0);
 		cv::Mat* GetResizeImageOutput();
-		cv::Mat* GetRgbThresholdOutput();
+		cv::Mat* GetDesaturateOutput();
 		std::vector<Line>* GetFindLinesOutput();
 		std::vector<Line>* GetFilterLinesOutput();
 };
+
 
 } // end namespace grip

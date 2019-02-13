@@ -10,6 +10,7 @@
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <gripPipeline/GripPipeline.h>
+//#include <StringRef.h>
 
 unique_ptr<OI> Robot::_oi;
 unique_ptr<RobotMap> Robot::_robotMap;
@@ -115,7 +116,10 @@ void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 void Robot::TestPeriodic() {}
 
 void Robot::VisionThread() {
-    cs::UsbCamera camera = CameraServer::GetInstance()->StartAutomaticCapture();
+    //cs::UsbCamera camera = CameraServer::GetInstance()->StartAutomaticCapture();
+
+    cs::AxisCamera camera = CameraServer::GetInstance()->AddAxisCamera( "10.55.84.11" );
+
     camera.SetResolution(320, 240);
     camera.SetFPS(20);
     cs::CvSink cvSink = CameraServer::GetInstance()->GetVideo();
@@ -144,7 +148,8 @@ void Robot::VisionThread() {
             ic_pipeline.Process(source);
 
             // STEP 2: fetch references to intermediate pipeline data
-            cv::Mat* img_rgbthreshold = ic_pipeline.GetRgbThresholdOutput();
+            //cv::Mat* img_rgbthreshold = ic_pipeline.GetRgbThresholdOutput();
+            cv::Mat* img_desaturate = ic_pipeline.GetDesaturateOutput();
             cv::Mat* img_resizeimage = ic_pipeline.GetResizeImageOutput();
             std::vector<grip::Line>* img_filterlines = ic_pipeline.GetFilterLinesOutput();
 
