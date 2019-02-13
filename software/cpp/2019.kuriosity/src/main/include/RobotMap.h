@@ -24,6 +24,7 @@ enum Can {
     can_srxElevatorMaster = 7,
     can_srxElevatorSlave = 8,
     can_srxRollerIntake = 9,
+    can_srxRollerIntakeBar = 10,
 };
 
 enum PWM {
@@ -120,6 +121,7 @@ public:
     //Intake and outake
     shared_ptr<WPI_TalonSRX> srxIntakeOutake;
     shared_ptr<WPI_TalonSRX> srxRollerIntake;
+    shared_ptr<WPI_TalonSRX> srxRollerIntakeBar;
 
     shared_ptr<DigitalInput> subIntakeOutakeCargo;
 

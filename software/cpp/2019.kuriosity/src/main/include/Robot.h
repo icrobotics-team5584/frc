@@ -18,6 +18,7 @@
 #include "subsystems/SubIntakeOutake.h"
 #include "subsystems/SubPanelAffector.h"
 #include "subsystems/SubRollerIntake.h"
+#include "subsystems/SubRollerIntakeBar.h"
 #include "subsystems/SubGimble.h"
 #include "commands/CmdSeekCargoShip.h"
 #include <cscore_oo.h>
@@ -39,6 +40,7 @@ class Robot : public frc::TimedRobot {
   static unique_ptr<SubIntakeOutake> subIntakeOutake;
   static unique_ptr<SubPanelAffector> subPanelAffector;
   static unique_ptr<SubRollerIntake> subRollerIntake;
+  static unique_ptr<SubRollerIntakeBar> subRollerIntakeBar;
   static unique_ptr<SubGimble> subGimble;
   static unique_ptr<SubGimbleLimits> subGimbleLimits;
   static unique_ptr<ElevatorCmdChooser> elevatorCmdChooser;

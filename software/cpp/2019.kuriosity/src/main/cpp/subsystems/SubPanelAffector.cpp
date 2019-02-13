@@ -17,7 +17,7 @@ SubPanelAffector::SubPanelAffector() : Subsystem("SubPanelAffector") {
   solTopFinger = Robot::_robotMap->solPanelAffectorTopFinger;
   solBottomFinger = Robot::_robotMap->solPanelAffectorBottomFinger;
   //_controller = Robot::_oi->controller; <-- this crashes the rio
-  SmartDashboard::PutData("Pneumatic Test", new CmdOutputPanel(true));
+  // SmartDashboard::PutData("Pneumatic Test", new CmdOutputPanel(true));
 
   Retract();
 }
