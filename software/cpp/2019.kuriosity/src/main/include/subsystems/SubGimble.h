@@ -20,20 +20,18 @@ class SubGimble : public frc::Subsystem {
   gimblePID* _gimblePID;
 
   double rotateSpeed = 0.65; //Max rotating power
-  double PotLeft = 783;
-	double PotRight = 3305;
+  double PotLeft = 784;
+	double PotRight = 3339;
 	double PotCentre = 1905;
 	double PIDp = -0.0025;
 	double PIDi = 0;
 	double PIDd = -0.001;
   double humanOffset = 0.001;  //Used for overide 
   double overrideSpeed = 0.0;
+  double target = 0.0;
   int potRange = 0;
-  int target = 0;
 	int lc = 0;
   int totalAngle = 180;
-  
-  
 
   public:
   SubGimble();
@@ -42,11 +40,15 @@ class SubGimble : public frc::Subsystem {
   void rotateLeft();
   void rotateRight();
   void VoltageControl(double percentage);
-  void stop();
+  void stop(int side);
   //void Reset();  Maybe in the future this can reset the left and right values?
   void enable();
   void disable();
   void PIDGimbleTo(double angle);  
   void OverridePID(bool leftRight);
   void ToCentre();
+  double POTPosition();
+  double GetTarget();
+  void PIDGimbleToLeft();
+  void PIDGimbleToRight();
 };

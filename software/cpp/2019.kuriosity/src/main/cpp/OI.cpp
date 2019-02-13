@@ -44,6 +44,9 @@ OI::OI() {
   btnDriveBaseSlow.reset(new AxisButton(controller.get(), leftAxisTrigger));
   btnDriveBaseSlow->WhileHeld(new CmdDriveBaseSlow());
 
+  btnSeekRocketSide.reset(new AxisButton(controller.get(), rightAxisTrigger));
+  btnSeekRocketSide->WhileHeld(new CmdSeekRocketSide());
+
   btnIntakeOut.reset(new frc::JoystickButton(controller.get(), rightBtn));
   btnIntakeOut->WhenPressed(new CmdCargoIntakeOut());
 
@@ -72,10 +75,10 @@ OI::OI() {
   //btnGimbleRotateRight->WhileHeld(new CmdGimbleRotateRight());
 
   //Gimble PID Controls 
-  povBtnGimblePidLeft.reset(new ButtonPOV(controller.get(), 90));
+  povBtnGimblePidLeft.reset(new ButtonPOV(controller.get(), 270));
   povBtnGimblePidLeft->WhenPressed(new CmdGimblePidLeft());
  
-  povBtnGimblePidRight.reset(new ButtonPOV(controller.get(), 270));
+  povBtnGimblePidRight.reset(new ButtonPOV(controller.get(), 90));
   povBtnGimblePidRight->WhenPressed(new CmdGimblePidRight());
   povBtnGimblePidCentre.reset(new ButtonPOV(controller.get(), 0));
   povBtnGimblePidCentre->WhenPressed(new CmdGimblePidCentre());
