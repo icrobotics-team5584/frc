@@ -33,7 +33,9 @@ void Robot::RobotInit() {
     subRollerIntake.reset(new SubRollerIntake());
     subGimble.reset(new SubGimble());
 
-    std::thread visionThread(VisionThread);
+    // create image processing thread and pass in reference to each variable
+    // that we need the thread to provide back to the main robot thread
+    std::thread visionThread(Robot::VisionThread, std::ref(Robot::validsignal), std::ref(Robot::errorsignal) );
     visionThread.detach();
 
     _oi.reset(new OI);
@@ -115,9 +117,9 @@ void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::TestPeriodic() {}
 
-void Robot::VisionThread() {
-    //cs::UsbCamera camera = CameraServer::GetInstance()->StartAutomaticCapture();
+void Robot::VisionThread( bool &targetvalid, double &targeterror ) {
 
+    //cs::UsbCamera camera = CameraServer::GetInstance()->StartAutomaticCapture();
     cs::AxisCamera camera = CameraServer::GetInstance()->AddAxisCamera( "10.55.84.11" );
 
     camera.SetResolution(320, 240);
@@ -140,7 +142,8 @@ void Robot::VisionThread() {
         // If the frame count displayed in the console at run time is not increasing then
         // this indicates that USB camera is not providing frames - you seem to need to
         // restart the roborio to resolve this problem - at least with this empty check 
-        // here the robot code is no longer crashing!
+        // here the robot code is no longer crashing! This probably redundant if we are
+        // now using an IP based AXIS camera.
         if(! source.empty()) {
             framecounter++;
 
@@ -173,12 +176,14 @@ void Robot::VisionThread() {
             // STEP 4: fetch filtered lines and further analyse
             cout << "INFO: searching for longest line" << endl;
             double longest_line_length = 0;
-            int longest_line_index = 999999;
-            int longest_line_midx = 999999;
-            int longest_line_midy = 999999;
+            int lines_found = 0;
+            int longest_line_index = -1;
+            int longest_line_midx = img_width / 2;
+            int longest_line_midy = img_height / 2;
             int i = 0;
             for( grip::Line line: *img_filterlines )
             {
+                lines_found++;
                 double lineLength = line.length();
                 cout << i << ":" << lineLength << endl;
                 if(lineLength>longest_line_length)
@@ -196,7 +201,7 @@ void Robot::VisionThread() {
             cout << "  midpoint: (" << longest_line_midx << "," << longest_line_midy << ")" << endl;
 
             // STEP 6: add midpoint of longest line to display
-            if( longest_line_index != 999999 )
+            if( lines_found > 0 )
               {
                     cv::Point center;
                     center.x = longest_line_midx;
@@ -215,8 +220,24 @@ void Robot::VisionThread() {
             // string imagepath = "/home/lvuser/field.images/field." + to_string(framecounter) + ".png";
             // imwrite( imagepath.c_str(), *img_resizeimage, compression_params );
 
+            // STEP 8: update target error for use by turret, calculate a value between -1 and +1
+            // where -1 is far left of FOV,; +1 is far right of FOV and 0 is centerline
+            if( lines_found > 0 )
+            {
+                targeterror = ( 1.0 * longest_line_midx - (img_width/2) ) / (img_width/2);
+                targetvalid = 1;
+            } else {
+                targeterror = 0;
+                targetvalid = 0;
+            }
+
+        } else {
+            targeterror = 0;
+            targetvalid = 0;
         }
         std::cout << "INFO: frame count: " << framecounter << std::endl;
+        std::cout << "INFO: target valid: " << targetvalid << std::endl;
+        std::cout << "INFO: target error: " << targeterror << std::endl;
     }
 }
 

@@ -63,7 +63,9 @@ class Robot : public frc::TimedRobot {
 
  private:
 
-  static void VisionThread();
+  static void VisionThread( bool &, double & );
+  bool validsignal;
+  double errorsignal;
 
   // Have it null by default so that if testing teleop it
   // doesn't have undefined behavior and potentially crash.
