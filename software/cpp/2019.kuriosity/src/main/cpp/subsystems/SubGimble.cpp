@@ -42,13 +42,13 @@ void SubGimble::disable() {
 }
 
 void SubGimble::OverridePID(bool leftRight) { //true = left  ... rotate left
-  //  if (leftRight){
-  //  overrideSpeed = overrideSpeed + humanOffset;
-  //}
-  //else{
-  //  overrideSpeed = overrideSpeed + - humanOffset;
-  //}
-  //gimbleController->SetSetpoint(overrideTarget);
+  if (leftRight){
+    humanOffset = humanOffset - overrideSpeed;
+  }
+  else{
+    humanOffset = humanOffset + overrideSpeed;
+  }
+  gimbleController->SetSetpoint(target + humanOffset);
 }
 
 void SubGimble::PIDGimbleTo(double angle) {
