@@ -24,7 +24,7 @@ void CmdGimbleRotateLeft::Execute() {
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdGimbleRotateLeft::IsFinished() { return false; }
+bool CmdGimbleRotateLeft::IsFinished() { return true; }
 
 // Called once after isFinished returns true
 void CmdGimbleRotateLeft::End() {
