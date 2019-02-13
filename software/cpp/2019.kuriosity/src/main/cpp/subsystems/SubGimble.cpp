@@ -42,13 +42,19 @@ void SubGimble::disable() {
 }
 
 void SubGimble::OverridePID(bool leftRight) { //true = left  ... rotate left
-  //  if (leftRight){
-  //  overrideSpeed = overrideSpeed + humanOffset;
-  //}
-  //else{
-  //  overrideSpeed = overrideSpeed + - humanOffset;
-  //}
-  //gimbleController->SetSetpoint(overrideTarget);
+  if (leftRight){
+    humanOffset = humanOffset - overrideSpeed;
+  }
+  else{
+    humanOffset = humanOffset + overrideSpeed;
+  }
+  if (target + humanOffset < PotLeft){
+    humanOffset = target - PotLeft;
+  }
+  if (target + humanOffset > PotRight){
+    humanOffset = PotRight - target;
+  }
+  gimbleController->SetSetpoint(target + humanOffset);
 }
 
 void SubGimble::PIDGimbleTo(double angle) {
@@ -98,4 +104,24 @@ double SubGimble::GetTarget(){
 
 double SubGimble::POTPosition(){
   return _anaGimblePot->GetAverageValue();
+}
+
+void SubGimble::OverrideMotorLeft(){
+  _srxGimble->Set(0.5);
+}
+
+void SubGimble::OverrideMotorRight(){
+  _srxGimble->Set(-0.5);
+}
+
+void SubGimble::MotorStop(){
+  _srxGimble->Set(0.0);
+}
+
+void SubGimble::PIDEnable(){
+  gimbleController->Enable();
+}
+
+void SubGimble::PIDDisable(){
+  gimbleController->Disable();
 }

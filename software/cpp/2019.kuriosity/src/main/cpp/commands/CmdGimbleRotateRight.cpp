@@ -16,19 +16,22 @@ CmdGimbleRotateRight::CmdGimbleRotateRight() {
 }
 
 // Called just before this Command runs the first time
-void CmdGimbleRotateRight::Initialize() {}
+void CmdGimbleRotateRight::Initialize() {
+  Robot::subGimble->PIDDisable();
+  Robot::subGimble->OverrideMotorRight();
+}
 
 // Called repeatedly when this Command is scheduled to run
-void CmdGimbleRotateRight::Execute() {
-  Robot::subGimble->OverridePID(false);
-}
+void CmdGimbleRotateRight::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdGimbleRotateRight::IsFinished() { return false; }
 
 // Called once after isFinished returns true
 void CmdGimbleRotateRight::End() {
-  Robot::subGimble->stop(2);
+  Robot::subGimble->MotorStop();
+  Robot::subGimble->PIDEnable();
+  Robot::subGimble->stop(0);
 }
 
 // Called when another command which requires one or more of the same
