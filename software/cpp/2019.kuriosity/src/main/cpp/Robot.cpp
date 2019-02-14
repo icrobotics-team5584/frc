@@ -35,7 +35,7 @@ void Robot::RobotInit() {
 
     // create image processing thread and pass in reference to each variable
     // that we need the thread to provide back to the main robot thread
-    std::thread visionThread(Robot::VisionThread, std::ref(Robot::validsignal), std::ref(Robot::errorsignal) );
+    std::thread visionThread(Robot::VisionThread, std::ref(Robot::vti_mode), std::ref(Robot::vto_valid), std::ref(Robot::vto_error) );
     visionThread.detach();
 
     _oi.reset(new OI);
@@ -117,7 +117,7 @@ void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::TestPeriodic() {}
 
-void Robot::VisionThread( bool &targetvalid, double &targeterror ) {
+void Robot::VisionThread( int &mode, bool &valid, double &error ) {
 
     //cs::UsbCamera camera = CameraServer::GetInstance()->StartAutomaticCapture();
     cs::AxisCamera camera = CameraServer::GetInstance()->AddAxisCamera( "10.55.84.11" );
@@ -224,20 +224,21 @@ void Robot::VisionThread( bool &targetvalid, double &targeterror ) {
             // where -1 is far left of FOV,; +1 is far right of FOV and 0 is centerline
             if( lines_found > 0 )
             {
-                targeterror = ( 1.0 * longest_line_midx - (img_width/2) ) / (img_width/2);
-                targetvalid = 1;
+                error = ( 1.0 * longest_line_midx - (img_width/2) ) / (img_width/2);
+                valid = 1;
             } else {
-                targeterror = 0;
-                targetvalid = 0;
+                error = 0;
+                valid = 0;
             }
 
         } else {
-            targeterror = 0;
-            targetvalid = 0;
+            error = 0;
+            valid = 0;
         }
         std::cout << "INFO: frame count: " << framecounter << std::endl;
-        std::cout << "INFO: target valid: " << targetvalid << std::endl;
-        std::cout << "INFO: target error: " << targeterror << std::endl;
+        std::cout << "INFO: mode:" << mode << std::endl;
+        std::cout << "INFO: valid: " << valid << std::endl;
+        std::cout << "INFO: error: " << error << std::endl;
     }
 }
 
