@@ -29,4 +29,6 @@ void CmdGimbleOverrideRight::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdGimbleOverrideRight::Interrupted() {}
+void CmdGimbleOverrideRight::Interrupted() {
+  End();
+}
