@@ -18,8 +18,8 @@ class SubIntakeOutake : public frc::Subsystem {
   // for methods that implement subsystem capabilities
   shared_ptr<WPI_TalonSRX> _srxIntakeOutake;
   shared_ptr<frc::DigitalInput> _dinCargoLimit;
-  double outSpeed = -1;
-  double inSpeed = 1;
+  double outSpeed = 1;
+  double inSpeed = -1;
 
  public:
   SubIntakeOutake();

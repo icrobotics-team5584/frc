@@ -56,20 +56,46 @@ void SubGimble::PIDGimbleTo(double angle) {
   potRange = PotRight - PotLeft;
   angle = angle + 90; // converts -90, 0, 90 to 0, 90, 180
   double conversion = potRange/180;
-  double target = (angle * conversion) + PotLeft;
+  target = (angle * conversion) + PotLeft;
 
 	SmartDashboard::PutNumber("TARGET Value", target);
 
 	gimbleController->SetSetpoint(target);
 }
 
+void SubGimble::PIDGimbleToLeft(){
+  gimbleController->SetSetpoint(PotLeft);
+}
+
+void SubGimble::PIDGimbleToRight(){
+  gimbleController->SetSetpoint(PotRight);
+}
+
 void SubGimble::VoltageControl(double percentage){
   _srxGimble->Set(percentage);
 }
 
-void SubGimble::stop() {
-  gimbleController->SetSetpoint(_anaGimblePot->GetAverageValue());
+void SubGimble::stop(int side) {
+  switch(side){
+    case 0:
+      gimbleController->SetSetpoint((_anaGimblePot->GetAverageValue() + 0));
+    break;
+    case 1:
+      gimbleController->SetSetpoint((_anaGimblePot->GetAverageValue() - 80));
+    break;
+    case 2:
+      gimbleController->SetSetpoint((_anaGimblePot->GetAverageValue() - 200));
+  }
 }
 void SubGimble::ToCentre(){
-  gimbleController->SetSetpoint(PotCentre);
+  target = PotCentre;
+  gimbleController->SetSetpoint(target);
+}
+
+double SubGimble::GetTarget(){
+  return target;
+}
+
+double SubGimble::POTPosition(){
+  return _anaGimblePot->GetAverageValue();
 }

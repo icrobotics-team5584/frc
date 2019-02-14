@@ -22,11 +22,11 @@ void SubRollerIntake::InitDefaultCommand() {
 // here. Call these from Commands.
 
 void SubRollerIntake::RollerIn() {
-  _srxRoller->Set(-inSpeed);
+  _srxRoller->Set(inSpeed);
 }
 
 void SubRollerIntake::RollerOut() {
-  _srxRoller->Set(-outSpeed);
+  _srxRoller->Set(outSpeed);
 }
 
 void SubRollerIntake::Stop() {
