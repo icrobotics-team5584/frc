@@ -34,6 +34,9 @@
 
 #include "commands/CmdGimblePIDLeftStop.h"
 #include "commands/CmdGimblePIDRightStop.h"
+
+#include "commands/CmdGimbleOverrideLeft.h"
+#include "commands/CmdGimbleOverrideRight.h"
 OI::OI() {
   cout << "Run Robot OI" << endl;
 
@@ -70,9 +73,9 @@ OI::OI() {
 
   //Gimble
   btnGimbleRotateLeft.reset(new frc::JoystickButton(controller.get(), backBtn));
-  btnGimbleRotateLeft->WhileHeld(new CmdGimbleRotateLeft());
+  btnGimbleRotateLeft->WhileHeld(new CmdGimbleOverrideLeft());
   btnGimbleRotateRight.reset(new frc::JoystickButton(controller.get(), startBtn));
-  btnGimbleRotateRight->WhileHeld(new CmdGimbleRotateRight());
+  btnGimbleRotateRight->WhileHeld(new CmdGimbleOverrideRight());
 
   //Gimble PID Controls 
   povBtnGimblePidLeft.reset(new ButtonPOV(controller.get(), 270));

@@ -43,17 +43,12 @@ void SubGimble::disable() {
 
 void SubGimble::OverridePID(bool leftRight) { //true = left  ... rotate left
   if (leftRight){
-    humanOffset = humanOffset - overrideSpeed;
+    humanOffset = -10;
   }
   else{
-    humanOffset = humanOffset + overrideSpeed;
+    humanOffset = 10;
   }
-  if (target + humanOffset < PotLeft){
-    humanOffset = target - PotLeft;
-  }
-  if (target + humanOffset > PotRight){
-    humanOffset = PotRight - target;
-  }
+
   gimbleController->SetSetpoint(target + humanOffset);
 }
 
