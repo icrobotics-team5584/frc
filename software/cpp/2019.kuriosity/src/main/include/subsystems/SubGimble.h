@@ -39,13 +39,8 @@ class SubGimble : public frc::Subsystem {
   SubGimble();
   void Periodic();
   void InitDefaultCommand() override;
-  void rotateLeft();
-  void rotateRight();
   void VoltageControl(double percentage);
   void stop(int side);
-  //void Reset();  Maybe in the future this can reset the left and right values?
-  void enable();
-  void disable();
   void PIDGimbleTo(double angle);  
   void OverridePID(bool leftRight);
   void ToCentre();

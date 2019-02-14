@@ -32,15 +32,6 @@ void SubGimble::Periodic() {
 
 void SubGimble::InitDefaultCommand() {}
 
-void SubGimble::enable() {
-  gimbleController->Enable();
-}
-
-void SubGimble::disable() {
-  gimbleController->Disable();
-  _srxGimble->Set(0);
-}
-
 void SubGimble::OverridePID(bool leftRight) { //true = left  ... rotate left
   if (leftRight){
     humanOffset = -10;
