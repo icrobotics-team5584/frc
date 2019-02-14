@@ -14,15 +14,15 @@ CmdGimbleOverrideRight::CmdGimbleOverrideRight() {
 }
 
 // Called just before this Command runs the first time
-void CmdGimbleOverrideRight::Initialize() {
+void CmdGimbleOverrideRight::Initialize() {}
+
+// Called repeatedly when this Command is scheduled to run
+void CmdGimbleOverrideRight::Execute() {
   Robot::subGimble->OverridePID(false);
 }
 
-// Called repeatedly when this Command is scheduled to run
-void CmdGimbleOverrideRight::Execute() {}
-
 // Make this return true when this Command no longer needs to run execute()
-bool CmdGimbleOverrideRight::IsFinished() { return true; }
+bool CmdGimbleOverrideRight::IsFinished() { return false; }
 
 // Called once after isFinished returns true
 void CmdGimbleOverrideRight::End() {}

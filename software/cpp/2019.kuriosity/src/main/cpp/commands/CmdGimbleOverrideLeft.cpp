@@ -13,12 +13,12 @@ CmdGimbleOverrideLeft::CmdGimbleOverrideLeft() {
 }
 
 // Called just before this Command runs the first time
-void CmdGimbleOverrideLeft::Initialize() {
-  Robot::subGimble->OverridePID(true);
-}
+void CmdGimbleOverrideLeft::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void CmdGimbleOverrideLeft::Execute() {}
+void CmdGimbleOverrideLeft::Execute() {
+  Robot::subGimble->OverridePID(true);
+}
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdGimbleOverrideLeft::IsFinished() { return true; }
