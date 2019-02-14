@@ -13,6 +13,9 @@
 #include "commands/CmdIntakePanel.h"
 #include "commands/CmdGimbleRotateLeft.h"
 #include "commands/CmdGimbleRotateRight.h"
+#include "commands/CmdGimblePidLeft.h"
+#include "commands/CmdGimblePidCentre.h"
+#include "commands/CmdGimblePidRight.h"
 #include "commands/CmdOverrideTurret.h"
 #include "commands/CmdElevatorUpTest.h"
 #include "commands/CmdElevatorDownTest.h"
@@ -25,7 +28,12 @@
 #include "commands/CmdMotionProfile.h"
 #include "commands/CmdEncoderDrive.h"
 #include "commands/CmdStopAtLine.h"
+#include "commands/CmdSeekRocketSide.h"
+#include "commands/CmdCargoIntakeOut.h"
+#include "commands/CmdCargoIntakeIn.h"
 
+#include "commands/CmdGimblePIDLeftStop.h"
+#include "commands/CmdGimblePIDRightStop.h"
 OI::OI() {
   cout << "Run Robot OI" << endl;
 
@@ -36,15 +44,17 @@ OI::OI() {
   btnDriveBaseSlow.reset(new AxisButton(controller.get(), leftAxisTrigger));
   btnDriveBaseSlow->WhileHeld(new CmdDriveBaseSlow());
 
-  btnStopAtLine.reset(new AxisButton(controller.get(), rightAxisTrigger));
-  btnStopAtLine->WhileHeld(new CmdStopAtLine(0.4, BACK_RIGHT));
+  btnSeekRocketSide.reset(new AxisButton(controller.get(), rightAxisTrigger));
+  btnSeekRocketSide->WhileHeld(new CmdSeekRocketSide());
+
+  btnIntakeOut.reset(new frc::JoystickButton(controller.get(), rightBtn));
+  btnIntakeOut->WhenPressed(new CmdCargoIntakeOut());
+
+  btnIntakeOut->WhenReleased(new CmdCargoIntakeIn());
 
   //Intake Outake
   btnCargoPodOut.reset(new frc::JoystickButton(controller.get(), leftBtn));
   btnCargoPodOut->WhileHeld(new CmdIntakeOutakeOut());
-
-  btnCargoPodIn.reset(new frc::JoystickButton(controller.get(), rightBtn));
-  btnCargoPodIn->WhileHeld(new CmdIntakeOutakeIn());
 
   // btnSeekRocketSide.reset(new frc::JoystickButton(controller.get(), yBtn));
   // btnSeekRocketSide->WhenPressed(new CmdSeekRocketSide());
@@ -61,10 +71,18 @@ OI::OI() {
   //Gimble
   btnGimbleRotateLeft.reset(new frc::JoystickButton(controller.get(), backBtn));
   btnGimbleRotateLeft->WhileHeld(new CmdGimbleRotateLeft());
-
   btnGimbleRotateRight.reset(new frc::JoystickButton(controller.get(), startBtn));
   btnGimbleRotateRight->WhileHeld(new CmdGimbleRotateRight());
 
+  //Gimble PID Controls 
+  povBtnGimblePidLeft.reset(new ButtonPOV(controller.get(), 270));
+  povBtnGimblePidLeft->WhenPressed(new CmdGimblePidLeft());
+ 
+  povBtnGimblePidRight.reset(new ButtonPOV(controller.get(), 90));
+  povBtnGimblePidRight->WhenPressed(new CmdGimblePidRight());
+  povBtnGimblePidCentre.reset(new ButtonPOV(controller.get(), 0));
+  povBtnGimblePidCentre->WhenPressed(new CmdGimblePidCentre());
+  
   btnOverride.reset(new frc::JoystickButton(controller.get(), rightStickBtn));
   btnOverride->WhileHeld(new CmdOverrideTurret());
 
@@ -72,6 +90,11 @@ OI::OI() {
   lmtPIDTop->WhenPressed(new CmdElevatorPIDTopStop());
   lmtPIDBottom.reset(new LimitButton(Robot::_robotMap->subElevatorLimitBottom, true));
   lmtPIDBottom->WhenPressed(new CmdElevatorPIDBottomStop());
+
+  lmtPIDLeft.reset(new LimitButton(Robot::_robotMap->subGimbleLimitLeft, false));
+  lmtPIDLeft->WhenPressed(new CmdGimblePIDLeftStop());
+  lmtPIDRight.reset(new LimitButton(Robot::_robotMap->subGimbleLimitRight, false));
+  lmtPIDRight->WhenPressed(new CmdGimblePIDRightStop());
 
   //Elevator
   //btnUpTest.reset(new frc::JoystickButton(controller.get(), yBtn));

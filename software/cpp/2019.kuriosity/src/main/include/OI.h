@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <frc/WPILib.h>
+#include "ButtonPOV.h"
 #include "AxisButton.h"
 #include "LimitButton.h"
 
@@ -35,28 +36,37 @@ class OI {
   shared_ptr<frc::Joystick> controllerReverse;
   shared_ptr<frc::JoystickButton> btnCargoPodOut;
   shared_ptr<frc::JoystickButton> btnCargoPodIn;
+  unique_ptr<AxisButton> btnStopAtLine;
+  unique_ptr<AxisButton> btnSeekRocketSide;
+  unique_ptr<frc::JoystickButton> btnIntakeOut;
+
   OI();
   std::shared_ptr<frc::Joystick> getJoystick(int);
 private:
   unique_ptr<frc::JoystickButton> btnFollowLine;
   unique_ptr<frc::JoystickButton> btnMotionProfile;
   unique_ptr<frc::JoystickButton> btnEncoderDrive;
-  unique_ptr<AxisButton> btnStopAtLine;
 
   unique_ptr<frc::JoystickButton> btnDeployPanel;
   unique_ptr<frc::JoystickButton> btnDeployFingers; 
   unique_ptr<frc::JoystickButton> btnSeekPath;
   unique_ptr<frc::JoystickButton> btnGimbleRotateLeft;
-  unique_ptr<frc::JoystickButton> btnGimbleRotateRight;
-  unique_ptr<frc::JoystickButton> btnSeekRocketSide;
+  unique_ptr<frc::JoystickButton> btnGimbleRotateRight; //Moved to overide stick (right stick with press)
+  unique_ptr<ButtonPOV> povBtnGimblePidLeft;
+  unique_ptr<ButtonPOV> povBtnGimblePidCentre;
+  unique_ptr<ButtonPOV> povBtnGimblePidRight;
+  //unique_ptr<frc::JoystickButton> btnSeekRocketSide;
   unique_ptr<AxisButton> btnDriveBaseSlow;
   unique_ptr<frc::JoystickButton> btnElevatorToPos;
   unique_ptr<frc::JoystickButton> btnElevatorToBottom;
+
 
   unique_ptr<frc::JoystickButton> btnOverride;
 
   unique_ptr<LimitButton> lmtPIDTop;
   unique_ptr<LimitButton> lmtPIDBottom;
+  unique_ptr<LimitButton> lmtPIDLeft;
+  unique_ptr<LimitButton> lmtPIDRight;
 
   unique_ptr<frc::JoystickButton> btnUpTest;
   unique_ptr<frc::JoystickButton> btnDownTest;

@@ -20,7 +20,9 @@ unique_ptr<SubElevatorLimits> Robot::subElevatorLimits;
 unique_ptr<SubPanelAffector> Robot::subPanelAffector;
 unique_ptr<SubIntakeOutake> Robot::subIntakeOutake;
 unique_ptr<SubRollerIntake> Robot::subRollerIntake;
+unique_ptr<SubRollerIntakeBar> Robot::subRollerIntakeBar;
 unique_ptr<SubGimble> Robot::subGimble;
+unique_ptr<SubGimbleLimits> Robot::subGimbleLimits;
 
 void Robot::RobotInit() {
   _robotMap.reset(new RobotMap);
@@ -31,7 +33,9 @@ void Robot::RobotInit() {
     subIntakeOutake.reset(new SubIntakeOutake());
     subPanelAffector.reset(new SubPanelAffector());
     subRollerIntake.reset(new SubRollerIntake());
+    subRollerIntakeBar.reset(new SubRollerIntakeBar());
     subGimble.reset(new SubGimble());
+    subGimbleLimits.reset(new SubGimbleLimits());
 
     // create image processing thread and pass in reference to each variable
     // that we need the thread to provide back to the main robot thread
@@ -39,15 +43,6 @@ void Robot::RobotInit() {
     visionThread.detach();
 
     _oi.reset(new OI);
-    std::cout << "robot init finish" << std::endl;
-
-    SmartDashboard::PutBoolean("started running End()", false);
-    SmartDashboard::PutBoolean("started running backwards()", false);
-    SmartDashboard::PutBoolean("finished running backwards()", false);
-
-    // m_chooser.SetDefaultOption("Default Auto", &m_defaultAuto);
-    // m_chooser.AddOption("My Auto", &m_myAuto);
-    // frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 }
 
 /**
@@ -59,10 +54,20 @@ void Robot::RobotInit() {
  * LiveWindow and SmartDashboard integrated updating.
  */
 void Robot::RobotPeriodic() {
-    SmartDashboard::PutNumber("Bottom Ultrasonic", subDriveBase->getDistanceToObstical());
+    //SmartDashboard::PutNumber("Bottom Ultrasonic", subDriveBase->getDistanceToObstical());
+    //SmartDashboard::PutBoolean("front sensor", subDriveBase->frontHasReachedLine());
+    //SmartDashboard::PutBoolean("mid sensor", subDriveBase->midHasReachedLine());
+    //SmartDashboard::PutBoolean("left sensor", subDriveBase->isLeftClsOnLine());
+    //SmartDashboard::PutBoolean("right sensor", subDriveBase->isRightClsOnLine());
+
+    SmartDashboard::PutBoolean("2222222 GIMBLE LIMIT LEFT", subGimbleLimits->GetLeftLimit());
+    SmartDashboard::PutBoolean("2222222 GIMBLE LIMIT RIGHT", subGimbleLimits->GetRightLimit());
+    
     SmartDashboard::PutNumber("Yaw", subDriveBase->getYaw());
     SmartDashboard::PutNumber("Elevator encoder", subElevator->GetEncoderPosition());
     SmartDashboard::PutBoolean("On Line", subDriveBase->clsBackRightDetected());
+    SmartDashboard::PutNumber("Roller bar position", subRollerIntakeBar->GetAngle());
+    SmartDashboard::PutNumber("Elevator pos", subElevator->GetEncoderPosition());
 }
 
 /**

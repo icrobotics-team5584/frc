@@ -10,7 +10,6 @@
 #include <frc/TimedRobot.h>
 #include <frc/commands/Command.h>
 #include <frc/smartdashboard/SendableChooser.h>
-
 #include "OI.h"
 #include "RobotMap.h"
 #include "subsystems/SubDriveBase.h"
@@ -19,11 +18,13 @@
 #include "subsystems/SubIntakeOutake.h"
 #include "subsystems/SubPanelAffector.h"
 #include "subsystems/SubRollerIntake.h"
+#include "subsystems/SubRollerIntakeBar.h"
 #include "subsystems/SubGimble.h"
 #include "commands/CmdSeekCargoShip.h"
 #include <cscore_oo.h>
 #include "commands/CmdIntakePanel.h"
 #include "subsystems/ElevatorCmdChooser.h"
+#include "subsystems/SubGimbleLimits.h"
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -44,8 +45,9 @@ class Robot : public frc::TimedRobot {
   static unique_ptr<SubIntakeOutake> subIntakeOutake;
   static unique_ptr<SubPanelAffector> subPanelAffector;
   static unique_ptr<SubRollerIntake> subRollerIntake;
+  static unique_ptr<SubRollerIntakeBar> subRollerIntakeBar;
   static unique_ptr<SubGimble> subGimble;
-
+  static unique_ptr<SubGimbleLimits> subGimbleLimits;
   static unique_ptr<ElevatorCmdChooser> elevatorCmdChooser;
 
   unique_ptr<CmdSeekCargoShip> cmdSeekCargoShip;

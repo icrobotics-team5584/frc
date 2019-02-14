@@ -24,6 +24,7 @@ enum Can {
     can_srxElevatorMaster = 7,
     can_srxElevatorSlave = 8,
     can_srxRollerIntake = 9,
+    can_srxRollerIntakeBar = 10,
 };
 
 enum PWM {
@@ -34,10 +35,10 @@ enum DIO {
     dio_clsDriveBaseBackLeft = 1,
     dio_clsDriveBaseMidRight = 2,
     dio_clsDriveBaseMidLeft = 3,
-    dio_ulsTriggerDriveBaseGimble = 4,
-    dio_ulsEchoDriveBaseGimble = 5,
-    dio_ulsTriggerDriveBaseBottom = 6666,
-    dio_ulsEchoDriveBaseBottom = 7777,
+    dio_ulsTriggerLeft = 20,
+    dio_ulsEchoLeft = 19,
+    dio_ulsTriggerRight = 4,
+    dio_ulsEchoRight = 5,
     dio_subGimbleLimitLeft = 6,
     dio_subGimbleLimitRight = 7,
     dio_subElevatorLimitBottom = 8,
@@ -99,10 +100,10 @@ public:
     //Gimble
     shared_ptr<WPI_TalonSRX> srxGimble;
 
-    std::shared_ptr<DigitalInput> subGimbleLimitLeft;
-    std::shared_ptr<DigitalInput> subGimbleLimitRight;
+    shared_ptr<DigitalInput> subGimbleLimitLeft;
+    shared_ptr<DigitalInput> subGimbleLimitRight;
 
-    std::shared_ptr<AnalogInput> subGimblePot;
+    shared_ptr<AnalogInput> subGimblePot;
 
     // DriveBase Sensors
     shared_ptr<AHRS> ahrsNavXDriveBase;
@@ -110,16 +111,17 @@ public:
     shared_ptr<DigitalInput> clsDriveBaseBackRight;
     shared_ptr<DigitalInput> clsDriveBaseMidLeft;
     shared_ptr<DigitalInput> clsDriveBaseMidRight;
-    shared_ptr<DigitalOutput> dioTriggerDriveBaseGimble;
-    shared_ptr<DigitalInput> dioEchoDriveBaseGimble;
-    shared_ptr<DigitalOutput> dioTriggerDriveBaseBottom;
-    shared_ptr<DigitalInput> dioEchoDriveBaseBottom;
-    shared_ptr<Ultrasonic> ulsDriveBaseGimble;
-    shared_ptr<Ultrasonic> ulsDriveBaseBottom;
+    shared_ptr<DigitalOutput> dioTriggerDriveBaseLeft;
+    shared_ptr<DigitalInput> dioEchoDriveBaseLeft;
+    shared_ptr<DigitalOutput> dioTriggerDriveBaseRight;
+    shared_ptr<DigitalInput> dioEchoDriveBaseRight;
+    shared_ptr<Ultrasonic> dioUlsDriveBaseLeft;
+    shared_ptr<Ultrasonic> dioUlsDriveBaseRight;
 
     //Intake and outake
     shared_ptr<WPI_TalonSRX> srxIntakeOutake;
     shared_ptr<WPI_TalonSRX> srxRollerIntake;
+    shared_ptr<WPI_TalonSRX> srxRollerIntakeBar;
 
     shared_ptr<DigitalInput> subIntakeOutakeCargo;
 

@@ -21,6 +21,7 @@ using namespace std;
 using namespace frc;
 
 enum ColourSensor {BACK_LEFT, BACK_RIGHT, MID_LEFT, MID_RIGHT};
+enum UltrasonicSensor {LEFT, RIGHT};
 
 class SubDriveBase : public frc::Subsystem {
  private:
@@ -40,8 +41,8 @@ class SubDriveBase : public frc::Subsystem {
   shared_ptr<DigitalInput> _clsBackRight;
   shared_ptr<DigitalInput> _clsMidLeft;
   shared_ptr<DigitalInput> _clsMidRight;
-  shared_ptr<Ultrasonic> _ulsGimble;
-  shared_ptr<Ultrasonic> _ulsBottom;
+  shared_ptr<Ultrasonic> _ulsLeft;
+  shared_ptr<Ultrasonic> _ulsRight;
   shared_ptr<AHRS> _ahrsNavXGyro;
   
 
@@ -70,6 +71,7 @@ class SubDriveBase : public frc::Subsystem {
   void brakeRobot();
   Segment* generatePath();
   int getPathLength();
+  void setTalBrakeMode(NeutralMode neutralMode);
 
   // Encoder functions
   void zeroEncoders();
@@ -95,8 +97,8 @@ class SubDriveBase : public frc::Subsystem {
   bool clsMidRightDetected();
 
   // Ultrasonic functions
-  double getDistanceToObstical();
-  bool isBayEmpty();
+  double getUlsDistance(UltrasonicSensor ultrasonic);
+  bool isBayEmpty(UltrasonicSensor ultrasonicSensor);
   double positionPID(double distance);
   void pidPositionConfig();
 //   void setPIDSetPoint();

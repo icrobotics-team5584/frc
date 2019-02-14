@@ -63,5 +63,6 @@
     "numeric": "cpp",
     "valarray": "cpp",
     "optional": "cpp"
+    "iomanip": "cpp"
   }
 }
