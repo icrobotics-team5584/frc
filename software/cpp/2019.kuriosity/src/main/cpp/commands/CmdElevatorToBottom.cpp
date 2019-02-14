@@ -16,7 +16,7 @@ CmdElevatorToBottom::CmdElevatorToBottom() {
 
 // Called just before this Command runs the first time
 void CmdElevatorToBottom::Initialize() {
-  Robot::subElevator->ElevatorToPos(0);
+  Robot::subElevator->SetHeight(BOTTOM_HATCH);
 }
 
 // Called repeatedly when this Command is scheduled to run
