@@ -39,7 +39,9 @@ void Robot::RobotInit() {
 
     // create image processing thread and pass in reference to each variable
     // that we need the thread to provide back to the main robot thread
-    std::thread visionThread(Robot::VisionThread, std::ref(Robot::vti_mode), std::ref(Robot::vto_valid), std::ref(Robot::vto_error) );
+    vti_mode = 0;
+    vti_debug = 0;
+    std::thread visionThread(Robot::VisionThread, std::ref(Robot::vti_mode), std::ref(Robot::vti_debug), std::ref(Robot::vto_valid), std::ref(Robot::vto_error) );
     visionThread.detach();
 
     _oi.reset(new OI);
@@ -122,7 +124,7 @@ void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::TestPeriodic() {}
 
-void Robot::VisionThread( int &mode, bool &valid, double &error ) {
+void Robot::VisionThread( int &mode, bool &debug, bool &valid, double &error ) {
 
     //cs::UsbCamera camera = CameraServer::GetInstance()->StartAutomaticCapture();
     cs::AxisCamera camera = CameraServer::GetInstance()->AddAxisCamera( "10.55.84.11" );
@@ -179,7 +181,7 @@ void Robot::VisionThread( int &mode, bool &valid, double &error ) {
             }
 
             // STEP 4: fetch filtered lines and further analyse
-            cout << "INFO: searching for longest line" << endl;
+            if( debug ) { cout << "INFO: searching for longest line" << endl; }
             double longest_line_length = 0;
             int lines_found = 0;
             int longest_line_index = -1;
@@ -190,7 +192,7 @@ void Robot::VisionThread( int &mode, bool &valid, double &error ) {
             {
                 lines_found++;
                 double lineLength = line.length();
-                cout << i << ":" << lineLength << endl;
+                if( debug ) { cout << i << ":" << lineLength << endl; }
                 if(lineLength>longest_line_length)
                 {
                     longest_line_length = lineLength;
@@ -200,10 +202,12 @@ void Robot::VisionThread( int &mode, bool &valid, double &error ) {
                 }
                 i++;
             }
-            cout << "INFO: longest line details:" << endl;
-            cout << "  index: " << longest_line_index << endl;
-            cout << "  length: " << longest_line_length << endl;
-            cout << "  midpoint: (" << longest_line_midx << "," << longest_line_midy << ")" << endl;
+            if( debug ) {
+                cout << "INFO: longest line details:" << endl;
+                cout << "  index: " << longest_line_index << endl;
+                cout << "  length: " << longest_line_length << endl;
+                cout << "  midpoint: (" << longest_line_midx << "," << longest_line_midy << ")" << endl;
+            }
 
             // STEP 6: add midpoint of longest line to display
             if( lines_found > 0 )
@@ -240,10 +244,12 @@ void Robot::VisionThread( int &mode, bool &valid, double &error ) {
             error = 0;
             valid = 0;
         }
-        std::cout << "INFO: frame count: " << framecounter << std::endl;
-        std::cout << "INFO: mode:" << mode << std::endl;
-        std::cout << "INFO: valid: " << valid << std::endl;
-        std::cout << "INFO: error: " << error << std::endl;
+        if( debug ) {
+            std::cout << "INFO: frame count: " << framecounter << std::endl;
+            std::cout << "INFO: mode:" << mode << std::endl;
+            std::cout << "INFO: valid: " << valid << std::endl;
+            std::cout << "INFO: error: " << error << std::endl;
+        }
     }
 }
 

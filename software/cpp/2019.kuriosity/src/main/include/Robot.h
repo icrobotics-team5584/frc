@@ -67,9 +67,10 @@ class Robot : public frc::TimedRobot {
 
   // vision thread inputs (vti_), outputs (vt0_) and methods
   int vti_mode;
+  bool vti_debug;
   bool vto_valid;
   double vto_error;
-  static void VisionThread( int &, bool &, double & );
+  static void VisionThread( int &, bool &, bool &, double & );
 
   // Have it null by default so that if testing teleop it
   // doesn't have undefined behavior and potentially crash.
