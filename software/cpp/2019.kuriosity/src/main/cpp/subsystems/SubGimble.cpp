@@ -19,6 +19,7 @@ SubGimble::SubGimble() : Subsystem("ExampleSubsystem") {
   SmartDashboard::PutNumber("Gimble PIDI", PIDi);
   SmartDashboard::PutNumber("Gimble PIDD", PIDd);
   SmartDashboard::PutNumber("TARGET Value", target);
+  SmartDashboard::PutBoolean("Test Mode", testMode);
 }
 
 void SubGimble::Periodic() {
@@ -34,7 +35,10 @@ void SubGimble::Periodic() {
   PIDp = SmartDashboard::GetNumber("Gimble PIDP", 0.0025);
   PIDi = SmartDashboard::GetNumber("Gimble PIDI", 0.0);
   PIDd = SmartDashboard::GetNumber("Gimble PIDD", 0.0);
-  target = SmartDashboard::GetNumber("TARGET Value", PotCentre);
+  testMode = SmartDashboard::GetBoolean("Test Mode", false);
+  if (testMode == true){
+    target = SmartDashboard::GetNumber("TARGET Value", PotCentre);
+  }
   kP = PIDp;
   kI = PIDi;
   kD = PIDd;
@@ -88,11 +92,11 @@ void SubGimble::stop(int side) {
     break;
     case 1:
       //gimbleController->SetSetpoint((_anaGimblePot->GetAverageValue() - 80));
-      target = _anaGimblePot->GetAverageValue() - 80;
+      target = _anaGimblePot->GetAverageValue() - 0;
     break;
     case 2:
       //gimbleController->SetSetpoint((_anaGimblePot->GetAverageValue() - 200));
-      target = _anaGimblePot->GetAverageValue() - 200;
+      target = _anaGimblePot->GetAverageValue() - 0;
     break;
   }
 }
@@ -109,36 +113,16 @@ double SubGimble::POTPosition(){
   return _anaGimblePot->GetAverageValue();
 }
 
-void SubGimble::OverrideMotorLeft(){
-  _srxGimble->Set(0.5);
-}
-
-void SubGimble::OverrideMotorRight(){
-  _srxGimble->Set(-0.5);
-}
-
-void SubGimble::MotorStop(){
-  _srxGimble->Set(0.0);
-}
-
-//void SubGimble::PIDEnable(){
-//  //gimbleController->Enable();
-//}
-//
-//void SubGimble::PIDDisable(){
-//  //gimbleController->Disable();
-//}
-
 void SubGimble::CustomPID(double PIDIntput){
   error = PIDIntput - target;
   intergral = intergral + error;
   derivative = error - lastError;
   PIDOutput = (error * kP) + (intergral * kI) + (derivative * kD);
-  if (PIDOutput > 1){
-    PIDOutput = 1;
+  if (PIDOutput > rotateSpeed){
+    PIDOutput = rotateSpeed;
   }
-  if (PIDOutput < -1){
-    PIDOutput = -1;
+  if (PIDOutput < -rotateSpeed){
+    PIDOutput = -rotateSpeed;
   }
   _srxGimble->Set(PIDOutput);
   lastError = error;

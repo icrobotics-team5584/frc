@@ -25,8 +25,8 @@ class SubGimble : public frc::Subsystem {
 	double PotRight = 3339;
 	double PotCentre = 1905;
 	double PIDp = 0.0025;
-	double PIDi = 0;
-	double PIDd = 0.0;
+	double PIDi = 0.0004;
+	double PIDd = 0.004;
   double humanOffset = 0.0;  //Used for overide 
   double overrideSpeed = 50;
   double target = PotCentre;
@@ -42,7 +42,8 @@ class SubGimble : public frc::Subsystem {
   double derivative;
   double lastError = 0;
   double PIDOutput;
-  double dampener = 1; //make this 0.25 - 0.9 to make the intergral's "memory" less
+  double dampener = 0.25; //make this 0.25 - 0.9 to make the intergral's "memory" less
+  bool testMode = false;
   
 
 
@@ -61,8 +62,6 @@ class SubGimble : public frc::Subsystem {
   void PIDGimbleToRight();
   void OverrideMotorLeft();
   void OverrideMotorRight();
-  //void PIDEnable();
-  //void PIDDisable();
   void MotorStop();
   void CustomPID(double PIDIntput);
 };
