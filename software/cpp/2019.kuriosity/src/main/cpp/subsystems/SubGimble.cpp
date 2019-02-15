@@ -50,7 +50,7 @@ void SubGimble::OverridePID(bool leftRight) { //true = left  ... rotate left
   else{
     humanOffset = 10;
   }
-
+  target = target + humanOffset;
   //gimbleController->SetSetpoint(target + humanOffset);
 }
 
@@ -68,10 +68,12 @@ void SubGimble::PIDGimbleTo(double angle) {
 
 void SubGimble::PIDGimbleToLeft(){
   //gimbleController->SetSetpoint(PotLeft);
+  target = PotLeft;
 }
 
 void SubGimble::PIDGimbleToRight(){
   //gimbleController->SetSetpoint(PotRight);
+  target = PotRight;
 }
 
 void SubGimble::VoltageControl(double percentage){
@@ -116,13 +118,13 @@ void SubGimble::MotorStop(){
   _srxGimble->Set(0.0);
 }
 
-void SubGimble::PIDEnable(){
-  //gimbleController->Enable();
-}
-
-void SubGimble::PIDDisable(){
-  //gimbleController->Disable();
-}
+//void SubGimble::PIDEnable(){
+//  //gimbleController->Enable();
+//}
+//
+//void SubGimble::PIDDisable(){
+//  //gimbleController->Disable();
+//}
 
 void SubGimble::CustomPID(double PIDIntput){
   error = PIDIntput - target;
