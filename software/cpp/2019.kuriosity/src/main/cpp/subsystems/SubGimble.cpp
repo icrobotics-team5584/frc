@@ -31,10 +31,10 @@ void SubGimble::Periodic() {
     
     lc = 0;
   }
-  PIDp = SmartDashboard::GetNumber("Gimble PIDP", PIDp, 0.0025);
-  PIDi = SmartDashboard::GetNumber("Gimble PIDI", PIDi, 0.0);
-  PIDd = SmartDashboard::GetNumber("Gimble PIDD", PIDd, 0.0);
-  target = SmartDashboard::GetNumber("TARGET Value", target, PotCentre);
+  PIDp = SmartDashboard::GetNumber("Gimble PIDP", 0.0025);
+  PIDi = SmartDashboard::GetNumber("Gimble PIDI", 0.0);
+  PIDd = SmartDashboard::GetNumber("Gimble PIDD", 0.0);
+  target = SmartDashboard::GetNumber("TARGET Value", PotCentre);
   kP = PIDp;
   kI = PIDi;
   kD = PIDd;
