@@ -84,12 +84,15 @@ void SubGimble::stop(int side) {
   switch(side){
     case 0:
       //gimbleController->SetSetpoint((_anaGimblePot->GetAverageValue() + 0));
+      target = _anaGimblePot->GetAverageValue() + 0;
     break;
     case 1:
       //gimbleController->SetSetpoint((_anaGimblePot->GetAverageValue() - 80));
+      target = _anaGimblePot->GetAverageValue() - 80;
     break;
     case 2:
       //gimbleController->SetSetpoint((_anaGimblePot->GetAverageValue() - 200));
+      target = _anaGimblePot->GetAverageValue() - 200;
     break;
   }
 }
@@ -128,7 +131,7 @@ void SubGimble::MotorStop(){
 
 void SubGimble::CustomPID(double PIDIntput){
   error = PIDIntput - target;
-  intergral = error + lastError;
+  intergral = intergral + error;
   derivative = error - lastError;
   PIDOutput = (error * kP) + (intergral * kI) + (derivative * kD);
   if (PIDOutput > 1){

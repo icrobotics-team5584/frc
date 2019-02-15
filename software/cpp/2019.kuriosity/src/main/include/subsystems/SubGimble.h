@@ -40,7 +40,7 @@ class SubGimble : public frc::Subsystem {
   double error;
   double intergral;
   double derivative;
-  double lastError = target;
+  double lastError = 0;
   double PIDOutput;
   double dampener = 1; //make this 0.25 - 0.9 to make the intergral's "memory" less
   
@@ -61,8 +61,8 @@ class SubGimble : public frc::Subsystem {
   void PIDGimbleToRight();
   void OverrideMotorLeft();
   void OverrideMotorRight();
-  void PIDEnable();
-  void PIDDisable();
+  //void PIDEnable();
+  //void PIDDisable();
   void MotorStop();
   void CustomPID(double PIDIntput);
 };

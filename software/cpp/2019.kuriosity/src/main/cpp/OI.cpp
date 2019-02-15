@@ -11,8 +11,6 @@
 #include "commands/CmdIntakeOutakeIn.h"
 #include "commands/CmdHatchLowRocket.h"
 #include "commands/CmdIntakePanel.h"
-#include "commands/CmdGimbleRotateLeft.h"
-#include "commands/CmdGimbleRotateRight.h"
 #include "commands/CmdGimblePidLeft.h"
 #include "commands/CmdGimblePidCentre.h"
 #include "commands/CmdGimblePidRight.h"
