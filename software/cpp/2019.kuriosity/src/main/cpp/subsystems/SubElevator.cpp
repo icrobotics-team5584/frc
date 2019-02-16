@@ -39,10 +39,10 @@ void SubElevator::Periodic() {
 	//PIDD = SmartDashboard::GetNumber("Elevator PIDD", 0.0);
 	targetPositionRotations = SmartDashboard::GetNumber("Elevator PID target", 0.0);
 
-	_srxElevatorMaster->Config_kF(kPIDLoopIdx, 0.0, kTimeoutMs);
-	_srxElevatorMaster->Config_kP(kPIDLoopIdx, PIDP, kTimeoutMs);
-	_srxElevatorMaster->Config_kI(kPIDLoopIdx, PIDI, kTimeoutMs);
-	_srxElevatorMaster->Config_kD(kPIDLoopIdx, PIDD, kTimeoutMs);
+	//_srxElevatorMaster->Config_kF(kPIDLoopIdx, 0.0, kTimeoutMs);
+	//_srxElevatorMaster->Config_kP(kPIDLoopIdx, PIDP, kTimeoutMs);
+	//_srxElevatorMaster->Config_kI(kPIDLoopIdx, PIDI, kTimeoutMs);
+	//_srxElevatorMaster->Config_kD(kPIDLoopIdx, PIDD, kTimeoutMs);
 }
 
 void SubElevator::InitDefaultCommand() {
