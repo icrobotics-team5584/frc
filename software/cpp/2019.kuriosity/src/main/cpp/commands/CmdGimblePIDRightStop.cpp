@@ -16,7 +16,7 @@ CmdGimblePIDRightStop::CmdGimblePIDRightStop() {
 
 // Called just before this Command runs the first time
 void CmdGimblePIDRightStop::Initialize() {
-  std::cout << "GIMBLE PID RIGHT STOP" << std::endl;
+  //std::cout << "GIMBLE PID RIGHT STOP" << std::endl;
   if(Robot::subGimble->GetTarget() >=  Robot::subGimble->POTPosition())
   {
     Robot::subGimble->stop(2);

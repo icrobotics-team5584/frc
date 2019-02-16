@@ -10,7 +10,7 @@ CmdGimblePidCentre::CmdGimblePidCentre() {
 void CmdGimblePidCentre::Initialize() {
   Robot::subGimble->ToCentre();
   
-  std::cout << "GIMBLE PID CENTRE" << std::endl;
+  //std::cout << "GIMBLE PID CENTRE" << std::endl;
 }
 
 // Called repeatedly when this Command is scheduled to run
