@@ -39,12 +39,12 @@ void SubPanelAffector::Deploy() {
 
 void SubPanelAffector::DeployFingers() {
   solTopFinger->Set(DoubleSolenoid::kForward);
-  solBottomFinger->Set(DoubleSolenoid::kForward);
+  //solBottomFinger->Set(DoubleSolenoid::kForward);
 }
 
 void SubPanelAffector::RetractFingers() {
   solTopFinger->Set(DoubleSolenoid::kReverse);
-  solBottomFinger->Set(DoubleSolenoid::kReverse);
+  //solBottomFinger->Set(DoubleSolenoid::kReverse);
 }
 void SubPanelAffector::StartRumble() {
   _controller->SetRumble(GenericHID::kRightRumble, 1);

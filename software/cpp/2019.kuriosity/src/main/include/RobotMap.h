@@ -129,7 +129,7 @@ public:
     shared_ptr<DoubleSolenoid> solPanelAffectorTop;
     shared_ptr<DoubleSolenoid> solPanelAffectorBottom;
     shared_ptr<DoubleSolenoid> solPanelAffectorTopFinger;
-    shared_ptr<DoubleSolenoid> solPanelAffectorBottomFinger;
+    //shared_ptr<DoubleSolenoid> solPanelAffectorBottomFinger;
 };
 
 /**
