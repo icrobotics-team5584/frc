@@ -24,7 +24,7 @@ RobotMap::RobotMap(){
     subIntakeOutakeCargo.reset(new DigitalInput(dio_subIntakeOutakeCargo));
 
     // DriveBase Sensors
-    ahrsNavXDriveBase.reset(new AHRS(SerialPort::kMXP));
+    ahrsNavXDriveBase.reset(new AHRS(SPI::kMXP));
 
     clsDriveBaseBackRight.reset(new DigitalInput(dio_clsDriveBaseBackRight));
     clsDriveBaseBackLeft.reset(new DigitalInput(dio_clsDriveBaseBackLeft));
