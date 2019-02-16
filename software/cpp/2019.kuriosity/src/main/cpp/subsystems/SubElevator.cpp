@@ -108,7 +108,7 @@ void SubElevator::PIDDisable() {
 }
 
 void SubElevator::Stop() {
-	cout << "ELEVATOR stop" << endl;
+	//cout << "ELEVATOR stop" << endl;//cout for when the elevator hits a limit switch
 	targetPositionRotations = (_srxElevatorMaster->GetSelectedSensorPosition(0));
 	_srxElevatorMaster->Set(ControlMode::Position, targetPositionRotations);
 }
