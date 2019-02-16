@@ -45,7 +45,7 @@ RobotMap::RobotMap(){
     solPanelAffectorTop.reset(new DoubleSolenoid(pcm_lower, pcm_solPanelAffectorTopForward, pcm_solPanelAffectorTopReverse));
     solPanelAffectorBottom.reset(new DoubleSolenoid(pcm_lower, pcm_solPanelAffectorBottomForward, pcm_solPanelAffectorBottomReverse));
     solPanelAffectorTopFinger.reset(new DoubleSolenoid(pcm_lower, pcm_solPanelAffectorTopFingerForward, pcm_solPanelAffectorTopFingerReverse));
-    solPanelAffectorBottomFinger.reset(new DoubleSolenoid(pcm_lower, pcm_solPanelAffectorBottomFingerForward, pcm_solPanelAffectorBottomFingerReverse));
+    //solPanelAffectorBottomFinger.reset(new DoubleSolenoid(pcm_lower, pcm_solPanelAffectorBottomFingerForward, pcm_solPanelAffectorBottomFingerReverse));
 
     //Gimble
     srxGimble.reset(new WPI_TalonSRX(can_srxGimble));
