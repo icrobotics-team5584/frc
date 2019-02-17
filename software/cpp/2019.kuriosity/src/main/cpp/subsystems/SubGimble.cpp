@@ -57,6 +57,16 @@ void SubGimble::OverridePID(bool leftRight) { //true = left  ... rotate left
   gimbleController->SetSetpoint(target + humanOffset);
 }
 
+void SubGimble::Override(std::shared_ptr<Joystick> rightStick){
+  _axis4 = rightStick->GetRawAxis(4); 
+
+	if (_axis4 > 0.5) { 
+		OverridePID(false);
+	} else if (_axis4 < -0.5){ 
+    OverridePID(true);
+	}
+}
+
 void SubGimble::PIDGimbleTo(double angle) {
   
   potRange = PotRight - PotLeft;

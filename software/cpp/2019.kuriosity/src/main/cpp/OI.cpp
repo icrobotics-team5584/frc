@@ -47,10 +47,10 @@ OI::OI() {
   btnSeekRocketSide.reset(new AxisButton(controller.get(), rightAxisTrigger));
   btnSeekRocketSide->WhileHeld(new CmdSeekRocketSide());
 
-  btnIntakeOut.reset(new frc::JoystickButton(controller.get(), rightBtn));
+  btnIntakeOut.reset(new frc::JoystickButton(controller.get(), startBtn));
   btnIntakeOut->WhenPressed(new CmdCargoIntakeOut());
 
-  btnIntakeOut->WhenReleased(new CmdCargoIntakeIn());
+  //btnIntakeOut->WhenReleased(new CmdCargoIntakeIn());
 
   //Intake Outake
   btnCargoPodOut.reset(new frc::JoystickButton(controller.get(), leftBtn));
@@ -65,14 +65,14 @@ OI::OI() {
   btnDeployPanel.reset(new frc::JoystickButton(controller.get(), xBtn));
   btnDeployPanel->WhileHeld(new CmdOutputPanel(false));
 
-  btnDeployFingers.reset(new frc::JoystickButton(controller.get(), bBtn));
-  btnDeployFingers->WhileHeld(new CmdIntakePanel());
+  btnDeployFingers.reset(new frc::JoystickButton(controller.get(), rightBtn));
+  btnDeployFingers->WhileHeld(new CmdIntakeOutakeIn());
 
   //Gimble
-  btnGimbleRotateLeft.reset(new frc::JoystickButton(controller.get(), backBtn));
-  btnGimbleRotateLeft->WhileHeld(new CmdGimbleRotateLeft());
-  btnGimbleRotateRight.reset(new frc::JoystickButton(controller.get(), startBtn));
-  btnGimbleRotateRight->WhileHeld(new CmdGimbleRotateRight());
+  //btnGimbleRotateLeft.reset(new frc::JoystickButton(controller.get(), backBtn));
+  //btnGimbleRotateLeft->WhileHeld(new CmdGimbleRotateLeft());
+  //btnGimbleRotateRight.reset(new frc::JoystickButton(controller.get(), startBtn));
+  //btnGimbleRotateRight->WhileHeld(new CmdGimbleRotateRight());
 
   //Gimble PID Controls 
   povBtnGimblePidLeft.reset(new ButtonPOV(controller.get(), 270));
