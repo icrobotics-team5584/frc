@@ -53,7 +53,8 @@ RobotMap::RobotMap(){
     subGimbleLimitRight.reset(new DigitalInput(dio_subGimbleLimitRight));
     subGimblePot.reset(new AnalogInput(ana_potGimble));
 
-    
+    //climber
+    srxClimber.reset(new WPI_TalonSRX(can_srxClimber));
     
     
 }

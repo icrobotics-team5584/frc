@@ -6,13 +6,23 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/SubClimber.h"
+#include "Robot.h"
 
 SubClimber::SubClimber() : Subsystem("ExampleSubsystem") {}
 
 void SubClimber::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
+  _srxClimber = Robot::_robotMap->srxClimber;
 }
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
+
+
+void SubClimber::Go(){
+  _srxClimber->Set(0.25);
+}
+void SubClimber::Stop(){
+  _srxClimber->Set(0.0);
+}

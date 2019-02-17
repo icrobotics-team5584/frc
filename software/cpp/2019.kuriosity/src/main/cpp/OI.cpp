@@ -31,7 +31,7 @@
 #include "commands/CmdSeekRocketSide.h"
 #include "commands/CmdCargoIntakeOut.h"
 #include "commands/CmdCargoIntakeIn.h"
-
+#include "commands/CmdClimberDeploy.h"
 #include "commands/CmdGimblePIDLeftStop.h"
 #include "commands/CmdGimblePIDRightStop.h"
 OI::OI() {
@@ -95,6 +95,9 @@ OI::OI() {
   lmtPIDLeft->WhenPressed(new CmdGimblePIDLeftStop());
   lmtPIDRight.reset(new LimitButton(Robot::_robotMap->subGimbleLimitRight, false));
   lmtPIDRight->WhenPressed(new CmdGimblePIDRightStop());
+
+  btnClimber.reset(new frc::JoystickButton(controller.get(), backBtn));
+  btnClimber->WhileHeld(new CmdClimberDeploy());
 
   //Elevator
   //btnUpTest.reset(new frc::JoystickButton(controller.get(), yBtn));

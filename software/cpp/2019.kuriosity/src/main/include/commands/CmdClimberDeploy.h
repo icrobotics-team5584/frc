@@ -7,21 +7,14 @@
 
 #pragma once
 
-#include <frc/WPILib.h>
-#include <frc/commands/Subsystem.h>
-#include <ctre/Phoenix.h>
-
-using namespace std;
-using namespace frc;
-
-class SubClimber : public frc::Subsystem {
- private:
-  // It's desirable that everything possible under private except
-  // for methods that implement subsystem capabilities
-  shared_ptr<WPI_TalonSRX> _srxClimber;
+#include <frc/commands/Command.h>
+#include "Robot.h"
+class CmdClimberDeploy : public frc::Command {
  public:
-  SubClimber();
-  void InitDefaultCommand() override;
-  void Go();
-  void Stop();
+  CmdClimberDeploy();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
 };

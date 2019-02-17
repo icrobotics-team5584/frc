@@ -132,7 +132,7 @@ public:
     shared_ptr<DoubleSolenoid> solPanelAffectorTopFinger;
     //shared_ptr<DoubleSolenoid> solPanelAffectorBottomFinger;
     //climber
-    
+    shared_ptr<WPI_TalonSRX> srxClimber;
 };
 
 /**

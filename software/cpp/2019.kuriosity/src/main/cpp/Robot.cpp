@@ -23,7 +23,7 @@ unique_ptr<SubRollerIntake> Robot::subRollerIntake;
 unique_ptr<SubRollerIntakeBar> Robot::subRollerIntakeBar;
 unique_ptr<SubGimble> Robot::subGimble;
 unique_ptr<SubGimbleLimits> Robot::subGimbleLimits;
-
+unique_ptr<SubClimber> Robot::subClimber;
 void Robot::RobotInit() {
   _robotMap.reset(new RobotMap);
 
@@ -36,6 +36,7 @@ void Robot::RobotInit() {
     subRollerIntakeBar.reset(new SubRollerIntakeBar());
     subGimble.reset(new SubGimble());
     subGimbleLimits.reset(new SubGimbleLimits());
+    subClimber.reset(new SubClimber());
 
     // create image processing thread and pass in reference to each variable
     // that we need the thread to provide back to the main robot thread
