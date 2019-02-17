@@ -19,5 +19,5 @@ class CmdMoveRollerIntakeBar : public frc::Command {
   void End() override;
   void Interrupted() override;
  private:
-  RollerPosition _rollerPosition;
+  RollerPosition _rollerPosition = IN;
 };

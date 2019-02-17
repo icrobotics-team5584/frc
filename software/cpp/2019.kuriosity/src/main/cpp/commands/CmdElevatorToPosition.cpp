@@ -15,13 +15,13 @@ CmdElevatorToPosition::CmdElevatorToPosition(bool bottom1, bool goTo, int setTo)
 
 // Called just before this Command runs the first time
 void CmdElevatorToPosition::Initialize() {
-  cout << "CMDELEVATOR INIT" << endl;
+  //cout << "CMDELEVATOR INIT" << endl;// comment for when 
   _height = Robot::subElevator->GetHeight();
 
   if(bottom == true){
       Robot::subElevator->SetHeight(BOTTOM_HATCH);
       //timeRound = 1;
-      cout << "000000000000000" << endl;
+      //cout << "000000000000000" << endl; //bottom hatch
   }
   if (bottom == false)
   {
@@ -74,14 +74,14 @@ void CmdElevatorToPosition::Initialize() {
          Robot::subElevator->SetHeight(BOTTOM_HATCH);
        break; 
      }
-     cout << "cccccaaaaasssssseeeeeeee" << endl;
-     timeRound++;
-
-     if(timeRound > 3){
-       timeRound = 0;
-       cout << "timeROUND >>>>>>>>>>>>>>>>> 3 " << endl;
-     }
-
+     //cout << "cccccaaaaasssssseeeeeeee" << endl;
+     //timeRound++;
+//
+     //if(timeRound > 3){
+     //  timeRound = 0;
+     //  cout << "timeROUND >>>>>>>>>>>>>>>>> 3 " << endl;
+     //}
+//
     
 
   }

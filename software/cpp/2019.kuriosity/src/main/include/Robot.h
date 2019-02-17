@@ -26,6 +26,11 @@
 #include "subsystems/ElevatorCmdChooser.h"
 #include "subsystems/SubGimbleLimits.h"
 
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgcodecs/imgcodecs.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+
 #include <iostream>
 
 using namespace std;
@@ -59,8 +64,13 @@ class Robot : public frc::TimedRobot {
   void TestPeriodic() override;
 
  private:
-  cs::VideoSink server;
-  cs::UsbCamera cam;
+
+  // vision thread inputs (vti_), outputs (vt0_) and methods
+  int vti_mode;
+  bool vti_debug;
+  bool vto_valid;
+  double vto_error;
+  static void VisionThread( int &, bool &, bool &, double & );
 
   // Have it null by default so that if testing teleop it
   // doesn't have undefined behavior and potentially crash.

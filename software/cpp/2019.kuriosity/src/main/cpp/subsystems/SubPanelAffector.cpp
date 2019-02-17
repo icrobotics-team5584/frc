@@ -15,7 +15,7 @@ SubPanelAffector::SubPanelAffector() : Subsystem("SubPanelAffector") {
   solTop = Robot::_robotMap->solPanelAffectorTop;
   solBottom = Robot::_robotMap->solPanelAffectorBottom;
   solTopFinger = Robot::_robotMap->solPanelAffectorTopFinger;
-  solBottomFinger = Robot::_robotMap->solPanelAffectorBottomFinger;
+  //solBottomFinger = Robot::_robotMap->solPanelAffectorBottomFinger;
   //_controller = Robot::_oi->controller; <-- this crashes the rio
   // SmartDashboard::PutData("Pneumatic Test", new CmdOutputPanel(true));
 
@@ -39,12 +39,12 @@ void SubPanelAffector::Deploy() {
 
 void SubPanelAffector::DeployFingers() {
   solTopFinger->Set(DoubleSolenoid::kForward);
-  solBottomFinger->Set(DoubleSolenoid::kForward);
+  //solBottomFinger->Set(DoubleSolenoid::kForward);
 }
 
 void SubPanelAffector::RetractFingers() {
   solTopFinger->Set(DoubleSolenoid::kReverse);
-  solBottomFinger->Set(DoubleSolenoid::kReverse);
+  //solBottomFinger->Set(DoubleSolenoid::kReverse);
 }
 void SubPanelAffector::StartRumble() {
   _controller->SetRumble(GenericHID::kRightRumble, 1);

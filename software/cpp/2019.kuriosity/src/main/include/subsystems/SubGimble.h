@@ -33,6 +33,7 @@ class SubGimble : public frc::Subsystem {
   int potRange = 0;
 	int lc = 0;
   int totalAngle = 180;
+  double _axis4 = 0;
   //PID 
   double kP;
   double kI;
@@ -64,4 +65,5 @@ class SubGimble : public frc::Subsystem {
   void OverrideMotorRight();
   void MotorStop();
   void CustomPID(double PIDIntput);
+  void Override(std::shared_ptr<Joystick> rightStick);
 };

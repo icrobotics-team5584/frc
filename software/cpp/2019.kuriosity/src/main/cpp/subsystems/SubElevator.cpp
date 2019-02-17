@@ -39,10 +39,10 @@ void SubElevator::Periodic() {
 	//PIDD = SmartDashboard::GetNumber("Elevator PIDD", 0.0);
 	targetPositionRotations = SmartDashboard::GetNumber("Elevator PID target", 0.0);
 
-	_srxElevatorMaster->Config_kF(kPIDLoopIdx, 0.0, kTimeoutMs);
-	_srxElevatorMaster->Config_kP(kPIDLoopIdx, PIDP, kTimeoutMs);
-	_srxElevatorMaster->Config_kI(kPIDLoopIdx, PIDI, kTimeoutMs);
-	_srxElevatorMaster->Config_kD(kPIDLoopIdx, PIDD, kTimeoutMs);
+	//_srxElevatorMaster->Config_kF(kPIDLoopIdx, 0.0, kTimeoutMs);
+	//_srxElevatorMaster->Config_kP(kPIDLoopIdx, PIDP, kTimeoutMs);
+	//_srxElevatorMaster->Config_kI(kPIDLoopIdx, PIDI, kTimeoutMs);
+	//_srxElevatorMaster->Config_kD(kPIDLoopIdx, PIDD, kTimeoutMs);
 }
 
 void SubElevator::InitDefaultCommand() {
@@ -81,7 +81,7 @@ void SubElevator::SetHeight(Heights currentHeight){
 			ElevatorToPos(4.5);
 		break;
 		case TOP_CARGO:
-			ElevatorToPos(4.8);
+			ElevatorToPos(4.9);
 		break;
 	}
 }
@@ -108,7 +108,7 @@ void SubElevator::PIDDisable() {
 }
 
 void SubElevator::Stop() {
-	cout << "ELEVATOR stop" << endl;
+	//cout << "ELEVATOR stop" << endl;//cout for when the elevator hits a limit switch
 	targetPositionRotations = (_srxElevatorMaster->GetSelectedSensorPosition(0));
 	_srxElevatorMaster->Set(ControlMode::Position, targetPositionRotations);
 }

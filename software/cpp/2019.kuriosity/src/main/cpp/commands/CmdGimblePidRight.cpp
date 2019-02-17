@@ -8,7 +8,7 @@ CmdGimblePidRight::CmdGimblePidRight() {
 // Called just before this Command runs the first time
 void CmdGimblePidRight::Initialize() {
   Robot::subGimble->PIDGimbleToRight();
-  std::cout << "GIMBLE PID RIGHT" << std::endl;
+  //std::cout << "GIMBLE PID RIGHT" << std::endl;
 }
 
 // Called repeatedly when this Command is scheduled to run

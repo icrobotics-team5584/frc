@@ -19,7 +19,7 @@ void CmdGimblePIDLeftStop::Initialize() {
   if(Robot::subGimble->GetTarget() <=  Robot::subGimble->POTPosition())
   {
     Robot::subGimble->stop(1);
-    std::cout << "GIMBLE PID LEFT STOP" << std::endl;
+    //std::cout << "GIMBLE PID LEFT STOP" << std::endl;
   }else{}
 }
 

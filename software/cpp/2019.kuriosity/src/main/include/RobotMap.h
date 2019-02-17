@@ -43,7 +43,7 @@ enum DIO {
     dio_subGimbleLimitRight = 7,
     dio_subElevatorLimitBottom = 8,
     dio_subElevatorLimitTop = 9,
-    dio_subIntakeOutakeCargo = 4444
+    dio_subIntakeOutakeCargo = 10
 };
 
 enum Analog {
@@ -59,8 +59,8 @@ enum PCM_0{
     pcm_solPanelAffectorTopFingerForward = 1,
     pcm_solPanelAffectorTopFingerReverse = 0,
 
-    pcm_solPanelAffectorBottomFingerForward = 9999,
-    pcm_solPanelAffectorBottomFingerReverse = 9999,
+    //pcm_solPanelAffectorBottomFingerForward = 9999,
+    //pcm_solPanelAffectorBottomFingerReverse = 9999,
     
     pcm_solPanelAffectorTopForward = 7,
     pcm_solPanelAffectorTopReverse = 6,
@@ -129,7 +129,7 @@ public:
     shared_ptr<DoubleSolenoid> solPanelAffectorTop;
     shared_ptr<DoubleSolenoid> solPanelAffectorBottom;
     shared_ptr<DoubleSolenoid> solPanelAffectorTopFinger;
-    shared_ptr<DoubleSolenoid> solPanelAffectorBottomFinger;
+    //shared_ptr<DoubleSolenoid> solPanelAffectorBottomFinger;
 };
 
 /**

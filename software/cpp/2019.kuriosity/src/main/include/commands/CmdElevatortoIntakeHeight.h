@@ -20,6 +20,6 @@ class CmdElevatortoIntakeHeight : public frc::Command {
  private:
   double elevatorPos;
   double tolerance;
-  double desiredRotations = 2;
+  double desiredRotations = 2.2;
   double error;
 };

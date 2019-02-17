@@ -11,8 +11,8 @@
 
 CmdOverrideTurret::CmdOverrideTurret() {
   // Use Requires() here to declare subsystem dependencies
-  Requires(Robot::subElevator.get());
-//  Requires(Robot::SubGimble.get());
+//  Requires(Robot::subElevator.get());
+  Requires(Robot::subGimble.get());
 }
 
 // Called just before this Command runs the first time
@@ -20,7 +20,8 @@ void CmdOverrideTurret::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void CmdOverrideTurret::Execute() {
-  	Robot::subElevator->Override(Robot::_oi->getJoystick(0));
+  	Robot::subGimble->Override(Robot::_oi->getJoystick(0));
+
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -28,7 +29,7 @@ bool CmdOverrideTurret::IsFinished() { return false; }
 
 // Called once after isFinished returns true
 void CmdOverrideTurret::End() {
-  Robot::subElevator->Stop();
+  //Robot::subElevator->Stop();
 }
 
 // Called when another command which requires one or more of the same
