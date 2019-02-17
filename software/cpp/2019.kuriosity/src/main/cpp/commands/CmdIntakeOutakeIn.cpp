@@ -33,9 +33,9 @@ bool CmdIntakeOutakeIn::IsFinished() {
 
 // Called once after isFinished returns true
 void CmdIntakeOutakeIn::End() {
-  // Robot::subIntakeOutake->Stop();
-  // Robot::subRollerIntake->Stop();
-  // Robot::subPanelAffector->RetractFingers();
+   Robot::subIntakeOutake->Stop();
+   //Robot::subRollerIntake->Stop();
+   Robot::subPanelAffector->RetractFingers();
 }
 
 // Called when another command which requires one or more of the same
