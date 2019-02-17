@@ -25,6 +25,7 @@ enum Can {
     can_srxElevatorSlave = 8,
     can_srxRollerIntake = 9,
     can_srxRollerIntakeBar = 10,
+    can_srxClimber = 11
 };
 
 enum PWM {
@@ -130,6 +131,8 @@ public:
     shared_ptr<DoubleSolenoid> solPanelAffectorBottom;
     shared_ptr<DoubleSolenoid> solPanelAffectorTopFinger;
     //shared_ptr<DoubleSolenoid> solPanelAffectorBottomFinger;
+    //climber
+    
 };
 
 /**
