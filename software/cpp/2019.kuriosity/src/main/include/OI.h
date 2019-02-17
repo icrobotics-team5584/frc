@@ -59,7 +59,7 @@ private:
   unique_ptr<AxisButton> btnDriveBaseSlow;
   unique_ptr<frc::JoystickButton> btnElevatorToPos;
   unique_ptr<frc::JoystickButton> btnElevatorToBottom;
-
+  unique_ptr<frc::JoystickButton> btnClimber;
 
   unique_ptr<frc::JoystickButton> btnOverride;
 

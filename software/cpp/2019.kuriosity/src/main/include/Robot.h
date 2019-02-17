@@ -26,6 +26,8 @@
 #include "subsystems/ElevatorCmdChooser.h"
 #include "subsystems/SubGimbleLimits.h"
 
+#include "subsystems/SubClimber.h"
+
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgcodecs/imgcodecs.hpp>
@@ -46,6 +48,7 @@ class Robot : public frc::TimedRobot {
   static unique_ptr<SubPanelAffector> subPanelAffector;
   static unique_ptr<SubRollerIntake> subRollerIntake;
   static unique_ptr<SubRollerIntakeBar> subRollerIntakeBar;
+  static unique_ptr<SubClimber> subClimber;
   static unique_ptr<SubGimble> subGimble;
   static unique_ptr<SubGimbleLimits> subGimbleLimits;
   static unique_ptr<ElevatorCmdChooser> elevatorCmdChooser;
