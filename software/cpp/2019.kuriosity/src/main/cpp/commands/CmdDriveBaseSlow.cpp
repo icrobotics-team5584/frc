@@ -21,7 +21,7 @@ void CmdDriveBaseSlow::Execute() {
     axis = Robot::_oi->controllerReverse->GetRawAxis(leftAxisTrigger);
 
   }
-  SmartDashboard::PutNumber("axis test", axis);
+  //SmartDashboard::PutNumber("axis test", axis);
   Robot::subDriveBase->drive(y/(axis + 1),x/(axis + 1));
 }
 

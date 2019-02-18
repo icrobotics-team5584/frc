@@ -48,11 +48,11 @@ void CmdFollowPath::Initialize() {
 
   // *trajectory = (Segment*)malloc(length * sizeof(Segment));
   seg = new Segment[length];
-  SmartDashboard::PutNumber("Before generation time", timer.Get());
+  //SmartDashboard::PutNumber("Before generation time", timer.Get());
   // Generate the trajectory
   int result = pathfinder_generate(&candidate, seg);
 
-  SmartDashboard::PutNumber("Time taken to generate path", timer.Get());
+  //SmartDashboard::PutNumber("Time taken to generate path", timer.Get());
   leftTrajectory = new Segment[length];
   rightTrajectory = new Segment[length];
 
@@ -92,8 +92,8 @@ void CmdFollowPath::Initialize() {
   rightConfig = {rightEncoderPosition, 4096, wheel_circumference,
                 0.2, 0.0, 0.0, 0.01/ max_velocity, 0.0};
   timer.Stop();
-  SmartDashboard::PutBoolean("Ended", false);
-  SmartDashboard::PutNumber("Time taken to run everything", timer.Get());
+  //SmartDashboard::PutBoolean("Ended", false);
+  //SmartDashboard::PutNumber("Time taken to run everything", timer.Get());
   Robot::subDriveBase->resetYaw();
   Robot::subDriveBase->zeroEncoders();
 }
@@ -105,7 +105,7 @@ void CmdFollowPath::Execute() {
   // // Arg 3: The Trajectory generated from `pathfinder_modify_tank`
   // // Arg 4: The Length of the Trajectory (length used in Segment seg[length];)
   // // Arg 5: The current value of your encoder
-  SmartDashboard::PutBoolean("start of exe", true);
+  //SmartDashboard::PutBoolean("start of exe", true);
   double leftEncoderValue = Robot::subDriveBase->getRawLeftEncoder(); 
   double rightEncoderValue = Robot::subDriveBase->getRawRightEncoder(); 
   double l = pathfinder_follow_encoder(leftConfig, leftFollower, leftTrajectory, length, leftEncoderValue);
@@ -120,7 +120,7 @@ void CmdFollowPath::Execute() {
 
   double leftPower = l + turn;
   double rightPower = r - turn;
-  SmartDashboard::PutNumber("Left Power", leftPower);
+  //SmartDashboard::PutNumber("Left Power", leftPower);
   //Robot::subDriveBase->tankDrive(leftPower, rightPower);
 }
 
@@ -131,7 +131,7 @@ bool CmdFollowPath::IsFinished() {
 
 // Called once after isFinished returns true
 void CmdFollowPath::End() {
-  SmartDashboard::PutBoolean("Ended", true);
+  //SmartDashboard::PutBoolean("Ended", true);
 }
 
 // Called when another command which requires one or more of the same

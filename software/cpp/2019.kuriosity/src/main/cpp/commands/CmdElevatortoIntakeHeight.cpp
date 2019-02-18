@@ -27,7 +27,7 @@ bool CmdElevatortoIntakeHeight::IsFinished() {
   elevatorPos = Robot::subElevator->GetEncoderPosition();
   tolerance = 2000;
   error = desiredRotations * 4096 - std::abs(elevatorPos);
-  frc::SmartDashboard::PutNumber("elevator error", error);
+  //frc::SmartDashboard::PutNumber("elevator error", error);
   if ((error < tolerance) && (error > -tolerance)) {
     return true;
   }
@@ -36,7 +36,7 @@ bool CmdElevatortoIntakeHeight::IsFinished() {
 
 // Called once after isFinished returns true
 void CmdElevatortoIntakeHeight::End() {
-  frc::SmartDashboard::PutBoolean("Finished running elevator intake", true);
+  //frc::SmartDashboard::PutBoolean("Finished running elevator intake", true);
 }
 
 // Called when another command which requires one or more of the same

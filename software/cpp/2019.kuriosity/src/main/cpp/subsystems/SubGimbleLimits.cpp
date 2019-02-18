@@ -14,8 +14,8 @@ void SubGimbleLimits::Periodic(){
   outCount++;
   if(outCount > 10){
     
-    SmartDashboard::PutBoolean("GIMBLE Left Limit", GetLeftLimit());
-    SmartDashboard::PutBoolean("GIMBLE Right Limit", GetRightLimit());
+    //SmartDashboard::PutBoolean("GIMBLE Left Limit", GetLeftLimit());
+    //SmartDashboard::PutBoolean("GIMBLE Right Limit", GetRightLimit());
     outCount = 0;
   }
 }

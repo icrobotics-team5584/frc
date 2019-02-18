@@ -35,7 +35,7 @@ void CmdSeekPath::Execute() {
   //pathFollower->followPath();
   double leftVelocity = 1.5 / scaleFactor / 10;
   double rightVelocity = -1.5 / scaleFactor / 10;
-  SmartDashboard::PutNumber("PID velocity", leftVelocity);
+  //SmartDashboard::PutNumber("PID velocity", leftVelocity);
   Robot::subDriveBase->tankDriveVelocity(leftVelocity, rightVelocity);
 }
 
@@ -47,7 +47,7 @@ bool CmdSeekPath::IsFinished() {
 
 // Called once after isFinished returns true
 void CmdSeekPath::End() {
-  SmartDashboard::PutBoolean("Running CmdSeekpath", false);
+  //SmartDashboard::PutBoolean("Running CmdSeekpath", false);
   Robot::subDriveBase->tankDriveVelocity(0.0, 0.0);
 }
 

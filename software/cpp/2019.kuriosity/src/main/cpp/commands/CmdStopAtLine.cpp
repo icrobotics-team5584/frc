@@ -29,19 +29,19 @@ void CmdStopAtLine::Execute() {
   currentAngle = Robot::subDriveBase->getYaw();
   desiredAngle = initialAngle + Robot::_oi->controller->GetX() * 5;
   if (!Robot::subDriveBase->getColourSensor(_rightColourSensor) or !Robot::subDriveBase->getColourSensor(_leftColourSensor)) {
-    frc::SmartDashboard::PutNumber("speed", _speed);
+    //frc::SmartDashboard::PutNumber("speed", _speed);
     Robot::subDriveBase->drive(_speed, kP * (desiredAngle - currentAngle));
   } else {
     Robot::subDriveBase->drive(0, 0);
     if(Robot::subDriveBase->getColourSensor(_rightColourSensor)) {
       //Robot::subGimble->right();
-      frc::SmartDashboard::PutBoolean("right", true);
-      frc::SmartDashboard::PutBoolean("left", false);
+      //frc::SmartDashboard::PutBoolean("right", true);
+      //frc::SmartDashboard::PutBoolean("left", false);
 
     }
     else {
-      frc::SmartDashboard::PutBoolean("left", true);
-      frc::SmartDashboard::PutBoolean("right", false);
+      //frc::SmartDashboard::PutBoolean("left", true);
+      //frc::SmartDashboard::PutBoolean("right", false);
       //Robot::subGimble->left();
     }
   }
@@ -55,7 +55,7 @@ bool CmdStopAtLine::IsFinished() {
 // Called once after isFinished returns true
 void CmdStopAtLine::End() {
   Robot::subDriveBase->drive(0, 0);
-  frc::SmartDashboard::PutNumber("speed", 0);
+  //frc::SmartDashboard::PutNumber("speed", 0);
 }
 
 // Called when another command which requires one or more of the same
