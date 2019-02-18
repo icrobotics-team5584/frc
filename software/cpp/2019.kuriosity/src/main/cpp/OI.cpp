@@ -70,7 +70,7 @@ OI::OI() {
   btnDeployPanel->WhileHeld(new CmdOutputPanel(false));
 
   btnDeployFingers.reset(new frc::JoystickButton(controller.get(), bBtn));
-  btnDeployFingers->WhileHeld(new CmdIntakeOutakeIn());
+  btnDeployFingers->WhileHeld(new CmdIntakePanel());
 
   //Gimble
   //btnGimbleRotateLeft.reset(new frc::JoystickButton(controller.get(), backBtn));
