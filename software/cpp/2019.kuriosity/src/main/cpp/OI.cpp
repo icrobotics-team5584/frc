@@ -43,7 +43,10 @@ OI::OI() {
 
   //Drive Base
   btnDriveBaseSlow.reset(new AxisButton(controller.get(), leftAxisTrigger));
-  btnDriveBaseSlow->WhileHeld(new CmdDriveBaseSlow());
+  btnDriveBaseSlow->WhileHeld(new CmdDriveBaseSlow(false));
+
+  btnDriveBaseSlowControllerReverse.reset(new AxisButton(controllerReverse.get(), leftAxisTrigger));
+  btnDriveBaseSlowControllerReverse->WhileHeld(new CmdDriveBaseSlow(true));
 
   btnSeekRocketSide.reset(new AxisButton(controller.get(), rightAxisTrigger));
   btnSeekRocketSide->WhileHeld(new CmdSeekRocketSide());
@@ -67,7 +70,7 @@ OI::OI() {
   btnDeployPanel->WhileHeld(new CmdOutputPanel(false));
 
   btnDeployFingers.reset(new frc::JoystickButton(controller.get(), bBtn));
-  btnDeployFingers->WhileHeld(new CmdIntakeOutakeIn());
+  btnDeployFingers->WhileHeld(new CmdIntakePanel());
 
   //Gimble
   //btnGimbleRotateLeft.reset(new frc::JoystickButton(controller.get(), backBtn));

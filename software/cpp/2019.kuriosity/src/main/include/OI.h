@@ -34,6 +34,7 @@ class OI {
  public:
   shared_ptr<frc::Joystick> controller;
   shared_ptr<frc::Joystick> controllerReverse;
+
   shared_ptr<frc::JoystickButton> btnCargoPodOut;
   shared_ptr<frc::JoystickButton> btnCargoPodIn;
   unique_ptr<AxisButton> btnStopAtLine;
@@ -57,6 +58,7 @@ private:
   unique_ptr<ButtonPOV> povBtnGimblePidRight;
   //unique_ptr<frc::JoystickButton> btnSeekRocketSide;
   unique_ptr<AxisButton> btnDriveBaseSlow;
+  unique_ptr<AxisButton> btnDriveBaseSlowControllerReverse;
   unique_ptr<frc::JoystickButton> btnElevatorToPos;
   unique_ptr<frc::JoystickButton> btnElevatorToBottom;
   unique_ptr<frc::JoystickButton> btnClimber;
