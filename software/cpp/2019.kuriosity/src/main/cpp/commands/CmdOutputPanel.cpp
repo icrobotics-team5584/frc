@@ -21,9 +21,9 @@ CmdOutputPanel::CmdOutputPanel(bool autoHold) {
 void CmdOutputPanel::Initialize() {
   notDeployed = true;
   if (_autoHold == true){
-    SmartDashboard::PutNumber("Test", SmartDashboard::GetNumber("Pneumatic_hold", 0.0));
+    //SmartDashboard::PutNumber("Test", SmartDashboard::GetNumber("Pneumatic_hold", 0.0));
     SetTimeout(SmartDashboard::GetNumber("Pneumatic_hold", 0.3));
-    SmartDashboard::PutNumber("Pneumatic_hold", timeoutTime);
+    //SmartDashboard::PutNumber("Pneumatic_hold", timeoutTime);
   }
 
   Robot::subPanelAffector->DeployFingers();

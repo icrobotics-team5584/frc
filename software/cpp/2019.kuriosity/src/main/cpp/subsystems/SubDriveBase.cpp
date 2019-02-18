@@ -54,8 +54,8 @@ void SubDriveBase::InitDefaultCommand() {
 }
 
 void SubDriveBase::drive(double speed, double rotation) {
-  frc::SmartDashboard::PutNumber("drive(speed)", -speed);
-  frc::SmartDashboard::PutNumber("drive(rotation)", rotation);
+  //frc::SmartDashboard::PutNumber("drive(speed)", -speed);
+  //frc::SmartDashboard::PutNumber("drive(rotation)", rotation);
   difDrive->ArcadeDrive(-speed, rotation);
 }
 
@@ -75,12 +75,12 @@ void SubDriveBase::tankDriveVelocity(double leftVelocity, double rightVelocity) 
 }
 
 double SubDriveBase::getRawLeftEncoder() {
-  SmartDashboard::PutNumber("Left Encoder", _srxFrontLeft->GetSelectedSensorPosition());
+  //SmartDashboard::PutNumber("Left Encoder", _srxFrontLeft->GetSelectedSensorPosition());
   return _srxFrontLeft->GetSelectedSensorPosition(0);
 }
 
 double SubDriveBase::getRawRightEncoder() {
-  SmartDashboard::PutNumber("Right Encoder", _srxFrontRight->GetSelectedSensorPosition());
+  //SmartDashboard::PutNumber("Right Encoder", _srxFrontRight->GetSelectedSensorPosition());
   return _srxFrontRight->GetSelectedSensorPosition(0);
 }
 void SubDriveBase::disablePID() {
@@ -180,7 +180,7 @@ bool SubDriveBase::clsBackRightDetected() {
 }
 
 bool SubDriveBase::clsMidLeftDetected() {
-  SmartDashboard::PutNumber("midLeftHasReachedLine", not(_clsMidLeft->Get()));
+  //SmartDashboard::PutNumber("midLeftHasReachedLine", not(_clsMidLeft->Get()));
   return not(_clsMidLeft->Get());
 }
 
@@ -280,7 +280,7 @@ Segment* SubDriveBase::generatePath(){
 
   // Array of Segments (the trajectory points) to store the trajectory in
   Segment * seg = new Segment[pathLength];
-  SmartDashboard::PutNumber("Before generation time", timer.Get());
+  //SmartDashboard::PutNumber("Before generation time", timer.Get());
   // Generate the trajectory
   int result = pathfinder_generate(&candidate, seg);
   std::ofstream file("/home/lvuser/output.txt");
@@ -297,7 +297,7 @@ Segment* SubDriveBase::generatePath(){
     // printf("Jerk (Acceleration per Second): %f\n", s.jerk);
     // printf("Heading (radians): %f\n", s.heading);
   }
-  SmartDashboard::PutNumber("Time taken to generate path", timer.Get());
+  //SmartDashboard::PutNumber("Time taken to generate path", timer.Get());
   timer.Stop();
   return seg;
 }

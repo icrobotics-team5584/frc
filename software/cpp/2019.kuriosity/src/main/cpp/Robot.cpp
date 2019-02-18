@@ -63,14 +63,14 @@ void Robot::RobotPeriodic() {
     //SmartDashboard::PutBoolean("left sensor", subDriveBase->isLeftClsOnLine());
     //SmartDashboard::PutBoolean("right sensor", subDriveBase->isRightClsOnLine());
 
-    SmartDashboard::PutBoolean("2222222 GIMBLE LIMIT LEFT", subGimbleLimits->GetLeftLimit());
-    SmartDashboard::PutBoolean("2222222 GIMBLE LIMIT RIGHT", subGimbleLimits->GetRightLimit());
+    //SmartDashboard::PutBoolean("2222222 GIMBLE LIMIT LEFT", subGimbleLimits->GetLeftLimit());
+    //SmartDashboard::PutBoolean("2222222 GIMBLE LIMIT RIGHT", subGimbleLimits->GetRightLimit());
     
-    SmartDashboard::PutNumber("Yaw", subDriveBase->getYaw());
-    SmartDashboard::PutNumber("Elevator encoder", subElevator->GetEncoderPosition());
-    SmartDashboard::PutBoolean("On Line", subDriveBase->clsBackRightDetected());
-    SmartDashboard::PutNumber("Roller bar position", subRollerIntakeBar->GetAngle());
-    SmartDashboard::PutNumber("Elevator pos", subElevator->GetEncoderPosition());
+    //SmartDashboard::PutNumber("Yaw", subDriveBase->getYaw());
+    //SmartDashboard::PutNumber("Elevator encoder", subElevator->GetEncoderPosition());
+    //SmartDashboard::PutBoolean("On Line", subDriveBase->clsBackRightDetected());
+    //SmartDashboard::PutNumber("Roller bar position", subRollerIntakeBar->GetAngle());
+    //SmartDashboard::PutNumber("Elevator pos", subElevator->GetEncoderPosition());
 }
 
 /**
@@ -96,7 +96,7 @@ void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 void Robot::AutonomousInit() {
 
 
-    // std::string autoSelected = frc::SmartDashboard::GetString(
+    // std::string autoSelected = //frc::SmartDashboard::GetString(
     //     "Auto Selector", "Default");
     // if (autoSelected == "My Auto") {
     //   m_autonomousCommand = &m_myAuto;

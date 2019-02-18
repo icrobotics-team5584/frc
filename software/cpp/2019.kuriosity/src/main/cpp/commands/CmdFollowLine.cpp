@@ -23,7 +23,7 @@ void CmdFollowLine::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdFollowLine::Execute() {
-  SmartDashboard::PutNumber("angle", angle);
+  //SmartDashboard::PutNumber("angle", angle);
   Robot::subDriveBase->drive(drivePower, angle);
   //if both sensors are seeing the line, drive foward because we know that the front of the robot is parallel with the loading station
   if (Robot::subDriveBase->clsBackRightDetected() && Robot::subDriveBase->clsBackLeftDetected()) {

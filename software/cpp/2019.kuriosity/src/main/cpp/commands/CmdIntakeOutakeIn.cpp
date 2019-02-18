@@ -17,7 +17,7 @@ CmdIntakeOutakeIn::CmdIntakeOutakeIn() {
 
 // Called just before this Command runs the first time
 void CmdIntakeOutakeIn::Initialize() {
-  frc::SmartDashboard::PutBoolean("running intake", true);
+  //frc::SmartDashboard::PutBoolean("running intake", true);
   Robot::subIntakeOutake->Intake();
   Robot::subRollerIntake->RollerIn();
   Robot::subPanelAffector->DeployFingers(); // Turns out this makes it easier for the ball to enter

@@ -15,20 +15,20 @@ SubGimble::SubGimble() : Subsystem("ExampleSubsystem") {
 	//gimbleController->SetContinuous(false);
 	//gimbleController->Enable();  //This must be set to true in future
 	//frc::SmartDashboard::PutData("Arm PID Controls", gimbleController);  
-  SmartDashboard::PutNumber("Gimble PIDP", PIDp);
-  SmartDashboard::PutNumber("Gimble PIDI", PIDi);
-  SmartDashboard::PutNumber("Gimble PIDD", PIDd);
-  SmartDashboard::PutNumber("TARGET Value", target);
-  SmartDashboard::PutBoolean("Test Mode", testMode);
+  //SmartDashboard::PutNumber("Gimble PIDP", PIDp);
+  //SmartDashboard::PutNumber("Gimble PIDI", PIDi);
+  //SmartDashboard::PutNumber("Gimble PIDD", PIDd);
+  //SmartDashboard::PutNumber("TARGET Value", target);
+  //SmartDashboard::PutBoolean("Test Mode", testMode);
 }
 
 void SubGimble::Periodic() {
   lc++;
 	if( lc > 10){
     //SmartDashboard::PutNumber("ARM PID OUTPUT", gimbleController->Get());
-	  SmartDashboard::PutNumber("POT Value Average", _anaGimblePot->GetAverageValue());
+	  //SmartDashboard::PutNumber("POT Value Average", _anaGimblePot->GetAverageValue());
 	  //SmartDashboard::PutNumber("The custom value thing", _potSourcePID->PIDGet());
-	  SmartDashboard::PutNumber("ARM TALON OUTPUT %", _srxGimble->Get());
+	  //SmartDashboard::PutNumber("ARM TALON OUTPUT %", _srxGimble->Get());
     
     lc = 0;
   }

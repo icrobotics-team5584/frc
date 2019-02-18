@@ -16,11 +16,11 @@ void SubElevatorLimits::Periodic(){
   //cout << "ELEVATOR LIMITS PERIODIC" << endl;
   //AutoStopBottom();
   //AutoStopTop();
-  ////Limit testing
+  //Limit testing
   outCount++;
   if(outCount > 10){
-    SmartDashboard::PutBoolean("ELEVATOR Top Limit", GetTopLimit());
-    SmartDashboard::PutBoolean("ELEVATOR Bottom Limit", GetBottomLimit());
+    //SmartDashboard::PutBoolean("ELEVATOR Top Limit", GetTopLimit());
+    //SmartDashboard::PutBoolean("ELEVATOR Bottom Limit", GetBottomLimit());
     outCount = 0;
   }
 }
