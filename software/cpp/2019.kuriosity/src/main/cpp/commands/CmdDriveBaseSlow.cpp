@@ -1,8 +1,9 @@
 #include "commands/CmdDriveBaseSlow.h"
 #include "Robot.h"
 
-CmdDriveBaseSlow::CmdDriveBaseSlow() {
+CmdDriveBaseSlow::CmdDriveBaseSlow(bool reversed) {
   Requires(Robot::subDriveBase.get());
+  _reversed = reversed;
 }
 
 // Called just before this Command runs the first time
@@ -10,9 +11,16 @@ void CmdDriveBaseSlow::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void CmdDriveBaseSlow::Execute() {
-  double x = Robot::_oi->controller->GetX();
-  double y = Robot::_oi->controller->GetY();
-  double axis = Robot::_oi->controller->GetRawAxis(leftAxisTrigger);
+  x = Robot::_oi->controller->GetX();
+  y = Robot::_oi->controller->GetY();
+  axis = Robot::_oi->controller->GetRawAxis(leftAxisTrigger);
+  if (_reversed) {
+    x = Robot::_oi->controllerReverse->GetX();
+    y = Robot::_oi->controllerReverse->GetY();
+    y = -y;
+    axis = Robot::_oi->controllerReverse->GetRawAxis(leftAxisTrigger);
+
+  }
   SmartDashboard::PutNumber("axis test", axis);
   Robot::subDriveBase->drive(y/(axis + 1),x/(axis + 1));
 }
