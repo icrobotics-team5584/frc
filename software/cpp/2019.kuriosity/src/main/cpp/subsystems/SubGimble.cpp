@@ -49,10 +49,10 @@ void SubGimble::InitDefaultCommand() {}
 
 void SubGimble::OverridePID(bool leftRight) { //true = left  ... rotate left
   if (leftRight){
-    humanOffset = -1;
+    humanOffset = -5;
   }
   else{
-    humanOffset = 1;
+    humanOffset = 5;
   }
   target = target + humanOffset;
   //gimbleController->SetSetpoint(target + humanOffset);
