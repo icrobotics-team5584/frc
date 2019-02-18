@@ -10,7 +10,6 @@
 #include <frc/TimedRobot.h>
 #include <frc/commands/Command.h>
 #include <frc/smartdashboard/SendableChooser.h>
-
 #include "OI.h"
 #include "RobotMap.h"
 #include "subsystems/SubDriveBase.h"
@@ -19,11 +18,20 @@
 #include "subsystems/SubIntakeOutake.h"
 #include "subsystems/SubPanelAffector.h"
 #include "subsystems/SubRollerIntake.h"
+#include "subsystems/SubRollerIntakeBar.h"
 #include "subsystems/SubGimble.h"
 #include "commands/CmdSeekCargoShip.h"
 #include <cscore_oo.h>
 #include "commands/CmdIntakePanel.h"
 #include "subsystems/ElevatorCmdChooser.h"
+#include "subsystems/SubGimbleLimits.h"
+
+#include "subsystems/SubClimber.h"
+
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgcodecs/imgcodecs.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 
 #include <iostream>
 
@@ -39,8 +47,10 @@ class Robot : public frc::TimedRobot {
   static unique_ptr<SubIntakeOutake> subIntakeOutake;
   static unique_ptr<SubPanelAffector> subPanelAffector;
   static unique_ptr<SubRollerIntake> subRollerIntake;
+  static unique_ptr<SubRollerIntakeBar> subRollerIntakeBar;
+  static unique_ptr<SubClimber> subClimber;
   static unique_ptr<SubGimble> subGimble;
-
+  static unique_ptr<SubGimbleLimits> subGimbleLimits;
   static unique_ptr<ElevatorCmdChooser> elevatorCmdChooser;
 
   unique_ptr<CmdSeekCargoShip> cmdSeekCargoShip;
@@ -57,8 +67,13 @@ class Robot : public frc::TimedRobot {
   void TestPeriodic() override;
 
  private:
-  cs::VideoSink server;
-  cs::UsbCamera cam;
+
+  // vision thread inputs (vti_), outputs (vt0_) and methods
+  int vti_mode;
+  bool vti_debug;
+  bool vto_valid;
+  double vto_error;
+  static void VisionThread( int &, bool &, bool &, double & );
 
   // Have it null by default so that if testing teleop it
   // doesn't have undefined behavior and potentially crash.

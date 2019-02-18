@@ -7,14 +7,9 @@
 
 #pragma once
 
-#include <frc/commands/Command.h>
+#include <frc/commands/CommandGroup.h>
 
-class CmdGimbleRotateLeft : public frc::Command {
+class CmdCargoIntakeOut : public frc::CommandGroup {
  public:
-  CmdGimbleRotateLeft();
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
+  CmdCargoIntakeOut();
 };

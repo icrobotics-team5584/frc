@@ -17,6 +17,7 @@ CmdIntakeOutakeIn::CmdIntakeOutakeIn() {
 
 // Called just before this Command runs the first time
 void CmdIntakeOutakeIn::Initialize() {
+  frc::SmartDashboard::PutBoolean("running intake", true);
   Robot::subIntakeOutake->Intake();
   Robot::subRollerIntake->RollerIn();
   Robot::subPanelAffector->DeployFingers(); // Turns out this makes it easier for the ball to enter
@@ -27,14 +28,14 @@ void CmdIntakeOutakeIn::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdIntakeOutakeIn::IsFinished() { 
-  return Robot::subIntakeOutake->GetCargoLimitSwitch(); 
+  return false; //Robot::subIntakeOutake->GetCargoLimitSwitch(); //or !Robot::_oi->btnIntakeOut->Get(); 
 }
 
 // Called once after isFinished returns true
 void CmdIntakeOutakeIn::End() {
-  Robot::subIntakeOutake->Stop();
-  Robot::subRollerIntake->Stop();
-  Robot::subPanelAffector->RetractFingers();
+   Robot::subIntakeOutake->Stop();
+   Robot::subRollerIntake->Stop();
+   Robot::subPanelAffector->RetractFingers();
 }
 
 // Called when another command which requires one or more of the same

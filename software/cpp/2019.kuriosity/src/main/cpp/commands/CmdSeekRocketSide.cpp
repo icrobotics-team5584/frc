@@ -7,13 +7,15 @@
 
 #include "commands/CmdSeekRocketSide.h"
 #include "commands/CmdSeekRocketCargo.h"
+#include "commands/CmdStopAtLine.h"
 #include "commands/CmdEncoderDrive.h"
+#include "subsystems/SubDriveBase.h"
 CmdSeekRocketSide::CmdSeekRocketSide() {
   // Add Commands here:
   // e.g. AddSequential(new Command1());
   //      AddSequential(new Command2());
-  AddSequential(new CmdSeekRocketCargo());
-  AddSequential(new CmdEncoderDrive(-0.6));
+  AddSequential(new CmdStopAtLine(0.7, BACK_RIGHT, BACK_LEFT));
+  AddSequential(new CmdEncoderDrive(-0.23));
   // these will run in order.
 
   // To run multiple commands at the same time,

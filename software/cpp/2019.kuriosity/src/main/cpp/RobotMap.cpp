@@ -14,30 +14,30 @@ RobotMap::RobotMap(){
     srxElevatorMaster.reset(new WPI_TalonSRX(can_srxElevatorMaster));
     srxElevatorSlave.reset(new WPI_TalonSRX(can_srxElevatorSlave));
     srxElevatorSlave->Set(ControlMode::Follower, can_srxElevatorMaster);
-
     subElevatorLimitBottom.reset(new DigitalInput(dio_subElevatorLimitBottom));
     subElevatorLimitTop.reset(new DigitalInput(dio_subElevatorLimitTop));
     
     // Intake and Outake
     srxIntakeOutake.reset(new WPI_TalonSRX(can_srxIntakeOutake));
     srxRollerIntake.reset(new WPI_TalonSRX(can_srxRollerIntake));
+    srxRollerIntakeBar.reset(new WPI_TalonSRX(can_srxRollerIntakeBar));
     subIntakeOutakeCargo.reset(new DigitalInput(dio_subIntakeOutakeCargo));
 
     // DriveBase Sensors
-    ahrsNavXDriveBase.reset(new AHRS(SerialPort::kMXP));
+    ahrsNavXDriveBase.reset(new AHRS(SPI::kMXP));
 
     clsDriveBaseBackRight.reset(new DigitalInput(dio_clsDriveBaseBackRight));
     clsDriveBaseBackLeft.reset(new DigitalInput(dio_clsDriveBaseBackLeft));
     clsDriveBaseMidRight.reset(new DigitalInput(dio_clsDriveBaseMidRight));
     clsDriveBaseMidLeft.reset(new DigitalInput(dio_clsDriveBaseMidLeft));
     
-    dioTriggerDriveBaseGimble.reset(new DigitalOutput(dio_ulsTriggerDriveBaseGimble));
-    dioEchoDriveBaseGimble.reset(new DigitalInput(dio_ulsEchoDriveBaseGimble));
-    dioTriggerDriveBaseBottom.reset(new DigitalOutput(dio_ulsTriggerDriveBaseBottom));
-    dioEchoDriveBaseBottom.reset(new DigitalInput(dio_ulsEchoDriveBaseBottom));
+    dioEchoDriveBaseLeft.reset(new DigitalInput(dio_ulsEchoLeft));
+    dioTriggerDriveBaseLeft.reset(new DigitalOutput(dio_ulsTriggerLeft));
+    dioEchoDriveBaseRight.reset(new DigitalInput(dio_ulsEchoRight));
+    dioTriggerDriveBaseRight.reset(new DigitalOutput(dio_ulsTriggerRight));
     
-    ulsDriveBaseGimble.reset(new Ultrasonic(dioTriggerDriveBaseGimble, dioEchoDriveBaseGimble));
-    ulsDriveBaseBottom.reset(new Ultrasonic(dioTriggerDriveBaseBottom, dioEchoDriveBaseBottom));
+    dioUlsDriveBaseLeft.reset(new Ultrasonic(dioTriggerDriveBaseLeft, dioEchoDriveBaseLeft));
+    dioUlsDriveBaseRight.reset(new Ultrasonic(dioTriggerDriveBaseRight, dioEchoDriveBaseRight));
     
     
 
@@ -45,11 +45,16 @@ RobotMap::RobotMap(){
     solPanelAffectorTop.reset(new DoubleSolenoid(pcm_lower, pcm_solPanelAffectorTopForward, pcm_solPanelAffectorTopReverse));
     solPanelAffectorBottom.reset(new DoubleSolenoid(pcm_lower, pcm_solPanelAffectorBottomForward, pcm_solPanelAffectorBottomReverse));
     solPanelAffectorTopFinger.reset(new DoubleSolenoid(pcm_lower, pcm_solPanelAffectorTopFingerForward, pcm_solPanelAffectorTopFingerReverse));
-    solPanelAffectorBottomFinger.reset(new DoubleSolenoid(pcm_lower, pcm_solPanelAffectorBottomFingerForward, pcm_solPanelAffectorBottomFingerReverse));
+    //solPanelAffectorBottomFinger.reset(new DoubleSolenoid(pcm_lower, pcm_solPanelAffectorBottomFingerForward, pcm_solPanelAffectorBottomFingerReverse));
 
     //Gimble
     srxGimble.reset(new WPI_TalonSRX(can_srxGimble));
     subGimbleLimitLeft.reset(new DigitalInput(dio_subGimbleLimitLeft));
     subGimbleLimitRight.reset(new DigitalInput(dio_subGimbleLimitRight));
     subGimblePot.reset(new AnalogInput(ana_potGimble));
+
+    //climber
+    srxClimber.reset(new WPI_TalonSRX(can_srxClimber));
+    
+    
 }

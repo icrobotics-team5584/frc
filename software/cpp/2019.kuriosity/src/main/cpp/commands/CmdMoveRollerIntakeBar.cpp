@@ -5,33 +5,41 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdGimbleRotateLeft.h"
+#include "commands/CmdMoveRollerIntakeBar.h"
 #include "Robot.h"
 
-CmdGimbleRotateLeft::CmdGimbleRotateLeft() {
+CmdMoveRollerIntakeBar::CmdMoveRollerIntakeBar(RollerPosition rollerPosition) {
   // Use Requires() here to declare subsystem dependencies
-  // eg. Requires(Robot::chassis.get());
-  Requires(Robot::subGimble.get());
+  Requires(Robot::subRollerIntakeBar.get());
+ 
+    _rollerPosition = rollerPosition;
+ 
+ 
+
+  
+  
 }
 
 // Called just before this Command runs the first time
-void CmdGimbleRotateLeft::Initialize() {
-  Robot::subGimble->rotateLeft();
+void CmdMoveRollerIntakeBar::Initialize() {
+  Robot::subRollerIntakeBar->SetSetpoint(_rollerPosition);
+  Robot::subRollerIntakeBar->SetPIDEnabled(true);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdGimbleRotateLeft::Execute() {}
+void CmdMoveRollerIntakeBar::Execute() {
+}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdGimbleRotateLeft::IsFinished() { return false; }
+bool CmdMoveRollerIntakeBar::IsFinished() { 
+  Robot::subRollerIntakeBar->OnTarget();
+}
 
 // Called once after isFinished returns true
-void CmdGimbleRotateLeft::End() {
-  Robot::subGimble->stop();
+void CmdMoveRollerIntakeBar::End() {
+  Robot::subRollerIntakeBar->SetPIDEnabled(false);
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdGimbleRotateLeft::Interrupted() {
-  End();
-}
+void CmdMoveRollerIntakeBar::Interrupted() {}
