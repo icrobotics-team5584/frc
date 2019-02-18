@@ -48,7 +48,7 @@ OI::OI() {
   btnSeekRocketSide.reset(new AxisButton(controller.get(), rightAxisTrigger));
   btnSeekRocketSide->WhileHeld(new CmdSeekRocketSide());
 
-  btnIntakeOut.reset(new frc::JoystickButton(controller.get(), startBtn));
+  btnIntakeOut.reset(new frc::JoystickButton(controller.get(), rightBtn));
   btnIntakeOut->WhenPressed(new CmdCargoIntakeOut());
 
   btnIntakeOut->WhenReleased(new CmdCargoIntakeIn());
@@ -66,7 +66,7 @@ OI::OI() {
   btnDeployPanel.reset(new frc::JoystickButton(controller.get(), xBtn));
   btnDeployPanel->WhileHeld(new CmdOutputPanel(false));
 
-  btnDeployFingers.reset(new frc::JoystickButton(controller.get(), rightBtn));
+  btnDeployFingers.reset(new frc::JoystickButton(controller.get(), bBtn));
   btnDeployFingers->WhileHeld(new CmdIntakeOutakeIn());
 
   //Gimble
