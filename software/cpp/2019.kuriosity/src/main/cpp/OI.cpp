@@ -43,7 +43,10 @@ OI::OI() {
 
   //Drive Base
   btnDriveBaseSlow.reset(new AxisButton(controller.get(), leftAxisTrigger));
-  btnDriveBaseSlow->WhileHeld(new CmdDriveBaseSlow());
+  btnDriveBaseSlow->WhileHeld(new CmdDriveBaseSlow(false));
+
+  btnDriveBaseSlowControllerReverse.reset(new AxisButton(controllerReverse.get(), leftAxisTrigger));
+  btnDriveBaseSlowControllerReverse->WhileHeld(new CmdDriveBaseSlow(true));
 
   btnSeekRocketSide.reset(new AxisButton(controller.get(), rightAxisTrigger));
   btnSeekRocketSide->WhileHeld(new CmdSeekRocketSide());
