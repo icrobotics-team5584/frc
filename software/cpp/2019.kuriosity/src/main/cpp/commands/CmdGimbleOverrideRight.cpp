@@ -5,37 +5,30 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdGimbleRotateLeft.h"
-#include "Robot.h"
-#include "subsystems/SubGimble.h"
+#include "commands/CmdGimbleOverrideRight.h"
 
-CmdGimbleRotateLeft::CmdGimbleRotateLeft() {
+CmdGimbleOverrideRight::CmdGimbleOverrideRight() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(Robot::subGimble.get());
 }
 
 // Called just before this Command runs the first time
-void CmdGimbleRotateLeft::Initialize() {
-  Robot::subGimble->PIDDisable();
-  Robot::subGimble->OverrideMotorLeft();
-}
+void CmdGimbleOverrideRight::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void CmdGimbleRotateLeft::Execute() {}
+void CmdGimbleOverrideRight::Execute() {
+  Robot::subGimble->OverridePID(false);
+}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdGimbleRotateLeft::IsFinished() { return false; }
+bool CmdGimbleOverrideRight::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdGimbleRotateLeft::End() {
-  Robot::subGimble->MotorStop();
-  Robot::subGimble->PIDEnable();
-  Robot::subGimble->stop(0);
-}
+void CmdGimbleOverrideRight::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdGimbleRotateLeft::Interrupted() {
+void CmdGimbleOverrideRight::Interrupted() {
   End();
 }

@@ -25,10 +25,10 @@ void CmdElevatortoIntakeHeight::Execute() {
 // Make this return true when this Command no longer needs to run execute()
 bool CmdElevatortoIntakeHeight::IsFinished() {
   elevatorPos = Robot::subElevator->GetEncoderPosition();
-  tolerance = 1000;
+  tolerance = 2000;
   error = desiredRotations * 4096 - std::abs(elevatorPos);
   frc::SmartDashboard::PutNumber("elevator error", error);
-  if (error < tolerance and error > -tolerance) {
+  if ((error < tolerance) && (error > -tolerance)) {
     return true;
   }
   return false;

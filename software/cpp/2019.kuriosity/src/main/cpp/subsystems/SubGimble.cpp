@@ -5,56 +5,57 @@ SubGimble::SubGimble() : Subsystem("ExampleSubsystem") {
 
   _srxGimble = Robot::_robotMap->srxGimble;
   _anaGimblePot = Robot::_robotMap->subGimblePot;
-  _potSourcePID = new PIDPot();
-  _gimblePID = new gimblePID();
+  //_potSourcePID = new PIDPot();
+  //_gimblePID = new gimblePID();
 
-  gimbleController = new PIDController(PIDp, PIDi, PIDd, _potSourcePID, _srxGimble.get());
-  gimbleController->SetSetpoint(PotCentre);
-	gimbleController->SetInputRange(PotRight, PotLeft);
-	gimbleController->SetOutputRange(-rotateSpeed, rotateSpeed); //Gimble MAX power set here
-	gimbleController->SetContinuous(false);
-	gimbleController->Enable();  //This must be set to true in future
-	frc::SmartDashboard::PutData("Arm PID Controls", gimbleController);  
-  
+  //gimbleController = new PIDController(PIDp, PIDi, PIDd, _potSourcePID, _srxGimble.get());
+  //gimbleController->SetSetpoint(PotCentre);
+	//gimbleController->SetInputRange(PotRight, PotLeft);
+	//gimbleController->SetOutputRange(-rotateSpeed, rotateSpeed); //Gimble MAX power set here
+	//gimbleController->SetContinuous(false);
+	//gimbleController->Enable();  //This must be set to true in future
+	//frc::SmartDashboard::PutData("Arm PID Controls", gimbleController);  
+  SmartDashboard::PutNumber("Gimble PIDP", PIDp);
+  SmartDashboard::PutNumber("Gimble PIDI", PIDi);
+  SmartDashboard::PutNumber("Gimble PIDD", PIDd);
+  SmartDashboard::PutNumber("TARGET Value", target);
+  SmartDashboard::PutBoolean("Test Mode", testMode);
 }
 
 void SubGimble::Periodic() {
   lc++;
 	if( lc > 10){
-    SmartDashboard::PutNumber("ARM PID OUTPUT", gimbleController->Get());
+    //SmartDashboard::PutNumber("ARM PID OUTPUT", gimbleController->Get());
 	  SmartDashboard::PutNumber("POT Value Average", _anaGimblePot->GetAverageValue());
-	  SmartDashboard::PutNumber("The custom value thing", _potSourcePID->PIDGet());
+	  //SmartDashboard::PutNumber("The custom value thing", _potSourcePID->PIDGet());
 	  SmartDashboard::PutNumber("ARM TALON OUTPUT %", _srxGimble->Get());
     
     lc = 0;
   }
+  PIDp = SmartDashboard::GetNumber("Gimble PIDP", 0.0025);
+  PIDi = SmartDashboard::GetNumber("Gimble PIDI", 0.0);
+  PIDd = SmartDashboard::GetNumber("Gimble PIDD", 0.0);
+  testMode = SmartDashboard::GetBoolean("Test Mode", false);
+  if (testMode == true){
+    target = SmartDashboard::GetNumber("TARGET Value", PotCentre);
+  }
+  kP = PIDp;
+  kI = PIDi;
+  kD = PIDd;
+  CustomPID(_anaGimblePot->GetAverageValue());
 }
 
 void SubGimble::InitDefaultCommand() {}
 
-void SubGimble::enable() {
-  gimbleController->Enable();
-}
-
-void SubGimble::disable() {
-  gimbleController->Disable();
-  _srxGimble->Set(0);
-}
-
 void SubGimble::OverridePID(bool leftRight) { //true = left  ... rotate left
   if (leftRight){
-    humanOffset = humanOffset - overrideSpeed;
+    humanOffset = -50;
   }
   else{
-    humanOffset = humanOffset + overrideSpeed;
+    humanOffset = 50;
   }
-  if (target + humanOffset < PotLeft){
-    humanOffset = target - PotLeft;
-  }
-  if (target + humanOffset > PotRight){
-    humanOffset = PotRight - target;
-  }
-  gimbleController->SetSetpoint(target + humanOffset);
+  target = target + humanOffset;
+  //gimbleController->SetSetpoint(target + humanOffset);
 }
 
 void SubGimble::Override(std::shared_ptr<Joystick> rightStick){
@@ -74,17 +75,19 @@ void SubGimble::PIDGimbleTo(double angle) {
   double conversion = potRange/180;
   target = (angle * conversion) + PotLeft;
 
-	SmartDashboard::PutNumber("TARGET Value", target);
+	
 
-	gimbleController->SetSetpoint(target);
+	//gimbleController->SetSetpoint(target);
 }
 
 void SubGimble::PIDGimbleToLeft(){
-  gimbleController->SetSetpoint(PotLeft);
+  //gimbleController->SetSetpoint(PotLeft);
+  target = PotLeft;
 }
 
 void SubGimble::PIDGimbleToRight(){
-  gimbleController->SetSetpoint(PotRight);
+  //gimbleController->SetSetpoint(PotRight);
+  target = PotRight;
 }
 
 void SubGimble::VoltageControl(double percentage){
@@ -94,18 +97,22 @@ void SubGimble::VoltageControl(double percentage){
 void SubGimble::stop(int side) {
   switch(side){
     case 0:
-      gimbleController->SetSetpoint((_anaGimblePot->GetAverageValue() + 0));
+      //gimbleController->SetSetpoint((_anaGimblePot->GetAverageValue() + 0));
+      target = _anaGimblePot->GetAverageValue() + 0;
     break;
     case 1:
-      gimbleController->SetSetpoint((_anaGimblePot->GetAverageValue() - 80));
+      //gimbleController->SetSetpoint((_anaGimblePot->GetAverageValue() - 80));
+      target = _anaGimblePot->GetAverageValue() - 0;
     break;
     case 2:
-      gimbleController->SetSetpoint((_anaGimblePot->GetAverageValue() - 200));
+      //gimbleController->SetSetpoint((_anaGimblePot->GetAverageValue() - 200));
+      target = _anaGimblePot->GetAverageValue() - 0;
+    break;
   }
 }
 void SubGimble::ToCentre(){
   target = PotCentre;
-  gimbleController->SetSetpoint(target);
+  //gimbleController->SetSetpoint(target);
 }
 
 double SubGimble::GetTarget(){
@@ -116,22 +123,20 @@ double SubGimble::POTPosition(){
   return _anaGimblePot->GetAverageValue();
 }
 
-void SubGimble::OverrideMotorLeft(){
-  _srxGimble->Set(0.5);
-}
+void SubGimble::CustomPID(double PIDIntput){
+  error = PIDIntput - target;
+  intergral = intergral + error;
+  derivative = error - lastError;
+  PIDOutput = (error * kP) + (intergral * kI) + (derivative * kD);
+  if (PIDOutput > rotateSpeed){
+    PIDOutput = rotateSpeed;
+  }
+  if (PIDOutput < -rotateSpeed){
+    PIDOutput = -rotateSpeed;
+  }
+  _srxGimble->Set(PIDOutput);
+  lastError = error;
+  intergral = intergral * dampener;
 
-void SubGimble::OverrideMotorRight(){
-  _srxGimble->Set(-0.5);
-}
 
-void SubGimble::MotorStop(){
-  _srxGimble->Set(0.0);
-}
-
-void SubGimble::PIDEnable(){
-  gimbleController->Enable();
-}
-
-void SubGimble::PIDDisable(){
-  gimbleController->Disable();
 }

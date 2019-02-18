@@ -11,8 +11,6 @@
 #include "commands/CmdIntakeOutakeIn.h"
 #include "commands/CmdHatchLowRocket.h"
 #include "commands/CmdIntakePanel.h"
-#include "commands/CmdGimbleRotateLeft.h"
-#include "commands/CmdGimbleRotateRight.h"
 #include "commands/CmdGimblePidLeft.h"
 #include "commands/CmdGimblePidCentre.h"
 #include "commands/CmdGimblePidRight.h"
@@ -34,6 +32,9 @@
 #include "commands/CmdClimberDeploy.h"
 #include "commands/CmdGimblePIDLeftStop.h"
 #include "commands/CmdGimblePIDRightStop.h"
+
+#include "commands/CmdGimbleOverrideLeft.h"
+#include "commands/CmdGimbleOverrideRight.h"
 OI::OI() {
   cout << "Run Robot OI" << endl;
 
@@ -50,7 +51,7 @@ OI::OI() {
   btnIntakeOut.reset(new frc::JoystickButton(controller.get(), startBtn));
   btnIntakeOut->WhenPressed(new CmdCargoIntakeOut());
 
-  //btnIntakeOut->WhenReleased(new CmdCargoIntakeIn());
+  btnIntakeOut->WhenReleased(new CmdCargoIntakeIn());
 
   //Intake Outake
   btnCargoPodOut.reset(new frc::JoystickButton(controller.get(), leftBtn));

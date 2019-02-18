@@ -8,7 +8,7 @@
 #include "commands/CmdSeekCargoShipRight.h"
 #include "commands/CmdSeekCargoShip.h"
 #include "commands/CmdEncoderDrive.h"
-#include "commands/CmdGimbleRotateLeft.h"
+#include "commands/CmdGimbleOverrideLeft.h"
 #include "commands/CmdIntakeOutakeIn.h"
 #include "subsystems/SubDriveBase.h"
 CmdSeekCargoShipRight::CmdSeekCargoShipRight() {

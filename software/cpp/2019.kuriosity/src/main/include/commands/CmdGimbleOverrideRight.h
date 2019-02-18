@@ -8,10 +8,10 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-
-class CmdGimbleRotateLeft : public frc::Command {
+#include "Robot.h"
+class CmdGimbleOverrideRight : public frc::Command {
  public:
-  CmdGimbleRotateLeft();
+  CmdGimbleOverrideRight();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
