@@ -51,7 +51,7 @@ OI::OI() {
   btnIntakeOut.reset(new frc::JoystickButton(controller.get(), startBtn));
   btnIntakeOut->WhenPressed(new CmdCargoIntakeOut());
 
-  //btnIntakeOut->WhenReleased(new CmdCargoIntakeIn());
+  btnIntakeOut->WhenReleased(new CmdCargoIntakeIn());
 
   //Intake Outake
   btnCargoPodOut.reset(new frc::JoystickButton(controller.get(), leftBtn));
