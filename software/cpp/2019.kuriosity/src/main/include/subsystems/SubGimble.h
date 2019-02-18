@@ -21,9 +21,9 @@ class SubGimble : public frc::Subsystem {
 
 
   double rotateSpeed = 0.65; //Max rotating power
-  double PotLeft = 784;
-	double PotRight = 3339;
-	double PotCentre = 1905;
+  double PotLeft = 766;
+	double PotRight = 3486;
+	double PotCentre = 2075;
 	double PIDp = 0.0025;
 	double PIDi = 0.0004;
 	double PIDd = 0.004;
