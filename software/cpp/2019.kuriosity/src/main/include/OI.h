@@ -40,6 +40,7 @@ class OI {
   unique_ptr<AxisButton> btnStopAtLine;
   unique_ptr<AxisButton> btnSeekRocketSide;
   unique_ptr<frc::JoystickButton> btnIntakeOut;
+  unique_ptr<frc::JoystickButton> btnDeployPanel;
 
   OI();
   std::shared_ptr<frc::Joystick> getJoystick(int);
@@ -48,7 +49,6 @@ private:
   unique_ptr<frc::JoystickButton> btnMotionProfile;
   unique_ptr<frc::JoystickButton> btnEncoderDrive;
 
-  unique_ptr<frc::JoystickButton> btnDeployPanel;
   unique_ptr<frc::JoystickButton> btnDeployFingers; 
   unique_ptr<frc::JoystickButton> btnSeekPath;
   unique_ptr<frc::JoystickButton> btnGimbleRotateLeft;

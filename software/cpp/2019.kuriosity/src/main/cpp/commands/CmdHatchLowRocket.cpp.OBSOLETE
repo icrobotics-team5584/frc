@@ -16,7 +16,7 @@ CmdHatchLowRocket::CmdHatchLowRocket() {
   //      AddSequential(new Command2());
   // these will run in order.
   AddSequential(new CmdFollowLine());
-  AddSequential(new CmdOutputPanel(true));
+  AddSequential(new CmdOutputPanel());
 
   // To run multiple commands at the same time,
   // use AddParallel()

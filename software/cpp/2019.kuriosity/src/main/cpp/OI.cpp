@@ -9,7 +9,6 @@
 #include "commands/CmdOutputPanel.h"
 #include "commands/CmdIntakeOutakeOut.h"
 #include "commands/CmdIntakeOutakeIn.h"
-#include "commands/CmdHatchLowRocket.h"
 #include "commands/CmdIntakePanel.h"
 #include "commands/CmdGimblePidLeft.h"
 #include "commands/CmdGimblePidCentre.h"
@@ -60,14 +59,9 @@ OI::OI() {
   btnCargoPodOut.reset(new frc::JoystickButton(controller.get(), leftBtn));
   btnCargoPodOut->WhileHeld(new CmdIntakeOutakeOut());
 
-  // btnSeekRocketSide.reset(new frc::JoystickButton(controller.get(), yBtn));
-  // btnSeekRocketSide->WhenPressed(new CmdSeekRocketSide());
-  //btnFollowLine.reset(new frc::JoystickButton(controller.get(), xBtn));
-  //btnFollowLine->WhenPressed(new CmdHatchLowRocket());
-
   //Panel Affector
   btnDeployPanel.reset(new frc::JoystickButton(controller.get(), xBtn));
-  btnDeployPanel->WhileHeld(new CmdOutputPanel(false));
+  btnDeployPanel->WhenPressed(new CmdOutputPanel());
 
   btnDeployFingers.reset(new frc::JoystickButton(controller.get(), bBtn));
   btnDeployFingers->WhileHeld(new CmdIntakePanel());
