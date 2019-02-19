@@ -49,10 +49,10 @@ void SubGimble::InitDefaultCommand() {}
 
 void SubGimble::OverridePID(bool leftRight) { //true = left  ... rotate left
   if (leftRight){
-    humanOffset = -50;
+    humanOffset = -5;
   }
   else{
-    humanOffset = 50;
+    humanOffset = 5;
   }
   target = target + humanOffset;
   //gimbleController->SetSetpoint(target + humanOffset);
@@ -62,9 +62,15 @@ void SubGimble::Override(std::shared_ptr<Joystick> rightStick){
   _axis4 = rightStick->GetRawAxis(4); 
 
 	if (_axis4 > 0.5) { 
-		OverridePID(false);
+    if((Robot::subGimbleLimits->GetRightLimit()) == false)
+    {
+		  OverridePID(false);
+    }
 	} else if (_axis4 < -0.5){ 
-    OverridePID(true);
+    if((Robot::subGimbleLimits->GetLeftLimit()) == false)
+    {
+      OverridePID(true);
+    }
 	}
 }
 
