@@ -8,8 +8,8 @@ SubElevator::SubElevator() : Subsystem("ExampleSubsystem") {
   //SmartDashboard::PutNumber("Elevator PIDP", PIDP);
   //SmartDashboard::PutNumber("Elevator PIDI", PIDI);
   //SmartDashboard::PutNumber("Elevator PIDD", PIDD);
-  //SmartDashboard::PutNumber("Elevator PID target", targetPositionRotations);
-//   SmartDashboard::PutData("Elevator go to entterd position", new CmdElevatorLimit());
+  	//SmartDashboard::PutNumber("Elevator PID target", targetPositionRotations);	 //FOR RESETING HEIGHTS
+	//SmartDashboard::PutData("Elevator go to entterd position", new CmdElevatorLimit());  //FOR RESETING HEIGHTS
 
 	/* lets grab the 360 degree position of the MagEncoder's absolute position */
 	int absolutePosition = _srxElevatorMaster->GetSelectedSensorPosition(0) & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */
@@ -69,19 +69,19 @@ void SubElevator::SetHeight(Heights currentHeight){
 			ElevatorToPos(0.0);
 		break;
 		case BOTTOM_CARGO:
-			ElevatorToPos(1.4);
+			ElevatorToPos(1.2);
 		break;
 		case MID_HATCH:
-			ElevatorToPos(2.5);
+			ElevatorToPos(2.4);
 		break;
 		case MID_CARGO:
-			ElevatorToPos(3.3);
+			ElevatorToPos(3.1);
 		break;
 		case TOP_HATCH:
-			ElevatorToPos(4.7);
+			ElevatorToPos(4.4);
 		break;
 		case TOP_CARGO:
-			ElevatorToPos(5.3);
+			ElevatorToPos(4.9);
 		break;
 	}
 }
