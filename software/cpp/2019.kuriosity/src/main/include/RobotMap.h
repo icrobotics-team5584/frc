@@ -32,10 +32,10 @@ enum PWM {
 };
 
 enum DIO {
-    dio_clsDriveBaseBackRight = 0,
-    dio_clsDriveBaseBackLeft = 1,
-    dio_clsDriveBaseMidRight = 2,
-    dio_clsDriveBaseMidLeft = 3,
+    dio_clsDriveBaseRight = 0,
+    dio_clsDriveBaseLeft = 1,
+    // dio_clsDriveBaseMidRight = 2,
+    // dio_clsDriveBaseMidLeft = 3,
     dio_ulsTriggerLeft = 20,
     dio_ulsEchoLeft = 19,
     dio_ulsTriggerRight = 4,
@@ -108,10 +108,10 @@ public:
 
     // DriveBase Sensors
     shared_ptr<AHRS> ahrsNavXDriveBase;
-    shared_ptr<DigitalInput> clsDriveBaseBackLeft;
-    shared_ptr<DigitalInput> clsDriveBaseBackRight;
-    shared_ptr<DigitalInput> clsDriveBaseMidLeft;
-    shared_ptr<DigitalInput> clsDriveBaseMidRight;
+    shared_ptr<DigitalInput> clsDriveBaseLeft;
+    shared_ptr<DigitalInput> clsDriveBaseRight;
+    // shared_ptr<DigitalInput> clsDriveBaseMidLeft;
+    // shared_ptr<DigitalInput> clsDriveBaseMidRight;
     shared_ptr<DigitalOutput> dioTriggerDriveBaseLeft;
     shared_ptr<DigitalInput> dioEchoDriveBaseLeft;
     shared_ptr<DigitalOutput> dioTriggerDriveBaseRight;

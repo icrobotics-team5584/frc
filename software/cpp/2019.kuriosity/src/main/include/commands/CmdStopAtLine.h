@@ -11,17 +11,23 @@
 #include "Robot.h"
 #include "subsystems/SubDriveBase.h"
 #include "subsystems/SubGimble.h"
+
 class CmdStopAtLine : public frc::Command {
  public:
-  CmdStopAtLine(double speed = 0.6, ColourSensor rightColourSensor = MID_RIGHT, ColourSensor leftColourSensor = MID_LEFT);
+  CmdStopAtLine(double speed = 0.6);
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+ 
  private:
+  frc::Counter leftLineCounter;
+  frc::Counter rightLineCounter;
+
   ColourSensor _leftColourSensor;
   ColourSensor _rightColourSensor;
+  
   double _speed;
   double frontClsDetected;
   double midClsDetected;

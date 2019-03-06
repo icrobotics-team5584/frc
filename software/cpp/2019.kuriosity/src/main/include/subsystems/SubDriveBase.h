@@ -20,7 +20,7 @@
 using namespace std;
 using namespace frc;
 
-enum ColourSensor {BACK_LEFT, BACK_RIGHT, MID_LEFT, MID_RIGHT};
+enum ColourSensor {CLS_LEFT, CLS_RIGHT};
 enum UltrasonicSensor {LEFT, RIGHT};
 
 class SubDriveBase : public frc::Subsystem {
@@ -37,10 +37,10 @@ class SubDriveBase : public frc::Subsystem {
   RightVelocitySource* rightVelocitySource;
 
   // Sensors
-  shared_ptr<DigitalInput> _clsBackLeft;
-  shared_ptr<DigitalInput> _clsBackRight;
-  shared_ptr<DigitalInput> _clsMidLeft;
-  shared_ptr<DigitalInput> _clsMidRight;
+  shared_ptr<DigitalInput> _clsLeft;
+  shared_ptr<DigitalInput> _clsRight;
+  // shared_ptr<DigitalInput> _clsMidLeft;
+  // shared_ptr<DigitalInput> _clsMidRight;
   shared_ptr<Ultrasonic> _ulsLeft;
   shared_ptr<Ultrasonic> _ulsRight;
   shared_ptr<AHRS> _ahrsNavXGyro;
@@ -90,7 +90,8 @@ class SubDriveBase : public frc::Subsystem {
   double getYaw();
 
   // Colour Sensor functions
-  bool getColourSensor(ColourSensor sensor);
+  bool getColourSensorState(ColourSensor sensor);
+  shared_ptr<DigitalInput> getColourSensorReference(ColourSensor sensor);
   bool clsBackLeftDetected();
   bool clsMidLeftDetected();
   bool clsBackRightDetected();
