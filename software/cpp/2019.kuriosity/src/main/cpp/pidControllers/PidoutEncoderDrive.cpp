@@ -12,5 +12,5 @@ PidoutEncoderDrive::PidoutEncoderDrive() {}
 
 void PidoutEncoderDrive::PIDWrite(double output) {
     //frc::SmartDashboard::PutNumber("PID Output", output);
-    Robot::subDriveBase->drive(output, 0);
+    Robot::subDriveBase->drive(-output, 0);
 }
