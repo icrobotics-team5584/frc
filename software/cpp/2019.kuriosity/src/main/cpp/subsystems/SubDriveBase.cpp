@@ -135,7 +135,7 @@ void SubDriveBase::zeroEncoders() {
 }
 
 double SubDriveBase::getDistanceTravelled() {
-  double encoderTics = (getRawLeftEncoder() + getRawRightEncoder()) / 2;
+  double encoderTics = (getRawRightEncoder()); // change to (getRawLeftEncoder() + getRawRightEncoder()) / 2 for dizzy
   double wheelRotations = encoderTics / ENCODER_TICS_PER_ROTATION;
   double distance = wheelRotations * metersPerRotation;
   return distance;  

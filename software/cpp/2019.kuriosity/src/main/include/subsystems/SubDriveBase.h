@@ -47,8 +47,8 @@ class SubDriveBase : public frc::Subsystem {
   
 
   // Robot constants
-  const double WHEEL_DIAMETER = 0.1524; // in meters (0.1016 for dizzy)(0.1524 for lofty)
-  const int ENCODER_TICS_PER_ROTATION = 4096; // (214 for dizzy)
+  const double WHEEL_DIAMETER = 0.1016; // in meters (0.1016 for lofty)(0.1524 for dizzy)
+  const int ENCODER_TICS_PER_ROTATION = 4096; // 
   double metersPerRotation; // calculated in constructor
 
   int pathLength; //path length

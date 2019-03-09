@@ -13,7 +13,7 @@ CmdEncoderDrive::CmdEncoderDrive(double distance) {
   driveController->SetAbsoluteTolerance(0.05);
   driveController->SetOutputRange(-0.8, 0.8);
   
-  //frc::SmartDashboard::PutData("Drive PID Controller", driveController.get());
+  frc::SmartDashboard::PutData("Drive PID Controller", driveController.get());
 }
 
 // Called just before this Command runs the first time
@@ -25,6 +25,7 @@ void CmdEncoderDrive::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdEncoderDrive::Execute() {
+  frc::SmartDashboard::PutNumber("Drive PID Error", driveController->GetError());
   //frc::SmartDashboard::PutNumber("error", driveController->GetError());
 }
 

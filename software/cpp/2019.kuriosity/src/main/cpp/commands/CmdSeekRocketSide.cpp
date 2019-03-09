@@ -14,8 +14,8 @@ CmdSeekRocketSide::CmdSeekRocketSide() {
   // Add Commands here:
   // e.g. AddSequential(new Command1());
   //      AddSequential(new Command2());
-  AddSequential(new CmdStopAtLine(0.6));
-  AddSequential(new CmdEncoderDrive(-0.235));
+  AddSequential(new CmdStopAtLine(0.8));
+  AddSequential(new CmdEncoderDrive(0.5)); //Dizzy was 0.235, change pid output to neg for dizzy
   // these will run in order.
 
   // To run multiple commands at the same time,
