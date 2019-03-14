@@ -16,12 +16,20 @@ using namespace frc;
 
 class SubClimber : public frc::Subsystem {
  private:
-  // It's desirable that everything possible under private except
+   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
   shared_ptr<WPI_TalonSRX> _srxClimber;
+  shared_ptr<Servo> _srvLatch;
+  const double LATCHED_POSITION = 0.25;
+  const double UNLATCHED_POSITION = 0;
+  const double IS_LATCHED_TOLERANCE = 0.1;
+
  public:
   SubClimber();
   void InitDefaultCommand() override;
   void Go();
   void Stop();
+  void Latch();
+  void Unlatch();
+  bool IsLatched();
 };

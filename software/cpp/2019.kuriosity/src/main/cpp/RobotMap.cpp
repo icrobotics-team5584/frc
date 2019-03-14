@@ -55,6 +55,6 @@ RobotMap::RobotMap(){
 
     //climber
     srxClimber.reset(new WPI_TalonSRX(can_srxClimber));
-    
+    srvClimberLatch.reset(new Servo(pwm_srvClimberLatch));
     
 }

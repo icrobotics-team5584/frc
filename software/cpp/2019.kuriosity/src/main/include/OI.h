@@ -62,6 +62,7 @@ private:
   unique_ptr<frc::JoystickButton> btnElevatorToPos;
   unique_ptr<frc::JoystickButton> btnElevatorToBottom;
   unique_ptr<frc::JoystickButton> btnClimber;
+  unique_ptr<frc::JoystickButton> btnClimberLatch;
 
   unique_ptr<frc::JoystickButton> btnOverride;
 

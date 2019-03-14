@@ -14,6 +14,7 @@ void SubClimber::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
   _srxClimber = Robot::_robotMap->srxClimber;
+  _srvLatch = Robot::_robotMap->srvClimberLatch;
 }
 
 // Put methods for controlling this subsystem
@@ -25,4 +26,20 @@ void SubClimber::Go(){
 }
 void SubClimber::Stop(){
   _srxClimber->Set(0.0);
+}
+
+
+void SubClimber::Latch() {
+  _srvLatch->Set(LATCHED_POSITION);
+}
+
+
+void SubClimber::Unlatch() {
+  _srvLatch->Set(UNLATCHED_POSITION);
+}
+
+
+bool SubClimber::IsLatched() {
+  double error = _srvLatch->Get() - LATCHED_POSITION; 
+  return (error < IS_LATCHED_TOLERANCE);
 }
