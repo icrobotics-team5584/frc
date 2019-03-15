@@ -21,7 +21,7 @@ RobotMap::RobotMap(){
     srxIntakeOutake.reset(new WPI_TalonSRX(can_srxIntakeOutake));
     srxRollerIntake.reset(new WPI_TalonSRX(can_srxRollerIntake));
     srxRollerIntakeBar.reset(new WPI_TalonSRX(can_srxRollerIntakeBar));
-    subIntakeOutakeCargo.reset(new DigitalInput(dio_subIntakeOutakeCargo));
+    // subIntakeOutakeCargo.reset(new DigitalInput(dio_subIntakeOutakeCargo));
 
     // DriveBase Sensors
     ahrsNavXDriveBase.reset(new AHRS(SPI::kMXP));
@@ -54,7 +54,9 @@ RobotMap::RobotMap(){
     subGimblePot.reset(new AnalogInput(ana_potGimble));
 
     //climber
-    srxClimber.reset(new WPI_TalonSRX(can_srxClimber));
+    spxClimber.reset(new VictorSPX(can_spxClimber));
+    spxClimberSlave.reset(new VictorSPX(can_spxClimberSlave));
     srvClimberLatch.reset(new Servo(pwm_srvClimberLatch));
+    limClimberLimit.reset(new DigitalInput(dio_limClimberLimit));
     
 }

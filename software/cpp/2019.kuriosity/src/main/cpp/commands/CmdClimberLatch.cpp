@@ -13,7 +13,7 @@ void CmdClimberLatch::Execute() {}
 bool CmdClimberLatch::IsFinished() { return false; }
 
 void CmdClimberLatch::End() {
-  Robot::subClimber->Unlatch();
+  // Robot::subClimber->Unlatch();
 }
 
 void CmdClimberLatch::Interrupted() {}

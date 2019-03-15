@@ -25,7 +25,8 @@ enum Can {
     can_srxElevatorSlave = 8,
     can_srxRollerIntake = 9,
     can_srxRollerIntakeBar = 10,
-    can_srxClimber = 11
+    can_spxClimber = 51,
+    can_spxClimberSlave = 52
 };
 
 enum PWM {
@@ -45,7 +46,8 @@ enum DIO {
     dio_subGimbleLimitRight = 7,
     dio_subElevatorLimitBottom = 8,
     dio_subElevatorLimitTop = 9,
-    dio_subIntakeOutakeCargo = 10
+    // dio_subIntakeOutakeCargo = 10
+    dio_limClimberLimit = 10
 };
 
 enum Analog {
@@ -125,7 +127,7 @@ public:
     shared_ptr<WPI_TalonSRX> srxRollerIntake;
     shared_ptr<WPI_TalonSRX> srxRollerIntakeBar;
 
-    shared_ptr<DigitalInput> subIntakeOutakeCargo;
+    // shared_ptr<DigitalInput> subIntakeOutakeCargo;
 
     // Panel Affector Actuators
     shared_ptr<DoubleSolenoid> solPanelAffectorTop;
@@ -134,8 +136,10 @@ public:
     //shared_ptr<DoubleSolenoid> solPanelAffectorBottomFinger;
     
     //climber
-    shared_ptr<WPI_TalonSRX> srxClimber;
+    shared_ptr<VictorSPX> spxClimber;
+    shared_ptr<VictorSPX> spxClimberSlave;
     shared_ptr<Servo> srvClimberLatch;
+    shared_ptr<DigitalInput> limClimberLimit;
 };
 
 /**

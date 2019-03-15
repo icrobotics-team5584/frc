@@ -30,11 +30,15 @@
 #include "commands/CmdCargoIntakeIn.h"
 #include "commands/CmdClimberDeploy.h"
 #include "commands/CmdClimberLatch.h"
+#include "commands/CmdClimberRetract.h"
 #include "commands/CmdGimblePIDLeftStop.h"
 #include "commands/CmdGimblePIDRightStop.h"
-
+#include "commands/CmdMoveRollerIntakeBar.h"
 #include "commands/CmdGimbleOverrideLeft.h"
 #include "commands/CmdGimbleOverrideRight.h"
+
+#include "subsystems/SubRollerIntakeBar.h"
+
 OI::OI() {
   cout << "Run Robot OI" << endl;
 
@@ -96,10 +100,16 @@ OI::OI() {
   lmtPIDRight->WhenPressed(new CmdGimblePIDRightStop());
 
   // Climber Controls
-  btnClimberLatch.reset(new frc::JoystickButton(controllerReverse.get(), startBtn));
+  btnClimberLatch.reset(new frc::JoystickButton(controllerReverse.get(), yBtn));
   btnClimberLatch->ToggleWhenPressed(new CmdClimberLatch());
-  btnClimber.reset(new frc::JoystickButton(controllerReverse.get(), backBtn));
-  btnClimber->WhileHeld(new CmdClimberDeploy());
+  btnClimber.reset(new frc::JoystickButton(controllerReverse.get(), startBtn));
+  btnClimber->WhenPressed(new CmdClimberDeploy());
+  btnSoloRollerDeploy.reset(new frc::JoystickButton(controllerReverse.get(), aBtn));
+  btnSoloRollerDeploy->WhenPressed(new CmdMoveRollerIntakeBar(OUT));
+  btnClimberRetract.reset(new frc::JoystickButton(controllerReverse.get(), backBtn));
+  btnClimberRetract->WhenPressed(new CmdClimberRetract());
+  btnSoloRollerRetract.reset(new frc::JoystickButton(controllerReverse.get(), xBtn));
+  btnSoloRollerRetract->WhenPressed(new CmdMoveRollerIntakeBar(IN));
 
   //Elevator
   //btnUpTest.reset(new frc::JoystickButton(controller.get(), yBtn));
