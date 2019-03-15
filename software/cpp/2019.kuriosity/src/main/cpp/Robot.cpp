@@ -94,7 +94,8 @@ void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
  * the if-else structure below with additional strings & commands.
  */
 void Robot::AutonomousInit() {
-
+    Robot::subElevator->SetHeight(BOTTOM_HATCH);
+    subDriveBase->resetYaw();
 
     // std::string autoSelected = //frc::SmartDashboard::GetString(
     //     "Auto Selector", "Default");
@@ -112,12 +113,11 @@ void Robot::AutonomousInit() {
 }
 
 void Robot::AutonomousPeriodic() {
-
+    frc::Scheduler::GetInstance()->Run();
 }
 
 void Robot::TeleopInit() {
-    Robot::subElevator->SetHeight(BOTTOM_HATCH);
-    subDriveBase->resetYaw();
+
 
 }
 
