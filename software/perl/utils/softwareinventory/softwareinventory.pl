@@ -11,8 +11,13 @@ use Cwd;
 my $CWD = getcwd;
 my $ME = "softwareinventory";
 my $TMPDIR = "$ENV{'TEMP'}";
+my $FRCDIR = "frc2019";
 my $EXEEXTRACTOR = "$TMPDIR/$ME.$$.vbs";
-my $JAREXTRACTOR = "C:\\Users\\Public\\frc2019\\jdk\\bin\\jar.exe";
+my $JAREXTRACTOR = "C:\\Users\\Public\\${FRCDIR}\\jdk\\bin\\jar.exe";
+my $FRCTOOLROOT = "C:\\Users\\Public\\${FRCDIR}\\tools";
+my $FRCDOCOROOT = "C:\\Users\\Public\\${FRCDIR}\\documentation";
+my $FRCPROJROOT = "C:\\Program Files (x86)\\National Instruments\\LabVIEW 2018\\project";
+my $FRCINSTROOT = "C:\\Program Files (x86)";
 my %PMSI;
 
 # STEP 1 : extract version information from PMSI in registry
@@ -29,23 +34,25 @@ extractversionfrompmsi('MobaXterm');
 # STEP 2 : extract version information from specific EXE files
 print "INFO: version information extracted from EXE files . . .\n";
 constructexeextractor();
-extractversionfromexe( 'FRC Driver Station',  'C:\Program Files (x86)\FRC Driver Station\DriverStation.exe' );
-extractversionfromexe( 'FRC Gamepad Tool',    'C:\Program Files (x86)\FRC Gamepad Tool\Gamepad Tool.exe' );
-extractversionfromexe( 'FRC Dashboard',       'C:\Program Files (x86)\FRC Dashboard\Dashboard.exe' );
+extractversionfromexe( 'FRC Driver Station',    "${FRCINSTROOT}\\FRC Driver Station\\DriverStation.exe" );
+extractversionfromexe( 'FRC Gamepad Tool',      "${FRCINSTROOT}\\FRC Gamepad Tool\\Gamepad Tool.exe" );
+extractversionfromexe( 'FRC Dashboard',         "${FRCINSTROOT}\\FRC Dashboard\\Dashboard.exe" );
+extractversionfromexe( 'roboRIO Imaging Tool',  "${FRCPROJROOT}\\roboRIO Tool\\roboRIO_ImagingTool.exe" );
+extractversionfromexe( 'Axis Camera Tool',      "${FRCPROJROOT}\\Axis Camera Tool\\AxisCameraSetup.exe" );
 destroyexeextractor();
 
 # STEP 3 : extract version information from specific JAR files
 print "INFO: version information extracted from JAR files . . .\n";
-extractversionfromjar( 'OnlineViewer',        'C:\Users\Public\frc2019\tools\OutlineViewer.jar' );
-extractversionfromjar( 'PathWeaver',          'C:\Users\Public\frc2019\tools\PathWeaver.jar' );
-extractversionfromjar( 'RobotBuilder',        'C:\Users\Public\frc2019\tools\RobotBuilder.jar' );
-extractversionfromjar( 'Shuffleboard',        'C:\Users\Public\frc2019\tools\shuffleboard.jar' );
-extractversionfromjar( 'SmartDashboard',      'C:\Users\Public\frc2019\tools\SmartDashboard.jar' );
-extractversionfromjar( 'ToolsUpdater',        'C:\Users\Public\frc2019\tools\ToolsUpdater.jar' );
+extractversionfromjar( 'OnlineViewer',          "${FRCTOOLROOT}\\OutlineViewer.jar" );
+extractversionfromjar( 'PathWeaver',            "${FRCTOOLROOT}\\PathWeaver.jar" );
+extractversionfromjar( 'RobotBuilder',          "${FRCTOOLROOT}\\RobotBuilder.jar" );
+extractversionfromjar( 'Shuffleboard',          "${FRCTOOLROOT}\\shuffleboard.jar" );
+extractversionfromjar( 'SmartDashboard',        "${FRCTOOLROOT}\\SmartDashboard.jar" );
+extractversionfromjar( 'ToolsUpdater',          "${FRCTOOLROOT}\\ToolsUpdater.jar" );
 
 # STEP 4 : extract version information from specific HTM files
 print "INFO: version information extracted from HTM files . . .\n";
-extractversionfromhtm( 'FRC Documentation',   'C:\Users\Public\frc2019\documentation\cpp\index.html' );
+extractversionfromhtm( 'FRC Documentation',   "${FRCDOCOROOT}\\cpp\\index.html" );
 
 sub loadpmsi
   {
