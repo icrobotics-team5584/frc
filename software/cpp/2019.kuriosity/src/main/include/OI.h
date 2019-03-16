@@ -40,6 +40,7 @@ class OI {
   unique_ptr<AxisButton> btnStopAtLine;
   unique_ptr<AxisButton> btnSeekRocketSide;
   unique_ptr<frc::JoystickButton> btnIntakeOut;
+  unique_ptr<AxisButton> btnIntakeRoll;
   unique_ptr<frc::JoystickButton> btnDeployPanel;
 
   unique_ptr<frc::JoystickButton> btnClimber;

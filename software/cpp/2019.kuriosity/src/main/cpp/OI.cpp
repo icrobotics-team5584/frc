@@ -36,7 +36,7 @@
 #include "commands/CmdMoveRollerIntakeBar.h"
 #include "commands/CmdGimbleOverrideLeft.h"
 #include "commands/CmdGimbleOverrideRight.h"
-
+#include "commands/CmdRollerIn.h"
 #include "subsystems/SubRollerIntakeBar.h"
 
 OI::OI() {
@@ -52,13 +52,14 @@ OI::OI() {
   btnDriveBaseSlowControllerReverse.reset(new AxisButton(controllerReverse.get(), leftAxisTrigger));
   btnDriveBaseSlowControllerReverse->WhileHeld(new CmdDriveBaseSlow(true));
 
-  btnSeekRocketSide.reset(new AxisButton(controller.get(), rightAxisTrigger));
+  btnSeekRocketSide.reset(new AxisButton(controllerReverse.get(), rightAxisTrigger));
   btnSeekRocketSide->WhileHeld(new CmdSeekRocketSide());
 
   btnIntakeOut.reset(new frc::JoystickButton(controller.get(), rightBtn));
   btnIntakeOut->WhenPressed(new CmdCargoIntakeOut());
-
   btnIntakeOut->WhenReleased(new CmdCargoIntakeIn());
+  btnIntakeRoll.reset(new AxisButton(controller.get(), rightAxisTrigger));
+  btnIntakeRoll->WhileHeld(new CmdRollerIn());
 
   //Intake Outake
   btnCargoPodOut.reset(new frc::JoystickButton(controller.get(), leftBtn));

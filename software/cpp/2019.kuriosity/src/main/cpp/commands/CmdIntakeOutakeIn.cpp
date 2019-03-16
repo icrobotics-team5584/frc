@@ -11,7 +11,7 @@
 CmdIntakeOutakeIn::CmdIntakeOutakeIn() {
   // Use Requires() here to declare subsystem dependencies
   Requires(Robot::subIntakeOutake.get());
-  Requires(Robot::subRollerIntake.get());
+  // Requires(Robot::subRollerIntake.get());
   Requires(Robot::subPanelAffector.get());
 }
 
@@ -19,7 +19,7 @@ CmdIntakeOutakeIn::CmdIntakeOutakeIn() {
 void CmdIntakeOutakeIn::Initialize() {
   //frc::SmartDashboard::PutBoolean("running intake", true);
   Robot::subIntakeOutake->Intake();
-  Robot::subRollerIntake->RollerIn();
+  // Robot::subRollerIntake->RollerIn();
   Robot::subPanelAffector->DeployFingers(); // Turns out this makes it easier for the ball to enter
 }
 
