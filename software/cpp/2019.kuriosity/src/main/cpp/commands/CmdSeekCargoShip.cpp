@@ -9,65 +9,41 @@
 #include "Robot.h"
 #include <iostream>
 
-CmdSeekCargoShip::CmdSeekCargoShip() {
+CmdSeekCargoShip::CmdSeekCargoShip(ColourSensor colourSensor, UltrasonicSensor ultrasonicSensor) {
   // Use Requires() here to declare subsystem dependencies
   Requires(Robot::subDriveBase.get());
-
+  _colourSensor = colourSensor;
+  _ultrasonicSensor = ultrasonicSensor;
 }
 
 // Called just before this Command runs the first time
 void CmdSeekCargoShip::Initialize() {
   driveState = SEARCHING_FOR_SHIP;
-  drivePower = 0.6;
-  SmartDashboard::PutBoolean("at hatch", false);
+  drivePower = 0.4;
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdSeekCargoShip::Execute() {
   //This is done so that you only need to change drivePower when changing speed. The drivePower default is 100%
     if (driveState == SEARCHING_FOR_SHIP) {
-        if (Robot::subDriveBase->frontHasReachedLine()) {
+        if (Robot::subDriveBase->getColourSensorState(_colourSensor)) {
           drivePower = 0.4;
-          driveState = SEARCHING_FOR_HATCH;
-        }
-    } 
-
-    else if (driveState == SEARCHING_FOR_HATCH) {
-        if (Robot::subDriveBase->midHasReachedLine()) {
-          SmartDashboard::PutBoolean("at hatch", true);
           driveState = AT_HATCH;
         }
-    }
+    } 
     
     else if (driveState == AT_HATCH) {
-        if (Robot::subDriveBase->isBayEmpty()){
-          driveState = HOLE_FOUND;
+        if (Robot::subDriveBase->isBayEmpty(_ultrasonicSensor)) {
+          drivePower = 0;
+          driveState = COMPLETE;
           timer.Start();    
         } 
         else {
           driveState = SEARCHING_FOR_SHIP;
         }
     }
-    
-    else if (driveState == HOLE_FOUND) {
-        drivePower = 0;
-        if (timer.Get() > 0.5) {
-          timer.Reset();
-          timer.Start();
-          driveState = REVERSING_TO_HATCH;
-        }
-    } 
-    else if (driveState == REVERSING_TO_HATCH) {
-        drivePower = -0.45;
-        if (Robot::subDriveBase->midHasReachedLine()) {
-          drivePower = 0;
-          driveState = COMPLETE;
-        }
-    } 
-
   Robot::subDriveBase->drive(drivePower, 0);
 
-  SmartDashboard::PutNumber("driveState", driveState);
 }
 
 

@@ -22,7 +22,7 @@ Position PosEncoderGyro::getPosition() {
 
     // Save values for next iteration
     prevDistance = currentDistance;
-    SmartDashboard::PutNumberArray("current pos", {currentPosition.x, currentPosition.y});
+    //SmartDashboard::PutNumberArray("current pos", {currentPosition.x, currentPosition.y});
     return currentPosition;
 }
 

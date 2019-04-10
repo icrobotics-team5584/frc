@@ -10,8 +10,8 @@
 
 SubIntakeOutake::SubIntakeOutake() 
 : Subsystem("ExampleSubsystem") {
-  _talLeft = Robot::_robotMap->talIntakeOutakeLeft;
-  _talRight = Robot::_robotMap->talIntakeOutakeRight;
+  _srxIntakeOutake = Robot::_robotMap->srxIntakeOutake;
+  _dinCargoLimit = Robot::_robotMap->limClimberLimit;
 }
 
 void SubIntakeOutake::InitDefaultCommand() {
@@ -23,15 +23,15 @@ void SubIntakeOutake::InitDefaultCommand() {
 // here. Call these from Commands.
 
 void SubIntakeOutake::Intake() {
-  _talLeft->Set(-inSpeed);
-  _talRight->Set(inSpeed);
+  _srxIntakeOutake->Set(inSpeed);
 }
 void SubIntakeOutake::Outake() {
-  _talLeft->Set(-outSpeed);
-  _talRight->Set(outSpeed);
+  _srxIntakeOutake->Set(outSpeed);
 }
 void SubIntakeOutake::Stop() {
-  _talRight->Set(0.0);
-  _talLeft->Set(0.0);
+  _srxIntakeOutake->Set(0.0);
+}
 
+bool SubIntakeOutake::GetCargoLimitSwitch() {
+  return _dinCargoLimit->Get();
 }

@@ -10,33 +10,53 @@ RobotMap::RobotMap(){
     srxDriveBaseBackRight.reset(new WPI_TalonSRX(can_srxDriveBaseBackRight));
     srxDriveBaseBackLeft->Set(ControlMode::Follower, can_srxDriveBaseFrontLeft);
     srxDriveBaseBackRight->Set(ControlMode::Follower, can_srxDriveBaseFrontRight);
-
+        //Elevator
+    srxElevatorMaster.reset(new WPI_TalonSRX(can_srxElevatorMaster));
+    srxElevatorSlave.reset(new WPI_TalonSRX(can_srxElevatorSlave));
+    srxElevatorSlave->Set(ControlMode::Follower, can_srxElevatorMaster);
+    subElevatorLimitBottom.reset(new DigitalInput(dio_subElevatorLimitBottom));
+    subElevatorLimitTop.reset(new DigitalInput(dio_subElevatorLimitTop));
+    
     // Intake and Outake
-    talIntakeOutakeRight.reset(new frc::Talon(pwm_talIntakeOutakeRight));
-    talIntakeOutakeLeft.reset(new frc::Talon(pwm_talIntakeOutakeLeft));
-    spkRollerIntake.reset(new frc::Spark(pwm_spkRollerIntake));
+    srxIntakeOutake.reset(new WPI_TalonSRX(can_srxIntakeOutake));
+    srxRollerIntake.reset(new WPI_TalonSRX(can_srxRollerIntake));
+    srxRollerIntakeBar.reset(new WPI_TalonSRX(can_srxRollerIntakeBar));
+    // subIntakeOutakeCargo.reset(new DigitalInput(dio_subIntakeOutakeCargo));
 
     // DriveBase Sensors
-    ahrsNavXDriveBase.reset(new AHRS(SerialPort::kMXP));
+    ahrsNavXDriveBase.reset(new AHRS(SPI::kMXP));
 
-    clsDriveBaseFront.reset(new DigitalInput(dio_clsDriveBaseFront));
-    clsDriveBaseMid.reset(new DigitalInput(dio_clsDriveBaseMid));
-    clsLineDriveBaseLeft.reset(new DigitalInput(dio_clsLineDriveBaseLeft));
-    clsLineDriveBaseRight.reset(new DigitalInput(dio_clsLineDriveBaseRight));
+    clsDriveBaseRight.reset(new DigitalInput(dio_clsDriveBaseRight));
+    clsDriveBaseLeft.reset(new DigitalInput(dio_clsDriveBaseLeft));
+    // clsDriveBaseMidRight.reset(new DigitalInput(dio_clsDriveBaseMidRight));
+    // clsDriveBaseMidLeft.reset(new DigitalInput(dio_clsDriveBaseMidLeft));
     
-    dioTriggerDriveBaseGimble.reset(new DigitalOutput(dio_ulsTriggerDriveBaseGimble));
-    dioEchoDriveBaseGimble.reset(new DigitalInput(dio_ulsEchoDriveBaseGimble));
-    dioTriggerDriveBaseBottom.reset(new DigitalOutput(dio_ulsTriggerDriveBaseBottom));
-    dioEchoDriveBaseBottom.reset(new DigitalInput(dio_ulsEchoDriveBaseBottom));
+    dioEchoDriveBaseLeft.reset(new DigitalInput(dio_ulsEchoLeft));
+    dioTriggerDriveBaseLeft.reset(new DigitalOutput(dio_ulsTriggerLeft));
+    dioEchoDriveBaseRight.reset(new DigitalInput(dio_ulsEchoRight));
+    dioTriggerDriveBaseRight.reset(new DigitalOutput(dio_ulsTriggerRight));
     
-    ulsDriveBaseGimble.reset(new Ultrasonic(dioTriggerDriveBaseGimble, dioEchoDriveBaseGimble));
-    ulsDriveBaseBottom.reset(new Ultrasonic(dioTriggerDriveBaseBottom, dioEchoDriveBaseBottom));
+    dioUlsDriveBaseLeft.reset(new Ultrasonic(dioTriggerDriveBaseLeft, dioEchoDriveBaseLeft));
+    dioUlsDriveBaseRight.reset(new Ultrasonic(dioTriggerDriveBaseRight, dioEchoDriveBaseRight));
     
     
 
     // Panel Affector Actuators
-    solPanelAffectorTop.reset(new DoubleSolenoid(pcm_solPanelAffectorTopForward, pcm_solPanelAffectorTopReverse));
-    solPanelAffectorBottom.reset(new DoubleSolenoid(pcm_solPanelAffectorBottomForward, pcm_solPanelAffectorBottomReverse));
-    solPanelAffectorTopFinger.reset(new DoubleSolenoid(pcm_solPanelAffectorTopFingerForward, pcm_solPanelAffectorTopFingerReverse));
-    solPanelAffectorBottomFinger.reset(new DoubleSolenoid(pcm_solPanelAffectorBottomFingerForward, pcm_solPanelAffectorBottomFingerReverse));
+    solPanelAffectorTop.reset(new DoubleSolenoid(pcm_lower, pcm_solPanelAffectorTopForward, pcm_solPanelAffectorTopReverse));
+    solPanelAffectorBottom.reset(new DoubleSolenoid(pcm_lower, pcm_solPanelAffectorBottomForward, pcm_solPanelAffectorBottomReverse));
+    solPanelAffectorTopFinger.reset(new DoubleSolenoid(pcm_lower, pcm_solPanelAffectorTopFingerForward, pcm_solPanelAffectorTopFingerReverse));
+    //solPanelAffectorBottomFinger.reset(new DoubleSolenoid(pcm_lower, pcm_solPanelAffectorBottomFingerForward, pcm_solPanelAffectorBottomFingerReverse));
+
+    //Gimble
+    srxGimble.reset(new WPI_TalonSRX(can_srxGimble));
+    subGimbleLimitLeft.reset(new DigitalInput(dio_subGimbleLimitLeft));
+    subGimbleLimitRight.reset(new DigitalInput(dio_subGimbleLimitRight));
+    subGimblePot.reset(new AnalogInput(ana_potGimble));
+
+    //climber
+    spxClimber.reset(new VictorSPX(can_spxClimber));
+    spxClimberSlave.reset(new VictorSPX(can_spxClimberSlave));
+    srvClimberLatch.reset(new Servo(pwm_srvClimberLatch));
+    limClimberLimit.reset(new DigitalInput(dio_limClimberLimit));
+    
 }

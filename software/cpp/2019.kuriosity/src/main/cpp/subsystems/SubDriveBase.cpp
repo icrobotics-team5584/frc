@@ -13,24 +13,25 @@
 
 SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   //motors
-  _srxBackLeft = Robot::_robotMap->srxDriveBaseBackLeft;
-  _srxBackRight = Robot::_robotMap->srxDriveBaseBackRight;
-  _srxFrontRight = Robot::_robotMap->srxDriveBaseFrontRight;
   _srxFrontLeft = Robot::_robotMap->srxDriveBaseFrontLeft;
+  _srxBackLeft = Robot::_robotMap->srxDriveBaseBackLeft;
+  _srxFrontRight = Robot::_robotMap->srxDriveBaseFrontRight;
+  _srxBackRight = Robot::_robotMap->srxDriveBaseBackRight;
   difDrive.reset(new frc::DifferentialDrive(*_srxFrontLeft, *_srxFrontRight));
 
   //sensors
   _ahrsNavXGyro = Robot::_robotMap->ahrsNavXDriveBase;
-  _clsMid = Robot::_robotMap->clsDriveBaseMid;
-  _clsFront = Robot::_robotMap->clsDriveBaseFront;
-  _ulsGimble = Robot::_robotMap->ulsDriveBaseGimble;
-  _ulsBottom = Robot::_robotMap->ulsDriveBaseBottom;
-  _clsLineLeft = Robot::_robotMap->clsLineDriveBaseLeft;
-  _clsLineRight = Robot::_robotMap->clsLineDriveBaseRight;
+  _ulsLeft = Robot::_robotMap->dioUlsDriveBaseLeft;
+  _ulsRight = Robot::_robotMap->dioUlsDriveBaseRight;
+  _clsRight = Robot::_robotMap->clsDriveBaseRight;
+  _clsLeft = Robot::_robotMap->clsDriveBaseLeft;
+  // _clsMidRight = Robot::_robotMap->clsDriveBaseMidRight;
+  // _clsMidLeft = Robot::_robotMap->clsDriveBaseMidLeft;
 
   //encoders
   _srxFrontRight->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
   _srxFrontLeft->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
+  _srxFrontRight->SetSensorPhase(true);
 
   rightVelocitySource = new RightVelocitySource();
   leftVelocitySource = new LeftVelocitySource();
@@ -41,8 +42,8 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   // _srxBackRight->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
   // _srxBackLeft->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
 
-  _ulsGimble->SetAutomaticMode(true);
-  _ulsBottom->SetAutomaticMode(true);
+  _ulsLeft->SetAutomaticMode(true);
+  _ulsRight->SetAutomaticMode(true);
 
   // Robot constants
   metersPerRotation = 3.14159265359 * WHEEL_DIAMETER;
@@ -53,6 +54,8 @@ void SubDriveBase::InitDefaultCommand() {
 }
 
 void SubDriveBase::drive(double speed, double rotation) {
+  //frc::SmartDashboard::PutNumber("drive(speed)", -speed);
+  //frc::SmartDashboard::PutNumber("drive(rotation)", rotation);
   difDrive->ArcadeDrive(-speed, rotation);
 }
 
@@ -60,6 +63,11 @@ void SubDriveBase::setTalControlMode(ControlMode controlMode) {
   _srxFrontRight->Set(controlMode, 0);
   _srxFrontLeft->Set(controlMode, 0);
 }
+void SubDriveBase::setTalBrakeMode(NeutralMode neutralMode) {
+  _srxFrontRight->SetNeutralMode(neutralMode);
+  _srxFrontLeft->SetNeutralMode(neutralMode);
+}
+
 void SubDriveBase::tankDriveVelocity(double leftVelocity, double rightVelocity) {
   _srxFrontLeft->Set(ControlMode::Velocity, leftVelocity);
   _srxFrontRight->Set(ControlMode::Velocity, rightVelocity);
@@ -67,17 +75,18 @@ void SubDriveBase::tankDriveVelocity(double leftVelocity, double rightVelocity) 
 }
 
 double SubDriveBase::getRawLeftEncoder() {
-  SmartDashboard::PutNumber("Left Encoder", _srxFrontLeft->GetSelectedSensorPosition());
+  //SmartDashboard::PutNumber("Left Encoder", _srxFrontLeft->GetSelectedSensorPosition());
   return _srxFrontLeft->GetSelectedSensorPosition(0);
 }
 
 double SubDriveBase::getRawRightEncoder() {
-  SmartDashboard::PutNumber("Right Encoder", _srxFrontRight->GetSelectedSensorPosition());
+  //SmartDashboard::PutNumber("Right Encoder", _srxFrontRight->GetSelectedSensorPosition());
   return _srxFrontRight->GetSelectedSensorPosition(0);
 }
 void SubDriveBase::disablePID() {
   _srxFrontLeft->SetNeutralMode(NeutralMode::Brake);
   _srxFrontRight->SetNeutralMode(NeutralMode::Brake);
+  _srxFrontRight->SetInverted(false);
 }
 //returns velocity in m/s
 double SubDriveBase::getRightVelocity() {
@@ -140,42 +149,131 @@ double SubDriveBase::getYaw() {
   return _ahrsNavXGyro->GetYaw();
 }
 
-bool SubDriveBase::frontHasReachedLine() {
-  SmartDashboard::PutNumber("frontHasReachedLine", not(_clsFront->Get()));
-  return not(_clsFront->Get());
+/*
+ * Gets the state of any one of the colour sensors attached to the drive base. Use the sensor
+ * paramater to choose the position of the sensor to get. Options are BACK_LEFT, BACK_RIGHT,
+ * MID_LEFT or MID_RIGHT. Make sure to #include "subsystems/SubDriveBase.h" to use these options.
+ */
+bool SubDriveBase::getColourSensorState(ColourSensor sensor) {
+  switch (sensor) {
+    case CLS_LEFT:
+      return !_clsLeft->Get();
+      break;
+    case CLS_RIGHT:
+      return !_clsRight->Get();
+      break;
+    // case MID_LEFT:
+    //   return !_clsMidLeft->Get();
+    //   break;
+    // case MID_RIGHT:
+    //   return !_clsMidRight->Get();
+    //   break;
+  }
 }
 
-bool SubDriveBase::midHasReachedLine() {
-  SmartDashboard::PutNumber("midHasReachedLine", not(_clsMid->Get()));
-  return not(_clsMid->Get());
+/*
+ * Gets a shared pointer of any one of the colour sensor objects attached to the drive base. Use 
+ * the sensor paramater to choose the position of the sensor to get. Options are BACK_LEFT, 
+ * BACK_RIGHT, MID_LEFT or MID_RIGHT. Make sure to #include "subsystems/SubDriveBase.h" to use 
+ * these options.
+ */
+shared_ptr<DigitalInput> SubDriveBase::getColourSensorReference(ColourSensor sensor) {
+  switch (sensor) {
+    case CLS_LEFT:
+      return _clsLeft;
+      break;
+    case CLS_RIGHT:
+      return _clsRight;
+      break;
+    // case MID_LEFT:
+    //   return _clsMidLeft;
+    //   break;
+    // case MID_RIGHT:
+    //   return _clsMidRight;
+    //   break;
+  }
+}
+
+bool SubDriveBase::clsBackLeftDetected() {
+  return not(_clsLeft->Get());
+}
+
+bool SubDriveBase::clsBackRightDetected() {
+  return not(_clsRight->Get());
+}
+
+bool SubDriveBase::clsMidLeftDetected() {
+  //SmartDashboard::PutNumber("midLeftHasReachedLine", not(_clsMidLeft->Get()));
+  // return not(_clsMidLeft->Get());
+  cout << "WARNING: Using depreciated function SubDriveBase::clsMidLeftDetected(), use getColourSensorState() instead" << endl;
+  return 0;
+}
+
+bool SubDriveBase::clsMidRightDetected() {
+  // return not(_clsMidRight->Get());
+  cout << "WARNING: Using depreciated function SubDriveBase::clsMidRightDetected(), use getColourSensorState() instead" << endl;
+  return 0;
 }
 
 void SubDriveBase::brakeRobot() {
     difDrive->ArcadeDrive(-0.4, 0.2);
 }
 
-double SubDriveBase::getDistanceToObstical() {
-  SmartDashboard::PutNumber("Bottom Ultrasonic Range", _ulsBottom->GetRangeMM());
-  SmartDashboard::PutBoolean("Bottom Ultrasonic range valid?", _ulsBottom->IsRangeValid());
-  return _ulsBottom->GetRangeMM();
+double SubDriveBase::getUlsDistance(UltrasonicSensor ultrasonic) {
+  switch (ultrasonic) {
+  case RIGHT:
+    return _ulsRight->GetRangeMM();
+  case LEFT:
+    return _ulsLeft->GetRangeMM();
+  }
 }
 
 //uses the ultrasonic sensor to check whether the cargo ship bay has a hatch panel on it
-bool SubDriveBase::isBayEmpty() {
-  if (_ulsGimble->GetRangeMM() < 500) {
-    return false;
-  }
-  else {
-    return true;
+bool SubDriveBase::isBayEmpty(UltrasonicSensor ultrasonicSensor) {
+  switch (ultrasonicSensor) {
+    case RIGHT:
+      if (_ulsRight->GetRangeMM() < 500) {
+        return false;
+      }
+      else {
+        return true;
+      }
+    case LEFT:
+      if (_ulsRight->GetRangeMM() < 500) {
+          return false;
+        }
+        else {
+          return true;
+        }
   }
 }
+void SubDriveBase::pidPositionConfig() {
+  _srxFrontLeft->ConfigNominalOutputForward(0, kTimeoutMs);
+  _srxFrontLeft->ConfigNominalOutputReverse(0, kTimeoutMs);
+  _srxFrontLeft->ConfigPeakOutputForward(0.8, kTimeoutMs);
+  _srxFrontLeft->ConfigPeakOutputReverse(-0.8, kTimeoutMs);
 
-bool SubDriveBase::isLeftClsOnLine() {
-  return not(_clsLineLeft->Get());
+  _srxFrontLeft->Config_kF(kPIDLoopIdx, 0, kTimeoutMs);
+  _srxFrontLeft->Config_kP(kPIDLoopIdx, 0.3, kTimeoutMs); //0.046
+  _srxFrontLeft->Config_kI(kPIDLoopIdx, 0.0, kTimeoutMs);
+  _srxFrontLeft->Config_kD(kPIDLoopIdx, 0, kTimeoutMs);
+
+  //right srx
+  _srxFrontRight->ConfigNominalOutputForward(0, kTimeoutMs);
+  _srxFrontRight->ConfigNominalOutputReverse(0, kTimeoutMs);
+  _srxFrontRight->ConfigPeakOutputForward(0.8, kTimeoutMs);
+  _srxFrontRight->ConfigPeakOutputReverse(-0.8, kTimeoutMs);
+
+  _srxFrontRight->Config_kF(kPIDLoopIdx, 0, kTimeoutMs);
+  _srxFrontRight->Config_kP(kPIDLoopIdx, 0.3, kTimeoutMs); //0.035
+  _srxFrontRight->Config_kI(kPIDLoopIdx, 0.0, kTimeoutMs);
+  _srxFrontRight->Config_kD(kPIDLoopIdx, 0.0, kTimeoutMs);
+  _srxFrontRight->SetNeutralMode(NeutralMode::Brake);
+  _srxFrontLeft->SetNeutralMode(NeutralMode::Brake);
 }
-
-bool SubDriveBase::isRightClsOnLine() {
-  return not(_clsLineRight->Get());
+double SubDriveBase::positionPID(double distance) {
+  _srxFrontRight->Set(ControlMode::Position, -distance);
+  _srxFrontLeft->Set(ControlMode::Position, distance);
 }
 
 Segment* SubDriveBase::generatePath(){
@@ -209,7 +307,7 @@ Segment* SubDriveBase::generatePath(){
 
   // Array of Segments (the trajectory points) to store the trajectory in
   Segment * seg = new Segment[pathLength];
-  SmartDashboard::PutNumber("Before generation time", timer.Get());
+  //SmartDashboard::PutNumber("Before generation time", timer.Get());
   // Generate the trajectory
   int result = pathfinder_generate(&candidate, seg);
   std::ofstream file("/home/lvuser/output.txt");
@@ -226,7 +324,7 @@ Segment* SubDriveBase::generatePath(){
     // printf("Jerk (Acceleration per Second): %f\n", s.jerk);
     // printf("Heading (radians): %f\n", s.heading);
   }
-  SmartDashboard::PutNumber("Time taken to generate path", timer.Get());
+  //SmartDashboard::PutNumber("Time taken to generate path", timer.Get());
   timer.Stop();
   return seg;
 }

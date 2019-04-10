@@ -23,26 +23,26 @@ void CmdFollowLine::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdFollowLine::Execute() {
-  SmartDashboard::PutNumber("angle", angle);
+  //SmartDashboard::PutNumber("angle", angle);
   Robot::subDriveBase->drive(drivePower, angle);
   //if both sensors are seeing the line, drive foward because we know that the front of the robot is parallel with the loading station
-  if (Robot::subDriveBase->isRightClsOnLine() && Robot::subDriveBase->isLeftClsOnLine()) {
+  if (Robot::subDriveBase->clsBackRightDetected() && Robot::subDriveBase->clsBackLeftDetected()) {
     angle = 0;
   }
   //if only the right colour sensor sees the line, turn left because the robot is not centred
-  else if (Robot::subDriveBase->isRightClsOnLine()) {
+  else if (Robot::subDriveBase->clsBackRightDetected()) {
 
     angle = 0.5;
   }
   //the last possible case is that only the left colour sensor is seeing the line. We make it turn right in an attempt to centre it.
-  else if (Robot::subDriveBase->isLeftClsOnLine()) {
+  else if (Robot::subDriveBase->clsBackLeftDetected()) {
     angle = -0.5;
   }
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdFollowLine::IsFinished() {
-  double range = Robot::subDriveBase->getDistanceToObstical();
+  double range = Robot::subDriveBase->getUlsDistance(UltrasonicSensor::RIGHT);
   std::cout << "range " << range << std::endl;
   return (range < 100) or (range > 1700);
 }

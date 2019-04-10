@@ -5,16 +5,18 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdHatchLowRocket.h"
-#include "commands/CmdFollowLine.h"
-#include "commands/CmdOutputPanel.h"
-CmdHatchLowRocket::CmdHatchLowRocket() {
+#include "commands/CmdSeekRocketSide.h"
+#include "commands/CmdSeekRocketCargo.h"
+#include "commands/CmdStopAtLine.h"
+#include "commands/CmdEncoderDrive.h"
+#include "subsystems/SubDriveBase.h"
+CmdSeekRocketSide::CmdSeekRocketSide() {
   // Add Commands here:
   // e.g. AddSequential(new Command1());
   //      AddSequential(new Command2());
+  AddSequential(new CmdStopAtLine(0.8));
+  AddSequential(new CmdEncoderDrive(-0.235)); //Dizzy was 0.235, change pid output to neg for dizzy
   // these will run in order.
-  AddSequential(new CmdFollowLine());
-  AddSequential(new CmdOutputPanel(true));
 
   // To run multiple commands at the same time,
   // use AddParallel()

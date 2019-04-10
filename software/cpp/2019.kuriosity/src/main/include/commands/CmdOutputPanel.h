@@ -10,14 +10,17 @@
 #include <frc/commands/Command.h>
 #include <frc/Timer.h>
 
+enum State {WAITING_FOR_FINGERS_OUT, WAITING_FOR_BUTTON_RELEASE, WAITING_FOR_PUNCH_IN, FINISHED};
+
 class CmdOutputPanel : public frc::Command {
-  private:
-  double timeoutTime = 0.3;
-  bool _autoHold;
-  bool notDeployed;
-  frc::Timer _timer;
-  public:
-  CmdOutputPanel(bool autoHold);
+private:
+  const double FINGERS_WAIT_TIME = 0.3;
+  const double PUNCH_WAIT_TIME = 0.2;
+  frc::Timer timer;
+  State state;
+
+public:
+  CmdOutputPanel();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
