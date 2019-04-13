@@ -29,8 +29,8 @@ public:
     double getLeftSpeedVoltage();
 
 private:
-    double lookaheadDistance = 0.1;   // Measured in meters
-    double pointRadius = 0.05;       // Measured in meters
+    double lookaheadDistance = 0.15;   // Measured in meters
+    double pointRadius = 0.15;       // Measured in meters
     vector<Point> path;
     shared_ptr<PositionSource> _source;
     shared_ptr<DriveOutput> _output;
@@ -42,6 +42,7 @@ private:
     const double TRACK_WIDTH = 0.75; //distance between wheels in meters
     double lastRightSpeed = 0;
     double lastLeftSpeed = 0;
+    Point pathPoints;
 
     void ImplimentRobotFunctions(shared_ptr<PositionSource> source, shared_ptr<DriveOutput> output);
     Point findClosestPoint();

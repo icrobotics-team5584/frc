@@ -130,9 +130,9 @@ Point PathFollower::findClosestPoint() {
     } else {
         closestPointIndex -= 5;
     }
-
+    
     // Find the closest point
-    while (true) {
+    while (closestPointIndex < getPathSize() - 1) {
         // Get data of next point on path
         closestPointIndex++;
         cout << closestPointIndex << endl;
@@ -144,7 +144,7 @@ Point PathFollower::findClosestPoint() {
         if (newDistance > oldDistance) {
             // We passed the closest, return previous point
             if (closestPointIndex > 0) {
-                closestPointIndex-=1;
+                closestPointIndex -= 1;
             } else {
                 closestPointIndex = 0;
             }
@@ -217,7 +217,7 @@ Point PathFollower::findLookaheadPoint() {
     double xPos = currentPosition.x;
     double yPos = currentPosition.y;
 
-    Point pathPoints;
+    // Point pathPoints;
     double xPoint, yPoint;
     double xyPathPointCount = findClosestPointIndex();  // Start search at point closest to robot
 
@@ -225,6 +225,7 @@ Point PathFollower::findLookaheadPoint() {
     bool doTheyIntersect = false;
     while ((!doTheyIntersect) && (xyPathPointCount < getPathSize()-1)) {
         xyPathPointCount++;
+        cout << xyPathPointCount << endl;
         xPoint = path.at(xyPathPointCount).position.x;
         yPoint = path.at(xyPathPointCount).position.y;
         // if the distance between the two centres of the circles is

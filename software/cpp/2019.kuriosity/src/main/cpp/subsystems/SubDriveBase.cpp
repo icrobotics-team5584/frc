@@ -299,10 +299,10 @@ Segment* SubDriveBase::generatePath(){
   // Max Jerk:            60 m/s/s/s
   // Change the sample count and/or the time step to generate the trajectory faster
   double max_velocity = 4.2;
-  double time_step = 0.01;
+  double time_step = 0.001;
   double max_accel = 10.0;
   double max_jerk= 60.0;
-  pathfinder_prepare(points, POINT_LENGTH, FIT_HERMITE_CUBIC, PATHFINDER_SAMPLES_FAST, time_step, max_velocity, max_accel, max_jerk, &candidate);
+  pathfinder_prepare(points, POINT_LENGTH, FIT_HERMITE_QUINTIC, PATHFINDER_SAMPLES_LOW, time_step, max_velocity, max_accel, max_jerk, &candidate);
   pathLength = candidate.length;
 
   // Array of Segments (the trajectory points) to store the trajectory in
@@ -324,7 +324,7 @@ Segment* SubDriveBase::generatePath(){
     // printf("Jerk (Acceleration per Second): %f\n", s.jerk);
     // printf("Heading (radians): %f\n", s.heading);
   }
-  //SmartDashboard::PutNumber("Time taken to generate path", timer.Get());
+  SmartDashboard::PutNumber("Time taken to generate path", timer.Get());
   timer.Stop();
   return seg;
 }
