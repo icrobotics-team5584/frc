@@ -13,7 +13,13 @@ SubClimber::SubClimber() : Subsystem("ExampleSubsystem") {}
 void SubClimber::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
-  _srxClimber = Robot::_robotMap->srxClimber;
+  _spxClimber = Robot::_robotMap->spxClimber;
+  _spxClimberSlave = Robot::_robotMap->spxClimberSlave;
+  _spxClimberSlave->Set(ControlMode::Follower, _spxClimber->GetDeviceID());
+  _srvLatch = Robot::_robotMap->srvClimberLatch;
+  _limLimit = Robot::_robotMap->limClimberLimit;
+
+  Stop();
 }
 
 // Put methods for controlling this subsystem
@@ -21,8 +27,41 @@ void SubClimber::InitDefaultCommand() {
 
 
 void SubClimber::Go(){
-  _srxClimber->Set(0.25);
+  _spxClimber->Set(ControlMode::PercentOutput, LIFT_POWER);
 }
+
+
+void SubClimber::Retract() {
+  _spxClimber->Set(ControlMode::PercentOutput, RETRACT_POWER);
+}
+
+
 void SubClimber::Stop(){
-  _srxClimber->Set(0.0);
+  _spxClimber->Set(ControlMode::PercentOutput, STORE_POWER);
+}
+
+
+void SubClimber::Hold() {
+  _spxClimber->Set(ControlMode::PercentOutput, HOLD_POWER);
+}
+
+
+void SubClimber::Latch() {
+  _srvLatch->Set(LATCHED_POSITION);
+}
+
+
+void SubClimber::Unlatch() {
+  _srvLatch->Set(UNLATCHED_POSITION);
+}
+
+
+bool SubClimber::IsLatched() {
+  double error = _srvLatch->Get() - LATCHED_POSITION; 
+  return (error < IS_LATCHED_TOLERANCE);
+}
+
+
+bool SubClimber::GetLimit() {
+  return _limLimit->Get();
 }

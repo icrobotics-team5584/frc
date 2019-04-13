@@ -25,17 +25,19 @@ enum Can {
     can_srxElevatorSlave = 8,
     can_srxRollerIntake = 9,
     can_srxRollerIntakeBar = 10,
-    can_srxClimber = 11
+    can_spxClimber = 51,
+    can_spxClimberSlave = 52
 };
 
 enum PWM {
+    pwm_srvClimberLatch = 0
 };
 
 enum DIO {
-    dio_clsDriveBaseBackRight = 0,
-    dio_clsDriveBaseBackLeft = 1,
-    dio_clsDriveBaseMidRight = 2,
-    dio_clsDriveBaseMidLeft = 3,
+    dio_clsDriveBaseRight = 0,
+    dio_clsDriveBaseLeft = 1,
+    // dio_clsDriveBaseMidRight = 2,
+    // dio_clsDriveBaseMidLeft = 3,
     dio_ulsTriggerLeft = 20,
     dio_ulsEchoLeft = 19,
     dio_ulsTriggerRight = 4,
@@ -44,7 +46,8 @@ enum DIO {
     dio_subGimbleLimitRight = 7,
     dio_subElevatorLimitBottom = 8,
     dio_subElevatorLimitTop = 9,
-    dio_subIntakeOutakeCargo = 10
+    // dio_subIntakeOutakeCargo = 10
+    dio_limClimberLimit = 10
 };
 
 enum Analog {
@@ -108,10 +111,10 @@ public:
 
     // DriveBase Sensors
     shared_ptr<AHRS> ahrsNavXDriveBase;
-    shared_ptr<DigitalInput> clsDriveBaseBackLeft;
-    shared_ptr<DigitalInput> clsDriveBaseBackRight;
-    shared_ptr<DigitalInput> clsDriveBaseMidLeft;
-    shared_ptr<DigitalInput> clsDriveBaseMidRight;
+    shared_ptr<DigitalInput> clsDriveBaseLeft;
+    shared_ptr<DigitalInput> clsDriveBaseRight;
+    // shared_ptr<DigitalInput> clsDriveBaseMidLeft;
+    // shared_ptr<DigitalInput> clsDriveBaseMidRight;
     shared_ptr<DigitalOutput> dioTriggerDriveBaseLeft;
     shared_ptr<DigitalInput> dioEchoDriveBaseLeft;
     shared_ptr<DigitalOutput> dioTriggerDriveBaseRight;
@@ -124,15 +127,19 @@ public:
     shared_ptr<WPI_TalonSRX> srxRollerIntake;
     shared_ptr<WPI_TalonSRX> srxRollerIntakeBar;
 
-    shared_ptr<DigitalInput> subIntakeOutakeCargo;
+    // shared_ptr<DigitalInput> subIntakeOutakeCargo;
 
     // Panel Affector Actuators
     shared_ptr<DoubleSolenoid> solPanelAffectorTop;
     shared_ptr<DoubleSolenoid> solPanelAffectorBottom;
     shared_ptr<DoubleSolenoid> solPanelAffectorTopFinger;
     //shared_ptr<DoubleSolenoid> solPanelAffectorBottomFinger;
+    
     //climber
-    shared_ptr<WPI_TalonSRX> srxClimber;
+    shared_ptr<VictorSPX> spxClimber;
+    shared_ptr<VictorSPX> spxClimberSlave;
+    shared_ptr<Servo> srvClimberLatch;
+    shared_ptr<DigitalInput> limClimberLimit;
 };
 
 /**

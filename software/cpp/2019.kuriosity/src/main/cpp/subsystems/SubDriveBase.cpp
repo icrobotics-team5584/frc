@@ -23,10 +23,10 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   _ahrsNavXGyro = Robot::_robotMap->ahrsNavXDriveBase;
   _ulsLeft = Robot::_robotMap->dioUlsDriveBaseLeft;
   _ulsRight = Robot::_robotMap->dioUlsDriveBaseRight;
-  _clsBackRight = Robot::_robotMap->clsDriveBaseBackRight;
-  _clsBackLeft = Robot::_robotMap->clsDriveBaseBackLeft;
-  _clsMidRight = Robot::_robotMap->clsDriveBaseMidRight;
-  _clsMidLeft = Robot::_robotMap->clsDriveBaseMidLeft;
+  _clsRight = Robot::_robotMap->clsDriveBaseRight;
+  _clsLeft = Robot::_robotMap->clsDriveBaseLeft;
+  // _clsMidRight = Robot::_robotMap->clsDriveBaseMidRight;
+  // _clsMidLeft = Robot::_robotMap->clsDriveBaseMidLeft;
 
   //encoders
   _srxFrontRight->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
@@ -154,38 +154,65 @@ double SubDriveBase::getYaw() {
  * paramater to choose the position of the sensor to get. Options are BACK_LEFT, BACK_RIGHT,
  * MID_LEFT or MID_RIGHT. Make sure to #include "subsystems/SubDriveBase.h" to use these options.
  */
-bool SubDriveBase::getColourSensor(ColourSensor sensor) {
+bool SubDriveBase::getColourSensorState(ColourSensor sensor) {
   switch (sensor) {
-    case BACK_LEFT:
-      return !_clsBackLeft->Get();
+    case CLS_LEFT:
+      return !_clsLeft->Get();
       break;
-    case BACK_RIGHT:
-      return !_clsBackRight->Get();
+    case CLS_RIGHT:
+      return !_clsRight->Get();
       break;
-    case MID_LEFT:
-      return !_clsMidLeft->Get();
+    // case MID_LEFT:
+    //   return !_clsMidLeft->Get();
+    //   break;
+    // case MID_RIGHT:
+    //   return !_clsMidRight->Get();
+    //   break;
+  }
+}
+
+/*
+ * Gets a shared pointer of any one of the colour sensor objects attached to the drive base. Use 
+ * the sensor paramater to choose the position of the sensor to get. Options are BACK_LEFT, 
+ * BACK_RIGHT, MID_LEFT or MID_RIGHT. Make sure to #include "subsystems/SubDriveBase.h" to use 
+ * these options.
+ */
+shared_ptr<DigitalInput> SubDriveBase::getColourSensorReference(ColourSensor sensor) {
+  switch (sensor) {
+    case CLS_LEFT:
+      return _clsLeft;
       break;
-    case MID_RIGHT:
-      return !_clsMidRight->Get();
+    case CLS_RIGHT:
+      return _clsRight;
       break;
+    // case MID_LEFT:
+    //   return _clsMidLeft;
+    //   break;
+    // case MID_RIGHT:
+    //   return _clsMidRight;
+    //   break;
   }
 }
 
 bool SubDriveBase::clsBackLeftDetected() {
-  return not(_clsBackLeft->Get());
+  return not(_clsLeft->Get());
 }
 
 bool SubDriveBase::clsBackRightDetected() {
-  return not(_clsBackRight->Get());
+  return not(_clsRight->Get());
 }
 
 bool SubDriveBase::clsMidLeftDetected() {
   //SmartDashboard::PutNumber("midLeftHasReachedLine", not(_clsMidLeft->Get()));
-  return not(_clsMidLeft->Get());
+  // return not(_clsMidLeft->Get());
+  cout << "WARNING: Using depreciated function SubDriveBase::clsMidLeftDetected(), use getColourSensorState() instead" << endl;
+  return 0;
 }
 
 bool SubDriveBase::clsMidRightDetected() {
-  return not(_clsMidRight->Get());
+  // return not(_clsMidRight->Get());
+  cout << "WARNING: Using depreciated function SubDriveBase::clsMidRightDetected(), use getColourSensorState() instead" << endl;
+  return 0;
 }
 
 void SubDriveBase::brakeRobot() {

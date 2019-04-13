@@ -26,7 +26,7 @@ void CmdSeekCargoShip::Initialize() {
 void CmdSeekCargoShip::Execute() {
   //This is done so that you only need to change drivePower when changing speed. The drivePower default is 100%
     if (driveState == SEARCHING_FOR_SHIP) {
-        if (Robot::subDriveBase->getColourSensor(_colourSensor)) {
+        if (Robot::subDriveBase->getColourSensorState(_colourSensor)) {
           drivePower = 0.4;
           driveState = AT_HATCH;
         }

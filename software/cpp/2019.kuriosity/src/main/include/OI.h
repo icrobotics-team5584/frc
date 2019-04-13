@@ -40,8 +40,15 @@ class OI {
   unique_ptr<AxisButton> btnStopAtLine;
   unique_ptr<AxisButton> btnSeekRocketSide;
   unique_ptr<frc::JoystickButton> btnIntakeOut;
+  unique_ptr<AxisButton> btnIntakeRoll;
   unique_ptr<frc::JoystickButton> btnDeployPanel;
 
+  unique_ptr<frc::JoystickButton> btnClimber;
+  unique_ptr<frc::JoystickButton> btnClimberLatch;
+  unique_ptr<frc::JoystickButton> btnClimberRetract;
+  unique_ptr<frc::JoystickButton> btnSoloRollerDeploy;
+  unique_ptr<frc::JoystickButton> btnSoloRollerRetract;
+  
   OI();
   std::shared_ptr<frc::Joystick> getJoystick(int);
 private:
@@ -61,7 +68,6 @@ private:
   unique_ptr<AxisButton> btnDriveBaseSlowControllerReverse;
   unique_ptr<frc::JoystickButton> btnElevatorToPos;
   unique_ptr<frc::JoystickButton> btnElevatorToBottom;
-  unique_ptr<frc::JoystickButton> btnClimber;
 
   unique_ptr<frc::JoystickButton> btnOverride;
 

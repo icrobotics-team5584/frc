@@ -14,7 +14,7 @@
 CmdSeekCargoShipRight::CmdSeekCargoShipRight() {
   
   //AddSequential(new CmdGimbleRotateLeft());
-  AddSequential(new CmdSeekCargoShip(ColourSensor::BACK_RIGHT, UltrasonicSensor::RIGHT));
+  AddSequential(new CmdSeekCargoShip(ColourSensor::CLS_RIGHT, UltrasonicSensor::RIGHT));
   AddSequential(new CmdEncoderDrive(-0.26));
   AddSequential(new CmdIntakeOutakeIn());
 
