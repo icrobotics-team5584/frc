@@ -67,25 +67,25 @@ void PathFollower::followPath() {
     updatePosition();
     double leftPower = getLeftSpeedVoltage();
     double rightPower = getRightSpeedVoltage();
-    //Point closestPoint = findClosestPoint();
-    //Point pathPoints = findLookaheadPoint();
+    Point closestPoint = findClosestPoint();
+    Point pathPoints = findLookaheadPoint();
     // velocityFile << closestPoint.velocity << ", " << motorVelocities.first << ", " << motorVelocities.second << std::endl;
     // curveFile << pathPoints.position.x << "," << pathPoints.position.y << "," << currentPosition.x << "," << currentPosition.y << ","<< _source->getAngle() << "," << driveCurve << std::endl;
-    //frc::SmartDashboard::PutNumber("Left power", motorVelocities.first);
-    //frc::SmartDashboard::PutNumber("Right power", motorVelocities.second);
-    //frc::SmartDashboard::PutNumber("curvature", generateSignedCurve());
-    //frc::SmartDashboard::PutNumber("angle from source", _source->getAngle());
-    // frc::SmartDashboard::PutNumber("closest point x", closestPoint.position.x);
-    //frc::SmartDashboard::PutNumber("closest point y", closestPoint.position.y);
+    frc::SmartDashboard::PutNumber("Left power", leftPower);
+    frc::SmartDashboard::PutNumber("Right power", rightPower);
+    frc::SmartDashboard::PutNumber("curvature", generateDriveCurve());
+    frc::SmartDashboard::PutNumber("angle", _source->getAngle());
+    frc::SmartDashboard::PutNumber("closest point x", closestPoint.position.x);
+    frc::SmartDashboard::PutNumber("closest point y", closestPoint.position.y);
     //frc::SmartDashboard::PutNumber("closest point vel",closestPoint.velocity);
     //frc::SmartDashboard::PutNumber("Path progress", closestPointIndex);
-    //frc::SmartDashboard::PutNumber("lookahead point x", pathPoints.position.x);
-    //frc::SmartDashboard::PutNumber("lookahead point y", pathPoints.position.y);
+    frc::SmartDashboard::PutNumber("lookahead point x", pathPoints.position.x);
+    frc::SmartDashboard::PutNumber("lookahead point y", pathPoints.position.y);
     //frc::SmartDashboard::PutNumber("path length", getPathSize());
     DriveOutput::MotorVelocities motorVelocities;
     motorVelocities.first = leftPower;
     motorVelocities.second = rightPower;
-    //_output->set(motorVelocities);
+    _output->set(motorVelocities);
 }
 
 bool PathFollower::isFinished() { 
@@ -256,37 +256,24 @@ double PathFollower::generateDriveCurve() {
     // Determine error between LA point and expected robot position
 
     double robotAngle = _source->getAngle();
-    double currentAngle = robotAngle * 0.01745329251;  // Convert to radians with * 0.01745329251
+    double currentAngle = robotAngle;  // Convert to radians with * 0.01745329251
     currentAngle = 90 * 0.01745329251 - currentAngle;
     Point lookAhead = findLookaheadPoint();
+
+    //generate the curve
     double distance = findDistance(lookAhead.position.x, currentPosition.x, lookAhead.position.y, currentPosition.y);
     double a = -tan(currentAngle);
-    double b = 1;
     double c = tan(currentAngle) * currentPosition.x - currentPosition.y;
-    double x = abs(a * lookAhead.position.x + b * lookAhead.position.y + c)/sqrt(a*a + b*b);
-    double curve = 2 * x / (lookaheadDistance * lookaheadDistance);
+    double x = abs(a * lookAhead.position.x + lookAhead.position.y + c) / sqrt(a * a + 1);
+
+    //generate the sign of the curve
+    int side = getSign(sin(3.1415/2 - robotAngle) * 
+    (lookAhead.position.x - currentPosition.x) - cos(3.1415/2 - robotAngle) *
+    (lookAhead.position.y - currentPosition.y));
+
+    double curve = side * (2 * x / (lookaheadDistance * lookaheadDistance)); //gives the robot information on whether the curvature is on the left or right side
     return curve;
 }
-double PathFollower::generateSignedCurve() {
-    Point lookAheadPoint = findLookaheadPoint();
-    Position position = currentPosition;
-    double signedCurvature;
-    //foward is supposed to be 90
-    //gets the sign of the curvature (1 is right, 0 is foward, -1 is left)
-    double robotAngle = _source->getAngle();
-
-    //frc::SmartDashboard::PutNumber("side", sin(robotAngle) * 
-    //(lookAheadPoint.position.x - currentPosition.x) - cos(robotAngle) *
-    //(lookAheadPoint.position.y - currentPosition.y));
-
-
-    int side = getSign(sin(robotAngle) * 
-    (lookAheadPoint.position.x - currentPosition.x) - cos(robotAngle) *
-    (lookAheadPoint.position.y - currentPosition.y));
-    signedCurvature = generateDriveCurve() * -side; // inverted side here because it returns the opposite for an unknown reason
-    return signedCurvature;
-}
-
 void PathFollower::updatePosition() { currentPosition = _source->getPosition(); }
 
 /*
@@ -350,27 +337,19 @@ std::vector<Point> PathFollower::constructVectorPathSeg(Segment *seg, int length
 }
 
 int PathFollower::getSign(double side){
-    int sign;
-    if (side > 0) {
-        sign = 1;
-    }
-    else if (side < 0) {
-        sign = -1;
-    }
-    else {
-        sign = 0;
-    }
-    return sign;
+    side = std::abs(side)/side;
+    return side;
 }
+
 DriveOutput::MotorVelocities PathFollower::generateWheelVelocities(double driveCurve, double targetVelocity) {
-    driveCurve = 0;
-    targetVelocity = 2;
+
     double leftPower = targetVelocity * (2 + driveCurve * TRACK_WIDTH) / 2;
     double rightPower = -(targetVelocity * (2 - driveCurve * TRACK_WIDTH) / 2);
     DriveOutput::MotorVelocities motorVelocities;
     motorVelocities.first = leftPower;
     motorVelocities.second = rightPower;
     return motorVelocities;
+    
 }
 double PathFollower::getRightSpeedVoltage() {
     double kP = 0;
@@ -380,7 +359,7 @@ double PathFollower::getRightSpeedVoltage() {
     double lastRightSpeed = Robot::subDriveBase->getRightVelocity();
    // double targetVelocity =  findClosestPoint().velocity;
     double targetVelocity = findClosestPoint().velocity;
-    double driveCurve = generateSignedCurve();
+    double driveCurve = generateDriveCurve();
     DriveOutput::MotorVelocities motorVelocities = generateWheelVelocities(driveCurve, findClosestPoint().velocity);
     
     //SmartDashboard::PutNumber("Right speed", kV * motorVelocities.second + kA * targetAccel + kP * (targetVelocity - Robot::subDriveBase->getRightVelocity()));
@@ -394,7 +373,7 @@ double PathFollower::getLeftSpeedVoltage() {
     double targetAccel = (Robot::subDriveBase->getLeftVelocity() - lastLeftSpeed) / 0.02;
     double lastLeftSpeed = Robot::subDriveBase->getLeftVelocity();
     double targetVelocity =  findClosestPoint().velocity;
-    double driveCurve = generateSignedCurve();
+    double driveCurve = generateDriveCurve();
     DriveOutput::MotorVelocities motorVelocities = generateWheelVelocities(driveCurve, findClosestPoint().velocity);
     //SmartDashboard::PutNumber("Desired left", motorVelocities.first);
     //SmartDashboard::PutNumber("Left speed", kV * motorVelocities.first + kA * targetAccel + kP * (targetVelocity - Robot::subDriveBase->getLeftVelocity()));

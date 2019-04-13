@@ -282,7 +282,7 @@ Segment* SubDriveBase::generatePath(){
   const int POINT_LENGTH = 2;
   Waypoint points[POINT_LENGTH];
   Waypoint p1 = {0, 0, d2r(90)};
-  Waypoint p2 = {0.2, 3, d2r(90)};
+  Waypoint p2 = {0, 1, d2r(90)};
   points[0] = p1;
   points [1] = p2;
   TrajectoryCandidate candidate;

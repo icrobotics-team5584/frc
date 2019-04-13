@@ -61,6 +61,9 @@ OI::OI() {
   btnIntakeRoll.reset(new AxisButton(controller.get(), rightAxisTrigger));
   btnIntakeRoll->WhileHeld(new CmdRollerIn());
 
+  btnSeekPath.reset(new frc::JoystickButton(controllerReverse.get(), startBtn));
+  btnSeekPath->WhenPressed(new CmdSeekPath());
+
   //Intake Outake
   btnCargoPodOut.reset(new frc::JoystickButton(controller.get(), leftBtn));
   btnCargoPodOut->WhileHeld(new CmdIntakeOutakeOut());

@@ -29,13 +29,13 @@ public:
     double getLeftSpeedVoltage();
 
 private:
-    double lookaheadDistance = 1.414213562;   // Measured in meters
-    double pointRadius = 0.1;       // Measured in meters
+    double lookaheadDistance = 0.1;   // Measured in meters
+    double pointRadius = 0.05;       // Measured in meters
     vector<Point> path;
     shared_ptr<PositionSource> _source;
     shared_ptr<DriveOutput> _output;
     std::ofstream velocityFile;
-    std::ofstream curveFile;
+    std::ofstream curveFile;    
     Position currentPosition;
     int closestPointIndex = 0;
     int xyPathPointCount = -1;
@@ -50,7 +50,6 @@ private:
     bool isLookaheadPoint(double x1, double y1, double x2, double y2, double r1, double r2);
     Point findLookaheadPoint();
     double generateDriveCurve();
-    double generateSignedCurve();
     void updatePosition();
     int getSign(double side);
     double findDistance(double x1, double y1, double x2, double y2);

@@ -32,11 +32,11 @@ void CmdSeekPath::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdSeekPath::Execute() {
-  //pathFollower->followPath();
+  pathFollower->followPath();
   double leftVelocity = 1.5 / scaleFactor / 10;
   double rightVelocity = -1.5 / scaleFactor / 10;
   //SmartDashboard::PutNumber("PID velocity", leftVelocity);
-  Robot::subDriveBase->tankDriveVelocity(leftVelocity, rightVelocity);
+  //Robot::subDriveBase->tankDriveVelocity(leftVelocity, rightVelocity);
 }
 
 // Make this return true when this Command no longer needs to run execute()

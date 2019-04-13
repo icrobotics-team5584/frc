@@ -57,7 +57,7 @@ void CmdFollowPath::Initialize() {
   rightTrajectory = new Segment[length];
 
   // The distance between the left and right sides of the wheelbase is 0.6m
-  double wheelbase_width = 0.6;
+  double wheelbase_width = 0.75;
 
   // Generate the Left and Right trajectories of the wheelbase using the 
   // originally generated trajectory
