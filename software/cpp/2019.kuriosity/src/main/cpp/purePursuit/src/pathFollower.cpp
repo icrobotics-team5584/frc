@@ -65,14 +65,13 @@ void PathFollower::setPointRadius(double meters) {
 // Drives the robot along the path as long as this is continuously called. 
 void PathFollower::followPath() { 
     updatePosition();
-    double leftPower = getLeftSpeedVoltage();
-    double rightPower = getRightSpeedVoltage();
     Point closestPoint = findClosestPoint();
     Point pathPoints = findLookaheadPoint();
+    DriveOutput::MotorVelocities motorVelocities = generateWheelVelocities(generateDriveCurve(), closestPoint.velocity);
     // velocityFile << closestPoint.velocity << ", " << motorVelocities.first << ", " << motorVelocities.second << std::endl;
     // curveFile << pathPoints.position.x << "," << pathPoints.position.y << "," << currentPosition.x << "," << currentPosition.y << ","<< _source->getAngle() << "," << driveCurve << std::endl;
-    frc::SmartDashboard::PutNumber("Left power", leftPower);
-    frc::SmartDashboard::PutNumber("Right power", rightPower);
+    frc::SmartDashboard::PutNumber("Left Velocity", motorVelocities.first);
+    frc::SmartDashboard::PutNumber("Right Velocity", motorVelocities.second);
     frc::SmartDashboard::PutNumber("curvature", generateDriveCurve());
     frc::SmartDashboard::PutNumber("angle", _source->getAngle());
     frc::SmartDashboard::PutNumber("closest point x", closestPoint.position.x);
@@ -82,9 +81,8 @@ void PathFollower::followPath() {
     frc::SmartDashboard::PutNumber("lookahead point x", pathPoints.position.x);
     frc::SmartDashboard::PutNumber("lookahead point y", pathPoints.position.y);
     //frc::SmartDashboard::PutNumber("path length", getPathSize());
-    DriveOutput::MotorVelocities motorVelocities;
-    motorVelocities.first = leftPower;
-    motorVelocities.second = rightPower;
+    
+    
     _output->set(motorVelocities);
 }
 
@@ -349,7 +347,7 @@ DriveOutput::MotorVelocities PathFollower::generateWheelVelocities(double driveC
     motorVelocities.first = leftPower;
     motorVelocities.second = rightPower;
     return motorVelocities;
-    
+
 }
 double PathFollower::getRightSpeedVoltage() {
     double kP = 0;
