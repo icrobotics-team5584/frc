@@ -46,6 +46,7 @@ private:
 
     void ImplimentRobotFunctions(shared_ptr<PositionSource> source, shared_ptr<DriveOutput> output);
     Point findClosestPoint();
+    Point findClosestPoint2();
     int findClosestPointIndex();
     double distanceToPoint(double xPoint, double yPoint);
     bool isLookaheadPoint(double x1, double y1, double x2, double y2, double r1, double r2);

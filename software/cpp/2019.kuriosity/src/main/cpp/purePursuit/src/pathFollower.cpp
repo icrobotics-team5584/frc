@@ -1,6 +1,7 @@
 #include "purePursuit/include/pathFollower.hpp"
 #include <stdlib.h>
 #include <cmath>
+#include <array>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -8,6 +9,7 @@
 #include <algorithm>
 #include <utility>
 #include <frc/WPILib.h>
+#include <iterator>
 
 /*
  * Instantiate a PathFollower object with a given robot path represented by a
@@ -159,6 +161,38 @@ Point PathFollower::findClosestPoint() {
             newClosestPointY = oldClosestPointY;
         }
     }
+}
+
+Point PathFollower::findClosestPoint2() {
+    
+    //create an vector that will store the distance between the position of the robot and each point on the path
+    std::vector<double> pathDistances;
+
+    // Start search a few points back from previous closest to avoid outrunning the robot
+    if (closestPointIndex <= 5) {
+        closestPointIndex = -1;
+    } else {
+        closestPointIndex -= 5;
+    }
+
+    //Create loop variables
+    Point closestPoint;
+    double distance;
+    //calculate distances and put into vector
+    for(int i = closestPointIndex; i < getPathSize() - 1; i++) {
+        closestPoint = path.at(i);
+        distance = distanceToPoint(closestPoint.position.x, closestPoint.position.y);
+        //first point distance will be [0], second will be [1]....
+        pathDistances.push_back(distance);
+    }
+    //find minimum value position of the path
+    double min = std::min_element(pathDistances.begin(), pathDistances.end()) - pathDistances.begin();
+    closestPoint = path.at(getPathSize() - pathDistances.size() + min);
+    
+    //set closestPointIndex to the current closest point position
+    closestPointIndex = getPathSize() - pathDistances.size() + min;
+
+    return closestPoint;
 }
 
 int PathFollower::findClosestPointIndex() {
