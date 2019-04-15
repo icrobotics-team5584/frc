@@ -68,7 +68,6 @@ void PathFollower::setPointRadius(double meters) {
 void PathFollower::followPath() { 
     updatePosition();
     Point closestPoint = findClosestPoint();
-    Point pathPoints = findLookaheadPoint();
     DriveOutput::MotorVelocities motorVelocities = generateWheelVelocities(generateDriveCurve(), closestPoint.velocity);
     // velocityFile << closestPoint.velocity << ", " << motorVelocities.first << ", " << motorVelocities.second << std::endl;
     // curveFile << pathPoints.position.x << "," << pathPoints.position.y << "," << currentPosition.x << "," << currentPosition.y << ","<< _source->getAngle() << "," << driveCurve << std::endl;
@@ -191,7 +190,6 @@ Point PathFollower::findClosestPoint2() {
     
     //set closestPointIndex to the current closest point position
     closestPointIndex = getPathSize() - pathDistances.size() + min;
-
     return closestPoint;
 }
 
@@ -227,19 +225,12 @@ bool PathFollower::isLookaheadPoint(double x1, double y1, double x2, double y2,
 
     // if the distance is greater than the sum of the two triangles, they are
     // not touching
-    if (dist > radSum) {
-        return false;
-    }
+
     // this checks whether it circle is inside the other
-    else if (dist < std::abs(r1 - r2)) {
+    if (r2 > dist + r1) {
         return false;
     }
-    // check whether they are the same circle (will not happen in our current
-    // situation, since the radiuses are different, but just in case)
-    else if ((dist == 0) && (r1 = r2)) {
-        return false;
-    }
-    else if (dist < radSum) {
+    else if (dist <= radSum) {
         return true;
     }
     else {
@@ -253,11 +244,13 @@ Point PathFollower::findLookaheadPoint() {
 
     // Point pathPoints;
     double xPoint, yPoint;
-    double xyPathPointCount = findClosestPointIndex();  // Start search at point closest to robot
-
+    double xyPathPointCount = findClosestPointIndex() - 5;  // Start search at point closest to robot and a bit less to avoid outrunning the robot
+    
     // Find the point with a radius that intersects the circle made by our lookahead distance
     bool doTheyIntersect = false;
-    while ((!doTheyIntersect) && (xyPathPointCount < getPathSize()-1)) {
+    //while ((!doTheyIntersect) && (xyPathPointCount < getPathSize()-1)) {
+    int i = xyPathPointCount;
+    for(i; (xyPathPointCount < getPathSize() - 1) or doTheyIntersect; i++) {
         xyPathPointCount++;
         cout << xyPathPointCount << endl;
         xPoint = path.at(xyPathPointCount).position.x;
