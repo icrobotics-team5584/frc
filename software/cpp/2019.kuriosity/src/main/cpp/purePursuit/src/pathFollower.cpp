@@ -245,13 +245,12 @@ Point PathFollower::findLookaheadPoint() {
     // Point pathPoints;
     double xPoint, yPoint;
     double xyPathPointCount = findClosestPointIndex() - 5;  // Start search at point closest to robot and a bit less to avoid outrunning the robot
-    
+
     // Find the point with a radius that intersects the circle made by our lookahead distance
     bool doTheyIntersect = false;
     //while ((!doTheyIntersect) && (xyPathPointCount < getPathSize()-1)) {
     int i = xyPathPointCount;
-    for(i; (xyPathPointCount < getPathSize() - 1) or doTheyIntersect; i++) {
-        xyPathPointCount++;
+    for(i; (i < getPathSize() - 1) or doTheyIntersect; i++) {
         cout << xyPathPointCount << endl;
         xPoint = path.at(xyPathPointCount).position.x;
         yPoint = path.at(xyPathPointCount).position.y;
@@ -270,6 +269,68 @@ Point PathFollower::findLookaheadPoint() {
     //frc::SmartDashboard::PutNumberArray("lookahead point", {pathPoints.position.x, pathPoints.position.y = 3});
     return pathPoints;
 }
+
+/* 
+*  This function uses the math in the pure pursuit pdf to calculate the lookahead point
+*  It does some weird vector addition dark magic sorcery to calculate whether they intersect, and if they do, it proceeds to find this point.
+*  Instead of returning a point on the path, it returns a point between two adjacent path points, making it infinitely better than what we have
+*/ 
+Point PathFollower::findLookAheadPoint2() {
+    double xPos = currentPosition.x;
+    double yPos = currentPosition.y;
+
+    double xyPathPointCount = findClosestPointIndex() - 5;  // Start search at point closest to robot and a bit less to avoid outrunning the robot
+
+    //initialise variables used for the loop
+    Point start;
+    Point end;
+    int i = xyPathPointCount;
+    bool doTheyIntersect = false;
+
+    for(i; (i < getPathSize() - 1); i++) {
+        //grab two adjacent points in the path
+        start = path.at(i);
+        end = path.at(i + 1);
+        //matrix subtraction
+        //hi liam, how can i make this into one line, having 5 lines for this seems stoopid
+        Vector2d d;
+        d.x = end.position.x - start.position.x;
+        d.y = end.position.y - start.position.y;
+        Vector2d f;
+        f.x = start.position.x - xPos;
+        f.y = start.position.y - yPos;
+
+        double a = d.Dot(d);
+        double b = 2 * f.Dot(d);
+        double c = f.Dot(f) - lookaheadDistance * lookaheadDistance;
+
+        double discrim = b * b - 4 * a * c;
+        //by the way, I don't know how the hell this math works because I haven't worked with vectors at school yet....so yeah....
+        if (discrim >= 0) {
+            //proceed to returning the lookahead point
+            //use the qudratic formula
+            discrim = sqrt(discrim);
+            double t1 = (-b - discrim)/(2 * a);
+            double t2 = (-b + discrim)/(2 * a);
+
+            if(t1 >= 0 && t1 <= 1) {
+                //return t1 intersection (our lookahead point)
+                pathPoints.position.x = start.position.x + t1 * d.x;
+                pathPoints.position.y = start.position.y + t1 * d.y;
+                return pathPoints;
+            }
+            if(t2 >= 0 && t2 <= 1) {
+                //return t2 intersection (our lookahead point)
+                pathPoints.position.x = start.position.x + t2 * d.x;
+                pathPoints.position.y = start.position.y + t2 * d.y;
+                return pathPoints;
+            }
+        }
+    }
+    cout << "ERROR: Could not find lookahead point. Using last seen points" << endl;
+    return pathPoints;
+}
+
 double PathFollower::findDistance(double x1, double y1, double x2, double y2) {
     return sqrt((x1-x2) * (x1-x2) + (y1-y2) * (y1-y2));
 }

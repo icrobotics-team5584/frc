@@ -51,6 +51,7 @@ private:
     double distanceToPoint(double xPoint, double yPoint);
     bool isLookaheadPoint(double x1, double y1, double x2, double y2, double r1, double r2);
     Point findLookaheadPoint();
+    Point findLookAheadPoint2();
     double generateDriveCurve();
     void updatePosition();
     int getSign(double side);
