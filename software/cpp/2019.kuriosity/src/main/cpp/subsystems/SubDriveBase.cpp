@@ -281,8 +281,8 @@ Segment* SubDriveBase::generatePath(){
   timer.Start();
   const int POINT_LENGTH = 2;
   Waypoint points[POINT_LENGTH];
-  Waypoint p1 = {0, 0, d2r(0)};
-  Waypoint p2 = {0, 1, d2r(0)};
+  Waypoint p1 = {0, 0, d2r(90)};
+  Waypoint p2 = {0, 1, d2r(90)};
   points[0] = p1;
   points [1] = p2;
   TrajectoryCandidate candidate;
@@ -299,7 +299,7 @@ Segment* SubDriveBase::generatePath(){
   // Max Jerk:            60 m/s/s/s
   // Change the sample count and/or the time step to generate the trajectory faster
   double max_velocity = 3;
-  double time_step = 0.03;
+  double time_step = 0.01;
   double max_accel = 10.0;
   double max_jerk= 60.0;
   pathfinder_prepare(points, POINT_LENGTH, FIT_HERMITE_QUINTIC, PATHFINDER_SAMPLES_LOW, time_step, max_velocity, max_accel, max_jerk, &candidate);

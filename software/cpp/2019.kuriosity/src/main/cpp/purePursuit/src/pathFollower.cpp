@@ -67,13 +67,14 @@ void PathFollower::setPointRadius(double meters) {
 // Drives the robot along the path as long as this is continuously called. 
 void PathFollower::followPath() { 
     updatePosition();
-    Point closestPoint = findClosestPoint();
-    DriveOutput::MotorVelocities motorVelocities = generateWheelVelocities(generateDriveCurve(), closestPoint.velocity);
+    Point closestPoint = findClosestPoint2();
+    findLookAheadPoint2();
+    //DriveOutput::MotorVelocities motorVelocities = generateWheelVelocities(generateDriveCurve(), closestPoint.velocity);
     // velocityFile << closestPoint.velocity << ", " << motorVelocities.first << ", " << motorVelocities.second << std::endl;
     // curveFile << pathPoints.position.x << "," << pathPoints.position.y << "," << currentPosition.x << "," << currentPosition.y << ","<< _source->getAngle() << "," << driveCurve << std::endl;
-    frc::SmartDashboard::PutNumber("Left Velocity", motorVelocities.first);
-    frc::SmartDashboard::PutNumber("Right Velocity", motorVelocities.second);
-    frc::SmartDashboard::PutNumber("curvature", generateDriveCurve());
+    //frc::SmartDashboard::PutNumber("Left Velocity", motorVelocities.first);
+    //frc::SmartDashboard::PutNumber("Right Velocity", motorVelocities.second);
+    //frc::SmartDashboard::PutNumber("curvature", generateDriveCurve());
     frc::SmartDashboard::PutNumber("angle", _source->getAngle());
     frc::SmartDashboard::PutNumber("closest point x", closestPoint.position.x);
     frc::SmartDashboard::PutNumber("closest point y", closestPoint.position.y);
@@ -84,7 +85,7 @@ void PathFollower::followPath() {
     //frc::SmartDashboard::PutNumber("path length", getPathSize());
     
     
-    _output->set(motorVelocities);
+    //_output->set(motorVelocities);
 }
 
 bool PathFollower::isFinished() { 
@@ -169,7 +170,7 @@ Point PathFollower::findClosestPoint2() {
 
     // Start search a few points back from previous closest to avoid outrunning the robot
     if (closestPointIndex <= 5) {
-        closestPointIndex = -1;
+        closestPointIndex = 0;
     } else {
         closestPointIndex -= 5;
     }
@@ -185,11 +186,19 @@ Point PathFollower::findClosestPoint2() {
         pathDistances.push_back(distance);
     }
     //find minimum value position of the path
-    double min = std::min_element(pathDistances.begin(), pathDistances.end()) - pathDistances.begin();
-    closestPoint = path.at(getPathSize() - pathDistances.size() + min);
+    SmartDashboard::PutNumber("Vector Size", pathDistances.size());
+    double minIndex = pathDistances.at(0);
+    for(int i = 1; i < pathDistances.size() - 1; i++) {
+        if(pathDistances.at(i) < pathDistances.at(minIndex)) {
+            minIndex = i;
+        }
+    }
+    //double min = std::min_element(pathDistances.begin(), pathDistances.end()) - pathDistances.begin();
+    //closestPoint = path.at(getPathSize() - pathDistances.size() + min);
     
     //set closestPointIndex to the current closest point position
-    closestPointIndex = getPathSize() - pathDistances.size() + min;
+    //closestPointIndex = getPathSize() - pathDistances.size() + min;
+    closestPoint = path.at(getPathSize() - pathDistances.size() + minIndex);
     return closestPoint;
 }
 
@@ -244,7 +253,7 @@ Point PathFollower::findLookaheadPoint() {
 
     // Point pathPoints;
     double xPoint, yPoint;
-    double xyPathPointCount = findClosestPointIndex() - 5;  // Start search at point closest to robot and a bit less to avoid outrunning the robot
+    double xyPathPointCount = findClosestPointIndex();  // Start search at point closest to robot and a bit less to avoid outrunning the robot
 
     // Find the point with a radius that intersects the circle made by our lookahead distance
     bool doTheyIntersect = false;
@@ -279,7 +288,7 @@ Point PathFollower::findLookAheadPoint2() {
     double xPos = currentPosition.x;
     double yPos = currentPosition.y;
 
-    double xyPathPointCount = findClosestPointIndex() - 5;  // Start search at point closest to robot and a bit less to avoid outrunning the robot
+    double xyPathPointCount = findClosestPointIndex();  // Start search at point closest to robot and a bit less to avoid outrunning the robot
 
     //initialise variables used for the loop
     Point start;
@@ -345,7 +354,7 @@ double PathFollower::generateDriveCurve() {
     double robotAngle = _source->getAngle();
     double currentAngle = robotAngle;  // Convert to radians with * 0.01745329251
     currentAngle = 90 * 0.01745329251 - currentAngle;
-    Point lookAhead = findLookaheadPoint();
+    Point lookAhead = findLookAheadPoint2();
 
     //generate the curve
     double distance = findDistance(lookAhead.position.x, currentPosition.x, lookAhead.position.y, currentPosition.y);

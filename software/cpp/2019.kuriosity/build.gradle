@@ -41,7 +41,7 @@ deploy {
 def includeSrcInIncludeRoot = false
 
 // Set this to true to enable desktop support.
-def includeDesktopSupport = false
+def includeDesktopSupport = true
 
 model {
     components {
