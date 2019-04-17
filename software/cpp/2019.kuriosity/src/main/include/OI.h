@@ -5,7 +5,7 @@
 #include "ButtonPOV.h"
 #include "AxisButton.h"
 #include "LimitButton.h"
-
+#include "ToggleButton.h"
 using namespace std;
 
 enum Buttons {
