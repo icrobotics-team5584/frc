@@ -179,15 +179,17 @@ Point PathFollower::findClosestPoint2() {
     Point closestPoint;
     double distance;
     //calculate distances and put into vector
-    for(int i = closestPointIndex; i < getPathSize() - 1; i++) {
-        closestPoint = path.at(i);
+    for(closestPointIndex; closestPointIndex < getPathSize() - 1; closestPointIndex){
+        closestPoint = path.at(closestPointIndex);
         distance = distanceToPoint(closestPoint.position.x, closestPoint.position.y);
         //first point distance will be [0], second will be [1]....
         pathDistances.push_back(distance);
     }
-    //find minimum value position of the path
-    SmartDashboard::PutNumber("Vector Size", pathDistances.size());
-    double minIndex = pathDistances.at(0);
+    /* here we assume that the first point in the vector is the closest point. 
+    *  we move along the vector of distances, and we check whether there is a smaller distance than pathDistances.at(0).
+    *  if this is true, we make this index our new minimum index, and keep checking until we go through the entire path.
+    */
+    double minIndex = 0;
     for(int i = 1; i < pathDistances.size() - 1; i++) {
         if(pathDistances.at(i) < pathDistances.at(minIndex)) {
             minIndex = i;
