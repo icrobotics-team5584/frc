@@ -68,7 +68,7 @@ void PathFollower::setPointRadius(double meters) {
 void PathFollower::followPath() { 
     updatePosition();
     Point closestPoint = findClosestPoint2();
-    findLookAheadPoint2();
+    Point lookaheadPoint = findLookAheadPoint2();
     //DriveOutput::MotorVelocities motorVelocities = generateWheelVelocities(generateDriveCurve(), closestPoint.velocity);
     // velocityFile << closestPoint.velocity << ", " << motorVelocities.first << ", " << motorVelocities.second << std::endl;
     // curveFile << pathPoints.position.x << "," << pathPoints.position.y << "," << currentPosition.x << "," << currentPosition.y << ","<< _source->getAngle() << "," << driveCurve << std::endl;
@@ -189,7 +189,7 @@ Point PathFollower::findClosestPoint2() {
     *  we move along the vector of distances, and we check whether there is a smaller distance than pathDistances.at(0).
     *  if this is true, we make this index our new minimum index, and keep checking until we go through the entire path.
     */
-    double minIndex = 0;
+    int minIndex = 0;
     for(int i = 1; i < pathDistances.size() - 1; i++) {
         if(pathDistances.at(i) < pathDistances.at(minIndex)) {
             minIndex = i;
@@ -281,28 +281,25 @@ Point PathFollower::findLookaheadPoint() {
     return pathPoints;
 }
 
-/* 
-*  This function uses the math in the pure pursuit pdf to calculate the lookahead point
-*  It does some weird vector addition dark magic sorcery to calculate whether they intersect, and if they do, it proceeds to find this point.
-*  Instead of returning a point on the path, it returns a point between two adjacent path points, making it infinitely better than what we have
-*/ 
+/* using the equation: |t*d + f| = r, we try to find the value(s) of 't' where the length of the vector from the
+* robot center to the point is equal to the radius 'r'.
+* if you square both sides we get a quadratic formula with a, b, c. we use the quadratic formula and check for
+* the intersections, and then check if the intersection is within the segment (if t is between zero and one.)
+* the final method is: (p^2)*t^2 + (2*p*f)*t + (f^2 - r^2) = 0
+*/
 Point PathFollower::findLookAheadPoint2() {
     double xPos = currentPosition.x;
     double yPos = currentPosition.y;
 
-    double xyPathPointCount = findClosestPointIndex();  // Start search at point closest to robot and a bit less to avoid outrunning the robot
-
     //initialise variables used for the loop
     Point start;
     Point end;
-    int i = xyPathPointCount;
-    bool doTheyIntersect = false;
-
-    for(i; (i < getPathSize() - 1); i++) {
+    double xyPathPointCount = findClosestPointIndex();  // Start search at point closest to robot
+    for(xyPathPointCount; xyPathPointCount < getPathSize() - 1; xyPathPointCount++) {
         //grab two adjacent points in the path
-        start = path.at(i);
-        end = path.at(i + 1);
-        //matrix subtraction
+        start = path.at(xyPathPointCount);
+        end = path.at(xyPathPointCount + 1);
+        //matrix subtraction    
         //hi liam, how can i make this into one line, having 5 lines for this seems stoopid
         Vector2d d;
         d.x = end.position.x - start.position.x;
