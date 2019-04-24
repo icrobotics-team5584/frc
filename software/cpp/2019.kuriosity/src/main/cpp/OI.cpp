@@ -61,7 +61,7 @@ OI::OI() {
 
 //Roller
   btnIntakeOut.reset(new ToggleButton(controller.get(), rightBtn));
-  btnIntakeOut->SetCommand(new CmdCargoIntakeOut, new CmdCargoIntakeIn);
+  btnIntakeOut->SetCommand(new CmdCargoIntakeOut(), new CmdCargoIntakeIn());
   
   btnIntakeRoll.reset(new AxisButton(controller.get(), rightAxisTrigger));
   btnIntakeRoll->WhileHeld(new CmdRollerIn());

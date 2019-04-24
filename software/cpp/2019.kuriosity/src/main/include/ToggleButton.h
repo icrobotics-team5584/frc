@@ -1,6 +1,6 @@
 
 #pragma once
-
+#include <iostream>
 #include <frc/wpilib.h>
 #include <frc/Buttons/Trigger.h>
 using namespace frc;
@@ -10,7 +10,7 @@ class ToggleButton : Trigger {
   ToggleButton(GenericHID* joystick, int axisNumber, bool isAxis = false);
 	bool Get();
 	float GetAxis();
-	void WhenPressed(Command* command);
+	void WhenPressed();
 	void WhileHeld(Command* command);
   void SetCommand(Command* cmd1, Command* cmd2);
 private:
