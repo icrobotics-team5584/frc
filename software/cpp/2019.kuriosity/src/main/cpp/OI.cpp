@@ -55,9 +55,14 @@ OI::OI() {
   btnSeekRocketSide.reset(new AxisButton(controllerReverse.get(), rightAxisTrigger));
   btnSeekRocketSide->WhileHeld(new CmdSeekRocketSide());
 
-  btnIntakeOut.reset(new frc::JoystickButton(controller.get(), rightBtn));
-  btnIntakeOut->WhenPressed(new CmdCargoIntakeOut());
-  btnIntakeOut->WhenReleased(new CmdCargoIntakeIn());
+  //btnIntakeOut.reset(new frc::JoystickButton(controller.get(), rightBtn));
+  //btnIntakeOut->WhenPressed(new CmdCargoIntakeOut());
+  //btnIntakeOut->WhenReleased(new CmdCargoIntakeIn());
+
+//Roller
+  btnIntakeOut.reset(new ToggleButton(controller.get(), rightBtn));
+  btnIntakeOut->SetCommand(new CmdCargoIntakeOut, new CmdCargoIntakeIn);
+  
   btnIntakeRoll.reset(new AxisButton(controller.get(), rightAxisTrigger));
   btnIntakeRoll->WhileHeld(new CmdRollerIn());
 
