@@ -17,16 +17,23 @@ bool ToggleButton::Get(){
         if (_joystick->GetRawAxis(_axisNumber) > 0) {
             WhenPressed();
         	return true;
+            std::cout << "true" << std::endl;
         } else {
         	return false;
+                        std::cout << "true" << std::endl;
         }
     } else{
         std::cout << "AXIS FALSE" << std::endl;
+        std::cout << "_joystick->GetRawAxis(_axisNumber) = true" << std::endl;
         if(_joystick->GetRawButton(_axisNumber) == true){
             WhenPressed();
             return true;
+                    std::cout << "_joystick->GetRawAxis(_axisNumber) = true" << std::endl;
+
         } else{
             return false;
+                    std::cout << "_joystick->GetRawAxis(_axisNumber) = false" << std::endl;
+
         }
     }
 }
