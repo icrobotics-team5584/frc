@@ -9,7 +9,13 @@
 
 #include <frc/commands/CommandGroup.h>
 
+<<<<<<< HEAD
 class Auto_rocket : public frc::CommandGroup {
  public:
   Auto_rocket();
+=======
+class Auto_rocket_1 : public frc::CommandGroup {
+ public:
+  Auto_rocket_1();
+>>>>>>> DDU2019
 };
