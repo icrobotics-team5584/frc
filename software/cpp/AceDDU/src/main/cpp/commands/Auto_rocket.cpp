@@ -9,7 +9,7 @@
 #include "commands/CmdAngleTurn.h"
 #include "commands/CmdAutoDrive.h"
 
-Auto_switch_1::Auto_switch_1() {
+Auto_rocket_1::Auto_rocket_1() {
 
   // Add Commands here:
   // e.g. AddSequential(new Command1());
