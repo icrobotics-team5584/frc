@@ -9,7 +9,7 @@
 
 #include <frc/commands/CommandGroup.h>
 
-class Auto_switch_1 : public frc::CommandGroup {
+class Auto_rocket : public frc::CommandGroup {
  public:
-  Auto_switch_1();
+  Auto_rocket();
 };

@@ -6,11 +6,8 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/Auto_rocket.h"
-#include "commands/CmdAngleTurn.h"
-#include "commands/CmdAutoDrive.h"
 
-Auto_switch_1::Auto_switch_1() {
-
+Auto_rocket::Auto_rocket() {
   // Add Commands here:
   // e.g. AddSequential(new Command1());
   //      AddSequential(new Command2());
