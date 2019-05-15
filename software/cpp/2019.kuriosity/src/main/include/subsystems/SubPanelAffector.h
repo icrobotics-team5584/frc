@@ -18,7 +18,9 @@ class SubPanelAffector : public frc::Subsystem {
   shared_ptr<DoubleSolenoid> solTop; 
   shared_ptr<DoubleSolenoid> solBottom;
   shared_ptr<DoubleSolenoid> solTopFinger;
-  shared_ptr<DoubleSolenoid> solBottomFinger;
+  //shared_ptr<DoubleSolenoid> solBottomFinger;
+
+  shared_ptr<frc::Joystick> _controller;
 
  public:
   SubPanelAffector();
@@ -27,4 +29,6 @@ class SubPanelAffector : public frc::Subsystem {
   void Deploy();
   void DeployFingers();
   void RetractFingers();
+  void StartRumble();
+  void StopRumble();
 };

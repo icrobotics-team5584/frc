@@ -16,7 +16,7 @@ class SubRollerIntake : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
-  shared_ptr<frc::Spark> _spkRoller;
+  shared_ptr<WPI_TalonSRX> _srxRoller;
   double inSpeed = 1.0;
   double outSpeed = -1.0;
  public:

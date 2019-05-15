@@ -9,14 +9,22 @@
 
 #include <frc/WPILib.h>
 #include <frc/commands/Subsystem.h>
+#include <pathfinder.h>
+
 #include <ctre/Phoenix.h>
 #include <AHRS.h>
 #include <networktables/NetworkTable.h>
 #include <networktables/NetworkTableInstance.h>
 #include <networktables/NetworkTableEntry.h>
 
+#include "RightVelocitySource.h"
+#include "LeftVelocitySource.h"
+
 using namespace std;
 using namespace frc;
+
+enum ColourSensor {CLS_LEFT, CLS_RIGHT};
+enum UltrasonicSensor {LEFT, RIGHT};
 
 class SubDriveBase : public frc::Subsystem {
  private:
@@ -26,42 +34,85 @@ class SubDriveBase : public frc::Subsystem {
   shared_ptr<WPI_TalonSRX> _srxBackLeft;
   shared_ptr<WPI_TalonSRX> _srxBackRight;
   unique_ptr<frc::DifferentialDrive> difDrive;
-  
-  // Sensors
-  shared_ptr<DigitalInput> _clsMid;
-  shared_ptr<DigitalInput> _clsFront;
-  shared_ptr<Ultrasonic> _ulsGimble;
-  shared_ptr<Ultrasonic> _ulsBottom;
-  shared_ptr<AHRS> _ahrsNavXGyro;
-  shared_ptr<DigitalInput> _clsLineLeft;
-  shared_ptr<DigitalInput> _clsLineRight;
+  unique_ptr<PIDController> leftVelocityController;
+  unique_ptr<PIDController> rightVelocityController;
+  LeftVelocitySource* leftVelocitySource;
+  RightVelocitySource* rightVelocitySource;
 
+  // Sensors
+  shared_ptr<DigitalInput> _clsLeft;
+  shared_ptr<DigitalInput> _clsRight;
+  // shared_ptr<DigitalInput> _clsMidLeft;
+  // shared_ptr<DigitalInput> _clsMidRight;
+  shared_ptr<Ultrasonic> _ulsLeft;
+  shared_ptr<Ultrasonic> _ulsRight;
+  shared_ptr<AHRS> _ahrsNavXGyro;
+  
+
+  // Robot constants
+  const double WHEEL_DIAMETER = 0.1524; // in meters (0.1016 for lofty)(0.1524 for dizzy)
+  const int ENCODER_TICS_PER_ROTATION = 4096; // 
+  double metersPerRotation; // calculated in constructor
+
+  int pathLength; //path length
+  double scaleFactor = (WHEEL_DIAMETER * 3.1459265)/4096;
+  Timer timer;
+  
+	double kTimeoutMs = 30;
+  double kPIDLoopIdx = 0;
+  double kSlotIdx = 0;
+ 
   // Data
   unique_ptr<nt::NetworkTableEntry> tgtY;
   unique_ptr<nt::NetworkTableEntry> tgtRange;
 
  public:
+  const double WHEEL_BASE_WIDTH =  0.6;
   SubDriveBase();
   void InitDefaultCommand() override;
 
   // Drive functions
+  void tankDriveVelocity(double leftVelocity, double rightVelocity);
   void drive(double speed, double rotation);
+  void tankDrive(double leftSpeed, double rightSpeed);
   void stop();
   void brakeRobot();
+  Segment* generatePath();
+  int getPathLength();
+  void setTalBrakeMode(NeutralMode neutralMode);
+
+  // Encoder functions
+  void zeroEncoders();
+  double getRawLeftEncoder();
+  double getRawRightEncoder();
+  double getDistanceTravelled();
+  double getRightVelocity();
+  double getLeftVelocity();
+  void velocityPIDConfig();
+  void setTalControlMode(ControlMode controlMode);
+
+  void disablePID();
 
   // Gyro functions
   void resetYaw();
   double getYaw();
 
   // Colour Sensor functions
-  bool frontHasReachedLine();
-  bool midHasReachedLine();
-  bool isLeftClsOnLine();
-  bool isRightClsOnLine();
+  bool getColourSensorState(ColourSensor sensor);
+  shared_ptr<DigitalInput> getColourSensorReference(ColourSensor sensor);
+  bool clsBackLeftDetected();
+  bool clsMidLeftDetected();
+  bool clsBackRightDetected();
+  bool clsMidRightDetected();
 
   // Ultrasonic functions
-  double getDistanceToObstical();
-  bool isBayEmpty();
+  double getUlsDistance(UltrasonicSensor ultrasonic);
+  bool isBayEmpty(UltrasonicSensor ultrasonicSensor);
+  double positionPID(double distance);
+  void pidPositionConfig();
+//   void setPIDSetPoint();
+//   void enablePID();
+//   bool isAtPIDSetPoint();
 
   // Vision functions
   double getTgtY();
