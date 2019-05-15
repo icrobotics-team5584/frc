@@ -6,15 +6,12 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/Auto_rocket.h"
-<<<<<<< HEAD
-=======
-#include "commands/CmdAngleTurn.h"
-#include "commands/CmdAutoDrive.h"
+#include "CmdAngleTurn.h"
+#include "CmdAutoDrive.h"
 
-Auto_rocket_1::Auto_rocket_1() {
->>>>>>> DDU2019
 
 Auto_rocket::Auto_rocket() {
+  
   // Add Commands here:
   // e.g. AddSequential(new Command1());
   //      AddSequential(new Command2());
