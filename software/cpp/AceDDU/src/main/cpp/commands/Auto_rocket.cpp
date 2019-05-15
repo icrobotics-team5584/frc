@@ -11,7 +11,8 @@
 
 
 Auto_rocket::Auto_rocket() {
-  
+  AddSequential(new CmdAutoDrive (1));
+  AddSequential(new CmdAngleTurn(45))
   // Add Commands here:
   // e.g. AddSequential(new Command1());
   //      AddSequential(new Command2());
