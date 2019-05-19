@@ -25,18 +25,25 @@ void CmdSeekPath::Initialize() {
   pathFollower->reset();
   Robot::subDriveBase->zeroEncoders();
   Robot::subDriveBase->setTalControlMode(ControlMode::PercentOutput);
-  Robot::subDriveBase->velocityPIDConfig();
   scaleFactor = wheelCircumference/4096;
   // SmartDashboard::PutBoolean("Running CmdSeekpath", true);
+  
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdSeekPath::Execute() {
-  pathFollower->followPath();
-  double leftVelocity = 1.5 / scaleFactor / 10;
-  double rightVelocity = -1.5 / scaleFactor / 10;
-  //SmartDashboard::PutNumber("PID velocity", leftVelocity);
-  //Robot::subDriveBase->tankDriveVelocity(leftVelocity, rightVelocity);
+  //pathFollower->followPath();
+  kF = 1023/ (3.6/ 0.000078 / 10);
+  kP = SmartDashboard::GetNumber("Vel P", 0);
+  kI = SmartDashboard::GetNumber("Vel I", 0);
+  kD = SmartDashboard::GetNumber("Vel D", 0);
+  targetVelocity = SmartDashboard::GetNumber("Target Vel", 0);
+  Robot::subDriveBase->velocityPIDConfig(kF, kP, kI, kD);
+  double leftVelocity = 1.5*(targetVelocity / scaleFactor / 10);
+  double rightVelocity = -(targetVelocity / scaleFactor / 10);
+  SmartDashboard::PutNumber("PID velocityL", Robot::subDriveBase->getLeftVelocity());
+  SmartDashboard::PutNumber("PID velocityR", Robot::subDriveBase->getRightVelocity());
+  Robot::subDriveBase->tankDriveVelocity(leftVelocity, rightVelocity);
 }
 
 // Make this return true when this Command no longer needs to run execute()

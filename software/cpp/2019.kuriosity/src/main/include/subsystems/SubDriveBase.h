@@ -80,7 +80,7 @@ class SubDriveBase : public frc::Subsystem {
   double getDistanceTravelled();
   double getRightVelocity();
   double getLeftVelocity();
-  void velocityPIDConfig();
+  void velocityPIDConfig(double kF, double kP, double kI, double kD);
   void setTalControlMode(ControlMode controlMode);
 
   void disablePID();

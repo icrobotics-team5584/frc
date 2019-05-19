@@ -21,6 +21,13 @@ class CmdSeekPath : public frc::Command {
   const double  wheelCircumference = 0.47877872; //(m)
   double scaleFactor;
 
+  double kF = 0;
+  double kP = 0.075;
+  double kI = -100;
+  double kD = 0.01;
+  double targetVelocity;
+
+
  public:
   CmdSeekPath();
   void Initialize() override;

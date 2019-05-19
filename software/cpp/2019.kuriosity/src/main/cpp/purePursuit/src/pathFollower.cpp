@@ -68,20 +68,17 @@ void PathFollower::setPointRadius(double meters) {
 void PathFollower::followPath() { 
     updatePosition();
     Point closestPoint = findClosestPoint2();
-    Point lookaheadPoint = findLookAheadPoint2();
-    //DriveOutput::MotorVelocities motorVelocities = generateWheelVelocities(generateDriveCurve(), closestPoint.velocity);
+    DriveOutput::MotorVelocities motorVelocities = generateWheelVelocities(generateDriveCurve(), closestPoint.velocity);
     // velocityFile << closestPoint.velocity << ", " << motorVelocities.first << ", " << motorVelocities.second << std::endl;
     // curveFile << pathPoints.position.x << "," << pathPoints.position.y << "," << currentPosition.x << "," << currentPosition.y << ","<< _source->getAngle() << "," << driveCurve << std::endl;
-    //frc::SmartDashboard::PutNumber("Left Velocity", motorVelocities.first);
-    //frc::SmartDashboard::PutNumber("Right Velocity", motorVelocities.second);
-    //frc::SmartDashboard::PutNumber("curvature", generateDriveCurve());
+    frc::SmartDashboard::PutNumber("Left Velocity", motorVelocities.first);
+    frc::SmartDashboard::PutNumber("Right Velocity", motorVelocities.second);
+    frc::SmartDashboard::PutNumber("curvature", generateDriveCurve());
     frc::SmartDashboard::PutNumber("angle", _source->getAngle());
     frc::SmartDashboard::PutNumber("closest point x", closestPoint.position.x);
     frc::SmartDashboard::PutNumber("closest point y", closestPoint.position.y);
     //frc::SmartDashboard::PutNumber("closest point vel",closestPoint.velocity);
     //frc::SmartDashboard::PutNumber("Path progress", closestPointIndex);
-    frc::SmartDashboard::PutNumber("lookahead point x", pathPoints.position.x);
-    frc::SmartDashboard::PutNumber("lookahead point y", pathPoints.position.y);
     //frc::SmartDashboard::PutNumber("path length", getPathSize());
     
     
@@ -179,8 +176,8 @@ Point PathFollower::findClosestPoint2() {
     Point closestPoint;
     double distance;
     //calculate distances and put into vector
-    for(closestPointIndex; closestPointIndex < getPathSize() - 1; closestPointIndex){
-        closestPoint = path.at(closestPointIndex);
+    for(int i = 0; i < getPathSize() - 1; i++){
+        closestPoint = path.at(i);
         distance = distanceToPoint(closestPoint.position.x, closestPoint.position.y);
         //first point distance will be [0], second will be [1]....
         pathDistances.push_back(distance);
@@ -199,7 +196,7 @@ Point PathFollower::findClosestPoint2() {
     //closestPoint = path.at(getPathSize() - pathDistances.size() + min);
     
     //set closestPointIndex to the current closest point position
-    //closestPointIndex = getPathSize() - pathDistances.size() + min;
+    closestPointIndex = getPathSize() - pathDistances.size() + minIndex;
     closestPoint = path.at(getPathSize() - pathDistances.size() + minIndex);
     return closestPoint;
 }
@@ -290,7 +287,7 @@ Point PathFollower::findLookaheadPoint() {
 Point PathFollower::findLookAheadPoint2() {
     double xPos = currentPosition.x;
     double yPos = currentPosition.y;
-
+    std::cout << "Robot pos: [" << currentPosition.x << ", " << currentPosition.y << "]" << std::endl;
     //initialise variables used for the loop
     Point start;
     Point end;
@@ -321,6 +318,9 @@ Point PathFollower::findLookAheadPoint2() {
             double t1 = (-b - discrim)/(2 * a);
             double t2 = (-b + discrim)/(2 * a);
 
+            //std::cout << "Robot pos: [" << currentPosition.x << ", " << currentPosition.y << "]" << "| t values: " << t1 << ", " << t2 << std::endl;
+            //std::cout << "segment co-ords: start: [" << start.position.x << ", " << start.position.y << "]" << " end: [" << end.position.x << ", " << end.position.y << "]" << std::endl;
+            //std::cout << "path progress: " << xyPathPointCount << std::endl;
             if(t1 >= 0 && t1 <= 1) {
                 //return t1 intersection (our lookahead point)
                 pathPoints.position.x = start.position.x + t1 * d.x;
@@ -351,22 +351,23 @@ double PathFollower::generateDriveCurve() {
     // Determine error between LA point and expected robot position
 
     double robotAngle = _source->getAngle();
-    double currentAngle = robotAngle;  // Convert to radians with * 0.01745329251
-    currentAngle = 90 * 0.01745329251 - currentAngle;
+    double currentAngle = 90 * 0.01745329251 - robotAngle;  // Convert to radians with * 0.01745329251
     Point lookAhead = findLookAheadPoint2();
+    SmartDashboard::PutNumber("lookahead x", lookAhead.position.x);
+    SmartDashboard::PutNumber("lookahead y", lookAhead.position.y);
 
     //generate the curve
-    double distance = findDistance(lookAhead.position.x, currentPosition.x, lookAhead.position.y, currentPosition.y);
+    double distance = distanceToPoint(lookAhead.position.x, lookAhead.position.y);
     double a = -tan(currentAngle);
     double c = tan(currentAngle) * currentPosition.x - currentPosition.y;
     double x = abs(a * lookAhead.position.x + lookAhead.position.y + c) / sqrt(a * a + 1);
 
     //generate the sign of the curve
-    int side = getSign(sin(3.1415/2 - robotAngle) * 
-    (lookAhead.position.x - currentPosition.x) - cos(3.1415/2 - robotAngle) *
+    int side = getSign(sin(currentAngle) * 
+    (lookAhead.position.x - currentPosition.x) - cos(currentAngle) *
     (lookAhead.position.y - currentPosition.y));
 
-    double curve = side * (2 * x / (lookaheadDistance * lookaheadDistance)); //gives the robot information on whether the curvature is on the left or right side
+    double curve = side * (2 * x / (distance * distance)); //gives the robot information on whether the curvature is on the left or right side
     return curve;
 }
 void PathFollower::updatePosition() { currentPosition = _source->getPosition(); }

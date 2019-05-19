@@ -16,8 +16,9 @@ Position PosEncoderGyro::getPosition() {
     double currentDistance = Robot::subDriveBase->getDistanceTravelled();
     SmartDashboard::PutNumber("Distance Travelled", Robot::subDriveBase->getDistanceTravelled());
     double distanceDelta = currentDistance - prevDistance;
-
+    SmartDashboard::PutNumber("Distance Delta ", distanceDelta);
     // Determine current position
+    SmartDashboard::PutNumber("Current Angle", currentAngle);
     currentPosition.x += distanceDelta * sin(currentAngle);
     currentPosition.y += distanceDelta * cos(currentAngle);
 

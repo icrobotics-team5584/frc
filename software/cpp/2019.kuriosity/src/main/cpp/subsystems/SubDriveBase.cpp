@@ -101,19 +101,18 @@ double SubDriveBase::getLeftVelocity() {
   return velocity;
 }
 
-void SubDriveBase::velocityPIDConfig() {
+void SubDriveBase::velocityPIDConfig(double kF, double kP, double kI, double kD) {
   difDrive->SetSafetyEnabled(false);
   //left talon
-  double kF = 1023/ (3.6/ 0.000078 / 10) + 0.18;
   _srxFrontLeft->ConfigNominalOutputForward(0, kTimeoutMs);
   _srxFrontLeft->ConfigNominalOutputReverse(0, kTimeoutMs);
   _srxFrontLeft->ConfigPeakOutputForward(1, kTimeoutMs);
   _srxFrontLeft->ConfigPeakOutputReverse(-1, kTimeoutMs);
 
   _srxFrontLeft->Config_kF(kPIDLoopIdx, kF, kTimeoutMs);
-  _srxFrontLeft->Config_kP(kPIDLoopIdx, 0.025, kTimeoutMs); //0.046
-  _srxFrontLeft->Config_kI(kPIDLoopIdx, 0.0, kTimeoutMs);
-  _srxFrontLeft->Config_kD(kPIDLoopIdx, 0, kTimeoutMs);
+  _srxFrontLeft->Config_kP(kPIDLoopIdx, kP, kTimeoutMs); //0.046
+  _srxFrontLeft->Config_kI(kPIDLoopIdx, kI, kTimeoutMs);
+  _srxFrontLeft->Config_kD(kPIDLoopIdx, kD, kTimeoutMs);
 
   //right srx
   _srxFrontRight->ConfigNominalOutputForward(0, kTimeoutMs);
@@ -122,9 +121,10 @@ void SubDriveBase::velocityPIDConfig() {
   _srxFrontRight->ConfigPeakOutputReverse(-1, kTimeoutMs);
 
   _srxFrontRight->Config_kF(kPIDLoopIdx, kF, kTimeoutMs);
-  _srxFrontRight->Config_kP(kPIDLoopIdx, 0.025, kTimeoutMs); //0.035
-  _srxFrontRight->Config_kI(kPIDLoopIdx, 0.0, kTimeoutMs);
-  _srxFrontRight->Config_kD(kPIDLoopIdx, 0.0, kTimeoutMs);
+  _srxFrontRight->Config_kP(kPIDLoopIdx, kP, kTimeoutMs); //0.035
+  _srxFrontRight->Config_kI(kPIDLoopIdx, kI, kTimeoutMs);
+  _srxFrontRight->Config_kD(kPIDLoopIdx, kD, kTimeoutMs);
+
   _srxFrontRight->SetNeutralMode(NeutralMode::Coast);
   _srxFrontLeft->SetNeutralMode(NeutralMode::Coast);
 }
@@ -135,7 +135,10 @@ void SubDriveBase::zeroEncoders() {
 }
 
 double SubDriveBase::getDistanceTravelled() {
+  SmartDashboard::PutNumber("Left Enc", getRawLeftEncoder());
+  SmartDashboard::PutNumber("Right Enc", getRawRightEncoder());
   double encoderTics = (getRawLeftEncoder() + getRawRightEncoder()) / 2;
+  SmartDashboard::PutNumber("Encoder tics", encoderTics);
   double wheelRotations = encoderTics / ENCODER_TICS_PER_ROTATION;
   double distance = wheelRotations * metersPerRotation;
   return distance;  

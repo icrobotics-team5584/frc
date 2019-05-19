@@ -26,6 +26,10 @@ unique_ptr<SubGimbleLimits> Robot::subGimbleLimits;
 unique_ptr<SubClimber> Robot::subClimber;
 void Robot::RobotInit() {
   _robotMap.reset(new RobotMap);
+    SmartDashboard::PutNumber("Vel P", 0);
+    SmartDashboard::PutNumber("Vel I", 0);
+    SmartDashboard::PutNumber("Vel D", 0);
+    SmartDashboard::PutNumber("Target Vel", 0);
 
     subDriveBase.reset(new SubDriveBase());
     subElevator.reset(new SubElevator());
