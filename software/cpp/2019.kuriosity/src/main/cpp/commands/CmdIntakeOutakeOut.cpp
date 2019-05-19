@@ -17,7 +17,7 @@ CmdIntakeOutakeOut::CmdIntakeOutakeOut() {
 // Called just before this Command runs the first time
 void CmdIntakeOutakeOut::Initialize() {
     Robot::subIntakeOutake->Outake();
-    Robot::subRollerIntake->RollerOut();
+    //Robot::subRollerIntake->RollerOut();
 }
 
 // Called repeatedly when this Command is scheduled to run
