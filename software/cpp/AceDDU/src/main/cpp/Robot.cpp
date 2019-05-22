@@ -10,6 +10,7 @@
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
+
 std::unique_ptr<OI> Robot::m_oi;
 std::unique_ptr<SubDrivebase> Robot::subDrivebase;
 
@@ -64,7 +65,10 @@ void Robot::AutonomousInit() {
 
 }
 
-void Robot::AutonomousPeriodic() { frc::Scheduler::GetInstance()->Run(); }
+void Robot::AutonomousPeriodic() 
+{ 
+  frc::Scheduler::GetInstance()->Run(); 
+}
 
 void Robot::TeleopInit() {
   // This makes sure that the autonomous stops running when

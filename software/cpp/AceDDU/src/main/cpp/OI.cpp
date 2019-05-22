@@ -12,7 +12,7 @@
 
 OI::OI():joystick1(0) {
   // Process operator interface input here
-  btnAutoDrive.reset(new frc::JoystickButton(&joystick1, 2));
+  //btnAutoDrive.reset(new frc::JoystickButton(&joystick1, 2));
 }
 
 
