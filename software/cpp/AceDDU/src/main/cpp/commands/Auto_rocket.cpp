@@ -5,9 +5,9 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "../include/commands/Auto_rocket.h"
-#include "../include/commands/CmdAngleTurn.h"
-#include "../include/commands/CmdAutoDrive.h"
+#include "..\include\commands\Auto_rocket.h"
+#include "..\include\commands\CmdAngleTurn.h"
+#include "..\include\commands\CmdAutoDrive.h"
 
 Auto_rocket::Auto_rocket() {
   AddSequential(new CmdAutoDrive (1));
