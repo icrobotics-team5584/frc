@@ -46,6 +46,10 @@ OI::OI() {
   controller.reset(new frc::Joystick(0));
   controllerReverse.reset(new frc::Joystick(1));
 
+  //Vision Drive Activation
+  btnVisionDrive.reset(new frc::JoystickButton(controllerReverse.get(), bBtn));
+  btnVisionDrive->WhileHeld(new CmdVisionDrive());
+
   //Drive Base
   btnDriveBaseSlow.reset(new AxisButton(controller.get(), leftAxisTrigger));
   btnDriveBaseSlow->WhileHeld(new CmdDriveBaseSlow(false));
