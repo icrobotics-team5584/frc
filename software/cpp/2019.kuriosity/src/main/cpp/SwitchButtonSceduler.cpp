@@ -7,12 +7,18 @@
 
 #include "SwitchButtonSceduler.h"
 
+#include "frc/buttons/Button.h"
+#include "frc/commands/Command.h"
+
+using namespace frc;
+
+
 SwitchButtonSceduler::SwitchButtonSceduler(bool last, Trigger* button, Command* orders1, Command* orders2) 
                          : ButtonScheduler(last, button, orders1) {
     secondaryCommand = orders2;
 }
 
-SwitchButtonSceduler::Execute(){
+void SwitchButtonSceduler::Execute(){
     bool pressed = m_button->Grab();
     if (!m_pressedLast && pressed) {
         if (m_command->IsRunning()) {

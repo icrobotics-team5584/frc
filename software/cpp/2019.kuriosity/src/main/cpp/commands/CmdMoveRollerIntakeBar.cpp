@@ -22,6 +22,7 @@ CmdMoveRollerIntakeBar::CmdMoveRollerIntakeBar(RollerPosition rollerPosition) {
 
 // Called just before this Command runs the first time
 void CmdMoveRollerIntakeBar::Initialize() {
+  std::cout << _rollerPosition << endl;
   Robot::subRollerIntakeBar->SetSetpoint(_rollerPosition);
   Robot::subRollerIntakeBar->SetPIDEnabled(true);
 }

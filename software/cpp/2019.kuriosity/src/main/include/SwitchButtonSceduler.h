@@ -6,11 +6,20 @@
 /*----------------------------------------------------------------------------*/
 
 #pragma once
-#include "frc/WPILib.h"
-class SwitchButtonSceduler : public ButtonScheduler{
+
+#include "frc/buttons/ButtonScheduler.h"
+
+namespace frc {
+
+class Trigger;
+class Command;
+
+class SwitchButtonSceduler : public ButtonScheduler {
  public:
   SwitchButtonSceduler(bool last, Trigger* button, Command* orders1, Command* orders2);
  private:
   Command* secondaryCommand;
   void Execute();
 };
+
+} //namespace
