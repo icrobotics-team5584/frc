@@ -10,8 +10,9 @@
 #include "..\include\commands\CmdAutoDrive.h"
 
 Auto_rocket::Auto_rocket() {
-  AddSequential(new CmdAutoDrive (1));
   AddSequential(new CmdAngleTurn(45));
+  AddSequential(new CmdAutoDrive (1));
+
   // Add Commands here:
   // e.g. AddSequential(new Command1());
   //      AddSequential(new Command2());

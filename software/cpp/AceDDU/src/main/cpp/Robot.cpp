@@ -6,8 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "Robot.h"
-#include "..\include\commands\Auto_rocket.h"
-
+#include "commands/Auto_rocket.h"
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
@@ -15,9 +14,11 @@
 std::unique_ptr<OI> Robot::m_oi;
 std::unique_ptr<SubDrivebase> Robot::subDrivebase;
 
+
 void Robot::RobotInit() {
   subDrivebase.reset(new SubDrivebase);
   m_oi.reset(new OI);
+  autoRocket.reset(new Auto_rocket);
 }
 
 
@@ -55,10 +56,10 @@ void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
  * chooser code above (like the commented example) or additional comparisons to
  * the if-else structure below with additional strings & commands.
  */
-void Robot::AutonomousInit() {
-  Auto_rocket autoRocket;
 
-  autoRocket.Start();
+void Robot::AutonomousInit() {
+
+  autoRocket->Start();
   // std::string autoSelected = frc::SmartDashboard::GetString(
   //     "Auto Selector", "Default");
   // if (autoSelected == "My Auto") {

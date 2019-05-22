@@ -10,6 +10,8 @@
 #include <frc/TimedRobot.h>
 #include <frc/commands/Command.h>
 #include <frc/smartdashboard/SendableChooser.h>
+class Auto_rocket;
+
 
 #include<subsystems/SubDrivebase.h>
 #include "OI.h"
@@ -32,7 +34,7 @@ class Robot : public frc::TimedRobot {
 
 
  private:
-  
+  std::unique_ptr<Auto_rocket> autoRocket;
   // Have it null by default so that if testing teleop it
   // doesn't have undefined behavior and potentially crash.
   frc::SendableChooser<frc::Command*> m_chooser;
