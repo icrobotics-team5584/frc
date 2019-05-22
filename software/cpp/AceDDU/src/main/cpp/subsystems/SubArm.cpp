@@ -14,5 +14,20 @@ void SubArm::InitDefaultCommand() {
   // SetDefaultCommand(new MySpecialCommand());
 }
 
+void SubArm::toggle()
+{
+  // Need to add an isEnabled function
+}
+
+void SubArm::enable()
+{
+  pidArm.Enable();
+}
+
+void SubArm::disable()
+{
+  pidArm.Disable();
+}
+
 // Put methods for controlling this subsystem
 // here. Call these from Commands.

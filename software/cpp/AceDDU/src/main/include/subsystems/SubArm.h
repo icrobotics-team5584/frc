@@ -15,6 +15,7 @@
 
 class SubArm : public frc::Subsystem {
  private:
+  CmdPidArm pidArm;
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
 
