@@ -21,11 +21,14 @@ class SubArm : public frc::Subsystem {
 
  public:
   SubArm();
-  std::shared_ptr<WPI_TalonSRX> srxArm;
   void InitDefaultCommand() override;
   
-  void toggle();
-  void enable();
-  void disable();
-  void lift(double angle);
+  void Toggle();
+  void Enable();
+  void Disable();
+  void SetSetpoint(double setpoint);
+  void SetRelativeSetpoint(double setpoint);
+  void ArmTo(int angle);
+  void ArmJoyControl();
+  double getAngle();
 };

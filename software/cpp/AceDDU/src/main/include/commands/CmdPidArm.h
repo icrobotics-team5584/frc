@@ -7,12 +7,17 @@
 
 #pragma once
 
-#include <frc/commands/PIDSubsystem.h>
+#include <frc/commands/Subsystem.h>
+#include <ctre/Phoenix.h>
+#include <frc/WPILib.h>
 
 class CmdPidArm : public frc::PIDSubsystem {
  public:
   CmdPidArm();
+  std::shared_ptr<WPI_TalonSRX> srxArm;
   double ReturnPIDInput() override;
   void UsePIDOutput(double output) override;
   void InitDefaultCommand() override;
+ private:
+  int _talon = 5; // arm talon number
 };

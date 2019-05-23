@@ -14,20 +14,36 @@ void SubArm::InitDefaultCommand() {
   // SetDefaultCommand(new MySpecialCommand());
 }
 
-void SubArm::toggle()
+void SubArm::Toggle()
 {
   // Need to add an isEnabled function
 }
 
-void SubArm::enable()
+void SubArm::Enable()
 {
   pidArm.Enable();
 }
 
-void SubArm::disable()
+void SubArm::Disable()
 {
   pidArm.Disable();
 }
+
+void SubArm::SetSetpoint(double setpoint)
+{
+  pidArm.SetSetpoint(setpoint);
+}
+
+void SubArm::SetRelativeSetpoint(double setpoint)
+{
+  pidArm.SetSetpointRelative(setpoint);
+}
+
+double SubArm::getAngle()
+{
+  return pidArm.GetPosition();
+}
+
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.

@@ -28,9 +28,11 @@ double CmdPidArm::ReturnPIDInput() {
 void CmdPidArm::UsePIDOutput(double output) {
   // Use output to drive your system, like a motor
   // e.g. yourMotor->Set(output);
+  CmdPidArm::srxArm->Set(output);
 }
 
 void CmdPidArm::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
+  srxArm.reset(new WPI_TalonSRX(_talon));
 }
