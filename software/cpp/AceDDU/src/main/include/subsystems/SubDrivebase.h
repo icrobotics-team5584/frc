@@ -15,7 +15,7 @@
 class SubDrivebase : public frc::Subsystem, public frc::PIDOutput{
 
  private:
-  const double WHEEL_DIAMETER{0.1016};
+  const double WHEEL_DIAMETER{0.089};
   double circumference;
   const double PI {3.14159265359};
   // It's desirable that everything possible under private except
