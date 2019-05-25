@@ -22,6 +22,21 @@ double CmdPidArm::ReturnPIDInput() {
   // Return your input value for the PID loop
   // e.g. a sensor, like a potentiometer:
   // yourPot->SetAverageVoltage() / kYourMaxVoltage;
+
+  /* Okay so usually for a case like this we would use a potentiometer (they are like encoders but are not continuous however they
+  * are used because they track angle despite being turned off).
+  * Recently we discovered that CTRE mag encoders also have the ability to return 'absolute' positioning, so that is probably
+  * what we will be using for this robot. (mechanical team does not enjoy mounting potentiometers)
+  * The CTRE mag encoders, will always track absolute positioning and quadrature positioning simultaneously
+  * If you don't know what quadrature encoders are:
+  * So basically there are two types of encoders: Quadrature and non-quadrature (i don't really know what they're called)
+  * A non quadrature only has one data channel, where let's just say it sends a pulse to the computer to signify 1 rotation.
+  * A quadrature encoder has 2 data channels, A and B. Insead of only measuring distance, they are also capable of returning diretion.
+  * 
+  * Anyway CTRE encoders in absolute mode. We have no idea how to do it, good luck in figuring it out :P . I suspect it is to do 
+  * with something in the firmware. You will need to test what changing the firmware does.
+  *
+  */
   return 0;
 }
 
