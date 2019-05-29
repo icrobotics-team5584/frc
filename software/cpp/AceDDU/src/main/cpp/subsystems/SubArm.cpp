@@ -7,7 +7,10 @@
 
 #include "subsystems/SubArm.h"
 
-SubArm::SubArm() : Subsystem("ExampleSubsystem") {}
+SubArm::SubArm() : Subsystem("ExampleSubsystem") {
+  srxShoulder.reset(new WPI_TalonSRX(5));
+
+}
 
 void SubArm::InitDefaultCommand() {
   // Set the default command for a subsystem here.
@@ -21,27 +24,27 @@ void SubArm::Toggle()
 
 void SubArm::Enable()
 {
-  pidArm.Enable();
+
 }
 
 void SubArm::Disable()
 {
-  pidArm.Disable();
+
 }
 
 void SubArm::SetSetpoint(double setpoint)
 {
-  pidArm.SetSetpoint(setpoint);
+
 }
 
 void SubArm::SetRelativeSetpoint(double setpoint)
 {
-  pidArm.SetSetpointRelative(setpoint);
+
 }
 
 double SubArm::getAngle()
 {
-  return pidArm.GetPosition();
+
 }
 
 

@@ -6,33 +6,54 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/CmdPidArm.h"
+#include <Robot.h>
 
-#include <frc/livewindow/LiveWindow.h>
-#include <frc/smartdashboard/SmartDashboard.h>
-
-CmdPidArm::CmdPidArm()
-    : PIDSubsystem("CmdPidArm", 1.0, 0.0, 0.0) {
-  // Use these to get going:
-  // SetSetpoint() -  Sets where the PID controller should move the system
-  //                  to
-  // Enable() - Enables the PID controller.
+CmdPidArm::CmdPidArm(double position) : armController(-0.05, 0, 0, &pidsrcArm, Robot::subDrivebase.get())
+{
+  // Use Requires() here to declare subsystem dependencies
+  // eg. Requires(Robot::chassis.get());
+  Requires(Robot::subDrivebase.get());
+  _position = position;
 }
 
-double CmdPidArm::ReturnPIDInput() {
-  // Return your input value for the PID loop
-  // e.g. a sensor, like a potentiometer:
-  // yourPot->SetAverageVoltage() / kYourMaxVoltage;
-  return 0;
+// Called just before this Command runs the first time
+void CmdPidArm::Initialize()
+{
+  frc::SmartDashboard::PutData("angle controler", &armController);
+  armController.SetContinuous(false);
+  armController.SetInputRange(-180, 180);
+  armController.SetOutputRange(-0.5, 0.5);
+  armController.SetSetpoint(_position);
+  //armController.SetAbsoluteTolerance(5);
+  armController.Enable();
 }
 
-void CmdPidArm::UsePIDOutput(double output) {
-  // Use output to drive your system, like a motor
-  // e.g. yourMotor->Set(output);
-  CmdPidArm::srxArm->Set(output);
+// Called repeatedly when this Command is scheduled to run
+void CmdPidArm::Execute() {}
+
+// Make this return true when this Command no longer needs to run execute()
+bool CmdPidArm::IsFinished()
+{
+  if (armController.OnTarget())
+  {
+    return true;
+  }
+
+  else
+  {
+    return false;
+  }
 }
 
-void CmdPidArm::InitDefaultCommand() {
-  // Set the default command for a subsystem here.
-  // SetDefaultCommand(new MySpecialCommand());
-  srxArm.reset(new WPI_TalonSRX(_talon));
+// Called once after isFinished returns true
+void CmdPidArm::End()
+{
+  armController.Disable();
+}
+
+// Called when another command which requires one or more of the same
+// subsystems is scheduled to run
+void CmdPidArm::Interrupted()
+{
+  End();
 }

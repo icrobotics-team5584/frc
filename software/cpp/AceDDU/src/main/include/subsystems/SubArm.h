@@ -15,12 +15,12 @@
 
 class SubArm : public frc::Subsystem {
  private:
-  CmdPidArm pidArm;
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
 
  public:
   SubArm();
+  std::shared_ptr<WPI_TalonSRX> srxShoulder;
   void InitDefaultCommand() override;
   
   void Toggle();
