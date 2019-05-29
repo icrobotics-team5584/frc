@@ -13,8 +13,7 @@
 using namespace frc;
 
 
-SwitchButtonSceduler::SwitchButtonSceduler(bool last, Trigger* button, Command* orders1, Command* orders2) 
-                         : ButtonScheduler(last, button, orders1) {
+SwitchButtonSceduler::SwitchButtonSceduler(bool last, Trigger* button, Command* orders1, Command* orders2): ButtonScheduler(last, button, orders1) {
     secondaryCommand = orders2;
 }
 
@@ -22,13 +21,16 @@ void SwitchButtonSceduler::Execute(){
     bool pressed = m_button->Grab();
     if (!m_pressedLast && pressed) {
         if (m_command->IsRunning()) {
+            std::cout << "stopping m_command   starting secondary" << std::endl;
             m_command->Cancel();
             secondaryCommand->Start();
         } else {
+            std::cout << "stopping secondary   starting m_commnd" << std::endl;
             secondaryCommand->Cancel();
             m_command->Start();
         }
   }
 
   m_pressedLast = pressed;
+  
 }

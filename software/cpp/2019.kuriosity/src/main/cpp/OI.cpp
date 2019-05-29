@@ -68,7 +68,7 @@ OI::OI() {
 
   //Intake Outake
   btnCargoPodOut.reset(new frc::JoystickButton(controller.get(), leftBtn));
-  btnCargoPodOut->WhileHeld(new CmdCargoOutakeIn());
+  btnCargoPodOut->WhileHeld(new CmdCargoIntakeOut());
 
   //Panel Affector
   btnDeployPanel.reset(new frc::JoystickButton(controller.get(), xBtn));

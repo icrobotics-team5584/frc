@@ -6,7 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #pragma once
-
+#include <iostream>
 #include "frc/buttons/ButtonScheduler.h"
 
 namespace frc {
