@@ -12,7 +12,7 @@ CmdPidArm::CmdPidArm(double position) : armController(-0.05, 0, 0, &pidsrcArm, R
 {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(Robot::subDrivebase.get());
+  srxShoulder.reset(new WPI_TalonSRX(5));
   _position = position;
 }
 
