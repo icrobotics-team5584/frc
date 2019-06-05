@@ -8,7 +8,7 @@
 #include "commands/CmdPidArm.h"
 #include <Robot.h>
 
-CmdPidArm::CmdPidArm(double position) : armController(-0.05, 0, 0, &pidsrcArm, Robot::subDrivebase.get())
+CmdPidArm::CmdPidArm(double position) : armController(-0.05, 0, 0, &pidsrcArm, Robot::subDrivebase.get()/*replace with arm encoder*/)
 {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());

@@ -5,48 +5,25 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/SubArm.h"
+#include "subsystems/SubEncodedArm.h"
+#include <Commands/Subsystem.h>
+#include "WPILib.h"
+#include <ctre/phoenix.h>
+#include <SmartDashboard/SmartDashboard.h>
+#include <iostream>
 
-SubArm::SubArm() : Subsystem("SubArm") {
-  srxShoulder.reset(new WPI_TalonSRX(5));
+SubEncodedArm::SubEncodedArm() : Subsystem("ExampleSubsystem") {
+  
 
+  armController = new frc::PIDController(PIDp, PIDi, PIDd, _potSourcePID, _armOutputPID);
 }
 
-void SubArm::InitDefaultCommand() {
+
+
+void SubEncodedArm::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
 }
-
-void SubArm::Toggle()
-{
-  // Need to add an isEnabled function
-}
-
-void SubArm::Enable()
-{
-
-}
-
-void SubArm::Disable()
-{
-
-}
-
-void SubArm::SetSetpoint(double setpoint)
-{
-
-}
-
-void SubArm::SetRelativeSetpoint(double setpoint)
-{
-
-}
-
-double SubArm::getAngle()
-{
-
-}
-
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
