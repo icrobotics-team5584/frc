@@ -15,6 +15,7 @@
 class CmdPidArm : public frc::Command {
  public:
   CmdPidArm(double position);
+  std::shared_ptr<WPI_TalonSRX> srxShoulder;
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
