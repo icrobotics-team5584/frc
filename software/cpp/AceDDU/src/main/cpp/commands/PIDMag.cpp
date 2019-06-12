@@ -14,7 +14,7 @@ double PIDMag::PIDGet() {
 }
 
 
-PIDPot::~PIDMag() {
+PIDMag::~PIDMag() {
 	// TODO Auto-generated destructor stub
 }
 
