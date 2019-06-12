@@ -14,7 +14,7 @@ CmdMoveRollerIntakeBar::CmdMoveRollerIntakeBar(RollerPosition rollerPosition) {
  
     _rollerPosition = rollerPosition;
  
- 
+ std::cout << "move intake bar start" << endl;
 
   
   
@@ -38,6 +38,7 @@ bool CmdMoveRollerIntakeBar::IsFinished() {
 
 // Called once after isFinished returns true
 void CmdMoveRollerIntakeBar::End() {
+  std::cout << "move intake bar finished" << endl;
   Robot::subRollerIntakeBar->SetPIDEnabled(false);
 }
 

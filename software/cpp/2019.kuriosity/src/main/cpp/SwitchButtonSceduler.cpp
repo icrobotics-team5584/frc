@@ -19,18 +19,29 @@ SwitchButtonSceduler::SwitchButtonSceduler(bool last, Trigger* button, Command* 
 
 void SwitchButtonSceduler::Execute(){
     bool pressed = m_button->Grab();
-    if (!m_pressedLast && pressed) {
-        if (m_command->IsRunning()) {
-            std::cout << "stopping m_command   starting secondary" << std::endl;
-            m_command->Cancel();
-            secondaryCommand->Start();
-        } else {
+    if (!m_pressedLast && pressed) { //not the toggle Darcy!
+        if (toggle == false) {
             std::cout << "stopping secondary   starting m_commnd" << std::endl;
             secondaryCommand->Cancel();
             m_command->Start();
+            toggle = true;
+        } else {
+            std::cout << "stopping m_command   starting secondary" << std::endl;
+            m_command->Cancel();
+            secondaryCommand->Start();
+            toggle = false;
         }
   }
 
   m_pressedLast = pressed;
   
 }
+// if (m_command->IsRunning()) {
+//             std::cout << "stopping m_command   starting secondary" << std::endl;
+//             m_command->Cancel();
+//             secondaryCommand->Start();
+//         } else {
+//             std::cout << "stopping secondary   starting m_commnd" << std::endl;
+//             secondaryCommand->Cancel();
+//             m_command->Start();
+//         }

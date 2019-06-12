@@ -20,6 +20,7 @@ class SwitchButtonSceduler : public ButtonScheduler {
  private:
   Command* secondaryCommand;
   void Execute();
+  bool toggle = false;
 };
 
 } //namespace
