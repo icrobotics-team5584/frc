@@ -47,15 +47,28 @@ def changeFont(fontName):
 		client_socket.send("CHANGED FONT.".encode('utf-8'))
 	except KeyError:
 		client_socket.send("FONT DOES NOT EXIST.".encode('utf-8'))
+def displayImage(imageFile):
+	print("Displaying image " + imageFile)
+	activeImage = pygame.image.load(imageFile)
+	activeImage = pygame.transform.scale(activeImage, (500, 500))
+	activeImageRect = activeImage.get_rect()
+	activeImageRect.centerx = windowSurface.get_rect().centerx
+	activeImageRect.centery = windowSurface.get_rect().centery
+	windowSurface.blit(activeImage, activeImageRect)
+	pygame.display.update()
+	pygame.event.get()
 def recieveFile(outputPath):
 	print("Ready to recieve file.")
-	client_socket.send("READY".encode('utf-8'))
+	msg = "READY"
+	client_socket.send(msg.encode('utf-8'))
 	imageData = client_socket.recv(100000)
 	client_socket.send("RECIEVED.".encode('utf-8'))
 	print(imageData)
-	f = open("temp.png", "wb+")
+	f = open(outputPath, "wb+")
 	f.write(imageData)
 	f.close()
+	displayImage(outputPath)
+
 #Pre-loop
 ######################################################################
 #Terminal clean-up and motd display

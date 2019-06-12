@@ -76,13 +76,13 @@ while message != "q" or "quit":
 		message = input(">@> ")
 	if message[0:5] == "ulimg":
 		print("Uploading image")
-		ulstring = "ulimg"
+		ulstring = "ulimg " + message[6:]
 		s.send(ulstring.encode('utf-8'))
-		data = s.recv(100000).decode('utf-8')
+		data = s.recv(1024).decode('utf-8')
 		print("Recieved from server: " + data)
-		if data == "READY":
+		if "READY" in data:
 			print("Sending image")
-			f = open("assets/iclogo-white.png", "rb")
+			f = open(message[6:], "rb")
 			fileData = f.read()
 			f.close()
 			print(fileData)

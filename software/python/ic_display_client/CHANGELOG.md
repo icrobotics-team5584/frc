@@ -26,3 +26,9 @@
 > + Added image download command to server script [ulimg].
 >   + Working correctly.
 
+> Version 0.4 - Wednesday 12th June 21:08
+>
+> + Added image display and center functionality
+> + Added variable image path to [ulimg] command - now 'ulimg assets/iclogo-white.png
+> + Fixed issue where the script would try to read too much and two consecutive image uploads would fail.
+
