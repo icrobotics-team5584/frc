@@ -15,18 +15,16 @@
 
 class SubEncodedArm : public frc::Subsystem {
  private:
-  frc::PIDController* armController;
-  armPID* _armOutputPID;
+  	
+  	//armPID* _armOutputPID;
+	std::shared_ptr<WPI_TalonSRX> srxArmFront;
+	std::shared_ptr<WPI_TalonSRX> srxArmBack;
 
-	double EncBack = 2500;
-	double EncFront = 440;
-	//double PotUp = 1435;
-	double totalAngle = 90;
-	double PIDp = 0.0007;
-	double PIDi = 0.0;
-	double PIDd = 0.0;
+	
 
  public:
   SubEncodedArm();
   void InitDefaultCommand() override;
+  int getEncoder();
+  void setSpeed(double speed);
 };

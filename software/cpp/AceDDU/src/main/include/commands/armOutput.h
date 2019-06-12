@@ -5,12 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "PidsrcArm.h"
-#include "Robot.h"
+#pragma once
+#include "WPILib.h"
+#include "subsystems/SubEncodedArm.h"
 
-PidsrcArm::PidsrcArm() {
-}
-
-double PidsrcArm::PIDGet(){
-    return Robot::SubEncodedArm->getEncoder();
-}
+class armOutput : public frc::PIDOutput {
+ public:
+  armOutput();
+ private:
+  virtual void PIDWrite(double output);
+};

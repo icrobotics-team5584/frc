@@ -13,16 +13,23 @@
 #include <iostream>
 
 SubEncodedArm::SubEncodedArm() : Subsystem("ExampleSubsystem") {
-  
-
-  armController = new frc::PIDController(PIDp, PIDi, PIDd, _potSourcePID, _armOutputPID);
+  srxArmFront.reset(new WPI_TalonSRX(2));
+	srxArmBack->Set(ControlMode::Follower, 4);
 }
-
-
 
 void SubEncodedArm::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
+}
+
+int SubEncodedArm::getEncoder()
+{
+  return srxArmBack->GetSelectedSensorPosition(0);
+}
+
+void SubEncodedArm::setSpeed(double speed)
+{
+  srxArmFront->Set(speed);
 }
 
 // Put methods for controlling this subsystem

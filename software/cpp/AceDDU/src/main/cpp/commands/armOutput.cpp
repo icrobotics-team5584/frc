@@ -5,12 +5,12 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "PidsrcArm.h"
+#include "commands/armOutput.h"
 #include "Robot.h"
 
-PidsrcArm::PidsrcArm() {
-}
+armOutput::armOutput() {}
 
-double PidsrcArm::PIDGet(){
-    return Robot::SubEncodedArm->getEncoder();
+void armOutput::PIDWrite(double output)
+{
+    Robot::SubEncodedArm->setSpeed(output);
 }

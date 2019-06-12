@@ -13,16 +13,27 @@
 #include <frc/commands/Subsystem.h>
 #include <ctre/Phoenix.h>
 #include <frc/WPILib.h>
+#include "subsystems/SubEncodedArm.h"
+#include "Robot.h"
+#include "commands/armOutput.h"
 
 class PIDMag : public frc::PIDSource {
 public:
 	PIDMag();
-	std::shared_ptr<WPI_TalonSRX> srxArm;
 	double PIDGet();
 	virtual ~PIDMag();
-	int get_armPos();
 private:
-
+	frc::PIDController* armController;
+	
+	armOutput* _armOutput;
+	PidsrcArm* pidsrcArm;
+	double EncBack = 2500;
+	double EncFront = 440;
+	//double PotUp = 1435;
+	double totalAngle = 90;
+	double PIDp = 0.0007;
+	double PIDi = 0.0;
+	double PIDd = 0.0;
 };
 
 //#endif /* SRC_SUBSYSTEMS_PIDPOT_H_ */

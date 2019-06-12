@@ -1,18 +1,16 @@
 
 
 #include "commands/PIDMag.h"
+#include "PidsrcArm.h"
 
 PIDMag::PIDMag() {
-	// TODO Auto-generated constructor stub
-	srxArm.reset(new WPI_TalonSRX(3));
+	armController = new frc::PIDController(PIDp, PIDi, PIDd, pidsrcArm, _armOutput);
+	armController->SetInputRange(EncBack, EncFront);
+	armController->SetOutputRange(-0.7, 0.7);
+	armController->SetContinuous(false);
 
+	frc::SmartDashboard::PutData("Arm PID Controls", armController);
 }
-
-double PIDMag::PIDGet() {
-
-	return srxArm->GetSelectedSensorPosition(0);
-}
-
 
 PIDMag::~PIDMag() {
 	// TODO Auto-generated destructor stub
