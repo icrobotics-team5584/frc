@@ -1,28 +1,7 @@
-# ic_display_client
+# ic_display_client #
+A Graphical Frontend for the nVidia Jetson and 5" 800x480 display.
 
-**Changelog**
-
-
-
-> Version 0.1 - Tuesday 11th June 01:30
->
-> + Added TCP socket communication
-> + Tested terminal
-> + Added rudimentary PyGame GUI functionality
-> + Added 'disp' command, pushes text to server's display.
-
-> Version 0.2 - Tuesday 11th June 08:47
->
-> + Fixed compatibility with Mac (and probably also Windows) in the PyGame GUI Window.
-
-> Version 0.3 - Tuesday 11th June 09:58
->
-> + Added font selection command. 
->   + ​	This doesn't properly work yet (on my Mac at least - yet to test on linux computer)
-> + Added font size command.
->   + ​	This doesn't properly work yet (on my Mac at least - yet to test on linux computer)
-> + Added image upload command to client script [ulimg].
->   + Working correctly.
-> + Added image download command to server script [ulimg].
->   + Working correctly.
-
+**DEPENDENCIES**  
+Python 3 - Any version should work.  
+pygame for Python 3 - I've installed this through 'pip3 install pygame'  
+socket for Python 3 - This is for TCP communication. It should come installed by default.  
