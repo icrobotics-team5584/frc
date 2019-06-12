@@ -74,23 +74,9 @@ while message != "q" or "quit":
 	message = input(">@> ")
 	while message == "":
 		message = input(">@> ")
-	if message[0:5] == "ulimg":
-		print("Uploading image")
-		ulstring = "ulimg"
-		s.send(ulstring.encode('utf-8'))
-		data = s.recv(100000).decode('utf-8')
-		print("Recieved from server: " + data)
-		if data == "READY":
-			print("Sending image")
-			f = open("assets/iclogo-white.png", "rb")
-			fileData = f.read()
-			f.close()
-			print(fileData)
-			s.send(fileData)
-	else:
-		s.send(message.encode('utf-8'))
-		data = s.recv(1024).decode('utf-8')
-		print("Recieved from server: " + data)
+	s.send(message.encode('utf-8'))
+	data = s.recv(1024).decode('utf-8')
+	print("Recieved from server: " + data)
 
 s.close()
 print("Connection closed.")

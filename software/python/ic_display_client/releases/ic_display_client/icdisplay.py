@@ -6,7 +6,7 @@ import socket
 import pygame
 
 #Variables
-port = 5800
+port = 5584
 timeout = 10
 
 #MOTD Assignment
@@ -28,7 +28,7 @@ Both of these arguments are required.
 ######################################################################
 def updateMessage(newText):
 	windowSurface.fill((0,0,0))
-	text = selectedFont.render(newText, True, (255,255,255), (0,0,255))
+	text = basicFont.render(newText, True, (255,255,255), (0,0,255))
 	textRect = text.get_rect()
 	textRect.centerx = windowSurface.get_rect().centerx
 	textRect.centery = windowSurface.get_rect().centery
@@ -40,31 +40,17 @@ def drawLogo():
 	logo = pygame.image.load('assets/iclogo-white.png')
 	logo = pygame.transform.scale(logo, (100,100))
 	windowSurface.blit(logo, (0,0))
-def changeFont(fontName):
-	try:
-		globals()[fontName] #Check existence
-		selectedFont = globals()[fontName]
-		client_socket.send("CHANGED FONT.".encode('utf-8'))
-	except KeyError:
-		client_socket.send("FONT DOES NOT EXIST.".encode('utf-8'))
-def recieveFile(outputPath):
-	print("Ready to recieve file.")
-	client_socket.send("READY".encode('utf-8'))
-	imageData = client_socket.recv(100000)
-	client_socket.send("RECIEVED.".encode('utf-8'))
-	print(imageData)
-	f = open("temp.png", "wb+")
-	f.write(imageData)
-	f.close()
+
 #Pre-loop
 ######################################################################
 #Terminal clean-up and motd display
 os.system("clear")
 print(motd)
-print(" > Listening on port " + str(port) + " for a total of " + str(timeout) + " seconds.")
+print(" > Listening on port 5584 for a total of " + str(timeout) + " seconds.")
 
 #Connect
 host = '0.0.0.0'
+port = 5584
 
 s = socket.socket()
 s.bind((host, port))
@@ -74,12 +60,9 @@ pygame.init()
 windowSurface = pygame.display.set_mode((800,480),0,32)
 pygame.display.set_caption("ic_display_client")
 #Set Up PyGame Fonts
-mstrFontSize = 48
-fntBasic = pygame.font.SysFont(None, mstrFontSize)
-fntComicSans = pygame.font.SysFont("Chalkduster", mstrFontSize)
+basicFont = pygame.font.SysFont(None, 48)
 #Set up PyGame Text
-selectedFont = fntBasic
-text = selectedFont.render('Ready to Connect!', True, (255,255,255), (0,0,255))
+text = basicFont.render('Ready to Connect!', True, (255,255,255), (0,0,255))
 textRect = text.get_rect()
 textRect.centerx = windowSurface.get_rect().centerx
 textRect.centery = windowSurface.get_rect().centery
@@ -110,16 +93,7 @@ while True:
 		parsed = data[5:]
 		updateMessage(parsed)
 		client_socket.send("DISPLAYED MESSAGE.".encode('utf-8'))
-	elif data[0:4] == "font":
-		parsed = data[5:]
-		changeFont(parsed)
-	elif data[0:5] == "fsize":
-		parsed = data[6:]
-		mstrFontSize = int(parsed)
-	elif data[0:5] == "ulimg":
-		parsed = data[6:]
-		recieveFile(str(parsed))
 	else:
 		data = data.upper()
-		client_socket.send("UNKNOWN COMMAND.".encode('utf-8'))
+		client_socket.send(data.encode('utf-8'))
 client_socket.close()

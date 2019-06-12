@@ -14,3 +14,14 @@
 > Version 0.2 - Tuesday 11th June 08:47
 >
 > + Fixed compatibility with Mac (and probably also Windows) in the PyGame GUI Window.
+
+> Version 0.3 - Tuesday 11th June 09:58
+>
+> + Added font selection command. 
+>   + ​	This doesn't properly work yet (on my Mac at least - yet to test on linux computer)
+> + Added font size command.
+>   + ​	This doesn't properly work yet (on my Mac at least - yet to test on linux computer)
+> + Added image upload command to client script [ulimg].
+>   + Working correctly.
+> + Added image download command to server script [ulimg].
+>   + Working correctly.
