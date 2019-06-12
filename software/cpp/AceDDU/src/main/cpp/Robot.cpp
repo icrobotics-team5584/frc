@@ -9,16 +9,16 @@
 #include "commands/Auto_rocket.h"
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
-
+#include "subsystems/SubEncodedArm.h"
 
 std::unique_ptr<OI> Robot::m_oi;
 std::unique_ptr<SubDrivebase> Robot::subDrivebase;
-std::unique_ptr<SubEncodedArm> Robot::SubEncodedArm;
+std::unique_ptr<SubEncodedArm> Robot::subEncodedArm;
 
 
 void Robot::RobotInit() {
   subDrivebase.reset(new SubDrivebase);
-  SubEncodedArm.reset(new SubEncodedArm);
+  subEncodedArm.reset(new SubEncodedArm);
   m_oi.reset(new OI);
   autoRocket.reset(new Auto_rocket);
 }
@@ -36,7 +36,7 @@ void Robot::RobotInit() {
 void Robot::RobotPeriodic() {
   frc::SmartDashboard::PutNumber("Angle", subDrivebase->get_angle());
   frc::SmartDashboard::PutNumber("Distance", subDrivebase->get_distance());
-  frc::SmartDashboard::PutNumber("Arm Angle", SubEncodedArm->getEncoder());
+  frc::SmartDashboard::PutNumber("Arm Angle", subEncodedArm->getEncoder());
 }
 
 /**

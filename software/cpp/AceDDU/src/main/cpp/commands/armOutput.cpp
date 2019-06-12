@@ -12,5 +12,5 @@ armOutput::armOutput() {}
 
 void armOutput::PIDWrite(double output)
 {
-    Robot::SubEncodedArm->setSpeed(output);
+    Robot::subEncodedArm->setSpeed(output);
 }

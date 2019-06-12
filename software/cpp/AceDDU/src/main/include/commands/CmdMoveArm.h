@@ -16,17 +16,18 @@
 #include "subsystems/SubEncodedArm.h"
 #include "Robot.h"
 #include "commands/armOutput.h"
+#include "PidsrcArm.h"
 
-class PIDMag : public frc::PIDSource {
+class PIDMag : public frc::Command {
 public:
 	PIDMag();
 	double PIDGet();
-	virtual ~PIDMag();
+	//virtual ~PIDMag();
 private:
 	frc::PIDController* armController;
 	
-	armOutput* _armOutput;
-	PidsrcArm* pidsrcArm;
+	armOutput _armOutput;
+	PidsrcArm _pidsrcArm;
 	double EncBack = 2500;
 	double EncFront = 440;
 	//double PotUp = 1435;

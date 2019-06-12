@@ -6,7 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #pragma once
-#include "WPILib.h"
+#include "frc/WPILib.h"
 #include "subsystems/SubEncodedArm.h"
 
 class armOutput : public frc::PIDOutput {

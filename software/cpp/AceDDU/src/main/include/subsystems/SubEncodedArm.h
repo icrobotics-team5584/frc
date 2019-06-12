@@ -7,10 +7,10 @@
 
 #pragma once
 
-#include <Commands/Subsystem.h>
-#include "WPILib.h"
+#include <frc/commands/Subsystem.h>
+#include "frc/WPILib.h"
 #include <ctre/phoenix.h>
-#include <SmartDashboard/SmartDashboard.h>
+#include <frc/SmartDashboard/SmartDashboard.h>
 #include <iostream>
 
 class SubEncodedArm : public frc::Subsystem {
