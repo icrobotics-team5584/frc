@@ -6,7 +6,7 @@
 SubRollerIntakeBar::SubRollerIntakeBar() : Subsystem("ExampleSubsystem") {
   // Set PID constants
   const double kP = 0.01;
-  const double kI = 0;
+  const double kI = 0; 
   const double kD = 0;
   
   srxRollerBar = Robot::_robotMap->srxRollerIntakeBar;
@@ -17,7 +17,7 @@ SubRollerIntakeBar::SubRollerIntakeBar() : Subsystem("ExampleSubsystem") {
   pidoutRoller.reset(new PidoutRoller());
   positionController.reset(new PIDController(kP, kI, kD, pidsrcRoller.get(), pidoutRoller.get()));
   positionController->SetSetpoint(7); // Measured in degrees
-  positionController->SetAbsoluteTolerance(5); // Measured in degrees
+  positionController->SetAbsoluteTolerance(10); // Measured in degrees, was 5
   positionController->SetOutputRange(-0.5, 0.5);
   //frc::SmartDashboard::PutData("roller intake bar PID controller", positionController.get());
 
@@ -54,6 +54,7 @@ void SubRollerIntakeBar::SetSetpoint(double angle) {
   } else if (angle < 0) {
     angle = 0;
   }
+  std::cout << "TARGET_ANGLE == " << angle << std::endl;
   positionController->SetSetpoint(angle);
 }
 
@@ -92,6 +93,8 @@ double SubRollerIntakeBar::GetAngle() {
  * constructor.
  */
 bool SubRollerIntakeBar::OnTarget() {
+  std::cout << positionController->OnTarget() << "- ontarget" << std::endl;
+  std::cout << GetAngle() << "ANGLE == " << std::endl;
   return positionController->OnTarget();
 }
 
