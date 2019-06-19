@@ -19,6 +19,8 @@ SubEncodedArm::SubEncodedArm() : Subsystem("ExampleSubsystem") {
   std::cout << "SubArmTalon1" << std::endl;
 	srxArmBack->Set(ControlMode::Follower, 3);
   std::cout << "SubArmTalons" << std::endl;
+
+  srxArmFront->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative);
 }
 
 void SubEncodedArm::InitDefaultCommand() {
@@ -28,7 +30,7 @@ void SubEncodedArm::InitDefaultCommand() {
 
 int SubEncodedArm::getEncoder()
 {
-  return srxArmBack->GetSelectedSensorPosition(0);
+  return srxArmFront->GetSelectedSensorPosition(0);
 }
 
 void SubEncodedArm::setSpeed(double speed)
