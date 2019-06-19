@@ -8,6 +8,19 @@
 #include <frc/WPILib.h>
 #pragma once
 
+enum Buttons{
+      aBtn = 1, 
+      bBtn = 2,
+      xBtn = 3,
+      yBtn = 4, 
+      leftBtn = 5,
+      rightBtn = 6,
+      backBtn = 7, 
+      startBtn = 8, 
+      leftStickBtn = 9,
+      rightStickBtn = 10
+};
+
 class OI {
  public:
   OI();
@@ -15,5 +28,7 @@ class OI {
   double GetJoystickY();
   std::shared_ptr<frc::Joystick> joystick1;
   std::unique_ptr<frc::JoystickButton> btnArmPid;
-
+  std::unique_ptr<frc::JoystickButton> btnIntake;
+  std::unique_ptr<frc::JoystickButton> btnOuttake;
+  std::unique_ptr<frc::JoystickButton> btnIntakeMode;
 };

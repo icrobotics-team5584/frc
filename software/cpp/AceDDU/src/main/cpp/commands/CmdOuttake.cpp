@@ -13,6 +13,9 @@ CmdOuttake::CmdOuttake() {
   // eg. Requires(Robot::chassis.get());
 }
 
+// Called just before this Command runs the first time
+void CmdOuttake::Initialize() {
+  Robot::subIntake->Outtake();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -23,7 +26,7 @@ bool CmdOuttake::IsFinished() { return false; }
 
 // Called once after isFinished returns true
 void CmdOuttake::End() {
-  Robot::subIntake -> Stop();
+  Robot::subIntake->Stop();
 }
 
 // Called when another command which requires one or more of the same
