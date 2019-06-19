@@ -13,10 +13,12 @@
 
 std::unique_ptr<OI> Robot::m_oi;
 std::unique_ptr<SubDrivebase> Robot::subDrivebase;
+std::unique_ptr<SubIntake> Robot::subIntake;
 
 
 void Robot::RobotInit() {
   subDrivebase.reset(new SubDrivebase);
+  subIntake.reset(new SubIntake);
   m_oi.reset(new OI);
   autoRocket.reset(new Auto_rocket);
 }

@@ -14,6 +14,7 @@ class Auto_rocket;
 
 
 #include<subsystems/SubDrivebase.h>
+#include<subsystems/SubIntake.h>
 #include "OI.h"
 
 
@@ -31,7 +32,7 @@ class Robot : public frc::TimedRobot {
   void TeleopPeriodic() override;
   void TestPeriodic() override;
   static std::unique_ptr<SubDrivebase> subDrivebase;
-
+  static std::unique_ptr<SubIntake> subIntake;
 
  private:
   std::unique_ptr<Auto_rocket> autoRocket;
