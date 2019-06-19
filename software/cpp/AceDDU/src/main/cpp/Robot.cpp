@@ -5,8 +5,11 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#include <iostream>
+
 #include "Robot.h"
 #include "commands/Auto_rocket.h"
+
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "subsystems/SubEncodedArm.h"
@@ -17,10 +20,15 @@ std::unique_ptr<SubEncodedArm> Robot::subEncodedArm;
 
 
 void Robot::RobotInit() {
+  std::cout << "RobotInit" << std::endl;
   subDrivebase.reset(new SubDrivebase);
   subEncodedArm.reset(new SubEncodedArm);
+  std::cout << "SubFinished" << std::endl;
   m_oi.reset(new OI);
+  std::cout << "m_oi Finished" << std::endl;
   autoRocket.reset(new Auto_rocket);
+  
+  std::cout << "Init Finished" << std::endl;
 }
 
 
@@ -34,9 +42,11 @@ void Robot::RobotInit() {
  * LiveWindow and SmartDashboard integrated updating.
  */
 void Robot::RobotPeriodic() {
+  //std::cout << "PeriodicStart" << std::endl;
   frc::SmartDashboard::PutNumber("Angle", subDrivebase->get_angle());
   frc::SmartDashboard::PutNumber("Distance", subDrivebase->get_distance());
   frc::SmartDashboard::PutNumber("Arm Angle", subEncodedArm->getEncoder());
+  //std::cout << "PeriodicEnd" << std::endl;
 }
 
 /**
@@ -62,7 +72,9 @@ void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::AutonomousInit() {
 
-  autoRocket->Start();
+  //autoRocket->Start();
+  cmdMoveArm.reset(new CmdMoveArm());
+  cmdMoveArm->Start();
   // std::string autoSelected = frc::SmartDashboard::GetString(
   //     "Auto Selector", "Default");
   // if (autoSelected == "My Auto") {
@@ -75,7 +87,8 @@ void Robot::AutonomousInit() {
 
 void Robot::AutonomousPeriodic() 
 { 
-  frc::Scheduler::GetInstance()->Run(); 
+  frc::Scheduler::GetInstance()->Run();
+  
 }
 
 void Robot::TeleopInit() {

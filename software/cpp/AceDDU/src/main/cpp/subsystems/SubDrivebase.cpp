@@ -13,12 +13,12 @@
 void SubDrivebase::PIDWrite(double output){
 
   drive(0,output);
-
+  
 
 }
 
 SubDrivebase::SubDrivebase() : Subsystem("ExampleSubsystem") {
-
+std::cout << "SubDriveBaseStart" << std::endl;
 //motors
 srxFrontLeft.reset(new WPI_TalonSRX(10));      //2
 srxFrontRight.reset(new WPI_TalonSRX(11));     //1
@@ -35,7 +35,7 @@ imu.reset(new PigeonIMU(srxFrontRight.get()));
 
 //global variables? can this be moved to the header file?
 circumference = PI * WHEEL_DIAMETER;
-
+std::cout << "SubDriveBaseEnd" << std::endl;
 }
 
 

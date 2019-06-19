@@ -13,8 +13,12 @@
 #include <iostream>
 
 SubEncodedArm::SubEncodedArm() : Subsystem("ExampleSubsystem") {
+  std::cout << "SubArm" << std::endl;
   srxArmFront.reset(new WPI_TalonSRX(3));
-	srxArmBack->Set(ControlMode::Follower, 1);
+  srxArmBack.reset(new WPI_TalonSRX(1));
+  std::cout << "SubArmTalon1" << std::endl;
+	srxArmBack->Set(ControlMode::Follower, 3);
+  std::cout << "SubArmTalons" << std::endl;
 }
 
 void SubEncodedArm::InitDefaultCommand() {
