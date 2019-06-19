@@ -8,10 +8,13 @@
 #include "..\include\commands\Auto_rocket.h"
 #include "..\include\commands\CmdAngleTurn.h"
 #include "..\include\commands\CmdAutoDrive.h"
+#include "..\include\commands\CmdMoveArm.h"
+#include <iostream>
 
 Auto_rocket::Auto_rocket() {
-  AddSequential(new CmdAngleTurn(45));
-  AddSequential(new CmdAutoDrive (1));
+  //AddSequential(new CmdAngleTurn(45));
+  //AddSequential(new CmdAutoDrive (1));
+  AddSequential(new CmdMoveArm());
 
   // Add Commands here:
   // e.g. AddSequential(new Command1());

@@ -5,26 +5,26 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-
 #pragma once
 
-#include<frc/WPILib.h>
-#include <frc/commands/Command.h>
-#include "PidsrcArm.h"
+#include <frc/commands/Subsystem.h>
+#include "frc/WPILib.h"
+#include <ctre/phoenix.h>
+#include <frc/SmartDashboard/SmartDashboard.h>
+#include <iostream>
 
-class CmdPidArm : public frc::Command {
+class SubEncodedArm : public frc::Subsystem {
+ private:
+  	
+  	//armPID* _armOutputPID;
+	std::shared_ptr<WPI_TalonSRX> srxArmFront;
+	std::shared_ptr<WPI_TalonSRX> srxArmBack;
+
+	
+
  public:
-  CmdPidArm(double position);
-  std::shared_ptr<WPI_TalonSRX> srxShoulder;
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
-
-private: 
-  double _position;
-  frc::PIDController armController;
-  PidsrcArm pidsrcArm;
+  SubEncodedArm();
+  void InitDefaultCommand() override;
+  int getEncoder();
+  void setSpeed(double speed);
 };
-

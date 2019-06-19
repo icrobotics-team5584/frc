@@ -8,23 +8,29 @@
 #include "OI.h"
 #include "commands/CmdAngleTurn.h"
 #include"commands/CmdAutoDrive.h"
+#include "commands/CmdMoveArm.h"
 #include <frc/WPILib.h>
 
 OI::OI():joystick1(0) {
+  std::cout << "OI Started" << std::endl;
   // Process operator interface input here
   //btnAutoDrive.reset(new frc::JoystickButton(&joystick1, 2));
+  btnArmPid.reset(new frc::JoystickButton(joystick1.get(), 1));
+  std::cout << "buttonInit Finished" << std::endl;
+  //btnArmPid->WhileHeld(new CmdMoveArm());
+  std::cout << "OI Finished" << std::endl;
 }
 
 
 
 double OI::GetJoystickX(){
-  joystick1.GetX();
+  //joystick1.GetX();
 
 
 }
 
 double OI::GetJoystickY(){
-  joystick1.GetY();
+  //joystick1.GetY();
 
 
 }

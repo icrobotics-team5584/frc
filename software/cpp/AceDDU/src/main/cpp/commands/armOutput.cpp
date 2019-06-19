@@ -5,13 +5,12 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "PidsrcAngle.h"
+#include "commands/armOutput.h"
 #include "Robot.h"
 
-PidsrcAngle::PidsrcAngle() {
-}
+armOutput::armOutput() {}
 
-double PidsrcAngle::PIDGet(){
-    return Robot::subEncodedArm->getEncoder();
-
+void armOutput::PIDWrite(double output)
+{
+    Robot::subEncodedArm->setSpeed(output);
 }

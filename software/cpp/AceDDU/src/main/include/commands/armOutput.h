@@ -5,13 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "PidsrcAngle.h"
-#include "Robot.h"
+#pragma once
+#include "frc/WPILib.h"
+#include "subsystems/SubEncodedArm.h"
 
-PidsrcAngle::PidsrcAngle() {
-}
-
-double PidsrcAngle::PIDGet(){
-    return Robot::subEncodedArm->getEncoder();
-
-}
+class armOutput : public frc::PIDOutput {
+ public:
+  armOutput();
+ private:
+  virtual void PIDWrite(double output);
+};

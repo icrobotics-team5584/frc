@@ -13,19 +13,19 @@
 void SubDrivebase::PIDWrite(double output){
 
   drive(0,output);
-
+  
 
 }
 
 SubDrivebase::SubDrivebase() : Subsystem("ExampleSubsystem") {
-
+std::cout << "SubDriveBaseStart" << std::endl;
 //motors
-srxFrontLeft.reset(new WPI_TalonSRX(2));
-srxFrontRight.reset(new WPI_TalonSRX(1));
-srxBackLeft.reset(new WPI_TalonSRX(4));
-srxBackRight.reset(new WPI_TalonSRX(3));
-srxBackLeft->Set(ControlMode::Follower, 2);
-srxBackRight->Set(ControlMode::Follower, 1);
+srxFrontLeft.reset(new WPI_TalonSRX(10));      //2
+srxFrontRight.reset(new WPI_TalonSRX(11));     //1
+srxBackLeft.reset(new WPI_TalonSRX(12));       //4
+srxBackRight.reset(new WPI_TalonSRX(13));      //3
+srxBackLeft->Set(ControlMode::Follower, 10);   //2
+srxBackRight->Set(ControlMode::Follower, 11);  //1
 
 //drive
 diffdrive.reset(new frc::DifferentialDrive(*srxFrontLeft,*srxFrontRight));
@@ -35,7 +35,7 @@ imu.reset(new PigeonIMU(srxFrontRight.get()));
 
 //global variables? can this be moved to the header file?
 circumference = PI * WHEEL_DIAMETER;
-
+std::cout << "SubDriveBaseEnd" << std::endl;
 }
 
 
@@ -55,7 +55,7 @@ void SubDrivebase::drive(double speed, double rotation){
 
   frc::SmartDashboard::PutNumber("Rotation out", rotation);
   frc::SmartDashboard::PutNumber("speed out", speed);
-  diffdrive->ArcadeDrive(speed, rotation); //RObot Driving
+  //diffdrive->ArcadeDrive(speed, rotation); //RObot Driving
 
   
 

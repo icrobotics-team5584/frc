@@ -12,6 +12,5 @@ PidsrcArm::PidsrcArm() {
 }
 
 double PidsrcArm::PIDGet(){
-    return 1;
-
+    return Robot::subEncodedArm->getEncoder();
 }
