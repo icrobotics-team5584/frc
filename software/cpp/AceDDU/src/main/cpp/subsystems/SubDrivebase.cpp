@@ -20,12 +20,12 @@ void SubDrivebase::PIDWrite(double output){
 SubDrivebase::SubDrivebase() : Subsystem("ExampleSubsystem") {
 
 //motors
-srxFrontLeft.reset(new WPI_TalonSRX(2));
-srxFrontRight.reset(new WPI_TalonSRX(1));
-srxBackLeft.reset(new WPI_TalonSRX(4));
-srxBackRight.reset(new WPI_TalonSRX(3));
-srxBackLeft->Set(ControlMode::Follower, 2);
-srxBackRight->Set(ControlMode::Follower, 1);
+srxFrontLeft.reset(new WPI_TalonSRX(10));      //2
+srxFrontRight.reset(new WPI_TalonSRX(11));     //1
+srxBackLeft.reset(new WPI_TalonSRX(12));       //4
+srxBackRight.reset(new WPI_TalonSRX(13));      //3
+srxBackLeft->Set(ControlMode::Follower, 10);   //2
+srxBackRight->Set(ControlMode::Follower, 11);  //1
 
 //drive
 diffdrive.reset(new frc::DifferentialDrive(*srxFrontLeft,*srxFrontRight));

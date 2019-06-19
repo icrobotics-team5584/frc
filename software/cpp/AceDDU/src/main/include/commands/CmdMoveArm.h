@@ -18,14 +18,20 @@
 #include "commands/armOutput.h"
 #include "PidsrcArm.h"
 
-class PIDMag : public frc::Command {
-public:
-	PIDMag();
+class CmdMoveArm : public frc::Command
+{
+  public:
+	CmdMoveArm();
 	double PIDGet();
+	void Initialize() override;
+	void Execute() override;
+	bool IsFinished() override;
+	void End() override;
+	void Interrupted() override;
 	//virtual ~PIDMag();
-private:
-	frc::PIDController* armController;
-	
+  private:
+	frc::PIDController *armController;
+
 	armOutput _armOutput;
 	PidsrcArm _pidsrcArm;
 	double EncBack = 2500;

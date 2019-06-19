@@ -12,6 +12,6 @@ PidsrcAngle::PidsrcAngle() {
 }
 
 double PidsrcAngle::PIDGet(){
-    return Robot::subDrivebase->get_angle();
+    return Robot::subEncodedArm->getEncoder();
 
 }
