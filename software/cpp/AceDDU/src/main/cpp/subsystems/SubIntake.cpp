@@ -11,7 +11,7 @@
 
 SubIntake::SubIntake() : Subsystem("ExampleSubsystem") {
   SolMode.reset(new frc::DoubleSolenoid(1, 0));
-  Motor.reset(new WPI_TalonSRX(5));
+  Motor.reset(new WPI_TalonSRX(9));
 }
 
 void SubIntake::InitDefaultCommand() {

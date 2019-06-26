@@ -21,10 +21,9 @@ OI::OI():joystick1(0) {
   btnIntake.reset(new frc::JoystickButton(joystick1.get(), leftBtn));
   btnIntake->WhileHeld(new CmdIntake());
   btnOuttake.reset(new frc::JoystickButton(joystick1.get(), rightBtn));
-  btnIntake->WhileHeld(new CmdOuttake());
+  btnOuttake->WhileHeld(new CmdOuttake());
   btnIntakeMode.reset(new frc::JoystickButton(joystick1.get(), xBtn));
-  //TODO:firgure out how to use toggle
-  //btnIntake->ToggleWhenPressed(new CmdOpenIntake(),new CmdCloseIntake);
+  //btnIntakeMode->ToggleWhenPressed(new CmdOpenIntake(),new CmdCloseIntake);
   
   std::cout << "buttonInit Finished" << std::endl;
   //btnArmPid->WhileHeld(new CmdMoveArm());
