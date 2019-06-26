@@ -19,7 +19,7 @@ SubRollerIntakeBar::SubRollerIntakeBar() : Subsystem("ExampleSubsystem") {
   positionController->SetSetpoint(7); // Measured in degrees
   positionController->SetAbsoluteTolerance(10); // Measured in degrees, was 5
   positionController->SetOutputRange(-0.5, 0.5);
-  //frc::SmartDashboard::PutData("roller intake bar PID controller", positionController.get());
+  frc::SmartDashboard::PutData("roller intake bar PID controller", positionController.get());
 
   // Place testing command to dashboard
   // frc::SmartDashboard::PutData("Move roller intake bar", new CmdMoveRollerIntakeBar(OUT));
