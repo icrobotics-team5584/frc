@@ -20,7 +20,7 @@ SubEncodedArm::SubEncodedArm() : Subsystem("ExampleSubsystem") {
 	srxArmBack->Set(ControlMode::Follower, 3);
   std::cout << "SubArmTalons" << std::endl;
 
-  srxArmFront->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative);
+  srxArmFront->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Absolute);
 }
 
 void SubEncodedArm::InitDefaultCommand() {

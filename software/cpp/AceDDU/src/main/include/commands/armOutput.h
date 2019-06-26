@@ -14,4 +14,5 @@ class armOutput : public frc::PIDOutput {
   armOutput();
  private:
   virtual void PIDWrite(double output);
+  int _maxSpeed = 0.01;
 };
