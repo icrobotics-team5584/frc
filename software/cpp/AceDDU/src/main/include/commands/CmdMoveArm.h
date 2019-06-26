@@ -38,7 +38,7 @@ class CmdMoveArm : public frc::Command
 	double EncFront = 440;
 	//double PotUp = 1435;
 	double totalAngle = 90;
-	double PIDp = 0.5;
+	double PIDp = 0.0;
 	double PIDi = 0.0;
 	double PIDd = 0.0;
 };
