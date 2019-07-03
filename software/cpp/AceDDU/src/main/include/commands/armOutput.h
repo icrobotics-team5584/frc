@@ -14,5 +14,12 @@ class armOutput : public frc::PIDOutput {
   armOutput();
  private:
   virtual void PIDWrite(double output);
-  int _maxSpeed = 0.01;
+  double _top = 3222;
+
+  double _angle;
+  double _angleDeg;
+  double _angleRad;
+  double pi = 3.14159265349;
+  double _outputSpeed;
+  double multiplier = 0;
 };
