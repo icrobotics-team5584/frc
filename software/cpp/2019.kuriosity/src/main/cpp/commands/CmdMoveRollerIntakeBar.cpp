@@ -14,7 +14,7 @@ CmdMoveRollerIntakeBar::CmdMoveRollerIntakeBar(RollerPosition rollerPosition) {
  
     _rollerPosition = rollerPosition;
  
- 
+ std::cout << "move intake bar start" << endl;
 
   
   
@@ -22,6 +22,7 @@ CmdMoveRollerIntakeBar::CmdMoveRollerIntakeBar(RollerPosition rollerPosition) {
 
 // Called just before this Command runs the first time
 void CmdMoveRollerIntakeBar::Initialize() {
+  std::cout << _rollerPosition << endl;
   Robot::subRollerIntakeBar->SetSetpoint(_rollerPosition);
   Robot::subRollerIntakeBar->SetPIDEnabled(true);
 }
@@ -37,9 +38,12 @@ bool CmdMoveRollerIntakeBar::IsFinished() {
 
 // Called once after isFinished returns true
 void CmdMoveRollerIntakeBar::End() {
+  std::cout << "move intake bar finished" << endl;
   Robot::subRollerIntakeBar->SetPIDEnabled(false);
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdMoveRollerIntakeBar::Interrupted() {}
+void CmdMoveRollerIntakeBar::Interrupted() {
+  
+}
