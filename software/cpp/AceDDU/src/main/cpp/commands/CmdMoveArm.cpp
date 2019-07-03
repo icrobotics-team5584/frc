@@ -13,10 +13,10 @@ void CmdMoveArm::Initialize()
   std::cout << "CmdArmInit" << std::endl;
 	armController = new frc::PIDController(PIDp, PIDi, PIDd, _pidsrcArm, _armOutput);
 	armController->SetInputRange(EncBack, EncFront);
-	armController->SetOutputRange(-0.1, 0.1);
+	armController->SetOutputRange(-0.3, 0.3);
 	armController->SetContinuous(false);
 	frc::SmartDashboard::PutData("Arm PID Controls", armController);
-	armController->Enable();
+	//armController->Enable();
   std::cout << "CmdArmInit Done" << std::endl;
 }
 

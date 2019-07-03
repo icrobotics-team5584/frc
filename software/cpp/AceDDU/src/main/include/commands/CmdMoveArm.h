@@ -34,13 +34,13 @@ class CmdMoveArm : public frc::Command
 
 	armOutput _armOutput;
 	PidsrcArm _pidsrcArm;
-	double EncBack = 2500;
-	double EncFront = 440;
+	double EncBack = 0;
+	double EncFront = 4096;
 	//double PotUp = 1435;
 	double totalAngle = 90;
-	double PIDp = 0.0;
+	double PIDp = -0.0002;
 	double PIDi = 0.0;
-	double PIDd = 0.0;
+	double PIDd = -0.0005;
 };
 
 //#endif /* SRC_SUBSYSTEMS_PIDPOT_H_ */

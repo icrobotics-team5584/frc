@@ -36,6 +36,7 @@ int SubEncodedArm::getEncoder()
 void SubEncodedArm::setSpeed(double speed)
 {
   srxArmFront->Set(speed);
+  frc::SmartDashboard::PutNumber("Arm Speed", speed);
 }
 
 // Put methods for controlling this subsystem
