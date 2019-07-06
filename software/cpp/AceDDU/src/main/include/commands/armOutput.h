@@ -21,5 +21,5 @@ class armOutput : public frc::PIDOutput {
   double _angleRad;
   double pi = 3.14159265349;
   double _outputSpeed;
-  double multiplier = 0;
+  double multiplier = 1;
 };
