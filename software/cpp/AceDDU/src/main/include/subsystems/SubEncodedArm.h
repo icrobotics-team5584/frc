@@ -15,21 +15,28 @@
 
 class SubEncodedArm : public frc::Subsystem {
  private:
-  	
-  	//armPID* _armOutputPID;
+  //armPID* _armOutputPID;
 	std::shared_ptr<WPI_TalonSRX> srxArmFront;
 	std::shared_ptr<WPI_TalonSRX> srxArmBack;
+  std::shared_ptr<frc::DoubleSolenoid> pneuBrake;
 
   double _angle;
   double _top = 3222;
   double _angleDeg;
 
-	
-
  public:
+
+  enum PneuBrakeState {
+    BRAKE,
+    COAST
+  };
+
   SubEncodedArm();
   void InitDefaultCommand() override;
   int getEncoder();
   double getAngle();
   void setSpeed(double speed);
+  void ResetEncoder();
+  void BrakeState(PneuBrakeState brakeState);
+
 };
