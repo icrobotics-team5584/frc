@@ -43,5 +43,4 @@ class Robot : public frc::TimedRobot {
   // Have it null by default so that if testing teleop it
   // doesn't have undefined behavior and potentially crash.
   frc::SendableChooser<frc::Command*> m_chooser;
-  std::unique_ptr<CmdMoveArm> cmdMoveArm;
 };

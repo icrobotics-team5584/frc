@@ -33,6 +33,19 @@ int SubEncodedArm::getEncoder()
   return srxArmFront->GetSelectedSensorPosition(0);
 }
 
+double SubEncodedArm::getAngle()
+{
+    _angle = getEncoder() - _top;
+
+    frc::SmartDashboard::PutNumber("Ticks to Top", _angle);
+    
+    _angleDeg = (_angle / 4096) * 360;
+
+    frc::SmartDashboard::PutNumber("Actual Arm Angle", _angleDeg);
+
+    return _angleDeg;
+}
+
 void SubEncodedArm::setSpeed(double speed)
 {
   srxArmFront->Set(speed);

@@ -5,22 +5,22 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/armOutput.h"
-#include "Robot.h"
+#pragma once
+#include <iostream>
+#include "frc/buttons/ButtonScheduler.h"
 
-armOutput::armOutput() {
+namespace frc {
 
-    subEncodedArm.reset(new SubEncodedArm);
-}
+class Trigger;
+class Command;
 
-void armOutput::PIDWrite(double output)
-{
+class SwitchButtonSceduler : public ButtonScheduler {
+ public:
+  SwitchButtonSceduler(bool last, Trigger* button, Command* orders1, Command* orders2);
+ private:
+  Command* secondaryCommand;
+  void Execute();
+  bool toggle = false;
+};
 
-    _angleRad = subEncodedArm->getAngle() * (pi/180);
-
-    _outputSpeed = (sin(_angleRad) * multiplier) + output;
-
-    frc::SmartDashboard::PutNumber("Output Speed", _outputSpeed);
-
-    Robot::subEncodedArm->setSpeed(_outputSpeed);
-}
+} //namespace

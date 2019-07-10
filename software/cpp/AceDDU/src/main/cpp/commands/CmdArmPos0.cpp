@@ -5,34 +5,44 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include <Robot.h>
-#include "commands/CmdDrive.h"
-#include <iostream>
+#include "commands/cmdArmPos0.h"
 
-CmdDrive::CmdDrive() {
+cmdArmPos0::cmdArmPos0() {
   // Use Requires() here to declare subsystem dependencies
-  Requires(Robot::subDrivebase.get());
-   
+  // eg. Requires(Robot::chassis.get());
 }
 
 // Called just before this Command runs the first time
-void CmdDrive::Initialize() {}
+void cmdArmPos0::Initialize() {
+  cmdMoveArm.reset(new CmdMoveArm());
+  cmdMoveArm->Start();
+
+  subEncodedArm.reset(new SubEncodedArm());
+}
 
 // Called repeatedly when this Command is scheduled to run
-void CmdDrive::Execute() {
-    //Robot::subDrivebase->drive(Robot::m_oi->GetJoystickY(), Robot::m_oi->GetJoystickX());
-    //std::cout<<Robot::m_oi->GetJoystickX()<<std::endl;
-    //std::cout<<Robot::m_oi->GetJoystickY()<<std::endl;
-  
+void cmdArmPos0::Execute() {
+  cmdMoveArm->setAngle(0);
 }
-  
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdDrive::IsFinished() { return false; }
+bool cmdArmPos0::IsFinished() 
+{ 
+  if(subEncodedArm->getAngle() == 0)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
 
 // Called once after isFinished returns true
-void CmdDrive::End() {}
+void cmdArmPos0::End() {
+  cmdMoveArm->End();
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdDrive::Interrupted() {}
+void cmdArmPos0::Interrupted() {}

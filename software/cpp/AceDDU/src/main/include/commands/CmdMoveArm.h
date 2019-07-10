@@ -28,6 +28,9 @@ class CmdMoveArm : public frc::Command
 	bool IsFinished() override;
 	void End() override;
 	void Interrupted() override;
+
+	void setTicks(int ticks);
+  	void setAngle(double angle);
 	//virtual ~PIDMag();
   private:
 	frc::PIDController *armController;
@@ -41,6 +44,10 @@ class CmdMoveArm : public frc::Command
 	double PIDp = -0.0002;
 	double PIDi = 0.0;
 	double PIDd = -0.0005;
+
+	double _armTicks;
+  	double _relativeArmTicks;
+  	double _zeroPoint = 2200;
 };
 
 //#endif /* SRC_SUBSYSTEMS_PIDPOT_H_ */

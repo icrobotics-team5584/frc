@@ -74,8 +74,7 @@ void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 void Robot::AutonomousInit() {
 
   //autoRocket->Start();
-  cmdMoveArm.reset(new CmdMoveArm());
-  cmdMoveArm->Start();
+  
   // std::string autoSelected = frc::SmartDashboard::GetString(
   //     "Auto Selector", "Default");
   // if (autoSelected == "My Auto") {

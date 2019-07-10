@@ -20,11 +20,16 @@ class SubEncodedArm : public frc::Subsystem {
 	std::shared_ptr<WPI_TalonSRX> srxArmFront;
 	std::shared_ptr<WPI_TalonSRX> srxArmBack;
 
+  double _angle;
+  double _top = 3222;
+  double _angleDeg;
+
 	
 
  public:
   SubEncodedArm();
   void InitDefaultCommand() override;
   int getEncoder();
+  double getAngle();
   void setSpeed(double speed);
 };
