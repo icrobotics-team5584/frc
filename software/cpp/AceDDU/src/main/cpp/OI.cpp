@@ -10,14 +10,17 @@
 #include"commands/CmdAutoDrive.h"
 #include "commands/CmdMoveArm.h"
 #include <frc/WPILib.h>
-
+#include <commands/CmdVacuum.h>
 OI::OI():joystick1(0) {
   std::cout << "OI Started" << std::endl;
   // Process operator interface input here
   //btnAutoDrive.reset(new frc::JoystickButton(&joystick1, 2));
   btnArmPid.reset(new frc::JoystickButton(joystick1.get(), 1));
-  std::cout << "buttonInit Finished" << std::endl;
+  std::cout << "button Init Finished" << std::endl;
   //btnArmPid->WhileHeld(new CmdMoveArm());
+  btnClimber.reset(new frc::JoystickButton(joystick1.get(), 2));
+  std::cout << "OI AFter btnClimber reset" << std::endl;
+  btnClimber->WhileHeld(new CmdVacuum);
   std::cout << "OI Finished" << std::endl;
 }
 

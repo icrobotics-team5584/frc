@@ -5,15 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include <frc/WPILib.h>
 #pragma once
 
-class OI {
+#include <frc/commands/Command.h>
+
+class CmdVacuum : public frc::Command {
  public:
-  OI();
-  double GetJoystickX();
-  double GetJoystickY();
-  std::shared_ptr<frc::Joystick> joystick1;
-  std::unique_ptr<frc::JoystickButton> btnArmPid;
-  std::unique_ptr<frc::JoystickButton> btnClimber;
+  CmdVacuum();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
 };
