@@ -15,5 +15,6 @@ class OI {
   double GetJoystickY();
   std::shared_ptr<frc::Joystick> joystick1;
   std::unique_ptr<frc::JoystickButton> btnArmPid;
+  std::unique_ptr<frc::JoystickButton> btnInspireArm;
 
 };

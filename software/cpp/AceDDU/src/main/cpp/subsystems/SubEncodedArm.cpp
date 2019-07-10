@@ -19,6 +19,9 @@ SubEncodedArm::SubEncodedArm() : Subsystem("ExampleSubsystem") {
   srxArmFront.reset(new WPI_TalonSRX(3));
   srxArmBack.reset(new WPI_TalonSRX(1));
 
+  srxArmFront->ConfigFactoryDefault();
+  srxArmBack->ConfigFactoryDefault();
+
 	srxArmBack->Set(ControlMode::Follower, 3);
 
   //sensors
@@ -34,6 +37,31 @@ void SubEncodedArm::InitDefaultCommand() {
   SetDefaultCommand(new CmdIdleArm());
 }
 
+void SubEncodedArm::ConfigTalon(){
+  // Configure Talon SRX
+  // Set the frame periods. It seems like we need this or maybe not but it's here in case.
+  srxArmFront->SetSensorPhase(true);
+  srxArmFront->SetInverted(true);
+  srxArmBack->SetInverted(true);
+
+  srxArmFront->SetStatusFramePeriod(StatusFrameEnhanced::Status_13_Base_PIDF0, 10, 10);
+  srxArmFront->SetStatusFramePeriod(StatusFrameEnhanced::Status_10_MotionMagic, 10, 10);
+
+  // Set peak outputs
+  srxArmFront->ConfigPeakOutputForward(0.6, 0);
+  srxArmFront->ConfigPeakOutputReverse(-0.6, 0);
+  
+  // Set motion magic gains **These numbers aren't set right yet (for muck)**
+  srxArmFront->SelectProfileSlot(0, 0);
+  srxArmFront->Config_kF(0, 0.3, 0);
+  srxArmFront->Config_kP(0, -0.0002, 0);
+  srxArmFront->Config_kI(0, 0.0, 0);
+  srxArmFront->Config_kD(0, -0.0005, 0);
+
+  // Set acceleration and cruise velocity
+  srxArmFront->ConfigMotionCruiseVelocity(300, 0);
+  srxArmFront->ConfigMotionAcceleration(300, 0);
+}
 int SubEncodedArm::getEncoder()
 {
   return srxArmFront->GetSelectedSensorPosition(0);
@@ -41,7 +69,7 @@ int SubEncodedArm::getEncoder()
 
 double SubEncodedArm::getAngle()
 {
-  _angle = getEncoder() - _top;
+  _angle = getEncoder();
 
   frc::SmartDashboard::PutNumber("Ticks to Top", _angle);
   
@@ -52,7 +80,7 @@ double SubEncodedArm::getAngle()
   return _angleDeg;
 }
 
-void SubEncodedArm::setSpeed(double speed)
+void SubEncodedArm::setSpeed(double speed) //Hardcodes power as %!!!!!
 {
   srxArmFront->Set(speed);
   frc::SmartDashboard::PutNumber("Arm Speed", speed);
@@ -77,4 +105,14 @@ void SubEncodedArm::BrakeState(PneuBrakeState brakeState) {
 
     case(COAST) : pneuBrake->Set(frc::DoubleSolenoid::kReverse);
   }
+}
+
+/* Enables motion magic based off of a desired position
+* @param desired angle of the arm
+*/
+void SubEncodedArm::SetPosition(double angle){
+  
+  angle = (angle / 360) * 4096;
+  std::cout << "angle input: " <<  angle << std::endl;
+  srxArmFront->Set(ControlMode::MotionMagic, angle);
 }

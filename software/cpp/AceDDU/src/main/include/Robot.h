@@ -10,11 +10,14 @@
 #include <frc/TimedRobot.h>
 #include <frc/commands/Command.h>
 #include <frc/smartdashboard/SendableChooser.h>
+#include <frc/WPILib.h>
+
+using namespace frc;
+
 class Auto_rocket;
 //class CmdMoveArm;
 
 #include "commands/CmdMoveArm.h"
-
 
 #include<subsystems/SubDrivebase.h>
 #include "OI.h"

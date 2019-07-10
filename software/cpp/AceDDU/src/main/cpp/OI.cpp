@@ -10,14 +10,18 @@
 #include"commands/CmdAutoDrive.h"
 #include "commands/CmdMoveArm.h"
 #include <frc/WPILib.h>
+#include "commands/CmdInspireArm.h"
 
-OI::OI():joystick1(0) {
+OI::OI() {
+  joystick1.reset(new Joystick(0));
   std::cout << "OI Started" << std::endl;
   // Process operator interface input here
   //btnAutoDrive.reset(new frc::JoystickButton(&joystick1, 2));
   btnArmPid.reset(new frc::JoystickButton(joystick1.get(), 1));
   std::cout << "buttonInit Finished" << std::endl;
   //btnArmPid->WhileHeld(new CmdMoveArm());
+  btnInspireArm.reset(new frc::JoystickButton(joystick1.get(), 2));
+  btnInspireArm->WhileHeld(new CmdInspireArm());
   std::cout << "OI Finished" << std::endl;
 }
 
