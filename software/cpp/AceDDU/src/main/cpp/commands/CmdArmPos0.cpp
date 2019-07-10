@@ -5,33 +5,44 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdElevatorToBottom.h"
-#include "commands/CmdElevatortoIntakeHeight.h"
-#include "Robot.h"
+#include "commands/cmdArmPos0.h"
 
-CmdElevatorToBottom::CmdElevatorToBottom() {
+cmdArmPos0::cmdArmPos0() {
   // Use Requires() here to declare subsystem dependencies
-  Requires(Robot::subElevator.get());
+  // eg. Requires(Robot::chassis.get());
 }
 
 // Called just before this Command runs the first time
-void CmdElevatorToBottom::Initialize() {
-  Robot::subElevator->SetHeight(BOTTOM_HATCH);
-  std::cout << "start to bottom" << endl;
+void cmdArmPos0::Initialize() {
+  cmdMoveArm.reset(new CmdMoveArm());
+  cmdMoveArm->Start();
+
+  subEncodedArm.reset(new SubEncodedArm());
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdElevatorToBottom::Execute() {}
+void cmdArmPos0::Execute() {
+  cmdMoveArm->setAngle(0);
+}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdElevatorToBottom::IsFinished() {
-  return Robot::subElevatorLimits->GetBottomLimit();
+bool cmdArmPos0::IsFinished() 
+{ 
+  if(subEncodedArm->getAngle() == 0)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
 }
 
 // Called once after isFinished returns true
-void CmdElevatorToBottom::End() {
+void cmdArmPos0::End() {
+  cmdMoveArm->End();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdElevatorToBottom::Interrupted() {}
+void cmdArmPos0::Interrupted() {}

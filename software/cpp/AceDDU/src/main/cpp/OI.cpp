@@ -10,22 +10,27 @@
 #include"commands/CmdAutoDrive.h"
 #include "commands/CmdMoveArm.h"
 #include <frc/WPILib.h>
-#include "commands/CmdInspireArm.h"
+#include <commands/CmdVacuum.h>
 
 OI::OI() {
   joystick1.reset(new Joystick(0));
   std::cout << "OI Started" << std::endl;
   // Process operator interface input here
   //btnAutoDrive.reset(new frc::JoystickButton(&joystick1, 2));
-  btnArmPid.reset(new frc::JoystickButton(joystick1.get(), 1));
-  std::cout << "buttonInit Finished" << std::endl;
+  //btnArm0.reset(new frc::JoystickButton(joystick1.get(), 1));
+  //btnArm45.reset(new frc::JoystickButton(joystick1.get(), 3));
+  //btnArm90.reset(new frc::JoystickButton(joystick1.get(), 4));
+ // btnArm180.reset(new frc::JoystickButton(joystick1.get(), 2));
+  std::cout << "button Init Finished" << std::endl;
   //btnArmPid->WhileHeld(new CmdMoveArm());
+  btnClimber.reset(new frc::JoystickButton(joystick1.get(), 2));
+  std::cout << "OI AFter btnClimber reset" << std::endl;
+  btnClimber->WhileHeld(new CmdVacuum);
+  //btnArm0->WhileHeld(new cmdArmPos0());
   btnInspireArm.reset(new frc::JoystickButton(joystick1.get(), 2));
   btnInspireArm->WhileHeld(new CmdInspireArm());
   std::cout << "OI Finished" << std::endl;
 }
-
-
 
 double OI::GetJoystickX(){
   //joystick1.GetX();

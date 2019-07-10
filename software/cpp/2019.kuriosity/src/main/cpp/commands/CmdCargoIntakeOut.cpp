@@ -18,7 +18,7 @@ CmdCargoIntakeOut::CmdCargoIntakeOut() {
   AddParallel(new CmdGimblePidCentre());
   AddSequential(new CmdElevatortoIntakeHeight());
   AddSequential(new CmdMoveRollerIntakeBar(OUT));
-  AddParallel(new CmdElevatorToBottom());
+  AddSequential(new CmdElevatorToBottom());
   //AddSequential(new CmdIntakeOutakeIn());
   
 }

@@ -5,33 +5,34 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdElevatorToBottom.h"
-#include "commands/CmdElevatortoIntakeHeight.h"
+#include "commands/CmdVacuum.h"
 #include "Robot.h"
-
-CmdElevatorToBottom::CmdElevatorToBottom() {
+CmdVacuum::CmdVacuum() {
   // Use Requires() here to declare subsystem dependencies
-  Requires(Robot::subElevator.get());
+  Requires(Robot::subClimber.get());
+  std::cout << "CmdVacuum Construct" << std::endl;
 }
 
 // Called just before this Command runs the first time
-void CmdElevatorToBottom::Initialize() {
-  Robot::subElevator->SetHeight(BOTTOM_HATCH);
-  std::cout << "start to bottom" << endl;
+void CmdVacuum::Initialize() {
+  Robot::subClimber->VacuumIn();
+  std::cout << "CmdVacuum Init" << std::endl;
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdElevatorToBottom::Execute() {}
+void CmdVacuum::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdElevatorToBottom::IsFinished() {
-  return Robot::subElevatorLimits->GetBottomLimit();
-}
+bool CmdVacuum::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdElevatorToBottom::End() {
+void CmdVacuum::End() {
+  Robot::subClimber->VacuumOut();
+  std::cout << "CmdVacuum End" << std::endl;
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdElevatorToBottom::Interrupted() {}
+void CmdVacuum::Interrupted() {
+  End();
+}

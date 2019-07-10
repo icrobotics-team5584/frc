@@ -22,7 +22,7 @@ class Auto_rocket;
 #include<subsystems/SubDrivebase.h>
 #include "OI.h"
 #include "subsystems/SubEncodedArm.h"
-
+#include "subsystems/SubClimber.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -39,12 +39,11 @@ class Robot : public frc::TimedRobot {
   void TestPeriodic() override;
   static std::unique_ptr<SubDrivebase> subDrivebase;
   static std::unique_ptr<SubEncodedArm> subEncodedArm;
-
+  static std::unique_ptr<SubClimber> subClimber;
 
  private:
   std::unique_ptr<Auto_rocket> autoRocket;
   // Have it null by default so that if testing teleop it
   // doesn't have undefined behavior and potentially crash.
   frc::SendableChooser<frc::Command*> m_chooser;
-  std::unique_ptr<CmdMoveArm> cmdMoveArm;
 };

@@ -5,18 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include <frc/WPILib.h>
-#include "../include/commands/cmdArmPos0.h"
 #pragma once
 
-class OI {
- public:
-  OI();
-  double GetJoystickX();
-  double GetJoystickY();
-  std::shared_ptr<frc::Joystick> joystick1;
-  std::unique_ptr<frc::JoystickButton> btnArmPid;
-  std::unique_ptr<frc::JoystickButton> btnInspireArm;
+#include <frc/commands/Subsystem.h>
+#include <frc/WPILib.h>
 
-  std::unique_ptr<frc::JoystickButton> btnClimber;
+class SubClimber : public frc::Subsystem {
+ private:
+  // It's desirable that everything possible under private except
+  // for methods that implement subsystem capabilities
+  
+  std::shared_ptr<frc::DoubleSolenoid> solClimber;
+ 
+ public:
+  SubClimber();
+  void InitDefaultCommand() override;
+  void VacuumIn();
+  void VacuumOut();
 };

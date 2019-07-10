@@ -5,18 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include <frc/WPILib.h>
-#include "../include/commands/cmdArmPos0.h"
 #pragma once
 
-class OI {
- public:
-  OI();
-  double GetJoystickX();
-  double GetJoystickY();
-  std::shared_ptr<frc::Joystick> joystick1;
-  std::unique_ptr<frc::JoystickButton> btnArmPid;
-  std::unique_ptr<frc::JoystickButton> btnInspireArm;
+#include <frc/commands/Command.h>
 
-  std::unique_ptr<frc::JoystickButton> btnClimber;
+class CmdVacuum : public frc::Command {
+ public:
+  CmdVacuum();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
 };

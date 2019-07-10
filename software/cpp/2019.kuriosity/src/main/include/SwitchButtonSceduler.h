@@ -1,22 +1,26 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
+/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include <frc/WPILib.h>
-#include "../include/commands/cmdArmPos0.h"
 #pragma once
+#include <iostream>
+#include "frc/buttons/ButtonScheduler.h"
 
-class OI {
+namespace frc {
+
+class Trigger;
+class Command;
+
+class SwitchButtonSceduler : public ButtonScheduler {
  public:
-  OI();
-  double GetJoystickX();
-  double GetJoystickY();
-  std::shared_ptr<frc::Joystick> joystick1;
-  std::unique_ptr<frc::JoystickButton> btnArmPid;
-  std::unique_ptr<frc::JoystickButton> btnInspireArm;
-
-  std::unique_ptr<frc::JoystickButton> btnClimber;
+  SwitchButtonSceduler(bool last, Trigger* button, Command* orders1, Command* orders2);
+ private:
+  Command* secondaryCommand;
+  void Execute();
+  bool toggle = false;
 };
+
+} //namespace
