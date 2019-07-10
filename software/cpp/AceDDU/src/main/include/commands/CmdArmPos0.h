@@ -5,19 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include <frc/WPILib.h>
-#include "../include/commands/cmdArmPos0.h"
 #pragma once
 
-class OI {
- public:
-  OI();
-  double GetJoystickX();
-  double GetJoystickY();
-  std::shared_ptr<frc::Joystick> joystick1;
+#include <frc/commands/Command.h>
+#include "CmdMoveArm.h"
 
-  std::shared_ptr<frc::JoystickButton> btnArm0;
-  std::shared_ptr<frc::JoystickButton> btnArm45;
-  std::shared_ptr<frc::JoystickButton> btnArm90;
-  std::shared_ptr<frc::JoystickButton> btnArm180;
+class cmdArmPos0 : public frc::Command {
+ public:
+  cmdArmPos0();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
+ private:
+  std::unique_ptr<SubEncodedArm> subEncodedArm;
+  std::unique_ptr<CmdMoveArm> cmdMoveArm;
+
 };

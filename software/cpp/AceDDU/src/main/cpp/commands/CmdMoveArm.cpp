@@ -46,3 +46,17 @@ void CmdMoveArm::Interrupted()
 {
   End();
 }
+
+void CmdMoveArm::setTicks(int ticks)
+{
+  armController->SetSetpoint(ticks);
+}
+
+void CmdMoveArm::setAngle(double angle)
+{
+  _relativeArmTicks = angle / 360 * 4096;
+
+  _armTicks = _relativeArmTicks + _zeroPoint;
+
+  setTicks(_armTicks);
+}
