@@ -40,7 +40,7 @@ void SubEncodedArm::InitDefaultCommand() {
 void SubEncodedArm::ConfigTalon(){
   // Configure Talon SRX
   // Set the frame periods. It seems like we need this or maybe not but it's here in case.
-  srxArmFront->SetSensorPhase();
+  srxArmFront->SetSensorPhase(true);
   srxArmFront->SetInverted(false);
   srxArmBack->SetInverted(false);
 

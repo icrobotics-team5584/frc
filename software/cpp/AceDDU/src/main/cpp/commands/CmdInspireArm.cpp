@@ -33,7 +33,7 @@ void CmdInspireArm::Execute() {
   //set feedfoward
   position = Robot::subEncodedArm->getEncoder();
   angleRadians = Robot::subEncodedArm->getAngle() * (3.14/180);
-  kF = 0.2;
+  kF = 0.2 * 1023;
 
   Robot::subEncodedArm->srxArmFront->Config_kF(0, kF, 0);
 
