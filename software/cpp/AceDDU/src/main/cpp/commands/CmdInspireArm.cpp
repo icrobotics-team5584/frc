@@ -22,8 +22,8 @@ void CmdInspireArm::Initialize() {
 void CmdInspireArm::Execute() {
   //grab values from shuffleboard
   kP = SmartDashboard::GetNumber("kP", 0.1);
-  kI = SmartDashboard::GetNumber("kI", 0.1);
-  kD = SmartDashboard::GetNumber("kD", 0.1);
+  kI = SmartDashboard::GetNumber("kI", 0);
+  kD = SmartDashboard::GetNumber("kD", 0);
 
   cruiseVelocity = SmartDashboard::GetNumber("cruiseVelocity", 300);
   maxAcceleration = SmartDashboard::GetNumber("maxAcceleration", 300);

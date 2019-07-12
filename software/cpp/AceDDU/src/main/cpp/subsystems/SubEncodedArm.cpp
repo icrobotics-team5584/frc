@@ -53,10 +53,10 @@ void SubEncodedArm::ConfigTalon(){
   
   // Set motion magic gains **These numbers aren't set right yet (for muck)**
   srxArmFront->SelectProfileSlot(0, 0);
-  srxArmFront->Config_kF(0, 0.3, 0);
-  srxArmFront->Config_kP(0, -0.0002, 0);
-  srxArmFront->Config_kI(0, 0.0, 0);
-  srxArmFront->Config_kD(0, -0.0005, 0);
+  srxArmFront->Config_kF(0, 0, 0);
+  srxArmFront->Config_kP(0, 0, 0);
+  srxArmFront->Config_kI(0, 0, 0);
+  srxArmFront->Config_kD(0, 0, 0);
 
   // Set acceleration and cruise velocity
   srxArmFront->ConfigMotionCruiseVelocity(300, 0);
