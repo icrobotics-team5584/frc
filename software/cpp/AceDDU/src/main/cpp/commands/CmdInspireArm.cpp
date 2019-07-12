@@ -7,7 +7,7 @@
 
 #include "commands/CmdInspireArm.h"
 
-CmdInspireArm::CmdInspireArm(Angle angle) {
+CmdInspireArm::CmdInspireArm(ArmState angle) {
   //Okay, now you can call CmdInspireArm with an "ArmState(FLOOR)" in the function (for example)
   
   // POSSIBLE ARM POSITIONS //
@@ -16,14 +16,13 @@ CmdInspireArm::CmdInspireArm(Angle angle) {
   //          SKY           //
   //          HAB           //
 
-  int _angle = angle
-
   Requires(Robot::subEncodedArm.get());
 }
 
 // Called just before this Command runs the first time
 void CmdInspireArm::Initialize() {
   Robot::subEncodedArm->ConfigTalon();
+  int _angle = angle;
 }
 
 // Called repeatedly when this Command is scheduled to run

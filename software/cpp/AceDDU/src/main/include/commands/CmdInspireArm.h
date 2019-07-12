@@ -22,15 +22,6 @@ class CmdInspireArm : public frc::Command {
   void Interrupted() override;
   double _angle;
 
-  // These values will need to be changed (duh) - I wasn't at the robot to test this at the time of writing.
-  enum ArmState {
-    FLOOR = 0,
-    HATCH = 0,
-    SKY = 0,
-    HAB = 0,
-  };
-
-
  private:
   double kF; 
   double kP;

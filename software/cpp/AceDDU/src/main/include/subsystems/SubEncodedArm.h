@@ -30,6 +30,14 @@ class SubEncodedArm : public frc::Subsystem {
     COAST
   };
 
+  // These values will need to be changed (duh) - I wasn't at the robot to test this at the time of writing.
+  enum ArmState {
+    FLOOR = 0,
+    HATCH = 0,
+    SKY = 0,
+    HAB = 0,
+  };
+
   SubEncodedArm();
   void InitDefaultCommand() override;
   int getEncoder();
