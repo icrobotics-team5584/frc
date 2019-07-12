@@ -14,7 +14,7 @@ using namespace frc;
 
 class CmdInspireArm : public frc::Command {
  public:
-  CmdInspireArm();
+  CmdInspireArm(ArmState angle);
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;

@@ -15,14 +15,13 @@ CmdInspireArm::CmdInspireArm(ArmState angle) {
   //         HATCH          //
   //          SKY           //
   //          HAB           //
-
+  _angle = angle;
   Requires(Robot::subEncodedArm.get());
 }
 
 // Called just before this Command runs the first time
 void CmdInspireArm::Initialize() {
   Robot::subEncodedArm->ConfigTalon();
-  int _angle = angle;
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -35,7 +34,6 @@ void CmdInspireArm::Execute() {
   cruiseVelocity = SmartDashboard::GetNumber("cruiseVelocity", 300);
   maxAcceleration = SmartDashboard::GetNumber("maxAcceleration", 300);
   
-  angle = _angle //Get inputs from the code (with the four preset positions from the enumerator.)
   //angle = SmartDashboard::GetNumber("setAngle", 0); //Get inputs from shuffleboard. This is disabled cause we're not manually setting anything anymore.
 
   //set feedfoward
