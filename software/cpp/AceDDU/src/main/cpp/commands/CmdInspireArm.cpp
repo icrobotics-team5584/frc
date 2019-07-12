@@ -7,9 +7,17 @@
 
 #include "commands/CmdInspireArm.h"
 
-CmdInspireArm::CmdInspireArm() {
-  // Use Requires() here to declare subsystem dependencies
-  // eg. Requires(Robot::chassis.get());
+CmdInspireArm::CmdInspireArm(Angle angle) {
+  //Okay, now you can call CmdInspireArm with an "ArmState(FLOOR)" in the function (for example)
+  
+  // POSSIBLE ARM POSITIONS //
+  //         FLOOR          //
+  //         HATCH          //
+  //          SKY           //
+  //          HAB           //
+
+  int _angle = angle
+
   Requires(Robot::subEncodedArm.get());
 }
 
@@ -20,15 +28,16 @@ void CmdInspireArm::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdInspireArm::Execute() {
-  //grab values from shuffleboard
+  //grab values from shuffleboard. Once the system is tuned this should be deleted.
   kP = SmartDashboard::GetNumber("kP", 0.1);
   kI = SmartDashboard::GetNumber("kI", 0);
   kD = SmartDashboard::GetNumber("kD", 0);
 
   cruiseVelocity = SmartDashboard::GetNumber("cruiseVelocity", 300);
   maxAcceleration = SmartDashboard::GetNumber("maxAcceleration", 300);
-
-  angle = SmartDashboard::GetNumber("setAngle", 0);
+  
+  angle = _angle //Get inputs from the code (with the four preset positions from the enumerator.)
+  //angle = SmartDashboard::GetNumber("setAngle", 0); //Get inputs from shuffleboard. This is disabled cause we're not manually setting anything anymore.
 
   //set feedfoward
   position = Robot::subEncodedArm->getEncoder();
