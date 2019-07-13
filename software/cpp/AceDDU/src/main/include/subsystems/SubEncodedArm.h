@@ -21,6 +21,8 @@ class SubEncodedArm : public frc::Subsystem {
   double _angle;
   double _top = 3222;
   double _angleDeg;
+
+  double kF;
   
   void configTalon();
  public:
@@ -30,13 +32,10 @@ class SubEncodedArm : public frc::Subsystem {
     COAST
   };
 
-  // These values will need to be changed (duh) - I wasn't at the robot to test this at the time of writing.
-  enum ArmState {
-    FLOOR = 0,
-    HATCH = 0,
-    SKY = 0,
-    HAB = 0,
-  };
+  //feedforward multiplier
+  double multiplier = 0.17;
+  double angleRadians;
+  double position;
 
   SubEncodedArm();
   void InitDefaultCommand() override;

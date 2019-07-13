@@ -9,7 +9,6 @@
 #include "commands/CmdAngleTurn.h"
 #include"commands/CmdAutoDrive.h"
 #include "commands/CmdMoveArm.h"
-#include "commands/CmdInspireArm.h"
 #include <frc/WPILib.h>
 #include <commands/CmdVacuum.h>
 
@@ -28,8 +27,8 @@ OI::OI() {
   std::cout << "OI AFter btnClimber reset" << std::endl;
   btnClimber->WhileHeld(new CmdVacuum());
   //btnArm0->WhileHeld(new cmdArmPos0());
-  btnInspireArm.reset(new frc::JoystickButton(joystick1.get(), 2));
-  btnInspireArm->WhileHeld(new CmdInspireArm());
+  //btnInspireArm.reset(new frc::JoystickButton(joystick1.get(), 2));
+  //btnInspireArm->WhileHeld(new CmdInspireArm());
   std::cout << "OI Finished" << std::endl;
 }
 

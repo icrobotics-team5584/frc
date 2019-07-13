@@ -23,7 +23,6 @@ void Robot::RobotInit() {
   std::cout << "RobotInit" << std::endl;
   subDrivebase.reset(new SubDrivebase);
   subEncodedArm.reset(new SubEncodedArm);
-  subEncodedArm->ResetEncoder();
   subClimber.reset(new SubClimber);
   std::cout << "SubFinished" << std::endl;
   m_oi.reset(new OI);

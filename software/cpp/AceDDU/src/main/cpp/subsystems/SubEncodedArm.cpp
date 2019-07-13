@@ -40,9 +40,7 @@ void SubEncodedArm::InitDefaultCommand() {
 void SubEncodedArm::ConfigTalon(){
   // Configure Talon SRX
   // Set the frame periods. It seems like we need this or maybe not but it's here in case.
-  srxArmFront->SetSensorPhase(true);
-  srxArmFront->SetInverted(false);
-  srxArmBack->SetInverted(false);
+  
 
   srxArmFront->SetStatusFramePeriod(StatusFrameEnhanced::Status_13_Base_PIDF0, 10, 10);
   srxArmFront->SetStatusFramePeriod(StatusFrameEnhanced::Status_10_MotionMagic, 10, 10);
@@ -51,10 +49,15 @@ void SubEncodedArm::ConfigTalon(){
   srxArmFront->ConfigPeakOutputForward(0.6, 0);
   srxArmFront->ConfigPeakOutputReverse(-0.6, 0);
   
+  //set feedfoward
+  position = Robot::subEncodedArm->getEncoder();
+  angleRadians = Robot::subEncodedArm->getAngle() * (3.14/180);
+  kF = 0.2 * 1023;
+
   // Set motion magic gains **These numbers aren't set right yet (for muck)**
   srxArmFront->SelectProfileSlot(0, 0);
-  srxArmFront->Config_kF(0, 0, 0);
-  srxArmFront->Config_kP(0, 0, 0);
+  srxArmFront->Config_kF(0, kF, 0);
+  srxArmFront->Config_kP(0, 0.1, 0);
   srxArmFront->Config_kI(0, 0, 0);
   srxArmFront->Config_kD(0, 0, 0);
 
