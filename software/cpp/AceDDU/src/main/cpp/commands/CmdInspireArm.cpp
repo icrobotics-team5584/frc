@@ -21,6 +21,7 @@ void CmdInspireArm::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void CmdInspireArm::Execute() {
   //grab values from shuffleboard
+  kF = SmartDashboard::GetNumber("kF", 0);
   kP = SmartDashboard::GetNumber("kP", 0.1);
   kI = SmartDashboard::GetNumber("kI", 0);
   kD = SmartDashboard::GetNumber("kD", 0);
@@ -33,8 +34,7 @@ void CmdInspireArm::Execute() {
   //set feedfoward
   position = Robot::subEncodedArm->getEncoder();
   angleRadians = Robot::subEncodedArm->getAngle() * (3.14/180);
-  kF = 0.2 * 1023;
-
+  
   Robot::subEncodedArm->srxArmFront->Config_kF(0, kF, 0);
 
   //delete this once tuned

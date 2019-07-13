@@ -100,6 +100,7 @@ void Robot::TeleopInit() {
   // teleop starts running. If you want the autonomous to
   // continue until interrupted by another command, remove
   // this line or comment it out.
+  SmartDashboard::PutNumber("kF", 0);
   SmartDashboard::PutNumber("kP", 0);
   SmartDashboard::PutNumber("kI", 0);
   SmartDashboard::PutNumber("kD", 0);
