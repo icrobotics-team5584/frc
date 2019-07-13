@@ -63,8 +63,8 @@ void SubEncodedArm::ConfigTalon(){
   srxArmFront->Config_kD(0, 0, 0);
 
   // Set acceleration and cruise velocity
-  srxArmFront->ConfigMotionCruiseVelocity(300, 0);
-  srxArmFront->ConfigMotionAcceleration(300, 0);
+  srxArmFront->ConfigMotionCruiseVelocity(2500, 0);
+  srxArmFront->ConfigMotionAcceleration(2000, 0);
 }
 int SubEncodedArm::getEncoder()
 {

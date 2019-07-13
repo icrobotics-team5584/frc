@@ -26,7 +26,7 @@ OI::OI() {
   std::cout << "OI Started" << std::endl;
   // Process operator interface input here
   //btnAutoDrive.reset(new frc::JoystickButton(&joystick1, 2));
-  btnArmToFloor.reset(new frc::JoystickButton(joystick1.get(), 3));
+   btnArmToFloor.reset(new frc::JoystickButton(joystick1.get(), 3));
   btnArmToHab.reset(new frc::JoystickButton(joystick1.get(), 4));
   btnArmToHatch.reset(new frc::JoystickButton(joystick1.get(), 5));
   btnArmToSky.reset(new frc::JoystickButton(joystick1.get(), 6));
@@ -55,13 +55,13 @@ OI::OI() {
 }
 
 double OI::GetJoystickX(){
-  return joystick1->GetX();
+  return joystick1.GetX();
 
 
 }
 
 double OI::GetJoystickY(){
-  return joystick1->GetY();
+  return joystick1.GetY();
 
 
 }
