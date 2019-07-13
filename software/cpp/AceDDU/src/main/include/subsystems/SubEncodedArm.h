@@ -21,6 +21,8 @@ class SubEncodedArm : public frc::Subsystem {
   double _angle;
   double _top = 3222;
   double _angleDeg;
+
+  double kF;
   
   void configTalon();
  public:
@@ -29,6 +31,11 @@ class SubEncodedArm : public frc::Subsystem {
     BRAKE,
     COAST
   };
+
+  //feedforward multiplier
+  double multiplier = 0.17;
+  double angleRadians;
+  double position;
 
   SubEncodedArm();
   void InitDefaultCommand() override;

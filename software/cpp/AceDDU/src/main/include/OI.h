@@ -21,5 +21,11 @@ class OI {
   std::unique_ptr<frc::JoystickButton> btnArmForward;
   std::unique_ptr<frc::JoystickButton> btnArmBackwards;
 
+  std::unique_ptr<frc::JoystickButton> btnArmToFloor;
+  std::unique_ptr<frc::JoystickButton> btnArmToHab;
+  std::unique_ptr<frc::JoystickButton> btnArmToHatch;
+  std::unique_ptr<frc::JoystickButton> btnArmToSky;
+  std::unique_ptr<frc::JoystickButton> btnArmToPreHab;
+
   std::unique_ptr<frc::JoystickButton> btnClimber;
 };

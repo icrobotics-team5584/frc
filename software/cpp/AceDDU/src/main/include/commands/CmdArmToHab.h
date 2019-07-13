@@ -12,9 +12,9 @@
 #include "frc/WPILib.h"
 using namespace frc;
 
-class CmdInspireArm : public frc::Command {
+class CmdArmToHab : public frc::Command {
  public:
-  CmdInspireArm();
+  CmdArmToHab();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
@@ -27,13 +27,8 @@ class CmdInspireArm : public frc::Command {
   double kI;
   double kD;
 
-  double angle;
+  double angle = 160;
 
   double cruiseVelocity;
   double maxAcceleration;
-
-  //feedforward multiplier
-  double multiplier = 0.17;
-  double angleRadians;
-  double position;
 };
