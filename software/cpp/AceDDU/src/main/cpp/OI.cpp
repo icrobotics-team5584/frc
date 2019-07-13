@@ -11,23 +11,46 @@
 #include "commands/CmdMoveArm.h"
 #include <frc/WPILib.h>
 #include <commands/CmdVacuum.h>
-#include "commands/CmdArmPos0.h"
+
+#include "commands/CmdArmToFloor.h"
+#include "commands/CmdArmToHab.h"
+#include "commands/CmdArmToHatch.h"
+#include "commands/CmdArmToPreHab.h"
+#include "commands/CmdArmToSky.h"
+
+#include <commands/CmdArmForward.h>
+#include <commands/CmdArmBackwards.h>
 
 OI::OI() {
-  joystick1.reset( new frc::Joystick(0));
+  joystick1.reset(new Joystick(0));
   std::cout << "OI Started" << std::endl;
   // Process operator interface input here
   //btnAutoDrive.reset(new frc::JoystickButton(&joystick1, 2));
-  btnArm0.reset(new frc::JoystickButton(joystick1.get(), 1));
-  btnArm45.reset(new frc::JoystickButton(joystick1.get(), 3));
-  btnArm90.reset(new frc::JoystickButton(joystick1.get(), 4));
-  btnArm180.reset(new frc::JoystickButton(joystick1.get(), 2));
+  btnArmToFloor.reset(new frc::JoystickButton(joystick1.get(), 3));
+  btnArmToHab.reset(new frc::JoystickButton(joystick1.get(), 4));
+  btnArmToHatch.reset(new frc::JoystickButton(joystick1.get(), 5));
+  btnArmToSky.reset(new frc::JoystickButton(joystick1.get(), 6));
+  btnArmToPreHab.reset(new frc::JoystickButton(joystick1.get(), 2));
   std::cout << "button Init Finished" << std::endl;
   //btnArmPid->WhileHeld(new CmdMoveArm());
-  btnClimber.reset(new frc::JoystickButton(joystick1.get(), 2));
+  btnClimber.reset(new frc::JoystickButton(joystick1.get(), 1));
   std::cout << "OI AFter btnClimber reset" << std::endl;
-  btnClimber->WhileHeld(new CmdVacuum);
-  btnArm0->WhileHeld(new cmdArmPos0());
+  btnClimber->WhileHeld(new CmdVacuum());
+  //btnArm0->WhileHeld(new cmdArmPos0());
+
+
+  btnArmForward.reset(new frc::JoystickButton(joystick1.get(), 3));
+  btnArmBackwards.reset(n ew frc::JoystickButton(joystick1.get(), 4));
+
+  btnArmForward->WhileHeld(new CmdArmForward());
+  btnArmBackwards->WhileHeld(new CmdArmBackwards());
+
+  btnArmToFloor->WhileHeld(new CmdArmToFloor());
+  btnArmToHab->WhileHeld(new CmdArmToHab());
+  btnArmToHatch->WhileHeld(new CmdArmToHatch());
+  btnArmToSky->WhileHeld(new CmdArmToSky());
+  btnArmToPreHab->WhileHeld(new CmdArmToPreHab());
+
   std::cout << "OI Finished" << std::endl;
 }
 

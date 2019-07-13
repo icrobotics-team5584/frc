@@ -30,6 +30,10 @@ void Robot::RobotInit() {
   autoRocket.reset(new Auto_rocket);
   
   std::cout << "Init Finished" << std::endl;
+
+  //Zero out/Initialize values on Shuffleboard
+  
+
 }
 
 
@@ -44,9 +48,9 @@ void Robot::RobotInit() {
  */
 void Robot::RobotPeriodic() {
   //std::cout << "PeriodicStart" << std::endl;
-  frc::SmartDashboard::PutNumber("Angle", subDrivebase->get_angle());
-  frc::SmartDashboard::PutNumber("Distance", subDrivebase->get_distance());
-  frc::SmartDashboard::PutNumber("Arm Angle", subEncodedArm->getEncoder());
+  //frc::SmartDashboard::PutNumber("Angle", subDrivebase->get_angle());
+  //frc::SmartDashboard::PutNumber("Distance", subDrivebase->get_distance());
+  frc::SmartDashboard::PutNumber("Arm Angle", subEncodedArm->getAngle());
   //std::cout << "PeriodicEnd" << std::endl;
 }
 
@@ -96,6 +100,17 @@ void Robot::TeleopInit() {
   // teleop starts running. If you want the autonomous to
   // continue until interrupted by another command, remove
   // this line or comment it out.
+  SmartDashboard::PutNumber("kF", 0);
+  SmartDashboard::PutNumber("kP", 0);
+  SmartDashboard::PutNumber("kI", 0);
+  SmartDashboard::PutNumber("kD", 0);
+
+  SmartDashboard::PutNumber("cruiseVelocity", 300);
+  SmartDashboard::PutNumber("maxAcceleration", 300);
+
+  SmartDashboard::PutNumber("setAngle", 0);
+
+  frc::SmartDashboard::PutNumber("Arm Speed", 0);
 }
 
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }

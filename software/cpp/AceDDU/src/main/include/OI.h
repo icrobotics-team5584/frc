@@ -15,9 +15,17 @@ class OI {
   double GetJoystickX();
   double GetJoystickY();
   std::shared_ptr<frc::Joystick> joystick1;
+  std::unique_ptr<frc::JoystickButton> btnArmPid;
+  std::unique_ptr<frc::JoystickButton> btnInspireArm;
+
+  std::unique_ptr<frc::JoystickButton> btnArmForward;
+  std::unique_ptr<frc::JoystickButton> btnArmBackwards;
+
+  std::unique_ptr<frc::JoystickButton> btnArmToFloor;
+  std::unique_ptr<frc::JoystickButton> btnArmToHab;
+  std::unique_ptr<frc::JoystickButton> btnArmToHatch;
+  std::unique_ptr<frc::JoystickButton> btnArmToSky;
+  std::unique_ptr<frc::JoystickButton> btnArmToPreHab;
+
   std::unique_ptr<frc::JoystickButton> btnClimber;
-  std::shared_ptr<frc::JoystickButton> btnArm0;
-  std::shared_ptr<frc::JoystickButton> btnArm45;
-  std::shared_ptr<frc::JoystickButton> btnArm90;
-  std::shared_ptr<frc::JoystickButton> btnArm180;
 };
