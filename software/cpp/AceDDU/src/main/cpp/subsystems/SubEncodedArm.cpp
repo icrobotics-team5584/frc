@@ -22,6 +22,13 @@ SubEncodedArm::SubEncodedArm() : Subsystem("ExampleSubsystem") {
   srxArmFront->ConfigFactoryDefault();
   srxArmBack->ConfigFactoryDefault();
 
+  srxArmFront->SetSensorPhase(false);
+  srxArmFront->SetInverted(true);
+  srxArmBack->SetInverted(true);
+  // Configure Talon SRX
+  // Set the frame periods. It seems like we need this or maybe not but it's here in case.
+  
+
 	srxArmBack->Set(ControlMode::Follower, 2);
 
   //sensors
@@ -36,13 +43,10 @@ SubEncodedArm::SubEncodedArm() : Subsystem("ExampleSubsystem") {
 void SubEncodedArm::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
-  SetDefaultCommand(new CmdIdleArm());
 }
 
 void SubEncodedArm::ConfigTalon(){
-  // Configure Talon SRX
-  // Set the frame periods. It seems like we need this or maybe not but it's here in case.
-  
+ 
 
   srxArmFront->SetStatusFramePeriod(StatusFrameEnhanced::Status_13_Base_PIDF0, 10, 10);
   srxArmFront->SetStatusFramePeriod(StatusFrameEnhanced::Status_10_MotionMagic, 10, 10);
