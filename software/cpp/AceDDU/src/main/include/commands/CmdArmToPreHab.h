@@ -12,9 +12,9 @@
 #include "frc/WPILib.h"
 using namespace frc;
 
-class CmdArmToHab : public frc::Command {
+class CmdArmToPreHab : public frc::Command {
  public:
-  CmdArmToHab();
+  CmdArmToPreHab();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
@@ -27,7 +27,7 @@ class CmdArmToHab : public frc::Command {
   double kI;
   double kD;
 
-  double angle = 160;
+  double angle = 150;
 
   double cruiseVelocity;
   double maxAcceleration;

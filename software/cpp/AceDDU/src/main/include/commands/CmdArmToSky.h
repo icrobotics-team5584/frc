@@ -27,7 +27,7 @@ class CmdArmToSky : public frc::Command {
   double kI;
   double kD;
 
-  double angle = 0;
+  double angle = 70;
 
   double cruiseVelocity;
   double maxAcceleration;
