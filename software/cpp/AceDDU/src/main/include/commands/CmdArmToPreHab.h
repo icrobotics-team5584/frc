@@ -27,7 +27,7 @@ class CmdArmToPreHab : public frc::Command {
   double kI;
   double kD;
 
-  double angle = 150;
+  double angle = 140;
 
   double cruiseVelocity;
   double maxAcceleration;

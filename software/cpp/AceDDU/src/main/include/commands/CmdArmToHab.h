@@ -27,7 +27,7 @@ class CmdArmToHab : public frc::Command {
   double kI;
   double kD;
 
-  double angle = 160;
+  double angle = 165;
 
   double cruiseVelocity;
   double maxAcceleration;

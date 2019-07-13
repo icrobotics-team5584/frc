@@ -55,13 +55,13 @@ OI::OI() {
 }
 
 double OI::GetJoystickX(){
-  return joystick1.GetX();
+  return joystick1->GetX();
 
 
 }
 
 double OI::GetJoystickY(){
-  return joystick1.GetY();
+  return joystick1->GetY();
 
 
 }
