@@ -58,12 +58,11 @@ void SubEncodedArm::ConfigTalon(){
   //set feedfoward
   position = Robot::subEncodedArm->getEncoder();
   angleRadians = Robot::subEncodedArm->getAngle() * (3.14/180);
-  kF = 0.2 * 1023;
 
   // Set motion magic gains **These numbers aren't set right yet (for muck)**
   srxArmFront->SelectProfileSlot(0, 0);
-  srxArmFront->Config_kF(0, kF, 0);
-  srxArmFront->Config_kP(0, 0.1, 0);
+  srxArmFront->Config_kF(0, 50, 0);
+  srxArmFront->Config_kP(0, 2.5, 0);
   srxArmFront->Config_kI(0, 0, 0);
   srxArmFront->Config_kD(0, 0, 0);
 

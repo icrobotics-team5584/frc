@@ -16,7 +16,7 @@ CmdArmToPreHab::CmdArmToPreHab() {
 // Called just before this Command runs the first time
 void CmdArmToPreHab::Initialize() {
   Robot::subEncodedArm->ConfigTalon();  
-  Robot::subEncodedArm->SetPosition(-angle);
+  Robot::subEncodedArm->SetPosition(angle);
 
 }
 
@@ -33,6 +33,4 @@ void CmdArmToPreHab::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdArmToPreHab::Interrupted() {
-  Robot::subEncodedArm->BrakeState(Robot::subEncodedArm->COAST);
-}
+void CmdArmToPreHab::Interrupted() {}
