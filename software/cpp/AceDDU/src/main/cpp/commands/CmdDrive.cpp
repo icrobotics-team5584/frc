@@ -20,7 +20,7 @@ void CmdDrive::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void CmdDrive::Execute() {
-    //Robot::subDrivebase->drive(Robot::m_oi->GetJoystickY(), Robot::m_oi->GetJoystickX());
+    Robot::subDrivebase->drive(Robot::m_oi->GetJoystickY(), Robot::m_oi->GetJoystickX());
     //std::cout<<Robot::m_oi->GetJoystickX()<<std::endl;
     //std::cout<<Robot::m_oi->GetJoystickY()<<std::endl;
   

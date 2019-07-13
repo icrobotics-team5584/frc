@@ -40,7 +40,7 @@ OI::OI() {
 
 
   btnArmForward.reset(new frc::JoystickButton(joystick1.get(), 3));
-  btnArmBackwards.reset(n ew frc::JoystickButton(joystick1.get(), 4));
+  btnArmBackwards.reset(new frc::JoystickButton(joystick1.get(), 4));
 
   btnArmForward->WhileHeld(new CmdArmForward());
   btnArmBackwards->WhileHeld(new CmdArmBackwards());
@@ -55,13 +55,13 @@ OI::OI() {
 }
 
 double OI::GetJoystickX(){
-  //joystick1.GetX();
+  joystick1->GetX();
 
 
 }
 
 double OI::GetJoystickY(){
-  //joystick1.GetY();
+  joystick1->GetY();
 
 
 }
