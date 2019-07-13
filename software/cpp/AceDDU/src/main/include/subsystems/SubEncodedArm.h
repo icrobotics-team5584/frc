@@ -50,4 +50,7 @@ class SubEncodedArm : public frc::Subsystem {
 
   std::shared_ptr<WPI_TalonSRX> srxArmFront;
 	std::shared_ptr<WPI_TalonSRX> srxArmBack;
+
+  // Manual Control
+  double armSpeed = 0;
 };

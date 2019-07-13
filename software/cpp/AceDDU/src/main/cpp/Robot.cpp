@@ -108,6 +108,8 @@ void Robot::TeleopInit() {
   SmartDashboard::PutNumber("maxAcceleration", 300);
 
   SmartDashboard::PutNumber("setAngle", 0);
+
+  frc::SmartDashboard::PutNumber("Arm Speed", 0);
 }
 
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }

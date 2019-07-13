@@ -29,6 +29,8 @@ SubEncodedArm::SubEncodedArm() : Subsystem("ExampleSubsystem") {
 
   //pneumatics
   pneuBrake.reset(new frc::DoubleSolenoid(2,3));
+
+
 }
 
 void SubEncodedArm::InitDefaultCommand() {
@@ -86,7 +88,6 @@ double SubEncodedArm::getAngle()
 void SubEncodedArm::setSpeed(double speed) //Hardcodes power as %!!!!!
 {
   srxArmFront->Set(speed);
-  frc::SmartDashboard::PutNumber("Arm Speed", speed);
 }
 
 /*
