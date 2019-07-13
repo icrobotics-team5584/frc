@@ -40,7 +40,7 @@ OI::OI() {
 
 
   btnArmForward.reset(new frc::JoystickButton(joystick1.get(), 3));
-  btnArmBackwards.reset(new frc::JoystickButton(joystick1.get(), 4));
+  btnArmBackwards.reset(n ew frc::JoystickButton(joystick1.get(), 4));
 
   btnArmForward->WhileHeld(new CmdArmForward());
   btnArmBackwards->WhileHeld(new CmdArmBackwards());
