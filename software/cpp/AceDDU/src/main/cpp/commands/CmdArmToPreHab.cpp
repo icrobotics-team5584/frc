@@ -15,12 +15,14 @@ CmdArmToPreHab::CmdArmToPreHab() {
 
 // Called just before this Command runs the first time
 void CmdArmToPreHab::Initialize() {
-  Robot::subEncodedArm->ConfigTalon();
+  Robot::subEncodedArm->ConfigTalon();  
+  Robot::subEncodedArm->SetPosition(-angle);
+
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdArmToPreHab::Execute() {
-  Robot::subEncodedArm->SetPosition(-angle);
+
 }
 
 // Make this return true when this Command no longer needs to run execute()

@@ -16,11 +16,12 @@ CmdArmToSky::CmdArmToSky() {
 // Called just before this Command runs the first time
 void CmdArmToSky::Initialize() {
   Robot::subEncodedArm->ConfigTalon();
+  Robot::subEncodedArm->SetPosition(-angle);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdArmToSky::Execute() {
-  Robot::subEncodedArm->SetPosition(-angle);
+
 }
 
 // Make this return true when this Command no longer needs to run execute()
