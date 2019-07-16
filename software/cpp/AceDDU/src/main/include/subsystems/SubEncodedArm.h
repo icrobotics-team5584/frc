@@ -42,11 +42,13 @@ class SubEncodedArm : public frc::Subsystem {
   int getEncoder();
   double getAngle();
   void setSpeed(double speed);
-  void ResetEncoder();
+/*  void ResetEncoder(); LETS NOT USE THIS ONE */
   void BrakeState(PneuBrakeState brakeState);
   void SetAngle(double angle);
   void ConfigTalon();
   void SetPosition(double angle);
+  double DegreesToSensorUnits(double degrees);
+  double SensorUnitsToDegrees(double sensorUnits);
 
   std::shared_ptr<WPI_TalonSRX> srxArmFront;
 	std::shared_ptr<WPI_TalonSRX> srxArmBack;
