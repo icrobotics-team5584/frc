@@ -18,7 +18,6 @@ class SubIntake : public frc::Subsystem {
 
   std::shared_ptr<frc::DoubleSolenoid> SolMode;
   std::shared_ptr<WPI_TalonSRX> Motor;
-
  public:
   SubIntake();
   void InitDefaultCommand() override;

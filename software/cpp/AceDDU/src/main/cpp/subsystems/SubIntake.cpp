@@ -9,26 +9,41 @@
 #include "frc/WPILib.h"
 #include "Robot.h"
 
+bool is_cargo_mode = false;
+
 SubIntake::SubIntake() : Subsystem("ExampleSubsystem") {
   SolMode.reset(new frc::DoubleSolenoid(2, 3));
-  Motor.reset(new WPI_TalonSRX(9));
+  Motor.reset(new WPI_TalonSRX(1));
 }
 
 void SubIntake::InitDefaultCommand() {
   
 }
+
 void SubIntake::Intake(){
-  Motor -> Set(SPEED);
+  if(is_cargo_mode)
+    Motor -> Set(SPEED);
+  else
+    Motor -> Set(-SPEED);
 }
+
 void SubIntake::Outtake(){
-  Motor -> Set(-SPEED);
+  if(is_cargo_mode)
+    Motor -> Set(-SPEED);
+  else
+    Motor -> Set(SPEED);
 }
+
 void SubIntake::Stop(){
   Motor -> Set(0);
 }
+
 void SubIntake::CargoMode(){
   SolMode -> Set(frc::DoubleSolenoid::kForward);
+  is_cargo_mode = true;
 }
+
 void SubIntake::HatchMode(){
   SolMode -> Set(frc::DoubleSolenoid::kReverse);
+  is_cargo_mode = false;
 }

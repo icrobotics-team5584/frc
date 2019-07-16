@@ -8,6 +8,7 @@
 #include <frc/WPILib.h>
 #include "../include/commands/cmdArmPos0.h"
 #include "customButtons/ButtonPOV.h"
+#include "customButtons/ToggleButton.h"
 
 #pragma once
 
@@ -52,5 +53,5 @@ class OI {
 
   std::unique_ptr<frc::JoystickButton> btnIntake;
   std::unique_ptr<frc::JoystickButton> btnOuttake;
-  std::unique_ptr<frc::JoystickButton> btnIntakeMode;
+  std::unique_ptr<ToggleButton> btnIntakeMode;
 };

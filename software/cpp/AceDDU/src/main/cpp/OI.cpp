@@ -20,6 +20,9 @@
 #include "commands/CmdArmToSky.h"
 #include <commands/CmdArmForward.h>
 #include <commands/CmdArmBackwards.h>
+#include "commands/CmdCloseIntake.h"
+#include "commands/CmdOpenIntake.h"
+#include "subsystems/SubIntake.h"
 
 OI::OI() {
   std::cout << "OI Started" << std::endl;
@@ -36,7 +39,7 @@ OI::OI() {
 
   btnIntake.reset(new frc::JoystickButton(joystick1.get(), leftBtn));   // Does not yet match drive team doc
   btnOuttake.reset(new frc::JoystickButton(joystick1.get(), rightBtn)); // Does not yet match drive team doc
-  btnIntakeMode.reset(new frc::JoystickButton(joystick1.get(), yBtn));  // Does not yet match drive team doc
+  btnIntakeMode.reset(new ToggleButton(joystick1.get(), yBtn));  // Does not yet match drive team doc
   
   std::cout << "button Init Finished" << std::endl;
 
@@ -51,6 +54,11 @@ OI::OI() {
 
   btnIntake->WhileHeld(new CmdIntake());
   btnOuttake->WhileHeld(new CmdOuttake());
+
+  btnIntakeMode->SetCommand(new CmdOpenIntake(), new CmdCloseIntake());
+  
+  
+
   //btnIntakeMode->todo: Toggle between two commands
   
   std::cout << "OI Finished" << std::endl;
@@ -63,4 +71,5 @@ double OI::GetJoystickX() {
 double OI::GetJoystickY() {
   return joystick1->GetY();
 }
+
 
