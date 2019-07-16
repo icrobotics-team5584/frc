@@ -17,11 +17,13 @@
 std::unique_ptr<OI> Robot::m_oi;
 std::unique_ptr<SubDrivebase> Robot::subDrivebase;
 std::unique_ptr<SubEncodedArm> Robot::subEncodedArm;
+std::unique_ptr<SubIntake> Robot::subIntake;
 std::unique_ptr<SubClimber> Robot::subClimber;
 
 void Robot::RobotInit() {
   std::cout << "RobotInit" << std::endl;
   subDrivebase.reset(new SubDrivebase);
+  subIntake.reset(new SubIntake);
   subEncodedArm.reset(new SubEncodedArm);
   subClimber.reset(new SubClimber);
   std::cout << "SubFinished" << std::endl;
