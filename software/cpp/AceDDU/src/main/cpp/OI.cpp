@@ -30,12 +30,12 @@ OI::OI() {
   
   // Create Buttons
   btnArmToFloor.reset(new frc::JoystickButton(joystick1.get(), aBtn));
-  btnArmToHab.reset(new frc::JoystickButton(joystick1.get(), startBtn));
   btnArmToHatch.reset(new frc::JoystickButton(joystick1.get(), bBtn));
   btnArmToSky.reset(new frc::JoystickButton(joystick1.get(), xBtn));
   btnArmToPreHab.reset(new frc::JoystickButton(joystick1.get(), backBtn)); //Listed as 'select' in drive team doc
   
   btnManualVacuum.reset(new ButtonPOV(joystick1.get(), UP));
+  btnArmToHab.reset(new ButtonPOV(joystick1.get(), DOWN));
 
   btnIntake.reset(new frc::JoystickButton(joystick1.get(), leftBtn));   // Does not yet match drive team doc
   btnOuttake.reset(new frc::JoystickButton(joystick1.get(), rightBtn)); // Does not yet match drive team doc

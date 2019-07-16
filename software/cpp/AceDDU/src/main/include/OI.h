@@ -44,7 +44,7 @@ class OI {
   std::shared_ptr<frc::Joystick> joystick1;
 
   std::unique_ptr<frc::JoystickButton> btnArmToFloor;
-  std::unique_ptr<frc::JoystickButton> btnArmToHab;
+  std::unique_ptr<ButtonPOV> btnArmToHab;
   std::unique_ptr<frc::JoystickButton> btnArmToHatch;
   std::unique_ptr<frc::JoystickButton> btnArmToSky;
   std::unique_ptr<frc::JoystickButton> btnArmToPreHab;
