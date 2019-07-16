@@ -27,7 +27,7 @@ class CmdArmToHatch : public frc::Command {
   double kI;
   double kD;
 
-  double angle = 22;
+  double angle = 30;
 
   double cruiseVelocity;
   double maxAcceleration;
