@@ -10,17 +10,20 @@
 #include <frc/TimedRobot.h>
 #include <frc/commands/Command.h>
 #include <frc/smartdashboard/SendableChooser.h>
+#include <frc/WPILib.h>
+
+using namespace frc;
+
 class Auto_rocket;
 //class CmdMoveArm;
 
 #include "commands/CmdMoveArm.h"
 
-
 #include<subsystems/SubDrivebase.h>
 #include<subsystems/SubIntake.h>
 #include "OI.h"
 #include "subsystems/SubEncodedArm.h"
-
+#include "subsystems/SubClimber.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -38,11 +41,11 @@ class Robot : public frc::TimedRobot {
   static std::unique_ptr<SubDrivebase> subDrivebase;
   static std::unique_ptr<SubEncodedArm> subEncodedArm;
   static std::unique_ptr<SubIntake> subIntake;
+  static std::unique_ptr<SubClimber> subClimber;
 
  private:
   std::unique_ptr<Auto_rocket> autoRocket;
   // Have it null by default so that if testing teleop it
   // doesn't have undefined behavior and potentially crash.
   frc::SendableChooser<frc::Command*> m_chooser;
-  std::unique_ptr<CmdMoveArm> cmdMoveArm;
 };

@@ -13,10 +13,10 @@ void CmdMoveArm::Initialize()
   std::cout << "CmdArmInit" << std::endl;
 	armController = new frc::PIDController(PIDp, PIDi, PIDd, _pidsrcArm, _armOutput);
 	armController->SetInputRange(EncBack, EncFront);
-	armController->SetOutputRange(-0.7, 0.7);
+	armController->SetOutputRange(-0.3, 0.3);
 	armController->SetContinuous(false);
 	frc::SmartDashboard::PutData("Arm PID Controls", armController);
-	armController->Enable();
+	//armController->Enable();
   std::cout << "CmdArmInit Done" << std::endl;
 }
 
@@ -47,8 +47,16 @@ void CmdMoveArm::Interrupted()
   End();
 }
 
-/*
-PIDMag::~PIDMag() {
-	// TODO Auto-generated destructor stub
+void CmdMoveArm::setTicks(int ticks)
+{
+  armController->SetSetpoint(ticks);
 }
-*/
+
+void CmdMoveArm::setAngle(double angle)
+{
+  _relativeArmTicks = angle / 360 * 4096;
+
+  _armTicks = _relativeArmTicks + _zeroPoint;
+
+  setTicks(_armTicks);
+}

@@ -6,41 +6,61 @@
 /*----------------------------------------------------------------------------*/
 
 #include "OI.h"
+#include <frc/WPILib.h>
 #include "commands/CmdAngleTurn.h"
-#include"commands/CmdAutoDrive.h"
+#include "commands/CmdAutoDrive.h"
 #include "commands/CmdMoveArm.h"
 #include "commands/CmdIntake.h"
 #include "commands/CmdOuttake.h"
-#include <frc/WPILib.h>
+#include "commands/CmdVacuum.h"
+#include "commands/CmdArmToFloor.h"
+#include "commands/CmdArmToHab.h"
+#include "commands/CmdArmToHatch.h"
+#include "commands/CmdArmToPreHab.h"
+#include "commands/CmdArmToSky.h"
+#include <commands/CmdArmForward.h>
+#include <commands/CmdArmBackwards.h>
 
-OI::OI():joystick1(0) {
+OI::OI() {
   std::cout << "OI Started" << std::endl;
-  // Process operator interface input here
-  //btnAutoDrive.reset(new frc::JoystickButton(&joystick1, 2));
-  btnArmPid.reset(new frc::JoystickButton(joystick1.get(), 1));
-  btnIntake.reset(new frc::JoystickButton(joystick1.get(), leftBtn));
-  btnIntake->WhileHeld(new CmdIntake());
-  btnOuttake.reset(new frc::JoystickButton(joystick1.get(), rightBtn));
-  btnOuttake->WhileHeld(new CmdOuttake());
-  btnIntakeMode.reset(new frc::JoystickButton(joystick1.get(), xBtn));
-  //btnIntakeMode->ToggleWhenPressed(new CmdOpenIntake(),new CmdCloseIntake);
+  joystick1.reset(new Joystick(0));
   
-  std::cout << "buttonInit Finished" << std::endl;
-  //btnArmPid->WhileHeld(new CmdMoveArm());
+  // Create Buttons
+  btnArmToFloor.reset(new frc::JoystickButton(joystick1.get(), aBtn));
+  btnArmToHab.reset(new frc::JoystickButton(joystick1.get(), startBtn));
+  btnArmToHatch.reset(new frc::JoystickButton(joystick1.get(), bBtn));
+  btnArmToSky.reset(new frc::JoystickButton(joystick1.get(), xBtn));
+  btnArmToPreHab.reset(new frc::JoystickButton(joystick1.get(), backBtn)); //Listed as 'select' in drive team doc
+  
+  btnManualVacuum.reset(new ButtonPOV(joystick1.get(), UP));
+
+  btnIntake.reset(new frc::JoystickButton(joystick1.get(), leftBtn));   // Does not yet match drive team doc
+  btnOuttake.reset(new frc::JoystickButton(joystick1.get(), rightBtn)); // Does not yet match drive team doc
+  btnIntakeMode.reset(new frc::JoystickButton(joystick1.get(), yBtn));  // Does not yet match drive team doc
+  
+  std::cout << "button Init Finished" << std::endl;
+
+  // Map Buttons to Commands 
+  btnArmToFloor->WhileHeld(new CmdArmToFloor());
+  btnArmToHab->WhileHeld(new CmdArmToHab());
+  btnArmToHatch->WhileHeld(new CmdArmToHatch());
+  btnArmToSky->WhileHeld(new CmdArmToSky());
+  btnArmToPreHab->WhileHeld(new CmdArmToPreHab());
+
+  btnManualVacuum->WhileHeld(new CmdVacuum());
+
+  btnIntake->WhileHeld(new CmdIntake());
+  btnOuttake->WhileHeld(new CmdOuttake());
+  //btnIntakeMode->todo: Toggle between two commands
+  
   std::cout << "OI Finished" << std::endl;
 }
 
-
-
-double OI::GetJoystickX(){
-  //joystick1.GetX();
-
-
+double OI::GetJoystickX() {
+  return joystick1->GetX();
 }
 
-double OI::GetJoystickY(){
-  //joystick1.GetY();
-
-
+double OI::GetJoystickY() {
+  return joystick1->GetY();
 }
 

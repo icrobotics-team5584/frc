@@ -10,7 +10,7 @@
 #include "Robot.h"
 
 SubIntake::SubIntake() : Subsystem("ExampleSubsystem") {
-  SolMode.reset(new frc::DoubleSolenoid(1, 0));
+  SolMode.reset(new frc::DoubleSolenoid(2, 3));
   Motor.reset(new WPI_TalonSRX(9));
 }
 

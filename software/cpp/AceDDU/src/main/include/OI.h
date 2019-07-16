@@ -6,6 +6,9 @@
 /*----------------------------------------------------------------------------*/
 
 #include <frc/WPILib.h>
+#include "../include/commands/cmdArmPos0.h"
+#include "customButtons/ButtonPOV.h"
+
 #pragma once
 
 enum Buttons{
@@ -21,13 +24,32 @@ enum Buttons{
       rightStickBtn = 10
 };
 
+enum POVPositions {
+      UP = 0,
+      UP_RIGHT = 45,
+      RIGHT = 90,
+      DOWN_RIGHT = 135,
+      DOWN = 180,
+      DOWN_LEFT = 225,
+      LEFT = 270,
+      UP_LEFT = 315,
+};
+
 class OI {
  public:
   OI();
   double GetJoystickX();
   double GetJoystickY();
   std::shared_ptr<frc::Joystick> joystick1;
-  std::unique_ptr<frc::JoystickButton> btnArmPid;
+
+  std::unique_ptr<frc::JoystickButton> btnArmToFloor;
+  std::unique_ptr<frc::JoystickButton> btnArmToHab;
+  std::unique_ptr<frc::JoystickButton> btnArmToHatch;
+  std::unique_ptr<frc::JoystickButton> btnArmToSky;
+  std::unique_ptr<frc::JoystickButton> btnArmToPreHab;
+
+  std::unique_ptr<ButtonPOV> btnManualVacuum;
+
   std::unique_ptr<frc::JoystickButton> btnIntake;
   std::unique_ptr<frc::JoystickButton> btnOuttake;
   std::unique_ptr<frc::JoystickButton> btnIntakeMode;

@@ -23,12 +23,11 @@ class SubDrivebase : public frc::Subsystem, public frc::PIDOutput{
 
  public:
   SubDrivebase();
-  std::shared_ptr<WPI_TalonSRX> srxFrontLeft;
-  std::shared_ptr<WPI_TalonSRX> srxFrontRight;
+  std::shared_ptr<WPI_VictorSPX> spxFrontLeft;
+  std::shared_ptr<WPI_VictorSPX> spxFrontRight;
   std::shared_ptr<WPI_TalonSRX> srxBackRight;
   std::shared_ptr<WPI_TalonSRX> srxBackLeft;
   std::shared_ptr<frc::DifferentialDrive> diffdrive;
-  std::shared_ptr<PigeonIMU> imu;
   void InitDefaultCommand() override;
   void drive(double speed, double rotation);
   int get_angle();

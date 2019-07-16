@@ -9,28 +9,33 @@
 
 #include "Robot.h"
 #include "commands/Auto_rocket.h"
-
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "subsystems/SubEncodedArm.h"
+
 
 std::unique_ptr<OI> Robot::m_oi;
 std::unique_ptr<SubDrivebase> Robot::subDrivebase;
 std::unique_ptr<SubEncodedArm> Robot::subEncodedArm;
 std::unique_ptr<SubIntake> Robot::subIntake;
-
+std::unique_ptr<SubClimber> Robot::subClimber;
 
 void Robot::RobotInit() {
   std::cout << "RobotInit" << std::endl;
   subDrivebase.reset(new SubDrivebase);
   subIntake.reset(new SubIntake);
   subEncodedArm.reset(new SubEncodedArm);
+  subClimber.reset(new SubClimber);
   std::cout << "SubFinished" << std::endl;
   m_oi.reset(new OI);
   std::cout << "m_oi Finished" << std::endl;
   autoRocket.reset(new Auto_rocket);
   
   std::cout << "Init Finished" << std::endl;
+
+  //Zero out/Initialize values on Shuffleboard
+  
+
 }
 
 
@@ -45,9 +50,9 @@ void Robot::RobotInit() {
  */
 void Robot::RobotPeriodic() {
   //std::cout << "PeriodicStart" << std::endl;
-  frc::SmartDashboard::PutNumber("Angle", subDrivebase->get_angle());
-  frc::SmartDashboard::PutNumber("Distance", subDrivebase->get_distance());
-  frc::SmartDashboard::PutNumber("Arm Angle", subEncodedArm->getEncoder());
+  //frc::SmartDashboard::PutNumber("Angle", subDrivebase->get_angle());
+  //frc::SmartDashboard::PutNumber("Distance", subDrivebase->get_distance());
+  frc::SmartDashboard::PutNumber("Arm Angle", subEncodedArm->getAngle());
   //std::cout << "PeriodicEnd" << std::endl;
 }
 
@@ -75,8 +80,7 @@ void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 void Robot::AutonomousInit() {
 
   //autoRocket->Start();
-  cmdMoveArm.reset(new CmdMoveArm());
-  cmdMoveArm->Start();
+  
   // std::string autoSelected = frc::SmartDashboard::GetString(
   //     "Auto Selector", "Default");
   // if (autoSelected == "My Auto") {
@@ -98,6 +102,17 @@ void Robot::TeleopInit() {
   // teleop starts running. If you want the autonomous to
   // continue until interrupted by another command, remove
   // this line or comment it out.
+  SmartDashboard::PutNumber("kF", 0);
+  SmartDashboard::PutNumber("kP", 0);
+  SmartDashboard::PutNumber("kI", 0);
+  SmartDashboard::PutNumber("kD", 0);
+
+  SmartDashboard::PutNumber("cruiseVelocity", 300);
+  SmartDashboard::PutNumber("maxAcceleration", 300);
+
+  SmartDashboard::PutNumber("setAngle", 0);
+
+  frc::SmartDashboard::PutNumber("Arm Speed", 0);
 }
 
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }

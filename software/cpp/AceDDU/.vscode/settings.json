@@ -72,7 +72,18 @@
     "*.tcc": "cpp",
     "cctype": "cpp",
     "clocale": "cpp",
-    "cwctype": "cpp"
+    "cwctype": "cpp",
+    "ctime": "cpp",
+    "deque": "cpp",
+    "fstream": "cpp",
+    "hash_map": "cpp",
+    "hash_set": "cpp",
+    "bitset": "cpp",
+    "complex": "cpp",
+    "unordered_set": "cpp",
+    "future": "cpp",
+    "iomanip": "cpp",
+    "numeric": "cpp"
   },
   "C_Cpp.default.configurationProvider": "vscode-wpilib"
 }

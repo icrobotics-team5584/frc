@@ -8,9 +8,24 @@
 #include "commands/armOutput.h"
 #include "Robot.h"
 
-armOutput::armOutput() {}
+armOutput::armOutput() {
+
+    subEncodedArm.reset(new SubEncodedArm);
+}
 
 void armOutput::PIDWrite(double output)
 {
-    Robot::subEncodedArm->setSpeed(output);
+
+    _angleRad = subEncodedArm->getAngle() * (pi/180);
+
+
+    _outputSpeed = (sin(_angleRad) * multiplier) + output;
+
+    /* REMOVE THIS LINE WHEN YOU ARE SURE THAT ANGLE RETURNED IS
+    ZERO DEGREES FOR ARM IN VERTICAL UP POSITION */
+    _outputSpeed = 0;
+
+    frc::SmartDashboard::PutNumber("Output Speed", _outputSpeed);
+
+    Robot::subEncodedArm->setSpeed(_outputSpeed);
 }

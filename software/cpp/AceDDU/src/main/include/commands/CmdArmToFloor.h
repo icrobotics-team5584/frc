@@ -8,16 +8,27 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include "Robot.h"
+#include "frc/WPILib.h"
+using namespace frc;
 
-class CmdCurrentLimitTest : public frc::Command {
+class CmdArmToFloor : public frc::Command {
  public:
-  CmdCurrentLimitTest();
+  CmdArmToFloor();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
- private:
-  double talonCurrentDraw;
 
+ private:
+  double kF; 
+  double kP;
+  double kI;
+  double kD;
+
+  double angle = 0;
+
+  double cruiseVelocity;
+  double maxAcceleration;
 };
