@@ -8,27 +8,13 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-#include "Robot.h"
-#include "frc/WPILib.h"
-using namespace frc;
 
-class CmdArmToHatch : public frc::Command {
+class CmdCloseIntake : public frc::Command {
  public:
-  CmdArmToHatch();
+  CmdCloseIntake();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
-
- private:
-  double kF; 
-  double kP;
-  double kI;
-  double kD;
-
-  double angle = 30;
-
-  double cruiseVelocity;
-  double maxAcceleration;
 };

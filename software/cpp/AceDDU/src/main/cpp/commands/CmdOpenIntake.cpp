@@ -5,34 +5,30 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include <Robot.h>
-#include "commands/CmdDrive.h"
-#include <iostream>
+#include "commands/CmdOpenIntake.h"
+#include "Robot.h"
 
-CmdDrive::CmdDrive() {
+CmdOpenIntake::CmdOpenIntake() {
   // Use Requires() here to declare subsystem dependencies
-  Requires(Robot::subDrivebase.get());
-   
+  // eg. Requires(Robot::chassis.get());
 }
 
 // Called just before this Command runs the first time
-void CmdDrive::Initialize() {}
+void CmdOpenIntake::Initialize() {
+  Robot::subIntake -> CargoMode();
+}
 
 // Called repeatedly when this Command is scheduled to run
-void CmdDrive::Execute() {
-    Robot::subDrivebase->drive(Robot::m_oi->GetJoystickY(), -Robot::m_oi->GetJoystickX());
-    //std::cout<<Robot::m_oi->GetJoystickX()<<std::endl;
-    //std::cout<<Robot::m_oi->GetJoystickY()<<std::endl;
-  
-}
-  
+void CmdOpenIntake::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdDrive::IsFinished() { return false; }
+bool CmdOpenIntake::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdDrive::End() {}
+void CmdOpenIntake::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdDrive::Interrupted() {}
+void CmdOpenIntake::Interrupted() {
+  End();
+}

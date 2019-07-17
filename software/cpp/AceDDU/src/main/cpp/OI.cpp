@@ -6,63 +6,70 @@
 /*----------------------------------------------------------------------------*/
 
 #include "OI.h"
-#include "commands/CmdAngleTurn.h"
-#include"commands/CmdAutoDrive.h"
-#include "commands/CmdMoveArm.h"
 #include <frc/WPILib.h>
-#include <commands/CmdVacuum.h>
-
+#include "commands/CmdAngleTurn.h"
+#include "commands/CmdAutoDrive.h"
+#include "commands/CmdMoveArm.h"
+#include "commands/CmdIntake.h"
+#include "commands/CmdOuttake.h"
+#include "commands/CmdVacuum.h"
 #include "commands/CmdArmToFloor.h"
 #include "commands/CmdArmToHab.h"
 #include "commands/CmdArmToHatch.h"
 #include "commands/CmdArmToPreHab.h"
 #include "commands/CmdArmToSky.h"
-
 #include <commands/CmdArmForward.h>
 #include <commands/CmdArmBackwards.h>
+#include "commands/CmdCloseIntake.h"
+#include "commands/CmdOpenIntake.h"
+#include "subsystems/SubIntake.h"
 
 OI::OI() {
-  joystick1.reset(new Joystick(0));
   std::cout << "OI Started" << std::endl;
-  // Process operator interface input here
-  //btnAutoDrive.reset(new frc::JoystickButton(&joystick1, 2));
-   btnArmToFloor.reset(new frc::JoystickButton(joystick1.get(), 3));
-  btnArmToHab.reset(new frc::JoystickButton(joystick1.get(), 4));
-  btnArmToHatch.reset(new frc::JoystickButton(joystick1.get(), 5));
-  btnArmToSky.reset(new frc::JoystickButton(joystick1.get(), 6));
-  btnArmToPreHab.reset(new frc::JoystickButton(joystick1.get(), 2));
+  joystick1.reset(new Joystick(0));
+  
+  // Create Buttons
+  btnArmToFloor.reset(new frc::JoystickButton(joystick1.get(), aBtn));
+  btnArmToHatch.reset(new frc::JoystickButton(joystick1.get(), bBtn));
+  btnArmToSky.reset(new frc::JoystickButton(joystick1.get(), xBtn));
+  btnArmToPreHab.reset(new frc::JoystickButton(joystick1.get(), backBtn)); //Listed as 'select' in drive team doc
+  
+  btnManualVacuum.reset(new ButtonPOV(joystick1.get(), UP));
+  btnArmToHab.reset(new ButtonPOV(joystick1.get(), DOWN));
+
+  btnIntake.reset(new frc::JoystickButton(joystick1.get(), leftBtn));   // Does not yet match drive team doc
+  btnOuttake.reset(new frc::JoystickButton(joystick1.get(), rightBtn)); // Does not yet match drive team doc
+  btnIntakeMode.reset(new ToggleButton(joystick1.get(), yBtn));  // Does not yet match drive team doc
+  
   std::cout << "button Init Finished" << std::endl;
-  //btnArmPid->WhileHeld(new CmdMoveArm());
-  btnClimber.reset(new frc::JoystickButton(joystick1.get(), 1));
-  std::cout << "OI AFter btnClimber reset" << std::endl;
-  btnClimber->WhileHeld(new CmdVacuum());
-  //btnArm0->WhileHeld(new cmdArmPos0());
 
-
-  btnArmForward.reset(new frc::JoystickButton(joystick1.get(), 3));
-  btnArmBackwards.reset(new frc::JoystickButton(joystick1.get(), 4));
-
-  btnArmForward->WhileHeld(new CmdArmForward());
-  btnArmBackwards->WhileHeld(new CmdArmBackwards());
-
+  // Map Buttons to Commands 
   btnArmToFloor->WhileHeld(new CmdArmToFloor());
   btnArmToHab->WhileHeld(new CmdArmToHab());
   btnArmToHatch->WhileHeld(new CmdArmToHatch());
   btnArmToSky->WhileHeld(new CmdArmToSky());
   btnArmToPreHab->WhileHeld(new CmdArmToPreHab());
 
+  btnManualVacuum->WhileHeld(new CmdVacuum());
+
+  btnIntake->WhileHeld(new CmdIntake());
+  btnOuttake->WhileHeld(new CmdOuttake());
+
+  btnIntakeMode->SetCommand(new CmdOpenIntake(), new CmdCloseIntake());
+  
+  
+
+  //btnIntakeMode->todo: Toggle between two commands
+  
   std::cout << "OI Finished" << std::endl;
 }
 
-double OI::GetJoystickX(){
+double OI::GetJoystickX() {
   return joystick1->GetX();
-
-
 }
 
-double OI::GetJoystickY(){
+double OI::GetJoystickY() {
   return joystick1->GetY();
-
-
 }
+
 

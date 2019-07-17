@@ -75,9 +75,9 @@ double SubEncodedArm::getAngle()
 {
   _angle = getEncoder();
 
-  frc::SmartDashboard::PutNumber("Ticks to Top", _angle);
+  frc::SmartDashboard::PutNumber("Raw absolute encoder sensor units", _angle);
   
-  _angleDeg = (_angle / 4096) * 360;
+  _angleDeg = SensorUnitsToDegrees(_angle);
 
   frc::SmartDashboard::PutNumber("Actual Arm Angle", _angleDeg);
 
@@ -92,9 +92,11 @@ void SubEncodedArm::setSpeed(double speed) //Hardcodes power as %!!!!!
 /*
 * For one time use to put 0 degrees at the correct position.
 */
+/* LETS NOT USE THIS
 void SubEncodedArm::ResetEncoder() {
   srxArmFront->SetSelectedSensorPosition(0);
 }
+*/
 
 /*
 * Changes the state of the arm's pneumatic braking system
@@ -115,7 +117,19 @@ void SubEncodedArm::BrakeState(PneuBrakeState brakeState) {
 */
 void SubEncodedArm::SetPosition(double angle){
   
-  angle = (angle / 360) * 4096;
+  angle = DegreesToSensorUnits( angle );
   std::cout << "angle input: " <<  angle << std::endl;
   srxArmFront->Set(ControlMode::MotionMagic, angle);
+}
+
+/* angle conversion function degrees to sensor units
+*/
+double SubEncodedArm::DegreesToSensorUnits( double degrees ){
+  return ( ( degrees / 360 ) * 4096 ) - 3878;
+}
+
+/* angle conversion function sensor units to degrees
+*/
+double SubEncodedArm::SensorUnitsToDegrees( double sensorUnits ){
+  return ( ( sensorUnits + 3878 ) / 4096 ) * 360;
 }

@@ -20,6 +20,7 @@ class Auto_rocket;
 #include "commands/CmdMoveArm.h"
 
 #include<subsystems/SubDrivebase.h>
+#include<subsystems/SubIntake.h>
 #include "OI.h"
 #include "subsystems/SubEncodedArm.h"
 #include "subsystems/SubClimber.h"
@@ -39,6 +40,7 @@ class Robot : public frc::TimedRobot {
   void TestPeriodic() override;
   static std::unique_ptr<SubDrivebase> subDrivebase;
   static std::unique_ptr<SubEncodedArm> subEncodedArm;
+  static std::unique_ptr<SubIntake> subIntake;
   static std::unique_ptr<SubClimber> subClimber;
 
  private:

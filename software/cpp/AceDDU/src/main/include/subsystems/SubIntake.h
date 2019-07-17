@@ -7,28 +7,24 @@
 
 #pragma once
 
-#include <frc/commands/Command.h>
-#include "Robot.h"
-#include "frc/WPILib.h"
-using namespace frc;
+#include <frc/WPILib.h>
 
-class CmdArmToHatch : public frc::Command {
- public:
-  CmdArmToHatch();
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
+#include <frc/commands/Subsystem.h>
+#include <ctre/Phoenix.h>
 
+class SubIntake : public frc::Subsystem {
  private:
-  double kF; 
-  double kP;
-  double kI;
-  double kD;
+  const double SPEED = 0.5;
 
-  double angle = 30;
-
-  double cruiseVelocity;
-  double maxAcceleration;
+  std::shared_ptr<frc::DoubleSolenoid> SolMode;
+  std::shared_ptr<WPI_TalonSRX> Motor;
+ public:
+  SubIntake();
+  void InitDefaultCommand() override;
+  //func
+  void Intake();
+  void Outtake();
+  void Stop();
+  void CargoMode();
+  void HatchMode();
 };

@@ -18,7 +18,12 @@ void armOutput::PIDWrite(double output)
 
     _angleRad = subEncodedArm->getAngle() * (pi/180);
 
+
     _outputSpeed = (sin(_angleRad) * multiplier) + output;
+
+    /* REMOVE THIS LINE WHEN YOU ARE SURE THAT ANGLE RETURNED IS
+    ZERO DEGREES FOR ARM IN VERTICAL UP POSITION */
+    _outputSpeed = 0;
 
     frc::SmartDashboard::PutNumber("Output Speed", _outputSpeed);
 
