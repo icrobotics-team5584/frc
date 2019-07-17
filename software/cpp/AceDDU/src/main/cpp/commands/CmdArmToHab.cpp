@@ -15,7 +15,7 @@ CmdArmToHab::CmdArmToHab() {
 
 // Called just before this Command runs the first time
 void CmdArmToHab::Initialize() {
-  Robot::subEncodedArm->ConfigTalon();
+  Robot::subEncodedArm->ConfigTalonHAB();
   Robot::subEncodedArm->SetPosition(angle);
 }
 

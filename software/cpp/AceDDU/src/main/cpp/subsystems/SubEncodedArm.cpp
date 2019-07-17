@@ -66,6 +66,29 @@ void SubEncodedArm::ConfigTalon(){
   srxArmFront->ConfigMotionCruiseVelocity(2500, 0);
   srxArmFront->ConfigMotionAcceleration(2000, 0);
 }
+
+void SubEncodedArm::ConfigTalonHAB(){
+ 
+
+  srxArmFront->SetStatusFramePeriod(StatusFrameEnhanced::Status_13_Base_PIDF0, 10, 10);
+  srxArmFront->SetStatusFramePeriod(StatusFrameEnhanced::Status_10_MotionMagic, 10, 10);
+
+  // Set peak outputs
+  srxArmFront->ConfigPeakOutputForward(0.6, 0);
+  srxArmFront->ConfigPeakOutputReverse(-0.6, 0);
+  
+  // Set motion magic gains **These numbers aren't set right yet (for muck)**
+  srxArmFront->SelectProfileSlot(0, 0);
+  srxArmFront->Config_kF(0, 5, 0);
+  srxArmFront->Config_kP(0, 5, 0);
+  srxArmFront->Config_kI(0, 0, 0);
+  srxArmFront->Config_kD(0, 0, 0);
+
+  // Set acceleration and cruise velocity
+  srxArmFront->ConfigMotionCruiseVelocity(10, 0);
+  srxArmFront->ConfigMotionAcceleration(100, 0);
+}
+
 int SubEncodedArm::getEncoder()
 {
   return srxArmFront->GetSelectedSensorPosition(0);
