@@ -36,9 +36,6 @@ SubEncodedArm::SubEncodedArm() : Subsystem("ExampleSubsystem") {
 
   //pneumatics
   pneuBrake.reset(new frc::DoubleSolenoid(2,3));
-
-  //frc::SmartDashboard::PutNumber("Arm angle in number of 1.8 degrees", _angleDeg/1.8);
-  //frc::SmartDashboard::PutNumber("Arm angle", _angleDeg);
 }
 
 void SubEncodedArm::InitDefaultCommand() {
