@@ -23,6 +23,7 @@
 #include "commands/CmdCloseIntake.h"
 #include "commands/CmdOpenIntake.h"
 #include "subsystems/SubIntake.h"
+#include "commands/CmdHabRoutine.h"
 
 OI::OI() {
   std::cout << "OI Started" << std::endl;
@@ -36,6 +37,7 @@ OI::OI() {
   
   btnManualVacuum.reset(new ButtonPOV(joystick1.get(), UP));
   btnArmToHab.reset(new ButtonPOV(joystick1.get(), DOWN));
+  btnHabRoutine.reset(new frc::JoystickButton(joystick1.get(), startBtn));
 
   btnIntake.reset(new frc::JoystickButton(joystick1.get(), leftBtn));   // Does not yet match drive team doc
   btnOuttake.reset(new frc::JoystickButton(joystick1.get(), rightBtn)); // Does not yet match drive team doc
@@ -51,6 +53,7 @@ OI::OI() {
   btnArmToPreHab->WhileHeld(new CmdArmToPreHab());
 
   btnManualVacuum->WhileHeld(new CmdVacuum());
+  btnHabRoutine->WhileHeld(new CmdHabRoutine());
 
   btnIntake->WhileHeld(new CmdIntake());
   btnOuttake->WhileHeld(new CmdOuttake());
