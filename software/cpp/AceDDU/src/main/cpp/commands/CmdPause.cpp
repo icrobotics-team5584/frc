@@ -5,47 +5,35 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdArmToHab.h"
+#include "commands/CmdPause.h"
 
-const double CmdArmToHab::angle = 165;
-
-CmdArmToHab::CmdArmToHab()
-{
+CmdPause::CmdPause() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(Robot::subEncodedArm.get());
 }
 
 // Called just before this Command runs the first time
-void CmdArmToHab::Initialize() {
-  Robot::subEncodedArm->ConfigTalonHAB();
-  Robot::subEncodedArm->SetPosition(angle);
+void CmdPause::Initialize() {
+  SetTimeout(4);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdArmToHab::Execute()
-{
-}
+void CmdPause::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdArmToHab::IsFinished()
-{
-  if (Robot::subEncodedArm->IsOnTarget())
-  {
+bool CmdPause::IsFinished() { 
+  if (IsTimedOut()) {
     return true;
   }
-
-  else
-  {
+  else {
     return false;
   }
-}
+
+ }
 
 // Called once after isFinished returns true
-void CmdArmToHab::End() {}
+void CmdPause::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdArmToHab::Interrupted()
-{
-}
+void CmdPause::Interrupted() {}

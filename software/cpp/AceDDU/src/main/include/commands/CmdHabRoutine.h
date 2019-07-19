@@ -7,28 +7,11 @@
 
 #pragma once
 
-#include <frc/commands/Command.h>
-#include "Robot.h"
-#include "frc/WPILib.h"
-using namespace frc;
+#include <frc/commands/CommandGroup.h>
 
-class CmdArmToSky : public frc::Command {
+class CmdHabRoutine : public frc::CommandGroup {
  public:
-  CmdArmToSky();
+  CmdHabRoutine();
+  void CheckIfPreHab();
   void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
-
-  static const double angle;
-
- private:
-  double kF; 
-  double kP;
-  double kI;
-  double kD;
-
-  double cruiseVelocity;
-  double maxAcceleration;
 };

@@ -84,6 +84,5 @@
     "future": "cpp",
     "iomanip": "cpp",
     "numeric": "cpp"
-  },
-  "C_Cpp.default.configurationProvider": "vscode-wpilib"
+  }
 }

@@ -13,7 +13,8 @@
 #include <iostream>
 #include "commands/CmdIdleArm.h"
 
-SubEncodedArm::SubEncodedArm() : Subsystem("ExampleSubsystem") {
+SubEncodedArm::SubEncodedArm() : Subsystem("ExampleSubsystem")
+{
 
   //motors
   srxArmFront.reset(new WPI_TalonSRX(2));
@@ -27,9 +28,8 @@ SubEncodedArm::SubEncodedArm() : Subsystem("ExampleSubsystem") {
   srxArmBack->SetInverted(true);
   // Configure Talon SRX
   // Set the frame periods. It seems like we need this or maybe not but it's here in case.
-  
 
-	srxArmBack->Set(ControlMode::Follower, 2);
+  srxArmBack->Set(ControlMode::Follower, 2);
 
   //sensors
   srxArmFront->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Absolute);
@@ -38,13 +38,14 @@ SubEncodedArm::SubEncodedArm() : Subsystem("ExampleSubsystem") {
   pneuBrake.reset(new frc::DoubleSolenoid(2,3));
 }
 
-void SubEncodedArm::InitDefaultCommand() {
+void SubEncodedArm::InitDefaultCommand()
+{
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
 }
 
-void SubEncodedArm::ConfigTalon(){
- 
+void SubEncodedArm::ConfigTalon()
+{
 
   srxArmFront->SetStatusFramePeriod(StatusFrameEnhanced::Status_13_Base_PIDF0, 10, 10);
   srxArmFront->SetStatusFramePeriod(StatusFrameEnhanced::Status_10_MotionMagic, 10, 10);
@@ -52,7 +53,7 @@ void SubEncodedArm::ConfigTalon(){
   // Set peak outputs
   srxArmFront->ConfigPeakOutputForward(0.6, 0);
   srxArmFront->ConfigPeakOutputReverse(-0.6, 0);
-  
+
   // Set motion magic gains **These numbers aren't set right yet (for muck)**
   srxArmFront->SelectProfileSlot(0, 0);
   srxArmFront->Config_kF(0, 50, 0);
@@ -97,7 +98,7 @@ double SubEncodedArm::getAngle()
   _angle = getEncoder();
 
   frc::SmartDashboard::PutNumber("Raw absolute encoder sensor units", _angle);
-  
+
   _angleDeg = SensorUnitsToDegrees(_angle);
 
   frc::SmartDashboard::PutNumber("Actual Arm Angle", _angleDeg);
@@ -124,33 +125,52 @@ void SubEncodedArm::ResetEncoder() {
 *
 * @param brakeState The desired state of the arm brake (brake, coast)
 */
-void SubEncodedArm::BrakeState(PneuBrakeState brakeState) {
-  switch(brakeState) {
+void SubEncodedArm::BrakeState(PneuBrakeState brakeState)
+{
+  switch (brakeState)
+  {
 
-    case(BRAKE) : pneuBrake->Set(frc::DoubleSolenoid::kForward);
+  case (BRAKE):
+    pneuBrake->Set(frc::DoubleSolenoid::kForward);
 
-    case(COAST) : pneuBrake->Set(frc::DoubleSolenoid::kReverse);
+  case (COAST):
+    pneuBrake->Set(frc::DoubleSolenoid::kReverse);
   }
 }
 
 /* Enables motion magic based off of a desired position
 * @param desired angle of the arm
 */
-void SubEncodedArm::SetPosition(double angle){
-  
-  angle = DegreesToSensorUnits( angle );
-  std::cout << "angle input: " <<  angle << std::endl;
+void SubEncodedArm::SetPosition(double angle)
+{
+  _targetPosition = angle;
+  angle = DegreesToSensorUnits(angle);
+  std::cout << "angle input: " << angle << std::endl;
   srxArmFront->Set(ControlMode::MotionMagic, angle);
 }
 
 /* angle conversion function degrees to sensor units
 */
-double SubEncodedArm::DegreesToSensorUnits( double degrees ){
-  return ( ( degrees / 360 ) * 4096 ) - 3878;
+double SubEncodedArm::DegreesToSensorUnits(double degrees)
+{
+  return ((degrees / 360) * 4096) - 3878;
 }
 
 /* angle conversion function sensor units to degrees
 */
-double SubEncodedArm::SensorUnitsToDegrees( double sensorUnits ){
-  return ( ( sensorUnits + 3878 ) / 4096 ) * 360;
+double SubEncodedArm::SensorUnitsToDegrees(double sensorUnits)
+{
+  return ((sensorUnits + 3878) / 4096) * 360;
+}
+
+bool SubEncodedArm::IsOnTarget()
+{
+  if (_targetPosition == getAngle())
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
 }

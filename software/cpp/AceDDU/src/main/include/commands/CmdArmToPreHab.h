@@ -21,13 +21,13 @@ class CmdArmToPreHab : public frc::Command {
   void End() override;
   void Interrupted() override;
 
+  static const double angle;
+
  private:
   double kF; 
   double kP;
   double kI;
   double kD;
-
-  double angle = 140;
 
   double cruiseVelocity;
   double maxAcceleration;

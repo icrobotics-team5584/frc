@@ -7,6 +7,8 @@
 
 #include "commands/CmdArmToSky.h"
 
+const double CmdArmToSky::angle = 70;
+
 CmdArmToSky::CmdArmToSky() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());

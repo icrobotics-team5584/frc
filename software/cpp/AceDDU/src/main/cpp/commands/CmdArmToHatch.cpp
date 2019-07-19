@@ -7,6 +7,8 @@
 
 #include "commands/CmdArmToHatch.h"
 
+const double CmdArmToHatch::angle = 30;
+
 CmdArmToHatch::CmdArmToHatch() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
