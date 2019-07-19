@@ -7,6 +7,8 @@
 
 #include "commands/CmdArmToPreHab.h"
 
+const double CmdArmToPreHab::angle = 140;
+
 CmdArmToPreHab::CmdArmToPreHab() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());

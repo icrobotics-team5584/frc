@@ -7,7 +7,10 @@
 
 #include "commands/CmdArmToHab.h"
 
-CmdArmToHab::CmdArmToHab() {
+const double CmdArmToHab::angle = 165;
+
+CmdArmToHab::CmdArmToHab()
+{
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(Robot::subEncodedArm.get());

@@ -10,9 +10,11 @@
 #include <frc/commands/Command.h>
 #include "Robot.h"
 #include "frc/WPILib.h"
+#include "CmdHabRoutine.h"
 using namespace frc;
 
 class CmdArmToHab : public frc::Command {
+  friend CmdHabRoutine;
  public:
   CmdArmToHab();
   void Initialize() override;
@@ -20,6 +22,8 @@ class CmdArmToHab : public frc::Command {
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+  
+  static const double angle;
 
  private:
   double kF; 
@@ -27,7 +31,6 @@ class CmdArmToHab : public frc::Command {
   double kI;
   double kD;
 
-  double angle = 165;
 
   double cruiseVelocity;
   double maxAcceleration;

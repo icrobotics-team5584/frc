@@ -21,13 +21,13 @@ class CmdArmToHatch : public frc::Command {
   void End() override;
   void Interrupted() override;
 
+  static const double angle;
+  
  private:
   double kF; 
   double kP;
   double kI;
   double kD;
-
-  double angle = 30;
 
   double cruiseVelocity;
   double maxAcceleration;
