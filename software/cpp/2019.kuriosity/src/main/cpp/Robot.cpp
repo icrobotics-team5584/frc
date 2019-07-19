@@ -133,8 +133,8 @@ void Robot::TestPeriodic() {}
 
 void Robot::VisionThread( int &mode, bool &debug, bool &valid, double &error ) {
 
-    //cs::UsbCamera camera = CameraServer::GetInstance()->StartAutomaticCapture();
-    cs::AxisCamera camera = CameraServer::GetInstance()->AddAxisCamera( "10.55.84.11" );
+    cs::UsbCamera camera = CameraServer::GetInstance()->StartAutomaticCapture();
+    //cs::AxisCamera camera = CameraServer::GetInstance()->AddAxisCamera( "10.55.84.11" );
 
     camera.SetResolution(320, 240);
     camera.SetFPS(20);

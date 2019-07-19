@@ -26,11 +26,12 @@ void Robot::RobotInit() {
   subIntake.reset(new SubIntake);
   subEncodedArm.reset(new SubEncodedArm);
   subClimber.reset(new SubClimber);
+  cs::UsbCamera camera = CameraServer::GetInstance()->StartAutomaticCapture();
   std::cout << "SubFinished" << std::endl;
   m_oi.reset(new OI);
   std::cout << "m_oi Finished" << std::endl;
   autoRocket.reset(new Auto_rocket);
-  
+
   std::cout << "Init Finished" << std::endl;
 
   //Zero out/Initialize values on Shuffleboard
@@ -114,6 +115,8 @@ void Robot::TeleopInit() {
 
   frc::SmartDashboard::PutNumber("Arm Speed", 0);
 }
+
+
 
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
