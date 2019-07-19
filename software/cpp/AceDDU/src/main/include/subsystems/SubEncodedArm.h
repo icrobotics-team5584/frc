@@ -22,6 +22,8 @@ class SubEncodedArm : public frc::Subsystem {
   double _top = 3222;
   double _angleDeg;
 
+  double _targetPosition;
+
   double kF;
   
   void configTalon();
@@ -49,7 +51,7 @@ class SubEncodedArm : public frc::Subsystem {
   void SetPosition(double angle);
   double DegreesToSensorUnits(double degrees);
   double SensorUnitsToDegrees(double sensorUnits);
-
+  bool IsOnTarget();
   std::shared_ptr<WPI_TalonSRX> srxArmFront;
 	std::shared_ptr<WPI_TalonSRX> srxArmBack;
 
