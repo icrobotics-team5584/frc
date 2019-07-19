@@ -9,11 +9,21 @@
 #include "commands/CmdArmToHab.h"
 #include "commands/CmdVacuum.h"
 #include "commands/CmdArmToFloor.h"
-#include "commands/CmdPause.h"
+#include "Robot.h"
+#include "commands/CmdArmToPreHab.h"
+
 CmdHabRoutine::CmdHabRoutine() {
 AddSequential(new CmdArmToHab); 
-AddSequential(new CmdVacuum);
-AddSequential(new CmdPause);
+AddSequential(new CmdVacuum, 3);
 AddSequential(new CmdArmToFloor);
+}
 
+void CmdHabRoutine::Initialize()
+{
+    double difference{};
+    const int LessThan{5};
+    difference = CmdArmToPreHab::angle - Robot::subEncodedArm->getAngle();
+
+    if(difference > LessThan)
+        this->_Cancel();
 }

@@ -7,6 +7,8 @@
 
 #include "commands/CmdArmToFloor.h"
 
+const double CmdArmToFloor::angle = 0;
+
 CmdArmToFloor::CmdArmToFloor() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
