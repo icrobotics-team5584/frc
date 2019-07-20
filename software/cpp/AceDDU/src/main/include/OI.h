@@ -50,6 +50,7 @@ class OI {
   std::unique_ptr<frc::JoystickButton> btnArmToPreHab;
 
   std::unique_ptr<ButtonPOV> btnManualVacuum;
+  std::unique_ptr<ButtonPOV> btnManualVacuumReverse;
   std::unique_ptr<frc::JoystickButton> btnHabRoutine;
 
   std::unique_ptr<frc::JoystickButton> btnIntake;

@@ -8,7 +8,7 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-
+#include <frc/Timer.h>
 class CmdVacuum : public frc::Command {
  public:
   CmdVacuum();
@@ -17,4 +17,5 @@ class CmdVacuum : public frc::Command {
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+  frc::Timer timer;
 };

@@ -11,8 +11,9 @@
 SubClimber::SubClimber() : Subsystem("ExampleSubsystem") {
 
   std::cout << "Climber Construct" << std::endl;
-solClimber.reset(new frc::DoubleSolenoid(0, 1));
-
+solClimber.reset(new frc::DoubleSolenoid(2, 0, 1));
+  solClimber->Set(frc::DoubleSolenoid::kOff);
+ 
 }
 void SubClimber::InitDefaultCommand() {
   // Set the default command for a subsystem here.
@@ -27,6 +28,10 @@ void SubClimber::VacuumIn() {
 
 void SubClimber::VacuumOut() {
   std::cout << "Climber VacuumOut" << std::endl;
+  solClimber->Set(frc::DoubleSolenoid::kOff);
+}
+
+void SubClimber::VacuumReverse() {
   solClimber->Set(frc::DoubleSolenoid::kReverse);
 }
 // Put methods for controlling this subsystem

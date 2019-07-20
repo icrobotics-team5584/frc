@@ -12,6 +12,6 @@
 class CmdHabRoutine : public frc::CommandGroup {
  public:
   CmdHabRoutine();
-  void CheckIfPreHab();
-  void Initialize() override;
+  //void CheckIfPreHab();
+  //void Initialize() override;
 };

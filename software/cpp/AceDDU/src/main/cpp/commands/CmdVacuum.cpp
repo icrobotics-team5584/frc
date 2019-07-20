@@ -9,21 +9,34 @@
 #include "Robot.h"
 CmdVacuum::CmdVacuum() {
   // Use Requires() here to declare subsystem dependencies
-  Requires(Robot::subClimber.get());
   std::cout << "CmdVacuum Construct" << std::endl;
+  Requires(Robot::subClimber.get());
+  std::cout << "CmdVacuum Construct aFTER" << std::endl;
+
+  
 }
 
 // Called just before this Command runs the first time
 void CmdVacuum::Initialize() {
-  Robot::subClimber->VacuumIn();
-  std::cout << "CmdVacuum Init" << std::endl;
+    std::cout << "CmdVacuum Init" << std::endl;
+  Robot::subClimber->VacuumReverse();
+
+  //timer.Start();
+  //timer.Reset();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdVacuum::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdVacuum::IsFinished() { return false; }
+bool CmdVacuum::IsFinished() { 
+  //if(timer.Get() > 3){
+    //timer.Stop();
+    //return true;
+  //}else{
+    return false; 
+  //}
+}
 
 // Called once after isFinished returns true
 void CmdVacuum::End() {

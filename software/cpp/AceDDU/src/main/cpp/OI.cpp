@@ -13,6 +13,7 @@
 #include "commands/CmdIntake.h"
 #include "commands/CmdOuttake.h"
 #include "commands/CmdVacuum.h"
+#include "commands/CmdVacuumReverse.h"
 #include "commands/CmdArmToFloor.h"
 #include "commands/CmdArmToHab.h"
 #include "commands/CmdArmToHatch.h"
@@ -36,6 +37,7 @@ OI::OI() {
   btnArmToPreHab.reset(new frc::JoystickButton(joystick1.get(), backBtn)); //Listed as 'select' in drive team doc
   
   btnManualVacuum.reset(new ButtonPOV(joystick1.get(), UP));
+  btnManualVacuumReverse.reset(new ButtonPOV(joystick1.get(), LEFT));
   btnArmToHab.reset(new ButtonPOV(joystick1.get(), DOWN));
   btnHabRoutine.reset(new frc::JoystickButton(joystick1.get(), startBtn));
 
@@ -53,6 +55,9 @@ OI::OI() {
   btnArmToPreHab->WhileHeld(new CmdArmToPreHab());
 
   btnManualVacuum->WhileHeld(new CmdVacuum());
+  
+  btnManualVacuumReverse->WhileHeld(new CmdVacuumReverse());
+
   btnHabRoutine->WhileHeld(new CmdHabRoutine());
 
   btnIntake->WhileHeld(new CmdIntake());

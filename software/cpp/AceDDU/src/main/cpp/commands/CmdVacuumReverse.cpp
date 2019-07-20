@@ -5,45 +5,47 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdArmToHab.h"
-
-const double CmdArmToHab::angle = 165;
-
-CmdArmToHab::CmdArmToHab()
-{
+#include "commands/CmdVacuumReverse.h"
+#include "Robot.h"
+CmdVacuumReverse::CmdVacuumReverse() {
   // Use Requires() here to declare subsystem dependencies
-  // eg. Requires(Robot::chassis.get());
-  Requires(Robot::subEncodedArm.get());
+  std::cout << "CmdVacuum Construct" << std::endl;
+  Requires(Robot::subClimber.get());
+  std::cout << "CmdVacuum Construct aFTER" << std::endl;
+
+  
 }
 
 // Called just before this Command runs the first time
-void CmdArmToHab::Initialize() {
-  Robot::subEncodedArm->ConfigTalonHAB();
-  Robot::subEncodedArm->SetPosition(angle);
-  std::cout << "arm to hab start" << std::endl;
+void CmdVacuumReverse::Initialize() {
+    std::cout << "CmdVacuum Init" << std::endl;
+  Robot::subClimber->VacuumIn();
+
+  //timer.Start();
+  //timer.Reset();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdArmToHab::Execute(){
-}
+void CmdVacuumReverse::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdArmToHab::IsFinished(){
-  if (Robot::subEncodedArm->IsOnTarget()){
-    return true;
-  }else{
-    return false;
-  }
+bool CmdVacuumReverse::IsFinished() { 
+  //if(timer.Get() > 3){
+    //timer.Stop();
+    //return true;
+  //}else{
+    return false; 
+  //}
 }
 
 // Called once after isFinished returns true
-void CmdArmToHab::End() {
-  std::cout << "arm to hab end" << std::endl;
+void CmdVacuumReverse::End() {
+  Robot::subClimber->VacuumOut();
+  std::cout << "CmdVacuum End" << std::endl;
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdArmToHab::Interrupted()
-{
+void CmdVacuumReverse::Interrupted() {
   End();
 }
