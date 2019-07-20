@@ -14,7 +14,7 @@
 
 CmdHabRoutine::CmdHabRoutine() {
 AddSequential(new CmdArmToHab(), 3.0); 
-AddSequential(new CmdVacuum(), 3.0);
+AddSequential(new CmdVacuum(), 2.0);
 AddSequential(new CmdArmToFloor());
 }
 
