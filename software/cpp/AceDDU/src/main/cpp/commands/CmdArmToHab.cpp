@@ -7,7 +7,7 @@
 
 #include "commands/CmdArmToHab.h"
 
-const double CmdArmToHab::angle = 165;
+const double CmdArmToHab::angle = 168;
 
 CmdArmToHab::CmdArmToHab()
 {
