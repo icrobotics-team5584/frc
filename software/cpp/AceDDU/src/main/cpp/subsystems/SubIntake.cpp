@@ -35,7 +35,7 @@ void SubIntake::Intake(){
 
 void SubIntake::Outtake(){
   if(is_cargo_mode)
-    Motor -> Set(-SPEED);
+    Motor -> Set(-0.8);
   else
     Motor -> Set(SPEED);
 }
