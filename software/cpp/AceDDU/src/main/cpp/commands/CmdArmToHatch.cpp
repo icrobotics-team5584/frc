@@ -7,7 +7,7 @@
 
 #include "commands/CmdArmToHatch.h"
 
-const double CmdArmToHatch::angle = 30;
+const double CmdArmToHatch::angle = 26.5;
 
 CmdArmToHatch::CmdArmToHatch() {
   // Use Requires() here to declare subsystem dependencies
