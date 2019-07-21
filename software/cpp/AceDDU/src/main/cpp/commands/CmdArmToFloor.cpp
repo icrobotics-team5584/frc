@@ -7,7 +7,7 @@
 
 #include "commands/CmdArmToFloor.h"
 
-const double CmdArmToFloor::angle = 0;
+const double CmdArmToFloor::angle = 4;
 
 CmdArmToFloor::CmdArmToFloor() {
   // Use Requires() here to declare subsystem dependencies

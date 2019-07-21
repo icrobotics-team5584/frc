@@ -35,7 +35,7 @@ SubEncodedArm::SubEncodedArm() : Subsystem("ExampleSubsystem")
   srxArmFront->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Absolute);
 
   //pneumatics
-  pneuBrake.reset(new frc::DoubleSolenoid(2,3));
+  pneuBrake.reset(new frc::DoubleSolenoid(4,5));
 }
 
 void SubEncodedArm::InitDefaultCommand()

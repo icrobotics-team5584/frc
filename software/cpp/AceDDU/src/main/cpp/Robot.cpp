@@ -26,7 +26,8 @@ void Robot::RobotInit() {
   subIntake.reset(new SubIntake);
   subEncodedArm.reset(new SubEncodedArm);
   subClimber.reset(new SubClimber);
-  cs::UsbCamera camera = CameraServer::GetInstance()->StartAutomaticCapture();
+  cs::UsbCamera camera0 = CameraServer::GetInstance()->StartAutomaticCapture(0);
+  cs::UsbCamera camera1 = CameraServer::GetInstance()->StartAutomaticCapture(1);
   std::cout << "SubFinished" << std::endl;
   m_oi.reset(new OI);
   std::cout << "m_oi Finished" << std::endl;
