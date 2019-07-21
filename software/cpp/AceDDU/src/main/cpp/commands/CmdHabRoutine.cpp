@@ -13,17 +13,18 @@
 #include "commands/CmdArmToPreHab.h"
 
 CmdHabRoutine::CmdHabRoutine() {
-AddSequential(new CmdArmToHab); 
-AddSequential(new CmdVacuum, 3);
-AddSequential(new CmdArmToFloor);
+AddSequential(new CmdArmToHab(), 3.0); 
+AddSequential(new CmdVacuum(), 2.0);
+AddSequential(new CmdArmToFloor());
 }
 
-void CmdHabRoutine::Initialize()
-{
-    double difference{};
-    const int LessThan{5};
-    difference = CmdArmToPreHab::angle - Robot::subEncodedArm->getAngle();
-
-    if(difference > LessThan)
-        this->_Cancel();
-}
+//void CmdHabRoutine::Initialize() {
+    //double difference;
+    //const int LessThan = 5;
+    //difference = CmdArmToPreHab::angle - Robot::subEncodedArm->getAngle();
+//
+    //if(difference > LessThan){
+    //    this->_Cancel();
+    //}
+        
+//}

@@ -5,34 +5,47 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdArmToHatch.h"
-
-const double CmdArmToHatch::angle = 27.5;
-
-CmdArmToHatch::CmdArmToHatch() {
+#include "commands/CmdVacuumReverse.h"
+#include "Robot.h"
+CmdVacuumReverse::CmdVacuumReverse() {
   // Use Requires() here to declare subsystem dependencies
-  // eg. Requires(Robot::chassis.get());
-  Requires(Robot::subEncodedArm.get());
+  std::cout << "CmdVacuum Construct" << std::endl;
+  Requires(Robot::subClimber.get());
+  std::cout << "CmdVacuum Construct aFTER" << std::endl;
+
+  
 }
 
 // Called just before this Command runs the first time
-void CmdArmToHatch::Initialize() {
-  Robot::subEncodedArm->ConfigTalon();
-  Robot::subEncodedArm->SetPosition(angle);
+void CmdVacuumReverse::Initialize() {
+    std::cout << "CmdVacuum Init" << std::endl;
+  Robot::subClimber->VacuumIn();
+
+  //timer.Start();
+  //timer.Reset();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdArmToHatch::Execute() {
-
-}
+void CmdVacuumReverse::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdArmToHatch::IsFinished() { return false; }
+bool CmdVacuumReverse::IsFinished() { 
+  //if(timer.Get() > 3){
+    //timer.Stop();
+    //return true;
+  //}else{
+    return false; 
+  //}
+}
 
 // Called once after isFinished returns true
-void CmdArmToHatch::End() {}
+void CmdVacuumReverse::End() {
+  Robot::subClimber->VacuumOut();
+  std::cout << "CmdVacuum End" << std::endl;
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdArmToHatch::Interrupted() {
+void CmdVacuumReverse::Interrupted() {
+  End();
 }

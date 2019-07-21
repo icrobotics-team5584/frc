@@ -36,9 +36,6 @@ SubEncodedArm::SubEncodedArm() : Subsystem("ExampleSubsystem")
 
   //pneumatics
   pneuBrake.reset(new frc::DoubleSolenoid(2,3));
-
-  //frc::SmartDashboard::PutNumber("Arm angle in number of 1.8 degrees", _angleDeg/1.8);
-  //frc::SmartDashboard::PutNumber("Arm angle", _angleDeg);
 }
 
 void SubEncodedArm::InitDefaultCommand()
@@ -61,7 +58,7 @@ void SubEncodedArm::ConfigTalon()
   srxArmFront->SelectProfileSlot(0, 0);
   srxArmFront->Config_kF(0, 50, 0);
   srxArmFront->Config_kP(0, 2.5, 0);
-  srxArmFront->Config_kI(0, 0, 0);
+  srxArmFront->Config_kI(0, 0.0015, 0);
   srxArmFront->Config_kD(0, 0, 0);
 
   // Set acceleration and cruise velocity
@@ -87,7 +84,7 @@ void SubEncodedArm::ConfigTalonHAB(){
   srxArmFront->Config_kD(0, 0, 0);
 
   // Set acceleration and cruise velocity
-  srxArmFront->ConfigMotionCruiseVelocity(10, 0);
+  srxArmFront->ConfigMotionCruiseVelocity(20, 0);
   srxArmFront->ConfigMotionAcceleration(100, 0);
 }
 
@@ -147,8 +144,9 @@ void SubEncodedArm::BrakeState(PneuBrakeState brakeState)
 void SubEncodedArm::SetPosition(double angle)
 {
   _targetPosition = angle;
+  std::cout << "angle input(degrees): " << angle << std::endl;
   angle = DegreesToSensorUnits(angle);
-  std::cout << "angle input: " << angle << std::endl;
+  std::cout << "angle input(ticks): " << angle << std::endl;
   srxArmFront->Set(ControlMode::MotionMagic, angle);
 }
 

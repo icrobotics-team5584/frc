@@ -19,6 +19,7 @@ CmdArmToFloor::CmdArmToFloor() {
 void CmdArmToFloor::Initialize() {
   Robot::subEncodedArm->ConfigTalon();
   Robot::subEncodedArm->SetPosition(angle);
+  std::cout << "arm to ground start" << std::endl;
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -30,9 +31,12 @@ void CmdArmToFloor::Execute() {
 bool CmdArmToFloor::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdArmToFloor::End() {}
+void CmdArmToFloor::End() {
+  std::cout << "arm to ground" << std::endl;
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void CmdArmToFloor::Interrupted() {
+  End();
 }

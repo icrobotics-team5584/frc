@@ -7,20 +7,29 @@
 
 #pragma once
 
-#include <frc/commands/Subsystem.h>
-#include <frc/WPILib.h>
+#include <frc/commands/Command.h>
+#include "Robot.h"
+#include "frc/WPILib.h"
+using namespace frc;
 
-class SubClimber : public frc::Subsystem {
- private:
-  // It's desirable that everything possible under private except
-  // for methods that implement subsystem capabilities
-  
-  std::shared_ptr<frc::DoubleSolenoid> solClimber;
- 
+class CmdArmToRocket : public frc::Command {
  public:
-  SubClimber();
-  void InitDefaultCommand() override;
-  void VacuumIn();
-  void VacuumOut();
-  void VacuumReverse();
+  CmdArmToRocket();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
+  
+  static const double angle;
+
+ private:
+  double kF; 
+  double kP;
+  double kI;
+  double kD;
+
+
+  double cruiseVelocity;
+  double maxAcceleration;
 };

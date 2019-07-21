@@ -9,6 +9,7 @@
 #include "../include/commands/cmdArmPos0.h"
 #include "customButtons/ButtonPOV.h"
 #include "customButtons/ToggleButton.h"
+#include "AxisButton.h"
 
 #pragma once
 
@@ -36,6 +37,11 @@ enum POVPositions {
       UP_LEFT = 315,
 };
 
+enum Triggers {
+      triggerL = 2,
+      triggerR = 3,
+};
+
 class OI {
  public:
   OI();
@@ -48,8 +54,10 @@ class OI {
   std::unique_ptr<frc::JoystickButton> btnArmToHatch;
   std::unique_ptr<frc::JoystickButton> btnArmToSky;
   std::unique_ptr<frc::JoystickButton> btnArmToPreHab;
+  std::unique_ptr<AxisButton> btnArmToRocket;
 
   std::unique_ptr<ButtonPOV> btnManualVacuum;
+  std::unique_ptr<ButtonPOV> btnManualVacuumReverse;
   std::unique_ptr<frc::JoystickButton> btnHabRoutine;
 
   std::unique_ptr<frc::JoystickButton> btnIntake;

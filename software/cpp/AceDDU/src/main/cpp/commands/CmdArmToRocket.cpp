@@ -5,34 +5,45 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdArmToHatch.h"
+#include "commands/CmdArmToRocket.h"
 
-const double CmdArmToHatch::angle = 27.5;
+const double CmdArmToRocket::angle = 80;
 
-CmdArmToHatch::CmdArmToHatch() {
+CmdArmToRocket::CmdArmToRocket()
+{
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(Robot::subEncodedArm.get());
 }
 
 // Called just before this Command runs the first time
-void CmdArmToHatch::Initialize() {
+void CmdArmToRocket::Initialize() {
   Robot::subEncodedArm->ConfigTalon();
   Robot::subEncodedArm->SetPosition(angle);
+  std::cout << "arm to Rocket start" << std::endl;
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdArmToHatch::Execute() {
-
+void CmdArmToRocket::Execute(){
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdArmToHatch::IsFinished() { return false; }
+bool CmdArmToRocket::IsFinished(){
+  if (Robot::subEncodedArm->IsOnTarget()){
+    return true;
+  }else{
+    return false;
+  }
+}
 
 // Called once after isFinished returns true
-void CmdArmToHatch::End() {}
+void CmdArmToRocket::End() {
+  std::cout << "arm to Rocket end" << std::endl;
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdArmToHatch::Interrupted() {
+void CmdArmToRocket::Interrupted()
+{
+  End();
 }

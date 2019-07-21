@@ -7,20 +7,15 @@
 
 #pragma once
 
-#include <frc/commands/Subsystem.h>
-#include <frc/WPILib.h>
-
-class SubClimber : public frc::Subsystem {
- private:
-  // It's desirable that everything possible under private except
-  // for methods that implement subsystem capabilities
-  
-  std::shared_ptr<frc::DoubleSolenoid> solClimber;
- 
+#include <frc/commands/Command.h>
+#include <frc/Timer.h>
+class CmdVacuumReverse : public frc::Command {
  public:
-  SubClimber();
-  void InitDefaultCommand() override;
-  void VacuumIn();
-  void VacuumOut();
-  void VacuumReverse();
+  CmdVacuumReverse();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
+  frc::Timer timer;
 };

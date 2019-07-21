@@ -15,8 +15,8 @@ SubIntake::SubIntake() : Subsystem("ExampleSubsystem") {
   SolMode.reset(new frc::DoubleSolenoid(2, 3));
   Motor.reset(new WPI_TalonSRX(1));
 
-  Motor->ConfigPeakCurrentLimit(2, 30); //(current limit, timeout)
-	Motor->ConfigPeakCurrentDuration(0, 30); //(time over limit to trigger, timeout)
+  Motor->ConfigPeakCurrentLimit(12, 30); //(current limit, timeout)
+	Motor->ConfigPeakCurrentDuration(350, 30); //(time over limit to trigger, timeout)
 	Motor->ConfigContinuousCurrentLimit(0.7, 30); //(set current to, timeout)
 	Motor->EnableCurrentLimit(true);
 
@@ -35,7 +35,7 @@ void SubIntake::Intake(){
 
 void SubIntake::Outtake(){
   if(is_cargo_mode)
-    Motor -> Set(-SPEED);
+    Motor -> Set(-0.8);
   else
     Motor -> Set(SPEED);
 }

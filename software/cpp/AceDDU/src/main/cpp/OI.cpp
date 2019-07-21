@@ -13,11 +13,13 @@
 #include "commands/CmdIntake.h"
 #include "commands/CmdOuttake.h"
 #include "commands/CmdVacuum.h"
+#include "commands/CmdVacuumReverse.h"
 #include "commands/CmdArmToFloor.h"
 #include "commands/CmdArmToHab.h"
 #include "commands/CmdArmToHatch.h"
 #include "commands/CmdArmToPreHab.h"
 #include "commands/CmdArmToSky.h"
+#include "commands/CmdArmToRocket.h"
 #include <commands/CmdArmForward.h>
 #include <commands/CmdArmBackwards.h>
 #include "commands/CmdCloseIntake.h"
@@ -34,8 +36,10 @@ OI::OI() {
   btnArmToHatch.reset(new frc::JoystickButton(joystick1.get(), bBtn));
   btnArmToSky.reset(new frc::JoystickButton(joystick1.get(), xBtn));
   btnArmToPreHab.reset(new frc::JoystickButton(joystick1.get(), backBtn)); //Listed as 'select' in drive team doc
+  btnArmToRocket.reset(new AxisButton(joystick1.get(), triggerL));
   
   btnManualVacuum.reset(new ButtonPOV(joystick1.get(), UP));
+  btnManualVacuumReverse.reset(new ButtonPOV(joystick1.get(), LEFT));
   btnArmToHab.reset(new ButtonPOV(joystick1.get(), DOWN));
   btnHabRoutine.reset(new frc::JoystickButton(joystick1.get(), startBtn));
 
@@ -51,8 +55,12 @@ OI::OI() {
   btnArmToHatch->WhileHeld(new CmdArmToHatch());
   btnArmToSky->WhileHeld(new CmdArmToSky());
   btnArmToPreHab->WhileHeld(new CmdArmToPreHab());
+  btnArmToRocket->WhileHeld(new CmdArmToRocket());
 
   btnManualVacuum->WhileHeld(new CmdVacuum());
+  
+  btnManualVacuumReverse->WhileHeld(new CmdVacuumReverse());
+
   btnHabRoutine->WhileHeld(new CmdHabRoutine());
 
   btnIntake->WhileHeld(new CmdIntake());
