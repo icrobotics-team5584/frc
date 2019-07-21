@@ -26,6 +26,7 @@
 #include "commands/CmdOpenIntake.h"
 #include "subsystems/SubIntake.h"
 #include "commands/CmdHabRoutine.h"
+#include "commands/CmdPreHabRoutine.h"
 
 OI::OI() {
   std::cout << "OI Started" << std::endl;
@@ -54,7 +55,7 @@ OI::OI() {
   btnArmToHab->WhileHeld(new CmdArmToHab());
   btnArmToHatch->WhileHeld(new CmdArmToHatch());
   btnArmToSky->WhileHeld(new CmdArmToSky());
-  btnArmToPreHab->WhileHeld(new CmdArmToPreHab());
+  btnArmToPreHab->WhileHeld(new CmdPreHabRoutine());
   btnArmToRocket->WhileHeld(new CmdArmToRocket());
 
   btnManualVacuum->WhileHeld(new CmdVacuum());
