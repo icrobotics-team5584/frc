@@ -9,6 +9,7 @@
  */
 
 #include <AxisButton.h>
+#include <iostream>
 
 AxisButton::AxisButton(GenericHID* joystick, int axisNumber) {
 	_joystick = joystick;
@@ -34,5 +35,6 @@ void AxisButton::WhenPressed(Command* command) {
 
 float AxisButton::GetAxis(){
 	return _joystick->GetRawAxis(_axisNumber);
+	std::cout << _axisNumber << std::endl;
 }
 
