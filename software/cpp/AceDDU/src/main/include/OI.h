@@ -47,6 +47,9 @@ class OI {
   OI();
   double GetJoystickX();
   double GetJoystickY();
+  double GetLeftAsix();
+  double GetRightAsix();
+
   std::shared_ptr<frc::Joystick> joystick1;
 
   std::unique_ptr<frc::JoystickButton> btnArmToFloor;
@@ -55,6 +58,7 @@ class OI {
   std::unique_ptr<frc::JoystickButton> btnArmToSky;
   std::unique_ptr<frc::JoystickButton> btnArmToPreHab;
   std::unique_ptr<AxisButton> btnArmToRocket;
+  std::unique_ptr<AxisButton> btnSlowDown;
 
   std::unique_ptr<ButtonPOV> btnManualVacuum;
   std::unique_ptr<ButtonPOV> btnManualVacuumReverse;

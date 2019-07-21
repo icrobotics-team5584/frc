@@ -27,6 +27,7 @@
 #include "subsystems/SubIntake.h"
 #include "commands/CmdHabRoutine.h"
 #include "commands/CmdPreHabRoutine.h"
+#include "commands/CmdSlowDown.h"
 
 OI::OI() {
   std::cout << "OI Started" << std::endl;
@@ -38,6 +39,7 @@ OI::OI() {
   btnArmToSky.reset(new frc::JoystickButton(joystick1.get(), xBtn));
   btnArmToPreHab.reset(new frc::JoystickButton(joystick1.get(), backBtn)); //Listed as 'select' in drive team doc
   btnArmToRocket.reset(new AxisButton(joystick1.get(), triggerL));
+  btnSlowDown.reset(new AxisButton(joystick1.get(), triggerR));
   
   btnManualVacuum.reset(new ButtonPOV(joystick1.get(), UP));
   btnManualVacuumReverse.reset(new ButtonPOV(joystick1.get(), LEFT));
@@ -57,6 +59,7 @@ OI::OI() {
   btnArmToSky->WhileHeld(new CmdArmToSky());
   btnArmToPreHab->WhileHeld(new CmdPreHabRoutine());
   btnArmToRocket->WhileHeld(new CmdArmToRocket());
+  btnSlowDown->WhileHeld(new CmdSlowDown());
 
   btnManualVacuum->WhileHeld(new CmdVacuum());
   
@@ -84,4 +87,10 @@ double OI::GetJoystickY() {
   return joystick1->GetY();
 }
 
+double OI::GetLeftAsix(){
+  return btnSlowDown->GetAxis();
+}
 
+double OI::GetRightAsix(){
+  return btnArmToRocket->GetAxis();
+}
