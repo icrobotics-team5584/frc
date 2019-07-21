@@ -49,6 +49,7 @@ class SubEncodedArm : public frc::Subsystem {
   void SetAngle(double angle);
   void ConfigTalon();
   void ConfigTalonHAB();
+  void ConfigTalonPREHAB();
   void SetPosition(double angle);
   double DegreesToSensorUnits(double degrees);
   double SensorUnitsToDegrees(double sensorUnits);

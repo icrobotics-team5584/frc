@@ -17,7 +17,7 @@ CmdArmToFloor::CmdArmToFloor() {
 
 // Called just before this Command runs the first time
 void CmdArmToFloor::Initialize() {
-  Robot::subEncodedArm->ConfigTalon();
+  Robot::subEncodedArm->ConfigTalonPREHAB();
   Robot::subEncodedArm->SetPosition(angle);
   std::cout << "arm to ground start" << std::endl;
 }
