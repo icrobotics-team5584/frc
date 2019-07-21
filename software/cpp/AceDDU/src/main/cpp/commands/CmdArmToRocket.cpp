@@ -7,7 +7,7 @@
 
 #include "commands/CmdArmToRocket.h"
 
-const double CmdArmToRocket::angle = 80;
+const double CmdArmToRocket::angle = 40;
 
 CmdArmToRocket::CmdArmToRocket()
 {
