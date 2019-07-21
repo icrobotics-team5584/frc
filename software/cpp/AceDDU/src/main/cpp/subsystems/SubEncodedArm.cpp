@@ -44,7 +44,7 @@ void SubEncodedArm::InitDefaultCommand()
   // SetDefaultCommand(new MySpecialCommand());
 }
 
-void SubEncodedArm::ConfigTalon()
+void SubEncodedArm::ConfigTalon()  //Generic Talon PID Config, has kI
 {
 
   srxArmFront->SetStatusFramePeriod(StatusFrameEnhanced::Status_13_Base_PIDF0, 10, 10);
@@ -88,8 +88,10 @@ void SubEncodedArm::ConfigTalonHAB(){
   srxArmFront->ConfigMotionAcceleration(100, 0);
 }
 
-void SubEncodedArm::ConfigTalonPREHAB()
-{
+
+//This is a copy of ConfigTalon without kI, used for  
+//ArmToFLoor and ArmToPreHab to prevent big overshoot.
+void SubEncodedArm::ConfigTalonPREHAB(){
   
   srxArmFront->SetStatusFramePeriod(StatusFrameEnhanced::Status_13_Base_PIDF0, 10, 10);
   srxArmFront->SetStatusFramePeriod(StatusFrameEnhanced::Status_10_MotionMagic, 10, 10);
