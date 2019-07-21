@@ -58,7 +58,7 @@ void SubEncodedArm::ConfigTalon()
   srxArmFront->SelectProfileSlot(0, 0);
   srxArmFront->Config_kF(0, 50, 0);
   srxArmFront->Config_kP(0, 2.5, 0);
-  srxArmFront->Config_kI(0, 0, 0);
+  srxArmFront->Config_kI(0, 0.0015, 0);
   srxArmFront->Config_kD(0, 0, 0);
 
   // Set acceleration and cruise velocity
@@ -144,8 +144,9 @@ void SubEncodedArm::BrakeState(PneuBrakeState brakeState)
 void SubEncodedArm::SetPosition(double angle)
 {
   _targetPosition = angle;
+  std::cout << "angle input(degrees): " << angle << std::endl;
   angle = DegreesToSensorUnits(angle);
-  std::cout << "angle input: " << angle << std::endl;
+  std::cout << "angle input(ticks): " << angle << std::endl;
   srxArmFront->Set(ControlMode::MotionMagic, angle);
 }
 
