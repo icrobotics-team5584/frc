@@ -49,6 +49,7 @@ class OI {
   double GetJoystickY();
   double GetLeftAsix();
   double GetRightAsix();
+  double GetRightYAxis();
 
   std::shared_ptr<frc::Joystick> joystick1;
 
@@ -67,4 +68,7 @@ class OI {
   std::unique_ptr<frc::JoystickButton> btnIntake;
   std::unique_ptr<frc::JoystickButton> btnOuttake;
   std::unique_ptr<ToggleButton> btnIntakeMode;
+
+  std::unique_ptr<frc::JoystickButton> btnOverride;
+
 };

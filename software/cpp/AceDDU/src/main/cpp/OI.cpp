@@ -28,6 +28,7 @@
 #include "commands/CmdHabRoutine.h"
 #include "commands/CmdPreHabRoutine.h"
 #include "commands/CmdSlowDown.h"
+#include "commands/CmdOverride.h"
 
 OI::OI() {
   std::cout << "OI Started" << std::endl;
@@ -50,9 +51,14 @@ OI::OI() {
   btnOuttake.reset(new frc::JoystickButton(joystick1.get(), rightBtn)); // Does not yet match drive team doc
   btnIntakeMode.reset(new ToggleButton(joystick1.get(), yBtn));  // Does not yet match drive team doc
   
+  btnOverride.reset(new frc::JoystickButton(joystick1.get(), rightStickBtn));
+
   std::cout << "button Init Finished" << std::endl;
 
   // Map Buttons to Commands 
+
+  btnOverride->WhileHeld(new CmdOverride());
+
   btnArmToFloor->WhileHeld(new CmdArmToFloor());
   btnArmToHab->WhileHeld(new CmdArmToHab());
   btnArmToHatch->WhileHeld(new CmdArmToHatch());
@@ -85,6 +91,10 @@ double OI::GetJoystickX() {
 
 double OI::GetJoystickY() {
   return joystick1->GetY();
+}
+
+double OI::GetRightYAxis(){
+  return joystick1->GetRawAxis(5);
 }
 
 double OI::GetLeftAsix(){

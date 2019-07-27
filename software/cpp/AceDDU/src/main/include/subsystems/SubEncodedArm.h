@@ -47,9 +47,10 @@ class SubEncodedArm : public frc::Subsystem {
 /*  void ResetEncoder(); LETS NOT USE THIS ONE */
   void BrakeState(PneuBrakeState brakeState);
   void SetAngle(double angle);
-  void ConfigTalon();
-  void ConfigTalonHAB();
-  void ConfigTalonPREHAB();
+  void ConfigTalon();//default
+  void ConfigTalonHAB();//for PID climb
+  void ConfigTalonPREHAB();//default PID - kI
+  void ConfigTalonOverride();//PID off
   void SetPosition(double angle);
   double DegreesToSensorUnits(double degrees);
   double SensorUnitsToDegrees(double sensorUnits);
