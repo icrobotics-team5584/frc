@@ -44,6 +44,17 @@ void SubEncodedArm::InitDefaultCommand()
   // SetDefaultCommand(new MySpecialCommand());
 }
 
+void SubEncodedArm::ConfigTalonOverride(){
+  srxArmFront->SelectProfileSlot(0, 0);
+  srxArmFront->Config_kF(0, 0, 0);
+  srxArmFront->Config_kP(0, 0, 0);
+  srxArmFront->Config_kI(0, 0, 0);
+  srxArmFront->Config_kD(0, 0, 0);
+  
+  srxArmFront->ConfigPeakOutputForward(0.6, 0);
+  srxArmFront->ConfigPeakOutputReverse(-0.6, 0);
+}
+
 void SubEncodedArm::ConfigTalon()  //Generic Talon PID Config, has kI
 {
 
