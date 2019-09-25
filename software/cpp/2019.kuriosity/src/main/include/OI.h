@@ -5,7 +5,7 @@
 #include "ButtonPOV.h"
 #include "AxisButton.h"
 #include "LimitButton.h"
-
+#include "ToggleButton.h"
 using namespace std;
 
 enum Buttons {
@@ -39,7 +39,8 @@ class OI {
   shared_ptr<frc::JoystickButton> btnCargoPodIn;
   unique_ptr<AxisButton> btnStopAtLine;
   unique_ptr<AxisButton> btnSeekRocketSide;
-  unique_ptr<frc::JoystickButton> btnIntakeOut;
+  //unique_ptr<frc::JoystickButton> btnIntakeOut;
+  unique_ptr<ToggleButton> btnIntakeOut;
   unique_ptr<AxisButton> btnIntakeRoll;
   unique_ptr<frc::JoystickButton> btnDeployPanel;
 

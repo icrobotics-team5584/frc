@@ -9,6 +9,12 @@
 #include <cameraserver/CameraServer.h>
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgcodecs/imgcodecs.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+
 #include <gripPipeline/GripPipeline.h>
 //#include <StringRef.h>
 
@@ -131,8 +137,8 @@ void Robot::TestPeriodic() {}
 
 void Robot::VisionThread( int &mode, bool &debug, bool &valid, double &error ) {
 
-    //cs::UsbCamera camera = CameraServer::GetInstance()->StartAutomaticCapture();
-    cs::AxisCamera camera = CameraServer::GetInstance()->AddAxisCamera( "10.55.84.11" );
+    cs::UsbCamera camera = CameraServer::GetInstance()->StartAutomaticCapture();
+    //cs::AxisCamera camera = CameraServer::GetInstance()->AddAxisCamera( "10.55.84.11" );
 
     camera.SetResolution(320, 240);
     camera.SetFPS(20);
