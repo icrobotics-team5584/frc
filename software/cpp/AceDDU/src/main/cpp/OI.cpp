@@ -39,8 +39,8 @@ OI::OI() {
   btnArmToHatch.reset(new frc::JoystickButton(joystick1.get(), bBtn));
   btnArmToSky.reset(new frc::JoystickButton(joystick1.get(), xBtn));
   btnArmToPreHab.reset(new frc::JoystickButton(joystick1.get(), backBtn)); //Listed as 'select' in drive team doc
-  btnArmToRocket.reset(new AxisButton(joystick1.get(), triggerL));
-  btnSlowDown.reset(new AxisButton(joystick1.get(), triggerR));
+  btnArmToRocket.reset(new AxisButton(joystick1.get(), triggerL, 0.5));
+  btnSlowDown.reset(new AxisButton(joystick1.get(), triggerR, 0.5));
   
   btnManualVacuum.reset(new ButtonPOV(joystick1.get(), UP));
   btnManualVacuumReverse.reset(new ButtonPOV(joystick1.get(), LEFT));

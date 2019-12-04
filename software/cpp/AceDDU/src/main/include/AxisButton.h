@@ -5,6 +5,7 @@
  *      Author: Liam
  * 	
  * 	Updated 20190204_2325 Darcy 
+ *  Updated 20191204_1954 Mitch
  * 
  */
 #pragma once
@@ -16,7 +17,7 @@ using namespace frc;
 
 class AxisButton : Trigger {
 public:
-	AxisButton(GenericHID* joystick, int axisNumber);
+	AxisButton(GenericHID* joystick, int axisNumber,  int deadzone = 0);
 	bool Get();
 	float GetAxis();
 	void WhenPressed(Command* command);
@@ -24,4 +25,5 @@ public:
 private:
 	GenericHID* _joystick;
 	int _axisNumber;
+	int _deadzone;
 };
