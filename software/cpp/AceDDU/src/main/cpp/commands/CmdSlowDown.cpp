@@ -31,7 +31,7 @@ void CmdSlowDown::Execute()
   y = Robot::m_oi->joystick1->GetY();
   axis = Robot::m_oi->joystick1->GetRawAxis(triggerR);
   //SmartDashboard::PutNumber("axis test", axis);
-  //Robot::subDrivebase->drive(y/(axis + 1),(-(x/(axis + 1))));
+  Robot::subDrivebase->drive(y/(axis + 1),(-(x/(axis + 1))));
 }
 
 // Make this return true when this Command no longer needs to run execute()
