@@ -55,6 +55,7 @@ void Robot::RobotPeriodic() {
   //frc::SmartDashboard::PutNumber("Angle", subDrivebase->get_angle());
   //frc::SmartDashboard::PutNumber("Distance", subDrivebase->get_distance());
   frc::SmartDashboard::PutNumber("Arm Angle", subEncodedArm->getAngle());
+  
   //std::cout << "PeriodicEnd" << std::endl;
 }
 
