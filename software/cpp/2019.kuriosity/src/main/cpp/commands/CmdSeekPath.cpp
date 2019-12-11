@@ -26,8 +26,7 @@ void CmdSeekPath::Initialize() {
   Robot::subDriveBase->zeroEncoders();
   Robot::subDriveBase->setTalControlMode(ControlMode::PercentOutput);
   scaleFactor = wheelCircumference/4096;
-  // SmartDashboard::PutBoolean("Running CmdSeekpath", true);
-  
+  std::cout << "yes" << std::endl;  
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -39,8 +38,8 @@ void CmdSeekPath::Execute() {
   kD = SmartDashboard::GetNumber("Vel D", 0);
   targetVelocity = SmartDashboard::GetNumber("Target Vel", 0);
   Robot::subDriveBase->velocityPIDConfig(kF, kP, kI, kD);
-  double leftVelocity = 1.5*(targetVelocity / scaleFactor / 10);
-  double rightVelocity = -(targetVelocity / scaleFactor / 10);
+  double leftVelocity = (targetVelocity / scaleFactor / 10);
+  double rightVelocity = -1.0*(targetVelocity / scaleFactor / 10);
   SmartDashboard::PutNumber("PID velocityL", Robot::subDriveBase->getLeftVelocity());
   SmartDashboard::PutNumber("PID velocityR", Robot::subDriveBase->getRightVelocity());
   Robot::subDriveBase->tankDriveVelocity(leftVelocity, rightVelocity);
@@ -49,15 +48,16 @@ void CmdSeekPath::Execute() {
 // Make this return true when this Command no longer needs to run execute()
 bool CmdSeekPath::IsFinished() { 
   return false;
-  return pathFollower->isFinished();
 }
 
 // Called once after isFinished returns true
 void CmdSeekPath::End() {
   //SmartDashboard::PutBoolean("Running CmdSeekpath", false);
-  Robot::subDriveBase->tankDriveVelocity(0.0, 0.0);
+  Robot::subDriveBase->drive(0.0, 0.0);
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdSeekPath::Interrupted() {}
+void CmdSeekPath::Interrupted() {
+  End();
+}

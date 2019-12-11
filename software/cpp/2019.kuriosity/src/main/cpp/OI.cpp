@@ -66,7 +66,7 @@ OI::OI() {
   btnIntakeRoll.reset(new AxisButton(controller.get(), rightAxisTrigger));
   btnIntakeRoll->WhileHeld(new CmdRollerIn());
 
-  btnSeekPath.reset(new frc::JoystickButton(controllerReverse.get(), startBtn));
+  btnSeekPath.reset(new frc::JoystickButton(controller.get(), startBtn));
   btnSeekPath->WhileHeld(new CmdSeekPath());
 
   //Intake Outake
@@ -111,8 +111,6 @@ OI::OI() {
   // Climber Controls
   btnClimberLatch.reset(new frc::JoystickButton(controllerReverse.get(), yBtn));
   btnClimberLatch->ToggleWhenPressed(new CmdClimberLatch());
-  btnClimber.reset(new frc::JoystickButton(controllerReverse.get(), startBtn));
-  btnClimber->WhenPressed(new CmdClimberDeploy());
   btnSoloRollerDeploy.reset(new frc::JoystickButton(controllerReverse.get(), aBtn));
   btnSoloRollerDeploy->WhenPressed(new CmdMoveRollerIntakeBar(OUT));
   btnClimberRetract.reset(new frc::JoystickButton(controllerReverse.get(), backBtn));

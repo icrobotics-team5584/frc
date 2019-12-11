@@ -17,6 +17,12 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   _srxBackLeft = Robot::_robotMap->srxDriveBaseBackLeft;
   _srxFrontRight = Robot::_robotMap->srxDriveBaseFrontRight;
   _srxBackRight = Robot::_robotMap->srxDriveBaseBackRight;
+  
+  _srxFrontRight->ConfigFactoryDefault();
+  _srxFrontLeft->ConfigFactoryDefault();
+  _srxBackRight->ConfigFactoryDefault();
+  _srxBackLeft->ConfigFactoryDefault();
+
   difDrive.reset(new frc::DifferentialDrive(*_srxFrontLeft, *_srxFrontRight));
 
   //sensors
@@ -31,7 +37,8 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   //encoders
   _srxFrontRight->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
   _srxFrontLeft->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
-  _srxFrontRight->SetSensorPhase(true);
+  _srxFrontRight->SetSensorPhase(false);
+  _srxFrontLeft->SetSensorPhase(false);
 
   rightVelocitySource = new RightVelocitySource();
   leftVelocitySource = new LeftVelocitySource();
@@ -50,7 +57,7 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
 }
 void SubDriveBase::InitDefaultCommand() {
   // Set the default command for a subsystem here.
-  SetDefaultCommand(new CmdJoystickDrive());
+  //SetDefaultCommand(new CmdJoystickDrive());
 }
 
 void SubDriveBase::drive(double speed, double rotation) {
@@ -86,7 +93,7 @@ double SubDriveBase::getRawRightEncoder() {
 void SubDriveBase::disablePID() {
   _srxFrontLeft->SetNeutralMode(NeutralMode::Brake);
   _srxFrontRight->SetNeutralMode(NeutralMode::Brake);
-  _srxFrontRight->SetInverted(false);
+  // _srxFrontRight->SetInverted(false);
 }
 //returns velocity in m/s
 double SubDriveBase::getRightVelocity() {

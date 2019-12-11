@@ -11,6 +11,7 @@
 #include "purePursuit/include/pathFollower.hpp"
 #include "purePursuit/include/PosEncoderGyro.h"
 #include "purePursuit/include/DvoTank.h"
+#include <iostream>
 
 class CmdSeekPath : public frc::Command {
  private:
