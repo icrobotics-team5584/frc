@@ -3,7 +3,11 @@
 #
 # COMMAND PROMPT USAGE: "c:\Program Files\Git\usr\bin\perl.exe" softwareinventory.pl
 #
+# OR: "c:\Program Files (x86)\Git\usr\bin\perl.exe" softwareinventory.pl
+#
 # BASH TERMINAL USAGE: "/c/Program Files/Git/usr/bin/perl.exe" softwareinventory.pl
+#
+# OR: "/c/Program Files (x86)/Git/usr/bin/perl.exe" softwareinventory.pl
 #
 
 use Cwd;
@@ -56,19 +60,36 @@ extractversionfromhtm( 'FRC Documentation',   "${FRCDOCOROOT}\\cpp\\index.html" 
 
 sub loadpmsi
   {
-  my $cmd = '"c:\Program Files\Git\usr\bin\regtool.exe" list /HKLM/SOFTWARE/WOW6432Node/Microsoft/Windows/CurrentVersion/Uninstall';
+  my $cmd;
+  my $regtool;
+  if( -e "c:\\Program Files\\Git\\usr\\bin\\regtool.exe" )
+    {
+    $cmd = '"c:\Program Files\Git\usr\bin\regtool.exe" list /HKLM/SOFTWARE/WOW6432Node/Microsoft/Windows/CurrentVersion/Uninstall';
+    $regtool = "c:\\Program Files\\Git\\usr\\bin\\regtool.exe";
+    }
+  elsif( -e "c:\\Program Files (x86)\\Git\\usr\\bin\\regtool.exe" )
+    {
+    $cmd = '"c:\Program Files (x86)\Git\usr\bin\regtool.exe" list /HKLM/SOFTWARE/WOW6432Node/Microsoft/Windows/CurrentVersion/Uninstall';
+    $regtool = "c:\\Program Files (x86)\\Git\\usr\\bin\\regtool.exe";
+    }
+  else
+    {
+    print "ERROR: unable to locate regtool - aborting!\n";
+    exit 1;
+    }
   # print "DEBUG: cmd: >$cmd<\n";
+  # print "DEBUG: regtool: >$regtool<\n";
   foreach( `$cmd` )
     {
     s|\x0A||;
     s|\x0D||;
     # print "DEBUG: >$_<\n";
     my $component = $_;
-    my $cmd = "\"c:\\Program Files\\Git\\usr\\bin\\regtool.exe\" get \"/HKLM/SOFTWARE/WOW6432Node/Microsoft/Windows/CurrentVersion/Uninstall/${component}/DisplayName\"";
+    my $cmd = "\"${regtool}\" get \"/HKLM/SOFTWARE/WOW6432Node/Microsoft/Windows/CurrentVersion/Uninstall/${component}/DisplayName\"";
     my $dn = `$cmd 2>&1`;
     $dn =~ s|\x0A||;
     $dn =~ s|\x0D||;
-    my $cmd = "\"c:\\Program Files\\Git\\usr\\bin\\regtool.exe\" get \"/HKLM/SOFTWARE/WOW6432Node/Microsoft/Windows/CurrentVersion/Uninstall/${component}/DisplayVersion\"";
+    my $cmd = "\"${regtool}\" get \"/HKLM/SOFTWARE/WOW6432Node/Microsoft/Windows/CurrentVersion/Uninstall/${component}/DisplayVersion\"";
     my $dv = `$cmd 2>&1`;
     $dv =~ s|\x0A||;
     $dv =~ s|\x0D||;
