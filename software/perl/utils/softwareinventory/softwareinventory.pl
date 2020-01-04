@@ -14,14 +14,33 @@ use Cwd;
 
 my $CWD = getcwd;
 my $ME = "softwareinventory";
+my $YEAR = "2020";
 my $TMPDIR = "$ENV{'TEMP'}";
-my $FRCDIR = "frc2019";
+
+my $FRCDIR;
+my $LVDIR;
+if( "$YEAR" eq "2020" )
+  {
+  $FRCDIR = "C:\\Users\\Public\\wpilib\\2020";
+  $LVDIR = "C:\\Program Files (x86)\\National Instruments\\LabVIEW 2019";
+  }
+elsif( "$YEAR" eq "2019" )
+  {
+  $FRCDIR = "C:\\Users\\Public\\frc2019";
+  $LVDIR = "C:\\Program Files (x86)\\National Instruments\\LabVIEW 2018";
+  }
+else
+  {
+  print "ERROR: unsupported year - aborting!\n";
+  exit 1;
+  }
 my $EXEEXTRACTOR = "$TMPDIR/$ME.$$.vbs";
-my $JAREXTRACTOR = "C:\\Users\\Public\\${FRCDIR}\\jdk\\bin\\jar.exe";
-my $FRCTOOLROOT = "C:\\Users\\Public\\${FRCDIR}\\tools";
-my $FRCDOCOROOT = "C:\\Users\\Public\\${FRCDIR}\\documentation";
-my $FRCPROJROOT = "C:\\Program Files (x86)\\National Instruments\\LabVIEW 2018\\project";
+my $JAREXTRACTOR = "${FRCDIR}\\jdk\\bin\\jar.exe";
+my $FRCTOOLROOT = "${FRCDIR}\\tools";
+my $FRCDOCOROOT = "${FRCDIR}\\documentation";
+my $FRCPROJROOT = "${LVDIR}\\project";
 my $FRCINSTROOT = "C:\\Program Files (x86)";
+
 my %PMSI;
 
 # STEP 1 : extract version information from PMSI in registry
@@ -57,6 +76,10 @@ extractversionfromjar( 'ToolsUpdater',          "${FRCTOOLROOT}\\ToolsUpdater.ja
 # STEP 4 : extract version information from specific HTM files
 print "INFO: version information extracted from HTM files . . .\n";
 extractversionfromhtm( 'FRC Documentation',   "${FRCDOCOROOT}\\cpp\\index.html" );
+
+exit 0;
+
+
 
 sub loadpmsi
   {
