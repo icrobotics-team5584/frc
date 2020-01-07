@@ -9,12 +9,23 @@
 
 #include <frc/commands/Subsystem.h>
 
+#include "ctre/Phoenix.h"
+
+
 class SubDriveBase : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
 
+  std::shared_ptr<TalonSRX> _srxFrontLeft;
+  std::shared_ptr<TalonSRX> _srxFrontRight;
+  std::shared_ptr<TalonSRX> _srxBackLeft;
+  std::shared_ptr<TalonSRX> _srxBackRight;
+
  public:
   SubDriveBase();
   void InitDefaultCommand() override;
+
+  void Drive(double speed, double rotation);
+
 };

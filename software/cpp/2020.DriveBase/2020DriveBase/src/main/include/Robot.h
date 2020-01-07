@@ -11,6 +11,8 @@
 #include <frc/commands/Command.h>
 #include <frc/smartdashboard/SendableChooser.h>
 
+#include "RobotMap.h"
+
 #include "Subsystems/SubDriveBase.h"
 
 #include "OI.h"
@@ -18,6 +20,7 @@
 class Robot : public frc::TimedRobot {
  public:
   static OI m_oi;
+  static RobotMap robotMap;
   static std::unique_ptr<SubDriveBase> subDriveBase;
 
   void RobotInit() override;

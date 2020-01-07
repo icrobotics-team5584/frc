@@ -10,6 +10,8 @@
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
+
+RobotMap Robot::robotMap;
 std::unique_ptr<SubDriveBase> Robot::subDriveBase;
 OI Robot::m_oi;
 

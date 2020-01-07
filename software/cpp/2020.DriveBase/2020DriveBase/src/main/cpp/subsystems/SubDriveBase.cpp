@@ -6,13 +6,26 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/SubDriveBase.h"
+#include "Robot.h"
 
-SubDriveBase::SubDriveBase() : Subsystem("SubDriveBase") {}
+SubDriveBase::SubDriveBase() : Subsystem("SubDriveBase") {
+  _srxFrontLeft = Robot::robotMap.srxDriveBaseFrontLeft;
+  _srxFrontRight = Robot::robotMap.srxDriveBaseFrontRight;
+  _srxBackLeft = Robot::robotMap.srxDriveBaseBackLeft;
+  _srxBackRight = Robot::robotMap.srxDriveBaseBackRight;
+
+}
 
 void SubDriveBase::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
 }
 
-// Put methods for controlling this subsystem
-// here. Call these from Commands.
+void SubDriveBase::Drive(double speed, double rotation) {
+  //This is here at the moment only to allow for a successful compilation.
+  _srxFrontLeft->Set(ControlMode::PercentOutput, 0);
+  _srxFrontRight->Set(ControlMode::PercentOutput, 0);  
+  _srxBackLeft->Set(ControlMode::PercentOutput, 0);
+  _srxBackRight->Set(ControlMode::PercentOutput, 0);
+  
+}

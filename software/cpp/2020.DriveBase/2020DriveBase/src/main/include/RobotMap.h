@@ -7,6 +7,27 @@
 
 #pragma once
 
+#include "ctre/Phoenix.h"
+
+enum Can {
+    can_srxDriveBaseFrontLeft = 1,
+    can_srxDriveBaseBackLeft = 2,
+    can_srxDriveBaseFrontRight = 3,
+    can_srxDriveBaseBackRight = 4,
+};
+
+class RobotMap {
+    private:
+    public:
+        RobotMap();
+
+        std::shared_ptr<TalonSRX> srxDriveBaseFrontLeft;
+        std::shared_ptr<TalonSRX> srxDriveBaseBackLeft;
+        std::shared_ptr<TalonSRX> srxDriveBaseFrontRight;
+        std::shared_ptr<TalonSRX> srxDriveBaseBackRight;
+
+};
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
