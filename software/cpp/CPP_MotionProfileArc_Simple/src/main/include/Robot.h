@@ -24,8 +24,19 @@ public:
 private:
 	int _state;
 
+	// DIZZY MOTOR CONTROLLERS:
+	// TalonSRX *_rightMaster;
+	// TalonSRX *_leftMaster;
+	// TalonSRX *_rightSlave;
+	// TalonSRX *_leftSlave;
+	// TalonSRX *_pidgeyNest;
+
+	// MUCK SLAVE MOTOR CONTROLLERS:
 	TalonSRX *_rightMaster;
 	TalonSRX *_leftMaster;
+	VictorSPX *_rightSlave;
+	VictorSPX *_leftSlave;
+	TalonSRX *_pidgeyNest;
 
 	MasterProfileConfiguration *_masterConfig;
 	FollowerProfileConfiguration *_followConfig;

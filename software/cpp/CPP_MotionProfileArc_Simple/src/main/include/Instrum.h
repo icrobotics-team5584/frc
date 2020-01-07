@@ -39,16 +39,16 @@ public:
 			talon->GetMotionProfileStatus(status);
 
 			std::stringstream line;
-			line << "  topBufferRem: " << status.topBufferRem << "\n";
-			line << "  topBufferCnt: " << status.topBufferCnt << "\n";
-			line << "  btmBufferCnt: " << status.btmBufferCnt << "\n";
-			line << "  hasUnderrun: " << status.hasUnderrun << "\n";
-			line << "  isUnderrun: " << status.isUnderrun << "\n";
-			line << "  activePointValid: " << status.activePointValid << "\n";
-			line << "  isLast: " << status.isLast << "\n";
-			line << "  profileSlotSelect0: " << status.profileSlotSelect0 << "\n";
-			line << "  profileSlotSelect1: " << status.profileSlotSelect1 << "\n";
-			line << "  outputEnable: " << status.outputEnable << "\n";
+			line << "  topBufferRem: " << status.topBufferRem << "\t";
+			line << "  topBufferCnt: " << status.topBufferCnt << "\t";
+			line << "  btmBufferCnt: " << status.btmBufferCnt << "\t";
+			line << "  hasUnderrun: " << status.hasUnderrun << "\t";
+			line << "  isUnderrun: " << status.isUnderrun << "\t";
+			line << "  activePointValid: " << status.activePointValid << "\t";
+			line << "  isLast: " << status.isLast << "\t";
+			line << "  profileSlotSelect0: " << status.profileSlotSelect0 << "\t";
+			line << "  profileSlotSelect1: " << status.profileSlotSelect1 << "\t";
+			line << "  outputEnable: " << status.outputEnable << "\t";
 			line << "  timeDurMs: " << status.timeDurMs << "\n";
 
 			PrintLine(line.str());

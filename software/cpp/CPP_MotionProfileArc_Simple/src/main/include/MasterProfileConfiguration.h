@@ -7,16 +7,18 @@ class MasterProfileConfiguration : public TalonSRXConfiguration
 {
 public:
     /* Constructor takes a talon and pigeon so it can reference it with their ID */
-    MasterProfileConfiguration(TalonSRX *otherTalon, PigeonIMU *pigeon) : TalonSRXConfiguration()
+    MasterProfileConfiguration(TalonSRX *otherTalon, TalonSRX *pigeonTalon, PigeonIMU *pigeon) : TalonSRXConfiguration()
     {
         /* Primary PID will be the sensor sum so it includes both sides */
         primaryPID.selectedFeedbackSensor = FeedbackDevice::SensorSum;
+
         /* Auxiliary PID will be RemoteSensor0 which is the Pigeon */
         auxiliaryPID.selectedFeedbackSensor = FeedbackDevice::RemoteSensor1;
         neutralDeadband = 0.001; /* 0.1% super small for best low-speed control */
 
         /* Find these gains in Phoenix Tuner first and later put them here */
-        slot0.kF = 0.35;
+        // slot0.kF = 0.35;
+        slot0.kF = 0.15;
         slot0.kP = 0.8;
         slot0.kI = 0.0;
         slot0.kD = 80;
@@ -35,11 +37,16 @@ public:
         remoteFilter0.remoteSensorDeviceID = otherTalon->GetDeviceID();
 
         /* Remote Sensor 1 is the Pigeon over CAN */
-        remoteFilter1.remoteSensorSource = RemoteSensorSource::RemoteSensorSource_Pigeon_Yaw;
-        remoteFilter1.remoteSensorDeviceID = pigeon->GetDeviceNumber();
+        // remoteFilter1.remoteSensorSource = RemoteSensorSource::RemoteSensorSource_Pigeon_Yaw;
+        // remoteFilter1.remoteSensorDeviceID = pigeon->GetDeviceNumber();
+
+        /* Remote Sensor 1 is the Pigeon over GADGETEER */
+        remoteFilter1.remoteSensorSource = RemoteSensorSource::RemoteSensorSource_GadgeteerPigeon_Yaw;
+        remoteFilter1.remoteSensorDeviceID = pigeonTalon->GetDeviceID();
 
         /* Configure sensor sum to be this quad encoder and the other talon's encoder */
         sum0Term = FeedbackDevice::QuadEncoder;
+        // sum0Term = FeedbackDevice::CTRE_MagEncoder_Relative;
         sum1Term = FeedbackDevice::RemoteSensor0;
 
         /* Configure auxPIDPolarity to match the drive train */

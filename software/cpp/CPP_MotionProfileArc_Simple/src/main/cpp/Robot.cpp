@@ -1,13 +1,52 @@
 #include "Robot.h"
 #include "MotionProfile.h"
 #include "Instrum.h"
-
+#
 void Robot::RobotInit() 
 {
     /* Construct global variables */
-    _rightMaster = new TalonSRX(1);
-    _leftMaster = new TalonSRX(2);
-    _pidgey = new PigeonIMU(3); //This uses a CAN pigeon, as opposed to a gadgeteer pigeon
+
+    // DIZZY MOTOR CONTROLLERS:
+    // _rightMaster = new TalonSRX(1);
+    // _leftMaster = new TalonSRX(3);
+    // _rightMaster->ConfigFactoryDefault();
+    // _leftMaster->ConfigFactoryDefault();
+    // MUCK MOTOR CONTROLLERS:
+    _rightMaster = new TalonSRX(12);
+    _leftMaster = new TalonSRX(11);
+    _rightMaster->ConfigFactoryDefault();
+    _leftMaster->ConfigFactoryDefault();
+
+    // DIZZY MOTOR CONTROLLERS:
+    // _rightSlave = new TalonSRX(2);
+    // _leftSlave = new TalonSRX(4);
+    // _rightSlave->ConfigFactoryDefault();
+    // _leftSlave->ConfigFactoryDefault();
+    // MUCK MOTOR CONTROLLERS:
+    _rightSlave = new VictorSPX(13);
+    _leftSlave = new VictorSPX(10);
+    _rightSlave->ConfigFactoryDefault();
+    _leftSlave->ConfigFactoryDefault();
+
+    // DIZZY CONTROLLER PAIRING:
+    // _rightSlave->Set(ControlMode::Follower, 1);
+    // _leftSlave->Set(ControlMode::Follower, 3);
+    // MUCK CONTROLLER PAIRING:
+    // _rightSlave->Set(ControlMode::Follower, 12); OR ...
+    _rightSlave->Follow(*_rightMaster);
+    // _leftSlave->Set(ControlMode::Follower, 11); OR ...
+    _leftSlave->Follow(*_leftMaster);
+
+    // DIZZY PIDGEON CONTROLLER:
+    // _pidgeyNest = new TalonSRX(7);
+    // _pidgeyNest->ConfigFactoryDefault();
+    // MUCK PIDGEON CONTROLLER:
+    _pidgeyNest = new TalonSRX(30);
+    _pidgeyNest->ConfigFactoryDefault();
+
+    // _pidgey = new PigeonIMU(3); //This uses a CAN pigeon, as opposed to a gadgeteer pigeon
+    _pidgey = new PigeonIMU(_pidgeyNest); //This uses a gadgeteer pigeon
+
     _joystick = new frc::Joystick(0);
     _bufferedStream = new BufferedTrajectoryPointStream();
 
@@ -18,17 +57,22 @@ void Robot::RobotInit()
     _state = 0;
 
 
-    _masterConfig = new MasterProfileConfiguration(_leftMaster, _pidgey);
+    _masterConfig = new MasterProfileConfiguration(_leftMaster, _pidgeyNest, _pidgey);
     _followConfig = new FollowerProfileConfiguration();
 
     _rightMaster->ConfigAllSettings(*_masterConfig);
     _leftMaster->ConfigAllSettings(*_followConfig);
 
-    _rightMaster->SetSensorPhase(true);
-    _leftMaster->SetSensorPhase(false);
+    _rightMaster->SetSensorPhase(false);
+    _leftMaster->SetSensorPhase(true);
 
-    _rightMaster->SetInverted(true);
-    _leftMaster->SetInverted(false);
+    _rightMaster->SetInverted(false);
+    _leftMaster->SetInverted(true);
+
+    // _rightSlave->SetInverted(InvertType::FollowMaster);
+    // _leftSlave->SetInverted(InvertType::FollowMaster);
+    _rightSlave->SetInverted(false);
+    _leftSlave->SetInverted(true);
 
     _rightMaster->SetStatusFramePeriod(StatusFrameEnhanced::Status_14_Turn_PIDF1, 20); //Telemetry using Phoenix Tuner
 }
@@ -68,20 +112,25 @@ void Robot::TeleopPeriodic()
             _pidgey->SetYaw(0);
             /* wait for 10 points to buffer in firmware, then transition to MP */
             _leftMaster->Follow(*_rightMaster, FollowerType_AuxOutput1);
-            _rightMaster->StartMotionProfile(*_bufferedStream, 10, ControlMode::MotionProfileArc);
+            int mperr;
+            mperr = _rightMaster->StartMotionProfile(*_bufferedStream, 45, ControlMode::MotionProfileArc);
             _state = 2;
             Instrum::PrintLine("MP started");
+            std::cout << "mperr : " << mperr << std::endl;
+            bPrintValues = true;
             break;
 
         /* wait for MP to finish */
         case 2:
+            bPrintValues = true;
             if (_rightMaster->IsMotionProfileFinished()) {
+                bPrintValues = false;
                 Instrum::PrintLine("MP finished");
                 _state = 3;
             }
             break;
 
-        /* MP is finished, nothing to do */
+        /* MP is finished, hand control back to joystick */
         case 3:
             break;
     }
@@ -127,6 +176,7 @@ void Robot::InitBuffer(const double profile[][3], int totalCnt, double rotations
          * In this example we're linearly interpolating creating a segment of a circle to follow
          */
         point.auxiliaryPos = turnAmount * ((double)i / (double)totalCnt); //Linearly interpolate the turn amount to do a circle
+
         point.auxiliaryVel = 0;
 
 

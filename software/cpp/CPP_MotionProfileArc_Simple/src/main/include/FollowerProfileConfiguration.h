@@ -9,6 +9,7 @@ public:
     FollowerProfileConfiguration() : TalonSRXConfiguration()
     {
         primaryPID.selectedFeedbackSensor = FeedbackDevice::QuadEncoder;
+        // primaryPID.selectedFeedbackSensor = FeedbackDevice::CTRE_MagEncoder_Relative;
         neutralDeadband = 0.001; /* 0.1% super small for best low-speed control */
     }
 };
