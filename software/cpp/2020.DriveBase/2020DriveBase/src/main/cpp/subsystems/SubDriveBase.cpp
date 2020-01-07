@@ -1,20 +1,18 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
+/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#pragma once
+#include "subsystems/SubDriveBase.h"
 
-#include <frc/commands/Command.h>
+SubDriveBase::SubDriveBase() : Subsystem("SubDriveBase") {}
 
-class ExampleCommand : public frc::Command {
- public:
-  ExampleCommand();
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
-};
+void SubDriveBase::InitDefaultCommand() {
+  // Set the default command for a subsystem here.
+  // SetDefaultCommand(new MySpecialCommand());
+}
+
+// Put methods for controlling this subsystem
+// here. Call these from Commands.
