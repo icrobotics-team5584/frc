@@ -23,9 +23,15 @@ void SubDriveBase::InitDefaultCommand() {
 
 void SubDriveBase::Drive(double speed, double rotation) {
   //This is here at the moment only to allow for a successful compilation.
-  _srxFrontLeft->Set(ControlMode::PercentOutput, 0);
+/*   _srxFrontLeft->Set(ControlMode::PercentOutput, 0);
   _srxFrontRight->Set(ControlMode::PercentOutput, 0);  
   _srxBackLeft->Set(ControlMode::PercentOutput, 0);
-  _srxBackRight->Set(ControlMode::PercentOutput, 0);
+  _srxBackRight->Set(ControlMode::PercentOutput, 0); */
   
+  //Arcade Drive Code.
+  _srxFrontLeft->Set(ControlMode::PercentOutput, speed+rotation);
+  _srxFrontRight->Set(ControlMode::PercentOutput, speed-rotation);
+  _srxBackLeft->Set(ControlMode::PercentOutput, speed+rotation);
+  _srxBackRight->Set(ControlMode::PercentOutput, speed-rotation);
+
 }
