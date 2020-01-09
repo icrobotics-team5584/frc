@@ -11,10 +11,12 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 std::shared_ptr<SubDriveBase> Robot::subDriveBase;
+std::shared_ptr<PosEncoderGyro> Robot::posEncoderGyro;
 OI Robot::m_oi;
 
 void Robot::RobotInit() {
   subDriveBase.reset(new SubDriveBase());
+  posEncoderGyro.reset(new PosEncoderGyro());
 }
 
 /**
@@ -29,6 +31,7 @@ void Robot::RobotPeriodic() {
 
   frc::SmartDashboard::PutNumber("Joy x", m_oi.getJoystickX());
   frc::SmartDashboard::PutNumber("Joy y", m_oi.getJoystickY());
+  posEncoderGyro.getPosition();
 }
 
 /**

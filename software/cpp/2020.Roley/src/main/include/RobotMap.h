@@ -11,6 +11,7 @@ enum Can {
     can_srxDriveBaseBackLeft = 2,
     can_srxDriveBaseFrontRight = 3,
     can_srxDriveBaseBackRight = 4,
+    can_srxDriveBaseAutoDolly = 7,
 };
 
 

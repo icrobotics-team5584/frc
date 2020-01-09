@@ -13,11 +13,13 @@
 
 #include "OI.h"
 #include "subsystems/SubDriveBase.h"
+#include "Utilities/PosEncoderGyro.h"
 
 class Robot : public frc::TimedRobot {
  public:
   static OI m_oi;
   static std::shared_ptr<SubDriveBase> subDriveBase;
+  static std::shared_ptr<PosEncoderGyro> posEncoderGyro;
 
   void RobotInit() override;
   void RobotPeriodic() override;

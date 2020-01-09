@@ -13,6 +13,7 @@
 #include <ctre/Phoenix.h>
 #include "frc/commands/Subsystem.h"
 #include "frc/smartdashboard/SmartDashboard.h"
+#include <AHRS.h>
 using namespace std;
 class SubDriveBase : public frc::Subsystem {
  private:
@@ -25,10 +26,23 @@ class SubDriveBase : public frc::Subsystem {
   shared_ptr<WPI_TalonSRX> _srxBackRight;
 
   unique_ptr<frc::DifferentialDrive> DiffDrive;
+
+  shared_ptr<AHRS> ahrsNavXGyro;
+
+  shared_ptr<WPI_TalonSRX> _srxAutoXAxis;
+
+// Robot constants
+  const double WHEEL_DIAMETER = 0.0508; // in meters (0.1016 for lofty)(0.1524 for dizzy) (0.0508 for dolly)
+  const int ENCODER_TICS_PER_ROTATION = 4096; // 
+  const double pi = 3.1415926535897932384626433832795028841971693993751;
+  double metersPerRotation; // calculated in constructor
   
 
  public:
   SubDriveBase();
   void InitDefaultCommand() override;
   void drive(double speed, double rotation);
+  double getYaw();
+  double getDistanceTravelled();
+  void zeroEncoders();
 };

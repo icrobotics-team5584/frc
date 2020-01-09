@@ -16,8 +16,10 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   _srxBackRight.reset(new WPI_TalonSRX(can_srxDriveBaseBackRight));
   _srxBackLeft->Follow(*_srxFrontLeft);
   _srxBackRight->Follow(*_srxFrontRight);
-
+  ahrsNavXGyro.reset(new AHRS(SPI::kMXP));
+  _srxAutoXAxis.reset(new WPI_TalonSRX(can_srxDriveBaseAutoDolly));
   SubDriveBase::DiffDrive.reset(new frc::DifferentialDrive(*_srxFrontLeft, *_srxFrontRight));
+  metersPerRotation = pi * WHEEL_DIAMETER;
 }
 
 void SubDriveBase::InitDefaultCommand() {
@@ -32,5 +34,23 @@ void SubDriveBase::drive(double speed, double rotation){
   frc::SmartDashboard::PutNumber("rot", rotation);
   DiffDrive->ArcadeDrive(speed, rotation);
 }
+
+double SubDriveBase::getYaw(){
+  return ahrsNavXGyro->GetYaw();
+}
+
+void SubDriveBase::zeroEncoders(){
+  _srxFrontLeft->SetSelectedSensorPosition(0, 0);
+  _srxFrontRight->SetSelectedSensorPosition(0, 0);
+
+}
+
+double SubDriveBase::getDistanceTravelled(){
+  double encoderTics = _srxAutoXAxis->GetSelectedSensorPosition(0);
+  double wheelRotations = encoderTics / ENCODER_TICS_PER_ROTATION;
+  double distance = wheelRotations * metersPerRotation;
+  return distance;  
+}
+
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
