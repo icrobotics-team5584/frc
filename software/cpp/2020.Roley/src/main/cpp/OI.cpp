@@ -7,6 +7,18 @@
 
 #include "OI.h"
 
+
+
 OI::OI() {
   // Process operator interface input here.
+  joystick1.reset(new frc::Joystick(0));
+
+}
+
+double OI::getJoystickX(){
+  return joystick1->GetX();
+}
+
+double OI::getJoystickY(){
+  return joystick1->GetY();
 }
