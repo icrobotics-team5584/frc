@@ -7,10 +7,13 @@
 
 #pragma once
 
-#include <frc/commands/Subsystem.h>
-#include<frc/WPILib.h>
+#include<frc/commands/Subsystem.h>
+#include<frc/Drive/DifferentialDrive.h>
 #include<iostream>
+#include <frc/VictorSP.h>
 #include<ctre/Phoenix.h>
+#include <frc/SpeedControllerGroup.h>
+#include <frc/SpeedController.h>
 
 
 
@@ -19,12 +22,16 @@ class SubDriveBase : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
-  std::shared_ptr<WPI_TalonSRX>_srxFrontLeft;
-  std::shared_ptr<WPI_TalonSRX>_srxFrontRight;
-  std::shared_ptr<WPI_TalonSRX>_srxBackLeft;
-  std::shared_ptr<WPI_TalonSRX>_srxBackRight;
-  std::unique_ptr<frc::DifferentialDrive>DiffDrive;
+  std::shared_ptr<frc::SpeedController> _srxFrontLeft;
+  std::shared_ptr<frc::SpeedController> _srxFrontRight;
+  std::shared_ptr<frc::SpeedController>_srxBackLeft;
+  std::shared_ptr<frc::SpeedController> _srxBackRight;
+  std::unique_ptr<frc::DifferentialDrive> DiffDrive;
   
+  std::unique_ptr<frc::SpeedControllerGroup> LeftGroup;
+  std::unique_ptr<frc::SpeedControllerGroup> RightGroup;
+
+
 
  public:
   SubDriveBase();

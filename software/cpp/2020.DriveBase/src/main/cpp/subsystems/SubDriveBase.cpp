@@ -7,18 +7,20 @@
 
 #include "subsystems/SubDriveBase.h"
 #include "commands/CmdDrive.h"
+#include "frc/SmartDashboard/SmartDashboard.h"
 
-SubDriveBase::SubDriveBase() : Subsystem("SubDrivebBase") 
+
+SubDriveBase::SubDriveBase() : Subsystem("SubDrivebBase")
 {
   //Talon
 
   _srxFrontLeft.reset(new WPI_TalonSRX(1));
-  _srxFrontRight.reset(new WPI_TalonSRX(3));
+  _srxFrontRight.reset(new frc::VictorSP(3));
   _srxBackLeft.reset(new WPI_TalonSRX(2));
-  _srxBackRight.reset(new WPI_TalonSRX(4));
-  _srxBackLeft->Follow(*_srxFrontLeft);
-  _srxBackRight->Follow(*_srxFrontRight);
+  _srxBackRight.reset(new frc::VictorSP(4));
 
+  LeftGroup.reset(new frc::SpeedControllerGroup(*_srxBackLeft, *_srxFrontLeft));
+  RightGroup.reset(new frc::SpeedControllerGroup(*_srxBackRight, *_srxFrontRight));
   //Diff Drive
 
   SubDriveBase::DiffDrive.reset(new frc::DifferentialDrive(*_srxFrontLeft, *_srxFrontRight));
