@@ -6,6 +6,14 @@
 /*----------------------------------------------------------------------------*/
 
 #pragma once
+enum Can {
+    can_srxDriveBaseFrontLeft = 1,
+    can_srxDriveBaseBackLeft = 2,
+    can_srxDriveBaseFrontRight = 3,
+    can_srxDriveBaseBackRight = 4,
+};
+
+
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into

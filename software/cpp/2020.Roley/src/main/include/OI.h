@@ -7,7 +7,16 @@
 
 #pragma once
 
+#include <iostream>
+#include "frc/Joystick.h"
+
+
 class OI {
  public:
   OI();
+  double getJoystickX();
+  double getJoystickY();
+ private:
+ std::unique_ptr<frc::Joystick> joystick1;
+
 };
