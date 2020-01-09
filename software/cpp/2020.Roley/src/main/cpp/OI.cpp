@@ -7,6 +7,30 @@
 
 #include "OI.h"
 
+#include "commands/CmdIntake.h"
+#include "commands/CmdOuttake.h"
+
 OI::OI() {
-  // Process operator interface input here.
+  std::cout<< "OI Started" << std::endl;
+
+  joystick1.reset(new frc::Joystick(0));
+
+  std::cout<< "1" << std::endl;
+
+  btnIntake.reset(new frc::JoystickButton(joystick1.get(), leftBtn));
+
+  std::cout<< "2" << std::endl;
+
+  btnOuttake.reset(new frc::JoystickButton(joystick1.get(), rightBtn));
+
+  std::cout<< "3" << std::endl;
+
+
+  btnIntake->WhileHeld(new CmdIntake());
+
+  std::cout<< "4" << std::endl;
+
+  btnOuttake->WhileHeld(new CmdOuttake());
+
+  std::cout<< "OI Ended" << std::endl;
 }

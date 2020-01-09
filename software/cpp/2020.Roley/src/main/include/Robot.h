@@ -16,10 +16,12 @@
 #include "commands/MyAutoCommand.h"
 #include "subsystems/ExampleSubsystem.h"
 
+#include "subsystems/SubIntake.h"
+
 class Robot : public frc::TimedRobot {
  public:
   static ExampleSubsystem m_subsystem;
-  static OI m_oi;
+  static std::unique_ptr<OI> m_oi;
 
   void RobotInit() override;
   void RobotPeriodic() override;
@@ -30,6 +32,8 @@ class Robot : public frc::TimedRobot {
   void TeleopInit() override;
   void TeleopPeriodic() override;
   void TestPeriodic() override;
+
+  static std::unique_ptr<SubIntake> subIntake;
 
  private:
   // Have it null by default so that if testing teleop it
