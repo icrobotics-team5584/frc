@@ -6,7 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/SubDriveBase.h"
-
+#include "commands/CmdJoystickDrive.h"
 
 SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   //motors
@@ -24,7 +24,7 @@ void SubDriveBase::InitDefaultCommand() {
 
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
-  //SetDefaultCommand(new CmdJoystickDrive());
+  SetDefaultCommand(new CmdJoystickDrive());
 }
 
 void SubDriveBase::drive(double speed, double rotation){
