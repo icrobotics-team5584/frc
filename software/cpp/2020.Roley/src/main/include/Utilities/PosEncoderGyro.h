@@ -11,6 +11,7 @@ public:
     double getAngle();
     void setPosition(double x, double y);
     void reset();
+    void updatePosition();
 
 private:
     Position currentPosition;

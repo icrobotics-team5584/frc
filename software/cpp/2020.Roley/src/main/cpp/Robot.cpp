@@ -31,7 +31,7 @@ void Robot::RobotPeriodic() {
 
   frc::SmartDashboard::PutNumber("Joy x", m_oi.getJoystickX());
   frc::SmartDashboard::PutNumber("Joy y", m_oi.getJoystickY());
-  posEncoderGyro.getPosition();
+  posEncoderGyro->updatePosition();
 }
 
 /**
@@ -70,6 +70,7 @@ void Robot::AutonomousInit() {
 void Robot::AutonomousPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::TeleopInit() {
+  posEncoderGyro->reset();
   // This makes sure that the autonomous stops running when
   // teleop starts running. If you want the autonomous to
   // continue until interrupted by another command, remove
