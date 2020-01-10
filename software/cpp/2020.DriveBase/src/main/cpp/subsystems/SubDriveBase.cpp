@@ -6,16 +6,22 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/SubDriveBase.h"
-#include "commands/CmdJoystickDrive.h"
+#include "commands/CmdDrive.h"
+#include "frc/SmartDashboard/SmartDashboard.h"
 
-SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
-  //motors
-  _srxFrontLeft.reset(new WPI_TalonSRX(can_srxDriveBaseFrontLeft));
-  _srxFrontRight.reset(new WPI_TalonSRX(can_srxDriveBaseFrontRight));
-  _srxBackLeft.reset(new WPI_TalonSRX(can_srxDriveBaseBackLeft));
-  _srxBackRight.reset(new WPI_TalonSRX(can_srxDriveBaseBackRight));
-  _srxBackLeft->Follow(*_srxFrontLeft);
-  _srxBackRight->Follow(*_srxFrontRight);
+
+SubDriveBase::SubDriveBase() : Subsystem("SubDrivebBase")
+{
+  //Talon
+
+  _srxFrontLeft.reset(new WPI_TalonSRX(1));
+  _srxFrontRight.reset(new frc::VictorSP(3));
+  _srxBackLeft.reset(new WPI_TalonSRX(2));
+  _srxBackRight.reset(new frc::VictorSP(4));
+
+  LeftGroup.reset(new frc::SpeedControllerGroup(*_srxBackLeft, *_srxFrontLeft));
+  RightGroup.reset(new frc::SpeedControllerGroup(*_srxBackRight, *_srxFrontRight));
+  //Diff Drive
 
   SubDriveBase::DiffDrive.reset(new frc::DifferentialDrive(*_srxFrontLeft, *_srxFrontRight));
 }
@@ -23,14 +29,20 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
 void SubDriveBase::InitDefaultCommand() {
 
   // Set the default command for a subsystem here.
-  // SetDefaultCommand(new MySpecialCommand());
-  SetDefaultCommand(new CmdJoystickDrive());
+  SetDefaultCommand(new CmdDrive());
 }
 
-void SubDriveBase::drive(double speed, double rotation){
+
+
+// Put methods for controlling this subsystem
+// here. Call these from Commands.
+
+
+
+//Drive
+
+void SubDriveBase::Drive(double speed, double rotation){
   frc::SmartDashboard::PutNumber("speed", speed);
   frc::SmartDashboard::PutNumber("rot", rotation);
   DiffDrive->ArcadeDrive(speed, rotation);
 }
-// Put methods for controlling this subsystem
-// here. Call these from Commands.

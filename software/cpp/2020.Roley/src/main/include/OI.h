@@ -42,9 +42,10 @@ enum Triggers {
 class OI {
  public:
   OI();
-
-  std::shared_ptr<frc::Joystick> joystick1;
-
+  double getJoystickX();
+  double getJoystickY();
+ private:
+  std::unique_ptr<frc::Joystick> joystick1;
   std::unique_ptr<frc::JoystickButton> btnIntake;
   std::unique_ptr<frc::JoystickButton> btnOuttake;
 };

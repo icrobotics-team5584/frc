@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
+/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -10,16 +10,11 @@
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
-
-
-std::unique_ptr<SubIntake> Robot::subIntake;
 std::shared_ptr<SubDriveBase> Robot::subDriveBase;
-
 OI Robot::m_oi;
 
 void Robot::RobotInit() {
   subDriveBase.reset(new SubDriveBase());
-  subIntake.reset(new SubIntake);
 }
 
 /**
@@ -31,9 +26,10 @@ void Robot::RobotInit() {
  * LiveWindow and SmartDashboard integrated updating.
  */
 void Robot::RobotPeriodic() {
-
   frc::SmartDashboard::PutNumber("Joy x", m_oi.getJoystickX());
   frc::SmartDashboard::PutNumber("Joy y", m_oi.getJoystickY());
+
+
 }
 
 /**
@@ -64,7 +60,6 @@ void Robot::AutonomousInit() {
   // } else {
   //   m_autonomousCommand = &m_defaultAuto;
   // }
-
 
 
 }
