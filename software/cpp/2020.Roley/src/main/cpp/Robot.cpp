@@ -11,7 +11,9 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 std::shared_ptr<SubDriveBase> Robot::subDriveBase;
+std::shared_ptr<SubShooter> Robot::subShooter;
 OI Robot::m_oi;
+
 
 void Robot::RobotInit() {
   subDriveBase.reset(new SubDriveBase());

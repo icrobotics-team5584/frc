@@ -12,11 +12,13 @@
 #include <frc/smartdashboard/SendableChooser.h>
 
 #include "OI.h"
+#include "subsystems/SubShooter.h"
 #include "subsystems/SubDriveBase.h"
 
 class Robot : public frc::TimedRobot {
  public:
   static OI m_oi;
+  static std::shared_ptr<SubShooter> subShooter;
   static std::shared_ptr<SubDriveBase> subDriveBase;
 
   void RobotInit() override;
