@@ -17,7 +17,7 @@ SubIntake::SubIntake() : Subsystem("ExampleSubsystem") {
 	srxIntake->ConfigContinuousCurrentLimit(0.01, 30); //(set current to, timeout)
 	srxIntake->EnableCurrentLimit(true);
 
-  frc::SmartDashboard::PutNumber("Intake Speed", 0);
+  frc::SmartDashboard::PutNumber("Intake Speed", 0.4);
 }
 
 void SubIntake::InitDefaultCommand() {
@@ -43,5 +43,5 @@ void SubIntake::Stop() {
 void SubIntake::Periodic()
 {
   frc::SmartDashboard::PutNumber("Intake Current", srxIntake->GetOutputCurrent());
-  _speed = frc::SmartDashboard::GetNumber("Intake Speed", 0);
+  _speed = frc::SmartDashboard::GetNumber("Intake Speed", 0.4);
 }
