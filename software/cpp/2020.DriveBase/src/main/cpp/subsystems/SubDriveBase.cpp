@@ -19,7 +19,7 @@ SubDriveBase::SubDriveBase() : Subsystem("SubDrivebBase")
   _srxBackLeft->Follow(*_srxFrontLeft);
   _srxBackRight->Follow(*_srxFrontRight);
 
-  //Diff Drive
+
 
   SubDriveBase::DiffDrive.reset(new frc::DifferentialDrive(*_srxFrontLeft, *_srxFrontRight));
 }

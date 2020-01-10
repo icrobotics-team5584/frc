@@ -23,8 +23,8 @@ class SubDriveBase : public frc::Subsystem {
   std::shared_ptr<WPI_TalonSRX>_srxFrontRight;
   std::shared_ptr<WPI_TalonSRX>_srxBackLeft;
   std::shared_ptr<WPI_TalonSRX>_srxBackRight;
-  std::unique_ptr<frc::DifferentialDrive>DiffDrive;
   
+  std::unique_ptr<frc::DifferentialDrive>DiffDrive;
 
  public:
   SubDriveBase();
