@@ -14,6 +14,7 @@
 #include "frc/commands/Subsystem.h"
 #include "frc/smartdashboard/SmartDashboard.h"
 #include <AHRS.h>
+#include "Utilities/PosEncoderGyro.h"
 using namespace std;
 class SubDriveBase : public frc::Subsystem {
  private:
@@ -45,4 +46,5 @@ class SubDriveBase : public frc::Subsystem {
   double getYaw();
   double getDistanceTravelled();
   void zeroEncoders();
+  void autoEncoderDrive(double target);
 };

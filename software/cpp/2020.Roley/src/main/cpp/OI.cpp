@@ -6,12 +6,14 @@
 /*----------------------------------------------------------------------------*/
 
 #include "OI.h"
-
+#include "Commands/CmdAutoEncoderDrive.h"
 
 
 OI::OI() {
   // Process operator interface input here.
   joystick1.reset(new frc::Joystick(0));
+  btnAuto.reset(new frc::JoystickButton(joystick1.get(), 1));
+  btnAuto->WhileHeld(new CmdAutoEncoderDrive());
 
 }
 

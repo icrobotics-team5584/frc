@@ -7,7 +7,7 @@
 
 #include "subsystems/SubDriveBase.h"
 #include "commands/CmdJoystickDrive.h"
-
+#include "Robot.h"
 SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   //motors
   _srxFrontLeft.reset(new WPI_TalonSRX(can_srxDriveBaseFrontLeft));
@@ -50,6 +50,24 @@ double SubDriveBase::getDistanceTravelled(){
   double wheelRotations = encoderTics / ENCODER_TICS_PER_ROTATION;
   double distance = wheelRotations * metersPerRotation;
   return distance;  
+}
+
+void SubDriveBase::autoEncoderDrive(double target){
+  double error;
+  double position;
+  position = Robot::posEncoderGyro->getPosition().x;
+  SmartDashboard::PutNumber("position", position);
+  error = position - target;
+  SmartDashboard::PutNumber("error", error);
+  if (error < -1){
+    error = -1;
+  }
+  if (error > 1){
+    error = 1;
+  }
+  SmartDashboard::PutNumber("error2", error);
+  DiffDrive->ArcadeDrive(0.5, -1.3*error, false);
+  std::cout << "auto stuff" << std::endl;
 }
 
 // Put methods for controlling this subsystem
