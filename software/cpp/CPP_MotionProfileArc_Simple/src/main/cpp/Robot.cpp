@@ -53,8 +53,10 @@ void Robot::RobotInit()
     _plotThread = new PlotThread(_rightMaster);
 
     /* Initialize buffer with motion profile */
+    InitBuffer(kMotionProfile, kMotionProfileSz, 1.0); //Do a full (1.0) rotation to the left
+//    InitBuffer(kMotionProfile, kMotionProfileSz, 0.5); //Do a half (0.5) rotation to the left
 //    InitBuffer(kMotionProfile, kMotionProfileSz, 0.25); //Do a quarter (0.25) rotation to the left
-    InitBuffer(kMotionProfile, kMotionProfileSz, 0.0); //No rotation
+//    InitBuffer(kMotionProfile, kMotionProfileSz, 0.0); //No rotation
     _state = 0;
 
 
