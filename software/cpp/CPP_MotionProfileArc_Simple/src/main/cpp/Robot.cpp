@@ -53,7 +53,8 @@ void Robot::RobotInit()
     _plotThread = new PlotThread(_rightMaster);
 
     /* Initialize buffer with motion profile */
-    InitBuffer(kMotionProfile, kMotionProfileSz, 0.25); //Do a quarter (0.25) rotation to the left
+//    InitBuffer(kMotionProfile, kMotionProfileSz, 0.25); //Do a quarter (0.25) rotation to the left
+    InitBuffer(kMotionProfile, kMotionProfileSz, 0.0); //No rotation
     _state = 0;
 
 
@@ -63,16 +64,23 @@ void Robot::RobotInit()
     _rightMaster->ConfigAllSettings(*_masterConfig);
     _leftMaster->ConfigAllSettings(*_followConfig);
 
+    // note that sensor phase needs to be set here so that SensorSum
+    // increases by approximately 8192u when we push the robot forward
     _rightMaster->SetSensorPhase(false);
-    _leftMaster->SetSensorPhase(true);
+    _leftMaster->SetSensorPhase(false);
 
+    // if need be, invert one or other side of robot
     _rightMaster->SetInverted(false);
     _leftMaster->SetInverted(true);
 
-    // _rightSlave->SetInverted(InvertType::FollowMaster);
-    // _leftSlave->SetInverted(InvertType::FollowMaster);
+    // these should be set to the same as masters
     _rightSlave->SetInverted(false);
     _leftSlave->SetInverted(true);
+
+    // set these to sensible value here so that we can see whats going
+    // on when we manually push robot around during setup
+    _rightMaster->GetSensorCollection().SetQuadraturePosition(0);
+    _leftMaster->GetSensorCollection().SetQuadraturePosition(0);
 
     _rightMaster->SetStatusFramePeriod(StatusFrameEnhanced::Status_14_Turn_PIDF1, 20); //Telemetry using Phoenix Tuner
 }
@@ -87,7 +95,7 @@ void Robot::TeleopPeriodic()
     bool bPrintValues = _joystick->GetRawButton(2);
     bool bFireMp = _joystick->GetRawButton(1);
     double axis = -_joystick->GetRawAxis(1);
-    double turn = _joystick->GetRawAxis(2);
+    double turn = _joystick->GetRawAxis(0);
 
     /* if button is up, just drive the motor in PercentOutput */
     if (bFireMp == false) {
@@ -99,6 +107,7 @@ void Robot::TeleopPeriodic()
         case 0:
             _rightMaster->Set(ControlMode::PercentOutput, axis, DemandType_ArbitraryFeedForward, -turn);
             _leftMaster->Set(ControlMode::PercentOutput, axis, DemandType_ArbitraryFeedForward, turn);
+
             if (bFireMp == true) {
                 /* go to MP logic */
                 _state = 1;
