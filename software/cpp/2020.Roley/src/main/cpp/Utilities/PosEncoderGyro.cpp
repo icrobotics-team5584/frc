@@ -10,8 +10,8 @@ PosEncoderGyro::PosEncoderGyro() {
 /*
  * Determines the robot's current position as represented by an x and y value
  */
-Position PosEncoderGyro::getPosition() {
-    return currentPosition;
+double PosEncoderGyro::getPositionx() {
+    return currentPosition.x;
 }
 
 double PosEncoderGyro::getAngle() {

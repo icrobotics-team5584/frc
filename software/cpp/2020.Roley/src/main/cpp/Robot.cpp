@@ -9,14 +9,19 @@
 
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
-
 std::shared_ptr<SubDriveBase> Robot::subDriveBase;
 std::shared_ptr<PosEncoderGyro> Robot::posEncoderGyro;
+std::shared_ptr<CmdResetGyro> Robot::cmdResetGyro;
 OI Robot::m_oi;
 
 void Robot::RobotInit() {
   subDriveBase.reset(new SubDriveBase());
   posEncoderGyro.reset(new PosEncoderGyro());
+  cmdResetGyro.reset(new CmdResetGyro());
+  posEncoderGyro->reset();
+  cmdResetGyro->Run();
+
+  std::cout << "robot init" << std::endl;
 }
 
 /**
@@ -32,6 +37,8 @@ void Robot::RobotPeriodic() {
   frc::SmartDashboard::PutNumber("Joy x", m_oi.getJoystickX());
   frc::SmartDashboard::PutNumber("Joy y", m_oi.getJoystickY());
   posEncoderGyro->updatePosition();
+
+
 }
 
 /**
@@ -62,20 +69,15 @@ void Robot::AutonomousInit() {
   // } else {
   //   m_autonomousCommand = &m_defaultAuto;
   // }
-  
-
-
 }
 
 void Robot::AutonomousPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::TeleopInit() {
-  posEncoderGyro->reset();
   // This makes sure that the autonomous stops running when
   // teleop starts running. If you want the autonomous to
   // continue until interrupted by another command, remove
   // this line or comment it out.
-
 }
 
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }

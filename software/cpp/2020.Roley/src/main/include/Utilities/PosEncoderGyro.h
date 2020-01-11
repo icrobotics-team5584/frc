@@ -4,10 +4,10 @@
 #include "Utilities/Position.h"
 
 using namespace std;
-class PosEncoderGyro : public PositionSource {
+class PosEncoderGyro {
 public:
     PosEncoderGyro();
-    Position getPosition();
+    double getPositionx();
     double getAngle();
     void setPosition(double x, double y);
     void reset();

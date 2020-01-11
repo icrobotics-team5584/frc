@@ -38,13 +38,22 @@ class SubDriveBase : public frc::Subsystem {
   const double pi = 3.1415926535897932384626433832795028841971693993751;
   double metersPerRotation; // calculated in constructor
   
-
+// PID Values
+  double Kp = -0.5;
+  double Ki = 0.0;
+  double Kd = -50.0;
+  double previousError;
+  double intergral = 0;
+  double AutoSpeed = 0.8;
  public:
   SubDriveBase();
   void InitDefaultCommand() override;
-  void drive(double speed, double rotation);
+  void drive(double speed, double rotation, bool squaredInputs = true);
   double getYaw();
   double getDistanceTravelled();
   void zeroEncoders();
   void autoEncoderDrive(double target);
+  void resetYaw();
+  void Periodic() override;
+  bool isNavxCal();
 };

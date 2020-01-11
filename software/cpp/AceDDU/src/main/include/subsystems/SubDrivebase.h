@@ -36,7 +36,7 @@ class SubDrivebase : public frc::Subsystem, public frc::PIDOutput{
   int get_RightEncoder();
   int get_LeftEncoder();
   void resetEncoders();
-
+  void resetYaw();
   /*
   Left = talon 3
   Right = talon 4

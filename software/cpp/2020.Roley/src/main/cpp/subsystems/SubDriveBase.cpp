@@ -29,10 +29,17 @@ void SubDriveBase::InitDefaultCommand() {
   SetDefaultCommand(new CmdJoystickDrive());
 }
 
-void SubDriveBase::drive(double speed, double rotation){
+void SubDriveBase::Periodic(){
+  SmartDashboard::PutNumber("yaw", ahrsNavXGyro->GetYaw());
+  if(ahrsNavXGyro->IsCalibrating()){
+    std::cout << "navx calibrating" << std::endl;
+  };
+}
+
+void SubDriveBase::drive(double speed, double rotation, bool squaredInputs){
   frc::SmartDashboard::PutNumber("speed", speed);
   frc::SmartDashboard::PutNumber("rot", rotation);
-  DiffDrive->ArcadeDrive(speed, rotation);
+  DiffDrive->ArcadeDrive(speed, rotation, squaredInputs);
 }
 
 double SubDriveBase::getYaw(){
@@ -42,11 +49,11 @@ double SubDriveBase::getYaw(){
 void SubDriveBase::zeroEncoders(){
   _srxFrontLeft->SetSelectedSensorPosition(0, 0);
   _srxFrontRight->SetSelectedSensorPosition(0, 0);
-
+  _srxBackRight->SetSelectedSensorPosition(0, 0);
 }
 
 double SubDriveBase::getDistanceTravelled(){
-  double encoderTics = _srxAutoXAxis->GetSelectedSensorPosition(0);
+  double encoderTics = _srxBackRight->GetSelectedSensorPosition(0);
   double wheelRotations = encoderTics / ENCODER_TICS_PER_ROTATION;
   double distance = wheelRotations * metersPerRotation;
   return distance;  
@@ -55,9 +62,11 @@ double SubDriveBase::getDistanceTravelled(){
 void SubDriveBase::autoEncoderDrive(double target){
   double error;
   double position;
-  position = Robot::posEncoderGyro->getPosition().x;
+  position = Robot::posEncoderGyro->getPositionx();
   SmartDashboard::PutNumber("position", position);
-  error = position - target;
+  intergral = intergral + (position - target);
+  error = Kp*(position - target) + Ki*(intergral) + Kd*((position - target) - previousError);
+  previousError = position - target;
   SmartDashboard::PutNumber("error", error);
   if (error < -1){
     error = -1;
@@ -65,10 +74,21 @@ void SubDriveBase::autoEncoderDrive(double target){
   if (error > 1){
     error = 1;
   }
+  //if(ahrsNavXGyro->GetYaw() > 90 || ahrsNavXGyro->GetYaw() < -90){
+  //  error = 0;
+  //}
   SmartDashboard::PutNumber("error2", error);
-  DiffDrive->ArcadeDrive(0.5, -1.3*error, false);
+
+  drive(AutoSpeed, error, false);
   std::cout << "auto stuff" << std::endl;
 }
 
+void SubDriveBase::resetYaw(){
+  ahrsNavXGyro->ZeroYaw();
+}
+
+bool SubDriveBase::isNavxCal(){
+  return ahrsNavXGyro->IsCalibrating();
+}
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
