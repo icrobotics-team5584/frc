@@ -5,34 +5,33 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdShooterShoot.h"
+#include "commands/CmdRollStorage.h"
 #include "Robot.h"
 
-CmdShooterShoot::CmdShooterShoot() {
-  Requires(Robot::subShooter.get());
+CmdRollStorage::CmdRollStorage() {
+  Requires(Robot::subStorage.get());
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
 }
 
 // Called just before this Command runs the first time
-void CmdShooterShoot::Initialize() {
-  Robot::subShooter->Shoot();
+void CmdRollStorage::Initialize() {
+  Robot::subStorage->Forward();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdShooterShoot::Execute() {
-}
+void CmdRollStorage::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdShooterShoot::IsFinished() { return false; }
+bool CmdRollStorage::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdShooterShoot::End() {
-  Robot::subShooter->Stop();
+void CmdRollStorage::End() {
+  Robot::subStorage->Stop();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdShooterShoot::Interrupted() {
+void CmdRollStorage::Interrupted() {
   End();
 }

@@ -12,6 +12,7 @@
 
 std::shared_ptr<SubDriveBase> Robot::subDriveBase;
 std::shared_ptr<SubShooter> Robot::subShooter;
+std::shared_ptr<SubStorage> subStorage;
 OI Robot::m_oi;
 
 

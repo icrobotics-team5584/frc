@@ -7,13 +7,12 @@
 
 #pragma once
 
-#include "frc/drive/DifferentialDrive.h"
-#include<iostream>
-#include "RobotMap.h"
+#include <frc/drive/DifferentialDrive.h>
 #include <ctre/Phoenix.h>
-#include "frc/commands/Subsystem.h"
-#include "frc/smartdashboard/SmartDashboard.h"
+#include <frc/commands/Subsystem.h>
+
 using namespace std;
+
 class SubDriveBase : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
@@ -26,7 +25,6 @@ class SubDriveBase : public frc::Subsystem {
 
   unique_ptr<frc::DifferentialDrive> DiffDrive;
   
-
  public:
   SubDriveBase();
   void InitDefaultCommand() override;

@@ -9,6 +9,21 @@
 
 #include <iostream>
 #include "frc/Joystick.h"
+#include "frc/buttons/JoystickButton.h"
+
+
+enum Buttons {
+     aBtn = 1,
+     bBtn = 2,
+     xBtn = 3,
+     yBtn = 4,
+     leftBtn = 5,
+     rightBtn = 6,
+     backBtn = 7,
+     startBtn = 8,
+     leftStickBtn = 9,
+     rightStickBtn =10
+};
 
 
 class OI {
@@ -16,7 +31,11 @@ class OI {
   OI();
   double getJoystickX();
   double getJoystickY();
+  
+
  private:
  std::unique_ptr<frc::Joystick> joystick1;
-
+ std::unique_ptr<frc::JoystickButton> btnShoot;
+ std::unique_ptr<frc::JoystickButton> btnForward;
+ std::unique_ptr<frc::JoystickButton> btnBackward;
 };

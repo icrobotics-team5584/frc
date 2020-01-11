@@ -8,9 +8,6 @@
 #pragma once
 
 #include <frc/commands/Subsystem.h>
-#include "Robot.h"
-#include "RobotMap.h"
-#include <frc/WPILib.h>
 #include <ctre/Phoenix.h>
 
 class SubShooter : public frc::Subsystem {
@@ -18,7 +15,7 @@ class SubShooter : public frc::Subsystem {
   std::shared_ptr<WPI_TalonSRX> leftMotor;
   std::shared_ptr<WPI_TalonSRX> rightMotor;
 
-  double speed;
+  float speed = 0.5;
 
 
 
@@ -31,4 +28,7 @@ class SubShooter : public frc::Subsystem {
   SubShooter();
   void InitDefaultCommand() override;
   void Periodic() override;
+
+  void Shoot();
+  void Stop();
 };

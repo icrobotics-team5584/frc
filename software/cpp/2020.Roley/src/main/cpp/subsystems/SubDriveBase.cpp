@@ -7,6 +7,8 @@
 
 #include "subsystems/SubDriveBase.h"
 #include "commands/CmdJoystickDrive.h"
+#include "frc/smartdashboard/SmartDashboard.h"
+#include "RobotMap.h"
 
 SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   //motors

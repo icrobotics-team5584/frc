@@ -6,13 +6,20 @@
 /*----------------------------------------------------------------------------*/
 
 #include "OI.h"
+#include "commands/CmdShooterShoot.h"
+#include "commands/CmdRollStorage.h"
+#include "commands/CmdRollStorageBack.h"
 
 
 
 OI::OI() {
   // Process operator interface input here.
   joystick1.reset(new frc::Joystick(0));
+  btnShoot.reset(new frc::JoystickButton(joystick1.get(),aBtn));
 
+  btnShoot->WhileHeld(new CmdShooterShoot);
+  btnForward->WhileHeld(new CmdRollStorage);
+  btnBackward->WhileHeld(new CmdRollStorageBack);
 }
 
 double OI::getJoystickX(){

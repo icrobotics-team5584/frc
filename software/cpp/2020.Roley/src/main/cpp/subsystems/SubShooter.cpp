@@ -6,12 +6,14 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/SubShooter.h"
+#include "RobotMap.h"
+#include "frc/smartdashboard/SmartDashboard.h"
 
 SubShooter::SubShooter() : Subsystem("ExampleSubsystem") {}
 
 void SubShooter::InitDefaultCommand() {
-  leftMotor.reset(new WPI_TalonSRX(0));
-  rightMotor.reset(new WPI_TalonSRX(1));
+  leftMotor.reset(new WPI_TalonSRX(can_srxShooterLeft));
+  rightMotor.reset(new WPI_TalonSRX(can_srxShooterRight));
 
   leftMotor->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative);
   rightMotor->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative);
@@ -33,7 +35,18 @@ double SubShooter::GetRightRPM(){
 void SubShooter::Periodic(){
   frc::SmartDashboard::PutNumber("Right RPM",GetRightRPM());
   frc::SmartDashboard::PutNumber("Left RPM", GetLeftRPM());
+  speed = frc::SmartDashboard::GetNumber("Motor Speed", speed);
 }
 
+
+void SubShooter::Shoot(){
+  leftMotor->Set(speed);
+  rightMotor->Set(-speed);
+}
+
+void SubShooter::Stop(){
+  leftMotor->Set(0);
+  rightMotor->Set(-0);
+}
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
