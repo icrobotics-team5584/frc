@@ -152,6 +152,7 @@ for( $i = 0; $i < $steps; $i++ )
 # output the header file
 
 open( HDR, ">MotionProfile${ident}.h" );
+print HDR "#pragma once\n";
 print HDR "// COLUMN 1 = Position (rotations)\n";
 print HDR "// COLUMN 2 = Velocity (rpm)\n";
 print HDR "// COLUMN 3 = Duration (ms)\n";
