@@ -12,12 +12,27 @@
 SubIntake::SubIntake() : Subsystem("ExampleSubsystem") {
   srxIntake.reset(new TalonSRX(kIntakeMotor));
 
-  srxIntake->ConfigPeakCurrentLimit(0, 30); //(current limit, timeout)
-	srxIntake->ConfigPeakCurrentDuration(350, 30); //(time over limit to trigger, timeout)
-	srxIntake->ConfigContinuousCurrentLimit(0.01, 30); //(set current to, timeout)
+  // Setup current limiting. 
+  /* Notes on current limiting:
+   * - Current must go above PeakCurrentLimit for a number of milliseconds equal to 
+   *      PeakCurrentDuration, then current will be limited to ContinuousCurrentLimit.
+   * - Setting a value to zero will instead set it to 1
+   * - Values are in Amps and must be integers, not doubles
+   * - Adding a 2 second ramp rate with talon->ConfigOpenLoopRamp(...) will make the current curve 
+   *      look much more like what is expected. That is not used here though because it is desirable
+   *      for an intake to speed up quickly. (So the graph on shuffleboard might look odd.)
+   * - A timeout for sending these commands is an optional parameter, we did not use that
+   * - This will limit the INPUT CURRENT into the Talon, not the output current to the motor
+   * - Should always factory reset the talon settings first to avoid keeping old settings
+   * - Some example current curves and values are on the IC Google Drive under 2020>Software
+   */ 
+  srxIntake->ConfigFactoryDefault();
+  srxIntake->ConfigPeakCurrentLimit(0); //(current limit in amps(integer), timeout in milliseconds)
+	srxIntake->ConfigPeakCurrentDuration(0); //(time over limit to trigger in milliseconds, timeout in milliseconds)
+	srxIntake->ConfigContinuousCurrentLimit(1); //(amps(integer) to set current to, timeout in milliseconds)
 	srxIntake->EnableCurrentLimit(true);
 
-  frc::SmartDashboard::PutNumber("Intake Speed", 0.4);
+  frc::SmartDashboard::PutNumber("Intake Speed", kDefaultSpeed);
 }
 
 void SubIntake::InitDefaultCommand() {
@@ -40,8 +55,8 @@ void SubIntake::Stop() {
   srxIntake->Set(ControlMode::PercentOutput, 0);
 }
 
-void SubIntake::Periodic()
-{
+void SubIntake::Periodic() {
+  // Update intake speed from dashboard
   frc::SmartDashboard::PutNumber("Intake Current", srxIntake->GetOutputCurrent());
-  _speed = frc::SmartDashboard::GetNumber("Intake Speed", 0.4);
+  _speed = frc::SmartDashboard::GetNumber("Intake Speed", kDefaultSpeed);
 }

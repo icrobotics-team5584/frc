@@ -15,7 +15,8 @@ class SubIntake : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
-  double _speed;
+  const double kDefaultSpeed = 1;
+  double _speed = kDefaultSpeed;
   std::shared_ptr<TalonSRX> srxIntake;
 
  public:
