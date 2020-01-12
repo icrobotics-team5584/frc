@@ -19,7 +19,7 @@ void Robot::RobotInit() {
 
   //Setup network table
   nt::NetworkTableInstance ntTableInstance = nt::NetworkTableInstance::GetDefault();
-  ntTable = ntTableInstance.GetTable("datatable");
+  ntTable = ntTableInstance.GetTable("JETSON");
 }
 
 /**
@@ -34,6 +34,12 @@ void Robot::RobotPeriodic() {
   frc::SmartDashboard::PutNumber("Joy x", m_oi.getJoystickX());
   frc::SmartDashboard::PutNumber("Joy y", m_oi.getJoystickY());
 
+  //Put to SmartDashboard JETSON table values 
+  frc::SmartDashboard::PutNumber("TARGET_X", ntTable->GetNumber("pegx", 0));
+  frc::SmartDashboard::PutNumber("TARGET_Y", ntTable->GetNumber("pegy", 0));
+  frc::SmartDashboard::PutNumber("VISION_FPS", ntTable->GetNumber("fps", 0));
+  frc::SmartDashboard::PutNumber("VISION_STATUS", ntTable->GetNumber("status", 0));
+  frc::SmartDashboard::PutNumber("VISION_HITRATE", ntTable->GetNumber("hitrate", 0));
 
 }
 
