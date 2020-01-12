@@ -12,12 +12,14 @@
 
 std::shared_ptr<SubDriveBase> Robot::subDriveBase;
 std::shared_ptr<SubShooter> Robot::subShooter;
-std::shared_ptr<SubStorage> subStorage;
+std::shared_ptr<SubStorage> Robot::subStorage;
 OI Robot::m_oi;
 
 
 void Robot::RobotInit() {
   subDriveBase.reset(new SubDriveBase());
+  subShooter.reset(new SubShooter());
+  subStorage.reset(new SubStorage());
 }
 
 /**
