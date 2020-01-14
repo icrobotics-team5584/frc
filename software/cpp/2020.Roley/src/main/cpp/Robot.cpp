@@ -10,9 +10,9 @@
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
-std::shared_ptr<SubDriveBase> Robot::subDriveBase;
-std::shared_ptr<SubShooter> Robot::subShooter;
-std::shared_ptr<SubStorage> Robot::subStorage;
+std::unique_ptr<SubDriveBase> Robot::subDriveBase;
+std::unique_ptr<SubShooter> Robot::subShooter;
+std::unique_ptr<SubStorage> Robot::subStorage;
 OI Robot::m_oi;
 
 

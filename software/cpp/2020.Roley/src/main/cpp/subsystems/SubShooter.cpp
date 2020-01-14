@@ -9,14 +9,16 @@
 #include "RobotMap.h"
 #include "frc/smartdashboard/SmartDashboard.h"
 
-SubShooter::SubShooter() : Subsystem("ExampleSubsystem") {}
-
-void SubShooter::InitDefaultCommand() {
+SubShooter::SubShooter() : Subsystem("ExampleSubsystem") {
   leftMotor.reset(new WPI_TalonSRX(can_srxShooterLeft));
   rightMotor.reset(new WPI_TalonSRX(can_srxShooterRight));
 
   leftMotor->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative);
   rightMotor->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative);
+}
+
+void SubShooter::InitDefaultCommand() {
+
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
 }

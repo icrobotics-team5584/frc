@@ -8,10 +8,12 @@
 #include "subsystems/SubStorage.h"
 #include "RobotMap.h"
 
-SubStorage::SubStorage() : Subsystem("ExampleSubsystem") {}
+SubStorage::SubStorage() : Subsystem("ExampleSubsystem") {
+  Motor.reset(new frc::VictorSP(pwn_Storage));
+}
 
 void SubStorage::InitDefaultCommand() {
-  Motor.reset(new frc::VictorSP(pwn_Storage));
+  
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
 }

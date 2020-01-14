@@ -16,6 +16,8 @@ OI::OI() {
   // Process operator interface input here.
   joystick1.reset(new frc::Joystick(0));
   btnShoot.reset(new frc::JoystickButton(joystick1.get(),aBtn));
+  btnForward.reset(new frc::JoystickButton(joystick1.get(),xBtn));
+  btnBackward.reset(new frc::JoystickButton(joystick1.get(),yBtn));
 
   btnShoot->WhileHeld(new CmdShooterShoot);
   btnForward->WhileHeld(new CmdRollStorage);
