@@ -31,11 +31,13 @@ class OI {
   OI();
   double getJoystickX();
   double getJoystickY();
-  
 
- private:
- std::unique_ptr<frc::Joystick> joystick1;
+   std::unique_ptr<frc::Joystick> joystick1;
  std::unique_ptr<frc::JoystickButton> btnShoot;
  std::unique_ptr<frc::JoystickButton> btnForward;
  std::unique_ptr<frc::JoystickButton> btnBackward;
+  
+
+ private:
+
 };

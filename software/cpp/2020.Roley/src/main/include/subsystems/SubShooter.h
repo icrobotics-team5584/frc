@@ -12,10 +12,12 @@
 
 class SubShooter : public frc::Subsystem {
  private:
-  std::shared_ptr<WPI_TalonSRX> leftMotor;
-  std::shared_ptr<WPI_TalonSRX> rightMotor;
 
-  float speed = 0.5;
+
+
+  const int kTimeoutMs = 30;
+  const int	kSlotIdx = 0;
+  const int	kPIDLoopIdx = 0;
 
 
 
@@ -23,11 +25,13 @@ class SubShooter : public frc::Subsystem {
   // for methods that implement subsystem capabilities
 
  public:
+   std::shared_ptr<WPI_TalonSRX> leftMotor;
+  std::shared_ptr<WPI_TalonSRX> rightMotor;
+    double speed = 0.5;
   double GetLeftRPM();
   double GetRightRPM();
   SubShooter();
   void InitDefaultCommand() override;
-  void Periodic() override;
 
   void Shoot();
   void Stop();

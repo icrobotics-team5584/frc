@@ -19,7 +19,7 @@ OI::OI() {
   btnForward.reset(new frc::JoystickButton(joystick1.get(),xBtn));
   btnBackward.reset(new frc::JoystickButton(joystick1.get(),yBtn));
 
-  btnShoot->WhileHeld(new CmdShooterShoot);
+//  btnShoot->WhileHeld(new CmdShooterShoot);
   btnForward->WhileHeld(new CmdRollStorage);
   btnBackward->WhileHeld(new CmdRollStorageBack);
 }
