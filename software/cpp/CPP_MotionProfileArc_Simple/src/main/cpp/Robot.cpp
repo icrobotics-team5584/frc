@@ -153,7 +153,7 @@ void Robot::TeleopPeriodic()
 void Robot::TestInit() {}
 void Robot::TestPeriodic() {}
 
-void Robot::InitBuffer(const double profile[][3], int totalCnt, double rotations)
+void Robot::InitBuffer(const double profile[][4], int totalCnt, double rotations)
 {
     bool forward = true; // set to false to drive in opposite direction of profile (not really needed
                          // since you can use negative numbers in profile).
@@ -164,8 +164,7 @@ void Robot::InitBuffer(const double profile[][3], int totalCnt, double rotations
     /* clear the buffer, in case it was used elsewhere */
     _bufferedStream->Clear();
 
-    double turnAmount = rotations * 8192.0; //8192 units per rotation for a pigeon
-
+    // double turnAmount = rotations * 8192.0; //8192 units per rotation for a pigeon
 
     /* Insert every point into buffer, no limit on size */
     for (int i = 0; i < totalCnt; ++i) {
@@ -173,7 +172,8 @@ void Robot::InitBuffer(const double profile[][3], int totalCnt, double rotations
         double direction = forward ? +1 : -1;
         double positionRot = profile[i][0];
         double velocityRPM = profile[i][1];
-        int durationMilliseconds = (int) profile[i][2];
+        double headingDeg = profile[i][2];
+        int durationMilliseconds = (int) profile[i][3];
 
         /* for each point, fill our structure and pass it to API */
         point.timeDur = durationMilliseconds;
@@ -186,11 +186,10 @@ void Robot::InitBuffer(const double profile[][3], int totalCnt, double rotations
          * Here is where you specify the heading of the robot at each point. 
          * In this example we're linearly interpolating creating a segment of a circle to follow
          */
-        point.auxiliaryPos = turnAmount * ((double)i / (double)totalCnt); //Linearly interpolate the turn amount to do a circle
-
+        point.auxiliaryPos = ( headingDeg / 360.0 ) * 8192.0; //8192 units per rotation for a pigeon
+        
         point.auxiliaryVel = 0;
-
-
+        
         point.profileSlotSelect0 = 0; /* which set of gains would you like to use [0,3]? */
         point.profileSlotSelect1 = 1; /* which set of gains would you like to use [0,3]? */
         point.zeroPos = (i == 0); /* set this to true on the first point */
