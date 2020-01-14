@@ -14,20 +14,21 @@ my $vscodeprojectname = "CPP_MotionProfileArc_Simple";
 my $vscodeprojectpath = "src/main/include";
 my $deploy_header_files = 1;
 my $deploy_csv_files = 0;
+my $perl = "c:/Strawberry/perl/bin/perl.exe";
 
 #####################################################################################
 
 print "INFO: creating profiles using XML configuration\n";
 
-runcmd( "perl motionprofile.pl" );
+runcmd( "$perl motionprofile.pl" );
 
 print "INFO: creating graphs for MotionProfile run\n";
 
-runcmd( "perl motionprofile.graph.pl" );
+runcmd( "$perl motionprofile.graph.pl" );
 
 print "INFO: creating html document for all profiles\n";
 
-runcmd( "perl motionprofile.document.pl" );
+runcmd( "$perl motionprofile.document.pl" );
 
 #####################################################################################
 

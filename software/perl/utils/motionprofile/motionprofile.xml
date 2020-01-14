@@ -33,5 +33,10 @@
         <segment id="5" type="straight" direction="backwards" length="120"/>
       </path>
     </profile>
+    <profile name="MotionProfile">
+      <path>
+        <segment id="1" type="turn" direction="forwards" turn="left" angle="90" length="96"/>
+      </path>
+    </profile>
   </profiles>
 </config>
