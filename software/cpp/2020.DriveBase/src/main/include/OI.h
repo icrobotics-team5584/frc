@@ -9,7 +9,7 @@
 #pragma once
 
 #include <iostream>
-#include<frc/WPILib.h>
+#include <frc/Joystick.h>
 #include "subsystems/AxisButton.h"
 
  enum Triggers {

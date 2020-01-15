@@ -10,7 +10,7 @@
  */
 #pragma once
 
-#include <frc/wpilib.h>
+#include <frc/Joystick.h>
 #include <frc/Buttons/Trigger.h>
 
 using namespace frc;

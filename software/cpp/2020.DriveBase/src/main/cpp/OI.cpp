@@ -7,7 +7,7 @@
 
 #include "OI.h"
 
-#include <frc/WPILib.h>
+#include <frc/Joystick.h>
 
 #include "commands/CmdDriveSlowDown.h"
 

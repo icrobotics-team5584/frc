@@ -8,9 +8,11 @@
 #pragma once
 
 #include <frc/commands/Subsystem.h>
-#include<frc/WPILib.h>
 #include<iostream>
-#include<ctre/Phoenix.h>
+#include<ctre/phoenix.h>
+#include<frc/drive/DifferentialDrive.h>
+#include<frc/smartdashboard/SmartDashboard.h>
+
 
 
 
