@@ -17,6 +17,10 @@ class SubShooter : public frc::Subsystem {
   const int	kSlotIdx = 0;
   const int	kPIDLoopIdx = 0;
 
+  double SetP = 0;
+  double SetI = 0;
+  double SetD = 0;
+
 
 
   // It's desirable that everything possible under private except
