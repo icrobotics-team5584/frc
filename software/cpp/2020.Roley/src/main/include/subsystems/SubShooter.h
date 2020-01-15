@@ -13,8 +13,6 @@
 class SubShooter : public frc::Subsystem {
  private:
 
-
-
   const int kTimeoutMs = 30;
   const int	kSlotIdx = 0;
   const int	kPIDLoopIdx = 0;
@@ -33,6 +31,6 @@ class SubShooter : public frc::Subsystem {
   SubShooter();
   void InitDefaultCommand() override;
 
-  void Shoot();
+  void Shoot(double RPM);
   void Stop();
 };

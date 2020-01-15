@@ -61,14 +61,15 @@ double SubShooter::GetRightRPM(){
 
 
 
-void SubShooter::Shoot(){
-  leftMotor->Set(speed);
-  rightMotor->Set(-speed);
+void SubShooter::Shoot(double RPM){
+    double targetVelocity_UnitsPer100ms = RPM * 4096 / 600  ;
+    leftMotor->Set(ControlMode::Velocity, targetVelocity_UnitsPer100ms); 
+    rightMotor->Set(ControlMode::Velocity, -targetVelocity_UnitsPer100ms);
 }
 
 void SubShooter::Stop(){
   leftMotor->Set(0);
-  rightMotor->Set(-0);
+  rightMotor->Set(0);
 }
 // Put methods for controlling this subsystem
 // here. Call these from Commands.

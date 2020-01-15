@@ -9,6 +9,7 @@
 
 #include <frc/commands/Command.h>
 
+
 class CmdShooterShoot : public frc::Command {
  public:
   CmdShooterShoot();
@@ -17,4 +18,6 @@ class CmdShooterShoot : public frc::Command {
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+ private:
+  double SetRPM = 1200;
 };

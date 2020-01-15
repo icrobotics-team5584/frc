@@ -38,10 +38,6 @@ void Robot::RobotPeriodic() {
   subShooter->speed = frc::SmartDashboard::GetNumber("Motor Speed", subShooter->speed);
   frc::SmartDashboard::PutNumber("Motor Speed", subShooter->speed);
 
-  RPM = frc::SmartDashboard::GetNumber("RPM", RPM);
-  frc::SmartDashboard::PutNumber("RPM", RPM);
-
-
   frc::SmartDashboard::PutNumber("Joy x", m_oi.getJoystickX());
   frc::SmartDashboard::PutNumber("Joy y", m_oi.getJoystickY());
   
@@ -91,11 +87,6 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() { 
-
-    double targetVelocity_UnitsPer100ms = RPM * 4096 / 600  ;
-    subShooter->leftMotor->Set(ControlMode::Velocity, targetVelocity_UnitsPer100ms); 
-    subShooter->rightMotor->Set(ControlMode::Velocity, -targetVelocity_UnitsPer100ms+80);
-  
   
   frc::Scheduler::GetInstance()->Run(); 
   }

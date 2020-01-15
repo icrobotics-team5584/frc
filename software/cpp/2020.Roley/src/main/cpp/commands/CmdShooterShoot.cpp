@@ -16,11 +16,18 @@ CmdShooterShoot::CmdShooterShoot() {
 
 // Called just before this Command runs the first time
 void CmdShooterShoot::Initialize() {
-  Robot::subShooter->Shoot();
+  
+
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdShooterShoot::Execute() {
+
+  SetRPM = frc::SmartDashboard::GetNumber("RPM", SetRPM);
+  frc::SmartDashboard::PutNumber("RPM", SetRPM);
+
+  Robot::subShooter->Shoot(SetRPM);
+
 }
 
 // Make this return true when this Command no longer needs to run execute()
