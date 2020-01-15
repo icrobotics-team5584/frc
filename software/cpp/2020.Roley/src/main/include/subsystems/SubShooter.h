@@ -20,6 +20,9 @@ class SubShooter : public frc::Subsystem {
   double SetP = 0;
   double SetI = 0;
   double SetD = 0;
+  double SetF = 0;
+  
+  double percentage = 0;
 
 
 
@@ -35,6 +38,6 @@ class SubShooter : public frc::Subsystem {
   SubShooter();
   void InitDefaultCommand() override;
 
-  void Shoot(double RPM);
+  void Shoot();
   void Stop();
 };

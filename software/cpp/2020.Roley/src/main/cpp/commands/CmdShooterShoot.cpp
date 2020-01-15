@@ -22,11 +22,7 @@ void CmdShooterShoot::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdShooterShoot::Execute() {
-
-  SetRPM = frc::SmartDashboard::GetNumber("RPM", SetRPM);
-  frc::SmartDashboard::PutNumber("RPM", SetRPM);
-
-  Robot::subShooter->Shoot(SetRPM);
+  Robot::subShooter->Shoot();
 
 }
 
