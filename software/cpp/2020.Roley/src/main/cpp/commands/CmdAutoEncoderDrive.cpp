@@ -19,7 +19,7 @@ void CmdAutoEncoderDrive::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void CmdAutoEncoderDrive::Execute() {
-  Robot::subDriveBase->autoEncoderDrive(0);
+  Robot::subDriveBase->autoEncoderDrive(-1.7);
 }
 
 // Make this return true when this Command no longer needs to run execute()

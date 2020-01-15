@@ -22,10 +22,13 @@ void CmdResetGyro::Initialize() {
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdResetGyro::Execute() {}
+void CmdResetGyro::Execute() {
+  std::cout << "reset yaw execute" << std::endl;
+}
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdResetGyro::IsFinished() {
+  std::cout << !Robot::subDriveBase->isNavxCal() << std::endl;
   return !Robot::subDriveBase->isNavxCal();
 }
 

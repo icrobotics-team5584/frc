@@ -19,8 +19,10 @@ void Robot::RobotInit() {
   posEncoderGyro.reset(new PosEncoderGyro());
   cmdResetGyro.reset(new CmdResetGyro());
   posEncoderGyro->reset();
-  cmdResetGyro->Run();
-
+  //enable cmd yaw to be run without being cancelled
+  cmdResetGyro->SetRunWhenDisabled(true);
+  //runs a cmd that waits for th navx to stop calibrating then resets gyro
+  cmdResetGyro->Start();
   std::cout << "robot init" << std::endl;
 }
 

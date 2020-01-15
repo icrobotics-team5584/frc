@@ -16,7 +16,11 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   _srxBackRight.reset(new WPI_TalonSRX(can_srxDriveBaseBackRight));
   _srxBackLeft->Follow(*_srxFrontLeft);
   _srxBackRight->Follow(*_srxFrontRight);
+
   ahrsNavXGyro.reset(new AHRS(SPI::kMXP));
+  //enables the yaw to be reset
+  ahrsNavXGyro->EnableBoardlevelYawReset(true);
+
   _srxAutoXAxis.reset(new WPI_TalonSRX(can_srxDriveBaseAutoDolly));
   SubDriveBase::DiffDrive.reset(new frc::DifferentialDrive(*_srxFrontLeft, *_srxFrontRight));
   metersPerRotation = pi * WHEEL_DIAMETER;
@@ -64,6 +68,8 @@ void SubDriveBase::autoEncoderDrive(double target){
   double position;
   position = Robot::posEncoderGyro->getPositionx();
   SmartDashboard::PutNumber("position", position);
+  SmartDashboard::PutNumber("trench position", position + 1.7);
+
   intergral = intergral + (position - target);
   error = Kp*(position - target) + Ki*(intergral) + Kd*((position - target) - previousError);
   previousError = position - target;
@@ -74,12 +80,12 @@ void SubDriveBase::autoEncoderDrive(double target){
   if (error > 1){
     error = 1;
   }
-  //if(ahrsNavXGyro->GetYaw() > 90 || ahrsNavXGyro->GetYaw() < -90){
-  //  error = 0;
-  //}
+  if((ahrsNavXGyro->GetYaw() < -90 && error < 0) || (ahrsNavXGyro->GetYaw() > 90 && error > 0)){
+    error = 0;
+  }
   SmartDashboard::PutNumber("error2", error);
 
-  drive(AutoSpeed, error, false);
+  drive(-AutoSpeed, error, false);
   std::cout << "auto stuff" << std::endl;
 }
 
