@@ -78,14 +78,30 @@ sub processprofilesegments
   {
   my ( $ident, $segments ) = @_;
   
-  # extract control parameters from config hash ...
+  # extract profile direction
+  my $dir = $config->{'profiles'}->{'profile'}->{$ident}->{'direction'};
+  my $polarity = 0;
+  if( "$dir" eq "forwards" )
+    {
+    $polarity = +1;
+    }
+  elsif( "$dir" eq "backwards" )
+    {
+    $polarity  = -1;
+    }
+  else
+    {
+    print "ERROR: unsupported direction specified ($dir) - aborting!\n";
+    exit 1;
+    }
   
-  my $itp = $config->{'controls'}->{'itp'};                   # in msec
-  my $t1 = $config->{'controls'}->{'t1'};                     # in msec
-  my $t2 = $config->{'controls'}->{'t2'};                     # in msec
-  my $vprog = $config->{'controls'}->{'velocity'};            # in rotations/sec
-  my $sensormode = $config->{'robot'}->{'sensor'}->{'mode'};  # we need to double distances if this is SensorSum mode
-  my $dist = converttorotations( gettotalprofilepathlength( $ident ), $config->{'robot'}->{'wheels'}->{'diameter'}, $config->{'units'}->{'length'} );
+  # extract control parameters from config hash
+  my $itp = $config->{'controls'}->{'itp'};                        # in msec
+  my $t1 = $config->{'controls'}->{'t1'};                          # in msec
+  my $t2 = $config->{'controls'}->{'t2'};                          # in msec
+  my $vprog = $polarity * $config->{'controls'}->{'velocity'};     # in rotations/sec
+  my $sensormode = $config->{'robot'}->{'sensor'}->{'mode'};       # we need to double distances if this is SensorSum mode
+  my $dist = $polarity * converttorotations( gettotalprofilepathlength( $ident ), $config->{'robot'}->{'wheels'}->{'diameter'}, $config->{'units'}->{'length'} );
   $dist = $dist * 2 if( "$sensormode" eq "SensorSum" );
   
   # generate the velocity array(s)
@@ -397,6 +413,13 @@ sub getheadings()
   my $segments = getsegmentsinprofile( $ident );
   my $pathlength = gettotalprofilepathlength( $ident );
   print "DEBUG: pathlength: $pathlength\n";
+  my $dir = $config->{'profiles'}->{'profile'}->{$ident}->{'direction'};
+  if( ( "$dir" ne "forwards" ) && ( "$dir" ne "backwards" ) )
+    {
+    print "ERROR: bad direction detected ($dir) - aborting!\n";
+    exit 1;
+    }
+
   my $s = 1;
   my $pathtally = 0;
   my @segpoints;
@@ -435,9 +458,6 @@ sub getheadings()
     # determine type of segment (straight/turn)
     my $type = $config->{'profiles'}->{'profile'}->{$ident}->{'path'}->{'segment'}->{$sid}->{'type'};
 
-    # determine direction (backward/forward)
-    my $direction = $config->{'profiles'}->{'profile'}->{$ident}->{'path'}->{'segment'}->{$sid}->{'direction'};
-
     if( "$type" eq "straight" )
       {
       $heading = $previousheading;
@@ -449,14 +469,37 @@ sub getheadings()
       # determine angle
       my $angle = $config->{'profiles'}->{'profile'}->{$ident}->{'path'}->{'segment'}->{$sid}->{'angle'};
       # calculate heading
-# print "$angle $point @waypoints[$sid] @waypoints[$sid-1]\n" if( $sid == 1 );
       if( "$turn" eq "left" )
         {
-        $heading = $angle * ($point-@waypoints[$sid-1]) / (@waypoints[$sid]-@waypoints[$sid-1]);
+        if( "$dir" eq "forwards" )
+          {
+          $heading = 1.0 * $angle * ($point-@waypoints[$sid-1]) / (@waypoints[$sid]-@waypoints[$sid-1]);
+          }
+         elsif( "$dir" eq "backwards" )
+          {
+          $heading = -1.0 * $angle * ($point-@waypoints[$sid]) / (@waypoints[$sid]-@waypoints[$sid-1]);
+          }
+         else
+          {
+          print "ERROR: bad direction detected ($dir) - aborting!\n";
+          exit 1;
+          }
         }
       elsif( "$turn" eq "right" )
         {
-        $heading = -$angle * ($point-@waypoints[$sid]) / (@waypoints[$sid]-@waypoints[$sid-1]);
+        if( "$dir" eq "forwards" )
+          {
+          $heading = -1.0 * $angle * ($point-@waypoints[$sid]) / (@waypoints[$sid]-@waypoints[$sid-1]);
+          }
+        elsif( "$dir" eq "backwards" )
+          {
+          $heading = 1.0 * $angle * ($point-@waypoints[$sid-1]) / (@waypoints[$sid]-@waypoints[$sid-1]);
+          }
+         else
+          {
+          print "ERROR: bad direction detected ($dir) - aborting!\n";
+          exit 1;
+          }
         }
       else
         {
@@ -470,16 +513,6 @@ sub getheadings()
       print "ERROR: bad segment type detected ($type) - aborting!\n";
       exit 1;
       }
-
-#    my $heading = 0.0;
-#    if( $point <= @waypoints[1] )
-#      { $heading = 45.0 * ($point-@waypoints[0]) / (@waypoints[1]-@waypoints[0]) }
-#    elsif( $point <= @waypoints[2] )
-#      { $heading = 45.0; }
-#    elsif( $point <= @waypoints[3] )
-#      { $heading = -45.0 * ($point-@waypoints[3]) / (@waypoints[3]-@waypoints[2]) }
-#    else
-#      { $heading = 0; }
 
     push( @retvals, $heading );
     $point++;
