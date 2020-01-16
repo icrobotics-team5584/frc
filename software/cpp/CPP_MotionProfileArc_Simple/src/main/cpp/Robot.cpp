@@ -1,7 +1,9 @@
 #include "Robot.h"
-#include "MotionProfile.h"
+#include "MotionProfileMotionProfile.h"
+#include "MotionProfileInitialisationToTrench01.h"
+#include "MotionProfileTrenchToPowerCellZone01.h"
 #include "Instrum.h"
-#
+
 void Robot::RobotInit() 
 {
     /* Construct global variables */
@@ -53,10 +55,15 @@ void Robot::RobotInit()
     _plotThread = new PlotThread(_rightMaster);
 
     /* Initialize buffer with motion profile */
-    InitBuffer(kMotionProfile, kMotionProfileSz, 1.0); //Do a full (1.0) rotation to the left
+//    InitBuffer(kMotionProfile, kMotionProfileSz, 1.0); //Do a full (1.0) rotation to the left
 //    InitBuffer(kMotionProfile, kMotionProfileSz, 0.5); //Do a half (0.5) rotation to the left
 //    InitBuffer(kMotionProfile, kMotionProfileSz, 0.25); //Do a quarter (0.25) rotation to the left
 //    InitBuffer(kMotionProfile, kMotionProfileSz, 0.0); //No rotation
+
+    InitBuffer(kMotionProfile, kMotionProfileSz, 0.0);
+//    InitBuffer(kInitialisationToTrench01, kInitialisationToTrench01Sz, 0.0);
+//    InitBuffer(kTrenchToPowerCellZone01, kTrenchToPowerCellZone01Sz, 0.0);
+
     _state = 0;
 
 
@@ -161,12 +168,12 @@ void Robot::InitBuffer(const double profile[][4], int totalCnt, double rotations
     TrajectoryPoint point; // temp for for loop, since unused params are initialized
                            // automatically, you can alloc just one
 
-    /* clear the buffer, in case it was used elsewhere */
+    // clear the buffer, in case it was used elsewhere
     _bufferedStream->Clear();
 
     // double turnAmount = rotations * 8192.0; //8192 units per rotation for a pigeon
 
-    /* Insert every point into buffer, no limit on size */
+    // Insert every point into buffer, no limit on size
     for (int i = 0; i < totalCnt; ++i) {
 
         double direction = forward ? +1 : -1;
@@ -175,28 +182,17 @@ void Robot::InitBuffer(const double profile[][4], int totalCnt, double rotations
         double headingDeg = profile[i][2];
         int durationMilliseconds = (int) profile[i][3];
 
-        /* for each point, fill our structure and pass it to API */
         point.timeDur = durationMilliseconds;
-        point.position = direction * positionRot * 4096; // Convert Revolutions to
-                                                         // Units
-        point.velocity = direction * velocityRPM * 4096 / 600.0; // Convert RPM to
-                                                                 // Units/100ms
-        
-        /** 
-         * Here is where you specify the heading of the robot at each point. 
-         * In this example we're linearly interpolating creating a segment of a circle to follow
-         */
-        point.auxiliaryPos = ( headingDeg / 360.0 ) * 8192.0; //8192 units per rotation for a pigeon
-        
+        point.position = direction * positionRot * 4096; // Convert Revolutions to Units
+        point.velocity = direction * velocityRPM * 4096 / 600.0; // Convert RPM to Units/100ms
+        point.auxiliaryPos = ( headingDeg / 360.0 ) * 8192.0; // 8192 units per rotation for a pigeon
         point.auxiliaryVel = 0;
-        
-        point.profileSlotSelect0 = 0; /* which set of gains would you like to use [0,3]? */
-        point.profileSlotSelect1 = 1; /* which set of gains would you like to use [0,3]? */
-        point.zeroPos = (i == 0); /* set this to true on the first point */
-        point.isLastPoint = ((i + 1) == totalCnt); /* set this to true on the last point */
-        point.arbFeedFwd = 0; /* you can add a constant offset to add to PID[0] output here */
-
-        point.useAuxPID = true; /* Using auxiliary PID */
+        point.profileSlotSelect0 = 0; // which set of gains would you like to use [0,3]? 
+        point.profileSlotSelect1 = 1; // which set of gains would you like to use [0,3]? 
+        point.zeroPos = (i == 0); // set this to true on the first point 
+        point.isLastPoint = ((i + 1) == totalCnt); // set this to true on the last point 
+        point.arbFeedFwd = 0; // you can add a constant offset to add to PID[0] output here 
+        point.useAuxPID = true; // Using auxiliary PID
         _bufferedStream->Write(point);
     }
 }
@@ -204,3 +200,4 @@ void Robot::InitBuffer(const double profile[][4], int totalCnt, double rotations
 #ifndef RUNNING_FRC_TESTS
 int main() { return frc::StartRobot<Robot>(); }
 #endif
+
