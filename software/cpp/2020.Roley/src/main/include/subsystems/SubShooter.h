@@ -17,12 +17,17 @@ class SubShooter : public frc::Subsystem {
   const int	kSlotIdx = 0;
   const int	kPIDLoopIdx = 0;
 
-  double SetP = 0;
-  double SetI = 0;
-  double SetD = 0;
-  double SetF = 0;
-  
-  double percentage = 0;
+  double SetPLeft = 0;
+  double SetILeft = 0;
+  double SetDLeft = 0;
+  double SetFLeft = 0;
+
+  double SetPRight = 0;
+  double SetIRight = 0;
+  double SetDRight = 0;
+  double SetFRight = 0;
+
+  double RPM = 0;
 
 
 

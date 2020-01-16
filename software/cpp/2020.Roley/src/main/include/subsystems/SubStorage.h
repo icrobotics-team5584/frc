@@ -14,7 +14,7 @@
 class SubStorage : public frc::Subsystem {
  private:
 
-  float speed = 0.5; 
+  float speed = 0.8; 
   std::shared_ptr<frc::VictorSP> Motor;
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
