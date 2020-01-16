@@ -26,7 +26,7 @@ void CmdDriveSlowDown::Initialize() {
 void CmdDriveSlowDown::Execute() {
   x = Robot::m_oi.joystick1->GetX();
   y = Robot::m_oi.joystick1->GetY();
-  axis = Robot::m_oi.joystick1->GetRawAxis(triggerR);
+  axis = Robot::m_oi.joystick1->GetRawAxis(triggerL);
   //SmartDashboard::PutNumber("axis test", axis);
   Robot::subDriveBase->drive(y/(axis + 1),(-(x/(axis + 1))));
 }

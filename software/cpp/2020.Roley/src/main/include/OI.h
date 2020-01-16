@@ -25,7 +25,7 @@ class OI {
   double getJoystickX();
   double getJoystickY();
 
-  double GetLeftAsix();
+  double GetRightAsix();
 
  std::unique_ptr<frc::Joystick> joystick1;
  std::unique_ptr<AxisButton> btnSlowDown;

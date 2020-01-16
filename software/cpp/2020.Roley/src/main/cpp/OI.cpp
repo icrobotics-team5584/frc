@@ -15,7 +15,7 @@ OI::OI() {
   // Process operator interface input here.
   joystick1.reset(new frc::Joystick(0));
 
-  btnSlowDown.reset(new AxisButton(joystick1.get(), triggerR));
+  btnSlowDown.reset(new AxisButton(joystick1.get(), triggerL));
 
   btnSlowDown->WhileHeld(new CmdDriveSlowDown());
 
@@ -33,6 +33,6 @@ double OI::getJoystickY(){
 
 
 
-double OI::GetLeftAsix(){
+double OI::GetRightAsix(){
   return btnSlowDown->GetAxis();
 }
