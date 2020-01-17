@@ -6,28 +6,26 @@ README.TXT
 Overview:
 ---------
 
-This suite of 4 perl scripts can be used to generate multiple Motion Profiles for use in FRC C++ code.
+This suite of perl utilities can be used to generate multiple Motion Profiles for use in FRC C++ code.
 
-For a drive base we typically generate pairs (A and B) of profiles for each autonomous run. Profile A will be applied to one side of the drivebase and Profile B to the other. If the profiles are the same then the robot can be expected to drive in a straight line. If profiles A and B are different then you can expect the robot to travel a curved path.
+The profiles generated are designed for use with TALON SRX motor controllers configured for use in "Motion Profile Arc" mode. For a sample project refer to CPP_MotionProfileArc_Simple in the IC github repo (frc/software/cpp/CPP_MotionProfileArc_Simple).
 
-The aim of the MULTI mode is to support generation of a profile that can be used on one side of the robot. Coupling this with a SIMPLE profile generated for the other side of the robot we can expect the robot to move in three phases: (i) accelerating in sync on both sides to drive straight at constanst speed; (ii) then decelerating on one side (therefore turning) for a period before accelerating on that side to matching speed on both sides; (c) complete remainder of profiles at the same speed and decelerate both sides in sync (i.e. straight drive).
+The main utility is motionprofile.pl which is controlled by a simple XML file (motionprofile.xml). The motionprofile.pl utility generates two output files for each profile that is defined in the motionprofile.xml input file: a C++ header and a CSV file. The output files are named MotionProfile{profilename}.h and MotionProfile{profilename}.csv.
+
+There is a graph generating utility (motionprofile.graph.pl) which takes a profile in CSV format and generates a graph as a PNG image.
+
+The motionprofile.document.pl utility can be used to generate a single HTML sumarry document that references each of the generated PNG images.
+
+The wrapper utility motionprofile.wrapper.pl can be used to run all of the above and optionally "deploy" the header files into the VSCODE IDE.
+
+Recommend that you run the utilities in a git bash shell.
 
 
 
-Summary:
---------
+Prerequisites:
+--------------
 
-Recommend that you run the following in a windows command prompt (or git bash shell) ...
-
-  motionprofile.wrapper.pl      - wrapper script enabling us to record all parameters and regenerate all motion profiles in one hit, as well as calling each of the other three scripts here, the wrapper will copy the *.h files into the appropriate directory of the eclipse project
-
-  motionprofile.pl              - generates a *.h and a *.csv using the parameters listed below
-
-  motionprofile.graph.pl        - generates *.png image from the *.csv file, image contains a graph of the position, velocity and acceleration in the profile
-
-  motionprofile.document.pl     - generates a single MotionProfile.html file with references to each of the *.png files so that we have a summary-on-a-page of all of the Motion Profiles that we have generated
-
-NOTE: motionprofile.graph.pl has a dependency on the GD module. If your version of perl reports errors like "Can't locate GD/Graph/lines.pm in @INC (you may need to install the GD::Graph::lines module) (@INC contains: ..." then install the GD module and any dependencies, or just install strawberry perl as that has GD and depencencies already incorporated in the base package
+NOTE: motionprofile.graph.pl has a dependency on the GD module. If your version of perl reports errors like "Can't locate GD/Graph/lines.pm in @INC (you may need to install the GD::Graph::lines module) (@INC contains: ..." then install the GD module and any dependencies, or just install strawberry perl as that has GD and depencencies already incorporated in the base package.
 
 NOTE: to change the perl installation that is used you will need to add the appropriate installation directory to the start of the path, if using GIT bash shell then ...
 
@@ -50,32 +48,54 @@ Then install the module (e.g. the GD::Graph module) in the client window by typi
 
 
 
+XML control file format:
+------------------------
 
-Parameters:
------------
+Refer to motionprofile.xml for sample configuration.i
 
-Basic parameters used in SIMPLE and MULTI modes ...
+The parameters used for config format version 1.0 are ...
 
-  -ident = name of the profile (e.g. LeftPegA, LeftPegB, RightPegA, RightPegB, MidPegA, MidPegB, BaselineA, BaselineB)
+* "robot" section consisting of ONE of each of the following parameters:
+  * "name" = name of the robot (e.g. "MUCK")
+  * "wheels"
+    * "diameter" = diameter of the wheel(s) that drive the encoder
+    * "track" = distance between left and right drive wheels
+  * "sensor"
+    * "mode" = the mode of the distance source (allowed values are: SensorSum|Quadrature)
 
-  -mode  = SIMPLE|MULTI - use SIMPLE for a single inverted bathtub profile, use MULTI for a curve constructed from two bathtubs (either added or subtracted)
+* "controls" section consisting of ONE of each of the following parameters:
+    * "pathlimit" = maximium path length - this is intended to provide a safety check only
+    * "velocity" = the cruise velocity of the profile
+    * "itp" =  interval (msec)
+    * "t1" = time constant 1
+    * "t2" = time constant 2
 
-  -t1    = time constant 1
+* "units" section consisting of ONE of each of the following parameters:
+  * "time" = all times in the xml are in this unit (allowed values: seconds)
+  * "length" = all lengths in the xml are in this unit (allowed values: inches)
+  * "angle" = all angles in the xml are in this unit (allowed values: degrees)
 
-  -t2    = time constant 2
+* "profiles" section consisting of ONE OR MORE "profile" sections:
 
-  -itp   = interval (msec)
+  * "profile" section consisting of ONE of each of the following parameters:
+    * "name" = name of the profile (e.g. "InitialisationToTrench")
+    * "direction" = forwards|backwards
+    * "path" section consisting of ONE OR MORE "segment" sections:
+      * "segment" sections can be of two types (turn or straight)
+        * straight segment consists of ONE of each of the following parameters:
+	  * "id" = an integer to specify the order of the segment
+	  * "type" =  "straight"
+	  * "length" = the length of the segment
+        * turn segment consists of ONE of each of the following parameters:
+	  * "id = an integer to specify the order of the segment
+	  * "type = "turn"
+	  * "turn = right|left (when specifying this, irrespective of forwards/backwards, imagine sitting on the robot facing the front)
+	  * "angle" =  change of direction (positive number)
+	  * "length" = the length of the segment
 
-  -vprog = maximum (rotations/sec)
+NOTE: profile and segment names should be unique.
 
-  -dist  = distance to travel (rotations)
+NOTE: segment IDs should be numerical 1,2,3 ..
 
-Additional parameters for MULTI mode ...
+NOTE: by design a profile runs all segments in the same direction. Where the robot needs to in one direction and then another it is expected that each will be configured as a separate profile (in the same XML control file).
 
-  -curve2dist       = distance for second curve (rotations)
-
-  -curve2offset     = delay from curve one to curve two in steps
-
-  -curve2proportion = curve 2 magnitude relative to curve 1 magnitude (in range 0 to 1)
-
-  -curve2multiplier = set to +1 for curves to be additive, set to -1 for curve 2 to be subtracted from curve 1

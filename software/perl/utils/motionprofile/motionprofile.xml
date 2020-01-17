@@ -38,6 +38,11 @@
         <segment id="1" type="straight" length="96"/>
       </path>
     </profile>
+    <profile name="DemoStraightBackwards01" direction="backwards">
+      <path>
+        <segment id="1" type="straight" length="96"/>
+      </path>
+    </profile>
     <profile name="DemoTurnLeft01" direction="forwards">
       <path>
         <segment id="1" type="turn" turn="left" angle="90" length="96"/>
