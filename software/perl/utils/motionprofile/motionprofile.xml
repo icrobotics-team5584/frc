@@ -33,9 +33,19 @@
         <segment id="5" type="straight" length="120"/>
       </path>
     </profile>
-    <profile name="MotionProfile" direction="forwards">
+    <profile name="DemoStraight01" direction="forwards">
+      <path>
+        <segment id="1" type="straight" length="96"/>
+      </path>
+    </profile>
+    <profile name="DemoTurnLeft01" direction="forwards">
       <path>
         <segment id="1" type="turn" turn="left" angle="90" length="96"/>
+      </path>
+    </profile>
+    <profile name="DemoTurnRight01" direction="forwards">
+      <path>
+        <segment id="1" type="turn" turn="right" angle="90" length="96"/>
       </path>
     </profile>
   </profiles>
