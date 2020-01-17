@@ -1,5 +1,7 @@
 #include "Robot.h"
-#include "MotionProfileMotionProfile.h"
+#include "MotionProfileDemoStraight01.h"
+#include "MotionProfileDemoTurnLeft01.h"
+#include "MotionProfileDemoTurnRight01.h"
 #include "MotionProfileInitialisationToTrench01.h"
 #include "MotionProfileTrenchToPowerCellZone01.h"
 #include "Instrum.h"
@@ -60,12 +62,13 @@ void Robot::RobotInit()
 //    InitBuffer(kMotionProfile, kMotionProfileSz, 0.25); //Do a quarter (0.25) rotation to the left
 //    InitBuffer(kMotionProfile, kMotionProfileSz, 0.0); //No rotation
 
-    InitBuffer(kMotionProfile, kMotionProfileSz, 0.0);
+//    InitBuffer(kMotionProfile, kMotionProfileSz, 0.0);
 //    InitBuffer(kInitialisationToTrench01, kInitialisationToTrench01Sz, 0.0);
 //    InitBuffer(kTrenchToPowerCellZone01, kTrenchToPowerCellZone01Sz, 0.0);
 
+    profile_num = 0;
+    loop_count = 0;
     _state = 0;
-
 
     _masterConfig = new MasterProfileConfiguration(_leftMaster, _pidgeyNest, _pidgey);
     _followConfig = new FollowerProfileConfiguration();
@@ -103,8 +106,38 @@ void Robot::TeleopPeriodic()
     /* get joystick button and stick */
     bool bPrintValues = _joystick->GetRawButton(2);
     bool bFireMp = _joystick->GetRawButton(1);
+    bool bNextMp = _joystick->GetRawButton(3);
     double axis = -_joystick->GetRawAxis(1);
     double turn = _joystick->GetRawAxis(0);
+
+    loop_count++;
+
+    /* if button is held for a while, shift to next MP */
+    if( ( bNextMp == true ) && ( (double)loop_count/50 == int( (double)loop_count/50) ) ) {
+            profile_num = profile_num < 4 ? profile_num + 1 : 0;
+    }
+
+    frc::SmartDashboard::PutNumber("profile_num", profile_num);
+    switch( profile_num ) {
+        case 0:
+            frc::SmartDashboard::PutString("profile_name", "DemoStraight01");
+            break;
+        case 1:
+            frc::SmartDashboard::PutString("profile_name", "DemoTurnLeft01");
+            break;
+        case 2:
+            frc::SmartDashboard::PutString("profile_name", "DemoTurnRight01");
+            break;
+        case 3:
+            frc::SmartDashboard::PutString("profile_name", "InitialisationToTrench01");
+            break;
+        case 4:
+            frc::SmartDashboard::PutString("profile_name", "TrenchToPowerCellZone01");
+            break;
+        default:
+            frc::SmartDashboard::PutString("profile_name", "DemoStraight01");
+            break;
+    }
 
     /* if button is up, just drive the motor in PercentOutput */
     if (bFireMp == false) {
@@ -119,6 +152,32 @@ void Robot::TeleopPeriodic()
 
             if (bFireMp == true) {
                 /* go to MP logic */
+                switch( profile_num ) {
+                    case 0:
+                        Instrum::PrintLine("Loading: DemoStraight01");
+                        InitBuffer(kDemoStraight01, kDemoStraight01Sz, 0.0);
+                        break;
+                    case 1:
+                        Instrum::PrintLine("Loading: DemoTurnLeft01");
+                        InitBuffer(kDemoTurnLeft01, kDemoTurnLeft01Sz, 0.0);
+                        break;
+                    case 2:
+                        Instrum::PrintLine("Loading: DemoTurnRight01");
+                        InitBuffer(kDemoTurnRight01, kDemoTurnRight01Sz, 0.0);
+                        break;
+                    case 3:
+                        Instrum::PrintLine("Loading: InitialisationToTrench01");
+                        InitBuffer(kInitialisationToTrench01, kInitialisationToTrench01Sz, 0.0);
+                        break;
+                    case 4:
+                        Instrum::PrintLine("Loading: TrenchToPowerCellZone01");
+                        InitBuffer(kTrenchToPowerCellZone01, kTrenchToPowerCellZone01Sz, 0.0);
+                        break;
+                    default:
+                        Instrum::PrintLine("Loading: DemoStraight01");
+                        InitBuffer(kDemoStraight01, kDemoStraight01Sz, 0.0);
+                        break;
+                }
                 _state = 1;
             }
             break;

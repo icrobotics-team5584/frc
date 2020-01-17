@@ -3,8 +3,8 @@
 // COLUMN 2 = Velocity (rpm)
 // COLUMN 3 = Heading (degrees)
 // COLUMN 4 = Duration (ms)
-const int kMotionProfileSz = 366;
-const double kMotionProfile[][4] = {
+const int kDemoTurnLeft01Sz = 366;
+const double kDemoTurnLeft01[][4] = {
 {0,	0,	0.245901639344262,	10},
 {5.95238095238095e-05,	0.714285714285714,	0.491803278688525,	10},
 {0.000267857142857143,	1.78571428571429,	0.737704918032787,	10},
