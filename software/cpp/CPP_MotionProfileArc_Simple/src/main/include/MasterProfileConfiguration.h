@@ -20,7 +20,7 @@ public:
         slot0.kF = 0.15;
         slot0.kP = 0.8;
         slot0.kI = 0.0;
-        slot0.kD = 80;
+        slot0.kD = 0.0;
         slot0.integralZone = 400;
         slot0.closedLoopPeakOutput = 1.0;
 

@@ -4,6 +4,7 @@
 #include "MotionProfileDemoTurnRight01.h"
 #include "MotionProfileInitialisationToTrench01.h"
 #include "MotionProfileTrenchToPowerCellZone01.h"
+#include "MotionProfileDemoStraightBackwards01.h"
 #include "Instrum.h"
 
 void Robot::RobotInit() 
@@ -114,7 +115,7 @@ void Robot::TeleopPeriodic()
 
     /* if button is held for a while, shift to next MP */
     if( ( bNextMp == true ) && ( (double)loop_count/50 == int( (double)loop_count/50) ) ) {
-            profile_num = profile_num < 4 ? profile_num + 1 : 0;
+            profile_num = profile_num < 5 ? profile_num + 1 : 0;
     }
 
     frc::SmartDashboard::PutNumber("profile_num", profile_num);
@@ -133,6 +134,9 @@ void Robot::TeleopPeriodic()
             break;
         case 4:
             frc::SmartDashboard::PutString("profile_name", "TrenchToPowerCellZone01");
+            break;
+        case 5:
+            frc::SmartDashboard::PutString("profile_name", "DemoStraightBackwards01");
             break;
         default:
             frc::SmartDashboard::PutString("profile_name", "DemoStraight01");
@@ -172,6 +176,10 @@ void Robot::TeleopPeriodic()
                     case 4:
                         Instrum::PrintLine("Loading: TrenchToPowerCellZone01");
                         InitBuffer(kTrenchToPowerCellZone01, kTrenchToPowerCellZone01Sz, 0.0);
+                        break;
+                    case 5:
+                        Instrum::PrintLine("Loading: DemoStraightBackwards01");
+                        InitBuffer(kDemoStraightBackwards01, kDemoStraightBackwards01Sz, 0.0);
                         break;
                     default:
                         Instrum::PrintLine("Loading: DemoStraight01");
