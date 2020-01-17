@@ -52,7 +52,7 @@ class SubDriveBase : public frc::Subsystem {
   double getYaw();
   double getDistanceTravelled();
   void zeroEncoders();
-  void autoEncoderDrive(double target);
+  void autoEncoderDrive(double target, double P, double I, double D, double Speed);
   void resetYaw();
   void Periodic() override;
   bool isNavxCal();

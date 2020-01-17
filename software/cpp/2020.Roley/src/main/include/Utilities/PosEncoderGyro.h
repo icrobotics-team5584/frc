@@ -7,7 +7,8 @@ using namespace std;
 class PosEncoderGyro {
 public:
     PosEncoderGyro();
-    double getPositionx();
+    double getPositionX();
+    double getPositionY();
     double getAngle();
     void setPosition(double x, double y);
     void reset();

@@ -65,12 +65,19 @@ double SubDriveBase::getDistanceTravelled(){
   return distance;  
 }
 
-void SubDriveBase::autoEncoderDrive(double target){
+void SubDriveBase::autoEncoderDrive(double target, double P, double I, double D, double Speed){
+
+  Kp = P;
+  Ki = I;
+  Kd = D;
+
   double error;
   double position;
-  position = Robot::posEncoderGyro->getPositionx();
+  position = Robot::posEncoderGyro->getPositionX();
   SmartDashboard::PutNumber("position", position);
   SmartDashboard::PutNumber("trench position", position + 1.7);
+
+
 
   intergral = intergral + (position - target);
   error = Kp*(position - target) + Ki*(intergral) + Kd*((position - target) - previousError);
@@ -87,7 +94,7 @@ void SubDriveBase::autoEncoderDrive(double target){
   }
   SmartDashboard::PutNumber("error2", error);
 
-  drive(-AutoSpeed, error, false);
+  drive(Speed, error, false);
   std::cout << "auto stuff" << std::endl;
 }
 
