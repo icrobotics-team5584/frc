@@ -8,10 +8,11 @@
 #include "commands/CmdAutoRoutineOne.h"
 #include "commands/CmdAutoEncoderDrive.h"
 CmdAutoRoutineOne::CmdAutoRoutineOne() {
-  
+  //Update Values when robot lengths are confirmed
   AddSequential(new CmdAutoEncoderDrive(-1.7, -0.9, 0.00001, -42, -0.8, 4.537));
   AddSequential(new CmdAutoEncoderDrive(-1.7, 0.9, -0.00001, 42, 0.8, 2.312));
   AddSequential(new CmdAutoEncoderDrive(0, 0.9, -0.00001, 42, 0.8, 0));
+  AddSequential(new CmdAutoEncoderDrive(0, 3, -0.0, 80, 0.5, -2.553));
 
   // Add Commands here:
   // e.g. AddSequential(new Command1());
