@@ -8,6 +8,7 @@
 #include "subsystems/SubDriveBase.h"
 #include "commands/CmdJoystickDrive.h"
 #include "Robot.h"
+
 SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   //motors
   _srxFrontLeft.reset(new WPI_TalonSRX(can_srxDriveBaseFrontLeft));
@@ -37,6 +38,7 @@ void SubDriveBase::Periodic(){
   SmartDashboard::PutNumber("yaw", ahrsNavXGyro->GetYaw());
   if(ahrsNavXGyro->IsCalibrating()){
     std::cout << "navx calibrating" << std::endl;
+    
   };
 }
 
@@ -80,7 +82,7 @@ void SubDriveBase::autoEncoderDrive(double target){
   if (error > 1){
     error = 1;
   }
-  if((ahrsNavXGyro->GetYaw() < -90 && error < 0) || (ahrsNavXGyro->GetYaw() > 90 && error > 0)){
+  if((ahrsNavXGyro->GetYaw() < -50 && error < 0) || (ahrsNavXGyro->GetYaw() > 50 && error > 0)){
     error = 0;
   }
   SmartDashboard::PutNumber("error2", error);
