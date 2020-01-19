@@ -10,7 +10,7 @@ PosEncoderGyro::PosEncoderGyro() {
 /*
  * Determines the robot's current position as represented by an x and y value
  */
-double PosEncoderGyro::getPositionX() {
+double PosEncoderGyro::getPositionX() {//returns position that is calculated in updatePosition()
     return currentPosition.x;
 }
 
@@ -35,11 +35,11 @@ void PosEncoderGyro::reset() {
     Robot::subDriveBase->zeroEncoders();
 }
 
-void PosEncoderGyro::updatePosition(){
+void PosEncoderGyro::updatePosition(){//calculates position, gets called in a periodic somewhere
     // Get relevant values
     double currentAngle = Robot::subDriveBase->getYaw() * 0.01745329251;  // Convert to radians with * 0.01745329251
-    double currentDistance = Robot::subDriveBase->getDistanceTravelled();
-    double distanceDelta = currentDistance - prevDistance;
+    double currentDistance = Robot::subDriveBase->getDistanceTravelled();//total distance
+    double distanceDelta = currentDistance - prevDistance;//distance since last 20 millisecond
     // Determine current position
     currentPosition.x += distanceDelta * sin(currentAngle);
     currentPosition.y += distanceDelta * cos(currentAngle);

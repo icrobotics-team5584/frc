@@ -66,35 +66,38 @@ double SubDriveBase::getDistanceTravelled(){
 }
 
 void SubDriveBase::autoEncoderDrive(double target, double P, double I, double D, double Speed){
-
-  Kp = P;
-  Ki = I;
-  Kd = D;
+  //PID values and setting passed in from command
+  kP = P;
+  kI = I;
+  kD = D;
 
   double error;
   double position;
-  position = Robot::posEncoderGyro->getPositionX();
+  position = Robot::posEncoderGyro->getPositionX();//gets position from custom class located at "PosEncoderGyro.cpp"
   SmartDashboard::PutNumber("position", position);
   SmartDashboard::PutNumber("trench position", position + 1.7);
 
 
-
-  intergral = intergral + (position - target);
-  error = Kp*(position - target) + Ki*(intergral) + Kd*((position - target) - previousError);
-  previousError = position - target;
+  //position - target is the error or "P"
+  intergral = intergral + (position - target);//calculates total error or "I"
+  //output = kP*theError         + kI*Intergral   + kD*Derivative
+  error = kP*(position - target) + kI*(intergral) + kD*((position - target) - previousError);
+  //error is the "steering" output of the PID
+  previousError = position - target;//Calculates previous error for Derivative
   SmartDashboard::PutNumber("error", error);
-  if (error < -1){
+  if (error < -1){//caps error at 1 and -1
     error = -1;
   }
   if (error > 1){
     error = 1;
   }
+  //checks if the robot is over spinning and changes steering to zero. the derivative catches the robot at the line
   if((ahrsNavXGyro->GetYaw() < -50 && error < 0) || (ahrsNavXGyro->GetYaw() > 50 && error > 0)){
     error = 0;
   }
   SmartDashboard::PutNumber("error2", error);
 
-  drive(Speed, error, false);
+  drive(Speed, error, false);//uses the same drive command as the joystick so onnly one can be run at the same time
   std::cout << "auto stuff" << std::endl;
 }
 

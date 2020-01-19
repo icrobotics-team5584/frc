@@ -12,8 +12,8 @@
 OI::OI() {
   // Process operator interface input here.
   joystick1.reset(new frc::Joystick(0));
-  btnAuto.reset(new frc::JoystickButton(joystick1.get(), 1));
-  btnAuto->WhenPressed(new CmdAutoRoutineOne());
+  btnAuto.reset(new frc::JoystickButton(joystick1.get(), 1));//Button A
+  btnAuto->WhenPressed(new CmdAutoRoutineOne());//Runs Auto Routine command group
 
 }
 

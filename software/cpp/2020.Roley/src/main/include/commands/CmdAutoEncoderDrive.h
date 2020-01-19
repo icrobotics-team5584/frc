@@ -9,15 +9,19 @@
 
 #include <frc/commands/Command.h>
 #include "Utilities/PosEncoderGyro.h"
+#include "Utilities/AutoPIDConfig.h"
+
+using namespace std;
 
 class CmdAutoEncoderDrive : public frc::Command {
  public:
-  CmdAutoEncoderDrive(double target, double P, double I, double D, double Speed, double TargetY);
+  CmdAutoEncoderDrive(PIDAutoConfig _PIDConfig);
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+
  private:
   double _target = 0;
   double _P = 0;

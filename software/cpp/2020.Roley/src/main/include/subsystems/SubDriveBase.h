@@ -39,9 +39,9 @@ class SubDriveBase : public frc::Subsystem {
   double metersPerRotation; // calculated in constructor
   
 // PID Values
-  double Kp = -0.9;
-  double Ki = 0.00001;
-  double Kd = -42;
+  double kP = -0.9;
+  double kI = 0.00001;
+  double kD = -42;
   double previousError;
   double intergral = 0;
   double AutoSpeed = 0.8;
