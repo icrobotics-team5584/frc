@@ -1,197 +1,163 @@
 #
-# motion profile generator
-#
-# use in "SIMPLE" mode to generate a simple inverted bathtub velocity
-# curve and the associated position and acceleration curves
-#
-# use in "MULTI" mode to generate a more complex set of curves constructed
-# from two bathtub curves
+# motion profile generator for postion/velocity/heading/duration
 #
 
 use strict;
 
+use XML::Simple;
+
 use Getopt::Long;
 
 my $debug = 0;
-my $ident = "NEW.SAMPLE";
-my $mode = "MULTI";
-
-# common parameters ...
-my $itp = 10;   # in ms
-my $t1 = 400;   # in ms
-my $t2 = 200;   # in ms
-
-# vprog and dist values for SIMPLE mode ...
-my $vprog = 4;   # in rotations/sec
-my $dist = 5;    # in rotations
-
-# additional values required for MULTI mode ...
-my $curve2offset = 106;        # in steps
-my $curve2proportion = 0.50;   # use 0.0 to 1.0 to define curve2 max velocity relative to curve1
-my $curve2multiplier = -1;     # set to +1 to add curve1 and curve2, set to -1 to subtract curve2 from curve1
-my $curve2dist = 2.94;         # in rotations
-
-# additional default values for initial position and initial velocity ...
-my $vini = 0;
-my $pini = 0;
-
 GetOptions (
-  "ident=s"            => \$ident,
-  "mode=s"             => \$mode,
-  "itp=s"              => \$itp,
-  "t1=s"               => \$t1,
-  "t2=s"               => \$t2,  
-  "vini=s"             => \$vini,
-  "pini=s"             => \$pini,
-  "vprog=s"            => \$vprog,
-  "dist=s"             => \$dist,
-  "curve2offset=s"     => \$curve2offset,
-  "curve2proportion=s" => \$curve2proportion,
-  "curve2multiplier=s" => \$curve2multiplier,
-  "curve2dist=s"       => \$curve2dist,
-  "debug"              => \$debug );
+  "debug" => \$debug );
 
+my $config = XMLin("motionprofile.xml", KeyAttr => { profile => 'name', segment => 'id' }, ForceArray => [ 'profile', 'segment' ]);
 
+# use Data::Dumper;
+# print Dumper($config);
 
-# generate the velocity array(s)
-
-my @velocities;
-if( "$mode" eq "SIMPLE" )
+foreach my $p ( keys %{ $config->{'profiles'}->{'profile'} } )
   {
-  @velocities = getvelocities( $ident, $vprog, $dist, $t1, $t2, $itp );
+  my $profilename = $p;
+  my $numberofsegmentsinprofile = getsegmentsinprofile( $profilename );
+  print "INFO: processing profile: $profilename ($numberofsegmentsinprofile segments detected)\n";
+  processprofilesegments( $profilename, $numberofsegmentsinprofile );
   }
-elsif( "$mode" eq "MULTI" )
+exit 0;
+
+sub getsegmentsinprofile
   {
-  my $vprog1 = $vprog;                         # in rotations/sec
-  my $dist1 = $dist;                           # in rotations
-  my $vprog2 = $vprog1 * $curve2proportion ;   # in rotations/sec
-  my $dist2 = $curve2dist;                     # in rotations
-  my @velocities1 = getvelocities( $ident, $vprog1, $dist1, $t1, $t2, $itp );
-  my @velocities2 = getvelocities( $ident, $vprog2, $dist2, $t1, $t2, $itp );
-  my $steps = $#velocities1 + 1;
+  my ( $profilename ) = @_;
+  my $moresegmentsexist = 1;
+  my $segmentcounter = 0;
+  while( $moresegmentsexist )
+    {
+    my $foundnext = 0;
+    foreach my $s ( keys %{ $config->{'profiles'}->{'profile'}->{$profilename}->{'path'}->{'segment'} } )
+      {
+      my $segmentid = $s;
+      my $nextsegment = $segmentcounter + 1;
+      $foundnext++ if( $segmentid == $nextsegment );
+      }
+    if( $foundnext )
+      {
+      $segmentcounter++;
+      }
+    else
+      {
+      $moresegmentsexist = 0;
+      }
+    }
+  return $segmentcounter;
+  }
+
+sub gettotalprofilepathlength
+  {
+  my ( $profilename ) = @_;
+  my $numberofsegments = getsegmentsinprofile( $profilename );
+  my $segment = 1;
+  my $pathlength = 0;
+  while( $segment <= $numberofsegments )
+    {
+    $pathlength = $pathlength + $config->{'profiles'}->{'profile'}->{$profilename}->{'path'}->{'segment'}->{$segment}->{'length'};
+    $segment++;
+    }
+  return $pathlength;
+  }
+
+sub converttorotations
+  {
+  my ( $distance, $diameter, $units ) = @_;
+  print "INFO: units detected: $units\n";
+  my $rotations = $distance / ( 3.1415926 * $diameter );
+  return $rotations;
+  }
+
+sub processprofilesegments
+  {
+  my ( $ident, $segments ) = @_;
+  
+  # extract control parameters from config hash ...
+  
+  my $itp = $config->{'controls'}->{'itp'};                   # in msec
+  my $t1 = $config->{'controls'}->{'t1'};                     # in msec
+  my $t2 = $config->{'controls'}->{'t2'};                     # in msec
+  my $vprog = $config->{'controls'}->{'velocity'};            # in rotations/sec
+  my $sensormode = $config->{'robot'}->{'sensor'}->{'mode'};  # we need to double distances if this is SensorSum mode
+  my $dist = converttorotations( gettotalprofilepathlength( $ident ), $config->{'robot'}->{'wheels'}->{'diameter'}, $config->{'units'}->{'length'} );
+  $dist = $dist * 2 if( "$sensormode" eq "SensorSum" );
+  
+  # generate the velocity array(s)
+  
+  my @velocities = getvelocities( $ident, $vprog, $dist, $t1, $t2, $itp );
+  
+  # now generate the position and acceleration arrays from the velocity array
+  
+  my @positions = getpositions( $itp, @velocities );
+  my @accelerations = getaccelerations( $itp, @velocities );
+  
+  # now generate the heading array from the positions array
+  
+  my @headings = getheadings( $ident, @positions );
+  
+  # construct buffer for header file
+  
+  my $hbuffer = "";   # buffer for data to go to HTML file
+  my $cbuffer = "";   # buffer for data to go to CSV file
+  my $gbuffer = "";   # buffer for data to go the GRAPH file
+  my $eol = ",";
+  my $steps = $#velocities + 1;
   my $i;
   for( $i = 0; $i < $steps; $i++ )
     {
-    my $velocity1 = $velocities1[$i];
-    my $velocity2 = 0;
-    if( ( $i >= $curve2offset ) && ( $i < $curve2offset + $#velocities2 ) )
+    my $rotations = @positions[$i];
+    my $rpm = @velocities[$i] * 60;
+    my $vel = @velocities[$i];
+    my $heading = @headings[$i];
+    my $duration = $itp;
+    if( $i == $steps - 1 )
       {
-      $velocity2 = $velocities2[$i - $curve2offset]
+      $eol = "};";
       }
-    push( @velocities, $velocity1 + ( $curve2multiplier * $velocity2 ) );
+    $hbuffer = $hbuffer . "{${rotations},\t${rpm},\t${heading},\t${duration}}${eol}\n";
+    $cbuffer = $cbuffer . "${rotations},${vel},${heading},${duration}\n";
+    $gbuffer = $gbuffer . @positions[$i] . "," . @velocities[$i] . "," . @accelerations[$i] . "\n";
     }
-  }
-else
-  {
-  print "ERROR: unrecognised mode - aborting!\n";
-  exit 1;
-  }
 
-
-
-# now generate the position and acceleration arrays from the velocity array
-
-my @positions = getpositions( $itp, @velocities );
-my @accelerations = getaccelerations( $itp, @velocities );
-
-
-
-# if necessary, inject the initial velocity
-
-if( $vini != 0 )
-  {
-  my $counter = 0;
-  foreach( @velocities )
+  # output the header file
+  
+  open( HDR, ">MotionProfile${ident}.h" );
+  print HDR "#pragma once\n";
+  print HDR "// COLUMN 1 = Position (rotations)\n";
+  print HDR "// COLUMN 2 = Velocity (rpm)\n";
+  print HDR "// COLUMN 3 = Heading (degrees)\n";
+  print HDR "// COLUMN 4 = Duration (ms)\n";
+  print HDR "const int k${ident}Sz = $steps;\n";
+  print HDR "const double k${ident}[][4] = {\n";
+  print HDR $hbuffer;
+  close( HDR );
+  
+  # output the csv file
+  
+  my $steps = $#velocities + 1;
+  my $i;
+  open( CSV, ">MotionProfile${ident}.csv" );
+  print CSV $cbuffer;
+  close( CSV );
+  
+  # output the graph file (this file is in a suitable format for use by the graph generation program)
+  
+  my $steps = $#velocities + 1;
+  my $i;
+  open( GRAPH, ">MotionProfile${ident}.graph" );
+  for( $i = 0; $i < $steps; $i++ )
     {
-    $velocities[$counter] = $velocities[$counter] + $vini;
-    $counter++;
+    print GRAPH "$i,$velocities[$i],$positions[$i],$accelerations[$i]\n";
     }
+  close( GRAPH );
+  
   }
-
-
-
-# if necessary, inject the initial position
-
-if( $pini != 0 )
-  {
-  my $counter = 0;
-  foreach( @positions )
-    {
-    $positions[$counter] = $positions[$counter] + $pini;
-    $counter++;
-    }
-  }
-
-
-
-# construct buffer for header file
-
-my $hbuffer = "";   # buffer for data to go to HTML file
-my $cbuffer = "";   # buffer for data to go to CSV file
-my $gbuffer = "";   # buffer for data to go the GRAPH file
-my $eol = ",";
-my $steps = $#velocities + 1;
-my $i;
-for( $i = 0; $i < $steps; $i++ )
-  {
-  my $rotations = @positions[$i];
-  my $rpm = @velocities[$i] * 60;
-  my $vel = @velocities[$i];
-  my $duration = $itp;
-  if( $i == $steps - 1 )
-    {
-    $eol = "};";
-    }
-  $hbuffer = $hbuffer . "{${rotations},\t${rpm}\t,${duration}}${eol}\n";
-  $cbuffer = $cbuffer . "${rotations},${vel},${duration}\n";
-  $gbuffer = $gbuffer . @positions[$i] . "," . @velocities[$i] . "," . @accelerations[$i] . "\n";
-  }
-
-
-
-# output the header file
-
-open( HDR, ">MotionProfile${ident}.h" );
-print HDR "// COLUMN 1 = Position (rotations)\n";
-print HDR "// COLUMN 2 = Velocity (rpm)\n";
-print HDR "// COLUMN 3 = Duration (ms)\n";
-print HDR "const int k${ident}Sz = $steps;\n";
-print HDR "const double k${ident}[][3] = {\n";
-print HDR $hbuffer;
-close( HDR );
-
-
-
-# output the csv file
-
-my $steps = $#velocities + 1;
-my $i;
-open( CSV, ">MotionProfile${ident}.csv" );
-print CSV $cbuffer;
-close( CSV );
-
-
-
-# output the graph file (this file is in a suitable format for use by the graph generation program)
-
-my $steps = $#velocities + 1;
-my $i;
-open( GRAPH, ">MotionProfile${ident}.graph" );
-for( $i = 0; $i < $steps; $i++ )
-  {
-  print GRAPH "$i,$velocities[$i],$positions[$i],$accelerations[$i]\n";
-  }
-close( GRAPH );
-
-
-
-exit 0;
-
-
-
-# -----------
-# subroutines
-# -----------
 
 sub getvelocities()
   {
@@ -215,7 +181,7 @@ sub getvelocities()
 
   my $step = 1;
   my $steps = 0;
-  my $maxsteps = 1000;
+  my $maxsteps = 2000;
   my $previousfilter1sum;
   my $previousvelocity = 0;
   my $previousposition = 0;
@@ -420,6 +386,105 @@ sub getaccelerations
     $step++;
     }
   print "INFO: completed calculation of accelerations sucessfully\n";
+  return @retvals;
+  }
+
+sub getheadings()
+  {
+  my ( $ident, @positions ) = @_;
+  my @retvals;
+  my $points = $#positions + 1;
+  my $segments = getsegmentsinprofile( $ident );
+  my $pathlength = gettotalprofilepathlength( $ident );
+  print "DEBUG: pathlength: $pathlength\n";
+  my $s = 1;
+  my $pathtally = 0;
+  my @segpoints;
+  my @waypoints;
+  push( @segpoints, 0 );
+  push( @waypoints, 0 );
+  while( $s <= $segments )
+    {
+    my $l = $config->{'profiles'}->{'profile'}->{$ident}->{'path'}->{'segment'}->{$s}->{'length'};
+    $pathtally = $pathtally + $l;
+    push( @segpoints, $pathtally );
+    push( @waypoints, int( $points * $pathtally / $pathlength ) );
+    $s++;
+    }
+
+  print "DEBUG: segpoints: ";
+  foreach( @segpoints ) { print ">$_< "; }
+  print "\n";
+
+  print "DEBUG: waypoints: ";
+  foreach( @waypoints ) { print ">$_< "; }
+  print "\n"; 
+
+  my $point = 1;
+  my $heading = 0;
+  my $previousheading = 0;
+  foreach( @positions )
+    {
+    # determine relevaant segment id
+    my $sid = 0;
+    while( $point > @waypoints[$sid] )
+      {
+      $sid++;
+      }
+
+    # determine type of segment (straight/turn)
+    my $type = $config->{'profiles'}->{'profile'}->{$ident}->{'path'}->{'segment'}->{$sid}->{'type'};
+
+    # determine direction (backward/forward)
+    my $direction = $config->{'profiles'}->{'profile'}->{$ident}->{'path'}->{'segment'}->{$sid}->{'direction'};
+
+    if( "$type" eq "straight" )
+      {
+      $heading = $previousheading;
+      }
+    elsif( "$type" eq "turn" )
+      {
+      # determine turn direction (left/right)
+      my $turn = $config->{'profiles'}->{'profile'}->{$ident}->{'path'}->{'segment'}->{$sid}->{'turn'};
+      # determine angle
+      my $angle = $config->{'profiles'}->{'profile'}->{$ident}->{'path'}->{'segment'}->{$sid}->{'angle'};
+      # calculate heading
+# print "$angle $point @waypoints[$sid] @waypoints[$sid-1]\n" if( $sid == 1 );
+      if( "$turn" eq "left" )
+        {
+        $heading = $angle * ($point-@waypoints[$sid-1]) / (@waypoints[$sid]-@waypoints[$sid-1]);
+        }
+      elsif( "$turn" eq "right" )
+        {
+        $heading = -$angle * ($point-@waypoints[$sid]) / (@waypoints[$sid]-@waypoints[$sid-1]);
+        }
+      else
+        {
+        print "ERROR: bad segment turn detected ($turn) - aborting!\n";
+        exit 1;
+        }
+      $previousheading = $heading;
+      }
+    else
+      {
+      print "ERROR: bad segment type detected ($type) - aborting!\n";
+      exit 1;
+      }
+
+#    my $heading = 0.0;
+#    if( $point <= @waypoints[1] )
+#      { $heading = 45.0 * ($point-@waypoints[0]) / (@waypoints[1]-@waypoints[0]) }
+#    elsif( $point <= @waypoints[2] )
+#      { $heading = 45.0; }
+#    elsif( $point <= @waypoints[3] )
+#      { $heading = -45.0 * ($point-@waypoints[3]) / (@waypoints[3]-@waypoints[2]) }
+#    else
+#      { $heading = 0; }
+
+    push( @retvals, $heading );
+    $point++;
+    }
+  print "INFO: completed calculation of $points headings sucessfully\n";
   return @retvals;
   }
 

@@ -48,5 +48,5 @@ private:
 	BufferedTrajectoryPointStream *_bufferedStream;
 	PlotThread *_plotThread;
 
-	void InitBuffer(const double profile[][3], int totalCnt, double rotations);
+	void InitBuffer(const double profile[][4], int totalCnt, double rotations);
 };

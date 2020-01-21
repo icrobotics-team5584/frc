@@ -9,11 +9,17 @@
 
 #include "commands/CmdIntake.h"
 #include "commands/CmdOuttake.h"
+#include <frc/Joystick.h>
 
+#include "commands/CmdDriveSlowDown.h"
 OI::OI() {
   std::cout<< "OI Started" << std::endl;
 
   joystick1.reset(new frc::Joystick(0));
+
+  btnSlowDown.reset(new AxisButton(joystick1.get(), triggerL));
+
+  btnSlowDown->WhileHeld(new CmdDriveSlowDown());
 
   std::cout<< "1" << std::endl;
 
@@ -35,10 +41,18 @@ OI::OI() {
   std::cout<< "OI Ended" << std::endl;
 }
 
+
+
 double OI::getJoystickX(){
   return joystick1->GetX();
 }
 
 double OI::getJoystickY(){
   return joystick1->GetY();
+}
+
+
+
+double OI::GetRightAsix(){
+  return btnSlowDown->GetAxis();
 }
