@@ -45,7 +45,7 @@ void SubDriveBase::Periodic(){
 void SubDriveBase::drive(double speed, double rotation, bool squaredInputs){
   frc::SmartDashboard::PutNumber("speed", speed);
   frc::SmartDashboard::PutNumber("rot", rotation);
-  DiffDrive->ArcadeDrive(speed, rotation, squaredInputs);
+  DiffDrive->ArcadeDrive(-speed, rotation, squaredInputs);
 }
 
 double SubDriveBase::getYaw(){
