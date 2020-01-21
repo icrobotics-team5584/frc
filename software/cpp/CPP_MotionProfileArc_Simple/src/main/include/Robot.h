@@ -23,6 +23,8 @@ public:
 
 private:
 	int _state;
+    int profile_num;
+	int loop_count;
 
 	// DIZZY MOTOR CONTROLLERS:
 	// TalonSRX *_rightMaster;

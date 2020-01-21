@@ -16,26 +16,41 @@
     <angle>degrees</angle>
   </units>
   <profiles>
-    <profile name="InitialisationToTrench01">
+    <profile name="InitialisationToTrench01" direction="forwards">
       <path>
-        <segment id="1" type="turn" direction="forwards" turn="left" angle="45" length="24"/>
-        <segment id="2" type="straight" direction="forwards" length="48"/>
-        <segment id="3" type="turn" direction="forwards" turn="right" angle="45" length="24"/>
-        <segment id="4" type="straight" direction="forwards" length="120"/>
+        <segment id="1" type="turn" turn="left" angle="45" length="24"/>
+        <segment id="2" type="straight" length="48"/>
+        <segment id="3" type="turn" turn="right" angle="45" length="24"/>
+        <segment id="4" type="straight" length="120"/>
       </path>
     </profile>
-    <profile name="TrenchToPowerCellZone01">
+    <profile name="TrenchToPowerCellZone01" direction="backwards">
       <path>
-        <segment id="1" type="straight" direction="backwards" length="120"/>
-        <segment id="2" type="turn" direction="backwards" turn="right" angle="45" length="24"/>
-        <segment id="3" type="straight" direction="backwards" length="48"/>
-        <segment id="4" type="turn" direction="backwards" turn="left" angle="45" length="24"/>
-        <segment id="5" type="straight" direction="backwards" length="120"/>
+        <segment id="1" type="straight" length="120"/>
+        <segment id="2" type="turn" turn="right" angle="45" length="24"/>
+        <segment id="3" type="straight" length="48"/>
+        <segment id="4" type="turn" turn="left" angle="45" length="24"/>
+        <segment id="5" type="straight" length="120"/>
       </path>
     </profile>
-    <profile name="MotionProfile">
+    <profile name="DemoStraight01" direction="forwards">
       <path>
-        <segment id="1" type="turn" direction="forwards" turn="left" angle="90" length="96"/>
+        <segment id="1" type="straight" length="96"/>
+      </path>
+    </profile>
+    <profile name="DemoStraightBackwards01" direction="backwards">
+      <path>
+        <segment id="1" type="straight" length="96"/>
+      </path>
+    </profile>
+    <profile name="DemoTurnLeft01" direction="forwards">
+      <path>
+        <segment id="1" type="turn" turn="left" angle="90" length="96"/>
+      </path>
+    </profile>
+    <profile name="DemoTurnRight01" direction="forwards">
+      <path>
+        <segment id="1" type="turn" turn="right" angle="90" length="96"/>
       </path>
     </profile>
   </profiles>

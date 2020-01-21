@@ -1,7 +1,12 @@
 #include "Robot.h"
-#include "MotionProfile.h"
+#include "MotionProfileDemoStraight01.h"
+#include "MotionProfileDemoTurnLeft01.h"
+#include "MotionProfileDemoTurnRight01.h"
+#include "MotionProfileInitialisationToTrench01.h"
+#include "MotionProfileTrenchToPowerCellZone01.h"
+#include "MotionProfileDemoStraightBackwards01.h"
 #include "Instrum.h"
-#
+
 void Robot::RobotInit() 
 {
     /* Construct global variables */
@@ -53,12 +58,18 @@ void Robot::RobotInit()
     _plotThread = new PlotThread(_rightMaster);
 
     /* Initialize buffer with motion profile */
-    InitBuffer(kMotionProfile, kMotionProfileSz, 1.0); //Do a full (1.0) rotation to the left
+//    InitBuffer(kMotionProfile, kMotionProfileSz, 1.0); //Do a full (1.0) rotation to the left
 //    InitBuffer(kMotionProfile, kMotionProfileSz, 0.5); //Do a half (0.5) rotation to the left
 //    InitBuffer(kMotionProfile, kMotionProfileSz, 0.25); //Do a quarter (0.25) rotation to the left
 //    InitBuffer(kMotionProfile, kMotionProfileSz, 0.0); //No rotation
-    _state = 0;
 
+//    InitBuffer(kMotionProfile, kMotionProfileSz, 0.0);
+//    InitBuffer(kInitialisationToTrench01, kInitialisationToTrench01Sz, 0.0);
+//    InitBuffer(kTrenchToPowerCellZone01, kTrenchToPowerCellZone01Sz, 0.0);
+
+    profile_num = 0;
+    loop_count = 0;
+    _state = 0;
 
     _masterConfig = new MasterProfileConfiguration(_leftMaster, _pidgeyNest, _pidgey);
     _followConfig = new FollowerProfileConfiguration();
@@ -96,8 +107,41 @@ void Robot::TeleopPeriodic()
     /* get joystick button and stick */
     bool bPrintValues = _joystick->GetRawButton(2);
     bool bFireMp = _joystick->GetRawButton(1);
+    bool bNextMp = _joystick->GetRawButton(3);
     double axis = -_joystick->GetRawAxis(1);
     double turn = _joystick->GetRawAxis(0);
+
+    loop_count++;
+
+    /* if button is held for a while, shift to next MP */
+    if( ( bNextMp == true ) && ( (double)loop_count/50 == int( (double)loop_count/50) ) ) {
+            profile_num = profile_num < 5 ? profile_num + 1 : 0;
+    }
+
+    frc::SmartDashboard::PutNumber("profile_num", profile_num);
+    switch( profile_num ) {
+        case 0:
+            frc::SmartDashboard::PutString("profile_name", "DemoStraight01");
+            break;
+        case 1:
+            frc::SmartDashboard::PutString("profile_name", "DemoTurnLeft01");
+            break;
+        case 2:
+            frc::SmartDashboard::PutString("profile_name", "DemoTurnRight01");
+            break;
+        case 3:
+            frc::SmartDashboard::PutString("profile_name", "InitialisationToTrench01");
+            break;
+        case 4:
+            frc::SmartDashboard::PutString("profile_name", "TrenchToPowerCellZone01");
+            break;
+        case 5:
+            frc::SmartDashboard::PutString("profile_name", "DemoStraightBackwards01");
+            break;
+        default:
+            frc::SmartDashboard::PutString("profile_name", "DemoStraight01");
+            break;
+    }
 
     /* if button is up, just drive the motor in PercentOutput */
     if (bFireMp == false) {
@@ -112,6 +156,36 @@ void Robot::TeleopPeriodic()
 
             if (bFireMp == true) {
                 /* go to MP logic */
+                switch( profile_num ) {
+                    case 0:
+                        Instrum::PrintLine("Loading: DemoStraight01");
+                        InitBuffer(kDemoStraight01, kDemoStraight01Sz, 0.0);
+                        break;
+                    case 1:
+                        Instrum::PrintLine("Loading: DemoTurnLeft01");
+                        InitBuffer(kDemoTurnLeft01, kDemoTurnLeft01Sz, 0.0);
+                        break;
+                    case 2:
+                        Instrum::PrintLine("Loading: DemoTurnRight01");
+                        InitBuffer(kDemoTurnRight01, kDemoTurnRight01Sz, 0.0);
+                        break;
+                    case 3:
+                        Instrum::PrintLine("Loading: InitialisationToTrench01");
+                        InitBuffer(kInitialisationToTrench01, kInitialisationToTrench01Sz, 0.0);
+                        break;
+                    case 4:
+                        Instrum::PrintLine("Loading: TrenchToPowerCellZone01");
+                        InitBuffer(kTrenchToPowerCellZone01, kTrenchToPowerCellZone01Sz, 0.0);
+                        break;
+                    case 5:
+                        Instrum::PrintLine("Loading: DemoStraightBackwards01");
+                        InitBuffer(kDemoStraightBackwards01, kDemoStraightBackwards01Sz, 0.0);
+                        break;
+                    default:
+                        Instrum::PrintLine("Loading: DemoStraight01");
+                        InitBuffer(kDemoStraight01, kDemoStraight01Sz, 0.0);
+                        break;
+                }
                 _state = 1;
             }
             break;
@@ -161,12 +235,12 @@ void Robot::InitBuffer(const double profile[][4], int totalCnt, double rotations
     TrajectoryPoint point; // temp for for loop, since unused params are initialized
                            // automatically, you can alloc just one
 
-    /* clear the buffer, in case it was used elsewhere */
+    // clear the buffer, in case it was used elsewhere
     _bufferedStream->Clear();
 
     // double turnAmount = rotations * 8192.0; //8192 units per rotation for a pigeon
 
-    /* Insert every point into buffer, no limit on size */
+    // Insert every point into buffer, no limit on size
     for (int i = 0; i < totalCnt; ++i) {
 
         double direction = forward ? +1 : -1;
@@ -175,28 +249,17 @@ void Robot::InitBuffer(const double profile[][4], int totalCnt, double rotations
         double headingDeg = profile[i][2];
         int durationMilliseconds = (int) profile[i][3];
 
-        /* for each point, fill our structure and pass it to API */
         point.timeDur = durationMilliseconds;
-        point.position = direction * positionRot * 4096; // Convert Revolutions to
-                                                         // Units
-        point.velocity = direction * velocityRPM * 4096 / 600.0; // Convert RPM to
-                                                                 // Units/100ms
-        
-        /** 
-         * Here is where you specify the heading of the robot at each point. 
-         * In this example we're linearly interpolating creating a segment of a circle to follow
-         */
-        point.auxiliaryPos = ( headingDeg / 360.0 ) * 8192.0; //8192 units per rotation for a pigeon
-        
+        point.position = direction * positionRot * 4096; // Convert Revolutions to Units
+        point.velocity = direction * velocityRPM * 4096 / 600.0; // Convert RPM to Units/100ms
+        point.auxiliaryPos = ( headingDeg / 360.0 ) * 8192.0; // 8192 units per rotation for a pigeon
         point.auxiliaryVel = 0;
-        
-        point.profileSlotSelect0 = 0; /* which set of gains would you like to use [0,3]? */
-        point.profileSlotSelect1 = 1; /* which set of gains would you like to use [0,3]? */
-        point.zeroPos = (i == 0); /* set this to true on the first point */
-        point.isLastPoint = ((i + 1) == totalCnt); /* set this to true on the last point */
-        point.arbFeedFwd = 0; /* you can add a constant offset to add to PID[0] output here */
-
-        point.useAuxPID = true; /* Using auxiliary PID */
+        point.profileSlotSelect0 = 0; // which set of gains would you like to use [0,3]? 
+        point.profileSlotSelect1 = 1; // which set of gains would you like to use [0,3]? 
+        point.zeroPos = (i == 0); // set this to true on the first point 
+        point.isLastPoint = ((i + 1) == totalCnt); // set this to true on the last point 
+        point.arbFeedFwd = 0; // you can add a constant offset to add to PID[0] output here 
+        point.useAuxPID = true; // Using auxiliary PID
         _bufferedStream->Write(point);
     }
 }
@@ -204,3 +267,4 @@ void Robot::InitBuffer(const double profile[][4], int totalCnt, double rotations
 #ifndef RUNNING_FRC_TESTS
 int main() { return frc::StartRobot<Robot>(); }
 #endif
+
