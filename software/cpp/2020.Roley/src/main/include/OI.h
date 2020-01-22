@@ -7,15 +7,39 @@
 
 #pragma once
 
+#include "frc/buttons/JoystickButton.h"
 #include <iostream>
-#include <frc/Joystick.h>
 #include "subsystems/AxisButton.h"
+#include "frc/Joystick.h"
 
- enum Triggers {
+enum Buttons{
+      aBtn = 1, 
+      bBtn = 2,
+      xBtn = 3,
+      yBtn = 4, 
+      leftBtn = 5,
+      rightBtn = 6,
+      backBtn = 7, 
+      startBtn = 8, 
+      leftStickBtn = 9,
+      rightStickBtn = 10
+};
+
+enum POVPositions {
+      UP = 0,
+      UP_RIGHT = 45,
+      RIGHT = 90,
+      DOWN_RIGHT = 135,
+      DOWN = 180,
+      DOWN_LEFT = 225,
+      LEFT = 270,
+      UP_LEFT = 315,
+};
+
+enum Triggers {
       triggerL = 2,
       triggerR = 3,
 };
-
 
 class OI {
  public:
@@ -29,5 +53,7 @@ class OI {
 
  std::unique_ptr<frc::Joystick> joystick1;
  std::unique_ptr<AxisButton> btnSlowDown;
-
+ private:
+  std::unique_ptr<frc::JoystickButton> btnIntake;
+  std::unique_ptr<frc::JoystickButton> btnOuttake;
 };
