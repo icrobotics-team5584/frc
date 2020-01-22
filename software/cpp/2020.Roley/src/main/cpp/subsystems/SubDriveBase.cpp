@@ -32,7 +32,7 @@ void SubDriveBase::InitDefaultCommand() {
 void SubDriveBase::drive(double speed, double rotation){
   frc::SmartDashboard::PutNumber("speed", speed);
   frc::SmartDashboard::PutNumber("rot", rotation);
-  DiffDrive->ArcadeDrive(speed, rotation);
+  DiffDrive->ArcadeDrive(-speed, rotation);
 }
 // Put methods for controlling this subsystem
 // here. Call these from Commands.

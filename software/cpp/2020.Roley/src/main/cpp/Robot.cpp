@@ -10,17 +10,18 @@
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
-std::unique_ptr<SubDriveBase> Robot::subDriveBase;
 std::unique_ptr<SubShooter> Robot::subShooter;
 std::unique_ptr<SubStorage> Robot::subStorage;
+std::unique_ptr<SubIntake> Robot::subIntake;
+std::shared_ptr<SubDriveBase> Robot::subDriveBase;
 OI Robot::m_oi;
 
 
 void Robot::RobotInit() {
   subDriveBase.reset(new SubDriveBase());
+  subIntake.reset(new SubIntake);
   subShooter.reset(new SubShooter());
   subStorage.reset(new SubStorage());
-
 }
 
 /**

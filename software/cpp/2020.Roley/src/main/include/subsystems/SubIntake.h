@@ -7,29 +7,23 @@
 
 #pragma once
 
-#include <frc/drive/DifferentialDrive.h>
-#include <ctre/Phoenix.h>
-#include "frc/commands/Subsystem.h"
-#include "frc/smartdashboard/SmartDashboard.h"
+#include <frc/commands/Subsystem.h>
+#include "RobotMap.h"
+#include "ctre/Phoenix.h"
 
-using namespace std;
-
-class SubDriveBase : public frc::Subsystem {
+class SubIntake : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
+  const double kDefaultSpeed = 1;
+  double _speed = kDefaultSpeed;
+  std::shared_ptr<TalonSRX> srxIntake;
 
-  
  public:
-    
-  shared_ptr<WPI_TalonSRX> _srxFrontLeft;
-  shared_ptr<WPI_TalonSRX> _srxFrontRight;
-  shared_ptr<WPI_TalonSRX> _srxBackLeft;
-  shared_ptr<WPI_TalonSRX> _srxBackRight;
-
-  unique_ptr<frc::DifferentialDrive> DiffDrive;
-  
-  SubDriveBase();
+  SubIntake();
   void InitDefaultCommand() override;
-  void drive(double speed, double rotation);
+  void Intake();
+  void Outtake();
+  void Stop();
+  virtual void Periodic();
 };

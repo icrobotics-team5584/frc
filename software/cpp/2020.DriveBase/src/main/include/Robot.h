@@ -10,13 +10,15 @@
 #include <frc/TimedRobot.h>
 #include <frc/commands/Command.h>
 #include <frc/smartdashboard/SendableChooser.h>
-
+#include "networktables/NetworkTable.h"
+#include "networktables/NetworkTableInstance.h"
 #include "OI.h"
 #include "subsystems/SubDriveBase.h"
 
 class Robot : public frc::TimedRobot {
  public:
   static std::shared_ptr<SubDriveBase> subDriveBase;
+  static std::shared_ptr<nt::NetworkTable> ntTable;
   static OI m_oi;
 
   void RobotInit() override;

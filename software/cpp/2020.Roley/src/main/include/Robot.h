@@ -16,8 +16,12 @@
 #include "subsystems/SubDriveBase.h"
 #include "subsystems/SubStorage.h"
 
+#include "subsystems/SubIntake.h"
+
 class Robot : public frc::TimedRobot {
  public:
+  
+
   static OI m_oi;
   static std::unique_ptr<SubShooter> subShooter;
   static std::unique_ptr<SubStorage> subStorage;
@@ -33,7 +37,7 @@ class Robot : public frc::TimedRobot {
   void TeleopPeriodic() override;
   void TestPeriodic() override;
 
-
+  static std::unique_ptr<SubIntake> subIntake;
 
  private:
   // Have it null by default so that if testing teleop it
