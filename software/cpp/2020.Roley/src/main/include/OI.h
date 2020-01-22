@@ -11,6 +11,7 @@
 #include <iostream>
 #include "subsystems/AxisButton.h"
 #include "frc/Joystick.h"
+#include "frc/buttons/JoystickButton.h"
 
 enum Buttons{
       aBtn = 1, 
@@ -53,6 +54,12 @@ class OI {
 
  std::unique_ptr<frc::Joystick> joystick1;
  std::unique_ptr<AxisButton> btnSlowDown;
+
+ std::unique_ptr<frc::JoystickButton> btnShoot;
+ std::unique_ptr<frc::JoystickButton> btnForward;
+ std::unique_ptr<frc::JoystickButton> btnBackward;
+  
+
  private:
   std::unique_ptr<frc::JoystickButton> btnIntake;
   std::unique_ptr<frc::JoystickButton> btnOuttake;

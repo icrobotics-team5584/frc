@@ -11,6 +11,13 @@ enum Can {
     can_srxDriveBaseBackLeft = 2,
     can_srxDriveBaseFrontRight = 3,
     can_srxDriveBaseBackRight = 4,
+    can_srxShooterLeft = 5,
+    can_srxShooterRight = 6,
+
+};
+
+enum PWM{
+    pwn_Storage = 0,
 };
 
 

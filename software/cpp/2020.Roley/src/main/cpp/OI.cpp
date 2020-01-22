@@ -6,6 +6,9 @@
 /*----------------------------------------------------------------------------*/
 
 #include "OI.h"
+#include "commands/CmdShooterShoot.h"
+#include "commands/CmdRollStorage.h"
+#include "commands/CmdRollStorageBack.h"
 
 #include "commands/CmdIntake.h"
 #include "commands/CmdOuttake.h"
@@ -16,7 +19,13 @@ OI::OI() {
   std::cout<< "OI Started" << std::endl;
 
   joystick1.reset(new frc::Joystick(0));
+  btnShoot.reset(new frc::JoystickButton(joystick1.get(),aBtn));
+  btnForward.reset(new frc::JoystickButton(joystick1.get(),xBtn));
+  btnBackward.reset(new frc::JoystickButton(joystick1.get(),yBtn));
 
+  btnShoot->WhileHeld(new CmdShooterShoot);
+  btnForward->WhileHeld(new CmdRollStorage);
+  btnBackward->WhileHeld(new CmdRollStorageBack);
   btnSlowDown.reset(new AxisButton(joystick1.get(), triggerL));
 
   btnSlowDown->WhileHeld(new CmdDriveSlowDown());

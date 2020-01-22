@@ -1,0 +1,4 @@
+See file:///C:/Users/Mitch/Documents/Git%20Repos/frc/software/cpp/2020.DriveBase/2020DriveBase/build/tmp/compileFrcUserProgramReleaseExecutableFrcUserProgramCpp/output.txt for all output for compileFrcUserProgramReleaseExecutableFrcUserProgramCpp.
+compiling SubDriveBase.cpp successful.
+
+Finished compileFrcUserProgramReleaseExecutableFrcUserProgramCpp, see full log file:///C:/Users/Mitch/Documents/Git%20Repos/frc/software/cpp/2020.DriveBase/2020DriveBase/build/tmp/compileFrcUserProgramReleaseExecutableFrcUserProgramCpp/output.txt.

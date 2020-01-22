@@ -1,0 +1,4 @@
+See file:///C:/Users/Mitch/Documents/Git%20Repos/frc/software/cpp/2020.DriveBase/2020DriveBase/build/tmp/linkFrcUserProgramDebugExecutable/output.txt for all output for linkFrcUserProgramDebugExecutable.
+linking frcUserProgram successful.
+
+Finished linkFrcUserProgramDebugExecutable, see full log file:///C:/Users/Mitch/Documents/Git%20Repos/frc/software/cpp/2020.DriveBase/2020DriveBase/build/tmp/linkFrcUserProgramDebugExecutable/output.txt.
