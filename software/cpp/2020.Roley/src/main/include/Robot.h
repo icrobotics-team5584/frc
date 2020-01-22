@@ -25,7 +25,7 @@ class Robot : public frc::TimedRobot {
   static OI m_oi;
   static std::unique_ptr<SubShooter> subShooter;
   static std::unique_ptr<SubStorage> subStorage;
-  static std::unique_ptr<SubDriveBase> subDriveBase;
+  static std::shared_ptr<SubDriveBase> subDriveBase;
 
   void RobotInit() override;
   void RobotPeriodic() override;
