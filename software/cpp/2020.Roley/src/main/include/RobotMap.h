@@ -14,6 +14,7 @@ enum Can {
     can_srxShooterLeft = 5,
     can_srxShooterRight = 6,
 
+    can_srxDriveBaseAutoDolly = 7,
 };
 
 enum PWM{

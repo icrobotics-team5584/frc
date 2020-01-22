@@ -53,6 +53,7 @@ class OI {
   double GetRightAsix();
 
  std::unique_ptr<frc::Joystick> joystick1;
+ std::unique_ptr<frc::JoystickButton> btnAuto;
  std::unique_ptr<AxisButton> btnSlowDown;
 
  std::unique_ptr<frc::JoystickButton> btnShoot;

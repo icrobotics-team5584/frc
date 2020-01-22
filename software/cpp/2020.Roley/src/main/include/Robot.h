@@ -15,6 +15,8 @@
 #include "subsystems/SubShooter.h"
 #include "subsystems/SubDriveBase.h"
 #include "subsystems/SubStorage.h"
+#include "Utilities/PosEncoderGyro.h"
+#include "commands/CmdResetGyro.h"
 
 #include "subsystems/SubIntake.h"
 
@@ -26,7 +28,9 @@ class Robot : public frc::TimedRobot {
   static std::unique_ptr<SubShooter> subShooter;
   static std::unique_ptr<SubStorage> subStorage;
   static std::shared_ptr<SubDriveBase> subDriveBase;
-
+  static std::shared_ptr<PosEncoderGyro> posEncoderGyro;
+  static std::shared_ptr<CmdResetGyro> cmdResetGyro;
+  
   void RobotInit() override;
   void RobotPeriodic() override;
   void DisabledInit() override;

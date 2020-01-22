@@ -6,26 +6,28 @@
 /*----------------------------------------------------------------------------*/
 
 #include "OI.h"
+#include "Commands/CmdAutoRoutineOne.h"
 #include "commands/CmdShooterShoot.h"
 #include "commands/CmdRollStorage.h"
 #include "commands/CmdRollStorageBack.h"
-
+#include "commands/CmdDriveSlowDown.h"
 #include "commands/CmdIntake.h"
 #include "commands/CmdOuttake.h"
 #include <frc/Joystick.h>
 
-#include "commands/CmdDriveSlowDown.h"
 OI::OI() {
   std::cout<< "OI Started" << std::endl;
-
+#include "commands/CmdDriveSlowDown.h"
   joystick1.reset(new frc::Joystick(0));
-  btnShoot.reset(new frc::JoystickButton(joystick1.get(),aBtn));
+  btnAuto.reset(new frc::JoystickButton(joystick1.get(), aBtn));//Button A
+  btnAuto->WhenPressed(new CmdAutoRoutineOne());//Runs Auto Routine command group
+  btnShoot.reset(new frc::JoystickButton(joystick1.get(), bBtn));
   btnForward.reset(new frc::JoystickButton(joystick1.get(),xBtn));
   btnBackward.reset(new frc::JoystickButton(joystick1.get(),yBtn));
 
-  btnShoot->WhileHeld(new CmdShooterShoot);
-  btnForward->WhileHeld(new CmdRollStorage);
-  btnBackward->WhileHeld(new CmdRollStorageBack);
+  btnShoot->WhileHeld(new CmdShooterShoot());
+  btnForward->WhileHeld(new CmdRollStorage());
+  btnBackward->WhileHeld(new CmdRollStorageBack());
   btnSlowDown.reset(new AxisButton(joystick1.get(), triggerL));
 
   btnSlowDown->WhileHeld(new CmdDriveSlowDown());

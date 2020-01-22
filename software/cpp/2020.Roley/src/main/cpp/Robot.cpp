@@ -14,6 +14,8 @@ std::unique_ptr<SubShooter> Robot::subShooter;
 std::unique_ptr<SubStorage> Robot::subStorage;
 std::unique_ptr<SubIntake> Robot::subIntake;
 std::shared_ptr<SubDriveBase> Robot::subDriveBase;
+std::shared_ptr<PosEncoderGyro> Robot::posEncoderGyro;
+std::shared_ptr<CmdResetGyro> Robot::cmdResetGyro;
 OI Robot::m_oi;
 
 
@@ -22,6 +24,14 @@ void Robot::RobotInit() {
   subIntake.reset(new SubIntake);
   subShooter.reset(new SubShooter());
   subStorage.reset(new SubStorage());
+  posEncoderGyro.reset(new PosEncoderGyro());
+  cmdResetGyro.reset(new CmdResetGyro());
+  posEncoderGyro->reset();
+  //enable cmd yaw to be run without being cancelled
+  cmdResetGyro->SetRunWhenDisabled(true);
+  //runs a cmd that waits for th navx to stop calibrating then resets gyro
+  cmdResetGyro->Start();
+  std::cout << "robot init" << std::endl;
 }
 
 /**
@@ -41,7 +51,8 @@ void Robot::RobotPeriodic() {
 
   frc::SmartDashboard::PutNumber("Joy x", m_oi.getJoystickX());
   frc::SmartDashboard::PutNumber("Joy y", m_oi.getJoystickY());
-  
+  posEncoderGyro->updateAbsolutePosition();
+  posEncoderGyro->updateRelativePosition();
 }
 
 /**
@@ -72,9 +83,6 @@ void Robot::AutonomousInit() {
   // } else {
   //   m_autonomousCommand = &m_defaultAuto;
   // }
-
-
-
 }
 
 void Robot::AutonomousPeriodic() { frc::Scheduler::GetInstance()->Run(); }
@@ -84,7 +92,6 @@ void Robot::TeleopInit() {
   // teleop starts running. If you want the autonomous to
   // continue until interrupted by another command, remove
   // this line or comment it out.
-
 }
 
 void Robot::TeleopPeriodic() { 
