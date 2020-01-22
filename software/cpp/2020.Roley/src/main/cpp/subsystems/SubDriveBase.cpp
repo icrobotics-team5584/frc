@@ -44,7 +44,7 @@ void SubDriveBase::Periodic(){
   if(ahrsNavXGyro->IsCalibrating()){
     std::cout << "navx calibrating" << std::endl;
     
-  };
+  }
 }
 
 void SubDriveBase::drive(double speed, double rotation, bool squaredInputs){
