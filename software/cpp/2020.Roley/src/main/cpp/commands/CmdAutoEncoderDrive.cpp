@@ -21,10 +21,13 @@ CmdAutoEncoderDrive::CmdAutoEncoderDrive(PIDAutoConfig _PIDConfig) {
   _D = _PIDConfig.D; 
   _Speed = _PIDConfig.speed;//speed of the robot
   _TargetY = _PIDConfig.targetY;  // position of the end of the target line 
+  _TargetAngle = _PIDConfig.targetAngle;
 }
 
 // Called just before this Command runs the first time
 void CmdAutoEncoderDrive::Initialize() {
+  Robot::posEncoderGyro->setTempPosition(Robot::posEncoderGyro->getPositionX(), Robot::posEncoderGyro->getPositionY());
+  Robot::posEncoderGyro->setTempAngle(_TargetAngle);
   //checks which direction the robot will be going so it knows when it has reached the target
   if(Robot::posEncoderGyro->getPositionY() < _TargetY){
     isForward = true;

@@ -35,6 +35,9 @@ void SubDriveBase::InitDefaultCommand() {
 }
 
 void SubDriveBase::Periodic(){
+  autoYaw = getActualYaw() - _targetYaw;
+  SmartDashboard::PutNumber("autoyaw", autoYaw);
+
   SmartDashboard::PutNumber("yaw", ahrsNavXGyro->GetYaw());
   if(ahrsNavXGyro->IsCalibrating()){
     std::cout << "navx calibrating" << std::endl;
@@ -49,7 +52,15 @@ void SubDriveBase::drive(double speed, double rotation, bool squaredInputs){
 }
 
 double SubDriveBase::getYaw(){
+  return autoYaw;
+}
+
+double SubDriveBase::getActualYaw(){
   return ahrsNavXGyro->GetYaw();
+}
+
+void SubDriveBase::setTargetYaw(double targetYaw){
+  _targetYaw = targetYaw;
 }
 
 void SubDriveBase::zeroEncoders(){
@@ -73,7 +84,7 @@ void SubDriveBase::autoEncoderDrive(double target, double P, double I, double D,
 
   double error;
   double position;
-  position = Robot::posEncoderGyro->getPositionX();//gets position from custom class located at "PosEncoderGyro.cpp"
+  position = Robot::posEncoderGyro->getTempPositionX();//gets position from custom class located at "PosEncoderGyro.cpp"
   SmartDashboard::PutNumber("position", position);
   SmartDashboard::PutNumber("trench position", position + 1.7);
 
@@ -92,7 +103,7 @@ void SubDriveBase::autoEncoderDrive(double target, double P, double I, double D,
     error = 1;
   }
   //checks if the robot is over spinning and changes steering to zero. the derivative catches the robot at the line
-  if((ahrsNavXGyro->GetYaw() < -50 && error < 0) || (ahrsNavXGyro->GetYaw() > 50 && error > 0)){
+  if((autoYaw < -50 && error < 0) || (autoYaw > 50 && error > 0)){
     error = 0;
   }
   SmartDashboard::PutNumber("error2", error);

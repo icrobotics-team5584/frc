@@ -45,6 +45,8 @@ class SubDriveBase : public frc::Subsystem {
   double previousError;
   double intergral = 0;
   double AutoSpeed = 0.8;
+  double autoYaw = 0;
+  double _targetYaw;
  public:
   SubDriveBase();
   void InitDefaultCommand() override;
@@ -56,4 +58,6 @@ class SubDriveBase : public frc::Subsystem {
   void resetYaw();
   void Periodic() override;
   bool isNavxCal();
+  double getActualYaw();
+  void setTargetYaw(double TargetYaw);
 };

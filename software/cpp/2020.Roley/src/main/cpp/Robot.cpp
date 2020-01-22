@@ -38,9 +38,8 @@ void Robot::RobotPeriodic() {
 
   frc::SmartDashboard::PutNumber("Joy x", m_oi.getJoystickX());
   frc::SmartDashboard::PutNumber("Joy y", m_oi.getJoystickY());
-  posEncoderGyro->updatePosition();
-
-
+  posEncoderGyro->updateAbsolutePosition();
+  posEncoderGyro->updateRelativePosition();
 }
 
 /**

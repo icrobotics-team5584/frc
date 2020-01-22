@@ -22,7 +22,7 @@ PIDAutoConfig autoRoutineOneLegTwo = {
   0.8,      //speed
   -1.7,     //targetX
   2.312,    //targetY
-  0,        //targetAngle
+  -22.5,        //targetAngle
   90        //targetAngle of Attack
 };
 //Three
