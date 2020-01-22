@@ -1,0 +1,9 @@
+[
+  {
+    "artifact": "frcCpp (in project 2020DriveBase)",
+    "target": "roborio",
+    "component": "frcUserProgram",
+    "debugfile": "frcCpp_roborio.debugconfig",
+    "language": "cpp"
+  }
+]

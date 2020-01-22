@@ -7,20 +7,22 @@
 
 #pragma once
 
-#include "frc/drive/DifferentialDrive.h"
-#include<iostream>
-#include "RobotMap.h"
+#include <frc/drive/DifferentialDrive.h>
 #include <ctre/Phoenix.h>
 #include "frc/commands/Subsystem.h"
 #include "frc/smartdashboard/SmartDashboard.h"
 #include <AHRS.h>
 #include "Utilities/PosEncoderGyro.h"
 using namespace std;
+
 class SubDriveBase : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
+
   
+ public:
+    
   shared_ptr<WPI_TalonSRX> _srxFrontLeft;
   shared_ptr<WPI_TalonSRX> _srxFrontRight;
   shared_ptr<WPI_TalonSRX> _srxBackLeft;

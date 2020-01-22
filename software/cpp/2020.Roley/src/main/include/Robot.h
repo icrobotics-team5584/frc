@@ -12,14 +12,21 @@
 #include <frc/smartdashboard/SendableChooser.h>
 
 #include "OI.h"
+#include "subsystems/SubShooter.h"
 #include "subsystems/SubDriveBase.h"
+#include "subsystems/SubStorage.h"
 #include "Utilities/PosEncoderGyro.h"
 #include "commands/CmdResetGyro.h"
 
+#include "subsystems/SubIntake.h"
 
 class Robot : public frc::TimedRobot {
  public:
+  
+
   static OI m_oi;
+  static std::unique_ptr<SubShooter> subShooter;
+  static std::unique_ptr<SubStorage> subStorage;
   static std::shared_ptr<SubDriveBase> subDriveBase;
   static std::shared_ptr<PosEncoderGyro> posEncoderGyro;
   static std::shared_ptr<CmdResetGyro> cmdResetGyro;
@@ -33,6 +40,8 @@ class Robot : public frc::TimedRobot {
   void TeleopInit() override;
   void TeleopPeriodic() override;
   void TestPeriodic() override;
+
+  static std::unique_ptr<SubIntake> subIntake;
 
  private:
   // Have it null by default so that if testing teleop it

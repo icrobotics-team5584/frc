@@ -39,7 +39,7 @@ void PosEncoderGyro::setPosition(double x, double y) {
 
 void PosEncoderGyro::setTempPosition(double x, double y) {
     tempPosition.x = x;
-    tempPosition.y = y;\
+    tempPosition.y = y;
 }
 
 void PosEncoderGyro::setInitialAngle(double angle){

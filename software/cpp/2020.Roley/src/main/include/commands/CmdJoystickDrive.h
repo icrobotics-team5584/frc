@@ -6,8 +6,8 @@
 /*----------------------------------------------------------------------------*/
 
 #pragma once
-#include <frc/commands/Command.h>
 
+#include <frc/commands/Command.h>
 
 class CmdJoystickDrive : public frc::Command {
  public:

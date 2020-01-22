@@ -17,11 +17,10 @@ public:
         neutralDeadband = 0.001; /* 0.1% super small for best low-speed control */
 
         /* Find these gains in Phoenix Tuner first and later put them here */
-        // slot0.kF = 0.35;
         slot0.kF = 0.15;
         slot0.kP = 0.8;
         slot0.kI = 0.0;
-        slot0.kD = 80;
+        slot0.kD = 0.0;
         slot0.integralZone = 400;
         slot0.closedLoopPeakOutput = 1.0;
 

@@ -7,15 +7,52 @@
 
 #include "OI.h"
 #include "Commands/CmdAutoRoutineOne.h"
-
+#include "commands/CmdShooterShoot.h"
+#include "commands/CmdRollStorage.h"
+#include "commands/CmdRollStorageBack.h"
+#include "commands/CmdDriveSlowDown.h"
+#include "commands/CmdIntake.h"
+#include "commands/CmdOuttake.h"
+#include <frc/Joystick.h>
 
 OI::OI() {
-  // Process operator interface input here.
+  std::cout<< "OI Started" << std::endl;
+#include "commands/CmdDriveSlowDown.h"
   joystick1.reset(new frc::Joystick(0));
-  btnAuto.reset(new frc::JoystickButton(joystick1.get(), 1));//Button A
+  btnAuto.reset(new frc::JoystickButton(joystick1.get(), aBtn));//Button A
   btnAuto->WhenPressed(new CmdAutoRoutineOne());//Runs Auto Routine command group
+  btnShoot.reset(new frc::JoystickButton(joystick1.get(), bBtn));
+  btnForward.reset(new frc::JoystickButton(joystick1.get(),xBtn));
+  btnBackward.reset(new frc::JoystickButton(joystick1.get(),yBtn));
 
+  btnShoot->WhileHeld(new CmdShooterShoot());
+  btnForward->WhileHeld(new CmdRollStorage());
+  btnBackward->WhileHeld(new CmdRollStorageBack());
+  btnSlowDown.reset(new AxisButton(joystick1.get(), triggerL));
+
+  btnSlowDown->WhileHeld(new CmdDriveSlowDown());
+
+  std::cout<< "1" << std::endl;
+
+  btnIntake.reset(new frc::JoystickButton(joystick1.get(), leftBtn));
+
+  std::cout<< "2" << std::endl;
+
+  btnOuttake.reset(new frc::JoystickButton(joystick1.get(), rightBtn));
+
+  std::cout<< "3" << std::endl;
+
+
+  btnIntake->WhileHeld(new CmdIntake());
+
+  std::cout<< "4" << std::endl;
+
+  btnOuttake->WhileHeld(new CmdOuttake());
+
+  std::cout<< "OI Ended" << std::endl;
 }
+
+
 
 double OI::getJoystickX(){
   return joystick1->GetX();
@@ -23,4 +60,10 @@ double OI::getJoystickX(){
 
 double OI::getJoystickY(){
   return joystick1->GetY();
+}
+
+
+
+double OI::GetRightAsix(){
+  return btnSlowDown->GetAxis();
 }

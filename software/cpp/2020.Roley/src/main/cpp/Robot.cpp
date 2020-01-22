@@ -9,13 +9,21 @@
 
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+
+std::unique_ptr<SubShooter> Robot::subShooter;
+std::unique_ptr<SubStorage> Robot::subStorage;
+std::unique_ptr<SubIntake> Robot::subIntake;
 std::shared_ptr<SubDriveBase> Robot::subDriveBase;
 std::shared_ptr<PosEncoderGyro> Robot::posEncoderGyro;
 std::shared_ptr<CmdResetGyro> Robot::cmdResetGyro;
 OI Robot::m_oi;
 
+
 void Robot::RobotInit() {
   subDriveBase.reset(new SubDriveBase());
+  subIntake.reset(new SubIntake);
+  subShooter.reset(new SubShooter());
+  subStorage.reset(new SubStorage());
   posEncoderGyro.reset(new PosEncoderGyro());
   cmdResetGyro.reset(new CmdResetGyro());
   posEncoderGyro->reset();
@@ -35,6 +43,11 @@ void Robot::RobotInit() {
  * LiveWindow and SmartDashboard integrated updating.
  */
 void Robot::RobotPeriodic() {
+
+  frc::SmartDashboard::PutNumber("Right RPM",subShooter->GetRightRPM());
+  frc::SmartDashboard::PutNumber("Left RPM", subShooter->GetLeftRPM());
+  subShooter->speed = frc::SmartDashboard::GetNumber("Motor Speed", subShooter->speed);
+  frc::SmartDashboard::PutNumber("Motor Speed", subShooter->speed);
 
   frc::SmartDashboard::PutNumber("Joy x", m_oi.getJoystickX());
   frc::SmartDashboard::PutNumber("Joy y", m_oi.getJoystickY());
@@ -81,7 +94,10 @@ void Robot::TeleopInit() {
   // this line or comment it out.
 }
 
-void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
+void Robot::TeleopPeriodic() { 
+  
+  frc::Scheduler::GetInstance()->Run(); 
+  }
 
 void Robot::TestPeriodic() {}
 
