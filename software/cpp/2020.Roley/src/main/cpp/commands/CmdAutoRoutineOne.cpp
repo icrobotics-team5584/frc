@@ -7,13 +7,19 @@
 
 #include "commands/CmdAutoRoutineOne.h"
 #include "commands/CmdAutoEncoderDrive.h"
-
+#include "commands/CmdAutoIntake.h"
+#include "commands/CmdIntakeStop.h"
 
 #include <iostream>
 
 CmdAutoRoutineOne::CmdAutoRoutineOne() {
+  AddParallel(new CmdAutoIntake());
   AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegOne)); //Init line -> end trench
-  AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegTwo)); //End trench -> start trench
-  AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegThree));//Start trench -> init line
-  AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegFour));//init line -> target zone
+  AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegTwo));  
+  AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegThree));//End trench -> start trench
+  AddSequential(new CmdIntakeStop());
+  AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegFour)); //Start trench -> init line
+  AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegFive));
+  
+//init line -> target zone
 }
