@@ -24,7 +24,7 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   //enables the yaw to be reset
   ahrsNavXGyro->EnableBoardlevelYawReset(true);
 
-  _srxAutoXAxis.reset(new WPI_TalonSRX(can_srxDriveBaseAutoDolly));
+  //_srxAutoXAxis.reset(new WPI_TalonSRX(can_srxDriveBaseAutoDolly));
   SubDriveBase::DiffDrive.reset(new frc::DifferentialDrive(*_srxFrontLeft, *_srxFrontRight));
   metersPerRotation = pi * WHEEL_DIAMETER;
 }
