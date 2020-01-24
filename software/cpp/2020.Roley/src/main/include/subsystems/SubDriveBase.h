@@ -32,7 +32,7 @@ class SubDriveBase : public frc::Subsystem {
 
   shared_ptr<AHRS> ahrsNavXGyro;
 
-  shared_ptr<WPI_TalonSRX> _srxAutoXAxis;
+  //shared_ptr<WPI_TalonSRX> _srxAutoXAxis;
 
 // Robot constants
   const double WHEEL_DIAMETER = 0.0508; // in meters (0.1016 for lofty)(0.1524 for dizzy) (0.0508 for dolly)
