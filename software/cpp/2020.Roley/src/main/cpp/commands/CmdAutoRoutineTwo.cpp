@@ -7,6 +7,8 @@
 
 #include "commands/CmdAutoRoutineTwo.h"
 #include "commands/CmdAutoEncoderDrive.h"
+#include "commands/CmdAutoIntake.h"
+#include "commands/CmdIntakeStop.h"
 
 
 #include <iostream>
@@ -27,4 +29,7 @@ CmdAutoRoutineTwo::CmdAutoRoutineTwo() {
   // e.g. if Command1 requires chassis, and Command2 requires arm,
   // a CommandGroup containing them would require both the chassis and the
   // arm.
+  AddParallel(new CmdAutoIntake());
+  AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegOne));
+  AddSequential(new CmdIntakeStop());
 }

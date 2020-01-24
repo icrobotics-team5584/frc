@@ -59,12 +59,12 @@ PIDAutoConfig autoRoutineOneLegFive = {
 };
 /*----------------------------Routine Two Setup--------------------*/
 PIDAutoConfig autoRoutineTwoLegOne = {
-  -3,     //P
-  -0.0000,  //I
-  -80,      //D
-  -0.8,     //speed
-  -1.7,     //targetX
-  4.537,    //targetY
+  -3,        //P
+  0.0,     //I
+  -80,       //D
+  -0.6,      //speed
+  0,        //targetX
+  1.78,   //targetY
   0,        //targetAngle
   90        //targetAoA
 };
