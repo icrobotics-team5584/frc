@@ -22,8 +22,8 @@ OI::OI() {
   joystick1.reset(new frc::Joystick(0));
 
   //Auto buttons
-  btnAuto.reset(new frc::JoystickButton(joystick1.get(), aBtn));  //Button A
-  btnAuto->WhenPressed(new CmdAutoRoutineOne());  //Runs Auto Routine command group
+  //btnAuto.reset(new frc::JoystickButton(joystick1.get(), aBtn));
+  //btnAuto->WhenPressed(new CmdAutoRoutineOne());  //Runs Auto Routine command group
 
   //Shooter buttons
   btnShoot.reset(new frc::JoystickButton(joystick1.get(), bBtn));
