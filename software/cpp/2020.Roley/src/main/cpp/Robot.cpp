@@ -7,9 +7,9 @@
 
 #include "Robot.h"
 
-std::unique_ptr<SubShooter> Robot::subShooter;
-std::unique_ptr<SubStorage> Robot::subStorage;
-std::unique_ptr<SubIntake> Robot::subIntake;
+std::shared_ptr<SubShooter> Robot::subShooter;
+std::shared_ptr<SubStorage> Robot::subStorage;
+std::shared_ptr<SubIntake> Robot::subIntake;
 std::shared_ptr<SubDriveBase> Robot::subDriveBase;
 std::shared_ptr<PosEncoderGyro> Robot::posEncoderGyro;
 std::shared_ptr<CmdResetGyro> Robot::cmdResetGyro;
