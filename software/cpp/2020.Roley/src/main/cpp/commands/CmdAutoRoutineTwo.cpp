@@ -12,7 +12,7 @@
 
 
 #include <iostream>
-CmdAutoRoutineTwo::CmdAutoRoutineTwo() {
+CmdAutoRoutineTwo::CmdAutoRoutineTwo() : CommandGroup("CmdAutoRoutineTwo: Steal") {
   // Add Commands here:
   // e.g. AddSequential(new Command1());
   //      AddSequential(new Command2());
@@ -32,4 +32,12 @@ CmdAutoRoutineTwo::CmdAutoRoutineTwo() {
   AddParallel(new CmdAutoIntake());
   AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegOne));
   AddSequential(new CmdIntakeStop());
+}
+
+void CmdAutoRoutineTwo::Initialize(){
+  std::cout << "routine init" << std::endl;
+}
+
+void CmdAutoRoutineTwo::Execute(){
+  std::cout << "routine exe" << std::endl;
 }

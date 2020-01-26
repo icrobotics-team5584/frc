@@ -12,4 +12,6 @@
 class CmdAutoRoutineTwo : public frc::CommandGroup {
  public:
   CmdAutoRoutineTwo();
+  void Initialize() override;
+  void Execute() override;
 };

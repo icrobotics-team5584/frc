@@ -11,10 +11,12 @@ CmdAutoIntake::CmdAutoIntake() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(Robot::subIntake.get());
+  
 }
 
 // Called just before this Command runs the first time
 void CmdAutoIntake::Initialize() {
+  std::cout << "Auto One Start" << std::endl;
   Robot::subIntake->Intake();
 }
 

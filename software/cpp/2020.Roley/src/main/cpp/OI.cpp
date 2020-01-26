@@ -6,8 +6,6 @@
 /*----------------------------------------------------------------------------*/
 
 #include "OI.h"
-#include "Commands/CmdAutoRoutineOne.h"
-#include "Commands/CmdAutoRoutineTwo.h"
 #include "commands/CmdShooterShoot.h"
 #include "commands/CmdRollStorage.h"
 #include "commands/CmdRollStorageBack.h"
@@ -19,8 +17,7 @@
 OI::OI() {
   std::cout<< "OI Started" << std::endl;
   joystick1.reset(new frc::Joystick(0));
-  btnAuto.reset(new frc::JoystickButton(joystick1.get(), aBtn));//Button A
-  btnAuto->WhenPressed(new CmdAutoRoutineTwo());//Runs Auto Routine command group
+  
   btnShoot.reset(new frc::JoystickButton(joystick1.get(), bBtn));
   btnForward.reset(new frc::JoystickButton(joystick1.get(),xBtn));
   btnBackward.reset(new frc::JoystickButton(joystick1.get(),yBtn));

@@ -12,7 +12,7 @@
 
 #include <iostream>
 
-CmdAutoRoutineOne::CmdAutoRoutineOne() {
+CmdAutoRoutineOne::CmdAutoRoutineOne() : CommandGroup("CmdAutoRoutineOne: Vanilla") {
   AddParallel(new CmdAutoIntake());
   AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegOne)); //Init line -> end trench
   AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegTwo));  

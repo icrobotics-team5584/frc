@@ -19,7 +19,7 @@ void CmdJoystickDrive::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void CmdJoystickDrive::Execute() {
-  Robot::subDriveBase->drive(Robot::m_oi.getJoystickY(), Robot::m_oi.getJoystickX());
+  Robot::subDriveBase->drive(Robot::oi->getJoystickY(), Robot::oi->getJoystickX());
 }
 
 // Make this return true when this Command no longer needs to run execute()

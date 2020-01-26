@@ -20,11 +20,15 @@
 
 #include "subsystems/SubIntake.h"
 
+#include "commands/CmdAutoRoutineOne.h"
+#include "commands/CmdAutoRoutineTwo.h"
+
+
 class Robot : public frc::TimedRobot {
  public:
   
 
-  static OI m_oi;
+  static std::unique_ptr<OI> oi;
   static std::unique_ptr<SubShooter> subShooter;
   static std::unique_ptr<SubStorage> subStorage;
   static std::shared_ptr<SubDriveBase> subDriveBase;
@@ -44,10 +48,8 @@ class Robot : public frc::TimedRobot {
   static std::unique_ptr<SubIntake> subIntake;
 
  private:
-  // Have it null by default so that if testing teleop it
-  // doesn't have undefined behavior and potentially crash.
-  //frc::Command* m_autonomousCommand = nullptr;
-  //ExampleCommand m_defaultAuto;
-  //MyAutoCommand m_myAuto;
-  //frc::SendableChooser<frc::Command*> m_chooser;
+  frc::Command* autonomousCommand;
+  CmdAutoRoutineOne* autoOne;
+  CmdAutoRoutineTwo* autoTwo;
+  frc::SendableChooser<frc::Command*> chooser;
 };
