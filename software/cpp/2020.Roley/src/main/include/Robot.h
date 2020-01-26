@@ -22,6 +22,7 @@
 
 #include "commands/CmdAutoRoutineOne.h"
 #include "commands/CmdAutoRoutineTwo.h"
+#include "commands/CmdAutoRoutineThree.h"
 
 
 class Robot : public frc::TimedRobot {
@@ -51,5 +52,6 @@ class Robot : public frc::TimedRobot {
   frc::Command* autonomousCommand;
   CmdAutoRoutineOne* autoOne;
   CmdAutoRoutineTwo* autoTwo;
+  CmdAutoRoutineThree* autoThree;
   frc::SendableChooser<frc::Command*> chooser;
 };

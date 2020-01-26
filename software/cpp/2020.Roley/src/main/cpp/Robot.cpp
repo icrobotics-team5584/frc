@@ -28,6 +28,7 @@ void Robot::RobotInit() {
   cmdResetGyro.reset(new CmdResetGyro());
   autoOne = new CmdAutoRoutineOne();
   autoTwo = new CmdAutoRoutineTwo();
+  autoThree = new CmdAutoRoutineThree();
   oi.reset(new OI());
   posEncoderGyro->reset();
   //enable cmd yaw to be run without being cancelled
@@ -37,6 +38,8 @@ void Robot::RobotInit() {
   std::cout << "robot init" << std::endl;
   chooser.SetDefaultOption("Vanilla Trench Run", autoOne);
   chooser.AddOption("Trench Steal Run", autoTwo);
+  chooser.AddOption("Sad Trench Run", autoThree);
+
   frc::SmartDashboard::PutData("Auto Selecter", &chooser);
 }
 
@@ -86,6 +89,8 @@ void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 void Robot::AutonomousInit() {
   autoOne = new CmdAutoRoutineOne();
   autoTwo = new CmdAutoRoutineTwo();
+  autoThree = new CmdAutoRoutineThree();
+
   if (autonomousCommand != nullptr){
     autonomousCommand->Cancel();
   }
