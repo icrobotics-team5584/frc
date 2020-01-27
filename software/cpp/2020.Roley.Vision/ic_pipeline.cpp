@@ -14,10 +14,12 @@
 #include "networktables/NetworkTableEntry.h"
 #include "networktables/NetworkTableInstance.h"
 
+#include "MJPEGWriter.h"
+#include "string.h"
+
 using namespace cv;
 using namespace std;
 // using namespace cv::gpu;
-
 
 RNG rng(12345);
 int peg_hits = 0;
@@ -44,8 +46,38 @@ int main( int argc, char *argv[] )
   nt::NetworkTableInstance ntinst = nt::NetworkTableInstance::GetDefault();
   std::shared_ptr<nt::NetworkTable> nt;
   nt = ntinst.GetTable("JETSON");
-  ntinst.StartClientTeam(5584);
+
+  // setup network tables for camera location settings.
+  //auto ntcam = NetworkTable::GetTable("CameraPublisher/CVCamera");
+  //ntcam->SetClientMode();
+  //ntcam->SetIPAddress("10.55.84.2\n");
+  //ntcam->Initialize();
+
+  std::shared_ptr<nt::NetworkTable> ntcam;
+  ntcam = ntinst.GetTable("CameraPublisher/CVCamera");
+
+//  std::shared_ptr<nt::NetworkTable> ntcam2;
+//  ntcam2 = ntinst.GetTable("CameraPublisher/CVCamera2");
+//  ntinst.StartClientTeam(5584); 
+
   std::this_thread::sleep_for(std::chrono::seconds(5));
+  std::cout << "Network Tables Initialized." << std::endl;
+  // Put IP Address Values into CameraPublisher NetworkTable
+  string Fred[1] = {"mjpeg:http://10.55.84.8:5800"}; //Fred and James are the camera ip address arrays. They have to be there for the camera server to work.
+  ntcam->PutStringArray("streams", Fred);
+  
+//  string James[1] = {"mjpeg:http://10.55.84.8:5801"};
+//  ntcam2->PutStringArray("streams", James);
+
+  std::cout << "Arrays pushed to network tables." << std::endl;
+
+  // Start the camera server on port 7777.
+  MJPEGWriter test(5800);
+//  MJPEGWriter test2(5801);
+  test.start();
+//  test2.start();
+
+  std::cout << "Camera Servers started." << std::endl;
 
   for (;;)
   {
@@ -73,7 +105,7 @@ int main( int argc, char *argv[] )
     }
 
     // STEP 5: construct image to display filetered contours, bounding rectangles and origins of rectangles
-    cv::Mat img_contours = cv::Mat::zeros( img.size(), CV_8UC3 );
+    cv::Mat img_contours = cv::Mat::zeros( cv::Size(320, 180), CV_8UC3 );
     int img_width = 320;  //img.size().width;
     int img_height = 180; //img.size().height;
     for( size_t i = 0; i< img_filtercontours->size(); i++ )
@@ -183,6 +215,16 @@ int main( int argc, char *argv[] )
     nt->PutNumber( "fps", fps );
     cout << "-----" << endl;
 
+    // STEP 7.5: Do some camera server things
+    std::cout << "About to push camera frames to server." << std::endl;
+//    test.write(img_contours);
+    test.write(img);
+    img_contours.release();
+    std::cout << "Frame 1 pushed to server." << std::endl;
+//    test2.write(img_contours);
+    img_contours.release();
+    std::cout << "Frame 2 pushed to server." << std::endl;
+
     // STEP 8: check for control file
     string line;
     ifstream ctlfile1("ic_pipeline.stop");
@@ -197,6 +239,8 @@ int main( int argc, char *argv[] )
     if( running == 0 )
     {
       cout << "INFO: detected control file (stop)" << endl;
+      test.stop();
+      //  test2.stop();
       break;
     }
 
