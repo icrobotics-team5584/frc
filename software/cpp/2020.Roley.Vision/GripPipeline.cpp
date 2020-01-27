@@ -9,28 +9,42 @@ GripPipeline::GripPipeline() {
 */
 void GripPipeline::Process(cv::Mat& source0){
 	//Step Resize_Image0:
+	//Convert CPU cv::Mat to GPU cv::GpuMat here
+	cv::cuda::GpuMat source1(source0);
+	source1.upload(source0);	
+
 	//input
-	cv::Mat resizeImageInput = source0;
+	cv::cuda::GpuMat resizeImageInput = source1;
 	double resizeImageWidth = 320.0;  // default Double
 	double resizeImageHeight = 180.0;  // default Double
 	int resizeImageInterpolation = cv::INTER_CUBIC;
 	resizeImage(resizeImageInput, resizeImageWidth, resizeImageHeight, resizeImageInterpolation, this->resizeImageOutput);
 	//Step Blur0:
 	//input
-	cv::Mat blurInput = resizeImageOutput;
+	cv::cuda::GpuMat blurInput = resizeImageOutput;
 	BlurType blurType = BlurType::GAUSSIAN;
 	double blurRadius = 4.118404732094154;  // default Double
 	blur(blurInput, blurType, blurRadius, this->blurOutput);
+
+
 	//Step HSV_Threshold0:
 	//input
-	cv::Mat hsvThresholdInput = blurOutput;
+	cv::Mat hsvThresholdInput;
+
+	blurOutput.download(hsvThresholdInput);
+
+
+
 	double hsvThresholdHue[] = {60, 92};
-	double hsvThresholdSaturation[] = {100, 255};
-	double hsvThresholdValue[] = {72, 231};
+	double hsvThresholdSaturation[] = {50, 255};
+	double hsvThresholdValue[] = {50, 255};
 	hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, this->hsvThresholdOutput);
 	//Step Find_Contours0:
+	//Convert GPU cv::GpuMat to CPU cv::Mat
+
 	//input
 	cv::Mat findContoursInput = hsvThresholdOutput;
+
 	bool findContoursExternalOnly = false;  // default Boolean
 	findContours(findContoursInput, findContoursExternalOnly, this->findContoursOutput);
 	//Step Filter_Contours0:
@@ -59,20 +73,23 @@ void GripPipeline::setsource0(cv::Mat &source0){
  * @return Mat output from Resize_Image.
  */
 cv::Mat* GripPipeline::GetResizeImageOutput(){
-	return &(this->resizeImageOutput);
+	this->resizeImageOutput.download(tempMat);
+	return &(tempMat);
 }
 /**
  * This method is a generated getter for the output of a Blur.
  * @return Mat output from Blur.
  */
 cv::Mat* GripPipeline::GetBlurOutput(){
-	return &(this->blurOutput);
+	this->blurOutput.download(tempMat);
+	return &(tempMat);
 }
 /**
  * This method is a generated getter for the output of a HSV_Threshold.
  * @return Mat output from HSV_Threshold.
  */
 cv::Mat* GripPipeline::GetHsvThresholdOutput(){
+	//this->hsvThresholdOutput.download(tempMat);
 	return &(this->hsvThresholdOutput);
 }
 /**
@@ -98,8 +115,8 @@ std::vector<std::vector<cv::Point> >* GripPipeline::GetFilterContoursOutput(){
 	 * @param interpolation The type of interpolation.
 	 * @param output The image in which to store the output.
 	 */
-	void GripPipeline::resizeImage(cv::Mat &input, double width, double height, int interpolation, cv::Mat &output) {
-		cv::resize(input, output, cv::Size(width, height), 0.0, 0.0, interpolation);
+	void GripPipeline::resizeImage(cv::cuda::GpuMat &input, double width, double height, int interpolation, cv::cuda::GpuMat &output) {
+		cv::cuda::resize(input, output, cv::Size(width, height), 0.0, 0.0, interpolation);
 	}
 
 	/**
@@ -110,26 +127,25 @@ std::vector<std::vector<cv::Point> >* GripPipeline::GetFilterContoursOutput(){
 	 * @param doubleRadius The radius for the blur.
 	 * @param output The image in which to store the output.
 	 */
-	void GripPipeline::blur(cv::Mat &input, BlurType &type, double doubleRadius, cv::Mat &output) {
+	void GripPipeline::blur(cv::cuda::GpuMat &input, BlurType &type, double doubleRadius, cv::cuda::GpuMat &output) {
 		int radius = (int)(doubleRadius + 0.5);
 		int kernelSize;
+		cv::Ptr<cv::cuda::Filter> filter;
 		switch(type) {
 			case BOX:
 				kernelSize = 2 * radius + 1;
-				cv::blur(input,output,cv::Size(kernelSize, kernelSize));
+				filter = cv::cuda::createBoxFilter(input.type(), output.type(), cv::Size(kernelSize, kernelSize));
 				break;
 			case GAUSSIAN:
 				kernelSize = 6 * radius + 1;
-				cv::GaussianBlur(input, output, cv::Size(kernelSize, kernelSize), radius);
+				filter = cv::cuda::createGaussianFilter(input.type(), output.type(), cv::Size(kernelSize, kernelSize), radius);
 				break;
 			case MEDIAN:
 				kernelSize = 2 * radius + 1;
-				cv::medianBlur(input, output, kernelSize);
+				filter = cv::cuda::createMedianFilter(input.type(), kernelSize);
 				break;
-			case BILATERAL:
-				cv::bilateralFilter(input, output, -1, radius, radius);
-				break;
-        }
+        	}
+		filter->apply( input, output );
 	}
 	/**
 	 * Segment an image based on hue, saturation, and value ranges.
@@ -141,8 +157,38 @@ std::vector<std::vector<cv::Point> >* GripPipeline::GetFilterContoursOutput(){
 	 * @param output The image in which to store the output.
 	 */
 	void GripPipeline::hsvThreshold(cv::Mat &input, double hue[], double sat[], double val[], cv::Mat &out) {
-		cv::cvtColor(input, out, cv::COLOR_BGR2HSV);
-		cv::inRange(out,cv::Scalar(hue[0], sat[0], val[0]), cv::Scalar(hue[1], sat[1], val[1]), out);
+/*		cv::gpu::GpuMat hsv[3];
+		cv::gpu::GpuMat hsvL[3];
+		cv::gpu::GpuMat hsvU[3];
+		cv::gpu::GpuMat hsvOut[3];
+		cv::gpu::GpuMat temp;
+
+		cv::gpu::cvtColor(input, out, cv::COLOR_BGR2HSV);*/
+		cv::inRange(input,cv::Scalar(hue[0], sat[0], val[0]), cv::Scalar(hue[1], sat[1], val[1]), out);
+		/*cv::gpu::split(input, hsv);
+
+		cv::gpu::threshold(hsv[0], hsvL[0], hue[0], 255, cv::THRESH_BINARY);
+		cv::gpu::threshold(hsv[0], hsvU[0], hue[1], 255, cv::THRESH_BINARY_INV);
+		cv::gpu::bitwise_and(hsvL[0], hsvU[0], hsvOut[0]);
+
+		cv::gpu::threshold(hsv[1], hsvL[1], sat[0], 255, cv::THRESH_BINARY);
+		cv::gpu::threshold(hsv[1], hsvU[1], sat[1], 255, cv::THRESH_BINARY_INV);
+		cv::gpu::bitwise_and(hsvL[1], hsvU[1], hsvOut[1]);
+
+		cv::gpu::threshold(hsv[2], hsvL[2], val[0], 255, cv::THRESH_BINARY);
+		cv::gpu::threshold(hsv[2], hsvU[2], val[1], 255, cv::THRESH_BINARY_INV);
+		cv::gpu::bitwise_and(hsvL[2], hsvU[2], hsvOut[2]);
+*/
+
+
+
+		
+		//cv::gpu::threshold(shsv[0], thresc[0], hue[0], hue[1], cv::THRESH_BINARY);
+		//cv::gpu::threshold(shsv[1], thresc[1], sat[0], sat[1], cv::THRESH_BINARY);
+		//cv::gpu::threshold(shsv[2], thresc[2], val[0], val[1], cv::THRESH_BINARY);
+
+		//cv::gpu::bitwise_and(hsvOut[0], hsvOut[1], temp);
+		//cv::gpu::bitwise_and(temp, hsvOut[2], out);
 	}
 
 	/**
@@ -153,6 +199,7 @@ std::vector<std::vector<cv::Point> >* GripPipeline::GetFilterContoursOutput(){
 	 * @param contours vector of contours to put contours in.
 	 */
 	void GripPipeline::findContours(cv::Mat &input, bool externalOnly, std::vector<std::vector<cv::Point> > &contours) {
+
 		std::vector<cv::Vec4i> hierarchy;
 		contours.clear();
 		int mode = externalOnly ? cv::RETR_EXTERNAL : cv::RETR_LIST;

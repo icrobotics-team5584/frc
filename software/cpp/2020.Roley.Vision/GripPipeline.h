@@ -4,7 +4,10 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/core/core.hpp>
 #include <opencv2/features2d.hpp>
-// #include <opencv2/gpu/gpu.hpp>
+#include <opencv2/core/cuda.hpp>
+#include <opencv2/cudawarping.hpp>
+#include <opencv2/cudafilters.hpp>
+
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,6 +16,7 @@
 #include <string>
 #include <math.h>
 
+
 namespace grip {
 
 /**
@@ -20,7 +24,7 @@ namespace grip {
 *
 */
 enum BlurType {
-	BOX, GAUSSIAN, MEDIAN, BILATERAL
+	BOX, GAUSSIAN, MEDIAN
 };
 /**
 * GripPipeline class.
@@ -30,13 +34,15 @@ enum BlurType {
 class GripPipeline {
 	private:
 		cv::Mat source0;
-		cv::Mat resizeImageOutput;
-		cv::Mat blurOutput;
+		cv::Mat tempMat;
+		cv::cuda::GpuMat source1;
+		cv::cuda::GpuMat resizeImageOutput;
+		cv::cuda::GpuMat blurOutput;
 		cv::Mat hsvThresholdOutput;
 		std::vector<std::vector<cv::Point> > findContoursOutput;
 		std::vector<std::vector<cv::Point> > filterContoursOutput;
-		void resizeImage(cv::Mat &, double , double , int , cv::Mat &);
-		void blur(cv::Mat &, BlurType &, double , cv::Mat &);
+		void resizeImage(cv::cuda::GpuMat &, double , double , int , cv::cuda::GpuMat &);
+		void blur(cv::cuda::GpuMat &, BlurType &, double , cv::cuda::GpuMat &);
 		void hsvThreshold(cv::Mat &, double [], double [], double [], cv::Mat &);
 		void findContours(cv::Mat &, bool , std::vector<std::vector<cv::Point> > &);
 		void filterContours(std::vector<std::vector<cv::Point> > &, double , double , double , double , double , double , double [], double , double , double , double , std::vector<std::vector<cv::Point> > &);

@@ -243,3 +243,33 @@ And regenerate all derived objects in the ic_pipeline project in the normal way 
   cmake ..
   make
 
+
+
+BUILD OPENCV PACKAGE WITH CUDA SUPPORT
+--------------------------------------
+
+(CREDIT: https://www.jetsonhacks.com/2019/11/22/opencv-4-cuda-on-jetson-nano/)
+
+Note that NANO Jetpack versions do ship with an OpenCV build (3.4) but this is not compiled with CUDA support so there are no GPU versions of the OpenCV libraries. Sigh.
+
+This means we have to build our own. This is a time consuming process which is desctribed in full here. We have also copied off the resulting packages so, if we do need to construct another SD card in a hurry this should save a bit of time! 
+
+Login as ubuntu/ubuntu then . . .
+
+$ cd
+$ git clone https://github.com/JetsonHacksNano/buildOpenCV
+$ cd buildOpenCV
+$ vi buildOpenCV.sh
+(change NUM_JOBS to 1 as recommended in the comments)
+$ ./buildOpenCV.sh |& tee openCV_build.log
+(enter password for sudo access when prompted)
+
+Build took 4 hours using SDCARD, may want to investigate USB options if we have to do this regularly.
+
+Packages created by this process...
+
+~/opencv/build/OpenCV-4.1.1-dirty-aarch64.sh
+~/opencv/build/OpenCV-4.1.1-dirty-aarch64.tar.gz
+~/opencv/build/OpenCV-4.1.1-dirty-aarch64.tar.Z
+
+Copied off these files for safe keeping in case we need to rebuild a new SDCARD in a hurry!

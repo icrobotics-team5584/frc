@@ -1,5 +1,6 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
+
 #include "GripPipeline.h"
 #include <ctime>
 #include <iostream>
@@ -16,8 +17,6 @@
 
 using namespace cv;
 using namespace std;
-// using namespace cv::gpu;
-
 
 RNG rng(12345);
 int peg_hits = 0;
@@ -55,7 +54,7 @@ int main( int argc, char *argv[] )
       break;
 
     // STEP 2: setup image pipeline
-    ic_pipeline.setsource0(img);
+    //ic_pipeline.setsource0(img);
     ic_pipeline.Process(img);
 
     // STEP 3: obtain intermediate images and countour vectors
