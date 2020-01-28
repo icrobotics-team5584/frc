@@ -53,7 +53,7 @@ set PROJECTACCOUNT=ubuntu@10.55.84.8
 
 echo ---------------------------------------------------------------------------
 echo INFO: constructing archive
-tar -cvf ..\%PROJECTARCHIVE% *.*
+tar -cvf ..\%PROJECTARCHIVE% *.txt *.sh *.h *.cpp
 
 echo ---------------------------------------------------------------------------
 echo INFO: transporting archive
