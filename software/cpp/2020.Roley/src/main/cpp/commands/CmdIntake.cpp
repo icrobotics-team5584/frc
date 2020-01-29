@@ -14,6 +14,7 @@ CmdIntake::CmdIntake() {
 
 // Called just before this Command runs the first time
 void CmdIntake::Initialize() {
+  Robot::subIntake->Deploy();
   Robot::subIntake->Intake();
 }
 
@@ -25,6 +26,7 @@ bool CmdIntake::IsFinished() { return false; }
 
 // Called once after isFinished returns true
 void CmdIntake::End() {
+  Robot::subIntake->Retract();
   Robot::subIntake->Stop();
 }
 

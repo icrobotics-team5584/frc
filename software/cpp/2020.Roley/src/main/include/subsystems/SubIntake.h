@@ -10,6 +10,7 @@
 #include <frc/commands/Subsystem.h>
 #include "RobotMap.h"
 #include "ctre/Phoenix.h"
+#include <frc/DoubleSolenoid.h>
 
 class SubIntake : public frc::Subsystem {
  private:
@@ -18,12 +19,14 @@ class SubIntake : public frc::Subsystem {
   const double kDefaultSpeed = 0.6;
   double _speed = kDefaultSpeed;
   std::shared_ptr<TalonSRX> srxIntake;
-
+  std::shared_ptr<frc::DoubleSolenoid> solIntakeActuator;
  public:
   SubIntake();
   void InitDefaultCommand() override;
   void Intake();
   void Outtake();
   void Stop();
+  void Deploy();
+  void Retract();
   virtual void Periodic();
 };

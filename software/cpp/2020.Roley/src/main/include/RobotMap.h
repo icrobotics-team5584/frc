@@ -12,9 +12,15 @@ enum Can {
     can_srxShooterRight = 6  
 };
 
+enum PCM{
+    pcm_solIntakeDeploy = 0,
+    pcm_solIntakeRetract = 1,
+};
+
 enum PWM{
     pwn_Storage = 0,
 };
+
 
 
 // For example to map the left and right motors, you could define the
