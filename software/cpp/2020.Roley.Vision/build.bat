@@ -81,5 +81,9 @@ echo INFO: setting permissions in workspace
 ssh %PROJECTACCOUNT% cd %PROJECTWORKSPACE%; chmod a+x *.sh
 
 echo ---------------------------------------------------------------------------
+echo INFO: forcing line endings in workspace
+ssh %PROJECTACCOUNT% cd %PROJECTWORKSPACE%; perl -pi -e 's/\r\n/\n/g' *.sh
+
+echo ---------------------------------------------------------------------------
 echo INFO: building in remote workspace
 ssh %PROJECTACCOUNT% cd %PROJECTWORKSPACE%; ./build.sh
