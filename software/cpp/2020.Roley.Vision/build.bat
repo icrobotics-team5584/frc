@@ -13,7 +13,7 @@ rem #                                                                          #
 rem # STEP 2: ON THE JETSON:                                                   #
 rem #                                                                          #
 rem #   cat /tmp/id_rsa.pub >> /home/ubuntu/.ssh/authorized_keys2              #
-rem #   rf -rf /tmp/id_rsa.pub                                                 #
+rem #   rm -rf /tmp/id_rsa.pub                                                 #
 rem #                                                                          #
 rem # STEP 3: ON WINDOWS PC:                                                   #
 rem #                                                                          #
