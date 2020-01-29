@@ -56,9 +56,8 @@ int main( int argc, char *argv[] )
   std::shared_ptr<nt::NetworkTable> ntcam;
   ntcam = ntinst.GetTable("CameraPublisher/CVCamera");
 
-//  std::shared_ptr<nt::NetworkTable> ntcam2;
-//  ntcam2 = ntinst.GetTable("CameraPublisher/CVCamera2");
-//  ntinst.StartClientTeam(5584); 
+  std::shared_ptr<nt::NetworkTable> ntcam2;
+  ntcam2 = ntinst.GetTable("CameraPublisher/CVCamera2");
 
   std::this_thread::sleep_for(std::chrono::seconds(5));
   std::cout << "Network Tables Initialized." << std::endl;
@@ -66,16 +65,16 @@ int main( int argc, char *argv[] )
   string Fred[1] = {"mjpeg:http://10.55.84.8:5800"}; //Fred and James are the camera ip address arrays. They have to be there for the camera server to work.
   ntcam->PutStringArray("streams", Fred);
   
-//  string James[1] = {"mjpeg:http://10.55.84.8:5801"};
-//  ntcam2->PutStringArray("streams", James);
+  string James[1] = {"mjpeg:http://10.55.84.8:5801"};
+  ntcam2->PutStringArray("streams", James);
 
   std::cout << "Arrays pushed to network tables." << std::endl;
 
   // Start the camera server on port 7777.
   MJPEGWriter test(5800);
-//  MJPEGWriter test2(5801);
+  MJPEGWriter test2(5801);
   test.start();
-//  test2.start();
+  test2.start();
 
   std::cout << "Camera Servers started." << std::endl;
 
@@ -217,8 +216,8 @@ int main( int argc, char *argv[] )
 
     // STEP 7.5: Do some camera server things
     std::cout << "About to push camera frames to server." << std::endl;
-//    test.write(img_contours);
     test.write(img);
+    test2.write(img_contours);
     img_contours.release();
     std::cout << "Frame 1 pushed to server." << std::endl;
 //    test2.write(img_contours);
@@ -240,7 +239,7 @@ int main( int argc, char *argv[] )
     {
       cout << "INFO: detected control file (stop)" << endl;
       test.stop();
-      //  test2.stop();
+      test2.stop();
       break;
     }
 

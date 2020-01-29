@@ -26,7 +26,7 @@ void GripPipeline::Process(cv::Mat& source0){
 	cv::Mat hsvThresholdInput = blurOutput;
 	double hsvThresholdHue[] = {60, 92};
 	double hsvThresholdSaturation[] = {100, 255};
-	double hsvThresholdValue[] = {72, 231};
+	double hsvThresholdValue[] = {32, 231};
 	hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, this->hsvThresholdOutput);
 	//Step Find_Contours0:
 	//input
