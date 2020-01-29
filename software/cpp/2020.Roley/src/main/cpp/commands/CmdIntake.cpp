@@ -9,11 +9,12 @@
 
 CmdIntake::CmdIntake() {
   // Use Requires() here to declare subsystem dependencies
-  // eg. Requires(Robot::chassis.get());
+  Requires(Robot::subIntake.get());
 }
 
 // Called just before this Command runs the first time
 void CmdIntake::Initialize() {
+  Robot::subIntake->Deploy();
   Robot::subIntake->Intake();
 }
 
@@ -25,6 +26,7 @@ bool CmdIntake::IsFinished() { return false; }
 
 // Called once after isFinished returns true
 void CmdIntake::End() {
+  Robot::subIntake->Retract();
   Robot::subIntake->Stop();
 }
 

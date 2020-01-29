@@ -102,4 +102,6 @@ void SubDrivebase::resetEncoders(){
   srxBackRight->SetSelectedSensorPosition(0);
 }
 
-
+void SubDriveBase::resetYaw(){
+  _ahrsNavXGyro->ZeroYaw();
+}

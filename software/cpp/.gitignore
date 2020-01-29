@@ -1,3 +1,9 @@
 /RemoteSystemsTempFiles/
+/build/
 /.metadata/
 *.*~
+*.tar.gz
+*.tar
+*.rar
+*.zip
+

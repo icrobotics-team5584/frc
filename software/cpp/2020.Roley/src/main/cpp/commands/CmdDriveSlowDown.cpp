@@ -18,17 +18,17 @@ CmdDriveSlowDown::CmdDriveSlowDown() {
 // Called just before this Command runs the first time
 void CmdDriveSlowDown::Initialize() {
   std::cout << "Cmd slow down initialized" << std::endl;
-  Robot::subDriveBase->drive((Robot::m_oi.getJoystickY()/2), (-Robot::m_oi.getJoystickX()/2));
+  //Robot::subDriveBase->drive((Robot::m_oi.getJoystickY()/2), (-Robot::m_oi.getJoystickX()/2));
   
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdDriveSlowDown::Execute() {
-  x = Robot::m_oi.joystick1->GetX();
-  y = Robot::m_oi.joystick1->GetY();
-  axis = Robot::m_oi.joystick1->GetRawAxis(triggerL);
+  x = Robot::m_oi.getJoystickX();
+  y = Robot::m_oi.getJoystickY();
+  axis = Robot::m_oi.getJoystickRawAxis(triggerL);
   //SmartDashboard::PutNumber("axis test", axis);
-  Robot::subDriveBase->drive(y/(axis + 1),(-(x/(axis + 1))));
+  Robot::subDriveBase->drive(y/(axis + 1),x/(axis + 1));
 }
 
 // Make this return true when this Command no longer needs to run execute()
