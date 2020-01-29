@@ -24,10 +24,9 @@ void CmdDriveSlowDown::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdDriveSlowDown::Execute() {
-  std::cout << "Slow down cmd" << std::endl;
-  x = Robot::oi->joystick1->GetX();
-  y = Robot::oi->joystick1->GetY();   
-  axis = Robot::oi->joystick1->GetRawAxis(triggerL);
+  x = Robot::oi->getJoystickX();
+  y = Robot::oi->getJoystickY();
+  axis = Robot::oi->getJoystickRawAxis(triggerL);
   //SmartDashboard::PutNumber("axis test", axis);
   Robot::subDriveBase->drive(y/(axis + 1),x/(axis + 1));
 }

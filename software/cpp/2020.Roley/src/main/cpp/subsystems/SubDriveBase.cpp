@@ -20,6 +20,8 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   _srxBackLeft->Follow(*_srxFrontLeft);
   _srxBackRight->Follow(*_srxFrontRight);
 
+  solDollyAcuator.reset(new DoubleSolenoid(pcm_solDollyDeploy, pcm_solDollyRetract));
+
   ahrsNavXGyro.reset(new AHRS(SPI::kMXP));
   //enables the yaw to be reset
   ahrsNavXGyro->EnableBoardlevelYawReset(true);
@@ -122,3 +124,12 @@ bool SubDriveBase::isNavxCal(){
 }
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
+
+
+void SubDriveBase::deployDolly(){
+  solDollyAcuator->Set(frc::DoubleSolenoid::kReverse);
+}
+
+void SubDriveBase::retractDolly(){
+  solDollyAcuator->Set(frc::DoubleSolenoid::kForward);
+}

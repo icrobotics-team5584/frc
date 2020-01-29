@@ -29,9 +29,9 @@ CmdAutoRoutineTwo::CmdAutoRoutineTwo() : CommandGroup("CmdAutoRoutineTwo: Steal"
   // e.g. if Command1 requires chassis, and Command2 requires arm,
   // a CommandGroup containing them would require both the chassis and the
   // arm.
-  AddParallel(new CmdAutoIntake());
-  AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegOne));
-  AddSequential(new CmdIntakeStop());
+ // AddParallel(new CmdAutoIntake());
+ // AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegOne));
+ // AddSequential(new CmdIntakeStop());
 }
 
 void CmdAutoRoutineTwo::Initialize(){

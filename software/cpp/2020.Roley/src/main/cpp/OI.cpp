@@ -1,9 +1,8 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
+/* OI.cpp                                                                     */
 /*----------------------------------------------------------------------------*/
+
+#include <frc/Joystick.h>
 
 #include "OI.h"
 #include "commands/CmdShooterShoot.h"
@@ -12,43 +11,36 @@
 #include "commands/CmdDriveSlowDown.h"
 #include "commands/CmdIntake.h"
 #include "commands/CmdOuttake.h"
-#include <frc/Joystick.h>
+
 
 OI::OI() {
-  std::cout<< "OI Started" << std::endl;
+
+  //std::cout<< "OI Started" << std::endl;
+
+  //Setup Joystick (0)
   joystick1.reset(new frc::Joystick(0));
   
   btnShoot.reset(new frc::JoystickButton(joystick1.get(), bBtn));
+  btnShoot->WhileHeld(new CmdShooterShoot());
+
+  //Storage buttons
   btnForward.reset(new frc::JoystickButton(joystick1.get(),xBtn));
   btnBackward.reset(new frc::JoystickButton(joystick1.get(),yBtn));
-
-  btnShoot->WhileHeld(new CmdShooterShoot());
   btnForward->WhileHeld(new CmdRollStorage());
   btnBackward->WhileHeld(new CmdRollStorageBack());
-  btnSlowDown.reset(new AxisButton(joystick1.get(), triggerL));
 
+  //Slow drive buttons
+  btnSlowDown.reset(new AxisButton(joystick1.get(), triggerL));
   btnSlowDown->WhileHeld(new CmdDriveSlowDown());
 
-  std::cout<< "1" << std::endl;
-
+  //Intake buttons
   btnIntake.reset(new frc::JoystickButton(joystick1.get(), leftBtn));
-
-  std::cout<< "2" << std::endl;
-
   btnOuttake.reset(new frc::JoystickButton(joystick1.get(), rightBtn));
-
-  std::cout<< "3" << std::endl;
-
-
   btnIntake->WhileHeld(new CmdIntake());
-
-  std::cout<< "4" << std::endl;
-
   btnOuttake->WhileHeld(new CmdOuttake());
 
-  std::cout<< "OI Ended" << std::endl;
+  //std::cout<< "OI Ended" << std::endl;
 }
-
 
 
 double OI::getJoystickX(){
@@ -59,7 +51,9 @@ double OI::getJoystickY(){
   return joystick1->GetY();
 }
 
-
+double OI::getJoystickRawAxis(Triggers trigger){
+  return joystick1->GetRawAxis(trigger);
+}
 
 double OI::GetRightAsix(){
   return btnSlowDown->GetAxis();
