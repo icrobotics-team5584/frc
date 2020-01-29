@@ -35,9 +35,9 @@ void GripPipeline::Process(cv::Mat& source0){
 
 
 
-	double hsvThresholdHue[] = {60, 92};
-	double hsvThresholdSaturation[] = {50, 255};
-	double hsvThresholdValue[] = {50, 255};
+	double hsvThresholdHue[] = {63, 82};
+	double hsvThresholdSaturation[] = {195, 255};
+	double hsvThresholdValue[] = {38, 127};
 	hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, this->hsvThresholdOutput);
 	//Step Find_Contours0:
 	//Convert GPU cv::GpuMat to CPU cv::Mat
@@ -161,10 +161,10 @@ std::vector<std::vector<cv::Point> >* GripPipeline::GetFilterContoursOutput(){
 		cv::gpu::GpuMat hsvL[3];
 		cv::gpu::GpuMat hsvU[3];
 		cv::gpu::GpuMat hsvOut[3];
-		cv::gpu::GpuMat temp;
+		cv::gpu::GpuMat temp;*/
 
-		cv::gpu::cvtColor(input, out, cv::COLOR_BGR2HSV);*/
-		cv::inRange(input,cv::Scalar(hue[0], sat[0], val[0]), cv::Scalar(hue[1], sat[1], val[1]), out);
+		cv::cvtColor(input, out, cv::COLOR_BGR2HSV);
+		cv::inRange(out,cv::Scalar(hue[0], sat[0], val[0]), cv::Scalar(hue[1], sat[1], val[1]), out);
 		/*cv::gpu::split(input, hsv);
 
 		cv::gpu::threshold(hsv[0], hsvL[0], hue[0], 255, cv::THRESH_BINARY);
@@ -247,4 +247,3 @@ std::vector<std::vector<cv::Point> >* GripPipeline::GetFilterContoursOutput(){
 
 
 } // end grip namespace
-
