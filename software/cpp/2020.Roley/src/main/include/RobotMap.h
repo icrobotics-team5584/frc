@@ -19,6 +19,8 @@ enum Can {
 enum PCM{
     pcm_solIntakeDeploy = 0,
     pcm_solIntakeRetract = 1,
+    pcm_solDollyDeploy = 2,
+    pcm_solDollyRetract = 3,
 };
 
 enum PWM{

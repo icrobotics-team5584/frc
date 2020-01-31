@@ -66,8 +66,6 @@ void PosEncoderGyro::updateAbsolutePosition(){//calculates position, gets called
     // Determine current position
     currentPosition.x += distanceDelta * sin(currentAngle);
     currentPosition.y += distanceDelta * cos(currentAngle);
-    frc::SmartDashboard::PutNumber("dollyx", currentPosition.x);
-    frc::SmartDashboard::PutNumber("dollyy", currentPosition.y);
     // Save values for next iteration
     prevDistance = currentDistance;
 }
@@ -80,8 +78,6 @@ void PosEncoderGyro::updateRelativePosition(){
     // Determine current position
     tempPosition.x += tDistanceDelta * sin(currentTAngle);
     tempPosition.y += tDistanceDelta * cos(currentTAngle);
-    frc::SmartDashboard::PutNumber("tdollyx", tempPosition.x);
-    frc::SmartDashboard::PutNumber("tdollyy", tempPosition.y);
     // Save values for next iteration
     prevTDistance = currentTDistance;
 }

@@ -5,7 +5,6 @@
 #include <frc/Joystick.h>
 
 #include "OI.h"
-#include "Commands/CmdAutoRoutineOne.h"
 #include "commands/CmdShooterShoot.h"
 #include "commands/CmdRollStorage.h"
 #include "commands/CmdRollStorageBack.h"
@@ -21,12 +20,7 @@ OI::OI() {
 
   //Setup Joystick (0)
   joystick1.reset(new frc::Joystick(0));
-
-  //Auto buttons
-  //btnAuto.reset(new frc::JoystickButton(joystick1.get(), aBtn));
-  //btnAuto->WhenPressed(new CmdAutoRoutineOne());  //Runs Auto Routine command group
-
-  //Shooter buttons
+  
   btnShoot.reset(new frc::JoystickButton(joystick1.get(), bBtn));
   btnShoot->WhileHeld(new CmdShooterShoot());
 
