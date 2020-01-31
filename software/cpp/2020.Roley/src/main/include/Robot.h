@@ -14,6 +14,7 @@
 #include "subsystems/SubStorage.h"
 #include "subsystems/SubIntake.h"
 #include "commands/CmdResetGyro.h"
+#include "subsystems/SubClimber.h"
 
 #include "Utilities/PosEncoderGyro.h"
 
@@ -22,6 +23,7 @@ class Robot : public frc::TimedRobot {
  public:
   static OI m_oi;
   static std::shared_ptr<SubShooter> subShooter;
+  static std::shared_ptr<SubClimber> subClimber;
   static std::shared_ptr<SubStorage> subStorage;
   static std::shared_ptr<SubIntake> subIntake;
   static std::shared_ptr<SubDriveBase> subDriveBase;

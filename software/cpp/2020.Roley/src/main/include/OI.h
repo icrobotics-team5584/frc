@@ -59,4 +59,5 @@ class OI {
   std::unique_ptr<frc::JoystickButton> btnBackward;
   std::unique_ptr<frc::JoystickButton> btnIntake;
   std::unique_ptr<frc::JoystickButton> btnOuttake;
+  std::unique_ptr<frc::JoystickButton> btnClimb;
 };
