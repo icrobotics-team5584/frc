@@ -7,9 +7,12 @@
 
 #include "subsystems/SubStorage.h"
 #include "RobotMap.h"
+#include "frc/smartdashboard/SmartDashboard.h"
+
 
 SubStorage::SubStorage() : Subsystem("ExampleSubsystem") {
-  Motor.reset(new frc::VictorSP(pwn_Storage));
+  srxStorage.reset(new TalonSRX(can_srxStorage));
+  frc::SmartDashboard::PutNumber("Feeder speed", _speed);
 }
 
 void SubStorage::InitDefaultCommand() {
@@ -19,15 +22,17 @@ void SubStorage::InitDefaultCommand() {
 }
 
 void SubStorage::Forward(){
-  Motor->Set(speed);
+  _speed = frc::SmartDashboard::GetNumber("Feeder speed", _speed);
+  srxStorage->Set(ControlMode::PercentOutput, _speed);
 }
 
 void SubStorage::Backward(){
-  Motor->Set(-speed);
+  _speed = frc::SmartDashboard::GetNumber("Feeder speed", _speed);
+  srxStorage->Set(ControlMode::PercentOutput, -_speed);
 }
 
 void SubStorage::Stop(){
-  Motor->Set(0);
+  srxStorage->Set(ControlMode::PercentOutput, 0);
 }
 
 

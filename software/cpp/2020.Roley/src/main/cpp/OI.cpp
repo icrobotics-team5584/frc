@@ -11,6 +11,7 @@
 #include "commands/CmdDriveSlowDown.h"
 #include "commands/CmdIntake.h"
 #include "commands/CmdOuttake.h"
+#include "commands/CmdClimberLimitUp.h"
 
 
 OI::OI() {
@@ -38,6 +39,11 @@ OI::OI() {
   btnOuttake.reset(new frc::JoystickButton(joystick1.get(), rightBtn));
   btnIntake->WhileHeld(new CmdIntake());
   btnOuttake->WhileHeld(new CmdOuttake());
+
+  //Climber Button
+
+  btnClimb.reset(new frc::JoystickButton(joystick1.get(), leftStickBtn));
+  btnClimb->WhileHeld(new CmdClimberLimitUp());
 
   //std::cout<< "OI Ended" << std::endl;
 }

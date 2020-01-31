@@ -13,6 +13,7 @@ std::shared_ptr<SubIntake> Robot::subIntake;
 std::shared_ptr<SubDriveBase> Robot::subDriveBase;
 std::shared_ptr<PosEncoderGyro> Robot::posEncoderGyro;
 std::shared_ptr<CmdResetGyro> Robot::cmdResetGyro;
+std::shared_ptr<SubClimber> Robot::subClimber;
 std::unique_ptr<OI> Robot::oi;
 
 
@@ -23,6 +24,7 @@ void Robot::RobotInit() {
   subIntake.reset(new SubIntake());
   subShooter.reset(new SubShooter());
   subStorage.reset(new SubStorage());
+  subClimber.reset(new SubClimber());
 
   //Reset Auto Encoder
   posEncoderGyro.reset(new PosEncoderGyro());

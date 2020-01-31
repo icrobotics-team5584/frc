@@ -52,6 +52,7 @@ SubShooter::SubShooter() : Subsystem("ExampleSubsystem") {
   // frc::SmartDashboard::PutNumber("I Value Right", SetIRight);
   // frc::SmartDashboard::PutNumber("D Value Right", SetDRight);
   // frc::SmartDashboard::PutNumber("F Value Right", SetFRight);
+  frc::SmartDashboard::PutNumber("Shooter Speed", shooterSpeed);
 }
 
 void SubShooter::InitDefaultCommand() {
@@ -75,7 +76,11 @@ double SubShooter::GetRightRPM(){
   
 }
 
-
+void SubShooter::PowerShoot(){
+  shooterSpeed = frc::SmartDashboard::GetNumber("Shooter Speed", 0.8);
+  leftMotor->Set(ControlMode::PercentOutput, -shooterSpeed);
+  rightMotor->Set(ControlMode::PercentOutput, shooterSpeed);
+}
 
 void SubShooter::Shoot(){
 

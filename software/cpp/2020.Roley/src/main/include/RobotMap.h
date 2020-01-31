@@ -9,7 +9,11 @@ enum Can {
     can_srxDriveBaseFrontRight = 3,
     can_srxDriveBaseBackRight = 4,
     can_srxShooterLeft = 5,
-    can_srxShooterRight = 6  
+    can_srxShooterRight = 6,
+    can_srxIntake = 7,
+    can_srxStorage = 8, 
+    can_srxClimberRight = 9,
+    can_srxClimberLeft =  10,
 };
 
 enum PCM{
@@ -34,4 +38,3 @@ enum PWM{
 // number and the module. For example you with a rangefinder:
 // constexpr int kRangeFinderPort = 1;
 // constexpr int kRangeFinderModule = 1;
-constexpr int kIntakeMotor = 7;
