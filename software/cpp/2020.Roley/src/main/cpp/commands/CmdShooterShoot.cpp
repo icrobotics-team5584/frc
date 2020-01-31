@@ -22,7 +22,7 @@ void CmdShooterShoot::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdShooterShoot::Execute() {
-  Robot::subShooter->Shoot();
+  Robot::subShooter->PowerShoot();
 
 }
 
