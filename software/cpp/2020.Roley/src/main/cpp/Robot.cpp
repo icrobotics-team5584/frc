@@ -43,8 +43,8 @@ void Robot::RobotPeriodic() {
 
   frc::SmartDashboard::PutNumber("Right RPM",subShooter->GetRightRPM());
   frc::SmartDashboard::PutNumber("Left RPM", subShooter->GetLeftRPM());
-  subShooter->speed = frc::SmartDashboard::GetNumber("Motor Speed", subShooter->speed);
-  frc::SmartDashboard::PutNumber("Motor Speed", subShooter->speed);
+  //subShooter->speed = frc::SmartDashboard::GetNumber("Motor Speed", subShooter->speed);
+  //frc::SmartDashboard::PutNumber("Motor Speed", subShooter->speed);
 
   frc::SmartDashboard::PutNumber("Joy x", m_oi.getJoystickX());
   frc::SmartDashboard::PutNumber("Joy y", m_oi.getJoystickY());

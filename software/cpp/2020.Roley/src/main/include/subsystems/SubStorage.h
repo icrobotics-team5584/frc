@@ -13,8 +13,8 @@
 
 class SubStorage : public frc::Subsystem {
  private:
-
-  float speed = 0.8; 
+  const double kDefaultFeederSpeed = 0.8;
+  double _speed = kDefaultFeederSpeed;
   std::shared_ptr<TalonSRX> srxStorage;
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
