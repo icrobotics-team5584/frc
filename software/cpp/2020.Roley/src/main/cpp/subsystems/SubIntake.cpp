@@ -11,7 +11,7 @@
 
 SubIntake::SubIntake() : Subsystem("ExampleSubsystem") {
   srxIntake.reset(new TalonSRX(kIntakeMotor));
-
+  solIntakeActuator.reset(new frc::DoubleSolenoid(pcm_solIntakeDeploy, pcm_solIntakeRetract));
   // Setup current limiting. 
   /* Notes on current limiting:
    * - Current must go above PeakCurrentLimit for a number of milliseconds equal to 
@@ -30,7 +30,7 @@ SubIntake::SubIntake() : Subsystem("ExampleSubsystem") {
   srxIntake->ConfigPeakCurrentLimit(0); //(current limit in amps(integer), timeout in milliseconds)
 	srxIntake->ConfigPeakCurrentDuration(0); //(time over limit to trigger in milliseconds, timeout in milliseconds)
 	srxIntake->ConfigContinuousCurrentLimit(1); //(amps(integer) to set current to, timeout in milliseconds)
-	srxIntake->EnableCurrentLimit(true);
+	srxIntake->EnableCurrentLimit(false);
 
   frc::SmartDashboard::PutNumber("Intake Speed", kDefaultSpeed);
 }
@@ -59,4 +59,12 @@ void SubIntake::Periodic() {
   // Update intake speed from dashboard
   frc::SmartDashboard::PutNumber("Intake Current", srxIntake->GetOutputCurrent());
   _speed = frc::SmartDashboard::GetNumber("Intake Speed", kDefaultSpeed);
+}
+
+void SubIntake::Deploy() {
+  solIntakeActuator -> Set(frc::DoubleSolenoid::kReverse);
+}
+
+void SubIntake::Retract() {
+  solIntakeActuator -> Set(frc::DoubleSolenoid::kForward);
 }
