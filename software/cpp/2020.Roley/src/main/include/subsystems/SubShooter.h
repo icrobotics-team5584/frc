@@ -43,6 +43,7 @@ class SubShooter : public frc::Subsystem {
   SubShooter();
   void InitDefaultCommand() override;
 
+  void PowerShoot();
   void Shoot();
   void Stop();
 };

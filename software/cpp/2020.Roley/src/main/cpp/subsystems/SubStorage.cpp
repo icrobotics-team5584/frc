@@ -9,7 +9,7 @@
 #include "RobotMap.h"
 
 SubStorage::SubStorage() : Subsystem("ExampleSubsystem") {
-  Motor.reset(new frc::VictorSP(pwn_Storage));
+  srxStorage.reset(new TalonSRX(can_srxStorage));
 }
 
 void SubStorage::InitDefaultCommand() {
@@ -19,15 +19,15 @@ void SubStorage::InitDefaultCommand() {
 }
 
 void SubStorage::Forward(){
-  Motor->Set(speed);
+  srxStorage->Set(ControlMode::PercentOutput, speed);
 }
 
 void SubStorage::Backward(){
-  Motor->Set(-speed);
+  srxStorage->Set(ControlMode::PercentOutput, -speed);
 }
 
 void SubStorage::Stop(){
-  Motor->Set(0);
+  srxStorage->Set(ControlMode::PercentOutput, 0);
 }
 
 

@@ -8,14 +8,14 @@
 #pragma once
 
 #include <frc/commands/Subsystem.h>
-#include <frc/VictorSP.h>
+#include <ctre/Phoenix.h>
 
 
 class SubStorage : public frc::Subsystem {
  private:
 
   float speed = 0.8; 
-  std::shared_ptr<frc::VictorSP> Motor;
+  std::shared_ptr<TalonSRX> srxStorage;
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
 
