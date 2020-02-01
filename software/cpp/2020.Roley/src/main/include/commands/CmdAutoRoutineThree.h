@@ -7,23 +7,9 @@
 
 #pragma once
 
-#include <frc/commands/Subsystem.h>
-#include <ctre/Phoenix.h>
+#include <frc/commands/CommandGroup.h>
 
-
-class SubStorage : public frc::Subsystem {
- private:
-  const double kDefaultFeederSpeed = 0.8;
-  double _speed = kDefaultFeederSpeed;
-  std::shared_ptr<TalonSRX> srxStorage;
-  // It's desirable that everything possible under private except
-  // for methods that implement subsystem capabilities
-
+class CmdAutoRoutineThree : public frc::CommandGroup {
  public:
-  SubStorage();
-  void InitDefaultCommand() override;
-
-  void Forward();
-  void Backward();
-  void Stop();
+  CmdAutoRoutineThree();
 };

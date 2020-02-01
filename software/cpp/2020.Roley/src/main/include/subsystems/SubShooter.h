@@ -29,6 +29,9 @@ class SubShooter : public frc::Subsystem {
 
   double RPM = 0;
 
+  double shooterSpeed = 0.8;
+
+
 
 
   // It's desirable that everything possible under private except
@@ -37,7 +40,6 @@ class SubShooter : public frc::Subsystem {
  public:
    std::shared_ptr<WPI_TalonSRX> leftMotor;
   std::shared_ptr<WPI_TalonSRX> rightMotor;
-    double speed = 0.5;
   double GetLeftRPM();
   double GetRightRPM();
   SubShooter();

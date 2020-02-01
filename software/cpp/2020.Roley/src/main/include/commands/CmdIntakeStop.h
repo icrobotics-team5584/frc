@@ -7,23 +7,15 @@
 
 #pragma once
 
-#include <frc/commands/Subsystem.h>
-#include <ctre/Phoenix.h>
+#include <frc/commands/Command.h>
+#include "Robot.h"
 
-
-class SubStorage : public frc::Subsystem {
- private:
-  const double kDefaultFeederSpeed = 0.8;
-  double _speed = kDefaultFeederSpeed;
-  std::shared_ptr<TalonSRX> srxStorage;
-  // It's desirable that everything possible under private except
-  // for methods that implement subsystem capabilities
-
+class CmdIntakeStop : public frc::Command {
  public:
-  SubStorage();
-  void InitDefaultCommand() override;
-
-  void Forward();
-  void Backward();
-  void Stop();
+  CmdIntakeStop();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
 };

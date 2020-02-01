@@ -57,7 +57,7 @@ void SubIntake::Stop() {
 
 void SubIntake::Periodic() {
   // Update intake speed from dashboard
-  frc::SmartDashboard::PutNumber("Intake Current", srxIntake->GetOutputCurrent());
+  //frc::SmartDashboard::PutNumber("Intake Current", srxIntake->GetOutputCurrent());
   _speed = frc::SmartDashboard::GetNumber("Intake Speed", kDefaultSpeed);
 }
 

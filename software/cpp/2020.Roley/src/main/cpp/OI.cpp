@@ -5,7 +5,6 @@
 #include <frc/Joystick.h>
 
 #include "OI.h"
-#include "Commands/CmdAutoRoutineOne.h"
 #include "commands/CmdShooterShoot.h"
 #include "commands/CmdRollStorage.h"
 #include "commands/CmdRollStorageBack.h"
@@ -13,9 +12,9 @@
 #include "commands/CmdIntake.h"
 #include "commands/CmdOuttake.h"
 #include "commands/CmdClimberLimitUp.h"
+#include "commands/CmdDeployDolly.h"
 #include "commands/CmdBuddyDeploy.h"
 #include "commands/CmdBuddyLock.h"
-
 
 OI::OI() {
 
@@ -23,12 +22,7 @@ OI::OI() {
 
   //Setup Joystick (0)
   joystick1.reset(new frc::Joystick(0));
-
-  //Auto buttons
-  //btnAuto.reset(new frc::JoystickButton(joystick1.get(), aBtn));
-  //btnAuto->WhenPressed(new CmdAutoRoutineOne());  //Runs Auto Routine command group
-
-  //Shooter buttons
+  
   btnShoot.reset(new frc::JoystickButton(joystick1.get(), bBtn));
   btnShoot->WhileHeld(new CmdShooterShoot());
 
@@ -52,6 +46,7 @@ OI::OI() {
 
   btnClimb.reset(new frc::JoystickButton(joystick1.get(), leftStickBtn));
   btnClimb->WhileHeld(new CmdClimberLimitUp());
+
 
   //std::cout<< "OI Ended" << std::endl;
 

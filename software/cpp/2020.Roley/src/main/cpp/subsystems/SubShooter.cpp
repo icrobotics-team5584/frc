@@ -23,7 +23,7 @@ SubShooter::SubShooter() : Subsystem("ExampleSubsystem") {
   leftMotor->ConfigFactoryDefault();
   rightMotor->ConfigFactoryDefault();
 
-  frc::SmartDashboard::PutNumber("RPM", 0);
+  //frc::SmartDashboard::PutNumber("RPM", 0);
 
   leftMotor->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, kTimeoutMs);
   leftMotor->SetSensorPhase(true);
@@ -43,15 +43,16 @@ SubShooter::SubShooter() : Subsystem("ExampleSubsystem") {
   leftMotor->SetNeutralMode(NeutralMode::Coast);
   rightMotor->SetNeutralMode(NeutralMode::Coast);
 
-  frc::SmartDashboard::PutNumber("P Value Left", SetPLeft);
-  frc::SmartDashboard::PutNumber("I Value Left", SetILeft);
-  frc::SmartDashboard::PutNumber("D Value Left", SetDLeft);
-  frc::SmartDashboard::PutNumber("F Value Left", SetFLeft);
+  // frc::SmartDashboard::PutNumber("P Value Left", SetPLeft);
+  // frc::SmartDashboard::PutNumber("I Value Left", SetILeft);
+  // frc::SmartDashboard::PutNumber("D Value Left", SetDLeft);
+  // frc::SmartDashboard::PutNumber("F Value Left", SetFLeft);
 
-  frc::SmartDashboard::PutNumber("P Value Right", SetPRight);
-  frc::SmartDashboard::PutNumber("I Value Right", SetIRight);
-  frc::SmartDashboard::PutNumber("D Value Right", SetDRight);
-  frc::SmartDashboard::PutNumber("F Value Right", SetFRight);
+  // frc::SmartDashboard::PutNumber("P Value Right", SetPRight);
+  // frc::SmartDashboard::PutNumber("I Value Right", SetIRight);
+  // frc::SmartDashboard::PutNumber("D Value Right", SetDRight);
+  // frc::SmartDashboard::PutNumber("F Value Right", SetFRight);
+  frc::SmartDashboard::PutNumber("Shooter Speed", shooterSpeed);
 }
 
 void SubShooter::InitDefaultCommand() {
@@ -76,25 +77,26 @@ double SubShooter::GetRightRPM(){
 }
 
 void SubShooter::PowerShoot(){
-  leftMotor->Set(ControlMode::PercentOutput, -0.5);
-  rightMotor->Set(ControlMode::PercentOutput, 0.5);
+  shooterSpeed = frc::SmartDashboard::GetNumber("Shooter Speed", 0.8);
+  leftMotor->Set(ControlMode::PercentOutput, -shooterSpeed);
+  rightMotor->Set(ControlMode::PercentOutput, shooterSpeed);
 }
 
 void SubShooter::Shoot(){
 
     std::cout << "Shoot function running." << std::endl;
 
-    RPM = frc::SmartDashboard::GetNumber("RPM", 0);
+    // RPM = frc::SmartDashboard::GetNumber("RPM", 0);
 
-    SetPLeft = frc::SmartDashboard::GetNumber("P Value Left", 0);
-    SetILeft = frc::SmartDashboard::GetNumber("I Value Left", 0);
-    SetDLeft = frc::SmartDashboard::GetNumber("D Value Left", 0);
-    SetFLeft = frc::SmartDashboard::GetNumber("F Value Left", 0);
+    // SetPLeft = frc::SmartDashboard::GetNumber("P Value Left", 0);
+    // SetILeft = frc::SmartDashboard::GetNumber("I Value Left", 0);
+    // SetDLeft = frc::SmartDashboard::GetNumber("D Value Left", 0);
+    // SetFLeft = frc::SmartDashboard::GetNumber("F Value Left", 0);
 
-    SetPRight = frc::SmartDashboard::GetNumber("P Value Right", 0);
-    SetIRight = frc::SmartDashboard::GetNumber("I Value Right", 0);
-    SetDRight = frc::SmartDashboard::GetNumber("D Value Right", 0);
-    SetFRight = frc::SmartDashboard::GetNumber("F Value Right", 0);
+    // SetPRight = frc::SmartDashboard::GetNumber("P Value Right", 0);
+    // SetIRight = frc::SmartDashboard::GetNumber("I Value Right", 0);
+    // SetDRight = frc::SmartDashboard::GetNumber("D Value Right", 0);
+    // SetFRight = frc::SmartDashboard::GetNumber("F Value Right", 0);
 
     std::cout << "PID Left: " << SetPLeft << ", " << SetILeft << ", " << SetDLeft << ", " << SetFLeft << std::endl;
     std::cout << "PID Right: " << SetPRight << ", " << SetIRight << ", " << SetDRight << ", " << SetFRight << std::endl;
