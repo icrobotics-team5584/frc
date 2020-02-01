@@ -14,25 +14,30 @@ std::shared_ptr<SubDriveBase> Robot::subDriveBase;
 std::shared_ptr<PosEncoderGyro> Robot::posEncoderGyro;
 std::shared_ptr<CmdResetGyro> Robot::cmdResetGyro;
 std::shared_ptr<SubClimber> Robot::subClimber;
+std::shared_ptr<SubBuddyClimb> Robot::subBuddyClimb;
+std::shared_ptr<frc::Timer> Robot::timer;
 OI Robot::m_oi;
 
 
 void Robot::RobotInit() {
 
   //Reset subsystems
+  
   subDriveBase.reset(new SubDriveBase());
   subIntake.reset(new SubIntake);
   subShooter.reset(new SubShooter());
   subStorage.reset(new SubStorage());
   subClimber.reset(new SubClimber());
+  subBuddyClimb.reset(new SubBuddyClimb());
 
+  timer.reset(new frc::Timer());
   //Reset Auto Encoder
   posEncoderGyro.reset(new PosEncoderGyro());
   //Auto CMD Reset
   cmdResetGyro.reset(new CmdResetGyro());
   //Auto INIT process
   posEncoderGyro->reset();
-  //Enable cmd yaw to be run without being cancelled
+  //Enable cmd yaw to be run without being cancelledo
   cmdResetGyro->SetRunWhenDisabled(true);
   //Runs a cmd that waits for th navx to stop calibrating then resets gyro
   cmdResetGyro->Start();
@@ -47,6 +52,7 @@ void Robot::RobotPeriodic() {
   frc::SmartDashboard::PutNumber("Left RPM", subShooter->GetLeftRPM());
   subShooter->speed = frc::SmartDashboard::GetNumber("Motor Speed", subShooter->speed);
   frc::SmartDashboard::PutNumber("Motor Speed", subShooter->speed);
+  frc::SmartDashboard::PutNumber("Timer", timer->GetMatchTime());
 
   frc::SmartDashboard::PutNumber("Joy x", m_oi.getJoystickX());
   frc::SmartDashboard::PutNumber("Joy y", m_oi.getJoystickY());
