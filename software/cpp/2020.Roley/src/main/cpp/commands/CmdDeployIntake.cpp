@@ -5,31 +5,29 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdIntake.h"
+#include "commands/CmdDeployIntake.h"
+#include "Robot.h"
 
-CmdIntake::CmdIntake() {
+CmdDeployIntake::CmdDeployIntake() {
   // Use Requires() here to declare subsystem dependencies
-  Requires(Robot::subIntake.get());
 }
 
 // Called just before this Command runs the first time
-void CmdIntake::Initialize() {
-  Robot::subIntake->Intake();
+void CmdDeployIntake::Initialize() {
+  Robot::subIntake->Deploy();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdIntake::Execute() {}
+void CmdDeployIntake::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdIntake::IsFinished() { return false; }
+bool CmdDeployIntake::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdIntake::End() {
-  Robot::subIntake->Stop();
+void CmdDeployIntake::End() {
+  Robot::subIntake->Retract();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdIntake::Interrupted() {
-  End();
-}
+void CmdDeployIntake::Interrupted() {End();}
