@@ -13,6 +13,8 @@
 #include "commands/CmdOuttake.h"
 #include "commands/CmdClimberLimitUp.h"
 #include "commands/CmdDeployDolly.h"
+#include "commands/CmdBuddyDeploy.h"
+#include "commands/CmdBuddyLock.h"
 
 OI::OI() {
 
@@ -47,6 +49,19 @@ OI::OI() {
 
 
   //std::cout<< "OI Ended" << std::endl;
+
+  //Buddy Climber Button
+
+  btnReleaseBuddyClimber.reset(new frc::JoystickButton(joystick1.get(), backBtn));
+  btnReleaseBuddyClimber->WhileHeld(new CmdBuddyLock());
+
+  btnOverride.reset(new frc::JoystickButton(joystick1.get(), startBtn));
+  // btnOverride->WhileHeld(new )
+
+}
+
+bool OI::GetOverride(){
+  return btnOverride->Get();
 }
 
 

@@ -27,6 +27,11 @@ enum PWM{
     pwn_Storage = 0,
 };
 
+enum SOL{
+    sol_buddyLeft = 6,
+    sol_buddyRight = 7,
+};
+
 
 
 // For example to map the left and right motors, you could define the
