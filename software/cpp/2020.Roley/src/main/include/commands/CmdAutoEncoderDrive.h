@@ -30,5 +30,6 @@ class CmdAutoEncoderDrive : public frc::Command {
   double _Speed  = 0;
   double _TargetY = 0;
   double _TargetAngle = 0;
+  double _TargetTurnaround;
   bool isForward;
 };

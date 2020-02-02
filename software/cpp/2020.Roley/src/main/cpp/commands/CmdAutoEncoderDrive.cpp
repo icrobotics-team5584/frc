@@ -22,6 +22,7 @@ CmdAutoEncoderDrive::CmdAutoEncoderDrive(PIDAutoConfig _PIDConfig) : Command("Cm
   _Speed = _PIDConfig.speed;//speed of the robot
   _TargetY = _PIDConfig.targetY;  // position of the end of the target line 
   _TargetAngle = _PIDConfig.targetAngle;
+  _TargetTurnaround = _PIDConfig.targetYstop;
 }
 
 // Called just before this Command runs the first time
@@ -39,24 +40,24 @@ void CmdAutoEncoderDrive::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdAutoEncoderDrive::Execute() {
-  Robot::subDriveBase->autoEncoderDrive(_target, _P, _I, _D, _Speed);//runs the PID from SubDriveBase.cpp
+  Robot::subDriveBase->autoEncoderDrive(_target, _P, _I, _D, _Speed, _TargetTurnaround);//runs the PID from SubDriveBase.cpp
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdAutoEncoderDrive::IsFinished() {
-  if(isForward){//checks which direction the robot is going as calculated in CmdAutoEncoderDrive::Initialize()
-    if(Robot::posEncoderGyro->getPositionY() < _TargetY){//checks whether robot has reached destination
-      return false;
-    } else{
-      return true;
-    }
-  } else{
-    if(Robot::posEncoderGyro->getPositionY() < _TargetY){
-      return true;
-    } else{
+ // if(isForward){//checks which direction the robot is going as calculated in CmdAutoEncoderDrive::Initialize()
+ //   if(Robot::posEncoderGyro->getPositionY() < _TargetY){//checks whether robot has reached destination
+ //     return false;
+ //   } else{
+ //     return true;
+ //   }
+ // } else{
+ //   if(Robot::posEncoderGyro->getPositionY() < _TargetY){
+ //     return true;
+ //   } else{
       return false; 
-    }
-  }
+ //   }
+ // }
 }
 
 // Called once after isFinished returns true
