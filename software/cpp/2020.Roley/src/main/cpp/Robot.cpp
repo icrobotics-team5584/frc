@@ -14,18 +14,23 @@ std::shared_ptr<SubDriveBase> Robot::subDriveBase;
 std::shared_ptr<PosEncoderGyro> Robot::posEncoderGyro;
 std::shared_ptr<CmdResetGyro> Robot::cmdResetGyro;
 std::shared_ptr<SubClimber> Robot::subClimber;
+std::shared_ptr<SubBuddyClimb> Robot::subBuddyClimb;
+std::shared_ptr<frc::Timer> Robot::timer;
 std::unique_ptr<OI> Robot::oi;
 
 
 void Robot::RobotInit() {
 
   //Reset subsystems
+  
   subDriveBase.reset(new SubDriveBase());
   subIntake.reset(new SubIntake());
   subShooter.reset(new SubShooter());
   subStorage.reset(new SubStorage());
   subClimber.reset(new SubClimber());
+  subBuddyClimb.reset(new SubBuddyClimb());
 
+  timer.reset(new frc::Timer());
   //Reset Auto Encoder
   posEncoderGyro.reset(new PosEncoderGyro());
   //Auto CMD Reset
@@ -36,7 +41,7 @@ void Robot::RobotInit() {
   //Auto INIT process
   oi.reset(new OI());
   posEncoderGyro->reset();
-  //Enable cmd yaw to be run without being cancelled
+  //Enable cmd yaw to be run without being cancelledo
   cmdResetGyro->SetRunWhenDisabled(true);
   //Runs a cmd that waits for th navx to stop calibrating then resets gyro
   cmdResetGyro->Start();
@@ -49,14 +54,11 @@ void Robot::RobotInit() {
 
 void Robot::RobotPeriodic() {
 
-  //frc::SmartDashboard::PutNumber("Right RPM",subShooter->GetRightRPM());
-  //frc::SmartDashboard::PutNumber("Left RPM", subShooter->GetLeftRPM());
+  frc::SmartDashboard::PutNumber("Match Time", timer->GetMatchTime());
+  frc::SmartDashboard::PutNumber("Left RPM", subShooter->GetLeftRPM());
+  frc::SmartDashboard::PutNumber("Right RPM",subShooter->GetRightRPM());
   //subShooter->speed = frc::SmartDashboard::GetNumber("Motor Speed", subShooter->speed);
   //frc::SmartDashboard::PutNumber("Motor Speed", subShooter->speed);
-  //std::cout << "shooter to shuffleboard" << std::endl;
-  //frc::SmartDashboard::PutNumber("Joy x", oi->getJoystickX());
-  //frc::SmartDashboard::PutNumber("Joy y", oi->getJoystickY());
-  //std::cout << "get joystick" << std::endl;
   posEncoderGyro->updateAbsolutePosition();
   posEncoderGyro->updateRelativePosition();
   //std::cout << "update position" << std::endl;
