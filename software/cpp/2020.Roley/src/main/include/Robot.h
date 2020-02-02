@@ -22,6 +22,8 @@
 #include "commands/CmdAutoRoutineTwo.h"
 #include "commands/CmdAutoRoutineThree.h"
 
+#include"commands/CmdDeployDolly.h"
+#include "commands/CmdRetractDolly.h"
 
 class Robot : public frc::TimedRobot {
  public:
