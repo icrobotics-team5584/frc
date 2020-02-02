@@ -54,7 +54,7 @@ void Robot::RobotInit() {
 
 void Robot::RobotPeriodic() {
 
-  frc::SmartDashboard::PutNumber("Timer", timer->GetMatchTime());
+  frc::SmartDashboard::PutNumber("Match Time", timer->GetMatchTime());
   frc::SmartDashboard::PutNumber("Left RPM", subShooter->GetLeftRPM());
   frc::SmartDashboard::PutNumber("Right RPM",subShooter->GetRightRPM());
   //subShooter->speed = frc::SmartDashboard::GetNumber("Motor Speed", subShooter->speed);
