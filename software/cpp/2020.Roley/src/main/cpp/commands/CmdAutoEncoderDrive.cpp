@@ -8,7 +8,7 @@
 #include "Robot.h"
 #include "commands/CmdAutoEncoderDrive.h"
 
-CmdAutoEncoderDrive::CmdAutoEncoderDrive(PIDAutoConfig _PIDConfig) {
+CmdAutoEncoderDrive::CmdAutoEncoderDrive(PIDAutoConfig _PIDConfig) : Command("CmdAutoEncoderDrive"){
   //Use "AutoRoutine" + desired routine + "Leg" + desired part of said routine
   //For example CmdAutoEncoderDrive(autoRoutineOneLegOne)
   //will run the first part of routine one
@@ -26,6 +26,7 @@ CmdAutoEncoderDrive::CmdAutoEncoderDrive(PIDAutoConfig _PIDConfig) {
 
 // Called just before this Command runs the first time
 void CmdAutoEncoderDrive::Initialize() {
+  std::cout << "Auto leg start " << std::endl;
   Robot::posEncoderGyro->setTempPosition(Robot::posEncoderGyro->getPositionX(), Robot::posEncoderGyro->getPositionY());
   Robot::posEncoderGyro->setTempAngle(_TargetAngle);
   //checks which direction the robot will be going so it knows when it has reached the target

@@ -4,34 +4,44 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-#include "Robot.h"
-#include "commands/CmdJoystickDrive.h"
-#include <iostream>
 
-CmdJoystickDrive::CmdJoystickDrive() {
-  Requires(Robot::subDriveBase.get());
+#include "commands/CmdBuddyLock.h"
+#include "Robot.h"
+
+CmdBuddyLock::CmdBuddyLock() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
+  Requires(Robot::subBuddyClimb.get());
 }
 
 // Called just before this Command runs the first time
-void CmdJoystickDrive::Initialize() {}
-
-// Called repeatedly when this Command is scheduled to run
-void CmdJoystickDrive::Execute() {
-  Robot::subDriveBase->drive(Robot::oi->getJoystickY(), Robot::oi->getJoystickX());
+void CmdBuddyLock::Initialize() {
+  double time = Robot::timer->GetMatchTime();
+  SmartDashboard::PutNumber("Time Via cmdSOLReverse", time);
+  if(Robot::oi->GetOverride()){
+    Robot::subBuddyClimb->Reverse();
+  }
+  if(time > 30){
+    SmartDashboard::PutString("Release SOL", "CANNOT RELEASE SOL");
+  }
+  else{
+    Robot::subBuddyClimb->Reverse(); 
+  }
 }
 
+// Called repeatedly when this Command is scheduled to run
+void CmdBuddyLock::Execute() {}
+
 // Make this return true when this Command no longer needs to run execute()
-bool CmdJoystickDrive::IsFinished() { return false; }
+bool CmdBuddyLock::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdJoystickDrive::End() {
-  Robot::subDriveBase->drive(0,0);
+void CmdBuddyLock::End() {
+  Robot::subBuddyClimb->Forward();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdJoystickDrive::Interrupted() {
+void CmdBuddyLock::Interrupted() {
   End();
 }

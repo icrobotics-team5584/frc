@@ -19,10 +19,17 @@ enum Can {
 enum PCM{
     pcm_solIntakeDeploy = 0,
     pcm_solIntakeRetract = 1,
+    pcm_solDollyDeploy = 2,
+    pcm_solDollyRetract = 3,
 };
 
 enum PWM{
     pwn_Storage = 0,
+};
+
+enum SOL{
+    sol_buddyLeft = 6,
+    sol_buddyRight = 7,
 };
 
 

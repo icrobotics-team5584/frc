@@ -46,6 +46,8 @@ class OI {
   double getJoystickY();
   double getJoystickRawAxis(Triggers trigger);
   double GetRightAsix();
+  bool GetOverride();
+  
   
  private:
   //Joystick pointers
@@ -59,4 +61,7 @@ class OI {
   std::unique_ptr<frc::JoystickButton> btnBackward;
   std::unique_ptr<frc::JoystickButton> btnIntake;
   std::unique_ptr<frc::JoystickButton> btnOuttake;
+  std::unique_ptr<frc::JoystickButton> btnClimb;
+  std::unique_ptr<frc::JoystickButton> btnReleaseBuddyClimber;
+  std::unique_ptr<frc::JoystickButton> btnOverride;
 };
