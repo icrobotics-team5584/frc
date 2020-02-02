@@ -32,9 +32,11 @@ int main( int argc, char *argv[] )
 
   // setup image pipeline
   cv::Mat img;
+  cv::Mat img2;
   //cv::GpuMat g_img(img);
   grip::GripPipeline ic_pipeline;
-  cv::VideoCapture input(0);
+  cv::VideoCapture input("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.1:1.0-video-index0");
+  cv::VideoCapture input2("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.3:1.0-video-index0");
 
   // record start time
   clock_t start = clock();
@@ -51,6 +53,9 @@ int main( int argc, char *argv[] )
 
     // STEP 1: fetch image
     if(!input.read(img))
+      break;
+
+    if(!input2.read(img2))
       break;
 
     // STEP 2: setup image pipeline
@@ -163,6 +168,7 @@ int main( int argc, char *argv[] )
     if( debug == 1 )
     {
       cv::imshow( "img", img );
+      cv::imshow( "img2", img2 );
       cv::imshow( "hsv threshold", *img_hsvthreshold );
       cv::imshow( "blur", *img_blur );
       cv::imshow( "img_contours", img_contours );
