@@ -12,7 +12,7 @@
 #include "commands/CmdIntake.h"
 #include "commands/CmdOuttake.h"
 #include "commands/CmdClimberLimitUp.h"
-
+#include "commands/CmdDeployDolly.h"
 
 OI::OI() {
 
@@ -44,6 +44,7 @@ OI::OI() {
 
   btnClimb.reset(new frc::JoystickButton(joystick1.get(), leftStickBtn));
   btnClimb->WhileHeld(new CmdClimberLimitUp());
+
 
   //std::cout<< "OI Ended" << std::endl;
 }
