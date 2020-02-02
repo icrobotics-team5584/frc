@@ -56,6 +56,7 @@ class OI {
 
   //Button pointers
   std::unique_ptr<AxisButton> btnSlowDown;
+  std::unique_ptr<AxisButton> btnDeployIntake;
   std::unique_ptr<frc::JoystickButton> btnShoot;
   std::unique_ptr<frc::JoystickButton> btnForward;
   std::unique_ptr<frc::JoystickButton> btnBackward;
