@@ -127,9 +127,11 @@ bool SubDriveBase::isNavxCal(){
 
 
 void SubDriveBase::deployDolly(){
-  solDollyAcuator->Set(frc::DoubleSolenoid::kReverse);
+  std::cout << "deploy dolly" << std::endl;
+  solDollyAcuator->Set(frc::DoubleSolenoid::kForward);
 }
 
 void SubDriveBase::retractDolly(){
-  solDollyAcuator->Set(frc::DoubleSolenoid::kForward);
+  std::cout << "retract dolly" << std::endl;
+  solDollyAcuator->Set(frc::DoubleSolenoid::kReverse);
 }

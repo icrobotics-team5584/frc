@@ -83,7 +83,7 @@ void Robot::AutonomousInit() {
     autonomousCommand->Start();
   }
   // autoTwo->Start();
-  subDriveBase->retractDolly();
+  subDriveBase->deployDolly();
 }
 
 void Robot::AutonomousPeriodic() { 
@@ -95,7 +95,7 @@ void Robot::AutonomousPeriodic() {
   }
 
 void Robot::TeleopInit() {
-  subDriveBase->deployDolly();
+  subDriveBase->retractDolly();
   // This makes sure that the autonomous stops running when
   // teleop starts running. If you want the autonomous to
   // continue until interrupted by another command, remove
