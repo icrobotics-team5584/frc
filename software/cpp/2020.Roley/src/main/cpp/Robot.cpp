@@ -57,8 +57,8 @@ void Robot::RobotPeriodic() {
   frc::SmartDashboard::PutNumber("Timer", timer->GetMatchTime());
   frc::SmartDashboard::PutNumber("Left RPM", subShooter->GetLeftRPM());
   frc::SmartDashboard::PutNumber("Right RPM",subShooter->GetRightRPM());
-  subShooter->speed = frc::SmartDashboard::GetNumber("Motor Speed", subShooter->speed);
-  frc::SmartDashboard::PutNumber("Motor Speed", subShooter->speed);
+  //subShooter->speed = frc::SmartDashboard::GetNumber("Motor Speed", subShooter->speed);
+  //frc::SmartDashboard::PutNumber("Motor Speed", subShooter->speed);
   posEncoderGyro->updateAbsolutePosition();
   posEncoderGyro->updateRelativePosition();
   //std::cout << "update position" << std::endl;

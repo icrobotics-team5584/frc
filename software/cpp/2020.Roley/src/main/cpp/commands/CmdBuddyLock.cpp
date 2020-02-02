@@ -18,7 +18,7 @@ CmdBuddyLock::CmdBuddyLock() {
 void CmdBuddyLock::Initialize() {
   double time = Robot::timer->GetMatchTime();
   SmartDashboard::PutNumber("Time Via cmdSOLReverse", time);
-  if(Robot::m_oi.GetOverride()){
+  if(Robot::oi->GetOverride()){
     Robot::subBuddyClimb->Reverse();
   }
   if(time > 30){
