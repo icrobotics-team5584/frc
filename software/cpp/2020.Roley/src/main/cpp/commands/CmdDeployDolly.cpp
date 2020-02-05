@@ -13,7 +13,7 @@
 CmdDeployDolly::CmdDeployDolly() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(Robot::subDriveBase.get());
+  //Requires(Robot::subDriveBase.get());
 }
 
 // Called just before this Command runs the first time

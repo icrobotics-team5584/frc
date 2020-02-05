@@ -49,6 +49,8 @@ void Robot::RobotInit() {
   chooser.AddOption("Trench Steal Run", autoTwo);
   chooser.AddOption("Sad Trench Run", autoThree);
   frc::SmartDashboard::PutData("Auto Selecter", &chooser);
+
+  frc::SmartDashboard::PutData("Dolly Deploy", new CmdDeployDolly());
 }
 
 
