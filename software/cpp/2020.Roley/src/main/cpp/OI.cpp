@@ -18,6 +18,7 @@
 #include "commands/CmdBuddyLock.h"
 #include "commands/CmdStorageExpand.h"
 #include "commands/CmdStorageRetract.h"
+#include "commands/CmdStorageTogglePneumatic.h"
 
 OI::OI() {
 
@@ -53,10 +54,8 @@ OI::OI() {
   btnClimb->WhileHeld(new CmdClimberLimitUp());
 
   //Storage Pneumatics
-  btnStorageExpand.reset(new frc::JoystickButton(joystick1.get(),startBtn));
-  btnStorageRetract.reset(new frc::JoystickButton(joystick1.get(),backBtn));
-  btnStorageExpand->WhileHeld(new CmdStorageExpand());
-  btnStorageRetract->WhileHeld(new CmdStorageRetract());
+  btnStorageExpand.reset(new frc::JoystickButton(joystick1.get(),aBtn));
+  btnStorageExpand->ToggleWhenPressed(new CmdStorageTogglePneumatic);
 
   //std::cout<< "OI Ended" << std::endl;
 

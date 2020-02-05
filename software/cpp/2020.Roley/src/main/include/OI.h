@@ -67,5 +67,4 @@ class OI {
   std::unique_ptr<frc::JoystickButton> btnOverride;
 
   std::unique_ptr<frc::JoystickButton> btnStorageExpand;
-  std::unique_ptr<frc::JoystickButton> btnStorageRetract;
   };
