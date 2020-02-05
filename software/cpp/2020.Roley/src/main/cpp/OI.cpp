@@ -16,6 +16,8 @@
 #include "commands/CmdDeployDolly.h"
 #include "commands/CmdBuddyDeploy.h"
 #include "commands/CmdBuddyLock.h"
+#include "commands/CmdStorageExpand.h"
+#include "commands/CmdStorageRetract.h"
 
 OI::OI() {
 
@@ -50,6 +52,11 @@ OI::OI() {
   btnClimb.reset(new frc::JoystickButton(joystick1.get(), leftStickBtn));
   btnClimb->WhileHeld(new CmdClimberLimitUp());
 
+  //Storage Pneumatics
+  btnStorageExpand.reset(new frc::JoystickButton(joystick1.get(),startBtn));
+  btnStorageRetract.reset(new frc::JoystickButton(joystick1.get(),backBtn));
+  btnStorageExpand->WhileHeld(new CmdStorageExpand());
+  btnStorageRetract->WhileHeld(new CmdStorageRetract());
 
   //std::cout<< "OI Ended" << std::endl;
 

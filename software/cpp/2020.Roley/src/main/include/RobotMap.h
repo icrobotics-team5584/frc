@@ -21,6 +21,8 @@ enum PCM{
     pcm_solIntakeRetract = 1,
     pcm_solDollyDeploy = 2,
     pcm_solDollyRetract = 3,
+    pcm_solStorageForward = 4,
+    pcm_solStorageRetract = 5
 };
 
 enum PWM{
