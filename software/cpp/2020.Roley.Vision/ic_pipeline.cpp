@@ -92,6 +92,7 @@ int main( int argc, char *argv[] )
     int max_y = 0;
     double peg_x = 0.0;
     double peg_y = 0.0;
+    double range_x = 0.0;
     double peg_range = 0.0;
     double bounding_rectangle_width = 0.0;
     double bounding_rectangle_height = 0.0;
@@ -133,8 +134,10 @@ int main( int argc, char *argv[] )
       peg_y = -17 * ( y - ( img_height / 2 ) ) / ( img_height / 2 );
       cout << "INFO: estimated peg position in field of view: (x,y)" << endl;
       cout << "(" << peg_x << "," << peg_y << ")" << endl;
-      // estimate range based on prior knowledge of camera vertical FOV and target height assume 45 degree (0.785 radian) vertical FOV and 200mm target height
-      peg_range = 200 / tan( 0.785 * ( max_y - min_y ) / img_height );
+      // estimate range based on prior knowledge of camera vertical FOV and  420mm target height
+      range_x = (max_y - min_y);
+      peg_range = (0.0009 * range_x * range_x) - (0.1845 * range_x) + 9.7792;
+      
       cout << "INFO: estimated peg range: (mm)" << endl;
       cout << peg_range << "mm" << endl;
       // display peg position at x, y on contours image ...

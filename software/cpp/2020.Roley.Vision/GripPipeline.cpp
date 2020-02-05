@@ -35,10 +35,10 @@ void GripPipeline::Process(cv::Mat& source0){
 
 
 
-	double hsvThresholdHue[] = {50, 100};
-	double hsvThresholdSaturation[] = {195, 255};
+	double hsvThresholdHue[] = {48, 100};
+	double hsvThresholdSaturation[] = {160, 255};
 	
-	double hsvThresholdValue[] = {38, 127};
+	double hsvThresholdValue[] = {38, 255};
 	hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, this->hsvThresholdOutput);
 	//Step Find_Contours0:
 	//Convert GPU cv::GpuMat to CPU cv::Mat
