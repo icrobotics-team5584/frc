@@ -10,6 +10,7 @@
 #include "commands/CmdRollStorageBack.h"
 #include "commands/CmdDriveSlowDown.h"
 #include "commands/CmdIntake.h"
+#include "commands/CmdDeployIntake.h"
 #include "commands/CmdOuttake.h"
 #include "commands/CmdClimberLimitUp.h"
 #include "commands/CmdDeployDolly.h"
@@ -40,8 +41,10 @@ OI::OI() {
   btnSlowDown->WhileHeld(new CmdDriveSlowDown());
 
   //Intake buttons
+  btnDeployIntake.reset(new AxisButton(joystick1.get(), triggerR));
   btnIntake.reset(new frc::JoystickButton(joystick1.get(), leftBtn));
   btnOuttake.reset(new frc::JoystickButton(joystick1.get(), rightBtn));
+  btnDeployIntake->WhileHeld(new CmdDeployIntake());
   btnIntake->WhileHeld(new CmdIntake());
   btnOuttake->WhileHeld(new CmdOuttake());
 

@@ -5,31 +5,29 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdIntake.h"
+#include "commands/CmdStorageRetract.h"
+#include "subsystems/SubStorage.h"
+#include "Robot.h"
 
-CmdIntake::CmdIntake() {
+CmdStorageRetract::CmdStorageRetract() {
   // Use Requires() here to declare subsystem dependencies
-  Requires(Robot::subIntake.get());
+  // eg. Requires(Robot::chassis.get());
 }
 
 // Called just before this Command runs the first time
-void CmdIntake::Initialize() {
-  Robot::subIntake->Intake();
-}
+void CmdStorageRetract::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void CmdIntake::Execute() {}
+void CmdStorageRetract::Execute() {
+  Robot::subStorage->Retract();
+}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdIntake::IsFinished() { return false; }
+bool CmdStorageRetract::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdIntake::End() {
-  Robot::subIntake->Stop();
-}
+void CmdStorageRetract::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdIntake::Interrupted() {
-  End();
-}
+void CmdStorageRetract::Interrupted() {}

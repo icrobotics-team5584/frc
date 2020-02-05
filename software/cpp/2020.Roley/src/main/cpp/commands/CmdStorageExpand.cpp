@@ -5,31 +5,28 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdIntake.h"
+#include "commands/CmdStorageExpand.h"
+#include "Robot.h"
 
-CmdIntake::CmdIntake() {
+CmdStorageExpand::CmdStorageExpand() {
   // Use Requires() here to declare subsystem dependencies
-  Requires(Robot::subIntake.get());
+  // eg. Requires(Robot::chassis.get());
 }
 
 // Called just before this Command runs the first time
-void CmdIntake::Initialize() {
-  Robot::subIntake->Intake();
-}
+void CmdStorageExpand::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void CmdIntake::Execute() {}
+void CmdStorageExpand::Execute() {
+  Robot::subStorage->Expand();
+}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdIntake::IsFinished() { return false; }
+bool CmdStorageExpand::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdIntake::End() {
-  Robot::subIntake->Stop();
-}
+void CmdStorageExpand::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdIntake::Interrupted() {
-  End();
-}
+void CmdStorageExpand::Interrupted() {}
