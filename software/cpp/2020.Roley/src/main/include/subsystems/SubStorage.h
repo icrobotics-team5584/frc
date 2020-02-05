@@ -9,6 +9,7 @@
 
 #include <frc/commands/Subsystem.h>
 #include <ctre/Phoenix.h>
+#include <frc/DigitalInput.h>
 
 
 class SubStorage : public frc::Subsystem {
@@ -16,13 +17,16 @@ class SubStorage : public frc::Subsystem {
   const double kDefaultFeederSpeed = 0.8;
   double _speed = kDefaultFeederSpeed;
   std::shared_ptr<TalonSRX> srxStorage;
+
+  frc::DigitalInput lbrTopStorage;
+    
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
 
  public:
   SubStorage();
   void InitDefaultCommand() override;
-
+  bool GetLbrTopStorage();
   void Forward();
   void Backward();
   void Stop();

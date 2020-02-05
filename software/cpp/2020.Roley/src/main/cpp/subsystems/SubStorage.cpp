@@ -10,7 +10,7 @@
 #include "frc/smartdashboard/SmartDashboard.h"
 
 
-SubStorage::SubStorage() : Subsystem("ExampleSubsystem") {
+SubStorage::SubStorage() : Subsystem("ExampleSubsystem"), lbrTopStorage(0) {
   srxStorage.reset(new TalonSRX(can_srxStorage));
   frc::SmartDashboard::PutNumber("Feeder speed", _speed);
 }
@@ -33,6 +33,10 @@ void SubStorage::Backward(){
 
 void SubStorage::Stop(){
   srxStorage->Set(ControlMode::PercentOutput, 0);
+}
+
+bool SubStorage::GetLbrTopStorage(){
+  return lbrTopStorage.Get();
 }
 
 

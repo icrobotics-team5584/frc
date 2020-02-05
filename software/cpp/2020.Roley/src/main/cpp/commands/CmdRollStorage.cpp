@@ -15,15 +15,17 @@ CmdRollStorage::CmdRollStorage() {
 }
 
 // Called just before this Command runs the first time
-void CmdRollStorage::Initialize() {
-  Robot::subStorage->Forward();
-}
+void CmdRollStorage::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void CmdRollStorage::Execute() {}
+void CmdRollStorage::Execute() {
+    Robot::subStorage->Forward();
+}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdRollStorage::IsFinished() { return false; }
+bool CmdRollStorage::IsFinished() { 
+  return !(Robot::subStorage->GetLbrTopStorage());
+}
 
 // Called once after isFinished returns true
 void CmdRollStorage::End() {

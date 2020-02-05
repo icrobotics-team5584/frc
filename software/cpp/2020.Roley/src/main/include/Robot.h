@@ -24,7 +24,6 @@
 #include "commands/CmdAutoRoutineTwo.h"
 #include "commands/CmdAutoRoutineThree.h"
 
-
 class Robot : public frc::TimedRobot {
  public:
   static std::unique_ptr<OI> oi;
