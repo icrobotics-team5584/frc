@@ -23,8 +23,7 @@ class SubClimber : public frc::Subsystem {
   std::unique_ptr<WPI_TalonSRX> srxClimberLeft;
   std::unique_ptr<WPI_TalonSRX> srxClimberRight;
 
-  std::shared_ptr<frc::DoubleSolenoid> SolLock1;
-  std::shared_ptr<frc::DoubleSolenoid> SolLock2;
+  std::shared_ptr<frc::DoubleSolenoid> solClimberRatchets;
 
   std::shared_ptr<frc::DigitalInput> LimitClimbUp;
   std::shared_ptr<frc::DigitalInput> LimitClimbDown;
@@ -49,8 +48,10 @@ class SubClimber : public frc::Subsystem {
   void Stop();
   //void Periodic() override;
 
-  void Lock();
-  void Unlock();
+  void RatchetsDisengage();
+  void RatchetsEngage();
+
+  void ElevatorPID();
 
   bool LimitClimbUpGet();
   bool LimitClimbDownGet();

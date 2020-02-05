@@ -11,7 +11,7 @@
 #include "RobotMap.h"
 
 SubBuddyClimb::SubBuddyClimb() : Subsystem("ExampleSubsystem") {
-  SolRelease.reset(new frc::DoubleSolenoid(sol_buddyRight, sol_buddyLeft));
+  SolRelease.reset(new frc::DoubleSolenoid(pcm_buddyOut, pcm_buddyIn));
 }
 
 void SubBuddyClimb::InitDefaultCommand() {

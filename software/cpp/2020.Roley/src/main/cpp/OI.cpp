@@ -16,6 +16,7 @@
 #include "commands/CmdDeployDolly.h"
 #include "commands/CmdBuddyDeploy.h"
 #include "commands/CmdBuddyLock.h"
+#include "commands/CmdEngageClimberRatchets.h"
 
 OI::OI() {
 
@@ -49,7 +50,8 @@ OI::OI() {
 
   btnClimb.reset(new frc::JoystickButton(joystick1.get(), leftStickBtn));
   btnClimb->WhileHeld(new CmdClimberLimitUp());
-
+  btnRatchets.reset(new frc::JoystickButton(joystick1.get(), aBtn));
+  btnRatchets->WhileHeld(new CmdEngageClimberRatchets());
 
   //std::cout<< "OI Ended" << std::endl;
 

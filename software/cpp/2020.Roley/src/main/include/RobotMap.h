@@ -16,20 +16,27 @@ enum Can {
     can_srxClimberLeft =  10,
 };
 
-enum PCM{
+enum PCM_ID{
+    pcm_0 = 0,
+    pcm_1 = 1,
+};
+
+enum PCM_0{
     pcm_solIntakeDeploy = 0,
     pcm_solIntakeRetract = 1,
     pcm_solDollyDeploy = 2,
     pcm_solDollyRetract = 3,
+    pcm_buddyIn = 16,
+    pcm_buddyOut = 17,
+};
+
+enum PCM_1{
+    pcm_solRatchetEngage = 0,
+    pcm_solRatchetDisengage = 1,
 };
 
 enum PWM{
     pwn_Storage = 0,
-};
-
-enum SOL{
-    sol_buddyLeft = 6,
-    sol_buddyRight = 7,
 };
 
 

@@ -11,8 +11,8 @@ SubClimber::SubClimber() : Subsystem("ExampleSubsystem") {
 
   srxClimberLeft.reset(new WPI_TalonSRX(can_srxClimberLeft));
   srxClimberRight.reset(new WPI_TalonSRX(can_srxClimberRight)); 
-  SolLock1.reset(new frc::DoubleSolenoid(0,1));
-  SolLock2.reset(new frc::DoubleSolenoid(2,3));
+  //solClimberRatchets.reset(new frc::DoubleSolenoid(pcm_1, pcm_solRatchetEngage, pcm_solRatchetDisengage));
+  solClimberRatchets.reset(new frc::DoubleSolenoid(pcm_0, 6, 7));
   LimitClimbUp.reset(new frc::DigitalInput(0));
   LimitClimbDown.reset(new frc::DigitalInput(1));
 
@@ -28,8 +28,8 @@ SubClimber::SubClimber() : Subsystem("ExampleSubsystem") {
 }
 
 void SubClimber::Periodic(){
-  frc::SmartDashboard::PutBoolean("Limit switch DOWN", LimitClimbDownGet());
-  frc::SmartDashboard::PutBoolean("Limit switch UP", LimitClimbUpGet());
+  //frc::SmartDashboard::PutBoolean("Limit switch DOWN", LimitClimbDownGet());
+  //frc::SmartDashboard::PutBoolean("Limit switch UP", LimitClimbUpGet());
   _speed = frc::SmartDashboard::GetNumber("Climber Speed", _speed);
   frc::SmartDashboard::PutNumber("Climber Speed", _speed);
 }
@@ -51,15 +51,14 @@ void SubClimber::Stop(){
   srxClimberLeft->Set(0);
 }
 
-void SubClimber::Lock(){
-  SolLock1->Set(frc::DoubleSolenoid::kForward);
-  SolLock2->Set(frc::DoubleSolenoid::kForward);
-
+void SubClimber::RatchetsDisengage(){
+  std::cout << "ratchet disengage piston" << std::endl;
+  solClimberRatchets->Set(frc::DoubleSolenoid::kForward);
 }
 
-void SubClimber::Unlock(){
-  SolLock1->Set(frc::DoubleSolenoid::kReverse);
-  SolLock2->Set(frc::DoubleSolenoid::kReverse);
+void SubClimber::RatchetsEngage(){
+  std::cout << "ratchet diengage piston" << std::endl;
+  solClimberRatchets->Set(frc::DoubleSolenoid::kReverse);
 }
 
 bool SubClimber::LimitClimbUpGet(){
@@ -157,6 +156,8 @@ bool SubClimber::IsOnTarget()
     return false;
   }
 }
+
+//void 
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
