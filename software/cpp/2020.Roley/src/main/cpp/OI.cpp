@@ -20,7 +20,8 @@
 #include "commands/CmdStorageExpand.h"
 #include "commands/CmdStorageRetract.h"
 #include "commands/CmdStorageTogglePneumatic.h"
-
+#include "commands/CmdElevatorFullExtend.h"
+#include "commands/CmdElevaterExtendMin.h"
 OI::OI() {
 
   //std::cout<< "OI Started" << std::endl;
@@ -69,6 +70,12 @@ OI::OI() {
 
   btnOverride.reset(new frc::JoystickButton(joystick1.get(), startBtn));
   // btnOverride->WhileHeld(new )
+
+  btnElevaterDown.reset(new ButtonPOV(joystick1.get(), DOWN));
+  btnElevaterDown->WhenPressed(new CmdElevaterExtendMin());
+
+  btnElevaterUp.reset(new ButtonPOV(joystick1.get(), UP));
+  btnElevaterUp->WhenPressed(new CmdElevatorFullExtend());
 
 }
 
