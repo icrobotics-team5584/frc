@@ -28,7 +28,8 @@ class SubClimber : public frc::Subsystem {
   std::shared_ptr<frc::DigitalInput> LimitClimbUp;
   std::shared_ptr<frc::DigitalInput> LimitClimbDown;
 
-  double _speed = 0.1;
+  double _upSpeed = 0.1;
+  double _downSpeed = 0.1;
   double _pos;
   double _top = 3222;
   double _dist;

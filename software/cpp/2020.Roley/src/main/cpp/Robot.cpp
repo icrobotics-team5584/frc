@@ -51,6 +51,8 @@ void Robot::RobotInit() {
   frc::SmartDashboard::PutData("Auto Selecter", &chooser);
 
   frc::SmartDashboard::PutData("Dolly Deploy", new CmdDeployDolly());
+  frc::SmartDashboard::PutData("Elevator Up", new CmdElevatorPowerUp());
+  frc::SmartDashboard::PutData("Elevator Down", new CmdElevatorPowerDown());
 }
 
 
