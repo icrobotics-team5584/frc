@@ -26,6 +26,8 @@ enum PCM_0{
     pcm_solIntakeRetract = 1,
     pcm_solDollyDeploy = 2,
     pcm_solDollyRetract = 3,
+    pcm_solStorageForward = 4,
+    pcm_solStorageRetract = 5
     pcm_buddyIn = 6,
     pcm_buddyOut = 7,
 };
