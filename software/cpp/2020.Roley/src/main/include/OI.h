@@ -65,6 +65,4 @@ class OI {
   std::unique_ptr<frc::JoystickButton> btnClimb;
   std::unique_ptr<frc::JoystickButton> btnReleaseBuddyClimber;
   std::unique_ptr<frc::JoystickButton> btnOverride;
-
-  std::unique_ptr<frc::JoystickButton> btnStorageExpand;
-  };
+};

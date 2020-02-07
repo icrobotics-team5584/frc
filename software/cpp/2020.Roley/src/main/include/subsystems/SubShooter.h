@@ -44,6 +44,7 @@ class SubShooter : public frc::Subsystem {
   double GetRightRPM();
   SubShooter();
   void InitDefaultCommand() override;
+
   void PowerShoot();
   void Shoot();
   void Stop();
