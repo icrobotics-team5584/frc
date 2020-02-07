@@ -13,6 +13,7 @@
 #include "frc/smartdashboard/SmartDashboard.h"
 #include <AHRS.h>
 #include "Utilities/PosEncoderGyro.h"
+#include <frc/DoubleSolenoid.h>
 using namespace std;
 
 class SubDriveBase : public frc::Subsystem {
@@ -27,6 +28,8 @@ class SubDriveBase : public frc::Subsystem {
   shared_ptr<WPI_TalonSRX> _srxFrontRight;
   shared_ptr<WPI_TalonSRX> _srxBackLeft;
   shared_ptr<WPI_TalonSRX> _srxBackRight;
+
+  shared_ptr<frc::DoubleSolenoid> solDollyAcuator;
 
   unique_ptr<frc::DifferentialDrive> DiffDrive;
 
@@ -62,4 +65,6 @@ class SubDriveBase : public frc::Subsystem {
   bool isNavxCal();
   double getActualYaw();
   void setTargetYaw(double TargetYaw);
+  void deployDolly();
+  void retractDolly();
 };

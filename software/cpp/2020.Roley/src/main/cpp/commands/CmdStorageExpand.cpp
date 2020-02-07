@@ -4,34 +4,29 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-#include "Robot.h"
-#include "commands/CmdJoystickDrive.h"
-#include <iostream>
 
-CmdJoystickDrive::CmdJoystickDrive() {
-  Requires(Robot::subDriveBase.get());
+#include "commands/CmdStorageExpand.h"
+#include "Robot.h"
+
+CmdStorageExpand::CmdStorageExpand() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
 }
 
 // Called just before this Command runs the first time
-void CmdJoystickDrive::Initialize() {}
+void CmdStorageExpand::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void CmdJoystickDrive::Execute() {
-  Robot::subDriveBase->drive(Robot::oi->getJoystickY(), Robot::oi->getJoystickX());
+void CmdStorageExpand::Execute() {
+  Robot::subStorage->Expand();
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdJoystickDrive::IsFinished() { return false; }
+bool CmdStorageExpand::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdJoystickDrive::End() {
-  Robot::subDriveBase->drive(0,0);
-}
+void CmdStorageExpand::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdJoystickDrive::Interrupted() {
-  End();
-}
+void CmdStorageExpand::Interrupted() {}

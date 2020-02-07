@@ -50,6 +50,18 @@ set PROJECTNAME=2020.Roley.Vision
 set PROJECTWORKSPACE=~/Projects/%PROJECTNAME%
 set PROJECTARCHIVE=%PROJECTNAME%.tar
 set PROJECTACCOUNT=ubuntu@10.55.84.8
+set PROJECTDATE=%DATE:~6,4%%DATE:~3,2%%DATE:~0,2%
+set PROJECTTIME=%TIME:~0,2%:%TIME:~3,2%:%TIME:~6,2%
+set PROJECTDATE=%PROJECTDATE: =0%
+set PROJECTTIME=%PROJECTTIME: =0%
+
+echo ---------------------------------------------------------------------------
+echo INFO: setting date in remote environment (%PROJECTDATE%)
+ssh %PROJECTACCOUNT% cd %PROJECTWORKSPACE%; sudo date +%%Y%%m%%d -s "%PROJECTDATE%"
+
+echo ---------------------------------------------------------------------------
+echo INFO: setting time in remote environment (%PROJECTTIME%)
+ssh %PROJECTACCOUNT% cd %PROJECTWORKSPACE%; sudo date +%%T -s "%PROJECTTIME%"
 
 echo ---------------------------------------------------------------------------
 echo INFO: constructing archive

@@ -9,7 +9,7 @@
 #include "Robot.h"
 
 CmdShooterShoot::CmdShooterShoot() {
-  Requires(Robot::subShooter.get());
+  //Requires(Robot::subShooter.get());
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
 }
@@ -22,7 +22,7 @@ void CmdShooterShoot::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdShooterShoot::Execute() {
-  Robot::subShooter->Shoot();
+  Robot::subShooter->PowerShoot();
 
 }
 

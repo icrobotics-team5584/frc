@@ -4,34 +4,34 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-#include "Robot.h"
-#include "commands/CmdJoystickDrive.h"
-#include <iostream>
 
-CmdJoystickDrive::CmdJoystickDrive() {
-  Requires(Robot::subDriveBase.get());
+#include "commands/CmdElevatorPowerDown.h"
+
+#include "Robot.h"
+
+CmdElevatorPowerDown::CmdElevatorPowerDown() {
   // Use Requires() here to declare subsystem dependencies
-  // eg. Requires(Robot::chassis.get());
+  Requires(Robot::subClimber.get());
 }
 
 // Called just before this Command runs the first time
-void CmdJoystickDrive::Initialize() {}
-
-// Called repeatedly when this Command is scheduled to run
-void CmdJoystickDrive::Execute() {
-  Robot::subDriveBase->drive(Robot::oi->getJoystickY(), Robot::oi->getJoystickX());
+void CmdElevatorPowerDown::Initialize() {
+  Robot::subClimber->MoveDown();
 }
 
+// Called repeatedly when this Command is scheduled to run
+void CmdElevatorPowerDown::Execute() {}
+
 // Make this return true when this Command no longer needs to run execute()
-bool CmdJoystickDrive::IsFinished() { return false; }
+bool CmdElevatorPowerDown::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdJoystickDrive::End() {
-  Robot::subDriveBase->drive(0,0);
+void CmdElevatorPowerDown::End() {
+  Robot::subClimber->Stop();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdJoystickDrive::Interrupted() {
+void CmdElevatorPowerDown::Interrupted() {
   End();
 }

@@ -10,8 +10,8 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 SubIntake::SubIntake() : Subsystem("ExampleSubsystem") {
-  srxIntake.reset(new TalonSRX(kIntakeMotor));
-
+  srxIntake.reset(new TalonSRX(can_srxIntake));
+  solIntakeActuator.reset(new frc::DoubleSolenoid(pcm_solIntakeDeploy, pcm_solIntakeRetract));
   // Setup current limiting. 
   /* Notes on current limiting:
    * - Current must go above PeakCurrentLimit for a number of milliseconds equal to 
@@ -57,6 +57,14 @@ void SubIntake::Stop() {
 
 void SubIntake::Periodic() {
   // Update intake speed from dashboard
-  frc::SmartDashboard::PutNumber("Intake Current", srxIntake->GetOutputCurrent());
+  //frc::SmartDashboard::PutNumber("Intake Current", srxIntake->GetOutputCurrent());
   _speed = frc::SmartDashboard::GetNumber("Intake Speed", kDefaultSpeed);
+}
+
+void SubIntake::Deploy() {
+  solIntakeActuator -> Set(frc::DoubleSolenoid::kReverse);
+}
+
+void SubIntake::Retract() {
+  solIntakeActuator -> Set(frc::DoubleSolenoid::kForward);
 }

@@ -20,6 +20,8 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   _srxBackLeft->Follow(*_srxFrontLeft);
   _srxBackRight->Follow(*_srxFrontRight);
 
+  solDollyAcuator.reset(new DoubleSolenoid(pcm_solDollyDeploy, pcm_solDollyRetract));
+
   ahrsNavXGyro.reset(new AHRS(SPI::kMXP));
   //enables the yaw to be reset
   ahrsNavXGyro->EnableBoardlevelYawReset(true);
@@ -38,18 +40,19 @@ void SubDriveBase::InitDefaultCommand() {
 
 void SubDriveBase::Periodic(){
   autoYaw = getActualYaw() - _targetYaw;
-  SmartDashboard::PutNumber("autoyaw", autoYaw);
+  //SmartDashboard::PutNumber("autoyaw", autoYaw);
 
   SmartDashboard::PutNumber("yaw", ahrsNavXGyro->GetYaw());
-  if(ahrsNavXGyro->IsCalibrating()){
-    std::cout << "navx calibrating" << std::endl;
-    
-  }
+  //if(ahrsNavXGyro->IsCalibrating()){
+  //  std::cout << "navx calibrating" << std::endl;
+  //  
+  //}
+
+  //frc::SmartDashboard::PutString("cmd", GetCurrentCommandName());
+
 }
 
 void SubDriveBase::drive(double speed, double rotation, bool squaredInputs){
-  frc::SmartDashboard::PutNumber("speed", speed);
-  frc::SmartDashboard::PutNumber("rot", rotation);
   DiffDrive->ArcadeDrive(-speed, rotation, squaredInputs);
 }
 
@@ -88,7 +91,6 @@ void SubDriveBase::autoEncoderDrive(double target, double P, double I, double D,
   double position;
   position = Robot::posEncoderGyro->getTempPositionX();//gets position from custom class located at "PosEncoderGyro.cpp"
   SmartDashboard::PutNumber("position", position);
-  SmartDashboard::PutNumber("trench position", position + 1.7);
 
 
   //position - target is the error or "P"
@@ -108,10 +110,9 @@ void SubDriveBase::autoEncoderDrive(double target, double P, double I, double D,
   if((autoYaw < -50 && error < 0) || (autoYaw > 50 && error > 0)){
     error = 0;
   }
-  SmartDashboard::PutNumber("error2", error);
 
   drive(Speed, error, false);//uses the same drive command as the joystick so onnly one can be run at the same time
-  std::cout << "auto stuff" << std::endl;
+  //std::cout << "auto stuff" << std::endl;
 }
 
 void SubDriveBase::resetYaw(){
@@ -123,3 +124,14 @@ bool SubDriveBase::isNavxCal(){
 }
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
+
+
+void SubDriveBase::deployDolly(){
+  std::cout << "deploy dolly" << std::endl;
+  solDollyAcuator->Set(frc::DoubleSolenoid::kForward);
+}
+
+void SubDriveBase::retractDolly(){
+  std::cout << "retract dolly" << std::endl;
+  solDollyAcuator->Set(frc::DoubleSolenoid::kReverse);
+}

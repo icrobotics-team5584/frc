@@ -9,12 +9,38 @@ enum Can {
     can_srxDriveBaseFrontRight = 3,
     can_srxDriveBaseBackRight = 4,
     can_srxShooterLeft = 5,
-    can_srxShooterRight = 6  
+    can_srxShooterRight = 6,
+    can_srxIntake = 7,
+    can_srxStorage = 8, 
+    can_srxClimberRight = 9,
+    can_srxClimberLeft =  10,
+};
+
+enum PCM_ID{
+    pcm_0 = 0,
+    pcm_1 = 1,
+};
+
+enum PCM_0{
+    pcm_solIntakeDeploy = 0,
+    pcm_solIntakeRetract = 1,
+    pcm_solDollyDeploy = 2,
+    pcm_solDollyRetract = 3,
+    pcm_solStorageForward = 4,
+    pcm_solStorageRetract = 5,
+    pcm_buddyIn = 6,
+    pcm_buddyOut = 7,
+};
+
+enum PCM_1{
+    pcm_solRatchetEngage = 0,
+    pcm_solRatchetDisengage = 1,
 };
 
 enum PWM{
     pwn_Storage = 0,
 };
+
 
 
 // For example to map the left and right motors, you could define the
@@ -26,4 +52,3 @@ enum PWM{
 // number and the module. For example you with a rangefinder:
 // constexpr int kRangeFinderPort = 1;
 // constexpr int kRangeFinderModule = 1;
-constexpr int kIntakeMotor = 7;

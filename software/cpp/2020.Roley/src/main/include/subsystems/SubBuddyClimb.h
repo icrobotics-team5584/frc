@@ -8,44 +8,19 @@
 #pragma once
 
 #include <frc/commands/Subsystem.h>
-#include <ctre/Phoenix.h>
 
-class SubShooter : public frc::Subsystem {
+#include <frc/DoubleSolenoid.h>
+
+
+class SubBuddyClimb : public frc::Subsystem {
  private:
-
-  const int kTimeoutMs = 30;
-  const int	kSlotIdx = 0;
-  const int	kPIDLoopIdx = 0;
-
-  double SetPLeft = 0;
-  double SetILeft = 0;
-  double SetDLeft = 0;
-  double SetFLeft = 0;
-
-  double SetPRight = 0;
-  double SetIRight = 0;
-  double SetDRight = 0;
-  double SetFRight = 0;
-
-  double RPM = 0;
-
-  double shooterSpeed = 0.8;
-
-
-
-
+   std::shared_ptr<frc::DoubleSolenoid> SolRelease;
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
 
  public:
-   std::shared_ptr<WPI_TalonSRX> leftMotor;
-  std::shared_ptr<WPI_TalonSRX> rightMotor;
-  double GetLeftRPM();
-  double GetRightRPM();
-  SubShooter();
+  SubBuddyClimb();
   void InitDefaultCommand() override;
-
-  void PowerShoot();
-  void Shoot();
-  void Stop();
+  void Reverse();
+  void Forward();
 };

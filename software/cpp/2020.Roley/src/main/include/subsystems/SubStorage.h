@@ -8,14 +8,18 @@
 #pragma once
 
 #include <frc/commands/Subsystem.h>
-#include <frc/VictorSP.h>
+#include <ctre/Phoenix.h>
+#include <frc/DoubleSolenoid.h>
 
 
 class SubStorage : public frc::Subsystem {
  private:
+  const double kDefaultFeederSpeed = 0.8;
+  double _speed = kDefaultFeederSpeed;
+  std::shared_ptr<TalonSRX> srxStorage;
 
-  float speed = 0.8; 
-  std::shared_ptr<frc::VictorSP> Motor;
+  std::shared_ptr<frc::DoubleSolenoid> solStorageActuator;
+
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
 
@@ -26,4 +30,7 @@ class SubStorage : public frc::Subsystem {
   void Forward();
   void Backward();
   void Stop();
+
+  void Expand();
+  void Retract();
 };
