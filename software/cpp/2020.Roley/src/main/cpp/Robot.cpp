@@ -4,6 +4,7 @@
 
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include "commands/CmdShooterShoot.h"
 
 #include "Robot.h"
 
@@ -59,6 +60,7 @@ void Robot::RobotPeriodic() {
   frc::SmartDashboard::PutNumber("Match Time", timer->GetMatchTime());
   frc::SmartDashboard::PutNumber("Left RPM", subShooter->GetLeftRPM());
   frc::SmartDashboard::PutNumber("Right RPM",subShooter->GetRightRPM());
+  frc::SmartDashboard::PutBoolean("ShooterShoot", CmdShooterShoot::ShooterShoot);
   //subShooter->speed = frc::SmartDashboard::GetNumber("Motor Speed", subShooter->speed);
   //frc::SmartDashboard::PutNumber("Motor Speed", subShooter->speed);
   posEncoderGyro->updateAbsolutePosition();

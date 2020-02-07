@@ -7,6 +7,7 @@
 
 #include "commands/CmdRollStorage.h"
 #include "Robot.h"
+#include "commands/CmdShooterShoot.h"
 
 CmdRollStorage::CmdRollStorage() {
   Requires(Robot::subStorage.get());
@@ -24,7 +25,16 @@ void CmdRollStorage::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdRollStorage::IsFinished() { 
-  return !(Robot::subStorage->GetLbrTopStorage());
+  if (!Robot::subStorage->GetLbrTopStorage())
+  {
+    if(CmdShooterShoot::ShooterShoot)
+      return false;
+    else
+      return true;
+  }
+  else
+    return false;
+  
 }
 
 // Called once after isFinished returns true
