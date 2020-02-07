@@ -56,7 +56,7 @@ void Robot::RobotInit() {
 
 
 void Robot::RobotPeriodic() {
-
+  frc::SmartDashboard::PutBoolean("lbrTopStorage", Robot::subStorage->GetLbrTopStorage());
   frc::SmartDashboard::PutNumber("Match Time", timer->GetMatchTime());
   frc::SmartDashboard::PutNumber("Left RPM", subShooter->GetLeftRPM());
   frc::SmartDashboard::PutNumber("Right RPM",subShooter->GetRightRPM());
