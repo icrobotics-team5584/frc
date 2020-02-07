@@ -51,13 +51,13 @@ OI::OI() {
 
   //Climber Button
 
-  btnClimb.reset(new frc::JoystickButton(joystick1.get(), leftStickBtn));
-  btnClimb->WhileHeld(new CmdClimberLimitUp());
-  btnRatchets.reset(new frc::JoystickButton(joystick1.get(), aBtn));
-  btnRatchets->WhileHeld(new CmdEngageClimberRatchets());
+  //btnClimb.reset(new frc::JoystickButton(joystick1.get(), leftStickBtn));
+  //btnClimb->WhileHeld(new CmdClimberLimitUp());
+  //btnRatchets.reset(new frc::JoystickButton(joystick1.get(), aBtn));
+  //btnRatchets->WhileHeld(new CmdEngageClimberRatchets());
 
   //Storage Pneumatics
-  btnStorageExpand.reset(new frc::JoystickButton(joystick1.get(),aBtn));
+  btnStorageExpand.reset(new frc::JoystickButton(joystick1.get(), aBtn));
   btnStorageExpand->ToggleWhenPressed(new CmdStorageTogglePneumatic);
 
   //std::cout<< "OI Ended" << std::endl;
