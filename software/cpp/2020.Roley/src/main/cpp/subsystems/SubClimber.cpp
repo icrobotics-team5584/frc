@@ -15,6 +15,9 @@ SubClimber::SubClimber() : Subsystem("ExampleSubsystem") {
   LimitClimbUp.reset(new frc::DigitalInput(0));
   LimitClimbDown.reset(new frc::DigitalInput(1));
 
+  srxClimberLeft->SetSelectedSensorPosition(0.0);
+  srxClimberLeft->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative);
+
   srxClimberLeft->ConfigFactoryDefault();
   srxClimberRight->ConfigFactoryDefault();
   srxClimberLeft->SetSensorPhase(false);
@@ -24,6 +27,13 @@ SubClimber::SubClimber() : Subsystem("ExampleSubsystem") {
   srxClimberLeft->SetInverted(false);
 
   srxClimberLeft->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Absolute);
+
+  frc::SmartDashboard::PutNumber("Elevator Up Speed", maxUpSpeed);
+  frc::SmartDashboard::PutNumber("Elevator Down Speed", maxDownSpeed);
+  frc::SmartDashboard::PutNumber("Target ele", target);
+  frc::SmartDashboard::PutNumber("kP", kP);
+
+
 }
 
 void SubClimber::Periodic(){
@@ -31,6 +41,17 @@ void SubClimber::Periodic(){
   //frc::SmartDashboard::PutBoolean("Limit switch UP", LimitClimbUpGet());
   _upSpeed = frc::SmartDashboard::GetNumber("Climber Speed", _upSpeed);
   frc::SmartDashboard::PutNumber("Climber Speed", _upSpeed);
+  if(timer.Get() > 0.5){
+    isElevatorLocked = false;
+  }
+  frc::SmartDashboard::PutBoolean("ratchet not engaged", !isElevatorLocked);
+  CustomPID(srxClimberLeft->GetSelectedSensorPosition());
+  maxUpSpeed = frc::SmartDashboard::GetNumber("Elevator Up Speed", 0.8);
+  maxDownSpeed = frc::SmartDashboard::GetNumber("Elevator Down Speed", 0.45);
+  //target = frc::SmartDashboard::GetNumber("Target ele", 0);
+  kP = frc::SmartDashboard::GetNumber("kP", -0.0008);
+  frc::SmartDashboard::PutNumber("elevater current speed", srxClimberLeft->GetMotorOutputPercent());
+  frc::SmartDashboard::PutNumber("elevater position", srxClimberLeft->GetSelectedSensorPosition());
 }
 
 void SubClimber::InitDefaultCommand() {
@@ -39,11 +60,15 @@ void SubClimber::InitDefaultCommand() {
 }
 
 void SubClimber::MoveUp(){
-  srxClimberLeft->Set(-_upSpeed);
+// if(!isElevatorLocked){
+//   srxClimberLeft->Set(-_upSpeed);
+// } else {
+//   srxClimberLeft->Set(0);
+// }
 }
 
 void SubClimber::MoveDown(){
-  srxClimberLeft->Set(_downSpeed);
+  //srxClimberLeft->Set(_downSpeed);
 }
 
 void SubClimber::Stop(){
@@ -51,12 +76,17 @@ void SubClimber::Stop(){
 }
 
 void SubClimber::RatchetsDisengage(){
-  std::cout << "ratchet disengage piston" << std::endl;
+  timer.Reset();
+  timer.Start();
+  std::cout << "ratchet disengage" << std::endl;
   solClimberRatchets->Set(frc::DoubleSolenoid::kForward);
 }
 
 void SubClimber::RatchetsEngage(){
-  std::cout << "ratchet diengage piston" << std::endl;
+  timer.Stop();
+  timer.Reset();
+  isElevatorLocked = true;
+  std::cout << "ratchet engage" << std::endl;
   solClimberRatchets->Set(frc::DoubleSolenoid::kReverse);
 }
 
@@ -122,7 +152,11 @@ double SubClimber::getPos()
 
 void SubClimber::setSpeed(double speed) //Hardcodes power as %!!!!!
 {
-  //srxClimberLeft->Set(speed);
+  if (-speed > 0 && isElevatorLocked){
+    srxClimberLeft->Set(0);
+  } else {
+    srxClimberLeft->Set(-speed);
+  }
 }
 
 void SubClimber::SetPosition(double position)
@@ -156,7 +190,26 @@ bool SubClimber::IsOnTarget()
   }
 }
 
-//void 
+void SubClimber::CustomPID(double PIDIntput){
+  error = PIDIntput - target;
+  intergral = intergral + error;
+  derivative = error - lastError;
+  PIDOutput = (error * kP) + (intergral * kI) + (derivative * kD);
+  if (PIDOutput > maxUpSpeed){
+    PIDOutput = maxUpSpeed;
+  }
+  if (PIDOutput < maxDownSpeed){
+    PIDOutput = maxDownSpeed;
+  }
+  setSpeed(PIDOutput);
+  lastError = error;
+  
+}
 
-// Put methods for controlling this subsystem
-// here. Call these from Commands.
+void SubClimber::ElevatorExtendMax(){
+  target = 30900;
+}
+
+void SubClimber::ElevaterExtendMin(){
+  target = 0;
+}
