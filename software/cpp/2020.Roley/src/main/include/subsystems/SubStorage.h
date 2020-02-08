@@ -9,6 +9,7 @@
 
 #include <frc/commands/Subsystem.h>
 #include <ctre/Phoenix.h>
+#include <frc/DoubleSolenoid.h>
 
 
 class SubStorage : public frc::Subsystem {
@@ -16,6 +17,9 @@ class SubStorage : public frc::Subsystem {
   const double kDefaultFeederSpeed = 0.8;
   double _speed = kDefaultFeederSpeed;
   std::shared_ptr<TalonSRX> srxStorage;
+
+  std::shared_ptr<frc::DoubleSolenoid> solStorageActuator;
+
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
 
@@ -26,4 +30,7 @@ class SubStorage : public frc::Subsystem {
   void Forward();
   void Backward();
   void Stop();
+
+  void Expand();
+  void Retract();
 };

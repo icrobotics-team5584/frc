@@ -15,6 +15,7 @@
 #include "frc/smartdashboard/SmartDashboard.h"
 #include <frc/DoubleSolenoid.h>
 #include <frc/DigitalInput.h>
+#include <frc/Timer.h>
 
 class SubClimber : public frc::Subsystem {
  private:
@@ -23,13 +24,13 @@ class SubClimber : public frc::Subsystem {
   std::unique_ptr<WPI_TalonSRX> srxClimberLeft;
   std::unique_ptr<WPI_TalonSRX> srxClimberRight;
 
-  std::shared_ptr<frc::DoubleSolenoid> SolLock1;
-  std::shared_ptr<frc::DoubleSolenoid> SolLock2;
+  std::shared_ptr<frc::DoubleSolenoid> solClimberRatchets;
 
   std::shared_ptr<frc::DigitalInput> LimitClimbUp;
   std::shared_ptr<frc::DigitalInput> LimitClimbDown;
 
-  double _speed = 0.1;
+  double _upSpeed = 0.1;
+  double _downSpeed = 0.5;
   double _pos;
   double _top = 3222;
   double _dist;
@@ -40,7 +41,24 @@ class SubClimber : public frc::Subsystem {
 
   double kF;
 
+  bool isElevatorLocked = true;
+
   void configTalon();
+
+  frc::Timer timer;
+
+  double error;
+  double target = 0;
+  double intergral;
+  double derivative;
+  double lastError = 0;
+  double PIDOutput;
+  double kP = -0.0008;
+  double kI = 0;
+  double kD = 0;
+  double maxUpSpeed = 0.9;
+  double maxDownSpeed = -0.45;
+
  public:
   SubClimber();
   void InitDefaultCommand() override;
@@ -49,8 +67,10 @@ class SubClimber : public frc::Subsystem {
   void Stop();
   //void Periodic() override;
 
-  void Lock();
-  void Unlock();
+  void RatchetsDisengage();
+  void RatchetsEngage();
+
+  void ElevatorPID();
 
   bool LimitClimbUpGet();
   bool LimitClimbDownGet();
@@ -67,4 +87,7 @@ class SubClimber : public frc::Subsystem {
   double MetresToSensorUnits(double metres);
   double SensorUnitsToMetres(double sensorUnits);
   bool IsOnTarget();
+  void CustomPID(double PIDIntput);
+  void ElevatorExtendMax();
+  void ElevaterExtendMin();
 };

@@ -16,7 +16,12 @@
 #include "commands/CmdDeployDolly.h"
 #include "commands/CmdBuddyDeploy.h"
 #include "commands/CmdBuddyLock.h"
-
+#include "commands/CmdEngageClimberRatchets.h"
+#include "commands/CmdStorageExpand.h"
+#include "commands/CmdStorageRetract.h"
+#include "commands/CmdStorageTogglePneumatic.h"
+#include "commands/CmdElevatorFullExtend.h"
+#include "commands/CmdElevaterExtendMin.h"
 OI::OI() {
 
   //std::cout<< "OI Started" << std::endl;
@@ -47,9 +52,14 @@ OI::OI() {
 
   //Climber Button
 
-  btnClimb.reset(new frc::JoystickButton(joystick1.get(), leftStickBtn));
-  btnClimb->WhileHeld(new CmdClimberLimitUp());
+  //btnClimb.reset(new frc::JoystickButton(joystick1.get(), leftStickBtn));
+  //btnClimb->WhileHeld(new CmdClimberLimitUp());
+  //btnRatchets.reset(new frc::JoystickButton(joystick1.get(), aBtn));
+  //btnRatchets->WhileHeld(new CmdEngageClimberRatchets());
 
+  //Storage Pneumatics
+  btnStorageExpand.reset(new frc::JoystickButton(joystick1.get(), aBtn));
+  btnStorageExpand->ToggleWhenPressed(new CmdStorageTogglePneumatic);
 
   //std::cout<< "OI Ended" << std::endl;
 
@@ -60,6 +70,12 @@ OI::OI() {
 
   btnOverride.reset(new frc::JoystickButton(joystick1.get(), startBtn));
   // btnOverride->WhileHeld(new )
+
+  btnElevaterDown.reset(new ButtonPOV(joystick1.get(), DOWN));
+  btnElevaterDown->WhenPressed(new CmdElevaterExtendMin());
+
+  btnElevaterUp.reset(new ButtonPOV(joystick1.get(), UP));
+  btnElevaterUp->WhenPressed(new CmdElevatorFullExtend());
 
 }
 
