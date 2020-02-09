@@ -45,21 +45,21 @@ void CmdAutoEncoderDrive::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdAutoEncoderDrive::IsFinished() {
- // if(isForward){//checks which direction the robot is going as calculated in CmdAutoEncoderDrive::Initialize()
- //   if(Robot::posEncoderGyro->getPositionY() < _TargetY){//checks whether robot has reached destination
- //     return false;
- //   } else{
- //     return true;
- //   }
- // } else{
- //   if(Robot::posEncoderGyro->getPositionY() < _TargetY){
- //     return true;
- //   } else{
+  if(isForward){//checks which direction the robot is going as calculated in CmdAutoEncoderDrive::Initialize()
+    if(Robot::posEncoderGyro->getPositionY() < _TargetY){//checks whether robot has reached destination
+      return false;
+    } else{
+      return true;
+    }
+  } else{
+    if(Robot::posEncoderGyro->getPositionY() < _TargetY){
+      return true;
+    } else{
       return false; 
- //   }
- // }
-}
+    }
+  }
 
+}
 // Called once after isFinished returns true
 void CmdAutoEncoderDrive::End() {
   Robot::subDriveBase->drive(0, 0);//robot stops (duh)
