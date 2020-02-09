@@ -16,6 +16,7 @@ CmdElevaterExtendMin::CmdElevaterExtendMin() {
 
 // Called just before this Command runs the first time
 void CmdElevaterExtendMin::Initialize() {
+  Robot::subClimber->EnablePID();
   Robot::subClimber->ElevaterExtendMin();
 }
 

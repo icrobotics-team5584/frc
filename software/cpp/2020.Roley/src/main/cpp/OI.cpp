@@ -22,6 +22,7 @@
 #include "commands/CmdStorageTogglePneumatic.h"
 #include "commands/CmdElevatorFullExtend.h"
 #include "commands/CmdElevaterExtendMin.h"
+#include "commands/CmdElevatorBuddy.h"
 OI::OI() {
 
   //std::cout<< "OI Started" << std::endl;
@@ -76,6 +77,9 @@ OI::OI() {
 
   btnElevaterUp.reset(new ButtonPOV(joystick1.get(), UP));
   btnElevaterUp->WhenPressed(new CmdElevatorFullExtend());
+
+  btnElevaterBuddy.reset(new ButtonPOV(joystick1.get(), RIGHT));
+  btnElevaterBuddy->WhenPressed(new CmdElevatorBuddy());
 
 }
 

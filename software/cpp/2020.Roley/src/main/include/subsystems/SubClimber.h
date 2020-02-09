@@ -59,6 +59,9 @@ class SubClimber : public frc::Subsystem {
   double maxUpSpeed = 0.9;
   double maxDownSpeed = -0.45;
 
+  bool startedDown;
+  bool PIDEnabled = true;
+
  public:
   SubClimber();
   void InitDefaultCommand() override;
@@ -81,8 +84,6 @@ class SubClimber : public frc::Subsystem {
   int getEncoder();
   double getPos();
   void setSpeed(double speed);
-  void ConfigTalon();//default
-  void ConfigTalonOverride();//PID off
   void SetPosition(double position);
   double MetresToSensorUnits(double metres);
   double SensorUnitsToMetres(double sensorUnits);
@@ -90,4 +91,8 @@ class SubClimber : public frc::Subsystem {
   void CustomPID(double PIDIntput);
   void ElevatorExtendMax();
   void ElevaterExtendMin();
+  void ElevatorExtendBuddy();
+  void EnablePID();
+  void DisablePID();
+  bool IsAtTarget();
 };
