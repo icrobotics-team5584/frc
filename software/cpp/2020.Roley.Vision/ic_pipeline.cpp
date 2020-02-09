@@ -26,6 +26,9 @@ int peg_hits = 0;
 int peg_misses = 0;
 int debug = 0;
 
+int stream0 = 0;
+int stream1 = 1;
+
 int main( int argc, char *argv[] )
 {
 
@@ -36,10 +39,27 @@ int main( int argc, char *argv[] )
   // setup image pipeline
   cv::Mat img;
   cv::Mat img2;
+  cv::Mat img3;
+  cv::Mat img4;
+
+  cv::Mat images[4] = { img, img2, img3, img4 };
+
   //cv::GpuMat g_img(img);
   grip::GripPipeline ic_pipeline;
   cv::VideoCapture input("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.1:1.0-video-index0");
-  cv::VideoCapture input2("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.3:1.0-video-index0");
+  cv::VideoCapture input2("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.2:1.0-video-index0");
+  cv::VideoCapture input3("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.3:1.0-video-index0");
+  cv::VideoCapture input4("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.4:1.0-video-index0");
+
+  input.set(cv::CAP_PROP_FRAME_WIDTH, 320);
+  input.set(cv::CAP_PROP_FRAME_HEIGHT, 180);
+  input2.set(cv::CAP_PROP_FRAME_WIDTH, 320);
+  input2.set(cv::CAP_PROP_FRAME_HEIGHT, 180);
+  input3.set(cv::CAP_PROP_FRAME_WIDTH, 320);
+  input3.set(cv::CAP_PROP_FRAME_HEIGHT, 180);
+  input4.set(cv::CAP_PROP_FRAME_WIDTH, 320);
+  input4.set(cv::CAP_PROP_FRAME_HEIGHT, 180);
+
 
   // record start time
   clock_t start = clock();
@@ -80,15 +100,26 @@ int main( int argc, char *argv[] )
 
   std::cout << "Camera Servers started." << std::endl;
 
+  nt->PutNumber("Cam 0", 0);
+  nt->PutNumber("Cam 1", 1);
+
   for (;;)
   {
+    
+
+    std::cout << "Stream 0: " << stream0 << " Stream 1: " << stream1 << std::endl;
+
 
     // STEP 1: fetch image
     if(!input.read(img))
       break;
-
     if(!input2.read(img2))
       break;
+    if(!input3.read(img3))
+      break;
+    if(!input4.read(img4))
+      break;
+
 
     // STEP 2: setup image pipeline
     ic_pipeline.setsource0(img);
@@ -221,8 +252,23 @@ int main( int argc, char *argv[] )
 
     // STEP 7.5: Do some camera server things
     std::cout << "About to push camera frames to server." << std::endl;
+
+    stream0 = nt->GetNumber("Cam 0", 0);
+    stream1 = nt->GetNumber("Cam 1", 1);
+    
+    /*if      (stream0 == 0) { test.write(img); }
+    else if (stream0 == 1) { test.write(img2); }
+    else if (stream0 == 2) { test.write(img3); }
+    else if (stream0 == 3) { test.write(img4); }
+    
+    if      (stream1 == 0) { test2.write(img); }
+    else if (stream1 == 1) { test2.write(img2); }
+    else if (stream1 == 2) { test2.write(img3); }
+    else if (stream1 == 3) { test2.write(img4); }*/
+
     test.write(img);
     test2.write(img2);
+
     img_contours.release();
     std::cout << "Frame 1 pushed to server." << std::endl;
 //    test2.write(img_contours);
