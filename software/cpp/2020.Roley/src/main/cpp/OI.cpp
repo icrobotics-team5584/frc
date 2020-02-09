@@ -66,7 +66,7 @@ OI::OI() {
   //Buddy Climber Button
 
   btnReleaseBuddyClimber.reset(new frc::JoystickButton(joystick1.get(), backBtn));
-  btnReleaseBuddyClimber->WhileHeld(new CmdBuddyLock());
+  btnReleaseBuddyClimber->WhenPressed(new CmdBuddyLock());
 
   btnOverride.reset(new frc::JoystickButton(joystick1.get(), startBtn));
   // btnOverride->WhileHeld(new )
