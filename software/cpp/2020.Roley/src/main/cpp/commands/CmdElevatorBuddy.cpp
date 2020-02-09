@@ -5,32 +5,35 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdElevaterExtendMin.h"
+#include "commands/CmdElevatorBuddy.h"
 
 #include "Robot.h"
 
-CmdElevaterExtendMin::CmdElevaterExtendMin() {
+CmdElevatorBuddy::CmdElevatorBuddy() {
   // Use Requires() here to declare subsystem dependencies
+  // eg. Requires(Robot::chassis.get());
   Requires(Robot::subClimber.get());
 }
 
 // Called just before this Command runs the first time
-void CmdElevaterExtendMin::Initialize() {
-  Robot::subClimber->EnablePID();
-  Robot::subClimber->ElevaterExtendMin();
+void CmdElevatorBuddy::Initialize() {
+  Robot::subClimber->ElevatorExtendBuddy();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdElevaterExtendMin::Execute() {}
+void CmdElevatorBuddy::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdElevaterExtendMin::IsFinished() { return true; }
+bool CmdElevatorBuddy::IsFinished() { return Robot::subClimber->IsAtTarget(); }
 
 // Called once after isFinished returns true
-void CmdElevaterExtendMin::End() {}
+void CmdElevatorBuddy::End() {
+  Robot::subClimber->RatchetsEngage();
+  Robot::subClimber->DisablePID();
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdElevaterExtendMin::Interrupted() {
+void CmdElevatorBuddy::Interrupted() {
   End();
 }

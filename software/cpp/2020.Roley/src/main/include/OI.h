@@ -72,4 +72,6 @@ class OI {
   std::unique_ptr<frc::JoystickButton> btnStorageExpand;
   std::unique_ptr<ButtonPOV> btnElevaterUp;
   std::unique_ptr<ButtonPOV> btnElevaterDown;
+  std::unique_ptr<ButtonPOV> btnElevaterBuddy;
+
   };

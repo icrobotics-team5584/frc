@@ -60,6 +60,7 @@ class SubClimber : public frc::Subsystem {
   double maxDownSpeed = -0.45;
 
   bool startedDown;
+  bool PIDEnabled = true;
 
  public:
   SubClimber();
@@ -90,4 +91,8 @@ class SubClimber : public frc::Subsystem {
   void CustomPID(double PIDIntput);
   void ElevatorExtendMax();
   void ElevaterExtendMin();
+  void ElevatorExtendBuddy();
+  void EnablePID();
+  void DisablePID();
+  bool IsAtTarget();
 };

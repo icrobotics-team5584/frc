@@ -37,7 +37,6 @@ SubClimber::SubClimber() : Subsystem("ExampleSubsystem") {
 
   frc::SmartDashboard::PutNumber("Elevator Up Speed", maxUpSpeed);
   frc::SmartDashboard::PutNumber("Elevator Down Speed", maxDownSpeed);
-  frc::SmartDashboard::PutNumber("Target ele", target);
   frc::SmartDashboard::PutNumber("kP", kP);
 
 
@@ -57,12 +56,15 @@ void SubClimber::Periodic(){
   maxUpSpeed = frc::SmartDashboard::GetNumber("Elevator Up Speed", 0.8);
   maxDownSpeed = frc::SmartDashboard::GetNumber("Elevator Down Speed", 0.45);
   //target = frc::SmartDashboard::GetNumber("Target ele", 0);
+  frc::SmartDashboard::PutNumber("Target ele", target);
   kP = frc::SmartDashboard::GetNumber("kP", -0.0008);
   frc::SmartDashboard::PutNumber("elevater current speed", srxClimberLeft->GetMotorOutputPercent());
   frc::SmartDashboard::PutNumber("elevater position", srxClimberLeft->GetSelectedSensorPosition());
 
   frc::SmartDashboard::PutBoolean("limit top", LimitClimbUp->Get());
   frc::SmartDashboard::PutBoolean("limit bottom", LimitClimbDown->Get());
+  frc::SmartDashboard::PutBoolean("PID enabled", PIDEnabled);
+
 }
 
 void SubClimber::InitDefaultCommand() {
@@ -130,7 +132,7 @@ double SubClimber::getPos()
 void SubClimber::setSpeed(double speed) //Hardcodes power as %!!!!!
 {
   if(startedDown){
-    if (-(srxClimberLeft->GetMotorOutputPercent()) >= 0 && isElevatorLocked){
+    if (speed >= 0 && isElevatorLocked){
       std::cout << "elevator stop" << std::endl;
       srxClimberLeft->Set(0);
     } else {
@@ -183,7 +185,11 @@ void SubClimber::CustomPID(double PIDIntput){
   if (PIDOutput < maxDownSpeed){
     PIDOutput = maxDownSpeed;
   }
-  setSpeed(PIDOutput);
+  if(PIDEnabled){
+    setSpeed(PIDOutput);
+  } else {
+    setSpeed(0);
+  }
   lastError = error;
   
 }
@@ -194,4 +200,26 @@ void SubClimber::ElevatorExtendMax(){
 
 void SubClimber::ElevaterExtendMin(){
   target = 0;
+}
+
+void SubClimber::ElevatorExtendBuddy(){
+  if(srxClimberLeft->GetSelectedSensorPosition() > 3634){
+    target = 3634;
+  }
+}
+
+void SubClimber::EnablePID(){
+  PIDEnabled = true;
+}
+
+void SubClimber::DisablePID(){
+  PIDEnabled = false;
+}
+
+bool SubClimber::IsAtTarget(){
+  if(srxClimberLeft->GetSelectedSensorPosition() < target + 500 && srxClimberLeft->GetSelectedSensorPosition() > target - 500){
+    return true;
+  } else {
+    return false;
+  }
 }
