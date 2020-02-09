@@ -104,6 +104,7 @@ void Robot::AutonomousPeriodic() {
 void Robot::TeleopInit() {
   subDriveBase->retractDolly();
   subClimber->RatchetsDisengage();
+  subBuddyClimb->Forward();
   // This makes sure that the autonomous stops running when
   // teleop starts running. If you want the autonomous to
   // continue until interrupted by another command, remove
