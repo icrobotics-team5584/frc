@@ -59,6 +59,8 @@ class SubClimber : public frc::Subsystem {
   double maxUpSpeed = 0.9;
   double maxDownSpeed = -0.45;
 
+  bool startedDown;
+
  public:
   SubClimber();
   void InitDefaultCommand() override;

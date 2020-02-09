@@ -41,6 +41,10 @@ enum PWM{
     pwn_Storage = 0,
 };
 
+enum DIO{
+    dio_ElevatorBottom = 2,
+    dio_ElevatorTop = 3,
+};
 
 
 // For example to map the left and right motors, you could define the

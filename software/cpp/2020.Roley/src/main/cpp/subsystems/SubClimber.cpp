@@ -12,10 +12,17 @@ SubClimber::SubClimber() : Subsystem("ExampleSubsystem") {
   srxClimberLeft.reset(new WPI_TalonSRX(can_srxClimberLeft));
   srxClimberRight.reset(new WPI_TalonSRX(can_srxClimberRight)); 
   solClimberRatchets.reset(new frc::DoubleSolenoid(pcm_1, pcm_solRatchetEngage, pcm_solRatchetDisengage));
-  LimitClimbUp.reset(new frc::DigitalInput(0));
-  LimitClimbDown.reset(new frc::DigitalInput(1));
+  LimitClimbUp.reset(new frc::DigitalInput(dio_ElevatorTop));
+  LimitClimbDown.reset(new frc::DigitalInput(dio_ElevatorBottom));
 
-  srxClimberLeft->SetSelectedSensorPosition(0.0);
+  if(!LimitClimbDown->Get()){
+    srxClimberLeft->SetSelectedSensorPosition(0.0);
+    startedDown = true;
+  } else {
+    startedDown = false;
+  }
+  frc::SmartDashboard::PutBoolean("Correct Elevator Start", startedDown);
+
   srxClimberLeft->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative);
 
   srxClimberLeft->ConfigFactoryDefault();
@@ -37,6 +44,7 @@ SubClimber::SubClimber() : Subsystem("ExampleSubsystem") {
 }
 
 void SubClimber::Periodic(){
+
   //frc::SmartDashboard::PutBoolean("Limit switch DOWN", LimitClimbDownGet());
   //frc::SmartDashboard::PutBoolean("Limit switch UP", LimitClimbUpGet());
   _upSpeed = frc::SmartDashboard::GetNumber("Climber Speed", _upSpeed);
@@ -52,6 +60,9 @@ void SubClimber::Periodic(){
   kP = frc::SmartDashboard::GetNumber("kP", -0.0008);
   frc::SmartDashboard::PutNumber("elevater current speed", srxClimberLeft->GetMotorOutputPercent());
   frc::SmartDashboard::PutNumber("elevater position", srxClimberLeft->GetSelectedSensorPosition());
+
+  frc::SmartDashboard::PutBoolean("limit top", LimitClimbUp->Get());
+  frc::SmartDashboard::PutBoolean("limit bottom", LimitClimbDown->Get());
 }
 
 void SubClimber::InitDefaultCommand() {
@@ -118,10 +129,15 @@ double SubClimber::getPos()
 
 void SubClimber::setSpeed(double speed) //Hardcodes power as %!!!!!
 {
-  if (-speed > 0 && isElevatorLocked){
-    srxClimberLeft->Set(0);
+  if(startedDown){
+    if (-(srxClimberLeft->GetMotorOutputPercent()) >= 0 && isElevatorLocked){
+      std::cout << "elevator stop" << std::endl;
+      srxClimberLeft->Set(0);
+    } else {
+      srxClimberLeft->Set(-speed);
+    }
   } else {
-    srxClimberLeft->Set(-speed);
+      srxClimberLeft->Set(0);
   }
 }
 
