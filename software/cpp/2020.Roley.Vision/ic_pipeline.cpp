@@ -33,10 +33,23 @@ int main( int argc, char *argv[] )
   // setup image pipeline
   cv::Mat img;
   cv::Mat img2;
+  cv::Mat img3;
+  cv::Mat img4;
   //cv::GpuMat g_img(img);
   grip::GripPipeline ic_pipeline;
   cv::VideoCapture input("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.1:1.0-video-index0");
-  cv::VideoCapture input2("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.3:1.0-video-index0");
+  cv::VideoCapture input2("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.2:1.0-video-index0");
+  cv::VideoCapture input3("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.3:1.0-video-index0");
+  cv::VideoCapture input4("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.4:1.0-video-index0");
+
+  input.set(cv::CAP_PROP_FRAME_WIDTH, 320);
+  input.set(cv::CAP_PROP_FRAME_HEIGHT, 180);
+  input2.set(cv::CAP_PROP_FRAME_WIDTH, 320);
+  input2.set(cv::CAP_PROP_FRAME_HEIGHT, 180);
+  input3.set(cv::CAP_PROP_FRAME_WIDTH, 320);
+  input3.set(cv::CAP_PROP_FRAME_HEIGHT, 180);
+  input4.set(cv::CAP_PROP_FRAME_WIDTH, 320);
+  input4.set(cv::CAP_PROP_FRAME_HEIGHT, 180);
 
   // record start time
   clock_t start = clock();
@@ -54,8 +67,11 @@ int main( int argc, char *argv[] )
     // STEP 1: fetch image
     if(!input.read(img))
       break;
-
     if(!input2.read(img2))
+      break;
+    if(!input3.read(img3))
+      break;
+    if(!input4.read(img4))
       break;
 
     // STEP 2: setup image pipeline
@@ -172,9 +188,11 @@ int main( int argc, char *argv[] )
     {
       cv::imshow( "img", img );
       cv::imshow( "img2", img2 );
-      cv::imshow( "hsv threshold", *img_hsvthreshold );
-      cv::imshow( "blur", *img_blur );
-      cv::imshow( "img_contours", img_contours );
+      cv::imshow( "img3", img3 );
+      cv::imshow( "img4", img4 );
+      //cv::imshow( "hsv threshold", *img_hsvthreshold );
+      //cv::imshow( "blur", *img_blur );
+      //cv::imshow( "img_contours", img_contours );
     }
 
     // STEP 7: update network tables
