@@ -81,8 +81,6 @@ class SubClimber : public frc::Subsystem {
   int getEncoder();
   double getPos();
   void setSpeed(double speed);
-  void ConfigTalon();//default
-  void ConfigTalonOverride();//PID off
   void SetPosition(double position);
   double MetresToSensorUnits(double metres);
   double SensorUnitsToMetres(double sensorUnits);

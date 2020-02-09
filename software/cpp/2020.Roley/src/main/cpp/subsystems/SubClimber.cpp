@@ -98,40 +98,6 @@ bool SubClimber::LimitClimbDownGet(){
   return !LimitClimbDown->frc::DigitalInput::Get();
 }
 
-
-void SubClimber::ConfigTalonOverride(){
-  srxClimberLeft->SelectProfileSlot(0, 0);
-  srxClimberLeft->Config_kF(0, 0, 0);
-  srxClimberLeft->Config_kP(0, 0, 0);
-  srxClimberLeft->Config_kI(0, 0, 0);
-  srxClimberLeft->Config_kD(0, 0, 0);
-  
-  srxClimberLeft->ConfigPeakOutputForward(0.6, 0);
-  srxClimberLeft->ConfigPeakOutputReverse(-0.6, 0);
-}
-
-void SubClimber::ConfigTalon()  //Generic Talon PID Config, has kI
-{
-
-  srxClimberLeft->SetStatusFramePeriod(StatusFrameEnhanced::Status_13_Base_PIDF0, 10, 10);
-  srxClimberLeft->SetStatusFramePeriod(StatusFrameEnhanced::Status_10_MotionMagic, 10, 10);
-
-  // Set peak outputs
-  srxClimberLeft->ConfigPeakOutputForward(0.6, 0);
-  srxClimberLeft->ConfigPeakOutputReverse(-0.6, 0);
-
-  // Set motion magic gains **These numbers aren't set right yet (for muck)**
-  srxClimberLeft->SelectProfileSlot(0, 0);
-  srxClimberLeft->Config_kF(0, 50, 0);
-  srxClimberLeft->Config_kP(0, 2.5, 0);
-  srxClimberLeft->Config_kI(0, 0.0015, 0);
-  srxClimberLeft->Config_kD(0, 0, 0);
-
-  // Set acceleration and cruise velocity
-  srxClimberLeft->ConfigMotionCruiseVelocity(2500, 0);
-  srxClimberLeft->ConfigMotionAcceleration(2000, 0);
-}
-
 int SubClimber::getEncoder()
 {
   return srxClimberLeft->GetSelectedSensorPosition(0);
