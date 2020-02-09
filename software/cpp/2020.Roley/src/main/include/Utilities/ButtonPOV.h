@@ -6,7 +6,7 @@
  */
 
 #pragma once
-#include <frc/WPILib.h>
+#include "frc/Joystick.h"
 #include <frc/buttons/Trigger.h>
 #include <cstdlib>
 
