@@ -81,7 +81,7 @@ double SubDriveBase::getDistanceTravelled(){
   return distance;  
 }
 
-void SubDriveBase::autoEncoderDrive(double target, double P, double I, double D, double Speed){
+void SubDriveBase::autoEncoderDrive(double target, double P, double I, double D, double Speed, double TargetY){
   //PID values and setting passed in from command
   kP = P;
   kI = I;
@@ -111,7 +111,16 @@ void SubDriveBase::autoEncoderDrive(double target, double P, double I, double D,
     error = 0;
   }
 
-  drive(Speed, error, false);//uses the same drive command as the joystick so onnly one can be run at the same time
+  y_position = Robot::posEncoderGyro->getTempPositionY();
+  y_target = TargetY;
+  y_intergral = y_intergral + (y_position - y_target);
+  y_error = y_kP*(y_position - y_target) + y_kI*(y_intergral) + y_kD*((y_position - y_target) - y_previousError);
+  y_previousError = y_position - y_target;
+
+  SmartDashboard::PutNumber("y position", y_position);
+
+
+  drive(y_error, error, false);//uses the same drive command as the joystick so onnly one can be run at the same time
   //std::cout << "auto stuff" << std::endl;
 }
 

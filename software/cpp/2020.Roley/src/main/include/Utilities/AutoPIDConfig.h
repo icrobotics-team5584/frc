@@ -7,6 +7,7 @@ struct PIDAutoConfig {
     double speed;
     double targetX;
     double targetY;
+    double targetYstop;
     double targetAngle;
     double targetAoA;
 };
