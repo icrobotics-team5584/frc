@@ -5,32 +5,29 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdEngageClimberRatchets.h"
+#include "commands/CmdAutoShoot.h"
+#include "Robot.h"
 
-CmdEngageClimberRatchets::CmdEngageClimberRatchets() {
+CmdAutoShoot::CmdAutoShoot() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  //Requires(Robot::subClimber.get());
+  //Requires()
 }
 
 // Called just before this Command runs the first time
-void CmdEngageClimberRatchets::Initialize() {
-  Robot::subClimber->RatchetsEngage();
+void CmdAutoShoot::Initialize() {
+ // Robot::subShooter->PowerShoot();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdEngageClimberRatchets::Execute() {}
+void CmdAutoShoot::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdEngageClimberRatchets::IsFinished() { return false; }
+bool CmdAutoShoot::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdEngageClimberRatchets::End() {
-  Robot::subClimber->RatchetsDisengage();
-}
+void CmdAutoShoot::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdEngageClimberRatchets::Interrupted() {
-  End();
-}
+void CmdAutoShoot::Interrupted() {}

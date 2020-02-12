@@ -5,32 +5,33 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdEngageClimberRatchets.h"
+#include "commands/CmdElevatorFullExtend.h"
 
-CmdEngageClimberRatchets::CmdEngageClimberRatchets() {
+#include "Robot.h"
+
+CmdElevatorFullExtend::CmdElevatorFullExtend() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  //Requires(Robot::subClimber.get());
+  Requires(Robot::subClimber.get());
+
 }
 
 // Called just before this Command runs the first time
-void CmdEngageClimberRatchets::Initialize() {
-  Robot::subClimber->RatchetsEngage();
+void CmdElevatorFullExtend::Initialize() {
+  Robot::subClimber->ElevatorExtendMax();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdEngageClimberRatchets::Execute() {}
+void CmdElevatorFullExtend::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdEngageClimberRatchets::IsFinished() { return false; }
+bool CmdElevatorFullExtend::IsFinished() { return true; }
 
 // Called once after isFinished returns true
-void CmdEngageClimberRatchets::End() {
-  Robot::subClimber->RatchetsDisengage();
-}
+void CmdElevatorFullExtend::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdEngageClimberRatchets::Interrupted() {
+void CmdElevatorFullExtend::Interrupted() {
   End();
 }

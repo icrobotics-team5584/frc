@@ -15,7 +15,7 @@ SubBuddyClimb::SubBuddyClimb() : Subsystem("ExampleSubsystem") {
 }
 
 void SubBuddyClimb::InitDefaultCommand() {
-  SetDefaultCommand(new CmdBuddyDeploy());
+  //SetDefaultCommand(new CmdBuddyDeploy());
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
 }

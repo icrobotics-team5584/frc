@@ -5,32 +5,29 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdEngageClimberRatchets.h"
+#include "commands/CmdAutoStorageStop.h"
+#include "Robot.h"
 
-CmdEngageClimberRatchets::CmdEngageClimberRatchets() {
+CmdAutoStorageStop::CmdAutoStorageStop() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  //Requires(Robot::subClimber.get());
+  Requires(Robot::subStorage.get());
 }
 
 // Called just before this Command runs the first time
-void CmdEngageClimberRatchets::Initialize() {
-  Robot::subClimber->RatchetsEngage();
+void CmdAutoStorageStop::Initialize() {
+  Robot::subStorage->Stop();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdEngageClimberRatchets::Execute() {}
+void CmdAutoStorageStop::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdEngageClimberRatchets::IsFinished() { return false; }
+bool CmdAutoStorageStop::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdEngageClimberRatchets::End() {
-  Robot::subClimber->RatchetsDisengage();
-}
+void CmdAutoStorageStop::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdEngageClimberRatchets::Interrupted() {
-  End();
-}
+void CmdAutoStorageStop::Interrupted() {}

@@ -10,6 +10,8 @@
 #include "subsystems/AxisButton.h"
 #include "frc/Joystick.h"
 
+#include "Utilities/ButtonPOV.h"
+
 enum Buttons{
       aBtn = 1, 
       bBtn = 2,
@@ -68,4 +70,8 @@ class OI {
   std::unique_ptr<frc::JoystickButton> btnRatchets;
 
   std::unique_ptr<frc::JoystickButton> btnStorageExpand;
+  std::unique_ptr<ButtonPOV> btnElevaterUp;
+  std::unique_ptr<ButtonPOV> btnElevaterDown;
+  std::unique_ptr<ButtonPOV> btnElevaterBuddy;
+
   };

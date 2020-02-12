@@ -8,28 +8,15 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-#include "Utilities/PosEncoderGyro.h"
-#include "Utilities/AutoPIDConfig.h"
 
-using namespace std;
-
-class CmdAutoEncoderDrive : public frc::Command {
+class CmdAutowait : public frc::Command {
  public:
-  CmdAutoEncoderDrive(PIDAutoConfig _PIDConfig);
+  CmdAutowait(double timeout);
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
-
- private:
-  double _target = 0;
-  double _P = 0;
-  double _I = 0;
-  double _D = 0;
-  double _Speed  = 0;
-  double _TargetY = 0;
-  double _TargetAngle = 0;
-  double _TargetTurnaround;
-  bool isForward;
+  private:
+  double _timeout;
 };
