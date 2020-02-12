@@ -51,8 +51,8 @@ int main( int argc, char *argv[] )
   cv::VideoCapture input3("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.3:1.0-video-index0");
   cv::VideoCapture input4("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.4:1.0-video-index0");
 
-  input.set(cv::CAP_PROP_FRAME_WIDTH, 320);
-  input.set(cv::CAP_PROP_FRAME_HEIGHT, 180);
+  input.set(cv::CAP_PROP_FRAME_WIDTH, 720);
+  input.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
   input2.set(cv::CAP_PROP_FRAME_WIDTH, 320);
   input2.set(cv::CAP_PROP_FRAME_HEIGHT, 180);
   input3.set(cv::CAP_PROP_FRAME_WIDTH, 320);
@@ -80,8 +80,11 @@ int main( int argc, char *argv[] )
   std::shared_ptr<nt::NetworkTable> ntcam;
   ntcam = ntinst.GetTable("CameraPublisher/CVCamera");
 
-  // std::shared_ptr<nt::NetworkTable> ntcam2;
-  // ntcam2 = ntinst.GetTable("CameraPublisher/CVCamera2");
+  std::shared_ptr<nt::NetworkTable> ntcam2;
+  ntcam2 = ntinst.GetTable("CameraPublisher/CVCamera2");
+
+  std::shared_ptr<nt::NetworkTable> ntcam3;
+  ntcam3 = ntinst.GetTable("CameraPublisher/CVCamera3");
 
   std::this_thread::sleep_for(std::chrono::seconds(5));
   std::cout << "Network Tables Initialized." << std::endl;
@@ -89,16 +92,21 @@ int main( int argc, char *argv[] )
   string Fred[1] = {"mjpeg:http://10.55.84.8:5800"}; //Fred and James are the camera ip address arrays. They have to be there for the camera server to work.
   ntcam->PutStringArray("streams", Fred);
   
-  // string James[1] = {"mjpeg:http://10.55.84.8:5801"};
-  // ntcam2->PutStringArray("streams", James);.l.;.ljjjjjuu
+  string James[1] = {"mjpeg:http://10.55.84.8:5801"};
+  ntcam2->PutStringArray("streams", James);
+
+  string Max[1] = {"mjpeg:http://10.55.84.8:5802"};
+  ntcam3->PutStringArray("streams", Max);
 
   std::cout << "Arrays pushed to network tables." << std::endl;
 
   // Start the camera server on port 5800.
   MJPEGWriter test(5800);
-  // MJPEGWriter test2(5801);
+  MJPEGWriter test2(5801);
+  MJPEGWriter test3(5802);
   test.start();
-  // test2.start();
+  test2.start();
+  test3.start();
 
   std::cout << "Camera Servers started." << std::endl;
 
@@ -275,7 +283,8 @@ int main( int argc, char *argv[] )
     // else if (stream1 == 3) { test2.write(img4); }
 
     //test.write(img);
-    //test2.write(img2);
+    test2.write(img2);
+    test3.write(img3);
 
     img_contours.release();
     std::cout << "Frame 1 pushed to server." << std::endl;
@@ -298,7 +307,8 @@ int main( int argc, char *argv[] )
     {
       cout << "INFO: detected control file (stop)" << endl;
       test.stop();
-      //test2.stop();
+      test2.stop();
+      test3.stop();
       break;
     }
 
