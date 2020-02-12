@@ -77,4 +77,6 @@ class SubDriveBase : public frc::Subsystem {
   void setTargetYaw(double TargetYaw);
   void deployDolly();
   void retractDolly();
+  double getJoystickY();
+  double getJoystickX();
 };
