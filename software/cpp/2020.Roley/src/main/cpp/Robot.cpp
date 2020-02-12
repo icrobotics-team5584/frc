@@ -49,6 +49,11 @@ void Robot::RobotInit() {
   chooser.AddOption("Trench Steal Run", autoTwo);
   chooser.AddOption("Sad Trench Run", autoThree);
   frc::SmartDashboard::PutData("Auto Selecter", &chooser);
+
+  frc::SmartDashboard::PutData("Dolly Deploy", new CmdDeployDolly());
+  frc::SmartDashboard::PutData("Elevator Up", new CmdElevatorPowerUp());
+  frc::SmartDashboard::PutData("Elevator Down", new CmdElevatorPowerDown());
+  frc::SmartDashboard::PutData("Ratchets", new CmdEngageClimberRatchets());
 }
 
 
@@ -98,6 +103,9 @@ void Robot::AutonomousPeriodic() {
 
 void Robot::TeleopInit() {
   subDriveBase->retractDolly();
+  subClimber->RatchetsDisengage();
+  subClimber->ElevaterExtendMin();
+  subBuddyClimb->Forward();
   // This makes sure that the autonomous stops running when
   // teleop starts running. If you want the autonomous to
   // continue until interrupted by another command, remove

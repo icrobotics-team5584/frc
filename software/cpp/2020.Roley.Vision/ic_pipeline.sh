@@ -4,8 +4,8 @@
 
 # setup camera
 
-/usr/bin/v4l2-ctl --set-ctrl exposure_auto=1
-/usr/bin/v4l2-ctl --set-ctrl exposure_absolute=5
+/usr/bin/v4l2-ctl --device /dev/v4l/by-path/platform-70090000.xusb-usb-0:2.1:1.0-video-index0 --set-ctrl exposure_auto=1
+/usr/bin/v4l2-ctl --device /dev/v4l/by-path/platform-70090000.xusb-usb-0:2.1:1.0-video-index0 --set-ctrl exposure_absolute=5
 
 
 

@@ -5,44 +5,33 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdBuddyLock.h"
+#include "commands/CmdElevatorPowerUp.h"
+
 #include "Robot.h"
 
-CmdBuddyLock::CmdBuddyLock() {
+CmdElevatorPowerUp::CmdElevatorPowerUp() {
   // Use Requires() here to declare subsystem dependencies
-  // eg. Requires(Robot::chassis.get());
-  Requires(Robot::subBuddyClimb.get());
+  Requires(Robot::subClimber.get());
 }
 
 // Called just before this Command runs the first time
-void CmdBuddyLock::Initialize() {
-  double time = Robot::timer->GetMatchTime();
-  SmartDashboard::PutNumber("Time Via cmdSOLReverse", time);
-  if(Robot::oi->GetOverride()){
-    Robot::subBuddyClimb->Reverse();
-  }
-  if(time > 30){
-    SmartDashboard::PutString("Release SOL", "CANNOT RELEASE SOL");
-  }
-  else{
-    Robot::subBuddyClimb->Reverse(); 
-    std::cout << "piston fire" << std::endl;
-  }
+void CmdElevatorPowerUp::Initialize() {
+  Robot::subClimber->MoveUp();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdBuddyLock::Execute() {}
+void CmdElevatorPowerUp::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdBuddyLock::IsFinished() { return true; }
+bool CmdElevatorPowerUp::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdBuddyLock::End() {
-  //Robot::subBuddyClimb->Forward();
+void CmdElevatorPowerUp::End() {
+  Robot::subClimber->Stop();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdBuddyLock::Interrupted() {
+void CmdElevatorPowerUp::Interrupted() {
   End();
 }

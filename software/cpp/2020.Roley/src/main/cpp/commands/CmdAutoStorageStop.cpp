@@ -5,44 +5,29 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdBuddyLock.h"
+#include "commands/CmdAutoStorageStop.h"
 #include "Robot.h"
 
-CmdBuddyLock::CmdBuddyLock() {
+CmdAutoStorageStop::CmdAutoStorageStop() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(Robot::subBuddyClimb.get());
+  Requires(Robot::subStorage.get());
 }
 
 // Called just before this Command runs the first time
-void CmdBuddyLock::Initialize() {
-  double time = Robot::timer->GetMatchTime();
-  SmartDashboard::PutNumber("Time Via cmdSOLReverse", time);
-  if(Robot::oi->GetOverride()){
-    Robot::subBuddyClimb->Reverse();
-  }
-  if(time > 30){
-    SmartDashboard::PutString("Release SOL", "CANNOT RELEASE SOL");
-  }
-  else{
-    Robot::subBuddyClimb->Reverse(); 
-    std::cout << "piston fire" << std::endl;
-  }
+void CmdAutoStorageStop::Initialize() {
+  Robot::subStorage->Stop();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdBuddyLock::Execute() {}
+void CmdAutoStorageStop::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdBuddyLock::IsFinished() { return true; }
+bool CmdAutoStorageStop::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdBuddyLock::End() {
-  //Robot::subBuddyClimb->Forward();
-}
+void CmdAutoStorageStop::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdBuddyLock::Interrupted() {
-  End();
-}
+void CmdAutoStorageStop::Interrupted() {}

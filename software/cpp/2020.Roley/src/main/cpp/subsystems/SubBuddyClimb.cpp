@@ -11,11 +11,11 @@
 #include "RobotMap.h"
 
 SubBuddyClimb::SubBuddyClimb() : Subsystem("ExampleSubsystem") {
-  SolRelease.reset(new frc::DoubleSolenoid(sol_buddyLeft, sol_buddyRight));
+  SolRelease.reset(new frc::DoubleSolenoid(pcm_buddyOut, pcm_buddyIn));
 }
 
 void SubBuddyClimb::InitDefaultCommand() {
-  SetDefaultCommand(new CmdBuddyDeploy());
+  //SetDefaultCommand(new CmdBuddyDeploy());
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
 }
