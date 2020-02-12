@@ -32,9 +32,11 @@ int main( int argc, char *argv[] )
 
   // setup image pipeline
   cv::Mat img;
+  cv::Mat img2;
   //cv::GpuMat g_img(img);
   grip::GripPipeline ic_pipeline;
-  cv::VideoCapture input(0);
+  cv::VideoCapture input("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.1:1.0-video-index0");
+  cv::VideoCapture input2("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.3:1.0-video-index0");
 
   // record start time
   clock_t start = clock();
@@ -51,6 +53,9 @@ int main( int argc, char *argv[] )
 
     // STEP 1: fetch image
     if(!input.read(img))
+      break;
+
+    if(!input2.read(img2))
       break;
 
     // STEP 2: setup image pipeline
@@ -87,6 +92,7 @@ int main( int argc, char *argv[] )
     int max_y = 0;
     double peg_x = 0.0;
     double peg_y = 0.0;
+    double range_x = 0.0;
     double peg_range = 0.0;
     double bounding_rectangle_width = 0.0;
     double bounding_rectangle_height = 0.0;
@@ -128,8 +134,10 @@ int main( int argc, char *argv[] )
       peg_y = -17 * ( y - ( img_height / 2 ) ) / ( img_height / 2 );
       cout << "INFO: estimated peg position in field of view: (x,y)" << endl;
       cout << "(" << peg_x << "," << peg_y << ")" << endl;
-      // estimate range based on prior knowledge of camera vertical FOV and target height assume 45 degree (0.785 radian) vertical FOV and 200mm target height
-      peg_range = 200 / tan( 0.785 * ( max_y - min_y ) / img_height );
+      // estimate range based on prior knowledge of camera vertical FOV and  420mm target height
+      range_x = (max_y - min_y);
+      peg_range = (0.0009 * range_x * range_x) - (0.1845 * range_x) + 9.7792;
+      
       cout << "INFO: estimated peg range: (mm)" << endl;
       cout << peg_range << "mm" << endl;
       // display peg position at x, y on contours image ...
@@ -163,6 +171,7 @@ int main( int argc, char *argv[] )
     if( debug == 1 )
     {
       cv::imshow( "img", img );
+      cv::imshow( "img2", img2 );
       cv::imshow( "hsv threshold", *img_hsvthreshold );
       cv::imshow( "blur", *img_blur );
       cv::imshow( "img_contours", img_contours );

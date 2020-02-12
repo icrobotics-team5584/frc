@@ -27,7 +27,7 @@ class SubShooter : public frc::Subsystem {
   double SetDRight = 0;
   double SetFRight = 0;
 
-  double RPM = 0;
+  double RPM = 1200;
 
   double shooterSpeed = 0.8;
 

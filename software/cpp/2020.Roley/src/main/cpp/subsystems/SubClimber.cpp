@@ -11,10 +11,19 @@ SubClimber::SubClimber() : Subsystem("ExampleSubsystem") {
 
   srxClimberLeft.reset(new WPI_TalonSRX(can_srxClimberLeft));
   srxClimberRight.reset(new WPI_TalonSRX(can_srxClimberRight)); 
-  SolLock1.reset(new frc::DoubleSolenoid(0,1));
-  SolLock2.reset(new frc::DoubleSolenoid(2,3));
-  LimitClimbUp.reset(new frc::DigitalInput(0));
-  LimitClimbDown.reset(new frc::DigitalInput(1));
+  solClimberRatchets.reset(new frc::DoubleSolenoid(pcm_1, pcm_solRatchetEngage, pcm_solRatchetDisengage));
+  LimitClimbUp.reset(new frc::DigitalInput(dio_ElevatorTop));
+  LimitClimbDown.reset(new frc::DigitalInput(dio_ElevatorBottom));
+
+  if(!LimitClimbDown->Get()){
+    srxClimberLeft->SetSelectedSensorPosition(0.0);
+    startedDown = true;
+  } else {
+    startedDown = false;
+  }
+  frc::SmartDashboard::PutBoolean("Correct Elevator Start", startedDown);
+
+  srxClimberLeft->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative);
 
   srxClimberLeft->ConfigFactoryDefault();
   srxClimberRight->ConfigFactoryDefault();
@@ -25,13 +34,37 @@ SubClimber::SubClimber() : Subsystem("ExampleSubsystem") {
   srxClimberLeft->SetInverted(false);
 
   srxClimberLeft->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Absolute);
+
+  frc::SmartDashboard::PutNumber("Elevator Up Speed", maxUpSpeed);
+  frc::SmartDashboard::PutNumber("Elevator Down Speed", maxDownSpeed);
+  frc::SmartDashboard::PutNumber("kP", kP);
+
+
 }
 
 void SubClimber::Periodic(){
-  frc::SmartDashboard::PutBoolean("Limit switch DOWN", LimitClimbDownGet());
-  frc::SmartDashboard::PutBoolean("Limit switch UP", LimitClimbUpGet());
-  _speed = frc::SmartDashboard::GetNumber("Climber Speed", _speed);
-  frc::SmartDashboard::PutNumber("Climber Speed", _speed);
+
+  //frc::SmartDashboard::PutBoolean("Limit switch DOWN", LimitClimbDownGet());
+  //frc::SmartDashboard::PutBoolean("Limit switch UP", LimitClimbUpGet());
+  _upSpeed = frc::SmartDashboard::GetNumber("Climber Speed", _upSpeed);
+  frc::SmartDashboard::PutNumber("Climber Speed", _upSpeed);
+  if(timer.Get() > 0.5){
+    isElevatorLocked = false;
+  }
+  frc::SmartDashboard::PutBoolean("ratchet not engaged", !isElevatorLocked);
+  CustomPID(srxClimberLeft->GetSelectedSensorPosition());
+  maxUpSpeed = frc::SmartDashboard::GetNumber("Elevator Up Speed", 0.8);
+  maxDownSpeed = frc::SmartDashboard::GetNumber("Elevator Down Speed", 0.45);
+  //target = frc::SmartDashboard::GetNumber("Target ele", 0);
+  frc::SmartDashboard::PutNumber("Target ele", target);
+  kP = frc::SmartDashboard::GetNumber("kP", -0.0008);
+  frc::SmartDashboard::PutNumber("elevater current speed", srxClimberLeft->GetMotorOutputPercent());
+  frc::SmartDashboard::PutNumber("elevater position", srxClimberLeft->GetSelectedSensorPosition());
+
+  frc::SmartDashboard::PutBoolean("limit top", LimitClimbUp->Get());
+  frc::SmartDashboard::PutBoolean("limit bottom", LimitClimbDown->Get());
+  frc::SmartDashboard::PutBoolean("PID enabled", PIDEnabled);
+
 }
 
 void SubClimber::InitDefaultCommand() {
@@ -40,26 +73,34 @@ void SubClimber::InitDefaultCommand() {
 }
 
 void SubClimber::MoveUp(){
-  srxClimberLeft->Set(_speed);
+// if(!isElevatorLocked){
+//   srxClimberLeft->Set(-_upSpeed);
+// } else {
+//   srxClimberLeft->Set(0);
+// }
 }
 
 void SubClimber::MoveDown(){
-  //srxClimberLeft->Set(-_speed);
+  //srxClimberLeft->Set(_downSpeed);
 }
 
 void SubClimber::Stop(){
   srxClimberLeft->Set(0);
 }
 
-void SubClimber::Lock(){
-  SolLock1->Set(frc::DoubleSolenoid::kForward);
-  SolLock2->Set(frc::DoubleSolenoid::kForward);
-
+void SubClimber::RatchetsDisengage(){
+  timer.Reset();
+  timer.Start();
+  std::cout << "ratchet disengage" << std::endl;
+  solClimberRatchets->Set(frc::DoubleSolenoid::kForward);
 }
 
-void SubClimber::Unlock(){
-  SolLock1->Set(frc::DoubleSolenoid::kReverse);
-  SolLock2->Set(frc::DoubleSolenoid::kReverse);
+void SubClimber::RatchetsEngage(){
+  timer.Stop();
+  timer.Reset();
+  isElevatorLocked = true;
+  std::cout << "ratchet engage" << std::endl;
+  solClimberRatchets->Set(frc::DoubleSolenoid::kReverse);
 }
 
 bool SubClimber::LimitClimbUpGet(){
@@ -68,40 +109,6 @@ bool SubClimber::LimitClimbUpGet(){
 
 bool SubClimber::LimitClimbDownGet(){
   return !LimitClimbDown->frc::DigitalInput::Get();
-}
-
-
-void SubClimber::ConfigTalonOverride(){
-  srxClimberLeft->SelectProfileSlot(0, 0);
-  srxClimberLeft->Config_kF(0, 0, 0);
-  srxClimberLeft->Config_kP(0, 0, 0);
-  srxClimberLeft->Config_kI(0, 0, 0);
-  srxClimberLeft->Config_kD(0, 0, 0);
-  
-  srxClimberLeft->ConfigPeakOutputForward(0.6, 0);
-  srxClimberLeft->ConfigPeakOutputReverse(-0.6, 0);
-}
-
-void SubClimber::ConfigTalon()  //Generic Talon PID Config, has kI
-{
-
-  srxClimberLeft->SetStatusFramePeriod(StatusFrameEnhanced::Status_13_Base_PIDF0, 10, 10);
-  srxClimberLeft->SetStatusFramePeriod(StatusFrameEnhanced::Status_10_MotionMagic, 10, 10);
-
-  // Set peak outputs
-  srxClimberLeft->ConfigPeakOutputForward(0.6, 0);
-  srxClimberLeft->ConfigPeakOutputReverse(-0.6, 0);
-
-  // Set motion magic gains **These numbers aren't set right yet (for muck)**
-  srxClimberLeft->SelectProfileSlot(0, 0);
-  srxClimberLeft->Config_kF(0, 50, 0);
-  srxClimberLeft->Config_kP(0, 2.5, 0);
-  srxClimberLeft->Config_kI(0, 0.0015, 0);
-  srxClimberLeft->Config_kD(0, 0, 0);
-
-  // Set acceleration and cruise velocity
-  srxClimberLeft->ConfigMotionCruiseVelocity(2500, 0);
-  srxClimberLeft->ConfigMotionAcceleration(2000, 0);
 }
 
 int SubClimber::getEncoder()
@@ -124,7 +131,16 @@ double SubClimber::getPos()
 
 void SubClimber::setSpeed(double speed) //Hardcodes power as %!!!!!
 {
-  //srxClimberLeft->Set(speed);
+  if(startedDown){
+    if (speed >= 0 && isElevatorLocked){
+      std::cout << "elevator stop" << std::endl;
+      srxClimberLeft->Set(0);
+    } else {
+      srxClimberLeft->Set(-speed);
+    }
+  } else {
+      srxClimberLeft->Set(0);
+  }
 }
 
 void SubClimber::SetPosition(double position)
@@ -158,5 +174,52 @@ bool SubClimber::IsOnTarget()
   }
 }
 
-// Put methods for controlling this subsystem
-// here. Call these from Commands.
+void SubClimber::CustomPID(double PIDIntput){
+  error = PIDIntput - target;
+  intergral = intergral + error;
+  derivative = error - lastError;
+  PIDOutput = (error * kP) + (intergral * kI) + (derivative * kD);
+  if (PIDOutput > maxUpSpeed){
+    PIDOutput = maxUpSpeed;
+  }
+  if (PIDOutput < maxDownSpeed){
+    PIDOutput = maxDownSpeed;
+  }
+  if(PIDEnabled){
+    setSpeed(PIDOutput);
+  } else {
+    setSpeed(0);
+  }
+  lastError = error;
+  
+}
+
+void SubClimber::ElevatorExtendMax(){
+  target = 30900;
+}
+
+void SubClimber::ElevaterExtendMin(){
+  target = 0;
+}
+
+void SubClimber::ElevatorExtendBuddy(){
+  if(srxClimberLeft->GetSelectedSensorPosition() > 3634){
+    target = 3634;
+  }
+}
+
+void SubClimber::EnablePID(){
+  PIDEnabled = true;
+}
+
+void SubClimber::DisablePID(){
+  PIDEnabled = false;
+}
+
+bool SubClimber::IsAtTarget(){
+  if(srxClimberLeft->GetSelectedSensorPosition() < target + 500 && srxClimberLeft->GetSelectedSensorPosition() > target - 500){
+    return true;
+  } else {
+    return false;
+  }
+}
