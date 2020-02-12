@@ -68,6 +68,8 @@ int main( int argc, char *argv[] )
   nt::NetworkTableInstance ntinst = nt::NetworkTableInstance::GetDefault();
   std::shared_ptr<nt::NetworkTable> nt;
   nt = ntinst.GetTable("JETSON");
+  ntinst.StartClientTeam(5584);
+  std::this_thread::sleep_for(std::chrono::seconds(5));
 
   // setup network tables for camera location settings.
   //auto ntcam = NetworkTable::GetTable("CameraPublisher/CVCamera");
@@ -262,7 +264,7 @@ int main( int argc, char *argv[] )
     stream0 = nt->GetNumber("Cam 0", 0);
     stream1 = nt->GetNumber("Cam 1", 1);
     
-    /*if      (stream0 == 0) { test.write(img); }
+    if      (stream0 == 0) { test.write(img); }
     else if (stream0 == 1) { test.write(img2); }
     else if (stream0 == 2) { test.write(img3); }
     else if (stream0 == 3) { test.write(img4); }
@@ -270,10 +272,10 @@ int main( int argc, char *argv[] )
     if      (stream1 == 0) { test2.write(img); }
     else if (stream1 == 1) { test2.write(img2); }
     else if (stream1 == 2) { test2.write(img3); }
-    else if (stream1 == 3) { test2.write(img4); }*/
+    else if (stream1 == 3) { test2.write(img4); }
 
-    test.write(img);
-    test2.write(img2);
+    //test.write(img);
+    //test2.write(img2);
 
     img_contours.release();
     std::cout << "Frame 1 pushed to server." << std::endl;
