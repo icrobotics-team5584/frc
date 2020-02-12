@@ -9,7 +9,6 @@
 
 CmdIntake::CmdIntake() {
   // Use Requires() here to declare subsystem dependencies
-  Requires(Robot::subIntake.get());
 }
 
 // Called just before this Command runs the first time
