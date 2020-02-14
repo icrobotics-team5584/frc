@@ -572,7 +572,19 @@
         "showGrid": true,
         "hgap": 16.0,
         "vgap": 16.0,
-        "tiles": {}
+        "tiles": {
+          "3,1": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Elevator Down Speed",
+              "_title": "SmartDashboard/Elevator Down Speed"
+            }
+          }
+        }
       }
     }
   ],

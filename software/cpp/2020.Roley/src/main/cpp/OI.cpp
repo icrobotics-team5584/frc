@@ -96,6 +96,14 @@ double OI::getJoystickY(){
   return joystick1->GetY();
 }
 
+double OI::getJoystick2X(){
+  return joystick1->GetRawAxis(4);
+}
+
+double OI::getJoystick2Y(){
+  return joystick1->GetRawAxis(5);
+}
+
 double OI::getJoystickRawAxis(Triggers trigger){
   return joystick1->GetRawAxis(trigger);
 }
