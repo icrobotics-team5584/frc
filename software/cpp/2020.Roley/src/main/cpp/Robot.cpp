@@ -6,6 +6,13 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "commands/CmdShooterShoot.h"
 
+#include "commands/CmdBuddyDeploy.h"
+#include "commands/CmdBuddyLock.h"
+#include "commands/CmdIntake.h"
+#include "commands/CmdStorageExpand.h"
+#include "commands/CmdStorageRetract.h"
+#include "commands/CmdDeployIntake.h"
+
 #include "Robot.h"
 
 std::shared_ptr<SubShooter> Robot::subShooter;
@@ -52,9 +59,20 @@ void Robot::RobotInit() {
   frc::SmartDashboard::PutData("Auto Selecter", &chooser);
 
   frc::SmartDashboard::PutData("Dolly Deploy", new CmdDeployDolly());
+
   frc::SmartDashboard::PutData("Elevator Up", new CmdElevatorPowerUp());
   frc::SmartDashboard::PutData("Elevator Down", new CmdElevatorPowerDown());
   frc::SmartDashboard::PutData("Ratchets", new CmdEngageClimberRatchets());
+
+  frc::SmartDashboard::PutData("Buddy Extend", new CmdBuddyLock());
+  frc::SmartDashboard::PutData("Buddy Retract", new CmdBuddyDeploy());
+
+  frc::SmartDashboard::PutData("intake", new CmdIntake());
+
+  frc::SmartDashboard::PutData("Storage Extend", new CmdStorageExpand());
+  frc::SmartDashboard::PutData("Dolly Deploy", new CmdStorageRetract());
+
+  frc::SmartDashboard::PutData("intake Deploy", new CmdDeployIntake());
 }
 
 
@@ -69,6 +87,7 @@ void Robot::RobotPeriodic() {
   posEncoderGyro->updateAbsolutePosition();
   posEncoderGyro->updateRelativePosition();
   //std::cout << "update position" << std::endl;
+  
 }
 
 
