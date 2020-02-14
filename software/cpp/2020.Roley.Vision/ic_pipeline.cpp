@@ -51,14 +51,14 @@ int main( int argc, char *argv[] )
   cv::VideoCapture input3("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.3:1.0-video-index0");
   cv::VideoCapture input4("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.4:1.0-video-index0");
 
-  input.set(cv::CAP_PROP_FRAME_WIDTH, 320);
-  input.set(cv::CAP_PROP_FRAME_HEIGHT, 180);
-  input2.set(cv::CAP_PROP_FRAME_WIDTH, 720);
-  input2.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
-  input3.set(cv::CAP_PROP_FRAME_WIDTH, 320);
-  input3.set(cv::CAP_PROP_FRAME_HEIGHT, 180);
-  input4.set(cv::CAP_PROP_FRAME_WIDTH, 320);
-  input4.set(cv::CAP_PROP_FRAME_HEIGHT, 180);
+  input.set(cv::CAP_PROP_FRAME_WIDTH, 160);
+  input.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+  input2.set(cv::CAP_PROP_FRAME_WIDTH, 800);
+  input2.set(cv::CAP_PROP_FRAME_HEIGHT, 600);
+  input3.set(cv::CAP_PROP_FRAME_WIDTH, 160);
+  input3.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+  input4.set(cv::CAP_PROP_FRAME_WIDTH, 160);
+  input4.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
 
 
   // record start time
@@ -86,8 +86,7 @@ int main( int argc, char *argv[] )
   std::shared_ptr<nt::NetworkTable> ntcam3;
   ntcam3 = ntinst.GetTable("CameraPublisher/CVCamera3");
 
-  std::this_thread::sleep_for(std::chrono::seconds(5));
-  std::cout << "Network Tables Initialized." << std::endl;
+  std::this_thread::sleep_for(std::chrono::seconds(5));  std::cout << "Network Tables Initialized." << std::endl;
   // Put IP Address Values into CameraPublisher NetworkTable
   string Fred[1] = {"mjpeg:http://10.55.84.8:5800"}; //Fred and James are the camera ip address arrays. They have to be there for the camera server to work.
   ntcam->PutStringArray("streams", Fred);
@@ -116,8 +115,7 @@ int main( int argc, char *argv[] )
   for (;;)
   {
     
-
-    std::cout << "Stream 0: " << stream0 << std::endl;
+std::cout << "Stream 0: " << stream0 << std::endl;
 
 
     // STEP 1: fetch image
@@ -273,48 +271,52 @@ int main( int argc, char *argv[] )
     // stream1 = nt->GetNumber("Cam 1", 1);
     
     if      (stream0 == 0) {
-      input2.set(cv::CAP_PROP_FRAME_WIDTH, 320);
-      input2.set(cv::CAP_PROP_FRAME_HEIGHT, 180);
-      input3.set(cv::CAP_PROP_FRAME_WIDTH, 320);
-      input3.set(cv::CAP_PROP_FRAME_HEIGHT, 180);
-      input4.set(cv::CAP_PROP_FRAME_WIDTH, 320);
-      input4.set(cv::CAP_PROP_FRAME_HEIGHT, 180);
+      std::cout << "CONDITION 0 MET" << std::endl;
+      input2.set(cv::CAP_PROP_FRAME_WIDTH, 160);
+      input2.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+      input3.set(cv::CAP_PROP_FRAME_WIDTH, 160);
+      input3.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+      input4.set(cv::CAP_PROP_FRAME_WIDTH, 160);
+      input4.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
       test.write(img);
 
       test2.write(img2);
       test3.write(img3);
       }
     else if (stream0 == 1) { 
-      input2.set(cv::CAP_PROP_FRAME_WIDTH, 720);
-      input2.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
-      input3.set(cv::CAP_PROP_FRAME_WIDTH, 320);
-      input3.set(cv::CAP_PROP_FRAME_HEIGHT, 180);
-      input4.set(cv::CAP_PROP_FRAME_WIDTH, 320);
-      input4.set(cv::CAP_PROP_FRAME_HEIGHT, 180);
+      std::cout << "CONDITION 1 MET" << std::endl;
+      input2.set(cv::CAP_PROP_FRAME_WIDTH, 800);
+      input2.set(cv::CAP_PROP_FRAME_HEIGHT, 600);
+      input3.set(cv::CAP_PROP_FRAME_WIDTH, 160);
+      input3.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+      input4.set(cv::CAP_PROP_FRAME_WIDTH, 160);
+      input4.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
       test.write(img2);
 
       test2.write(img3);
       test3.write(img4);
     }
     else if (stream0 == 2) {
-      input2.set(cv::CAP_PROP_FRAME_WIDTH, 320);
-      input2.set(cv::CAP_PROP_FRAME_HEIGHT, 180);
-      input3.set(cv::CAP_PROP_FRAME_WIDTH, 720);
-      input3.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
-      input4.set(cv::CAP_PROP_FRAME_WIDTH, 320);
-      input4.set(cv::CAP_PROP_FRAME_HEIGHT, 180);
+      std::cout << "CONDITION 2 MET" << std::endl;
+      input2.set(cv::CAP_PROP_FRAME_WIDTH, 160);
+      input2.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+      input3.set(cv::CAP_PROP_FRAME_WIDTH, 800);
+      input3.set(cv::CAP_PROP_FRAME_HEIGHT, 600);
+      input4.set(cv::CAP_PROP_FRAME_WIDTH, 160);
+      input4.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
       test.write(img3);
 
       test2.write(img2);
       test3.write(img4);
     }
     else if (stream0 == 3) {
-      input2.set(cv::CAP_PROP_FRAME_WIDTH, 320);
-      input2.set(cv::CAP_PROP_FRAME_HEIGHT, 180);
-      input3.set(cv::CAP_PROP_FRAME_WIDTH, 320);
-      input3.set(cv::CAP_PROP_FRAME_HEIGHT, 180);
-      input4.set(cv::CAP_PROP_FRAME_WIDTH, 720);
-      input4.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
+      std::cout << "CONDITION 3 MET" << std::endl;
+      input2.set(cv::CAP_PROP_FRAME_WIDTH, 160);
+      input2.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+      input3.set(cv::CAP_PROP_FRAME_WIDTH, 160);
+      input3.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+      input4.set(cv::CAP_PROP_FRAME_WIDTH, 800);
+      input4.set(cv::CAP_PROP_FRAME_HEIGHT, 600);
       test.write(img4);
 
       test2.write(img2);
