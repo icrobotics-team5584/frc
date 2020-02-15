@@ -46,6 +46,8 @@ class OI {
   OI();
   double getJoystickX();
   double getJoystickY();
+  double getJoystick2X();
+  double getJoystick2Y();
   double getJoystickRawAxis(Triggers trigger);
   double GetRightAsix();
   bool GetOverride();

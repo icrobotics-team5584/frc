@@ -9,7 +9,7 @@
 #include "commands/CmdJoystickDrive.h"
 #include "RobotMap.h"
 #include "Robot.h"
-
+#include <cmath>
 
 SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem") {
   //motors
@@ -143,4 +143,20 @@ void SubDriveBase::deployDolly(){
 void SubDriveBase::retractDolly(){
   std::cout << "retract dolly" << std::endl;
   solDollyAcuator->Set(frc::DoubleSolenoid::kReverse);
+}
+
+double SubDriveBase::getJoystickY(){
+  if(abs(Robot::oi->getJoystickX()) < 0.2 && abs(Robot::oi->getJoystickY()) < 0.2){
+    return -Robot::oi->getJoystick2Y();
+  } else {
+    return Robot::oi->getJoystickY();
+  }
+}
+
+double SubDriveBase::getJoystickX(){
+  if(abs(Robot::oi->getJoystickX()) < 0.2 && abs(Robot::oi->getJoystickY()) < 0.2){
+    return Robot::oi->getJoystick2X();
+  } else {
+    return Robot::oi->getJoystickX();
+  }
 }

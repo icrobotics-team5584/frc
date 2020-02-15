@@ -273,3 +273,29 @@ Packages created by this process...
 ~/opencv/build/OpenCV-4.1.1-dirty-aarch64.tar.Z
 
 Copied off these files for safe keeping in case we need to rebuild a new SDCARD in a hurry!
+
+
+INTEGRATING MJPEGWRITER CODE
+----------------------------
+
+(CREDIT: https://github.com/JPery/MJPEGWriter/blob/master/README.md)
+
+MJPEGWriter.h and MJPEGWriter.cpp copied in from the above github project, CMakeList.txt updated to include MJPEGWriter.cpp in executable definition, required library path added plus linker library dependencies. The revised CMakeList.txt looks like:
+
+  cmake_minimum_required (VERSION 2.8)
+  project(ic_pipeline)
+  find_package(OpenCV REQUIRED)
+  include_directories(${OpenCV_INCLUDE_DIRS} /home/ubuntu/allwpilib.20200121.1500/ntcore/src/main/native/include/ /home/ubuntu/allwpilib.20200121.1500/wpiutil/src/main/native/include/)
+  add_executable(ic_pipeline ic_pipeline.cpp GripPipeline.cpp MJPEGWriter.cpp)
+  target_link_libraries(ic_pipeline ${OpenCV_LIBS} /home/ubuntu/allwpilib.20200121.1500/build/lib/libntcore.so /usr/lib/aarch64-linux-gnu/libpthread.so)
+  add_definitions(-Wall -std=c++17 -lstdc++ -lntcore -lopencv_highgui -lopencv_core -lpthread)
+
+Code changes made to ic_pipeline.cpp to publish the stream in the relevant section of the network tables and also to feed the Mat image frames into the MJPEGWriter object.
+
+Code still builds in the normal way ...
+
+  cd /home/ubuntu/Projects/2020.Roley.Vision
+  rm -rf build/*
+  cd build
+  cmake ..
+  make
