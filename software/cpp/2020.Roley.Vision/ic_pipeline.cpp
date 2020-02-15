@@ -27,6 +27,11 @@ cv::Mat img2;
 cv::Mat img3;
 cv::Mat img4;
 
+// Start the camera server on port 5800.
+MJPEGWriter test(5800);
+MJPEGWriter test2(5801);
+MJPEGWriter test3(5802);
+
 cv::Mat blankMat;
 
 std::mutex m;
@@ -181,9 +186,95 @@ void vidCap3() {
   }
 }
 
+void stream()
+{
+  int streamer = 0;
+
+    // setup network tables connection
+    nt::NetworkTableInstance ntinst = nt::NetworkTableInstance::GetDefault();
+    std::shared_ptr<nt::NetworkTable> nt;
+    nt = ntinst.GetTable("JETSON");
+    ntinst.StartClientTeam(5584);
+    std::this_thread::sleep_for(std::chrono::seconds(5));
+
+    // setup network tables for camera location settings.
+    //auto ntcam = NetworkTable::GetTable("CameraPublisher/CVCamera");
+    //ntcam->SetClientMode();
+    //ntcam->SetIPAddress("10.55.84.2\n");
+    //ntcam->Initialize();
+
+    std::shared_ptr<nt::NetworkTable> ntcam;
+    ntcam = ntinst.GetTable("CameraPublisher/CVCamera");
+
+    std::shared_ptr<nt::NetworkTable> ntcam2;
+    ntcam2 = ntinst.GetTable("CameraPublisher/CVCamera2");
+
+    std::shared_ptr<nt::NetworkTable> ntcam3;
+    ntcam3 = ntinst.GetTable("CameraPublisher/CVCamera3");
+
+    std::this_thread::sleep_for(std::chrono::seconds(5));  std::cout << "Network Tables Initialized." << std::endl;
+    // Put IP Address Values into CameraPublisher NetworkTable
+    string Fred[1] = {"mjpeg:http://10.55.84.8:5800"}; //Fred and James are the camera ip address arrays. They have to be there for the camera server to work.
+    ntcam->PutStringArray("streams", Fred);
+    
+    string James[1] = {"mjpeg:http://10.55.84.8:5801"};
+    ntcam2->PutStringArray("streams", James);
+
+    string Max[1] = {"mjpeg:http://10.55.84.8:5802"};
+    ntcam3->PutStringArray("streams", Max);
+
+    std::cout << "Arrays pushed to network tables." << std::endl;
+
+    
+    test.start();
+    test2.start();
+    test3.start();
+
+    std::cout << "Camera Servers started." << std::endl;
+
+    nt->PutNumber("Cam 0", 1);
+    //nt->PutNumber("Cam 1", 1);
+
+  while(true)
+  {
+    streamer = nt->GetNumber("Cam 0", 0);
+
+    m.lock();
+    if      (stream0 == 0) {
+      //std::cout << "CONDITION 0 MET" << std::endl;
+      test.write(img);
+
+      test2.write(img2);
+      test3.write(img3);
+      }
+    else if (stream0 == 1) { 
+      //std::cout << "CONDITION 1 MET" << std::endl;
+      test.write(img2);
+
+      test2.write(img3);
+      test3.write(img4);
+    }
+    else if (stream0 == 2) {
+      //std::cout << "CONDITION 2 MET" << std::endl;
+      test.write(img3);
+
+      test2.write(img2);
+      test3.write(img4);
+    }
+    else if (stream0 == 3) {
+      //std::cout << "CONDITION 3 MET" << std::endl;
+      test.write(img4);
+
+      test2.write(img2);
+      test3.write(img3);
+    }
+    m.unlock();
+
+  }
+}
+
 int main( int argc, char *argv[] )
 {
-
   // handle command line arguments
   if( ( argc > 1 ) && ( strcmp( argv[1], "--debug" ) == 0 ) )
     debug = 1;
@@ -196,11 +287,6 @@ int main( int argc, char *argv[] )
   //cv::GpuMat g_img(img);
   grip::GripPipeline ic_pipeline;
 
-
-
-  // record start time
-  clock_t start = clock();
-
   // setup network tables connection
   nt::NetworkTableInstance ntinst = nt::NetworkTableInstance::GetDefault();
   std::shared_ptr<nt::NetworkTable> nt;
@@ -208,61 +294,22 @@ int main( int argc, char *argv[] )
   ntinst.StartClientTeam(5584);
   std::this_thread::sleep_for(std::chrono::seconds(5));
 
-  // setup network tables for camera location settings.
-  //auto ntcam = NetworkTable::GetTable("CameraPublisher/CVCamera");
-  //ntcam->SetClientMode();
-  //ntcam->SetIPAddress("10.55.84.2\n");
-  //ntcam->Initialize();
 
-  std::shared_ptr<nt::NetworkTable> ntcam;
-  ntcam = ntinst.GetTable("CameraPublisher/CVCamera");
 
-  std::shared_ptr<nt::NetworkTable> ntcam2;
-  ntcam2 = ntinst.GetTable("CameraPublisher/CVCamera2");
-
-  std::shared_ptr<nt::NetworkTable> ntcam3;
-  ntcam3 = ntinst.GetTable("CameraPublisher/CVCamera3");
-
-  std::this_thread::sleep_for(std::chrono::seconds(5));  std::cout << "Network Tables Initialized." << std::endl;
-  // Put IP Address Values into CameraPublisher NetworkTable
-  string Fred[1] = {"mjpeg:http://10.55.84.8:5800"}; //Fred and James are the camera ip address arrays. They have to be there for the camera server to work.
-  ntcam->PutStringArray("streams", Fred);
-  
-  string James[1] = {"mjpeg:http://10.55.84.8:5801"};
-  ntcam2->PutStringArray("streams", James);
-
-  string Max[1] = {"mjpeg:http://10.55.84.8:5802"};
-  ntcam3->PutStringArray("streams", Max);
-
-  std::cout << "Arrays pushed to network tables." << std::endl;
-
-  // Start the camera server on port 5800.
-  MJPEGWriter test(5800);
-  MJPEGWriter test2(5801);
-  MJPEGWriter test3(5802);
-  test.start();
-  test2.start();
-  test3.start();
-
-  std::cout << "Camera Servers started." << std::endl;
-
-  nt->PutNumber("Cam 0", 1);
-  //nt->PutNumber("Cam 1", 1);
+  // record start time
+  clock_t start = clock();
 
   
   thread t1(vidCap0);
   thread t2(vidCap1);
   thread t3(vidCap2);
   thread t4(vidCap3);
+  thread t5(stream);
 
   while (empty(img))  {}
   while (empty(img2)) {}
   while (empty(img3)) {}
   while (empty(img4)) {}
-
-
-
-
 
   for (;;)
   {
@@ -414,36 +461,7 @@ int main( int argc, char *argv[] )
     stream0 = nt->GetNumber("Cam 0", 0);
     // stream1 = nt->GetNumber("Cam 1", 1);
     
-    m.lock();
-    if      (stream0 == 0) {
-      std::cout << "CONDITION 0 MET" << std::endl;
-      test.write(img);
-
-      test2.write(img2);
-      test3.write(img3);
-      }
-    else if (stream0 == 1) { 
-      std::cout << "CONDITION 1 MET" << std::endl;
-      test.write(img2);
-
-      test2.write(img3);
-      test3.write(img4);
-    }
-    else if (stream0 == 2) {
-      std::cout << "CONDITION 2 MET" << std::endl;
-      test.write(img3);
-
-      test2.write(img2);
-      test3.write(img4);
-    }
-    else if (stream0 == 3) {
-      std::cout << "CONDITION 3 MET" << std::endl;
-      test.write(img4);
-
-      test2.write(img2);
-      test3.write(img3);
-    }
-    m.unlock();
+    
     
     // if      (stream1 == 0) { test2.write(img); }
     // else if (stream1 == 1) { test2.write(img2); }
@@ -482,6 +500,7 @@ int main( int argc, char *argv[] )
       t2.join();
       t3.join();
       t4.join();
+      t5.join();
       break;
     }
 
