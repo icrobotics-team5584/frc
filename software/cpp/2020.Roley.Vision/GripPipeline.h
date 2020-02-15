@@ -15,6 +15,7 @@
 #include <vector>
 #include <string>
 #include <math.h>
+#include <thread>
 
 
 namespace grip {
