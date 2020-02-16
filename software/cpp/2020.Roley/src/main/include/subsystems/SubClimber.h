@@ -65,8 +65,6 @@ class SubClimber : public frc::Subsystem {
  public:
   SubClimber();
   void InitDefaultCommand() override;
-  void MoveUp();
-  void MoveDown();
   void Stop();
   //void Periodic() override;
 
@@ -82,12 +80,10 @@ class SubClimber : public frc::Subsystem {
   virtual void Periodic();
 
   int getEncoder();
-  double getPos();
   void setSpeed(double speed);
   void SetPosition(double position);
   double MetresToSensorUnits(double metres);
   double SensorUnitsToMetres(double sensorUnits);
-  bool IsOnTarget();
   void CustomPID(double PIDIntput);
   void ElevatorExtendMax();
   void ElevaterExtendMin();

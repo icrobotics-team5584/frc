@@ -72,18 +72,6 @@ void SubClimber::InitDefaultCommand() {
   // SetDefaultCommand(new MySpecialCommand());
 }
 
-void SubClimber::MoveUp(){
-// if(!isElevatorLocked){
-//   srxClimberLeft->Set(-_upSpeed);
-// } else {
-//   srxClimberLeft->Set(0);
-// }
-}
-
-void SubClimber::MoveDown(){
-  //srxClimberLeft->Set(_downSpeed);
-}
-
 void SubClimber::Stop(){
   srxClimberLeft->Set(0);
 }
@@ -114,19 +102,6 @@ bool SubClimber::LimitClimbDownGet(){
 int SubClimber::getEncoder()
 {
   return srxClimberLeft->GetSelectedSensorPosition(0);
-}
-
-double SubClimber::getPos()
-{
-  _pos = getEncoder();
-
-  frc::SmartDashboard::PutNumber("Raw relative encoder sensor units", _pos);
-
-  _dist = SensorUnitsToMetres(_pos);
-
-  frc::SmartDashboard::PutNumber("Actual Climber Position", _dist);
-
-  return _dist;
 }
 
 void SubClimber::setSpeed(double speed) //Hardcodes power as %!!!!!
@@ -160,18 +135,6 @@ double SubClimber::MetresToSensorUnits(double metres)
 double SubClimber::SensorUnitsToMetres(double sensorUnits)
 {
   return (sensorUnits / 4096) * _ticksPerMetre;
-}
-
-bool SubClimber::IsOnTarget()
-{
-  if (_targetPosition == getPos())
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
 }
 
 void SubClimber::CustomPID(double PIDIntput){

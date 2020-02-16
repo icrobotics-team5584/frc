@@ -19,7 +19,7 @@ CmdClimberLimitUp::CmdClimberLimitUp() {
 // Called just before this Command runs the first time
 void CmdClimberLimitUp::Initialize() {
   cout << "Climber limit Up initialized" << std::endl;
-  Robot::subClimber->MoveUp();
+  //Robot::subClimber->MoveUp();
 }
 
 // Called repeatedly when this Command is scheduled to run
