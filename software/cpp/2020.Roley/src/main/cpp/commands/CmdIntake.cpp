@@ -8,12 +8,15 @@
 #include "commands/CmdIntake.h"
 
 CmdIntake::CmdIntake() {
-  // Use Requires() here to declare subsystem dependencies
+  // Require subsystems so other commands cant use the hardware at the same time
+  Requires(Robot::subIntake.get());
+  Requires(Robot::subStorage.get());
 }
 
 // Called just before this Command runs the first time
 void CmdIntake::Initialize() {
   Robot::subIntake->Intake();
+  Robot::subStorage->Forward();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -25,6 +28,7 @@ bool CmdIntake::IsFinished() { return false; }
 // Called once after isFinished returns true
 void CmdIntake::End() {
   Robot::subIntake->Stop();
+  Robot::subStorage->Stop();
 }
 
 // Called when another command which requires one or more of the same

@@ -9,9 +9,8 @@
 #include "Robot.h"
 
 CmdDeployIntake::CmdDeployIntake() {
-  // Use Requires() here to declare subsystem dependencies
-  Requires(Robot::subIntake.get());
-  Requires(Robot::subStorage.get());
+  // Doesnt requre storage or intake because this needs to be used at the same time as CmdIntake,
+  // which does require those subsystems.
 }
 
 // Called just before this Command runs the first time

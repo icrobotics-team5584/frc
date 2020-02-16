@@ -29,15 +29,9 @@ OI::OI() {
 
   //Setup Joystick (0)
   joystick1.reset(new frc::Joystick(0));
-  
+
   btnShoot.reset(new frc::JoystickButton(joystick1.get(), aBtn));
   btnShoot->WhileHeld(new CmdShooterShoot());
-
-  //Storage buttons
-  btnForward.reset(new frc::JoystickButton(joystick1.get(),xBtn));
-  btnBackward.reset(new frc::JoystickButton(joystick1.get(),yBtn));
-  btnForward->WhileHeld(new CmdRollStorage());
-  btnBackward->WhileHeld(new CmdRollStorageBack());
 
   //Slow drive buttons
   btnSlowDown.reset(new AxisButton(joystick1.get(), triggerL));
