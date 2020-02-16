@@ -8,6 +8,8 @@
 #include "commands/CmdShooterShoot.h"
 #include "Robot.h"
 
+ bool CmdShooterShoot::ShooterShoot;
+ 
 CmdShooterShoot::CmdShooterShoot() {
   //Requires(Robot::subShooter.get());
   // Use Requires() here to declare subsystem dependencies
@@ -29,10 +31,12 @@ void CmdShooterShoot::Execute() {
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdShooterShoot::IsFinished() { return false; }
+bool CmdShooterShoot::IsFinished() { 
+  return false; }
 
 // Called once after isFinished returns true
 void CmdShooterShoot::End() {
+  //ShooterShoot = false;
   Robot::subShooter->Stop();
   Robot::subStorage->Stop();
 }
