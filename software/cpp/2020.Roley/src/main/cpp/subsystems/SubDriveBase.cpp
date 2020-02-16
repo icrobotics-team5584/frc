@@ -13,14 +13,20 @@
 
 SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem"), dollyTalon(Robot::doubleTalon.get()) {
   //motors
-  
-  std::cout << "Before spms are created" << std::endl;
   _spmFrontLeft.reset(new rev::CANSparkMax(SPM_DriveBaseFrontLeft, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   _spmFrontRight.reset(new rev::CANSparkMax(SPM_DriveBaseFrontRight, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   _spmBackLeft.reset(new rev::CANSparkMax(SPM_DriveBaseBackLeft, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   _spmBackRight.reset(new rev::CANSparkMax(SPM_DriveBaseBackRight, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
-  std::cout << "after spms are created" << std::endl;
 
+  _spmFrontLeft->RestoreFactoryDefaults();
+  _spmFrontRight->RestoreFactoryDefaults();
+  _spmBackLeft->RestoreFactoryDefaults();
+  _spmBackRight->RestoreFactoryDefaults();
+
+  _spmFrontLeft->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  _spmFrontRight->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  _spmBackLeft->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  _spmBackRight->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
 
   _spmBackLeft->Follow(*_spmFrontLeft);
   _spmBackRight->Follow(*_spmFrontRight);
@@ -34,8 +40,6 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem"), dollyTalon(Robot::
   //_srxAutoXAxis.reset(new WPI_TalonSRX(can_srxDriveBaseAutoDolly));
   SubDriveBase::DiffDrive.reset(new frc::DifferentialDrive(*_spmFrontLeft, *_spmFrontRight));
   metersPerRotation = pi * WHEEL_DIAMETER;
-  std::cout << "end subdrivebase construct" << std::endl;
-
 }
 
 void SubDriveBase::InitDefaultCommand() {
