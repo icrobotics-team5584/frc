@@ -82,9 +82,10 @@ void Robot::RobotInit() {
   //DRIVEBASE ----------------------------------------------------------------
   frc::Shuffleboard::GetTab("HARDWARE").Add("CmdDeployDolly", *(new CmdDeployDolly()));
   //ELEVATOR ----------------------------------------------------------------
-  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdElevatorPowerUp", *(new CmdElevatorPowerUp())); //Currently does nothing
-  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdElevatorPowerDown", *(new CmdElevatorPowerDown())); //Currently does nothing
-  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdEngageClimberRatchets", *(new CmdEngageClimberRatchets()));  
+  //NOTE: Currently not integrated. DO NOT USE!
+  //frc::Shuffleboard::GetTab("HARDWARE").Add("CmdElevatorPowerUp", *(new CmdElevatorPowerUp())); 
+  //frc::Shuffleboard::GetTab("HARDWARE").Add("CmdElevatorPowerDown", *(new CmdElevatorPowerDown())); 
+  //frc::Shuffleboard::GetTab("HARDWARE").Add("CmdEngageClimberRatchets", *(new CmdEngageClimberRatchets()));  
   //BUDDY ----------------------------------------------------------------
   frc::Shuffleboard::GetTab("HARDWARE").Add("CmdBuddyLock", *(new CmdBuddyLock()));
   frc::Shuffleboard::GetTab("HARDWARE").Add("CmdBuddyDeploy", *(new CmdBuddyDeploy()));
