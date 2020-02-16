@@ -24,7 +24,7 @@ void CmdShooterShoot::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdShooterShoot::Execute() {
-  ShooterShoot = true;
+  //ShooterShoot = true;
   Robot::subShooter->PowerShoot();
 
 }
@@ -35,7 +35,7 @@ bool CmdShooterShoot::IsFinished() {
 
 // Called once after isFinished returns true
 void CmdShooterShoot::End() {
-  ShooterShoot = false;
+  //ShooterShoot = false;
   Robot::subShooter->Stop();
 }
 

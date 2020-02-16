@@ -57,8 +57,4 @@ class Robot : public frc::TimedRobot {
   CmdAutoRoutineThree* autoThree;
   frc::SendableChooser<frc::Command*> chooser;
 
-  bool buddy;
-  bool dollyWheel;
-  bool storage;
-  bool intake;
 };

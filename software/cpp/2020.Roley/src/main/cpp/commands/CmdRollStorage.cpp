@@ -25,16 +25,7 @@ void CmdRollStorage::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdRollStorage::IsFinished() { 
-  if (!Robot::subStorage->GetLbrTopStorage())
-  {
-    if(CmdShooterShoot::ShooterShoot)
-      return false;
-    else
-      return true;
-  }
-  else
-    return false;
-  
+  return false;
 }
 
 // Called once after isFinished returns true
