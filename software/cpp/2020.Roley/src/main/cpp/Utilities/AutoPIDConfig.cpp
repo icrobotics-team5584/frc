@@ -5,9 +5,9 @@
 /*----------------------------Routine One Setup--------------------*/
 //One
 PIDAutoConfig autoRoutineOneLegOne = {
-  -0.9,     //P
+  -0.45,     //P
   0.00001,  //I
-  -42,      //D
+  -20,      //D
   -0.8,     //speed
   -1.6,     //targetX
   2.2,    //targetY
@@ -17,9 +17,9 @@ PIDAutoConfig autoRoutineOneLegOne = {
 };
 //Two
 PIDAutoConfig autoRoutineOneLegTwo = {
-  -3,        //P
+  -0.75,        //P
   0.0,     //I
-  -80,       //D
+  -40,       //D
   -0.6,      //speed
   -1.6,        //targetX
   4.5,   //targetY
@@ -28,9 +28,9 @@ PIDAutoConfig autoRoutineOneLegTwo = {
   90        //targetAoA
 };
 PIDAutoConfig autoRoutineOneLegThree = {
-  0.9,      //P
+  0.45,      //P
   -0.00001, //I
-  42,       //D
+  20,       //D
   0.8,      //speed
   -1.6,     //targetX
   2.312,    //targetY
@@ -40,9 +40,9 @@ PIDAutoConfig autoRoutineOneLegThree = {
 };
 //Three
 PIDAutoConfig autoRoutineOneLegFour = {
-  0.9,      //P
+  0.45,      //P
   -0.00001, //I
-  42,       //D
+  20,       //D
   0.8,      //speed
   0,        //targetX
   0,        //targetY
@@ -52,9 +52,9 @@ PIDAutoConfig autoRoutineOneLegFour = {
 };
 //Four
 PIDAutoConfig autoRoutineOneLegFive = {
-  3,        //P
+  0.75,        //P
   -0.0,     //I
-  80,       //D
+  40,       //D
   0.5,      //speed
   0,        //targetX
   -2.553,   //targetY
@@ -69,8 +69,8 @@ PIDAutoConfig autoRoutineTwoLegOne = {
   -80,       //D
   -0.6,      //speed
   0,        //targetX
-  1.78,   //targetY
-  1.78, //target y turn around point
+  4,   //targetY - 1.78
+  4, //target y turn around point
   0,        //targetAngle
   90        //targetAoA
 };

@@ -86,6 +86,7 @@ void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 
 void Robot::AutonomousInit() {
+  subDriveBase->autoConfig();
   autoOne = new CmdAutoRoutineOne();
   autoTwo = new CmdAutoRoutineTwo();
   autoThree = new CmdAutoRoutineThree();
@@ -111,6 +112,7 @@ void Robot::AutonomousPeriodic() {
   }
 
 void Robot::TeleopInit() {
+  subDriveBase->teleConfig();
   subDriveBase->retractDolly();
   subClimber->RatchetsDisengage();
   subClimber->ElevaterExtendMin();

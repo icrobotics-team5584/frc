@@ -56,7 +56,7 @@ class SubDriveBase : public frc::Subsystem {
   double autoYaw = 0;
   double _targetYaw;
 
-  double y_kP = 1.6;
+  double y_kP = 0.8;
   double y_kI = 0;
   double y_kD = 0;
   double y_previousError;
@@ -82,4 +82,6 @@ class SubDriveBase : public frc::Subsystem {
   void retractDolly();
   double getJoystickY();
   double getJoystickX();
+  void autoConfig();
+  void teleConfig();
 };

@@ -23,11 +23,6 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem"), dollyTalon(Robot::
   _spmBackLeft->RestoreFactoryDefaults();
   _spmBackRight->RestoreFactoryDefaults();
 
-  _spmFrontLeft->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
-  _spmFrontRight->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
-  _spmBackLeft->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
-  _spmBackRight->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
-
   _spmBackLeft->Follow(*_spmFrontLeft);
   _spmBackRight->Follow(*_spmFrontRight);
 
@@ -40,6 +35,34 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem"), dollyTalon(Robot::
   //_srxAutoXAxis.reset(new WPI_TalonSRX(can_srxDriveBaseAutoDolly));
   SubDriveBase::DiffDrive.reset(new frc::DifferentialDrive(*_spmFrontLeft, *_spmFrontRight));
   metersPerRotation = pi * WHEEL_DIAMETER;
+  SmartDashboard::PutNumber("auto P", y_kP);
+  SmartDashboard::PutNumber("auto I", y_kI);
+  SmartDashboard::PutNumber("auto D", y_kD);
+  SmartDashboard::PutNumber("y position", y_position);
+
+
+}
+
+void SubDriveBase::autoConfig() {
+  _spmFrontLeft->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  _spmFrontRight->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  _spmBackLeft->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  _spmBackRight->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  _spmFrontLeft->SetOpenLoopRampRate(0.4);
+  _spmFrontRight->SetOpenLoopRampRate(0.4);
+  _spmBackLeft->SetOpenLoopRampRate(0.4);
+  _spmBackRight->SetOpenLoopRampRate(0.4);
+}
+
+void SubDriveBase::teleConfig() {
+  _spmFrontLeft->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  _spmFrontRight->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  _spmBackLeft->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  _spmBackRight->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  _spmFrontLeft->SetOpenLoopRampRate(0);
+  _spmFrontRight->SetOpenLoopRampRate(0);
+  _spmBackLeft->SetOpenLoopRampRate(0);
+  _spmBackRight->SetOpenLoopRampRate(0);
 }
 
 void SubDriveBase::InitDefaultCommand() {
@@ -127,6 +150,11 @@ void SubDriveBase::autoEncoderDrive(double target, double P, double I, double D,
   y_position = Robot::posEncoderGyro->getTempPositionY();
   y_target = TargetY;
   y_intergral = y_intergral + (y_position - y_target);
+
+  y_kP = SmartDashboard::GetNumber("auto P", y_kP);
+  y_kI = SmartDashboard::GetNumber("auto I", y_kI);
+  y_kD = SmartDashboard::GetNumber("auto D", y_kD);
+
   y_error = y_kP*(y_position - y_target) + y_kI*(y_intergral) + y_kD*((y_position - y_target) - y_previousError);
   y_previousError = y_position - y_target;
 
