@@ -27,6 +27,8 @@ cv::Mat img2;
 cv::Mat img3;
 cv::Mat img4;
 
+int ntVariable = 1;
+
 // Start the camera server on port 5800.
 MJPEGWriter test(5800);
 MJPEGWriter test2(5801);
@@ -54,63 +56,56 @@ void vidCap0() {
 
   while (true)
   {
-    m.lock();
+    //m.lock();
     if(!input.read(img))
         break;
-    m.unlock();
+    //m.unlock();
   }
 }
 
 void vidCap1() {
-  nt::NetworkTableInstance ntinst = nt::NetworkTableInstance::GetDefault();
-  std::shared_ptr<nt::NetworkTable> nt;
-  nt = ntinst.GetTable("JETSON");
-  ntinst.StartClientTeam(5584);
-  std::this_thread::sleep_for(std::chrono::seconds(5));
-
   cv::VideoCapture input2("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.2:1.0-video-index0");
-  int streamer1 = 0;
+  //int streamer1 = 0;
+  int lastNtVariable = 1;
 
-
-  input2.set(cv::CAP_PROP_FRAME_WIDTH, 800);
-  input2.set(cv::CAP_PROP_FRAME_HEIGHT, 600);
+  input2.set(cv::CAP_PROP_FRAME_WIDTH, 160);
+  input2.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
 
   while (true)
   {
-    streamer1 = nt->GetNumber("Cam 0", 0);
-    m.lock();
+    //streamer1 = nt->GetNumber("Cam 0", 0);
+    //m.lock();
     if(!input2.read(img2))
       break;
-    m.unlock();
+    //m.unlock();
   
-    if      (streamer1 == 0) {
-      input2.set(cv::CAP_PROP_FRAME_WIDTH, 160);
-      input2.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+    if (ntVariable != lastNtVariable) {
+      if      (ntVariable == 0) {
+        input2.set(cv::CAP_PROP_FRAME_WIDTH, 160);
+        input2.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+      }
+      else if (ntVariable == 1) { 
+        input2.set(cv::CAP_PROP_FRAME_WIDTH, 800);
+        input2.set(cv::CAP_PROP_FRAME_HEIGHT, 600);
+      }
+      else if (ntVariable == 2) {
+        input2.set(cv::CAP_PROP_FRAME_WIDTH, 160);
+        input2.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+      }
+      else if (ntVariable == 3) {
+        input2.set(cv::CAP_PROP_FRAME_WIDTH, 160);
+        input2.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+      }
     }
-    else if (streamer1 == 1) { 
-      input2.set(cv::CAP_PROP_FRAME_WIDTH, 800);
-      input2.set(cv::CAP_PROP_FRAME_HEIGHT, 600);
-    }
-    else if (streamer1 == 2) {
-      input2.set(cv::CAP_PROP_FRAME_WIDTH, 160);
-      input2.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
-    }
-    else if (streamer1 == 3) {
-      input2.set(cv::CAP_PROP_FRAME_WIDTH, 160);
-      input2.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
-    }
+
+    lastNtVariable = ntVariable;
   }
 }
 
 void vidCap2() {
-  nt::NetworkTableInstance ntinst = nt::NetworkTableInstance::GetDefault();
-  std::shared_ptr<nt::NetworkTable> nt;
-  nt = ntinst.GetTable("JETSON");
-  ntinst.StartClientTeam(5584);
-  std::this_thread::sleep_for(std::chrono::seconds(5));
-
   cv::VideoCapture input3("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.3:1.0-video-index0");
-  int streamer2 = 0;
+  //int streamer2 = 0;
+  int lastNtVariable = 1;
 
 
   input3.set(cv::CAP_PROP_FRAME_WIDTH, 160);
@@ -118,41 +113,37 @@ void vidCap2() {
 
   while (true)
   {
-    streamer2 = nt->GetNumber("Cam 0", 0);
+    //streamer2 = nt->GetNumber("Cam 0", 0);
 
-    m.lock();
+    //m.lock();
     if(!input3.read(img3))
       break;
-    m.unlock();
-  
-    if      (streamer2 == 0) {
-      input3.set(cv::CAP_PROP_FRAME_WIDTH, 160);
-      input3.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
-    }
-    else if (streamer2 == 1) { 
-      input3.set(cv::CAP_PROP_FRAME_WIDTH, 160);
-      input3.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
-    }
-    else if (streamer2 == 2) {
-      input3.set(cv::CAP_PROP_FRAME_WIDTH, 800);
-      input3.set(cv::CAP_PROP_FRAME_HEIGHT, 600);
-    }
-    else if (streamer2 == 3) {
-      input3.set(cv::CAP_PROP_FRAME_WIDTH, 160);
-      input3.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+    //m.unlock();
+    if (ntVariable != lastNtVariable) {
+      if      (ntVariable == 0) {
+        input3.set(cv::CAP_PROP_FRAME_WIDTH, 160);
+        input3.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+      }
+      else if (ntVariable == 1) { 
+        input3.set(cv::CAP_PROP_FRAME_WIDTH, 160);
+        input3.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+      }
+      else if (ntVariable == 2) {
+        input3.set(cv::CAP_PROP_FRAME_WIDTH, 800);
+        input3.set(cv::CAP_PROP_FRAME_HEIGHT, 600);
+      }
+      else if (ntVariable == 3) {
+        input3.set(cv::CAP_PROP_FRAME_WIDTH, 160);
+        input3.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+      }
     }
   }
 }
 
 void vidCap3() {
-  nt::NetworkTableInstance ntinst = nt::NetworkTableInstance::GetDefault();
-  std::shared_ptr<nt::NetworkTable> nt;
-  nt = ntinst.GetTable("JETSON");
-  ntinst.StartClientTeam(5584);
-  std::this_thread::sleep_for(std::chrono::seconds(5));
-
   cv::VideoCapture input4("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.4:1.0-video-index0");
-  int streamer3 = 0;
+  //int streamer3 = 0;
+  int lastNtVariable = 1;
 
 
   input4.set(cv::CAP_PROP_FRAME_WIDTH, 160);
@@ -160,28 +151,30 @@ void vidCap3() {
 
   while (true)
   {
-    streamer3 = nt->GetNumber("Cam 0", 0);
+    //streamer3 = nt->GetNumber("Cam 0", 0);
 
-    m.lock();
+    //m.lock();
     if(!input4.read(img4))
       break;
-    m.unlock();
-  
-    if      (streamer3 == 0) {
-      input4.set(cv::CAP_PROP_FRAME_WIDTH, 160);
-      input4.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
-    }
-    else if (streamer3 == 1) { 
-      input4.set(cv::CAP_PROP_FRAME_WIDTH, 160);
-      input4.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
-    }
-    else if (streamer3 == 2) {
-      input4.set(cv::CAP_PROP_FRAME_WIDTH, 160);
-      input4.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
-    }
-    else if (streamer3 == 3) {
-      input4.set(cv::CAP_PROP_FRAME_WIDTH, 800);
-      input4.set(cv::CAP_PROP_FRAME_HEIGHT, 600);
+    //m.unlock();
+
+    if (ntVariable != lastNtVariable) {
+      if      (ntVariable == 0) {
+        input4.set(cv::CAP_PROP_FRAME_WIDTH, 160);
+        input4.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+      }
+      else if (ntVariable == 1) { 
+        input4.set(cv::CAP_PROP_FRAME_WIDTH, 160);
+        input4.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+      }
+      else if (ntVariable == 2) {
+        input4.set(cv::CAP_PROP_FRAME_WIDTH, 160);
+        input4.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+      }
+      else if (ntVariable == 3) {
+        input4.set(cv::CAP_PROP_FRAME_WIDTH, 800);
+        input4.set(cv::CAP_PROP_FRAME_HEIGHT, 600);
+      }
     }
   }
 }
@@ -232,43 +225,42 @@ void stream()
 
     std::cout << "Camera Servers started." << std::endl;
 
-    nt->PutNumber("Cam 0", 1);
     //nt->PutNumber("Cam 1", 1);
 
   while(true)
   {
-    streamer = nt->GetNumber("Cam 0", 0);
+    //streamer = nt->GetNumber("Cam 0", 0);
 
-    m.lock();
-    if      (stream0 == 0) {
+    //m.lock();
+    if      (ntVariable == 0) {
       //std::cout << "CONDITION 0 MET" << std::endl;
       test.write(img);
 
       test2.write(img2);
       test3.write(img3);
       }
-    else if (stream0 == 1) { 
+    else if (ntVariable == 1) { 
       //std::cout << "CONDITION 1 MET" << std::endl;
       test.write(img2);
 
       test2.write(img3);
       test3.write(img4);
     }
-    else if (stream0 == 2) {
+    else if (ntVariable == 2) {
       //std::cout << "CONDITION 2 MET" << std::endl;
       test.write(img3);
 
       test2.write(img2);
       test3.write(img4);
     }
-    else if (stream0 == 3) {
+    else if (ntVariable == 3) {
       //std::cout << "CONDITION 3 MET" << std::endl;
       test.write(img4);
 
       test2.write(img2);
       test3.write(img3);
     }
-    m.unlock();
+    //m.unlock();
 
   }
 }
@@ -294,6 +286,7 @@ int main( int argc, char *argv[] )
   ntinst.StartClientTeam(5584);
   std::this_thread::sleep_for(std::chrono::seconds(5));
 
+  nt->PutNumber("Cam 0", 1);
 
 
   // record start time
@@ -458,7 +451,7 @@ int main( int argc, char *argv[] )
     // STEP 7.5: Do some camera server things
     std::cout << "About to push camera frames to server." << std::endl;
 
-    stream0 = nt->GetNumber("Cam 0", 0);
+    ntVariable = nt->GetNumber("Cam 0", 0);
     // stream1 = nt->GetNumber("Cam 1", 1);
     
     
