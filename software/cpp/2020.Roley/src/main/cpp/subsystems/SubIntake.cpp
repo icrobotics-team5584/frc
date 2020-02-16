@@ -6,11 +6,15 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/SubIntake.h"
-#include "RobotMap.h"
+#include "Robot.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 
 SubIntake::SubIntake() : Subsystem("ExampleSubsystem") {
-  srxIntake.reset(new TalonSRX(can_srxIntake));
+  std::cout << "subintake constructor" << std::endl;
+
+  srxIntake = Robot::doubleTalon;
+  std::cout << "after double talon" << std::endl;
+
   solIntakeActuator.reset(new frc::DoubleSolenoid(pcm_solIntakeDeploy, pcm_solIntakeRetract));
   // Setup current limiting. 
   /* Notes on current limiting:

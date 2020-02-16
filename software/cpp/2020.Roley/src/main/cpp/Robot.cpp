@@ -25,19 +25,26 @@ std::shared_ptr<SubClimber> Robot::subClimber;
 std::shared_ptr<SubBuddyClimb> Robot::subBuddyClimb;
 std::shared_ptr<frc::Timer> Robot::timer;
 std::unique_ptr<OI> Robot::oi;
-
+std::shared_ptr<TalonSRX> Robot::doubleTalon;
 
 void Robot::RobotInit() {
 
   //Reset subsystems
-  
+  std::cout << "robot init" << std::endl;
+  doubleTalon.reset(new TalonSRX(can_srxIntake));
   subDriveBase.reset(new SubDriveBase());
+  std::cout << "after subdrivebase created" << std::endl;
   subIntake.reset(new SubIntake());
+  std::cout << "after subintake constructor" << std::endl;
+
   subShooter.reset(new SubShooter());
   subStorage.reset(new SubStorage());
   subClimber.reset(new SubClimber());
   subBuddyClimb.reset(new SubBuddyClimb());
 
+  
+  std::cout << "after double talon created" << std::endl;
+  
   timer.reset(new frc::Timer());
   //Reset Auto Encoder
   posEncoderGyro.reset(new PosEncoderGyro());
@@ -58,21 +65,21 @@ void Robot::RobotInit() {
   chooser.AddOption("Sad Trench Run", autoThree);
   frc::SmartDashboard::PutData("Auto Selecter", &chooser);
 
-  frc::SmartDashboard::PutData("Dolly Deploy", new CmdDeployDolly());
+  frc::SmartDashboard::PutData("CmdDeployDolly", new CmdDeployDolly());
 
-  frc::SmartDashboard::PutData("Elevator Up", new CmdElevatorPowerUp());
-  frc::SmartDashboard::PutData("Elevator Down", new CmdElevatorPowerDown());
-  frc::SmartDashboard::PutData("Ratchets", new CmdEngageClimberRatchets());
+  frc::SmartDashboard::PutData("CmdElevatorPowerUp", new CmdElevatorPowerUp());
+  frc::SmartDashboard::PutData("CmdElevatorPowerDown", new CmdElevatorPowerDown());
+  frc::SmartDashboard::PutData("CmdEngageClimberRatchets", new CmdEngageClimberRatchets());
 
-  frc::SmartDashboard::PutData("Buddy Extend", new CmdBuddyLock());
-  frc::SmartDashboard::PutData("Buddy Retract", new CmdBuddyDeploy());
+  frc::SmartDashboard::PutData("CmdBuddyLock", new CmdBuddyLock());
+  frc::SmartDashboard::PutData("CmdBuddyDeploy", new CmdBuddyDeploy());
 
-  frc::SmartDashboard::PutData("intake", new CmdIntake());
+  frc::SmartDashboard::PutData("CmdIntake", new CmdIntake());
 
-  frc::SmartDashboard::PutData("Storage Extend", new CmdStorageExpand());
-  frc::SmartDashboard::PutData("Dolly Deploy", new CmdStorageRetract());
+  frc::SmartDashboard::PutData("CmdStorageExpand", new CmdStorageExpand());
+  frc::SmartDashboard::PutData("CmdStorageRetract", new CmdStorageRetract());
 
-  frc::SmartDashboard::PutData("intake Deploy", new CmdDeployIntake());
+  frc::SmartDashboard::PutData("CmdDeployIntake", new CmdDeployIntake());
 }
 
 
