@@ -8,26 +8,29 @@
 #pragma once
 
 #include <frc/drive/DifferentialDrive.h>
-#include <ctre/Phoenix.h>
 #include "frc/commands/Subsystem.h"
 #include "frc/smartdashboard/SmartDashboard.h"
 #include <AHRS.h>
 #include "Utilities/PosEncoderGyro.h"
 #include <frc/DoubleSolenoid.h>
+#include <rev/CANSparkMax.h>
+#include <ctre/Phoenix.h>
+#include "Utilities/EncoderTalon.h"
+
 using namespace std;
 
 class SubDriveBase : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
-
+  EncoderTalon dollyTalon;
   
  public:
     
-  shared_ptr<WPI_TalonSRX> _srxFrontLeft;
-  shared_ptr<WPI_TalonSRX> _srxFrontRight;
-  shared_ptr<WPI_TalonSRX> _srxBackLeft;
-  shared_ptr<WPI_TalonSRX> _srxBackRight;
+  shared_ptr<rev::CANSparkMax> _spmFrontLeft;
+  shared_ptr<rev::CANSparkMax> _spmFrontRight;
+  shared_ptr<rev::CANSparkMax> _spmBackLeft;
+  shared_ptr<rev::CANSparkMax> _spmBackRight;
 
   shared_ptr<frc::DoubleSolenoid> solDollyAcuator;
 
@@ -77,4 +80,6 @@ class SubDriveBase : public frc::Subsystem {
   void setTargetYaw(double TargetYaw);
   void deployDolly();
   void retractDolly();
+  double getJoystickY();
+  double getJoystickX();
 };

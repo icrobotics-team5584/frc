@@ -22,6 +22,7 @@
 #include "commands/CmdStorageTogglePneumatic.h"
 #include "commands/CmdElevatorFullExtend.h"
 #include "commands/CmdElevaterExtendMin.h"
+#include "commands/CmdElevatorBuddy.h"
 OI::OI() {
 
   //std::cout<< "OI Started" << std::endl;
@@ -66,7 +67,7 @@ OI::OI() {
   //Buddy Climber Button
 
   btnReleaseBuddyClimber.reset(new frc::JoystickButton(joystick1.get(), backBtn));
-  btnReleaseBuddyClimber->WhileHeld(new CmdBuddyLock());
+  btnReleaseBuddyClimber->WhenPressed(new CmdBuddyLock());
 
   btnOverride.reset(new frc::JoystickButton(joystick1.get(), startBtn));
   // btnOverride->WhileHeld(new )
@@ -76,6 +77,9 @@ OI::OI() {
 
   btnElevaterUp.reset(new ButtonPOV(joystick1.get(), UP));
   btnElevaterUp->WhenPressed(new CmdElevatorFullExtend());
+
+  btnElevaterBuddy.reset(new ButtonPOV(joystick1.get(), RIGHT));
+  btnElevaterBuddy->WhenPressed(new CmdElevatorBuddy());
 
 }
 
@@ -90,6 +94,14 @@ double OI::getJoystickX(){
 
 double OI::getJoystickY(){
   return joystick1->GetY();
+}
+
+double OI::getJoystick2X(){
+  return joystick1->GetRawAxis(4);
+}
+
+double OI::getJoystick2Y(){
+  return joystick1->GetRawAxis(5);
 }
 
 double OI::getJoystickRawAxis(Triggers trigger){

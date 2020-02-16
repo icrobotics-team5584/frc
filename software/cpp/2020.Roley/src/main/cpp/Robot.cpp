@@ -17,19 +17,26 @@ std::shared_ptr<SubClimber> Robot::subClimber;
 std::shared_ptr<SubBuddyClimb> Robot::subBuddyClimb;
 std::shared_ptr<frc::Timer> Robot::timer;
 std::unique_ptr<OI> Robot::oi;
-
+std::shared_ptr<TalonSRX> Robot::doubleTalon;
 
 void Robot::RobotInit() {
 
   //Reset subsystems
-  
+  std::cout << "robot init" << std::endl;
+  doubleTalon.reset(new TalonSRX(can_srxIntake));
   subDriveBase.reset(new SubDriveBase());
+  std::cout << "after subdrivebase created" << std::endl;
   subIntake.reset(new SubIntake());
+  std::cout << "after subintake constructor" << std::endl;
+
   subShooter.reset(new SubShooter());
   subStorage.reset(new SubStorage());
   subClimber.reset(new SubClimber());
   subBuddyClimb.reset(new SubBuddyClimb());
 
+  
+  std::cout << "after double talon created" << std::endl;
+  
   timer.reset(new frc::Timer());
   //Reset Auto Encoder
   posEncoderGyro.reset(new PosEncoderGyro());
@@ -54,6 +61,8 @@ void Robot::RobotInit() {
   frc::SmartDashboard::PutData("Elevator Up", new CmdElevatorPowerUp());
   frc::SmartDashboard::PutData("Elevator Down", new CmdElevatorPowerDown());
   frc::SmartDashboard::PutData("Ratchets", new CmdEngageClimberRatchets());
+  std::cout << "after robot init" << std::endl;
+  
 }
 
 
@@ -104,6 +113,8 @@ void Robot::AutonomousPeriodic() {
 void Robot::TeleopInit() {
   subDriveBase->retractDolly();
   subClimber->RatchetsDisengage();
+  subClimber->ElevaterExtendMin();
+  subBuddyClimb->Forward();
   // This makes sure that the autonomous stops running when
   // teleop starts running. If you want the autonomous to
   // continue until interrupted by another command, remove

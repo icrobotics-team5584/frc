@@ -46,6 +46,8 @@ class OI {
   OI();
   double getJoystickX();
   double getJoystickY();
+  double getJoystick2X();
+  double getJoystick2Y();
   double getJoystickRawAxis(Triggers trigger);
   double GetRightAsix();
   bool GetOverride();
@@ -72,4 +74,6 @@ class OI {
   std::unique_ptr<frc::JoystickButton> btnStorageExpand;
   std::unique_ptr<ButtonPOV> btnElevaterUp;
   std::unique_ptr<ButtonPOV> btnElevaterDown;
+  std::unique_ptr<ButtonPOV> btnElevaterBuddy;
+
   };
