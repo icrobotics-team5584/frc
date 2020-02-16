@@ -14,18 +14,19 @@ CmdShooterShoot::CmdShooterShoot() {
   //Requires(Robot::subShooter.get());
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
+  Requires(Robot::subShooter.get());
+  Requires(Robot::subStorage.get());
 }
 
 // Called just before this Command runs the first time
 void CmdShooterShoot::Initialize() {
-  
+  Robot::subShooter->PowerShoot();
+  Robot::subStorage->Forward();
 
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdShooterShoot::Execute() {
-  //ShooterShoot = true;
-  Robot::subShooter->PowerShoot();
 
 }
 
@@ -37,6 +38,7 @@ bool CmdShooterShoot::IsFinished() {
 void CmdShooterShoot::End() {
   //ShooterShoot = false;
   Robot::subShooter->Stop();
+  Robot::subStorage->Stop();
 }
 
 // Called when another command which requires one or more of the same
