@@ -4,10 +4,6 @@
 
 #pragma once
 enum Can {
-    can_srxDriveBaseFrontLeft = 1,
-    can_srxDriveBaseBackLeft = 2,
-    can_srxDriveBaseFrontRight = 3,
-    can_srxDriveBaseBackRight = 4,
     can_srxShooterLeft = 5,
     can_srxShooterRight = 6,
     can_srxIntake = 7,
@@ -46,6 +42,12 @@ enum DIO{
     dio_ElevatorTop = 3,
 };
 
+enum SPM{
+    SPM_DriveBaseFrontLeft = 1,
+    SPM_DriveBaseBackLeft = 2,
+    SPM_DriveBaseFrontRight = 3,
+    SPM_DriveBaseBackRight = 4,
+};
 
 // For example to map the left and right motors, you could define the
 // following variables to use with your drivetrain subsystem.
