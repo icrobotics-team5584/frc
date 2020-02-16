@@ -6,12 +6,20 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "commands/CmdShooterShoot.h"
 
+#include "commands/CmdDeployDolly.h"
+#include "commands/CmdElevatorPowerDown.h"
+#include "commands/CmdElevatorPowerUp.h"
+#include "commands/CmdEngageClimberRatchets.h"
 #include "commands/CmdBuddyDeploy.h"
 #include "commands/CmdBuddyLock.h"
 #include "commands/CmdIntake.h"
-#include "commands/CmdStorageExpand.h"
-#include "commands/CmdStorageRetract.h"
+#include "commands/CmdOuttake.h"
 #include "commands/CmdDeployIntake.h"
+#include "commands/CmdStorageTogglePneumatic.h"
+#include "commands/CmdRollStorage.h"
+#include "commands/CmdRollStorageBack.h"
+#include "commands/CmdShooterShoot.h"
+#include "commands/CmdShooterShootReverse.h"
 
 #include "Robot.h"
 
@@ -65,21 +73,33 @@ void Robot::RobotInit() {
   chooser.AddOption("Sad Trench Run", autoThree);
   frc::SmartDashboard::PutData("Auto Selecter", &chooser);
 
+
+/*------------------------------------------------------------------------*/
+/* Hardware testing control.                                              */
+/* "PutData" push up commands used to test most hardware features on the  */
+/*  robot.                                                                */  
+/*------------------------------------------------------------------------*/
+  //DRIVEBASE ----------------------------------------------------------------
   frc::SmartDashboard::PutData("CmdDeployDolly", new CmdDeployDolly());
-
-  frc::SmartDashboard::PutData("CmdElevatorPowerUp", new CmdElevatorPowerUp());
-  frc::SmartDashboard::PutData("CmdElevatorPowerDown", new CmdElevatorPowerDown());
-  frc::SmartDashboard::PutData("CmdEngageClimberRatchets", new CmdEngageClimberRatchets());
-
+  //ELEVATOR ----------------------------------------------------------------
+  frc::SmartDashboard::PutData("CmdElevatorPowerUp", new CmdElevatorPowerUp()); //Currently does nothing
+  frc::SmartDashboard::PutData("CmdElevatorPowerDown", new CmdElevatorPowerDown()); //Currently does nothing
+  frc::SmartDashboard::PutData("CmdEngageClimberRatchets", new CmdEngageClimberRatchets()); 
+  //BUDDY ----------------------------------------------------------------
   frc::SmartDashboard::PutData("CmdBuddyLock", new CmdBuddyLock());
   frc::SmartDashboard::PutData("CmdBuddyDeploy", new CmdBuddyDeploy());
-
+  //INTAKE ----------------------------------------------------------------
   frc::SmartDashboard::PutData("CmdIntake", new CmdIntake());
-
-  frc::SmartDashboard::PutData("CmdStorageExpand", new CmdStorageExpand());
-  frc::SmartDashboard::PutData("CmdStorageRetract", new CmdStorageRetract());
-
+  frc::SmartDashboard::PutData("CmdOuttake", new CmdOuttake());
   frc::SmartDashboard::PutData("CmdDeployIntake", new CmdDeployIntake());
+  //STORAGE ----------------------------------------------------------------
+  frc::SmartDashboard::PutData("CmdStorageTogglePneumatic", new CmdStorageTogglePneumatic());
+  frc::SmartDashboard::PutData("CmdRollStorage", new CmdRollStorage());
+  frc::SmartDashboard::PutData("CmdRollStorageBack", new CmdRollStorageBack());
+  //SHOOTER ----------------------------------------------------------------
+  frc::SmartDashboard::PutData("CmdShooterShoot", new CmdShooterShoot());
+  frc::SmartDashboard::PutData("CmdShooterShootReverse", new CmdShooterShootReverse());
+
 }
 
 

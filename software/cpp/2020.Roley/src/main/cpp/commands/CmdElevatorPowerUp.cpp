@@ -16,7 +16,7 @@ CmdElevatorPowerUp::CmdElevatorPowerUp() {
 
 // Called just before this Command runs the first time
 void CmdElevatorPowerUp::Initialize() {
-  Robot::subClimber->MoveUp();
+  //Robot::subClimber->setSpeed(0); 
 }
 
 // Called repeatedly when this Command is scheduled to run

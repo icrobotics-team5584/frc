@@ -5,33 +5,38 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdElevatorPowerDown.h"
-
+#include "commands/CmdShooterShootReverse.h"
 #include "Robot.h"
-
-CmdElevatorPowerDown::CmdElevatorPowerDown() {
+ 
+CmdShooterShootReverse::CmdShooterShootReverse() {
+  //Requires(Robot::subShooter.get());
   // Use Requires() here to declare subsystem dependencies
-  Requires(Robot::subClimber.get());
+  // eg. Requires(Robot::chassis.get());
 }
 
 // Called just before this Command runs the first time
-void CmdElevatorPowerDown::Initialize() {
-  //Robot::subClimber->setSpeed(0);
+void CmdShooterShootReverse::Initialize() {
+  
+
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdElevatorPowerDown::Execute() {}
+void CmdShooterShootReverse::Execute() {
+  Robot::subShooter->PowerShootReverse();
+}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdElevatorPowerDown::IsFinished() { return false; }
+bool CmdShooterShootReverse::IsFinished() { 
+  return false; 
+}
 
 // Called once after isFinished returns true
-void CmdElevatorPowerDown::End() {
-  Robot::subClimber->Stop();
+void CmdShooterShootReverse::End() {
+  Robot::subShooter->Stop();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdElevatorPowerDown::Interrupted() {
+void CmdShooterShootReverse::Interrupted() {
   End();
 }

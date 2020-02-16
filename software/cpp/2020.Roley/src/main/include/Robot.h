@@ -24,11 +24,6 @@
 #include "commands/CmdAutoRoutineTwo.h"
 #include "commands/CmdAutoRoutineThree.h"
 
-#include "commands/CmdDeployDolly.h"
-#include "commands/CmdElevatorPowerDown.h"
-#include "commands/CmdElevatorPowerUp.h"
-#include "commands/CmdEngageClimberRatchets.h"
-
 #include <ctre/phoenix.h>
 
 class Robot : public frc::TimedRobot {

@@ -82,6 +82,12 @@ void SubShooter::PowerShoot(){
   rightMotor->Set(ControlMode::PercentOutput, shooterSpeed);
 }
 
+void SubShooter::PowerShootReverse(){
+  shooterSpeed = frc::SmartDashboard::GetNumber("Shooter Speed", 0.8);
+  leftMotor->Set(ControlMode::PercentOutput, shooterSpeed);
+  rightMotor->Set(ControlMode::PercentOutput, -shooterSpeed);
+}
+
 void SubShooter::Shoot(){
 
     std::cout << "Shoot function running." << std::endl;
