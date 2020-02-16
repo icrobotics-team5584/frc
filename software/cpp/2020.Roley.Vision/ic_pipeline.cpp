@@ -27,12 +27,15 @@ cv::Mat img2;
 cv::Mat img3;
 cv::Mat img4;
 
+int largeFrame[] = { 320, 240 };
+int smallFrame[] = { 160, 120 };
+
 int ntVariable = 1;
 
 // Start the camera server on port 5800.
 MJPEGWriter test(5800);
-MJPEGWriter test2(5801);
-MJPEGWriter test3(5802);
+//MJPEGWriter test2(5801);
+//MJPEGWriter test3(5802);
 
 cv::Mat blankMat;
 
@@ -51,8 +54,9 @@ int stream1 = 1;
 void vidCap0() {
   cv::VideoCapture input("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.1:1.0-video-index0");
 
-  input.set(cv::CAP_PROP_FRAME_WIDTH, 160);
-  input.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+  input.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
+  input.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
+  //input.set(cv::CAP_PROP_FPS, 20);
 
   while (true)
   {
@@ -68,8 +72,9 @@ void vidCap1() {
   //int streamer1 = 0;
   int lastNtVariable = 1;
 
-  input2.set(cv::CAP_PROP_FRAME_WIDTH, 160);
-  input2.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+  input2.set(cv::CAP_PROP_FRAME_WIDTH, largeFrame[0]);
+  input2.set(cv::CAP_PROP_FRAME_HEIGHT, largeFrame[1]);
+  //input2.set(cv::CAP_PROP_FPS, 20);
 
   while (true)
   {
@@ -81,20 +86,20 @@ void vidCap1() {
   
     if (ntVariable != lastNtVariable) {
       if      (ntVariable == 0) {
-        input2.set(cv::CAP_PROP_FRAME_WIDTH, 160);
-        input2.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+        input2.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
+        input2.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
       }
       else if (ntVariable == 1) { 
-        input2.set(cv::CAP_PROP_FRAME_WIDTH, 800);
-        input2.set(cv::CAP_PROP_FRAME_HEIGHT, 600);
+        input2.set(cv::CAP_PROP_FRAME_WIDTH, largeFrame[0]);
+        input2.set(cv::CAP_PROP_FRAME_HEIGHT, largeFrame[1]);
       }
       else if (ntVariable == 2) {
-        input2.set(cv::CAP_PROP_FRAME_WIDTH, 160);
-        input2.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+        input2.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
+        input2.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
       }
       else if (ntVariable == 3) {
-        input2.set(cv::CAP_PROP_FRAME_WIDTH, 160);
-        input2.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+        input2.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
+        input2.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
       }
     }
 
@@ -108,8 +113,9 @@ void vidCap2() {
   int lastNtVariable = 1;
 
 
-  input3.set(cv::CAP_PROP_FRAME_WIDTH, 160);
-  input3.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+  input3.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
+  input3.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
+  //input3.set(cv::CAP_PROP_FPS, 20);
 
   while (true)
   {
@@ -121,20 +127,20 @@ void vidCap2() {
     //m.unlock();
     if (ntVariable != lastNtVariable) {
       if      (ntVariable == 0) {
-        input3.set(cv::CAP_PROP_FRAME_WIDTH, 160);
-        input3.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+        input3.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
+        input3.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
       }
       else if (ntVariable == 1) { 
-        input3.set(cv::CAP_PROP_FRAME_WIDTH, 160);
-        input3.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+        input3.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
+        input3.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
       }
       else if (ntVariable == 2) {
-        input3.set(cv::CAP_PROP_FRAME_WIDTH, 800);
-        input3.set(cv::CAP_PROP_FRAME_HEIGHT, 600);
+        input3.set(cv::CAP_PROP_FRAME_WIDTH, largeFrame[0]);
+        input3.set(cv::CAP_PROP_FRAME_HEIGHT, largeFrame[1]);
       }
       else if (ntVariable == 3) {
-        input3.set(cv::CAP_PROP_FRAME_WIDTH, 160);
-        input3.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+        input3.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
+        input3.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
       }
     }
   }
@@ -146,8 +152,9 @@ void vidCap3() {
   int lastNtVariable = 1;
 
 
-  input4.set(cv::CAP_PROP_FRAME_WIDTH, 160);
-  input4.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+  input4.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
+  input4.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
+  //input4.set(cv::CAP_PROP_FPS, 20);
 
   while (true)
   {
@@ -160,20 +167,20 @@ void vidCap3() {
 
     if (ntVariable != lastNtVariable) {
       if      (ntVariable == 0) {
-        input4.set(cv::CAP_PROP_FRAME_WIDTH, 160);
-        input4.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+        input4.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
+        input4.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
       }
       else if (ntVariable == 1) { 
-        input4.set(cv::CAP_PROP_FRAME_WIDTH, 160);
-        input4.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+        input4.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
+        input4.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
       }
       else if (ntVariable == 2) {
-        input4.set(cv::CAP_PROP_FRAME_WIDTH, 160);
-        input4.set(cv::CAP_PROP_FRAME_HEIGHT, 120);
+        input4.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
+        input4.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
       }
       else if (ntVariable == 3) {
-        input4.set(cv::CAP_PROP_FRAME_WIDTH, 800);
-        input4.set(cv::CAP_PROP_FRAME_HEIGHT, 600);
+        input4.set(cv::CAP_PROP_FRAME_WIDTH, largeFrame[0]);
+        input4.set(cv::CAP_PROP_FRAME_HEIGHT, largeFrame[1]);
       }
     }
   }
@@ -199,29 +206,29 @@ void stream()
     std::shared_ptr<nt::NetworkTable> ntcam;
     ntcam = ntinst.GetTable("CameraPublisher/CVCamera");
 
-    std::shared_ptr<nt::NetworkTable> ntcam2;
-    ntcam2 = ntinst.GetTable("CameraPublisher/CVCamera2");
+    //std::shared_ptr<nt::NetworkTable> ntcam2;
+    //ntcam2 = ntinst.GetTable("CameraPublisher/CVCamera2");
 
-    std::shared_ptr<nt::NetworkTable> ntcam3;
-    ntcam3 = ntinst.GetTable("CameraPublisher/CVCamera3");
+    //std::shared_ptr<nt::NetworkTable> ntcam3;
+    //ntcam3 = ntinst.GetTable("CameraPublisher/CVCamera3");
 
     std::this_thread::sleep_for(std::chrono::seconds(5));  std::cout << "Network Tables Initialized." << std::endl;
     // Put IP Address Values into CameraPublisher NetworkTable
     string Fred[1] = {"mjpeg:http://10.55.84.8:5800"}; //Fred and James are the camera ip address arrays. They have to be there for the camera server to work.
     ntcam->PutStringArray("streams", Fred);
     
-    string James[1] = {"mjpeg:http://10.55.84.8:5801"};
-    ntcam2->PutStringArray("streams", James);
+    //string James[1] = {"mjpeg:http://10.55.84.8:5801"};
+    //ntcam2->PutStringArray("streams", James);
 
-    string Max[1] = {"mjpeg:http://10.55.84.8:5802"};
-    ntcam3->PutStringArray("streams", Max);
+    //string Max[1] = {"mjpeg:http://10.55.84.8:5802"};
+    //ntcam3->PutStringArray("streams", Max);
 
     std::cout << "Arrays pushed to network tables." << std::endl;
 
     
     test.start();
-    test2.start();
-    test3.start();
+    //test2.start();
+    //test3.start();
 
     std::cout << "Camera Servers started." << std::endl;
 
@@ -236,29 +243,29 @@ void stream()
       //std::cout << "CONDITION 0 MET" << std::endl;
       test.write(img);
 
-      test2.write(img2);
-      test3.write(img3);
+      //test2.write(img2);
+      //test3.write(img3);
       }
     else if (ntVariable == 1) { 
       //std::cout << "CONDITION 1 MET" << std::endl;
       test.write(img2);
 
-      test2.write(img3);
-      test3.write(img4);
+      //test2.write(img3);
+      //test3.write(img4);
     }
     else if (ntVariable == 2) {
       //std::cout << "CONDITION 2 MET" << std::endl;
       test.write(img3);
 
-      test2.write(img2);
-      test3.write(img4);
+      //test2.write(img2);
+      //test3.write(img4);
     }
     else if (ntVariable == 3) {
       //std::cout << "CONDITION 3 MET" << std::endl;
       test.write(img4);
 
-      test2.write(img2);
-      test3.write(img3);
+      //test2.write(img2);
+      //test3.write(img3);
     }
     //m.unlock();
 
@@ -486,8 +493,8 @@ int main( int argc, char *argv[] )
     {
       cout << "INFO: detected control file (stop)" << endl;
       test.stop();
-      test2.stop();
-      test3.stop();
+      //test2.stop();
+      //test3.stop();
 
       t1.join();
       t2.join();

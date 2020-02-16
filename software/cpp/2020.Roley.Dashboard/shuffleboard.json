@@ -482,8 +482,8 @@
               "Controls/Rotation": "NONE",
               "compression": -1.0,
               "fps": -1,
-              "imageWidth": -1,
-              "imageHeight": -1
+              "imageWidth": 0,
+              "imageHeight": 0
             }
           },
           "7,1": {
@@ -501,8 +501,8 @@
               "Controls/Rotation": "NONE",
               "compression": -1.0,
               "fps": -1,
-              "imageWidth": -1,
-              "imageHeight": -1
+              "imageWidth": 0,
+              "imageHeight": 0
             }
           },
           "7,3": {
@@ -520,8 +520,8 @@
               "Controls/Rotation": "NONE",
               "compression": -1.0,
               "fps": -1,
-              "imageWidth": -1,
-              "imageHeight": -1
+              "imageWidth": 0,
+              "imageHeight": 0
             }
           }
         }
@@ -589,9 +589,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -8.0,
-    "y": 22.0,
-    "width": 1936.0,
-    "height": 1066.0
+    "x": -6.857142925262451,
+    "y": -6.857142925262451,
+    "width": 1728.0,
+    "height": 1116.5714111328125
   }
 }
