@@ -4,6 +4,22 @@
 
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/shuffleboard/Shuffleboard.h>
+
+#include "commands/CmdDeployDolly.h"
+#include "commands/CmdElevatorPowerDown.h"
+#include "commands/CmdElevatorPowerUp.h"
+#include "commands/CmdEngageClimberRatchets.h"
+#include "commands/CmdBuddyDeploy.h"
+#include "commands/CmdBuddyLock.h"
+#include "commands/CmdIntake.h"
+#include "commands/CmdOuttake.h"
+#include "commands/CmdDeployIntake.h"
+#include "commands/CmdStorageTogglePneumatic.h"
+#include "commands/CmdRollStorage.h"
+#include "commands/CmdRollStorageBack.h"
+#include "commands/CmdShooterShoot.h"
+#include "commands/CmdShooterShootReverse.h"
 
 #include "Robot.h"
 
@@ -57,25 +73,49 @@ void Robot::RobotInit() {
   chooser.AddOption("Sad Trench Run", autoThree);
   frc::SmartDashboard::PutData("Auto Selecter", &chooser);
 
-  frc::SmartDashboard::PutData("Dolly Deploy", new CmdDeployDolly());
-  frc::SmartDashboard::PutData("Elevator Up", new CmdElevatorPowerUp());
-  frc::SmartDashboard::PutData("Elevator Down", new CmdElevatorPowerDown());
-  frc::SmartDashboard::PutData("Ratchets", new CmdEngageClimberRatchets());
-  std::cout << "after robot init" << std::endl;
-  
+
+/*------------------------------------------------------------------------*/
+/* Hardware testing control.                                              */
+/* "PutData" push up commands used to test most hardware features on the  */
+/*  robot.                                                                */  
+/*------------------------------------------------------------------------*/
+  //DRIVEBASE ----------------------------------------------------------------
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdDeployDolly", *(new CmdDeployDolly()));
+  //ELEVATOR ----------------------------------------------------------------
+  //NOTE: Currently not integrated. DO NOT USE!
+  //frc::Shuffleboard::GetTab("HARDWARE").Add("CmdElevatorPowerUp", *(new CmdElevatorPowerUp())); 
+  //frc::Shuffleboard::GetTab("HARDWARE").Add("CmdElevatorPowerDown", *(new CmdElevatorPowerDown())); 
+  //frc::Shuffleboard::GetTab("HARDWARE").Add("CmdEngageClimberRatchets", *(new CmdEngageClimberRatchets()));  
+  //BUDDY ----------------------------------------------------------------
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdBuddyLock", *(new CmdBuddyLock()));
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdBuddyDeploy", *(new CmdBuddyDeploy()));
+  //INTAKE ----------------------------------------------------------------
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdIntake", *(new CmdIntake()));
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdOuttake", *(new CmdOuttake()));
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdDeployIntake", *(new CmdDeployIntake()));
+  //STORAGE ----------------------------------------------------------------
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdStorageTogglePneumatic", *(new CmdStorageTogglePneumatic()));
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdRollStorage", *(new CmdRollStorage()));
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdRollStorageBack", *(new CmdRollStorageBack()));
+  //SHOOTER ----------------------------------------------------------------
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdShooterShoot", *(new CmdShooterShoot()));
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdShooterShootReverse", *(new CmdShooterShootReverse()));
+
 }
 
 
 void Robot::RobotPeriodic() {
-
+  frc::SmartDashboard::PutBoolean("lbrTopStorage", Robot::subStorage->GetLbrTopStorage());
   frc::SmartDashboard::PutNumber("Match Time", timer->GetMatchTime());
   frc::SmartDashboard::PutNumber("Left RPM", subShooter->GetLeftRPM());
   frc::SmartDashboard::PutNumber("Right RPM",subShooter->GetRightRPM());
+  frc::SmartDashboard::PutBoolean("ShooterShoot", CmdShooterShoot::ShooterShoot);
   //subShooter->speed = frc::SmartDashboard::GetNumber("Motor Speed", subShooter->speed);
   //frc::SmartDashboard::PutNumber("Motor Speed", subShooter->speed);
   posEncoderGyro->updateAbsolutePosition();
   posEncoderGyro->updateRelativePosition();
   //std::cout << "update position" << std::endl;
+  
 }
 
 
