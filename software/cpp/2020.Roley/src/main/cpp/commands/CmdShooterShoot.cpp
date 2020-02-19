@@ -7,6 +7,8 @@
 
 #include "commands/CmdShooterShoot.h"
 #include "Robot.h"
+#include <iostream>
+
 
  bool CmdShooterShoot::ShooterShoot;
  
@@ -20,6 +22,8 @@ CmdShooterShoot::CmdShooterShoot() {
 
 // Called just before this Command runs the first time
 void CmdShooterShoot::Initialize() {
+  std::cout << "------------------------------------------------shooter shoot init" << std::endl;
+
   Robot::subShooter->PowerShoot();
   Robot::subStorage->Forward();
 
@@ -36,6 +40,8 @@ bool CmdShooterShoot::IsFinished() {
 
 // Called once after isFinished returns true
 void CmdShooterShoot::End() {
+  std::cout << "------------------------------------------------shooter shoot end" << std::endl;
+  
   //ShooterShoot = false;
   Robot::subShooter->Stop();
   Robot::subStorage->Stop();

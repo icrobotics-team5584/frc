@@ -7,6 +7,8 @@
 
 #include "commands/CmdDeployIntakeOnly.h"
 #include "Robot.h"
+#include <iostream>
+
 
 CmdDeployIntakeOnly::CmdDeployIntakeOnly() {
   Requires(Robot::subIntake.get());
@@ -16,6 +18,8 @@ CmdDeployIntakeOnly::CmdDeployIntakeOnly() {
 
 // Called just before this Command runs the first time
 void CmdDeployIntakeOnly::Initialize() {
+  std::cout << "------------------------------------------------intake only init" << std::endl;
+
   Robot::subIntake->Deploy();
 }
 
@@ -27,9 +31,13 @@ bool CmdDeployIntakeOnly::IsFinished() { return false; }
 
 // Called once after isFinished returns true
 void CmdDeployIntakeOnly::End() {
+  std::cout << "------------------------------------------------deploy intake only end" << std::endl;
+
   Robot::subStorage->Retract();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdDeployIntakeOnly::Interrupted() {}
+void CmdDeployIntakeOnly::Interrupted() {
+  End();
+}

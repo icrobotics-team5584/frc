@@ -12,13 +12,23 @@
 #include "commands/CmdRollStorage.h"
 #include "commands/CmdDeployIntake.h"
 #include "commands/CmdDeployIntakeOnly.h"
+#include "Robot.h"
+#include "commands/CmdShooterShoot.h"
+
 
 CmdShooterSquence::CmdShooterSquence() {
-  AddSequential(new CmdStartShoot(), 0.1);
   AddSequential(new CmdStorageRetract(), 0.5);
+  AddParallel(new CmdStartShoot(), 0.1);
   AddParallel(new CmdDeployIntakeOnly());
-  AddSequential(new CmdRollStorage());
   AddParallel(new CmdStopShoot());
+  AddSequential(new CmdRollStorage());
+
+  
+
+
+
+
+  
 
   
 
