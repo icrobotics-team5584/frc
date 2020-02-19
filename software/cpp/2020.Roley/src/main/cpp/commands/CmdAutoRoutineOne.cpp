@@ -14,11 +14,11 @@
 
 CmdAutoRoutineOne::CmdAutoRoutineOne() : CommandGroup("CmdAutoRoutineOne: Vanilla") {
   //AddParallel(new CmdAutoIntake());
-  AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegOne)); //Init line -> end trench
-  //AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegTwo));  
-  //AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegThree));//End trench -> start trench
-  //AddSequential(new CmdIntakeStop());
-  //AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegFour)); //Start trench -> init line
+  AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegOne)); 
+  AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegTwo));  
+  AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegThree));
+  ////AddSequential(new CmdIntakeStop());
+  AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegFour)); 
   //AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegFive));
   
 //init line -> target zone
