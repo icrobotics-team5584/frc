@@ -23,6 +23,7 @@
 #include "commands/CmdElevatorFullExtend.h"
 #include "commands/CmdElevaterExtendMin.h"
 #include "commands/CmdElevatorBuddy.h"
+#include "commands/CmdShooterSquence.h"
 OI::OI() {
 
   //std::cout<< "OI Started" << std::endl;
@@ -31,7 +32,7 @@ OI::OI() {
   joystick1.reset(new frc::Joystick(0));
 
   btnShoot.reset(new frc::JoystickButton(joystick1.get(), aBtn));
-  btnShoot->WhileHeld(new CmdShooterShoot());
+  btnShoot->WhileHeld(new CmdShooterSquence());
 
   //Slow drive buttons
   btnSlowDown.reset(new AxisButton(joystick1.get(), triggerL));
