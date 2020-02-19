@@ -9,17 +9,27 @@
 #include "commands/CmdAutoEncoderDrive.h"
 #include "commands/CmdAutoIntake.h"
 #include "commands/CmdIntakeStop.h"
-
+#include "commands/CmdAutoIntakeDeploy.h"
+#include "commands/CmdAutoShoot.h"
+#include "commands/CmdAutoStorage.h"
 #include <iostream>
 
 CmdAutoRoutineOne::CmdAutoRoutineOne() : CommandGroup("CmdAutoRoutineOne: Vanilla") {
   //AddParallel(new CmdAutoIntake());
-  AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegOne)); 
-  AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegTwo));  
+  AddParallel(new CmdAutoIntakeDeploy());
+  AddParallel(new CmdAutoShoot(), 3);
+  AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegOne));
+  AddSequential(new CmdAutoStorage(), 1);
+  AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegTwo)); 
+  AddParallel(new CmdAutoIntake(), 5); 
   AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegThree));
-  ////AddSequential(new CmdIntakeStop());
   AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegFour)); 
-  //AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegFive));
+  AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegFive));
+  AddParallel(new CmdAutoShoot(), 3);
+  AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegSix));
+  AddSequential(new CmdAutoStorage(), 1);
+
+
   
 //init line -> target zone
 }
