@@ -24,11 +24,7 @@
 #include "commands/CmdAutoRoutineTwo.h"
 #include "commands/CmdAutoRoutineThree.h"
 
-#include "commands/CmdDeployDolly.h"
-#include "commands/CmdElevatorPowerDown.h"
-#include "commands/CmdElevatorPowerUp.h"
-#include "commands/CmdEngageClimberRatchets.h"
-
+#include <ctre/phoenix.h>
 
 class Robot : public frc::TimedRobot {
  public:
@@ -42,6 +38,7 @@ class Robot : public frc::TimedRobot {
   static std::shared_ptr<PosEncoderGyro> posEncoderGyro;
   static std::shared_ptr<CmdResetGyro> cmdResetGyro;
   static std::shared_ptr<frc::Timer> timer;
+  static std::shared_ptr<TalonSRX> doubleTalon;
   
   void RobotInit() override;
   void RobotPeriodic() override;
@@ -59,4 +56,5 @@ class Robot : public frc::TimedRobot {
   CmdAutoRoutineTwo* autoTwo;
   CmdAutoRoutineThree* autoThree;
   frc::SendableChooser<frc::Command*> chooser;
+
 };

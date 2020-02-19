@@ -7,6 +7,7 @@
 
 #include "commands/CmdBuddyLock.h"
 #include "Robot.h"
+#include <frc/DigitalInput.h>
 
 CmdBuddyLock::CmdBuddyLock() {
   // Use Requires() here to declare subsystem dependencies
