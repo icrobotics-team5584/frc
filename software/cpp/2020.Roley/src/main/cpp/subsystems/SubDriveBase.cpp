@@ -40,6 +40,7 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem"), dollyTalon(Robot::
   SmartDashboard::PutNumber("auto D", y_kD);
   SmartDashboard::PutNumber("y position", y_position);
 
+  SmartDashboard::PutNumber("position", position);
 
 }
 
@@ -73,6 +74,8 @@ void SubDriveBase::InitDefaultCommand() {
 }
 
 void SubDriveBase::Periodic(){
+  SmartDashboard::PutNumber("position", position);
+
   autoYaw = getActualYaw() - _targetYaw;
   //SmartDashboard::PutNumber("autoyaw", autoYaw);
 
@@ -117,16 +120,15 @@ double SubDriveBase::getDistanceTravelled(){
   return distance;  
 }
 
-void SubDriveBase::autoEncoderDrive(double target, double P, double I, double D, double Speed, double TargetY){
+void SubDriveBase::autoEncoderDrive(double target, double P, double I, double D, double Speed, double TargetY, double TargetAOA){
   //PID values and setting passed in from command
   kP = P;
   kI = I;
   kD = D;
 
   double error;
-  double position;
+  
   position = Robot::posEncoderGyro->getTempPositionX();//gets position from custom class located at "PosEncoderGyro.cpp"
-  SmartDashboard::PutNumber("position", position);
 
 
   //position - target is the error or "P"
@@ -142,10 +144,6 @@ void SubDriveBase::autoEncoderDrive(double target, double P, double I, double D,
   if (error > 1){
     error = 1;
   }
-  //checks if the robot is over spinning and changes steering to zero. the derivative catches the robot at the line
-  if((autoYaw < -50 && error < 0) || (autoYaw > 50 && error > 0)){
-    error = 0;
-  }
 
   y_position = Robot::posEncoderGyro->getTempPositionY();
   y_target = TargetY;
@@ -158,11 +156,28 @@ void SubDriveBase::autoEncoderDrive(double target, double P, double I, double D,
   y_error = y_kP*(y_position - y_target) + y_kI*(y_intergral) + y_kD*((y_position - y_target) - y_previousError);
   y_previousError = y_position - y_target;
 
+  if (abs(y_error) > abs(Speed)){
+    y_error = Speed;
+  }
+
   SmartDashboard::PutNumber("y position", y_position);
 
 
-  drive(y_error, error, false);//uses the same drive command as the joystick so onnly one can be run at the same time
-  //std::cout << "auto stuff" << std::endl;
+  
+
+  //checks if the robot is over spinning and changes steering to zero. the derivative catches the robot at the line
+  //if(autoYaw < -TargetAOA && error > 0){
+  //  error = 0;
+  //}
+  
+    
+  //checks if the robot is over spinning and changes steering to zero. the derivative catches the robot at the line
+  if((autoYaw < -TargetAOA && error < 0) || (autoYaw > TargetAOA && error > 0)){
+    error = 0;
+  }
+    drive(y_error, error, false);//uses the same drive command as the joystick so onnly one can be run at the same time
+    //std::cout << "auto stuff" << std::endl;
+  
 }
 
 void SubDriveBase::resetYaw(){

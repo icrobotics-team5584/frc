@@ -5,15 +5,15 @@
 /*----------------------------Routine One Setup--------------------*/
 //One
 PIDAutoConfig autoRoutineOneLegOne = {
-  -0.45,     //P
-  0.00001,  //I
-  -20,      //D
-  -0.8,     //speed
-  -1.6,     //targetX
+  -0.75,     //P
+  0.0000,  //I
+  -30,      //D
+  -0.6,     //speed
+  -1.7,     //targetX
   2.2,    //targetY
   4.5, //target y turn around point
   0,        //targetAngle
-  90        //targetAoA
+  10,        //targetAoA
 };
 //Two
 PIDAutoConfig autoRoutineOneLegTwo = {
