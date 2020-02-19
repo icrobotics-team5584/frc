@@ -11,7 +11,7 @@
 #include "Robot.h"
 
 
-SubStorage::SubStorage() : Subsystem("ExampleSubsystem") {
+SubStorage::SubStorage() : Subsystem("ExampleSubsystem"), lbrTopStorage(0) {
   srxStorage.reset(new TalonSRX(can_srxStorage));
   frc::SmartDashboard::PutNumber("Feeder speed", _speed);
 
@@ -39,6 +39,9 @@ void SubStorage::Stop(){
   srxStorage->Set(ControlMode::PercentOutput, 0);
 }
 
+bool SubStorage::GetLbrTopStorage(){
+  return lbrTopStorage.Get();
+}
 void SubStorage::Expand(){
   solStorageActuator->Set(frc::DoubleSolenoid::kForward);
 }
@@ -46,6 +49,7 @@ void SubStorage::Expand(){
 void SubStorage::Retract(){
   solStorageActuator->Set(frc::DoubleSolenoid::kReverse);
 }
+
 
 
 // Put methods for controlling this subsystem

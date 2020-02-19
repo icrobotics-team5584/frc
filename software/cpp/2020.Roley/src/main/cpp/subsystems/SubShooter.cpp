@@ -82,6 +82,12 @@ void SubShooter::PowerShoot(){
   rightMotor->Set(ControlMode::PercentOutput, shooterSpeed);
 }
 
+void SubShooter::PowerShootReverse(){
+  shooterSpeed = frc::SmartDashboard::GetNumber("Shooter Speed", 0.8);
+  leftMotor->Set(ControlMode::PercentOutput, shooterSpeed);
+  rightMotor->Set(ControlMode::PercentOutput, -shooterSpeed);
+}
+
 void SubShooter::Shoot(){
 
     std::cout << "Shoot function running." << std::endl;
@@ -98,26 +104,26 @@ void SubShooter::Shoot(){
     // SetDRight = frc::SmartDashboard::GetNumber("D Value Right", 0);
     // SetFRight = frc::SmartDashboard::GetNumber("F Value Right", 0);
 
-    std::cout << "PID Left: " << SetPLeft << ", " << SetILeft << ", " << SetDLeft << ", " << SetFLeft << std::endl;
-    std::cout << "PID Right: " << SetPRight << ", " << SetIRight << ", " << SetDRight << ", " << SetFRight << std::endl;
-    std::cout << "Target RPM: " << RPM << std::endl;
+    // std::cout << "PID Left: " << SetPLeft << ", " << SetILeft << ", " << SetDLeft << ", " << SetFLeft << std::endl;
+    // std::cout << "PID Right: " << SetPRight << ", " << SetIRight << ", " << SetDRight << ", " << SetFRight << std::endl;
+    // std::cout << "Target RPM: " << RPM << std::endl;
 
-    leftMotor->Config_kF(kPIDLoopIdx, SetFLeft, kTimeoutMs);
-    leftMotor->Config_kP(kPIDLoopIdx, SetPLeft, kTimeoutMs);
-    leftMotor->Config_kI(kPIDLoopIdx, SetILeft, kTimeoutMs);
-    leftMotor->Config_kD(kPIDLoopIdx, SetDLeft, kTimeoutMs);
+    // leftMotor->Config_kF(kPIDLoopIdx, SetFLeft, kTimeoutMs);
+    // leftMotor->Config_kP(kPIDLoopIdx, SetPLeft, kTimeoutMs);
+    // leftMotor->Config_kI(kPIDLoopIdx, SetILeft, kTimeoutMs);
+    // leftMotor->Config_kD(kPIDLoopIdx, SetDLeft, kTimeoutMs);
 
-    rightMotor->Config_kF(kPIDLoopIdx, SetFRight, kTimeoutMs);
-    rightMotor->Config_kP(kPIDLoopIdx, SetPRight, kTimeoutMs);
-    rightMotor->Config_kI(kPIDLoopIdx, SetIRight, kTimeoutMs);
-    rightMotor->Config_kD(kPIDLoopIdx, SetDRight, kTimeoutMs);
+    // rightMotor->Config_kF(kPIDLoopIdx, SetFRight, kTimeoutMs);
+    // rightMotor->Config_kP(kPIDLoopIdx, SetPRight, kTimeoutMs);
+    // rightMotor->Config_kI(kPIDLoopIdx, SetIRight, kTimeoutMs);
+    // rightMotor->Config_kD(kPIDLoopIdx, SetDRight, kTimeoutMs);
 
-    double targetVelocity_UnitsPer100ms = RPM * 4096 / 600;
+    // double targetVelocity_UnitsPer100ms = RPM * 4096 / 600;
 
-    std::cout << "targetVelocity_UnitsPer100ms: " << targetVelocity_UnitsPer100ms << std::endl;
+    // std::cout << "targetVelocity_UnitsPer100ms: " << targetVelocity_UnitsPer100ms << std::endl;
 
-    leftMotor->Set(ControlMode::Velocity, targetVelocity_UnitsPer100ms); 
-    rightMotor->Set(ControlMode::Velocity, -targetVelocity_UnitsPer100ms);
+    // leftMotor->Set(ControlMode::Velocity, targetVelocity_UnitsPer100ms); 
+    // rightMotor->Set(ControlMode::Velocity, -targetVelocity_UnitsPer100ms);
 
     // leftMotor->Set(ControlMode::PercentOutput, percentage); 
     // rightMotor->Set(ControlMode::PercentOutput, -percentage);

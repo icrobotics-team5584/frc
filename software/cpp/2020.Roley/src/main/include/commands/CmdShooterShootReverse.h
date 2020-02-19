@@ -10,9 +10,9 @@
 #include <frc/commands/Command.h>
 
 
-class CmdShooterShoot : public frc::Command {
+class CmdShooterShootReverse : public frc::Command {
  public:
-  CmdShooterShoot();
+  CmdShooterShootReverse();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
