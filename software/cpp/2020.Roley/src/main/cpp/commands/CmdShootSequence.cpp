@@ -20,7 +20,7 @@ void CmdShootSequence::Initialize() {
   //deploy intake
   Robot::subIntake->Deploy();
   //shooter start
-  Robot::subShooter->Shoot();
+  Robot::subShooter->PowerShoot();
   //storage roll
   Robot::subStorage->Forward();
 }
