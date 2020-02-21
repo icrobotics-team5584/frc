@@ -39,4 +39,6 @@ void CmdAutoIntake::End() {
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdAutoIntake::Interrupted() {}
+void CmdAutoIntake::Interrupted() {
+  End();
+}
