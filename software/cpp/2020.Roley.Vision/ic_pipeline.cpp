@@ -52,23 +52,28 @@ int stream0 = 0;
 int stream1 = 1;
 
 void vidCap0() {
-  cv::VideoCapture input("/dev/video0");
+  cv::VideoCapture input("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.1:1.0-video-index0");
 
   input.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
   input.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
   //input.set(cv::CAP_PROP_FPS, 20);
 
+  std::this_thread::sleep_for(std::chrono::seconds(2));
+
+  img = img2.clone();
+
   while (true)
   {
+    /*
     //m.lock();
     if(!input.read(img))
         break;
-    //m.unlock();
+    //m.unlock();*/
   }
 }
 
 void vidCap1() {
-  cv::VideoCapture input2("/dev/video1");
+  cv::VideoCapture input2("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.2:1.0-video-index0");
   //int streamer1 = 0;
   int lastNtVariable = 1;
 
@@ -108,7 +113,7 @@ void vidCap1() {
 }
 
 void vidCap2() {
-  cv::VideoCapture input3("/dev/video2");
+  cv::VideoCapture input3("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.3:1.0-video-index0");
   //int streamer2 = 0;
   int lastNtVariable = 1;
 
@@ -147,7 +152,7 @@ void vidCap2() {
 }
 
 void vidCap3() {
-  cv::VideoCapture input4("/dev/video3");
+  cv::VideoCapture input4("/dev/v4l/by-path/platform-70090000.xusb-usb-0:2.4:1.0-video-index0");
   //int streamer3 = 0;
   int lastNtVariable = 1;
 
