@@ -8,11 +8,11 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-#include <iostream>
+#include "Robot.h"
 
-class CmdStorageRetract : public frc::Command {
+class CmdIntakeOutTake : public frc::Command {
  public:
-  CmdStorageRetract();
+  CmdIntakeOutTake();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;

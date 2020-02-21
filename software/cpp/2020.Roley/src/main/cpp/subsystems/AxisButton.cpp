@@ -37,6 +37,6 @@ void AxisButton::WhenPressed(Command* command) {
 
 float AxisButton::GetAxis(){
 	return _joystick->GetRawAxis(_axisNumber);
-	std::cout << _axisNumber << std::endl;
+	//std::cout << _axisNumber << std::endl;
 }
 

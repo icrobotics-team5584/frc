@@ -5,41 +5,39 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdResetGyro.h"
+#include "commands/CmdDeployIntakeOnly.h"
 #include "Robot.h"
-#include "subsystems/SubDriveBase.h"
+#include <iostream>
 
-CmdResetGyro::CmdResetGyro() {
+
+CmdDeployIntakeOnly::CmdDeployIntakeOnly() {
+  Requires(Robot::subIntake.get());
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  std::cout << "reset yaw construct" << std::endl;
-
 }
 
 // Called just before this Command runs the first time
-void CmdResetGyro::Initialize() {
-  std::cout << "reset yaw start init" << std::endl;
+void CmdDeployIntakeOnly::Initialize() {
+  std::cout << "------------------------------------------------intake only init" << std::endl;
+
+  Robot::subIntake->Deploy();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdResetGyro::Execute() {
-  //std::cout << "reset yaw execute" << std::endl;
-}
+void CmdDeployIntakeOnly::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdResetGyro::IsFinished() {
-  //std::cout << !Robot::subDriveBase->isNavxCal() << std::endl;
-  return !Robot::subDriveBase->isNavxCal();
-}
+bool CmdDeployIntakeOnly::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdResetGyro::End() {
-  std::cout << "reset yaw" << std::endl;
-  Robot::subDriveBase->resetYaw();
+void CmdDeployIntakeOnly::End() {
+  std::cout << "------------------------------------------------deploy intake only end" << std::endl;
+
+  Robot::subStorage->Retract();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdResetGyro::Interrupted() {
+void CmdDeployIntakeOnly::Interrupted() {
   End();
 }
