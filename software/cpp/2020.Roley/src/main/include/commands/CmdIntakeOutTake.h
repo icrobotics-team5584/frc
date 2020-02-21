@@ -8,6 +8,7 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include "Robot.h"
 
 class CmdIntakeOutTake : public frc::Command {
  public:

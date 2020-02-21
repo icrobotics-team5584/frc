@@ -8,12 +8,16 @@
 #include "commands/CmdIntakeOutTake.h"
 
 CmdIntakeOutTake::CmdIntakeOutTake() {
+  Requires(Robot::subIntake.get());
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
 }
 
 // Called just before this Command runs the first time
-void CmdIntakeOutTake::Initialize() {}
+void CmdIntakeOutTake::Initialize() {
+  Robot::subIntake->Deploy();
+  Robot::subIntake->Outtake();
+}
 
 // Called repeatedly when this Command is scheduled to run
 void CmdIntakeOutTake::Execute() {}
@@ -22,8 +26,13 @@ void CmdIntakeOutTake::Execute() {}
 bool CmdIntakeOutTake::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdIntakeOutTake::End() {}
+void CmdIntakeOutTake::End() {
+  Robot::subIntake->Stop();
+  Robot::subIntake->Retract();
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdIntakeOutTake::Interrupted() {}
+void CmdIntakeOutTake::Interrupted() {
+  End();
+}

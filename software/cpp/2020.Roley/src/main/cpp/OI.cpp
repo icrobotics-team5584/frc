@@ -50,7 +50,7 @@ OI::OI() {
 
   //Intake reverse
 
-  btnIntakeReverse.reset(new frc::JoystickButton(joystick1.get(), yBtn);
+  btnIntakeReverse.reset(new frc::JoystickButton(joystick1.get(), yBtn));
   btnIntakeReverse->WhileHeld(new CmdIntakeOutTake());
 
 
@@ -62,8 +62,8 @@ OI::OI() {
   //btnRatchets->WhileHeld(new CmdEngageClimberRatchets());
 
   //Storage Pneumatics
-  btnStorageExpand.reset(new frc::JoystickButton(joystick1.get(), bBtn));
-  btnStorageExpand->ToggleWhenPressed(new CmdStorageTogglePneumatic);
+  btnReverseStorage.reset(new frc::JoystickButton(joystick1.get(), bBtn));
+  btnReverseStorage->WhileHeld(new CmdRollStorageBack());
 
   //std::cout<< "OI Ended" << std::endl;
 
