@@ -28,6 +28,15 @@ void CmdVisionTrack::Initialize() {
 void CmdVisionTrack::Execute() {
   _error = Robot::ntTable->GetNumber("pegx", 0);
 
+  if (_integral > _maxIntegral)
+  {
+    _integral = _maxIntegral;
+  }
+  if (_integral < -_maxIntegral)
+  {
+    _integral = -_maxIntegral;
+  }
+
   _derivative = _lastError - _derivative;
 
   _speed = (_error * P) + (_integral * I) - (_derivative * D);
@@ -40,21 +49,12 @@ void CmdVisionTrack::Execute() {
   {
     _speed = -_cap;
   }
+  
 
   Robot::subDriveBase->drive(0, _speed);
 
 
-
   _integral += _error;
-
-  if (_integral > _maxIntegral)
-  {
-    _integral = _maxIntegral;
-  }
-  if (_integral < -_maxIntegral)
-  {
-    _integral = -_maxIntegral;
-  }
 }
 
 // Make this return true when this Command no longer needs to run execute()

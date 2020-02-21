@@ -58,17 +58,12 @@ void vidCap0() {
   input.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
   //input.set(cv::CAP_PROP_FPS, 20);
 
-  std::this_thread::sleep_for(std::chrono::seconds(2));
-
-  img = img2.clone();
-
   while (true)
   {
-    /*
     //m.lock();
     if(!input.read(img))
         break;
-    //m.unlock();*/
+    //m.unlock();
   }
 }
 

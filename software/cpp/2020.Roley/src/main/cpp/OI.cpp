@@ -23,6 +23,7 @@
 #include "commands/CmdElevatorFullExtend.h"
 #include "commands/CmdElevaterExtendMin.h"
 #include "commands/CmdElevatorBuddy.h"
+#include "commands/CmdVisionTrack.h"
 OI::OI() {
 
   //std::cout<< "OI Started" << std::endl;
@@ -43,6 +44,11 @@ OI::OI() {
   //btnOuttake.reset(new frc::JoystickButton(joystick1.get(), rightBtn));
   btnDeployIntake->WhileHeld(new CmdDeployIntake());
   btnIntake->WhileHeld(new CmdIntake());
+
+  //Vision buttons
+  btnVisionTrack.reset(new frc::JoystickButton(joystick1.get(), xBtn));
+  btnVisionTrack->WhileHeld(new CmdVisionTrack());
+
   //btnOuttake->WhileHeld(new CmdOuttake());
 
   //Climber Button
