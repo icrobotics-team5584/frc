@@ -26,9 +26,8 @@ void CmdDriveSlowDown::Initialize() {
 void CmdDriveSlowDown::Execute() {
   x = Robot::oi->getJoystickX();
   y = Robot::oi->getJoystickY();
-  axis = Robot::oi->getJoystickRawAxis(triggerL);
   //SmartDashboard::PutNumber("axis test", axis);
-  Robot::subDriveBase->drive(y/(axis + 1),x/(axis + 1));
+  Robot::subDriveBase->drive(y/2,x);
 }
 
 // Make this return true when this Command no longer needs to run execute()
