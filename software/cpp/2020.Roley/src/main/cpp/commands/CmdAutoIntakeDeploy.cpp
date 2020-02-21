@@ -5,38 +5,29 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdAutoIntake.h"
+#include "commands/CmdAutoIntakeDeploy.h"
 
-CmdAutoIntake::CmdAutoIntake() {
+CmdAutoIntakeDeploy::CmdAutoIntakeDeploy() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  
 }
 
 // Called just before this Command runs the first time
-void CmdAutoIntake::Initialize() {
-  std::cout << "Auto One Start" << std::endl;
-  Robot::subIntake->Intake();
-  Robot::subStorage->Forward();
-  Robot::subStorage->Expand();
-
-
+void CmdAutoIntakeDeploy::Initialize() {
+  Robot::subIntake->Deploy();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdAutoIntake::Execute() {}
+void CmdAutoIntakeDeploy::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdAutoIntake::IsFinished() { return true; }
+bool CmdAutoIntakeDeploy::IsFinished() { return true; }
 
 // Called once after isFinished returns true
-void CmdAutoIntake::End() {
-  Robot::subIntake->Stop();
-  Robot::subStorage->Stop();
-  Robot::subStorage->Retract();
-
-}
+void CmdAutoIntakeDeploy::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdAutoIntake::Interrupted() {}
+void CmdAutoIntakeDeploy::Interrupted() {
+  End();
+}
