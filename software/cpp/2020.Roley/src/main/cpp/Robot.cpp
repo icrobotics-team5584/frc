@@ -68,7 +68,7 @@ void Robot::RobotInit() {
   cmdResetGyro->SetRunWhenDisabled(true);
   //Runs a cmd that waits for th navx to stop calibrating then resets gyro
   cmdResetGyro->Start();
-  chooser.SetDefaultOption("Vanilla Trench Run", autoOne);
+  chooser.SetDefaultOption("Six Ball Auto", autoOne);
   chooser.AddOption("Trench Steal Run", autoTwo);
   chooser.AddOption("Sad Trench Run", autoThree);
   frc::SmartDashboard::PutData("Auto Selecter", &chooser);
@@ -126,6 +126,7 @@ void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 
 void Robot::AutonomousInit() {
+  subDriveBase->autoConfig();
   autoOne = new CmdAutoRoutineOne();
   autoTwo = new CmdAutoRoutineTwo();
   autoThree = new CmdAutoRoutineThree();
@@ -151,6 +152,7 @@ void Robot::AutonomousPeriodic() {
   }
 
 void Robot::TeleopInit() {
+  subDriveBase->teleConfig();
   subDriveBase->retractDolly();
   subClimber->RatchetsDisengage();
   subClimber->ElevaterExtendMin();
