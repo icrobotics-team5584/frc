@@ -20,6 +20,7 @@
 #include "commands/CmdRollStorageBack.h"
 #include "commands/CmdShooterShoot.h"
 #include "commands/CmdShooterShootReverse.h"
+#include "commands/CmdAutoShoot.h"
 
 #include "Robot.h"
 
@@ -69,7 +70,7 @@ void Robot::RobotInit() {
   //Runs a cmd that waits for th navx to stop calibrating then resets gyro
   cmdResetGyro->Start();
   chooser.SetDefaultOption("Six Ball Auto", autoOne);
-  chooser.AddOption("Trench Steal Run", autoTwo);
+  chooser.AddOption("6 Ball Evasive Auto", autoTwo);
   chooser.AddOption("Sad Trench Run", autoThree);
   frc::SmartDashboard::PutData("Auto Selecter", &chooser);
 
@@ -100,7 +101,7 @@ void Robot::RobotInit() {
   //SHOOTER ----------------------------------------------------------------
   frc::Shuffleboard::GetTab("HARDWARE").Add("CmdShooterShoot", *(new CmdShooterShoot()));
   frc::Shuffleboard::GetTab("HARDWARE").Add("CmdShooterShootReverse", *(new CmdShooterShootReverse()));
-
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdAutoShoot", *(new CmdAutoShoot()));
 }
 
 
