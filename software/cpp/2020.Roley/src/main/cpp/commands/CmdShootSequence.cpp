@@ -39,6 +39,8 @@ void CmdShootSequence::End() {
   Robot::subIntake->Stop();
   //stop shooter
   Robot::subShooter->Stop();
+
+  Robot::subIntake->Retract();
 }
 
 // Called when another command which requires one or more of the same
