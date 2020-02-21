@@ -24,6 +24,9 @@
 #include "commands/CmdAutoRoutineTwo.h"
 #include "commands/CmdAutoRoutineThree.h"
 
+#include "networktables/NetworkTable.h"
+#include "networktables/NetworkTableInstance.h"
+
 #include <ctre/phoenix.h>
 
 class Robot : public frc::TimedRobot {
@@ -39,6 +42,7 @@ class Robot : public frc::TimedRobot {
   static std::shared_ptr<CmdResetGyro> cmdResetGyro;
   static std::shared_ptr<frc::Timer> timer;
   static std::shared_ptr<TalonSRX> doubleTalon;
+  static std::shared_ptr<nt::NetworkTable> ntTable;
   
   void RobotInit() override;
   void RobotPeriodic() override;

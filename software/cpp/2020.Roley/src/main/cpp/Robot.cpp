@@ -34,6 +34,7 @@ std::shared_ptr<SubBuddyClimb> Robot::subBuddyClimb;
 std::shared_ptr<frc::Timer> Robot::timer;
 std::unique_ptr<OI> Robot::oi;
 std::shared_ptr<TalonSRX> Robot::doubleTalon;
+std::shared_ptr<nt::NetworkTable> Robot::ntTable;
 
 void Robot::RobotInit() {
 
@@ -49,6 +50,10 @@ void Robot::RobotInit() {
   subStorage.reset(new SubStorage());
   subClimber.reset(new SubClimber());
   subBuddyClimb.reset(new SubBuddyClimb());
+
+  //Setup network table
+  nt::NetworkTableInstance ntTableInstance = nt::NetworkTableInstance::GetDefault();
+  ntTable = ntTableInstance.GetTable("JETSON");
 
   
   std::cout << "after double talon created" << std::endl;
@@ -101,6 +106,12 @@ void Robot::RobotInit() {
   frc::Shuffleboard::GetTab("HARDWARE").Add("CmdShooterShoot", *(new CmdShooterShoot()));
   frc::Shuffleboard::GetTab("HARDWARE").Add("CmdShooterShootReverse", *(new CmdShooterShootReverse()));
 
+  frc::SmartDashboard::PutNumber("Vision P", 0);
+  frc::SmartDashboard::PutNumber("Vision I", 0);
+  frc::SmartDashboard::PutNumber("Vision D", 0);
+  frc::SmartDashboard::PutNumber("Vision Speed Cap", 0);
+  frc::SmartDashboard::PutNumber("Vision Integral Cap", 0);
+
 }
 
 
@@ -116,6 +127,12 @@ void Robot::RobotPeriodic() {
   posEncoderGyro->updateRelativePosition();
   //std::cout << "update position" << std::endl;
   
+  frc::SmartDashboard::PutNumber("TARGET_X", ntTable->GetNumber("pegx", 0));
+  frc::SmartDashboard::PutNumber("TARGET_Y", ntTable->GetNumber("pegy", 0));
+  frc::SmartDashboard::PutNumber("TARGET_DIST", ntTable->GetNumber("pegrange", 0));
+  frc::SmartDashboard::PutNumber("VISION_FPS", ntTable->GetNumber("fps", 0));
+  frc::SmartDashboard::PutNumber("VISION_STATUS", ntTable->GetNumber("status", 0));
+  frc::SmartDashboard::PutNumber("VISION_HITRATE", ntTable->GetNumber("hitrate", 0));
 }
 
 
