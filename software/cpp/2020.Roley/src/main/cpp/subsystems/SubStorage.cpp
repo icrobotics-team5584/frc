@@ -8,15 +8,27 @@
 #include "subsystems/SubStorage.h"
 #include "RobotMap.h"
 #include "frc/smartdashboard/SmartDashboard.h"
+#include <frc/shuffleboard/Shuffleboard.h>
 #include "Robot.h"
 
 
-SubStorage::SubStorage() : Subsystem("ExampleSubsystem"), lbrTopStorage(0) {
+SubStorage::SubStorage() : Subsystem("ExampleSubsystem"), 
+  spmBottomRoller(SPM_StorageBottom, rev::CANSparkMaxLowLevel::MotorType::kBrushed),
+  lbrTopStorage(0) {
+  
+  // Create and set motors controllers to default settings
   srxStorage.reset(new TalonSRX(can_srxStorage));
-  frc::SmartDashboard::PutNumber("Feeder speed", _speed);
-
   solStorageActuator.reset(new DoubleSolenoid(pcm_solStorageForward, pcm_solStorageRetract));
+  spmBottomRoller.RestoreFactoryDefaults();
 
+  // Setup shuffleboard values
+  frc::SmartDashboard::PutNumber("Feeder speed", _speed);
+  nteBottomRollerSpeed = frc::Shuffleboard::GetTab(kShuffleBoardSettingsTab)
+    .Add("Bottom Roller Speed", kDefaultBottomRollerSpeed) 
+    .GetEntry();
+  nteBottomRollerReverseSpeed = frc::Shuffleboard::GetTab(kShuffleBoardSettingsTab)
+    .Add("Bottom Roller Reverse Speed", kDefaultBottomRollerSpeed) 
+    .GetEntry();
 }
 
 void SubStorage::InitDefaultCommand() {
@@ -33,6 +45,20 @@ void SubStorage::Forward(){
 void SubStorage::Backward(){
   _speed = frc::SmartDashboard::GetNumber("Feeder speed", _speed);
   srxStorage->Set(ControlMode::PercentOutput, -_speed);
+}
+
+void SubStorage::BottomRollerForward(){
+  std::cout << "roller in " << nteBottomRollerSpeed.GetDouble(kDefaultBottomRollerSpeed) << std::endl;
+  spmBottomRoller.Set(nteBottomRollerSpeed.GetDouble(kDefaultBottomRollerSpeed));
+}
+
+void SubStorage::BottomRollerBackward(){
+    std::cout << "roller out " << nteBottomRollerSpeed.GetDouble(kDefaultBottomRollerSpeed) << std::endl;
+  spmBottomRoller.Set(nteBottomRollerReverseSpeed.GetDouble(kDefaultBottomRollerReverseSpeed));
+}
+
+void SubStorage::BottomRollerStop() {
+  spmBottomRoller.Set(0);  
 }
 
 void SubStorage::Stop(){

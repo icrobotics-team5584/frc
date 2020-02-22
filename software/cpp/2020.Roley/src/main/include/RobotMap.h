@@ -47,6 +47,7 @@ enum SPM{
     SPM_DriveBaseBackLeft = 2,
     SPM_DriveBaseFrontRight = 3,
     SPM_DriveBaseBackRight = 4,
+    SPM_StorageBottom = 6,
 };
 
 // For example to map the left and right motors, you could define the
