@@ -23,6 +23,8 @@ void CmdShootSequence::Initialize() {
   Robot::subShooter->PowerShoot();
   //storage roll
   Robot::subStorage->Forward();
+  //storage bottom roller
+  Robot::subStorage->BottomRollerForward();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -39,6 +41,8 @@ void CmdShootSequence::End() {
   Robot::subIntake->Stop();
   //stop shooter
   Robot::subShooter->Stop();
+
+  Robot::subStorage->BottomRollerStop();
 
   Robot::subIntake->Retract();
 }
