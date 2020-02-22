@@ -17,6 +17,7 @@ CmdIntake::CmdIntake() {
 void CmdIntake::Initialize() {
   Robot::subIntake->Intake();
   Robot::subStorage->Forward();
+  Robot::subStorage->BottomRollerForward();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -29,6 +30,7 @@ bool CmdIntake::IsFinished() { return false; }
 void CmdIntake::End() {
   Robot::subIntake->Stop();
   Robot::subStorage->Stop();
+  Robot::subStorage->BottomRollerStop();
 }
 
 // Called when another command which requires one or more of the same
