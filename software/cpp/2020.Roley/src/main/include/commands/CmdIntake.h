@@ -9,6 +9,9 @@
 
 #include <frc/commands/Command.h>
 #include "Robot.h"
+#include <frc/Timer.h>
+
+enum State { NORMAL, SHUFFLE, };
 
 class CmdIntake : public frc::Command {
  public:
@@ -18,4 +21,11 @@ class CmdIntake : public frc::Command {
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+ private:
+  void Intake();
+  void Shuffle();
+  void GrabBall();
+  double startTime = 0;
+  frc::Timer timer;
+  State currentState;
 };
