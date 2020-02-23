@@ -15,6 +15,7 @@
 #include <networktables/NetworkTableEntry.h>
 #include <String>
 
+
 class SubStorage : public frc::Subsystem {
  private:
   const double kDefaultBottomRollerSpeed = 0.8;
@@ -29,6 +30,10 @@ class SubStorage : public frc::Subsystem {
   frc::DigitalInput lbrTopStorage;
   std::shared_ptr<frc::DoubleSolenoid> solStorageActuator;
 
+  std::shared_ptr<frc::DigitalInput> lbrBottom;
+  std::shared_ptr<frc::DigitalInput> lbrTop;
+  std::shared_ptr<frc::DigitalInput> lbrRoller;
+
   // Shuffleboard values
   const std::string kShuffleBoardSettingsTab = "Storage Settings";
   nt::NetworkTableEntry nteBottomRollerSpeed;
@@ -37,6 +42,7 @@ class SubStorage : public frc::Subsystem {
  public:
   SubStorage();
   void InitDefaultCommand() override;
+  void Periodic() override;
   bool GetLbrTopStorage();
   void Forward();
   void Backward();
@@ -44,6 +50,11 @@ class SubStorage : public frc::Subsystem {
   void BottomRollerBackward();
   void BottomRollerStop();
   void Stop();
+
+  bool lbrBottomIsBlocked();
+  bool lbrTopIsBlocked();
+  bool lbrRollerIsBlocked();
+
 
   void Expand();
   void Retract();
