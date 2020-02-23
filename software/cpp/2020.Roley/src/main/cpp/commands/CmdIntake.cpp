@@ -33,6 +33,11 @@ void CmdIntake::Execute() {
       Robot::subStorage->Stop();
     }
   }
+  else
+  {
+    Robot::subStorage->Stop();
+  }
+  
 
   if (Robot::subStorage->lbrRollerIsBlocked())
   {
