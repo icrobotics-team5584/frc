@@ -21,7 +21,7 @@ CmdAutoRoutineOne::CmdAutoRoutineOne() : CommandGroup("CmdAutoRoutineOne: Vanill
   AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegOne));
   AddSequential(new CmdAutoStorage(), 1);
   AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegTwo));
-  AddParallel(new CmdAutoIntake(), 5); 
+  AddParallel(new CmdAutoIntake(), 4); 
   AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegThree));
   AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegFour)); 
   AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegFive));

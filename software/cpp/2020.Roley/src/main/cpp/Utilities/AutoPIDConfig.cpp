@@ -30,7 +30,7 @@ PIDAutoConfig autoRoutineOneLegTwo = {
 PIDAutoConfig autoRoutineOneLegThree = {
   -0.7,     //P
   0.0,  //I
-  -25,      //D
+  -27,      //D
   -0.6,     //speed
   -1.7,     //targetX
   2.2,    //targetY
