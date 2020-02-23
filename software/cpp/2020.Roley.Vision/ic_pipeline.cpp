@@ -15,7 +15,7 @@
 #include "networktables/NetworkTableEntry.h"
 #include "networktables/NetworkTableInstance.h"
 
-#include "MJPEGWriter.h"
+// #include "MJPEGWriter.h"
 #include "string.h"
 
 using namespace cv;
@@ -23,23 +23,25 @@ using namespace std;
 
 
 cv::Mat img;
-cv::Mat img2;
-cv::Mat img3;
-cv::Mat img4;
+// cv::Mat img2;
+// cv::Mat img3;
+// cv::Mat img4;
 
 int largeFrame[] = { 320, 240 };
 int smallFrame[] = { 160, 120 };
 
 int ntVariable = 1;
 
+
+
 // Start the camera server on port 5800.
-MJPEGWriter test(5800);
-MJPEGWriter test2(5801);
-MJPEGWriter test3(5802);
+// MJPEGWriter test(5800);
+// MJPEGWriter test2(5801);
+// MJPEGWriter test3(5802);
 
 cv::Mat blankMat;
 
-std::mutex m;
+// std::mutex m;
 
 
 
@@ -67,210 +69,187 @@ void vidCap0() {
   }
 }
 
-void vidCap1() {
-  cv::VideoCapture input2("/dev/video1");
-  //int streamer1 = 0;
-  int lastNtVariable = 1;
+// void vidCap1() {
+//   cv::VideoCapture input2("/dev/video1");
+//   //int streamer1 = 0;
+//   int lastNtVariable = 1;
 
-  input2.set(cv::CAP_PROP_FRAME_WIDTH, largeFrame[0]);
-  input2.set(cv::CAP_PROP_FRAME_HEIGHT, largeFrame[1]);
-  //input2.set(cv::CAP_PROP_FPS, 20);
+//   input2.set(cv::CAP_PROP_FRAME_WIDTH, largeFrame[0]);
+//   input2.set(cv::CAP_PROP_FRAME_HEIGHT, largeFrame[1]);
+//   //input2.set(cv::CAP_PROP_FPS, 20);
 
-  while (true)
-  {
-    //streamer1 = nt->GetNumber("Cam 0", 0);
-    //m.lock();
-    if(!input2.read(img2))
-      break;
-    //m.unlock();
+//   while (true)
+//   {
+//     //streamer1 = nt->GetNumber("Cam 0", 0);
+//     //m.lock();
+//     if(!input2.read(img2))
+//       break;
+//     //m.unlock();
   
-    if (ntVariable != lastNtVariable) {
-      if      (ntVariable == 0) {
-        input2.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
-        input2.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
-      }
-      else if (ntVariable == 1) { 
-        input2.set(cv::CAP_PROP_FRAME_WIDTH, largeFrame[0]);
-        input2.set(cv::CAP_PROP_FRAME_HEIGHT, largeFrame[1]);
-      }
-      else if (ntVariable == 2) {
-        input2.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
-        input2.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
-      }
-      else if (ntVariable == 3) {
-        input2.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
-        input2.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
-      }
-    }
+//     if (ntVariable != lastNtVariable) {
+//       if      (ntVariable == 0) {
+//         input2.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
+//         input2.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
+//       }
+//       else if (ntVariable == 1) { 
+//         input2.set(cv::CAP_PROP_FRAME_WIDTH, largeFrame[0]);
+//         input2.set(cv::CAP_PROP_FRAME_HEIGHT, largeFrame[1]);
+//       }
+//       else if (ntVariable == 2) {
+//         input2.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
+//         input2.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
+//       }
+//       else if (ntVariable == 3) {
+//         input2.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
+//         input2.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
+//       }
+//     }
 
-    lastNtVariable = ntVariable;
-  }
-}
+//     lastNtVariable = ntVariable;
+//   }
+// }
 
-void vidCap2() {
-  cv::VideoCapture input3("/dev/video2");
-  //int streamer2 = 0;
-  int lastNtVariable = 1;
-
-
-  input3.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
-  input3.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
-  //input3.set(cv::CAP_PROP_FPS, 20);
-
-  while (true)
-  {
-    //streamer2 = nt->GetNumber("Cam 0", 0);
-
-    //m.lock();
-    if(!input3.read(img3))
-      break;
-    //m.unlock();
-    if (ntVariable != lastNtVariable) {
-      if      (ntVariable == 0) {
-        input3.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
-        input3.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
-      }
-      else if (ntVariable == 1) { 
-        input3.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
-        input3.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
-      }
-      else if (ntVariable == 2) {
-        input3.set(cv::CAP_PROP_FRAME_WIDTH, largeFrame[0]);
-        input3.set(cv::CAP_PROP_FRAME_HEIGHT, largeFrame[1]);
-      }
-      else if (ntVariable == 3) {
-        input3.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
-        input3.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
-      }
-    }
-  }
-}
-
-void vidCap3() {
-  cv::VideoCapture input4("/dev/video3");
-  //int streamer3 = 0;
-  int lastNtVariable = 1;
+// void vidCap2() {
+//   cv::VideoCapture input3("/dev/video2");
+//   //int streamer2 = 0;
+//   int lastNtVariable = 1;
 
 
-  input4.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
-  input4.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
-  //input4.set(cv::CAP_PROP_FPS, 20);
+//   input3.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
+//   input3.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
+//   //input3.set(cv::CAP_PROP_FPS, 20);
 
-  while (true)
-  {
-    //streamer3 = nt->GetNumber("Cam 0", 0);
+//   while (true)
+//   {
+//     //streamer2 = nt->GetNumber("Cam 0", 0);
 
-    //m.lock();
-    if(!input4.read(img4))
-      break;
-    //m.unlock();
+//     //m.lock();
+//     if(!input3.read(img3))
+//       break;
+//     //m.unlock();
+//     if (ntVariable != lastNtVariable) {
+//       if      (ntVariable == 0) {
+//         input3.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
+//         input3.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
+//       }
+//       else if (ntVariable == 1) { 
+//         input3.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
+//         input3.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
+//       }
+//       else if (ntVariable == 2) {
+//         input3.set(cv::CAP_PROP_FRAME_WIDTH, largeFrame[0]);
+//         input3.set(cv::CAP_PROP_FRAME_HEIGHT, largeFrame[1]);
+//       }
+//       else if (ntVariable == 3) {
+//         input3.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
+//         input3.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
+//       }
+//     }
+//   }
+// }
 
-    if (ntVariable != lastNtVariable) {
-      if      (ntVariable == 0) {
-        input4.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
-        input4.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
-      }
-      else if (ntVariable == 1) { 
-        input4.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
-        input4.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
-      }
-      else if (ntVariable == 2) {
-        input4.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
-        input4.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
-      }
-      else if (ntVariable == 3) {
-        input4.set(cv::CAP_PROP_FRAME_WIDTH, largeFrame[0]);
-        input4.set(cv::CAP_PROP_FRAME_HEIGHT, largeFrame[1]);
-      }
-    }
-  }
-}
+// void vidCap3() {
+//   cv::VideoCapture input4("/dev/video3");
+//   //int streamer3 = 0;
+//   int lastNtVariable = 1;
 
-void stream()
-{
-  int streamer = 0;
 
-    // setup network tables connection
-    nt::NetworkTableInstance ntinst = nt::NetworkTableInstance::GetDefault();
-    std::shared_ptr<nt::NetworkTable> nt;
-    nt = ntinst.GetTable("JETSON");
-    ntinst.StartClientTeam(5584);
-    std::this_thread::sleep_for(std::chrono::seconds(5));
+//   input4.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
+//   input4.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
+//   //input4.set(cv::CAP_PROP_FPS, 20);
 
-    // setup network tables for camera location settings.
-    //auto ntcam = NetworkTable::GetTable("CameraPublisher/CVCamera");
-    //ntcam->SetClientMode();
-    //ntcam->SetIPAddress("10.55.84.2\n");
-    //ntcam->Initialize();
+//   while (true)
+//   {
+//     //streamer3 = nt->GetNumber("Cam 0", 0);
 
-    std::shared_ptr<nt::NetworkTable> ntcam;
-    ntcam = ntinst.GetTable("CameraPublisher/CVCamera");
+//     //m.lock();
+//     if(!input4.read(img4))
+//       break;
+//     //m.unlock();
 
-    std::shared_ptr<nt::NetworkTable> ntcam2;
-    ntcam2 = ntinst.GetTable("CameraPublisher/CVCamera2");
+//     if (ntVariable != lastNtVariable) {
+//       if      (ntVariable == 0) {
+//         input4.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
+//         input4.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
+//       }
+//       else if (ntVariable == 1) { 
+//         input4.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
+//         input4.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
+//       }
+//       else if (ntVariable == 2) {
+//         input4.set(cv::CAP_PROP_FRAME_WIDTH, smallFrame[0]);
+//         input4.set(cv::CAP_PROP_FRAME_HEIGHT, smallFrame[1]);
+//       }
+//       else if (ntVariable == 3) {
+//         input4.set(cv::CAP_PROP_FRAME_WIDTH, largeFrame[0]);
+//         input4.set(cv::CAP_PROP_FRAME_HEIGHT, largeFrame[1]);
+//       }
+//     }
+//   }
+// }
 
-    std::shared_ptr<nt::NetworkTable> ntcam3;
-    ntcam3 = ntinst.GetTable("CameraPublisher/CVCamera3");
+// void stream()
+// {
+//   int streamer = 0;
 
-    std::this_thread::sleep_for(std::chrono::seconds(5));  std::cout << "Network Tables Initialized." << std::endl;
-    // Put IP Address Values into CameraPublisher NetworkTable
-    string Fred[1] = {"mjpeg:http://10.55.84.8:5800"}; //Fred and James are the camera ip address arrays. They have to be there for the camera server to work.
-    ntcam->PutStringArray("streams", Fred);
-    
-    string James[1] = {"mjpeg:http://10.55.84.8:5801"};
-    ntcam2->PutStringArray("streams", James);
+//     // setup network tables connection
 
-    string Max[1] = {"mjpeg:http://10.55.84.8:5802"};
-    ntcam3->PutStringArray("streams", Max);
+//     std::this_thread::sleep_for(std::chrono::seconds(5));
 
-    std::cout << "Arrays pushed to network tables." << std::endl;
+//     // setup network tables for camera location settings.
+//     //auto ntcam = NetworkTable::GetTable("CameraPublisher/CVCamera");
+//     //ntcam->SetClientMode();
+//     //ntcam->SetIPAddress("10.55.84.2\n");
+//     //ntcam->Initialize();
+
+
 
     
-    test.start();
-    test2.start();
-    test3.start();
+//     test.start();
+//     test2.start();
+//     test3.start();
 
-    std::cout << "Camera Servers started." << std::endl;
+//     std::cout << "Camera Servers started." << std::endl;
 
-    //nt->PutNumber("Cam 1", 1);
+//     //nt->PutNumber("Cam 1", 1);
 
-  while(true)
-  {
-    //streamer = nt->GetNumber("Cam 0", 0);
+//   while(true)
+//   {
+//     //streamer = nt->GetNumber("Cam 0", 0);
 
-    //m.lock();
-    if      (ntVariable == 0) {
-      //std::cout << "CONDITION 0 MET" << std::endl;
-      test.write(img);
+//     //m.lock();
+//     if      (ntVariable == 0) {
+//       //std::cout << "CONDITION 0 MET" << std::endl;
+//       test.write(img);
 
-      test2.write(img2);
-      test3.write(img3);
-      }
-    else if (ntVariable == 1) { 
-      //std::cout << "CONDITION 1 MET" << std::endl;
-      test.write(img2);
+//       test2.write(img2);
+//       test3.write(img3);
+//       }
+//     else if (ntVariable == 1) { 
+//       //std::cout << "CONDITION 1 MET" << std::endl;
+//       test.write(img2);
 
-      test2.write(img3);
-      test3.write(img4);
-    }
-    else if (ntVariable == 2) {
-      //std::cout << "CONDITION 2 MET" << std::endl;
-      test.write(img3);
+//       test2.write(img3);
+//       test3.write(img4);
+//     }
+//     else if (ntVariable == 2) {
+//       //std::cout << "CONDITION 2 MET" << std::endl;
+//       test.write(img3);
 
-      test2.write(img2);
-      test3.write(img4);
-    }
-    else if (ntVariable == 3) {
-      //std::cout << "CONDITION 3 MET" << std::endl;
-      test.write(img4);
+//       test2.write(img2);
+//       test3.write(img4);
+//     }
+//     else if (ntVariable == 3) {
+//       //std::cout << "CONDITION 3 MET" << std::endl;
+//       test.write(img4);
 
-      test2.write(img2);
-      test3.write(img3);
-    }
-    //m.unlock();
+//       test2.write(img2);
+//       test3.write(img3);
+//     }
+//     //m.unlock();
 
-  }
-}
+//   }
+// }
 
 int main( int argc, char *argv[] )
 {
@@ -281,7 +260,7 @@ int main( int argc, char *argv[] )
   // setup image pipeline
   
 
-  cv::Mat images[4] = { img, img2, img3, img4 };
+  //cv::Mat images[4] = { img, img2, img3, img4 };
 
   //cv::GpuMat g_img(img);
   grip::GripPipeline ic_pipeline;
@@ -296,21 +275,44 @@ int main( int argc, char *argv[] )
   nt->PutNumber("Cam 0", 1);
 
 
+std::shared_ptr<nt::NetworkTable> ntcam;
+ntcam = ntinst.GetTable("CameraPublisher/CVCamera");
+
+std::shared_ptr<nt::NetworkTable> ntcam2;
+ntcam2 = ntinst.GetTable("CameraPublisher/CVCamera2");
+
+std::shared_ptr<nt::NetworkTable> ntcam3;
+ntcam3 = ntinst.GetTable("CameraPublisher/CVCamera3");
+
+std::this_thread::sleep_for(std::chrono::seconds(5));  std::cout << "Network Tables Initialized." << std::endl;
+// Put IP Address Values into CameraPublisher NetworkTable
+string Fred[1] = {"mjpeg:http://10.55.84.8:5800/?action=stream"}; //Fred and James are the camera ip address arrays. They have to be there for the camera server to work.
+ntcam->PutStringArray("streams", Fred);
+
+string James[1] = {"mjpeg:http://10.55.84.8:5801"};
+ntcam2->PutStringArray("streams", James);
+
+string Max[1] = {"mjpeg:http://10.55.84.8:5802"};
+ntcam3->PutStringArray("streams", Max);
+
+std::cout << "Arrays pushed to network tables." << std::endl;
+
+
   // record start time
   clock_t start = clock();
 
   
   thread t1(vidCap0);
-  thread t2(vidCap1);
-  thread t3(vidCap2);
-  thread t4(vidCap3);
+  // thread t2(vidCap1);
+  // thread t3(vidCap2);
+  // thread t4(vidCap3);
 
   while (empty(img))  {}
-  while (empty(img2)) {}
-  while (empty(img3)) {}
-  while (empty(img4)) {}
+  // while (empty(img2)) {}
+  // while (empty(img3)) {}
+  // while (empty(img4)) {}
 
-  thread t5(stream);
+  // thread t5(stream);
 
   for (;;)
   {
@@ -434,9 +436,9 @@ int main( int argc, char *argv[] )
     if( debug == 1 )
     {
       cv::imshow( "img", img );
-      cv::imshow( "img2", img2 );
-      cv::imshow( "img3", img3 );
-      cv::imshow( "img4", img4 );
+      // cv::imshow( "img2", img2 );
+      // cv::imshow( "img3", img3 );
+      // cv::imshow( "img4", img4 );
       cv::imshow( "hsv threshold", *img_hsvthreshold );
       cv::imshow( "blur", *img_blur );
       cv::imshow( "img_contours", img_contours );
@@ -459,7 +461,7 @@ int main( int argc, char *argv[] )
     // STEP 7.5: Do some camera server things
     std::cout << "About to push camera frames to server." << std::endl;
 
-    ntVariable = nt->GetNumber("Cam 0", 0);
+    // ntVariable = nt->GetNumber("Cam 0", 0);
     // stream1 = nt->GetNumber("Cam 1", 1);
     
     
@@ -493,15 +495,15 @@ int main( int argc, char *argv[] )
     if( running == 0 )
     {
       cout << "INFO: detected control file (stop)" << endl;
-      test.stop();
-      test2.stop();
-      test3.stop();
+      // test.stop();
+      // test2.stop();
+      // test3.stop();
 
       t1.join();
-      t2.join();
-      t3.join();
-      t4.join();
-      t5.join();
+      // t2.join();
+      // t3.join();
+      // t4.join();
+      // t5.join();
       break;
     }
 
