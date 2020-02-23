@@ -40,6 +40,9 @@ enum PWM{
 enum DIO{
     dio_ElevatorBottom = 2,
     dio_ElevatorTop = 3,
+    dio_StorageBottom = 4,
+    dio_StorageRoller = 5,
+    dio_StorageTop = 6,
 };
 
 enum SPM{

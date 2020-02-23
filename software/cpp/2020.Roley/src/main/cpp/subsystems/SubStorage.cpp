@@ -14,12 +14,15 @@
 
 SubStorage::SubStorage() : Subsystem("ExampleSubsystem"), 
   spmBottomRoller(SPM_StorageBottom, rev::CANSparkMaxLowLevel::MotorType::kBrushed),
-  lbrTopStorage(0) {
+  lbrTopStorage(0){
   
   // Create and set motors controllers to default settings
   srxStorage.reset(new TalonSRX(can_srxStorage));
   solStorageActuator.reset(new DoubleSolenoid(pcm_solStorageForward, pcm_solStorageRetract));
   spmBottomRoller.RestoreFactoryDefaults();
+  lbrBottom.reset(new frc::DigitalInput(dio_StorageBottom));
+  lbrTop.reset(new frc::DigitalInput(dio_StorageTop));
+  lbrRoller.reset(new frc::DigitalInput(dio_StorageRoller));
 
   // Setup shuffleboard values
   frc::SmartDashboard::PutNumber("Feeder speed", _speed);
@@ -35,6 +38,14 @@ void SubStorage::InitDefaultCommand() {
   
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
+}
+
+void SubStorage::Periodic(){
+  //frc::Shuffleboard::GetTab(kShuffleBoardSettingsTab)
+  //  .Add("Bottom Linebreak", lbrBottom->Get());
+  frc::SmartDashboard::PutBoolean("Storage Bottom Linebreak", lbrBottom->Get());
+  frc::SmartDashboard::PutBoolean("Storage Top Linebreak", lbrTop->Get());
+  frc::SmartDashboard::PutBoolean("Storage Roller Linebreak", lbrRoller->Get());
 }
 
 void SubStorage::Forward(){
@@ -68,6 +79,19 @@ void SubStorage::Stop(){
 bool SubStorage::GetLbrTopStorage(){
   return lbrTopStorage.Get();
 }
+
+bool SubStorage::lbrBottomIsBlocked(){
+  return !lbrBottom->Get();
+}
+
+bool SubStorage::lbrTopIsBlocked(){
+  return !lbrTop->Get();
+}
+
+bool SubStorage::lbrRollerIsBlocked(){
+  return !lbrRoller->Get();
+}
+
 void SubStorage::Expand(){
   solStorageActuator->Set(frc::DoubleSolenoid::kForward);
 }
@@ -75,6 +99,7 @@ void SubStorage::Expand(){
 void SubStorage::Retract(){
   solStorageActuator->Set(frc::DoubleSolenoid::kReverse);
 }
+
 
 
 
