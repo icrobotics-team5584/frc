@@ -100,7 +100,10 @@ void SubStorage::Retract(){
   solStorageActuator->Set(frc::DoubleSolenoid::kReverse);
 }
 
-
+void SubStorage::SetSpeed(double speed){
+  speedSet = speed;
+  srxStorage->Set(ControlMode::PercentOutput, speedSet);
+}
 
 
 // Put methods for controlling this subsystem
