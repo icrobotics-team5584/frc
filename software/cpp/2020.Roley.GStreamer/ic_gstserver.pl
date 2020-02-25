@@ -3,6 +3,9 @@
 use strict;
 use Time::HiRes qw( usleep );
 
+my $ctlfile = $0;
+$ctlfile =~ s|.pl$|.ctl|;
+
 my $video_src_1 = "v4l2src device=/dev/video0";
 my $video_src_2 = "v4l2src device=/dev/video1";
 my $video_src_3 = "v4l2src device=/dev/video2";
@@ -22,7 +25,7 @@ switch($control);
 my $running = 1;
 while( $running )
   {
-  open( CTL, "<ic_gstserver.ctl" );
+  open( CTL, "<$ctlfile" );
   $control = <CTL>;
   close( CTL );
   next unless( ( "$control" eq "1" ) || ( "$control" eq "2" ) || ( "$control" eq "3" ) );
@@ -80,4 +83,3 @@ sub relaunch
   my $cmd = "gst-launch-1.0 ${source} ! textoverlay text=\"${ident}\" valignment=2 halignment=1 font-desc=\"sans 72\" ! jpegenc ! image/jpeg,width=${width},height=${height} ! progressreport ! rtpjpegpay ! udpsink host=${ipaddr} port=${port} > /tmp/ic_gstserver.${port}.log";
   `$cmd 2>&1 &`;
   }
-
