@@ -25,7 +25,7 @@ class SubStorage : public frc::Subsystem {
   double speedSet = 0.8;
 
   std::shared_ptr<TalonSRX> srxStorage;
-  rev::CANSparkMax spmBottomRoller;
+  std::shared_ptr<rev::CANSparkMax> spmBottomRoller;
 
   frc::DigitalInput lbrTopStorage;
   std::shared_ptr<frc::DoubleSolenoid> solStorageActuator;
