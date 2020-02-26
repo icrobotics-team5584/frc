@@ -20,7 +20,7 @@ class SubStorage : public frc::Subsystem {
  private:
   const double kDefaultBottomRollerSpeed = 0.8;
   const double kDefaultBottomRollerReverseSpeed = -0.8;
-  const double kDefaultFeederSpeed = 0.4;
+  const double kDefaultFeederSpeed = 0.8;
   double _speed = kDefaultFeederSpeed;
   double speedSet = 0.8;
 
