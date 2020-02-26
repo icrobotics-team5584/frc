@@ -40,6 +40,9 @@ enum PWM{
 enum DIO{
     dio_ElevatorBottom = 2,
     dio_ElevatorTop = 3,
+    dio_StorageBottom = 4,
+    dio_StorageRoller = 5,
+    dio_StorageTop = 6,
 };
 
 enum SPM{
@@ -47,6 +50,7 @@ enum SPM{
     SPM_DriveBaseBackLeft = 2,
     SPM_DriveBaseFrontRight = 3,
     SPM_DriveBaseBackRight = 4,
+    SPM_StorageBottom = 6,
 };
 
 // For example to map the left and right motors, you could define the

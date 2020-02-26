@@ -11,12 +11,13 @@
 CmdAutoStorage::CmdAutoStorage() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(Robot::subStorage.get());
+ // Requires(Robot::subStorage.get());
 }
 
 // Called just before this Command runs the first time
 void CmdAutoStorage::Initialize() {
-  Robot::subStorage->Forward();
+  Robot::subStorage->SetSpeed(1.0);
+  Robot::subStorage->BottomRollerForward();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -28,6 +29,7 @@ bool CmdAutoStorage::IsFinished() { return false; }
 // Called once after isFinished returns true
 void CmdAutoStorage::End() {
   Robot::subStorage->Stop();
+  Robot::subStorage->BottomRollerStop();
 }
 
 // Called when another command which requires one or more of the same

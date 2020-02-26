@@ -16,11 +16,40 @@ CmdIntake::CmdIntake() {
 // Called just before this Command runs the first time
 void CmdIntake::Initialize() {
   Robot::subIntake->Intake();
-  Robot::subStorage->Forward();
+  //Robot::subStorage->Forward();
+  //Robot::subStorage->BottomRollerForward();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdIntake::Execute() {}
+void CmdIntake::Execute() {
+  if (!Robot::subStorage->lbrTopIsBlocked())
+  {
+    if (Robot::subStorage->lbrBottomIsBlocked())
+    {
+      Robot::subStorage->Forward();
+    }
+    else
+    {
+      Robot::subStorage->Stop();
+    }
+  }
+  else
+  {
+    Robot::subStorage->Stop();
+  }
+  
+
+  if (Robot::subStorage->lbrRollerIsBlocked())
+  {
+    Robot::subStorage->BottomRollerForward();
+  }
+  else
+  {
+    Robot::subStorage->BottomRollerForward();
+  }
+  
+  
+}
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdIntake::IsFinished() { return false; }
@@ -29,6 +58,7 @@ bool CmdIntake::IsFinished() { return false; }
 void CmdIntake::End() {
   Robot::subIntake->Stop();
   Robot::subStorage->Stop();
+  Robot::subStorage->BottomRollerStop();
 }
 
 // Called when another command which requires one or more of the same

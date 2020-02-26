@@ -20,8 +20,8 @@ CmdAutoRoutineOne::CmdAutoRoutineOne() : CommandGroup("CmdAutoRoutineOne: Vanill
   AddParallel(new CmdAutoShoot(), 3);
   AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegOne));
   AddSequential(new CmdAutoStorage(), 1);
-  AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegTwo)); 
-  AddParallel(new CmdAutoIntake(), 5); 
+  AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegTwo));
+  AddParallel(new CmdAutoIntake(), 4); 
   AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegThree));
   AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegFour)); 
   AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegFive));
