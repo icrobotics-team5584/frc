@@ -19,6 +19,8 @@ SubStorage::SubStorage() : Subsystem("ExampleSubsystem"), lbrTopStorage(0){
   solStorageActuator.reset(new DoubleSolenoid(pcm_solStorageForward, pcm_solStorageRetract));
   spmBottomRoller.reset(new rev::CANSparkMax(SPM_StorageBottom, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   spmBottomRoller->RestoreFactoryDefaults();
+  spmBottomRoller->SetSmartCurrentLimit(30);
+
   lbrBottom.reset(new frc::DigitalInput(dio_StorageBottom));
   lbrTop.reset(new frc::DigitalInput(dio_StorageTop));
   lbrRoller.reset(new frc::DigitalInput(dio_StorageRoller));
