@@ -12,6 +12,7 @@
 CmdVisionTrack::CmdVisionTrack() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
+  Requires(Robot::subDriveBase.get());
 }
 
 // Called just before this Command runs the first time
@@ -37,9 +38,9 @@ void CmdVisionTrack::Execute() {
     _integral = -_maxIntegral;
   }
 
-  _derivative = _lastError - _derivative;
+  _derivative = _error - _lastError;
 
-  _speed = (_error * P) + (_integral * I) - (_derivative * D);
+  _speed = (_error * P) + (_integral * I) + (_derivative * D);
 
   if (_speed > _cap)
   {
@@ -51,7 +52,8 @@ void CmdVisionTrack::Execute() {
   }
   
 
-  Robot::subDriveBase->drive(0, _speed);
+  frc::SmartDashboard::PutNumber("Vision Output Speed", _speed);
+  Robot::subDriveBase->drive(Robot::oi->getJoystickY(), _speed, false);
 
 
   _integral += _error;
