@@ -91,10 +91,12 @@ ssh %PROJECTACCOUNT% rm -rf /tmp/%PROJECTARCHIVE%
 echo ---------------------------------------------------------------------------
 echo INFO: setting permissions in workspace
 ssh %PROJECTACCOUNT% cd %PROJECTWORKSPACE%; chmod a+x *.sh
+ssh %PROJECTACCOUNT% cd %PROJECTWORKSPACE%; chmod a+x *.pl
 
 echo ---------------------------------------------------------------------------
 echo INFO: forcing line endings in workspace
 ssh %PROJECTACCOUNT% cd %PROJECTWORKSPACE%; perl -pi -e 's/\r\n/\n/g' *.sh
+ssh %PROJECTACCOUNT% cd %PROJECTWORKSPACE%; perl -pi -e 's/\r\n/\n/g' *.pl
 
 echo ---------------------------------------------------------------------------
 echo INFO: building in remote workspace
