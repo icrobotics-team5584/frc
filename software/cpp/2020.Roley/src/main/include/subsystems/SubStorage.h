@@ -22,9 +22,10 @@ class SubStorage : public frc::Subsystem {
   const double kDefaultBottomRollerReverseSpeed = -0.8;
   const double kDefaultFeederSpeed = 0.8;
   double _speed = kDefaultFeederSpeed;
+  double speedSet = 0.8;
 
   std::shared_ptr<TalonSRX> srxStorage;
-  rev::CANSparkMax spmBottomRoller;
+  std::shared_ptr<rev::CANSparkMax> spmBottomRoller;
 
   frc::DigitalInput lbrTopStorage;
   std::shared_ptr<frc::DoubleSolenoid> solStorageActuator;
@@ -57,4 +58,6 @@ class SubStorage : public frc::Subsystem {
 
   void Expand();
   void Retract();
+
+  void SetSpeed(double speed);
 };

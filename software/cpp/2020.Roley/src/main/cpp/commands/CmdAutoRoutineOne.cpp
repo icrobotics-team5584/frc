@@ -7,7 +7,7 @@
 
 #include "commands/CmdAutoRoutineOne.h"
 #include "commands/CmdAutoEncoderDrive.h"
-#include "commands/CmdAutoIntake.h"
+#include "commands/CmdIntake.h"
 #include "commands/CmdIntakeStop.h"
 #include "commands/CmdAutoIntakeDeploy.h"
 #include "commands/CmdAutoShoot.h"
@@ -21,7 +21,7 @@ CmdAutoRoutineOne::CmdAutoRoutineOne() : CommandGroup("CmdAutoRoutineOne: Vanill
   AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegOne));
   AddSequential(new CmdAutoStorage(), 1);
   AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegTwo));
-  AddParallel(new CmdAutoIntake(), 5); 
+  AddParallel(new CmdIntake(), 4); 
   AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegThree));
   AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegFour)); 
   AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegFive));

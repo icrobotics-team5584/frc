@@ -17,8 +17,8 @@ CmdAutoIntake::CmdAutoIntake() {
 void CmdAutoIntake::Initialize() {
   std::cout << "Auto One Start" << std::endl;
   Robot::subIntake->Intake();
-  Robot::subStorage->Forward();
-  Robot::subStorage->Expand();
+  Robot::subStorage->SetSpeed(0.4);
+  Robot::subStorage->BottomRollerForward();
 
 
 }

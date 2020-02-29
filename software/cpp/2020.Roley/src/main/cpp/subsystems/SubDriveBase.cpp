@@ -40,7 +40,7 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem"), dollyTalon(Robot::
   SmartDashboard::PutNumber("auto D", y_kD);
   SmartDashboard::PutNumber("y position", y_position);
 
-  SmartDashboard::PutNumber("position", position);
+  SmartDashboard::PutNumber("position", (position+1.7));
 
 }
 
@@ -74,7 +74,7 @@ void SubDriveBase::InitDefaultCommand() {
 }
 
 void SubDriveBase::Periodic(){
-  SmartDashboard::PutNumber("position", position);
+  SmartDashboard::PutNumber("position", position+1.7);
 
   autoYaw = getActualYaw() - _targetYaw;
   //SmartDashboard::PutNumber("autoyaw", autoYaw);

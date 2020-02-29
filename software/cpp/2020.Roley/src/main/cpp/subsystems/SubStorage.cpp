@@ -12,14 +12,15 @@
 #include "Robot.h"
 
 
-SubStorage::SubStorage() : Subsystem("ExampleSubsystem"), 
-  spmBottomRoller(SPM_StorageBottom, rev::CANSparkMaxLowLevel::MotorType::kBrushed),
-  lbrTopStorage(0){
+SubStorage::SubStorage() : Subsystem("ExampleSubsystem"), lbrTopStorage(0){
   
   // Create and set motors controllers to default settings
   srxStorage.reset(new TalonSRX(can_srxStorage));
   solStorageActuator.reset(new DoubleSolenoid(pcm_solStorageForward, pcm_solStorageRetract));
-  spmBottomRoller.RestoreFactoryDefaults();
+  spmBottomRoller.reset(new rev::CANSparkMax(SPM_StorageBottom, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  spmBottomRoller->RestoreFactoryDefaults();
+  spmBottomRoller->SetSmartCurrentLimit(30);
+
   lbrBottom.reset(new frc::DigitalInput(dio_StorageBottom));
   lbrTop.reset(new frc::DigitalInput(dio_StorageTop));
   lbrRoller.reset(new frc::DigitalInput(dio_StorageRoller));
@@ -60,16 +61,16 @@ void SubStorage::Backward(){
 
 void SubStorage::BottomRollerForward(){
   std::cout << "roller in " << nteBottomRollerSpeed.GetDouble(kDefaultBottomRollerSpeed) << std::endl;
-  spmBottomRoller.Set(nteBottomRollerSpeed.GetDouble(kDefaultBottomRollerSpeed));
+  spmBottomRoller->Set(nteBottomRollerSpeed.GetDouble(kDefaultBottomRollerSpeed));
 }
 
 void SubStorage::BottomRollerBackward(){
     std::cout << "roller out " << nteBottomRollerSpeed.GetDouble(kDefaultBottomRollerSpeed) << std::endl;
-  spmBottomRoller.Set(nteBottomRollerReverseSpeed.GetDouble(kDefaultBottomRollerReverseSpeed));
+  spmBottomRoller->Set(nteBottomRollerReverseSpeed.GetDouble(kDefaultBottomRollerReverseSpeed));
 }
 
 void SubStorage::BottomRollerStop() {
-  spmBottomRoller.Set(0);  
+  spmBottomRoller->Set(0);  
 }
 
 void SubStorage::Stop(){
@@ -100,7 +101,10 @@ void SubStorage::Retract(){
   solStorageActuator->Set(frc::DoubleSolenoid::kReverse);
 }
 
-
+void SubStorage::SetSpeed(double speed){
+  speedSet = speed;
+  srxStorage->Set(ControlMode::PercentOutput, speedSet);
+}
 
 
 // Put methods for controlling this subsystem
