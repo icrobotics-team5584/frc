@@ -24,7 +24,6 @@ class CmdIntake : public frc::Command {
  private:
   void Intake();
   void Shuffle();
-  void GrabBall();
   double startTime = 0;
   frc::Timer timer;
   State currentState;

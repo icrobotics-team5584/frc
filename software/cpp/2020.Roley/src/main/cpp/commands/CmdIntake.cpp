@@ -17,28 +17,30 @@ CmdIntake::CmdIntake() {
 void CmdIntake::Initialize() {
   Robot::subIntake->Intake();
   //Robot::subStorage->Forward();
-  //Robot::subStorage->BottomRollerForward();
+  Robot::subStorage->BottomRollerForward();
   timer.Reset();
   currentState = NORMAL;
 }
 
 void CmdIntake::Intake()
 {
-  if (Robot::subStorage->lbrBottomIsBlocked())
-    {
-      Robot::subStorage->Forward();
-    }
-    else
-    {
-      Robot::subStorage->Stop();
-    }
+  if (Robot::subStorage->lbrBottomIsBlocked() && !Robot::subStorage->lbrTopIsBlocked())
+  {
+    Robot::subStorage->Forward();
+  }
+  else
+  {
+    Robot::subStorage->Stop();
+  }
+  Robot::subStorage->BottomRollerForward();
 }
 
 void CmdIntake::Shuffle()
 {
   startTime = timer.Get();
-  if (startTime < 0.5)
+  if (startTime < 0.25)
   {
+    Robot::subStorage->BottomRollerStop();
     Robot::subStorage->Backward();
   }
 
@@ -46,25 +48,12 @@ void CmdIntake::Shuffle()
 
   //Robot::subStorage->Stop();
 }
-
-void CmdIntake::GrabBall()
-{
-  if (Robot::subStorage->lbrRollerIsBlocked())
-  {
-    Robot::subStorage->BottomRollerForward();
-  }
-  else
-  {
-    Robot::subStorage->BottomRollerForward();
-  }
-}
-
 // Called repeatedly when this Command is scheduled to run
 void CmdIntake::Execute() {
   switch (currentState){
     case NORMAL:
       Intake();
-      if (Robot::subStorage->lbrTopIsBlocked())
+      if (Robot::subStorage->lbrTopIsBlocked() && Robot::subStorage->lbrStorageHasGap())
       {
         currentState = SHUFFLE;
         timer.Reset();
@@ -72,14 +61,12 @@ void CmdIntake::Execute() {
       break;
     case SHUFFLE:
       Shuffle();
-      if (timer.Get() > 0.5)
+      if (timer.Get() > 0.1)
       {
         currentState = NORMAL;
       }
       break;
   }
-
-  GrabBall();
 }
 
 // Make this return true when this Command no longer needs to run execute()

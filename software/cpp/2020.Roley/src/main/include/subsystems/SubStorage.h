@@ -18,21 +18,22 @@
 
 class SubStorage : public frc::Subsystem {
  private:
-  const double kDefaultBottomRollerSpeed = 0.8;
-  const double kDefaultBottomRollerReverseSpeed = -0.8;
+  const double kDefaultBottomRollerSpeed = -0.8;
+  const double kDefaultBottomRollerReverseSpeed = 0.8;
   const double kDefaultFeederSpeed = 0.8;
   double _speed = kDefaultFeederSpeed;
   double speedSet = 0.8;
 
   std::shared_ptr<TalonSRX> srxStorage;
-  std::shared_ptr<rev::CANSparkMax> spmBottomRoller;
+  //std::shared_ptr<rev::CANSparkMax> spmBottomRoller;
+  std::shared_ptr<TalonSRX> srxBottomRoller;
 
   frc::DigitalInput lbrTopStorage;
   std::shared_ptr<frc::DoubleSolenoid> solStorageActuator;
 
   std::shared_ptr<frc::DigitalInput> lbrBottom;
   std::shared_ptr<frc::DigitalInput> lbrTop;
-  std::shared_ptr<frc::DigitalInput> lbrRoller;
+  std::shared_ptr<frc::DigitalInput> lbrGap;
 
   // Shuffleboard values
   const std::string kShuffleBoardSettingsTab = "Storage Settings";
@@ -53,7 +54,7 @@ class SubStorage : public frc::Subsystem {
 
   bool lbrBottomIsBlocked();
   bool lbrTopIsBlocked();
-  bool lbrRollerIsBlocked();
+  bool lbrStorageHasGap();
 
 
   void Expand();
