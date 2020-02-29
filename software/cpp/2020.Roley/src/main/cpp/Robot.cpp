@@ -4,7 +4,7 @@
 
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
-#include "commands/CmdShooterShoot.h"
+#include <frc/shuffleboard/Shuffleboard.h>
 
 #include "commands/CmdDeployDolly.h"
 #include "commands/CmdElevatorPowerDown.h"
@@ -20,6 +20,7 @@
 #include "commands/CmdRollStorageBack.h"
 #include "commands/CmdShooterShoot.h"
 #include "commands/CmdShooterShootReverse.h"
+#include "commands/CmdAutoShoot.h"
 
 #include "Robot.h"
 
@@ -68,8 +69,8 @@ void Robot::RobotInit() {
   cmdResetGyro->SetRunWhenDisabled(true);
   //Runs a cmd that waits for th navx to stop calibrating then resets gyro
   cmdResetGyro->Start();
-  chooser.SetDefaultOption("Vanilla Trench Run", autoOne);
-  chooser.AddOption("Trench Steal Run", autoTwo);
+  chooser.SetDefaultOption("Six Ball Auto", autoOne);
+  chooser.AddOption("6 Ball Evasive Auto", autoTwo);
   chooser.AddOption("Sad Trench Run", autoThree);
   frc::SmartDashboard::PutData("Auto Selecter", &chooser);
 
@@ -80,26 +81,27 @@ void Robot::RobotInit() {
 /*  robot.                                                                */  
 /*------------------------------------------------------------------------*/
   //DRIVEBASE ----------------------------------------------------------------
-  frc::SmartDashboard::PutData("CmdDeployDolly", new CmdDeployDolly());
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdDeployDolly", *(new CmdDeployDolly()));
   //ELEVATOR ----------------------------------------------------------------
-  frc::SmartDashboard::PutData("CmdElevatorPowerUp", new CmdElevatorPowerUp()); //Currently does nothing
-  frc::SmartDashboard::PutData("CmdElevatorPowerDown", new CmdElevatorPowerDown()); //Currently does nothing
-  frc::SmartDashboard::PutData("CmdEngageClimberRatchets", new CmdEngageClimberRatchets()); 
+  //NOTE: Currently not integrated. DO NOT USE!
+  //frc::Shuffleboard::GetTab("HARDWARE").Add("CmdElevatorPowerUp", *(new CmdElevatorPowerUp())); 
+  //frc::Shuffleboard::GetTab("HARDWARE").Add("CmdElevatorPowerDown", *(new CmdElevatorPowerDown())); 
+  //frc::Shuffleboard::GetTab("HARDWARE").Add("CmdEngageClimberRatchets", *(new CmdEngageClimberRatchets()));  
   //BUDDY ----------------------------------------------------------------
-  frc::SmartDashboard::PutData("CmdBuddyLock", new CmdBuddyLock());
-  frc::SmartDashboard::PutData("CmdBuddyDeploy", new CmdBuddyDeploy());
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdBuddyLock", *(new CmdBuddyLock()));
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdBuddyDeploy", *(new CmdBuddyDeploy()));
   //INTAKE ----------------------------------------------------------------
-  frc::SmartDashboard::PutData("CmdIntake", new CmdIntake());
-  frc::SmartDashboard::PutData("CmdOuttake", new CmdOuttake());
-  frc::SmartDashboard::PutData("CmdDeployIntake", new CmdDeployIntake());
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdIntake", *(new CmdIntake()));
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdOuttake", *(new CmdOuttake()));
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdDeployIntake", *(new CmdDeployIntake()));
   //STORAGE ----------------------------------------------------------------
-  frc::SmartDashboard::PutData("CmdStorageTogglePneumatic", new CmdStorageTogglePneumatic());
-  frc::SmartDashboard::PutData("CmdRollStorage", new CmdRollStorage());
-  frc::SmartDashboard::PutData("CmdRollStorageBack", new CmdRollStorageBack());
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdStorageTogglePneumatic", *(new CmdStorageTogglePneumatic()));
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdRollStorage", *(new CmdRollStorage()));
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdRollStorageBack", *(new CmdRollStorageBack()));
   //SHOOTER ----------------------------------------------------------------
-  frc::SmartDashboard::PutData("CmdShooterShoot", new CmdShooterShoot());
-  frc::SmartDashboard::PutData("CmdShooterShootReverse", new CmdShooterShootReverse());
-
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdShooterShoot", *(new CmdShooterShoot()));
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdShooterShootReverse", *(new CmdShooterShootReverse()));
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdAutoShoot", *(new CmdAutoShoot()));
 }
 
 
@@ -125,6 +127,7 @@ void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 
 void Robot::AutonomousInit() {
+  subDriveBase->autoConfig();
   autoOne = new CmdAutoRoutineOne();
   autoTwo = new CmdAutoRoutineTwo();
   autoThree = new CmdAutoRoutineThree();
@@ -150,6 +153,7 @@ void Robot::AutonomousPeriodic() {
   }
 
 void Robot::TeleopInit() {
+  subDriveBase->teleConfig();
   subDriveBase->retractDolly();
   subClimber->RatchetsDisengage();
   subClimber->ElevaterExtendMin();

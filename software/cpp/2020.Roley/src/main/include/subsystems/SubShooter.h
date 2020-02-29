@@ -29,7 +29,7 @@ class SubShooter : public frc::Subsystem {
 
   double RPM = 1200;
 
-  double shooterSpeed = 0.8;
+  double shooterSpeed = 1;
 
 
 

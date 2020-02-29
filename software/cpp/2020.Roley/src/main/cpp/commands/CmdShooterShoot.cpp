@@ -7,6 +7,8 @@
 
 #include "commands/CmdShooterShoot.h"
 #include "Robot.h"
+#include <iostream>
+
 
  bool CmdShooterShoot::ShooterShoot;
  
@@ -14,18 +16,21 @@ CmdShooterShoot::CmdShooterShoot() {
   //Requires(Robot::subShooter.get());
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
+  Requires(Robot::subShooter.get());
+  Requires(Robot::subStorage.get());
 }
 
 // Called just before this Command runs the first time
 void CmdShooterShoot::Initialize() {
-  
+  std::cout << "------------------------------------------------shooter shoot init" << std::endl;
+
+  Robot::subShooter->PowerShoot();
+  Robot::subStorage->Forward();
 
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdShooterShoot::Execute() {
-  ShooterShoot = true;
-  Robot::subShooter->PowerShoot();
 
 }
 
@@ -35,8 +40,11 @@ bool CmdShooterShoot::IsFinished() {
 
 // Called once after isFinished returns true
 void CmdShooterShoot::End() {
-  ShooterShoot = false;
+  std::cout << "------------------------------------------------shooter shoot end" << std::endl;
+  
+  //ShooterShoot = false;
   Robot::subShooter->Stop();
+  Robot::subStorage->Stop();
 }
 
 // Called when another command which requires one or more of the same

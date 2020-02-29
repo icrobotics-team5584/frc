@@ -48,11 +48,11 @@ void SubIntake::InitDefaultCommand() {
 // here. Call these from Commands.
 
 void SubIntake::Intake() {
-  srxIntake->Set(ControlMode::PercentOutput, _speed);
+  srxIntake->Set(ControlMode::PercentOutput, -_speed);
 }
 
 void SubIntake::Outtake() {
-  srxIntake->Set(ControlMode::PercentOutput, -_speed);
+  srxIntake->Set(ControlMode::PercentOutput, _speed);
 }
 
 void SubIntake::Stop() {

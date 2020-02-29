@@ -23,33 +23,36 @@
 #include "commands/CmdElevatorFullExtend.h"
 #include "commands/CmdElevaterExtendMin.h"
 #include "commands/CmdElevatorBuddy.h"
+#include "commands/CmdShootSequence.h"
+#include "commands/CmdIntakeOutTake.h"
+
 OI::OI() {
 
   //std::cout<< "OI Started" << std::endl;
 
   //Setup Joystick (0)
   joystick1.reset(new frc::Joystick(0));
-  
-  btnShoot.reset(new frc::JoystickButton(joystick1.get(), bBtn));
-  btnShoot->WhileHeld(new CmdShooterShoot());
 
-  //Storage buttons
-  btnForward.reset(new frc::JoystickButton(joystick1.get(),xBtn));
-  btnBackward.reset(new frc::JoystickButton(joystick1.get(),yBtn));
-  btnForward->WhileHeld(new CmdRollStorage());
-  btnBackward->WhileHeld(new CmdRollStorageBack());
+  btnShoot.reset(new frc::JoystickButton(joystick1.get(), aBtn));
+  btnShoot->WhileHeld(new CmdShootSequence());
 
   //Slow drive buttons
   btnSlowDown.reset(new AxisButton(joystick1.get(), triggerL));
   btnSlowDown->WhileHeld(new CmdDriveSlowDown());
 
   //Intake buttons
-  btnDeployIntake.reset(new AxisButton(joystick1.get(), triggerR));
+  btnDeployIntake.reset(new frc::JoystickButton(joystick1.get(), rightBtn));
   btnIntake.reset(new frc::JoystickButton(joystick1.get(), leftBtn));
-  btnOuttake.reset(new frc::JoystickButton(joystick1.get(), rightBtn));
+  //btnOuttake.reset(new frc::JoystickButton(joystick1.get(), rightBtn));
   btnDeployIntake->WhileHeld(new CmdDeployIntake());
   btnIntake->WhileHeld(new CmdIntake());
-  btnOuttake->WhileHeld(new CmdOuttake());
+  //btnOuttake->WhileHeld(new CmdOuttake());
+
+  //Intake reverse
+
+  btnIntakeReverse.reset(new frc::JoystickButton(joystick1.get(), yBtn));
+  btnIntakeReverse->WhileHeld(new CmdIntakeOutTake());
+
 
   //Climber Button
 
@@ -59,8 +62,8 @@ OI::OI() {
   //btnRatchets->WhileHeld(new CmdEngageClimberRatchets());
 
   //Storage Pneumatics
-  btnStorageExpand.reset(new frc::JoystickButton(joystick1.get(), aBtn));
-  btnStorageExpand->ToggleWhenPressed(new CmdStorageTogglePneumatic);
+  btnReverseStorage.reset(new frc::JoystickButton(joystick1.get(), bBtn));
+  btnReverseStorage->WhileHeld(new CmdRollStorageBack());
 
   //std::cout<< "OI Ended" << std::endl;
 

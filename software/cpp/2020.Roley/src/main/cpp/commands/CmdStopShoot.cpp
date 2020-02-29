@@ -5,33 +5,39 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdDeployIntake.h"
+#include "commands/CmdStopShoot.h"
 #include "Robot.h"
+#include <iostream>
 
-CmdDeployIntake::CmdDeployIntake() {
-  // Doesnt requre storage or intake because this needs to be used at the same time as CmdIntake,
-  // which does require those subsystems.
+
+CmdStopShoot::CmdStopShoot() {
+  Requires(Robot::subShooter.get());
+  // Use Requires() here to declare subsystem dependencies
+  // eg. Requires(Robot::chassis.get());
 }
 
 // Called just before this Command runs the first time
-void CmdDeployIntake::Initialize() {
-  Robot::subIntake->Deploy();
-  Robot::subStorage->Expand();
+void CmdStopShoot::Initialize() {
+  //does not start using for command group
+  std::cout << "------------------------------------------------stop shoot init" << std::endl;
+
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdDeployIntake::Execute() {}
+void CmdStopShoot::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdDeployIntake::IsFinished() { return false; }
+bool CmdStopShoot::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdDeployIntake::End() {
-  Robot::subIntake->Retract();
-  Robot::subStorage->Retract();
+void CmdStopShoot::End() {
+  std::cout << "------------------------------------------------stop shoot end" << std::endl;
+  Robot::subShooter->Stop();
 
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdDeployIntake::Interrupted() {End();}
+void CmdStopShoot::Interrupted() {
+  End();
+}

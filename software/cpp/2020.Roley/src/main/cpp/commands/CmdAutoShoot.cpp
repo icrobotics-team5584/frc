@@ -16,7 +16,7 @@ CmdAutoShoot::CmdAutoShoot() {
 
 // Called just before this Command runs the first time
 void CmdAutoShoot::Initialize() {
- // Robot::subShooter->PowerShoot();
+  Robot::subShooter->PowerShoot();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -26,8 +26,12 @@ void CmdAutoShoot::Execute() {}
 bool CmdAutoShoot::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdAutoShoot::End() {}
+void CmdAutoShoot::End() {
+  Robot::subShooter->Stop();
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdAutoShoot::Interrupted() {}
+void CmdAutoShoot::Interrupted() {
+  End();
+}

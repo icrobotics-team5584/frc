@@ -5,33 +5,34 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdDeployIntake.h"
-#include "Robot.h"
+#include "commands/CmdIntakeOutTake.h"
 
-CmdDeployIntake::CmdDeployIntake() {
-  // Doesnt requre storage or intake because this needs to be used at the same time as CmdIntake,
-  // which does require those subsystems.
+CmdIntakeOutTake::CmdIntakeOutTake() {
+  Requires(Robot::subIntake.get());
+  // Use Requires() here to declare subsystem dependencies
+  // eg. Requires(Robot::chassis.get());
 }
 
 // Called just before this Command runs the first time
-void CmdDeployIntake::Initialize() {
+void CmdIntakeOutTake::Initialize() {
   Robot::subIntake->Deploy();
-  Robot::subStorage->Expand();
+  Robot::subIntake->Outtake();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdDeployIntake::Execute() {}
+void CmdIntakeOutTake::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdDeployIntake::IsFinished() { return false; }
+bool CmdIntakeOutTake::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdDeployIntake::End() {
+void CmdIntakeOutTake::End() {
+  Robot::subIntake->Stop();
   Robot::subIntake->Retract();
-  Robot::subStorage->Retract();
-
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdDeployIntake::Interrupted() {End();}
+void CmdIntakeOutTake::Interrupted() {
+  End();
+}
