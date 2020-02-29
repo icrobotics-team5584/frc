@@ -50,7 +50,7 @@ void CmdIntake::Shuffle()
 }
 // Called repeatedly when this Command is scheduled to run
 void CmdIntake::Execute() {
-  switch (currentState){
+  /*switch (currentState){
     case NORMAL:
       Intake();
       if (Robot::subStorage->lbrTopIsBlocked() && Robot::subStorage->lbrStorageHasGap())
@@ -66,7 +66,9 @@ void CmdIntake::Execute() {
         currentState = NORMAL;
       }
       break;
-  }
+  }*/
+
+  Intake();
 }
 
 // Make this return true when this Command no longer needs to run execute()
