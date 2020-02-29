@@ -4,6 +4,7 @@
 
 #pragma once
 enum Can {
+    can_srxStorageRoller = 6,
     can_srxIntake = 7,
     can_srxStorage = 8, 
     can_srxClimberRight = 9,
@@ -39,7 +40,7 @@ enum DIO{
     dio_ElevatorBottom = 2,
     dio_ElevatorTop = 3,
     dio_StorageBottom = 4,
-    dio_StorageRoller = 5,
+    dio_StorageGap = 5,
     dio_StorageTop = 6,
 };
 
@@ -48,11 +49,8 @@ enum SPM{
     SPM_DriveBaseBackLeft = 2,
     SPM_DriveBaseFrontRight = 3,
     SPM_DriveBaseBackRight = 4,
-    SPM_StorageBottom = 15,
-
     SPM_ShooterLeft = 5,
     SPM_ShooterRight = 6,
-
 };
 
 // For example to map the left and right motors, you could define the
