@@ -17,13 +17,13 @@ SubStorage::SubStorage() : Subsystem("ExampleSubsystem"), lbrTopStorage(0){
   // Create and set motors controllers to default settings
   srxStorage.reset(new TalonSRX(can_srxStorage));
   solStorageActuator.reset(new DoubleSolenoid(pcm_solStorageForward, pcm_solStorageRetract));
-  spmBottomRoller.reset(new rev::CANSparkMax(SPM_StorageBottom, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
-  spmBottomRoller->RestoreFactoryDefaults();
-  spmBottomRoller->SetSmartCurrentLimit(30);
+  srxBottomRoller.reset(new TalonSRX(can_srxStorageRoller));
+  //spmBottomRoller->RestoreFactoryDefaults();
+  //spmBottomRoller->SetSmartCurrentLimit(30);
 
   lbrBottom.reset(new frc::DigitalInput(dio_StorageBottom));
   lbrTop.reset(new frc::DigitalInput(dio_StorageTop));
-  lbrRoller.reset(new frc::DigitalInput(dio_StorageRoller));
+  lbrGap.reset(new frc::DigitalInput(dio_StorageGap));
 
   // Setup shuffleboard values
   frc::SmartDashboard::PutNumber("Feeder speed", _speed);
@@ -46,7 +46,7 @@ void SubStorage::Periodic(){
   //  .Add("Bottom Linebreak", lbrBottom->Get());
   frc::SmartDashboard::PutBoolean("Storage Bottom Linebreak", lbrBottom->Get());
   frc::SmartDashboard::PutBoolean("Storage Top Linebreak", lbrTop->Get());
-  frc::SmartDashboard::PutBoolean("Storage Roller Linebreak", lbrRoller->Get());
+  frc::SmartDashboard::PutBoolean("Storage Gap Linebreak", lbrGap->Get());
 }
 
 void SubStorage::Forward(){
@@ -61,16 +61,16 @@ void SubStorage::Backward(){
 
 void SubStorage::BottomRollerForward(){
   std::cout << "roller in " << nteBottomRollerSpeed.GetDouble(kDefaultBottomRollerSpeed) << std::endl;
-  spmBottomRoller->Set(nteBottomRollerSpeed.GetDouble(kDefaultBottomRollerSpeed));
+  srxBottomRoller->Set(ControlMode::PercentOutput, nteBottomRollerSpeed.GetDouble(kDefaultBottomRollerSpeed));
 }
 
 void SubStorage::BottomRollerBackward(){
     std::cout << "roller out " << nteBottomRollerSpeed.GetDouble(kDefaultBottomRollerSpeed) << std::endl;
-  spmBottomRoller->Set(nteBottomRollerReverseSpeed.GetDouble(kDefaultBottomRollerReverseSpeed));
+  srxBottomRoller->Set(ControlMode::PercentOutput, nteBottomRollerReverseSpeed.GetDouble(kDefaultBottomRollerReverseSpeed));
 }
 
 void SubStorage::BottomRollerStop() {
-  spmBottomRoller->Set(0);  
+  srxBottomRoller->Set(ControlMode::PercentOutput, 0);  
 }
 
 void SubStorage::Stop(){
@@ -89,8 +89,8 @@ bool SubStorage::lbrTopIsBlocked(){
   return !lbrTop->Get();
 }
 
-bool SubStorage::lbrRollerIsBlocked(){
-  return !lbrRoller->Get();
+bool SubStorage::lbrStorageHasGap(){
+  return lbrGap->Get();
 }
 
 void SubStorage::Expand(){
