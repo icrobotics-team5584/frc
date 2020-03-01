@@ -147,9 +147,9 @@ PIDAutoConfig autoRoutineThreeLegOne = {
   -25,       //D
   -0.2,      //speed
   0,     //targetX
-  2.312,    //targetY
-  2.048,
-  22.5,        //targetAngle
+  2.8,    //targetY
+  3.5,
+  26,        //targetAngle
   90,        //targetAngle of Attack
 };
 //Two

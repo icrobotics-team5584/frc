@@ -15,7 +15,7 @@ CmdAutoShootSlow::CmdAutoShootSlow() {
 
 // Called just before this Command runs the first time
 void CmdAutoShootSlow::Initialize() {
-  Robot::subShooter->ShootAtSpeed(0.775);
+  Robot::subShooter->ShootAtSpeed(0.8);
 
 }
 
