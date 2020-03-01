@@ -9,6 +9,7 @@
 
 #include <frc/commands/Subsystem.h>
 #include <ctre/Phoenix.h>
+#include <rev/CANSparkMax.h>
 
 class SubShooter : public frc::Subsystem {
  private:
@@ -38,8 +39,8 @@ class SubShooter : public frc::Subsystem {
   // for methods that implement subsystem capabilities
 
  public:
-   std::shared_ptr<WPI_TalonSRX> leftMotor;
-  std::shared_ptr<WPI_TalonSRX> rightMotor;
+  std::shared_ptr<rev::CANSparkMax> leftMotor;
+  std::shared_ptr<rev::CANSparkMax> rightMotor;
   double GetLeftRPM();
   double GetRightRPM();
   SubShooter();
