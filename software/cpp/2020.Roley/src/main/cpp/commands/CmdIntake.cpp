@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/CmdIntake.h"
+#include <frc/shuffleboard/Shuffleboard.h>
 
 CmdIntake::CmdIntake() {
   // Require subsystems so other commands cant use the hardware at the same time
@@ -20,6 +21,7 @@ void CmdIntake::Initialize() {
   Robot::subStorage->BottomRollerForward();
   timer.Reset();
   currentState = NORMAL;
+  timer.Start();
 }
 
 void CmdIntake::Intake()
@@ -38,7 +40,7 @@ void CmdIntake::Intake()
 void CmdIntake::Shuffle()
 {
   startTime = timer.Get();
-  if (startTime < 0.25)
+  if (startTime < frc::SmartDashboard::GetNumber("Feeder Reverse Time", 0))
   {
     Robot::subStorage->BottomRollerStop();
     Robot::subStorage->Backward();
@@ -50,25 +52,26 @@ void CmdIntake::Shuffle()
 }
 // Called repeatedly when this Command is scheduled to run
 void CmdIntake::Execute() {
-  /*switch (currentState){
+  frc::Shuffleboard::GetTab("Storage Settings").Add("Timer", timer.Get());
+  switch (currentState){
     case NORMAL:
       Intake();
       if (Robot::subStorage->lbrTopIsBlocked() && Robot::subStorage->lbrStorageHasGap())
       {
-        currentState = SHUFFLE;
         timer.Reset();
+        std::cout << "timer reset" << std::endl;
+        currentState = SHUFFLE;
       }
       break;
     case SHUFFLE:
       Shuffle();
-      if (timer.Get() > 0.1)
+      if (timer.Get() > frc::SmartDashboard::GetNumber("Feeder Reverse Time", 0))
       {
         currentState = NORMAL;
+        Robot::subStorage->Stop();
       }
       break;
-  }*/
-
-  Intake();
+  }
 }
 
 // Make this return true when this Command no longer needs to run execute()

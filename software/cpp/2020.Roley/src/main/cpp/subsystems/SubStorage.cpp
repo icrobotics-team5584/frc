@@ -27,6 +27,8 @@ SubStorage::SubStorage() : Subsystem("ExampleSubsystem"), lbrTopStorage(0){
 
   // Setup shuffleboard values
   frc::SmartDashboard::PutNumber("Feeder speed", _speed);
+  frc::SmartDashboard::PutNumber("Feeder Reverse Speed", _speed);
+  frc::SmartDashboard::PutNumber("Feeder Reverse Time", 0.25);
   nteBottomRollerSpeed = frc::Shuffleboard::GetTab(kShuffleBoardSettingsTab)
     .Add("Bottom Roller Speed", kDefaultBottomRollerSpeed) 
     .GetEntry();
@@ -55,8 +57,8 @@ void SubStorage::Forward(){
 }
 
 void SubStorage::Backward(){
-  _speed = frc::SmartDashboard::GetNumber("Feeder speed", _speed);
-  srxStorage->Set(ControlMode::PercentOutput, -_speed);
+  _reverseSpeed = frc::SmartDashboard::GetNumber("Feeder Reverse speed", _reverseSpeed);
+  srxStorage->Set(ControlMode::PercentOutput, _reverseSpeed);
 }
 
 void SubStorage::BottomRollerForward(){

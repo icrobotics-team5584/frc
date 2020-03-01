@@ -21,6 +21,8 @@ class SubStorage : public frc::Subsystem {
   const double kDefaultBottomRollerSpeed = -0.8;
   const double kDefaultBottomRollerReverseSpeed = 0.8;
   const double kDefaultFeederSpeed = 0.8;
+  const double kDefaultFeederReverseSpeed = -0.4;
+  double _reverseSpeed = kDefaultFeederReverseSpeed;
   double _speed = kDefaultFeederSpeed;
   double speedSet = 0.8;
 
@@ -39,6 +41,7 @@ class SubStorage : public frc::Subsystem {
   const std::string kShuffleBoardSettingsTab = "Storage Settings";
   nt::NetworkTableEntry nteBottomRollerSpeed;
   nt::NetworkTableEntry nteBottomRollerReverseSpeed;
+  
 
  public:
   SubStorage();
