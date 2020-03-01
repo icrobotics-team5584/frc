@@ -11,7 +11,7 @@
 #include "Robot.h"
 #include <frc/Timer.h>
 
-enum State { NORMAL, SHUFFLE, };
+enum State { NORMAL, SHUFFLE,};
 
 class CmdIntake : public frc::Command {
  public:

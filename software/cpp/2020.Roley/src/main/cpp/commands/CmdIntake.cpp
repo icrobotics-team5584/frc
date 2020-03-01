@@ -26,7 +26,7 @@ void CmdIntake::Initialize() {
 
 void CmdIntake::Intake()
 {
-  if (Robot::subStorage->lbrBottomIsBlocked() && !Robot::subStorage->lbrTopIsBlocked())
+  if (Robot::subStorage->lbrBottomIsBlocked())
   {
     Robot::subStorage->Forward();
   }
@@ -56,7 +56,7 @@ void CmdIntake::Execute() {
   switch (currentState){
     case NORMAL:
       Intake();
-      if (Robot::subStorage->lbrTopIsBlocked() && Robot::subStorage->lbrStorageHasGap())
+      if (false)
       {
         timer.Reset();
         std::cout << "timer reset" << std::endl;
