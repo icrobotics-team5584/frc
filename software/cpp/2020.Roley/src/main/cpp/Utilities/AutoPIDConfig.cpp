@@ -32,7 +32,7 @@ PIDAutoConfig autoRoutineOneLegThree = {
   0.0,  //I
   -28,      //D
   -0.5,     //speed
-  -1.7,     //targetX
+  -1.9,     //targetX
   2.2,    //targetY
   5.1, //target y turn around point
   0,        //targetAngle
@@ -43,7 +43,7 @@ PIDAutoConfig autoRoutineOneLegFour = {
   0.0,     //I
   -25,       //D
   -0.5,      //speed
-  -1.7,        //targetX
+  -1.9,        //targetX
   5.1,   //targetY
   5.1, //target y turn around point
   0,        //targetAngle
@@ -65,7 +65,7 @@ PIDAutoConfig autoRoutineOneLegSix = {
   0, //I
   25,       //D
   0.5,      //speed
-  0,        //targetX
+  -0.2,        //targetX
   -2,    //targetY
   -2.048, //target y turn around point
   0,        //targetAngle
@@ -73,52 +73,50 @@ PIDAutoConfig autoRoutineOneLegSix = {
 };
 /*----------------------------Routine Two Setup--------------------*/
 PIDAutoConfig autoRoutineTwoLegOne = {
-  0.65,     //P
-  0.0,  //I
-  29,      //D
-  0.4,     //speed
+  0.7,      //P
+  0, //I
+  25,       //D
+  0.5,      //speed
   0,     //targetX
-  -0.3,    //targetY
-  -2.148, //target y turn around point
-  0,        //targetAngle
-  10,        //targetAoA
-  
+  -2.0,    //targetY
+  -2.5, //target y turn around point
+  -36,        //targetAngle
+  10,        //targetAngle of Attack
 };
 //Two
 PIDAutoConfig autoRoutineTwoLegTwo = {
-  0.65,     //P
-  0.0,  //I
-  29,      //D
-  0.4,     //speed
-  1.7,     //targetX
-  -2.148,    //targetY
-  -2.151, //target y turn around point
-  0,        //targetAngle
-  15,        //targetAoA
-};
-PIDAutoConfig autoRoutineTwoLegThree = {
-  -0.65,     //P
-  0.0,  //I
-  -29,      //D
-  -0.4,     //speed
-  1.7,     //targetX
-  -1.848,
+ -0.7,        //P
+  0.0,     //I
+  -25,       //D
+  -0.5,      //speed
+  0,        //targetX
+  5.1,   //targetY
   5.1, //target y turn around point
   0,        //targetAngle
   10,        //targetAoA
-  
+};
+PIDAutoConfig autoRoutineTwoLegThree = {
+  0.7,        //P
+  0.0,     //I
+  25,       //D
+  0.5,      //speed
+  0.1,        //targetX
+  0,   //targetY
+  -2.5, //target y turn around point
+  0,        //targetAngle
+  10,        //targetAoA
 };
 //Two
 PIDAutoConfig autoRoutineTwoLegFour = {
-  -0.65,     //P
-  0.0,  //I
-  -29,      //D
-  -0.4,     //speed
-  0,     //targetX
-  0,    //targetY
-  5.1, //target y turn around point
-  0,        //targetAngle
-  15,        //targetAoA
+ 0.7,      //P
+  0, //I
+  25,       //D
+  0.5,      //speed
+  0.1,     //targetX
+  -1.9,    //targetY
+  -2.5, //target y turn around point
+  -36,        //targetAngle
+  10,        //targetAngle of Attack
 };
 PIDAutoConfig autoRoutineTwoLegFive = {
   -0.7,        //P
@@ -144,15 +142,15 @@ PIDAutoConfig autoRoutineTwoLegSix = {
 };
 /*----------------------------Routine Three Setup------------------*/
 PIDAutoConfig autoRoutineThreeLegOne = {
-  -0.9,     //P
-  0.00001,  //I
-  -42,      //D
-  -0.8,     //speed
+  -0.7,      //P
+  0, //I
+  -25,       //D
+  -0.2,      //speed
   0,     //targetX
-  3.3,    //targetY
-  3.3, //target y turn around point
-  0,        //targetAngle
-  90        //targetAoA
+  2.312,    //targetY
+  2.048,
+  22.5,        //targetAngle
+  90,        //targetAngle of Attack
 };
 //Two
 PIDAutoConfig autoRoutineThreeLegTwo = {

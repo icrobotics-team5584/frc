@@ -5,16 +5,10 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdAutoRoutineOne.h"
+#include "commands/CmdAutoRoutineFour.h"
 #include "commands/CmdAutoEncoderDrive.h"
-#include "commands/CmdIntake.h"
-#include "commands/CmdIntakeStop.h"
-#include "commands/CmdAutoIntakeDeploy.h"
-#include "commands/CmdAutoShoot.h"
-#include "commands/CmdAutoStorage.h"
-#include <iostream>
 
-CmdAutoRoutineThree::CmdAutoRoutineThree() {
+CmdAutoRoutineFour::CmdAutoRoutineFour() {
   // Add Commands here:
   // e.g. AddSequential(new Command1());
   //      AddSequential(new Command2());
@@ -31,18 +25,5 @@ CmdAutoRoutineThree::CmdAutoRoutineThree() {
   // e.g. if Command1 requires chassis, and Command2 requires arm,
   // a CommandGroup containing them would require both the chassis and the
   // arm.
-  AddParallel(new CmdAutoIntakeDeploy());
-  AddParallel(new CmdIntake());
-  AddSequential(new CmdAutoEncoderDrive(autoRoutineThreeLegOne)); 
-  //AddSequential(new CmdAutoEncoderDrive(autoRoutineThreeLegTwo));  
-  //AddSequential(new CmdIntakeStop());
-  //AddParallel(new CmdStorageRetract(), 1);
-  //AddParallel(new CmdAutoStorageStop());
-  //AddSequential(new CmdAutoEncoderDrive(autoRoutineThreeLegThree));
-//
-  //AddParallel(new CmdShooterShoot(), 4);
-  //AddSequential(new CmdAutowait(1));
-  //AddParallel(new CmdAutoStorage());
-  //AddSequential(new CmdAutowait(3));
-  //AddParallel(new CmdAutoStorageStop());
+  AddSequential(new CmdAutoEncoderDrive(autoRoutineOneLegOne));
 }

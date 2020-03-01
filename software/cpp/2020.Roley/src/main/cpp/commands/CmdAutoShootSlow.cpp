@@ -5,33 +5,33 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdAutoShoot.h"
+#include "commands/CmdAutoShootSlow.h"
 #include "Robot.h"
 
-CmdAutoShoot::CmdAutoShoot() {
+CmdAutoShootSlow::CmdAutoShootSlow() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  //Requires()
 }
 
 // Called just before this Command runs the first time
-void CmdAutoShoot::Initialize() {
-  Robot::subShooter->ShootAtSpeed(1.0);
+void CmdAutoShootSlow::Initialize() {
+  Robot::subShooter->ShootAtSpeed(0.775);
+
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdAutoShoot::Execute() {}
+void CmdAutoShootSlow::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdAutoShoot::IsFinished() { return false; }
+bool CmdAutoShootSlow::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdAutoShoot::End() {
+void CmdAutoShootSlow::End() {
   Robot::subShooter->Stop();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdAutoShoot::Interrupted() {
+void CmdAutoShootSlow::Interrupted() {
   End();
 }
