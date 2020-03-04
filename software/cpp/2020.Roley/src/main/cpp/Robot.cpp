@@ -32,6 +32,7 @@ std::shared_ptr<PosEncoderGyro> Robot::posEncoderGyro;
 std::shared_ptr<CmdResetGyro> Robot::cmdResetGyro;
 std::shared_ptr<SubClimber> Robot::subClimber;
 std::shared_ptr<SubBuddyClimb> Robot::subBuddyClimb;
+std::shared_ptr<SubVision> Robot::subVision;
 std::shared_ptr<frc::Timer> Robot::timer;
 std::unique_ptr<OI> Robot::oi;
 std::shared_ptr<TalonSRX> Robot::doubleTalon;
@@ -51,6 +52,7 @@ void Robot::RobotInit() {
   subStorage.reset(new SubStorage());
   subClimber.reset(new SubClimber());
   subBuddyClimb.reset(new SubBuddyClimb());
+  subVision.reset(new SubVision());
 
   //Setup network table
   nt::NetworkTableInstance ntTableInstance = nt::NetworkTableInstance::GetDefault();
@@ -130,13 +132,6 @@ void Robot::RobotPeriodic() {
   posEncoderGyro->updateAbsolutePosition();
   posEncoderGyro->updateRelativePosition();
   //std::cout << "update position" << std::endl;
-  
-  frc::SmartDashboard::PutNumber("TARGET_X", ntTable->GetNumber("pegx", 0));
-  frc::SmartDashboard::PutNumber("TARGET_Y", ntTable->GetNumber("pegy", 0));
-  frc::SmartDashboard::PutNumber("TARGET_DIST", ntTable->GetNumber("pegrange", 0));
-  frc::SmartDashboard::PutNumber("VISION_FPS", ntTable->GetNumber("fps", 0));
-  frc::SmartDashboard::PutNumber("VISION_STATUS", ntTable->GetNumber("status", 0));
-  frc::SmartDashboard::PutNumber("VISION_HITRATE", ntTable->GetNumber("hitrate", 0));
 }
 
 

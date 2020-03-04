@@ -7,6 +7,7 @@
 
 #include "commands/CmdVisionTrack.h"
 #include "Robot.h"
+
 #include "frc/smartdashboard/SmartDashboard.h"
 
 CmdVisionTrack::CmdVisionTrack() {
