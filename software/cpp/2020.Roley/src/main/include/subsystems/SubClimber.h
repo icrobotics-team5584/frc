@@ -53,11 +53,11 @@ class SubClimber : public frc::Subsystem {
   double derivative;
   double lastError = 0;
   double PIDOutput;
-  double kP = -0.0008;
-  double kI = 0;
+  double kP = -0.0009;
+  double kI = -0.0000000001;
   double kD = 0;
   double maxUpSpeed = 0.9;
-  double maxDownSpeed = -0.45;
+  double maxDownSpeed = -0.8;
 
   bool startedDown;
   bool PIDEnabled = true;
