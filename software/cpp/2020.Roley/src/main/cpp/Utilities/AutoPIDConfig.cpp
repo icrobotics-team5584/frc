@@ -142,15 +142,15 @@ PIDAutoConfig autoRoutineTwoLegSix = {
 };
 /*----------------------------Routine Three Setup------------------*/
 PIDAutoConfig autoRoutineThreeLegOne = {
-  -0.7,      //P
+  0.7,       //P
   0, //I
-  -25,       //D
-  -0.2,      //speed
+  25,        //D
+  0.5,       //speed
   0,     //targetX
-  2.8,    //targetY
-  3.5,
-  26,        //targetAngle
-  90,        //targetAngle of Attack
+  -1.9,    //targetY
+  -2.5,
+  34.2,        //targetAngle
+  10,        //targetAngle of Attack
 };
 //Two
 PIDAutoConfig autoRoutineThreeLegTwo = {

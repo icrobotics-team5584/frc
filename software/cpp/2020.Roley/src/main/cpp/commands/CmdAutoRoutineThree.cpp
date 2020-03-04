@@ -12,6 +12,7 @@
 #include "commands/CmdAutoIntakeDeploy.h"
 #include "commands/CmdAutoShoot.h"
 #include "commands/CmdAutoStorage.h"
+#include "commands/CmdAutoShootSlow.h"
 #include <iostream>
 
 CmdAutoRoutineThree::CmdAutoRoutineThree() {
@@ -32,8 +33,9 @@ CmdAutoRoutineThree::CmdAutoRoutineThree() {
   // a CommandGroup containing them would require both the chassis and the
   // arm.
   AddParallel(new CmdAutoIntakeDeploy());
-  AddParallel(new CmdIntake());
+  AddParallel(new CmdAutoShootSlow(), 3);
   AddSequential(new CmdAutoEncoderDrive(autoRoutineThreeLegOne)); 
+  AddSequential(new CmdAutoStorage(), 1);
   //AddSequential(new CmdAutoEncoderDrive(autoRoutineThreeLegTwo));  
   //AddSequential(new CmdIntakeStop());
   //AddParallel(new CmdStorageRetract(), 1);
