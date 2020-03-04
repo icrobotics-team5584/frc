@@ -5,10 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdAutoRoutineTwo.h"
+#include "commands/CmdAutoRoutineOne.h"
 #include "commands/CmdAutoEncoderDrive.h"
-#include "commands/CmdAutoIntake.h"
+#include "commands/CmdIntake.h"
 #include "commands/CmdIntakeStop.h"
+#include "commands/CmdAutoIntakeDeploy.h"
+#include "commands/CmdAutoShoot.h"
+#include "commands/CmdAutoShootSlow.h"
+#include "commands/CmdAutoStorage.h"
 
 
 #include <iostream>
@@ -30,14 +34,23 @@ CmdAutoRoutineTwo::CmdAutoRoutineTwo() : CommandGroup("CmdAutoRoutineTwo: Steal"
   // a CommandGroup containing them would require both the chassis and the
   // arm.
  // AddParallel(new CmdAutoIntake());
+  AddParallel(new CmdAutoIntakeDeploy());
+  AddParallel(new CmdAutoShootSlow(), 3);
   AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegOne));
+  AddSequential(new CmdAutoStorage(), 1);
+  AddParallel(new CmdIntake(), 6); 
   AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegTwo));
   AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegThree));
+  AddParallel(new CmdAutoShootSlow(), 3);
   AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegFour));
-  AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegFive));
-  AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegSix));
-  AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegOne));
-  AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegTwo));
+  AddSequential(new CmdAutoStorage(), 1);
+  //AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegTwo));
+  //AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegThree));
+  //AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegFour));
+  //AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegFive));
+  //AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegSix));
+  //AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegOne));
+  //AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegTwo));
 
  // AddSequential(new CmdIntakeStop());
 }

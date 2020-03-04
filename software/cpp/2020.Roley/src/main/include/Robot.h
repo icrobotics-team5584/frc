@@ -24,6 +24,7 @@
 #include "commands/CmdAutoRoutineOne.h"
 #include "commands/CmdAutoRoutineTwo.h"
 #include "commands/CmdAutoRoutineThree.h"
+#include "commands/CmdAutoRoutineFour.h"
 
 #include "networktables/NetworkTable.h"
 #include "networktables/NetworkTableInstance.h"
@@ -61,6 +62,7 @@ class Robot : public frc::TimedRobot {
   CmdAutoRoutineOne* autoOne;
   CmdAutoRoutineTwo* autoTwo;
   CmdAutoRoutineThree* autoThree;
+  CmdAutoRoutineFour* autoFour;
   frc::SendableChooser<frc::Command*> chooser;
 
 };

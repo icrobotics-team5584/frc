@@ -69,6 +69,7 @@ void Robot::RobotInit() {
   autoOne = new CmdAutoRoutineOne();
   autoTwo = new CmdAutoRoutineTwo();
   autoThree = new CmdAutoRoutineThree();
+  autoFour = new CmdAutoRoutineFour();
   //Auto INIT process
   oi.reset(new OI());
   posEncoderGyro->reset();
@@ -78,7 +79,9 @@ void Robot::RobotInit() {
   cmdResetGyro->Start();
   chooser.SetDefaultOption("Six Ball Auto", autoOne);
   chooser.AddOption("6 Ball Evasive Auto", autoTwo);
-  chooser.AddOption("Sad Trench Run", autoThree);
+  chooser.AddOption("EXPERIMENTAL! Magic 8 Ball Auto", autoThree);
+  chooser.AddOption("Drive forward 2.3m", autoFour);
+
   frc::SmartDashboard::PutData("Auto Selecter", &chooser);
 
 
@@ -146,6 +149,7 @@ void Robot::AutonomousInit() {
   autoOne = new CmdAutoRoutineOne();
   autoTwo = new CmdAutoRoutineTwo();
   autoThree = new CmdAutoRoutineThree();
+  autoFour = new CmdAutoRoutineFour();
 
   if (autonomousCommand != nullptr){
     autonomousCommand->Cancel();

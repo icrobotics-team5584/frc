@@ -136,3 +136,8 @@ void SubShooter::Stop(){
 }
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
+
+void SubShooter::ShootAtSpeed(double shootSpeed){
+  leftMotor->Set(-shootSpeed);
+  rightMotor->Set(shootSpeed);
+}
