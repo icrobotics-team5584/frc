@@ -20,6 +20,7 @@
 #include "commands/CmdRollStorageBack.h"
 #include "commands/CmdShooterShoot.h"
 #include "commands/CmdShooterShootReverse.h"
+#include "commands/CmdAutoShoot.h"
 
 #include "Robot.h"
 
@@ -74,7 +75,7 @@ void Robot::RobotInit() {
   //Runs a cmd that waits for th navx to stop calibrating then resets gyro
   cmdResetGyro->Start();
   chooser.SetDefaultOption("Six Ball Auto", autoOne);
-  chooser.AddOption("Trench Steal Run", autoTwo);
+  chooser.AddOption("6 Ball Evasive Auto", autoTwo);
   chooser.AddOption("Sad Trench Run", autoThree);
   frc::SmartDashboard::PutData("Auto Selecter", &chooser);
 
@@ -106,15 +107,15 @@ void Robot::RobotInit() {
   frc::Shuffleboard::GetTab("HARDWARE").Add("CmdRollStorage", *(new CmdRollStorage())).WithSize(SHUFFLE_WIDTH,SHUFFLE_HEIGHT);
   frc::Shuffleboard::GetTab("HARDWARE").Add("CmdRollStorageBack", *(new CmdRollStorageBack())).WithSize(SHUFFLE_WIDTH,SHUFFLE_HEIGHT);
   //SHOOTER ----------------------------------------------------------------
-  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdShooterShoot", *(new CmdShooterShoot())).WithSize(SHUFFLE_WIDTH,SHUFFLE_HEIGHT);
-  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdShooterShootReverse", *(new CmdShooterShootReverse())).WithSize(SHUFFLE_WIDTH,SHUFFLE_HEIGHT);
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdShooterShoot", *(new CmdShooterShoot()));
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdShooterShootReverse", *(new CmdShooterShootReverse()));
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdAutoShoot", *(new CmdAutoShoot()));
 
   frc::SmartDashboard::PutNumber("Vision P", 0);
   frc::SmartDashboard::PutNumber("Vision I", 0);
   frc::SmartDashboard::PutNumber("Vision D", 0);
   frc::SmartDashboard::PutNumber("Vision Speed Cap", 0);
   frc::SmartDashboard::PutNumber("Vision Integral Cap", 0);
-
 }
 
 

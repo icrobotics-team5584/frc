@@ -24,6 +24,9 @@
 #include "commands/CmdElevaterExtendMin.h"
 #include "commands/CmdElevatorBuddy.h"
 #include "commands/CmdVisionTrack.h"
+#include "commands/CmdShootSequence.h"
+#include "commands/CmdIntakeOutTake.h"
+
 OI::OI() {
 
   //std::cout<< "OI Started" << std::endl;
@@ -32,7 +35,7 @@ OI::OI() {
   joystick1.reset(new frc::Joystick(0));
 
   btnShoot.reset(new frc::JoystickButton(joystick1.get(), aBtn));
-  btnShoot->WhileHeld(new CmdShooterShoot());
+  btnShoot->WhileHeld(new CmdShootSequence());
 
   //Slow drive buttons
   btnSlowDown.reset(new AxisButton(joystick1.get(), triggerL));
@@ -51,6 +54,12 @@ OI::OI() {
 
   //btnOuttake->WhileHeld(new CmdOuttake());
 
+  //Intake reverse
+
+  btnIntakeReverse.reset(new frc::JoystickButton(joystick1.get(), yBtn));
+  btnIntakeReverse->WhileHeld(new CmdIntakeOutTake());
+
+
   //Climber Button
 
   //btnClimb.reset(new frc::JoystickButton(joystick1.get(), leftStickBtn));
@@ -59,8 +68,8 @@ OI::OI() {
   //btnRatchets->WhileHeld(new CmdEngageClimberRatchets());
 
   //Storage Pneumatics
-  btnStorageExpand.reset(new frc::JoystickButton(joystick1.get(), bBtn));
-  btnStorageExpand->ToggleWhenPressed(new CmdStorageTogglePneumatic);
+  btnReverseStorage.reset(new frc::JoystickButton(joystick1.get(), bBtn));
+  btnReverseStorage->WhileHeld(new CmdRollStorageBack());
 
   //std::cout<< "OI Ended" << std::endl;
 

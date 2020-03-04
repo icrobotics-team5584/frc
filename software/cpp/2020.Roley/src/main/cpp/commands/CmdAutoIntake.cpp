@@ -17,8 +17,8 @@ CmdAutoIntake::CmdAutoIntake() {
 void CmdAutoIntake::Initialize() {
   std::cout << "Auto One Start" << std::endl;
   Robot::subIntake->Intake();
-  Robot::subStorage->Forward();
-  Robot::subStorage->Expand();
+  Robot::subStorage->SetSpeed(0.4);
+  Robot::subStorage->BottomRollerForward();
 
 
 }
@@ -27,7 +27,7 @@ void CmdAutoIntake::Initialize() {
 void CmdAutoIntake::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdAutoIntake::IsFinished() { return true; }
+bool CmdAutoIntake::IsFinished() { return false; }
 
 // Called once after isFinished returns true
 void CmdAutoIntake::End() {
@@ -39,4 +39,6 @@ void CmdAutoIntake::End() {
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdAutoIntake::Interrupted() {}
+void CmdAutoIntake::Interrupted() {
+  End();
+}

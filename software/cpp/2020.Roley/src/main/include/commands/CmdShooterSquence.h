@@ -7,15 +7,9 @@
 
 #pragma once
 
-#include <frc/commands/Command.h>
-#include <iostream>
+#include <frc/commands/CommandGroup.h>
 
-class CmdStorageRetract : public frc::Command {
+class CmdShooterSquence : public frc::CommandGroup {
  public:
-  CmdStorageRetract();
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
+  CmdShooterSquence();
 };

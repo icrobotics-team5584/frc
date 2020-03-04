@@ -8,11 +8,10 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-#include <iostream>
 
-class CmdStorageRetract : public frc::Command {
+class CmdStartShoot : public frc::Command {
  public:
-  CmdStorageRetract();
+  CmdStartShoot();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;

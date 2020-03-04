@@ -17,31 +17,31 @@
 #include "frc/smartdashboard/SmartDashboard.h"
 
 SubShooter::SubShooter() : Subsystem("ExampleSubsystem") {
-  leftMotor.reset(new WPI_TalonSRX(can_srxShooterLeft));
-  rightMotor.reset(new WPI_TalonSRX(can_srxShooterRight));
+  leftMotor.reset(new rev::CANSparkMax(SPM_ShooterLeft, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  rightMotor.reset(new rev::CANSparkMax(SPM_ShooterRight, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
 
-  leftMotor->ConfigFactoryDefault();
-  rightMotor->ConfigFactoryDefault();
+  leftMotor->RestoreFactoryDefaults();
+  rightMotor->RestoreFactoryDefaults();
 
   //frc::SmartDashboard::PutNumber("RPM", 0);
 
-  leftMotor->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, kTimeoutMs);
-  leftMotor->SetSensorPhase(true);
-  rightMotor->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, kTimeoutMs);
-  rightMotor->SetSensorPhase(true);
+  //leftMotor->SetSelectedSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, kTimeoutMs);
+  //leftMotor->SetSensorPhase(true);
+  //rightMotor->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, kTimeoutMs);
+  //rightMotor->SetSensorPhase(true);
 
-  leftMotor->ConfigNominalOutputForward(0, kTimeoutMs);
-  leftMotor->ConfigNominalOutputReverse(0, kTimeoutMs);
-  leftMotor->ConfigPeakOutputForward(1, kTimeoutMs);
-  leftMotor->ConfigPeakOutputReverse(-1, kTimeoutMs);
+  //leftMotor->ConfigNominalOutputForward(0, kTimeoutMs);
+  //leftMotor->ConfigNominalOutputReverse(0, kTimeoutMs);
+  //leftMotor->ConfigPeakOutputForward(1, kTimeoutMs);
+  //leftMotor->ConfigPeakOutputReverse(-1, kTimeoutMs);
 
-  rightMotor->ConfigNominalOutputForward(0, kTimeoutMs);
-	rightMotor->ConfigNominalOutputReverse(0, kTimeoutMs);
-	rightMotor->ConfigPeakOutputForward(1, kTimeoutMs);
-	rightMotor->ConfigPeakOutputReverse(-1, kTimeoutMs);
+  //rightMotor->ConfigNominalOutputForward(0, kTimeoutMs);
+	//rightMotor->ConfigNominalOutputReverse(0, kTimeoutMs);
+	//rightMotor->ConfigPeakOutputForward(1, kTimeoutMs);
+	//rightMotor->ConfigPeakOutputReverse(-1, kTimeoutMs);
 
-  leftMotor->SetNeutralMode(NeutralMode::Coast);
-  rightMotor->SetNeutralMode(NeutralMode::Coast);
+  leftMotor->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  rightMotor->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
 
   // frc::SmartDashboard::PutNumber("P Value Left", SetPLeft);
   // frc::SmartDashboard::PutNumber("I Value Left", SetILeft);
@@ -63,29 +63,29 @@ void SubShooter::InitDefaultCommand() {
   // SetDefaultCommand(new MySpecialCommand());
 }
 double SubShooter::GetLeftRPM(){
-  double sensorUnitVel = leftMotor->GetSelectedSensorVelocity();
-  return sensorUnitVel/4096*600;
-  
+  //double sensorUnitVel = leftMotor->GetSelectedSensorVelocity();
+  //return sensorUnitVel/4096*600;
+  return 0;
 }
 
 double SubShooter::GetRightRPM(){
-  double sensorUnitVel = rightMotor->GetSelectedSensorVelocity();
-  return sensorUnitVel/4096*600;
-  
+  //double sensorUnitVel = rightMotor->GetSelectedSensorVelocity();
+  //return sensorUnitVel/4096*600;
+  return 0;
   
   
 }
 
 void SubShooter::PowerShoot(){
   shooterSpeed = frc::SmartDashboard::GetNumber("Shooter Speed", 0.8);
-  leftMotor->Set(ControlMode::PercentOutput, -shooterSpeed);
-  rightMotor->Set(ControlMode::PercentOutput, shooterSpeed);
+  leftMotor->Set(-shooterSpeed);
+  rightMotor->Set(shooterSpeed);
 }
 
 void SubShooter::PowerShootReverse(){
   shooterSpeed = frc::SmartDashboard::GetNumber("Shooter Speed", 0.8);
-  leftMotor->Set(ControlMode::PercentOutput, shooterSpeed);
-  rightMotor->Set(ControlMode::PercentOutput, -shooterSpeed);
+  leftMotor->Set(shooterSpeed);
+  rightMotor->Set(-shooterSpeed);
 }
 
 void SubShooter::Shoot(){

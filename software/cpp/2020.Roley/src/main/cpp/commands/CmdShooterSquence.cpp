@@ -5,14 +5,33 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdAutoRoutineTwo.h"
-#include "commands/CmdAutoEncoderDrive.h"
-#include "commands/CmdAutoIntake.h"
-#include "commands/CmdIntakeStop.h"
+#include "commands/CmdShooterSquence.h"
+#include "commands/CmdStartShoot.h"
+#include "commands/CmdStopShoot.h"
+#include "commands/CmdStorageRetract.h"
+#include "commands/CmdRollStorage.h"
+#include "commands/CmdDeployIntake.h"
+#include "commands/CmdDeployIntakeOnly.h"
+#include "Robot.h"
+#include "commands/CmdShooterShoot.h"
 
 
-#include <iostream>
-CmdAutoRoutineTwo::CmdAutoRoutineTwo() : CommandGroup("CmdAutoRoutineTwo: Steal") {
+CmdShooterSquence::CmdShooterSquence() {
+  AddSequential(new CmdStorageRetract(), 0.5);
+  AddParallel(new CmdStartShoot(), 0.1);
+  AddParallel(new CmdDeployIntakeOnly());
+  AddParallel(new CmdStopShoot());
+  AddSequential(new CmdRollStorage());
+
+  
+
+
+
+
+  
+
+  
+
   // Add Commands here:
   // e.g. AddSequential(new Command1());
   //      AddSequential(new Command2());
@@ -29,23 +48,4 @@ CmdAutoRoutineTwo::CmdAutoRoutineTwo() : CommandGroup("CmdAutoRoutineTwo: Steal"
   // e.g. if Command1 requires chassis, and Command2 requires arm,
   // a CommandGroup containing them would require both the chassis and the
   // arm.
- // AddParallel(new CmdAutoIntake());
-  AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegOne));
-  AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegTwo));
-  AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegThree));
-  AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegFour));
-  AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegFive));
-  AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegSix));
-  AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegOne));
-  AddSequential(new CmdAutoEncoderDrive(autoRoutineTwoLegTwo));
-
- // AddSequential(new CmdIntakeStop());
-}
-
-void CmdAutoRoutineTwo::Initialize(){
-  std::cout << "routine init" << std::endl;
-}
-
-void CmdAutoRoutineTwo::Execute(){
-  std::cout << "routine exe" << std::endl;
 }

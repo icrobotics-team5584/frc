@@ -40,7 +40,7 @@ SubDriveBase::SubDriveBase() : Subsystem("ExampleSubsystem"), dollyTalon(Robot::
   SmartDashboard::PutNumber("auto D", y_kD);
   SmartDashboard::PutNumber("y position", y_position);
 
-  SmartDashboard::PutNumber("position", position);
+  SmartDashboard::PutNumber("position", (position+1.7));
 
 }
 
@@ -60,10 +60,10 @@ void SubDriveBase::teleConfig() {
   _spmFrontRight->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
   _spmBackLeft->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
   _spmBackRight->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
-  _spmFrontLeft->SetOpenLoopRampRate(0);
-  _spmFrontRight->SetOpenLoopRampRate(0);
-  _spmBackLeft->SetOpenLoopRampRate(0);
-  _spmBackRight->SetOpenLoopRampRate(0);
+  _spmFrontLeft->SetOpenLoopRampRate(0.2);
+  _spmFrontRight->SetOpenLoopRampRate(0.2);
+  _spmBackLeft->SetOpenLoopRampRate(0.2);
+  _spmBackRight->SetOpenLoopRampRate(0.2);
 }
 
 void SubDriveBase::InitDefaultCommand() {
@@ -74,7 +74,7 @@ void SubDriveBase::InitDefaultCommand() {
 }
 
 void SubDriveBase::Periodic(){
-  SmartDashboard::PutNumber("position", position);
+  SmartDashboard::PutNumber("position", position+1.7);
 
   autoYaw = getActualYaw() - _targetYaw;
   //SmartDashboard::PutNumber("autoyaw", autoYaw);
