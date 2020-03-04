@@ -49,4 +49,5 @@ class SubShooter : public frc::Subsystem {
   void PowerShootReverse();
   void Shoot();
   void Stop();
+  void ShootAtSpeed(double shootSpeed);
 };
