@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>WebJCC</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="/raleway.css" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link href="FadeIn.css" rel="stylesheet" type="text/css">
+  <link href="centerElements.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	
+	<script>
+	document.body.classList.add('fade');
+	</script>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+	<div class="container">
+    <div class="row">
+      <div class="one-half column" style="margin-top: 25%">
+        <h4>WebJCC</h4>
+		  <p><i>(Web-based Jetson Camera Client)</i></p>
+        <p>A simple webstream client made for the Nvidia Jetson. To begin, enter the correct values into the Options tab below.</p>
+      </div>
+    </div>
+	  
+	<div class="row">
+    	<div class="six columns">
+      		<label for="ipInput">IP Address</label>
+      		<input class="u-full-width" type="text" placeholder="192.168.0.1" id="ipInput">
+    	</div>
+    	<div class="six columns">
+	      	<label for="portInput">Port</label>
+      		<input class="u-full-width" type="text" placeholder="5800" id="portInput">
+    	</div>
+  	</div>
+  
+	<div class="row">
+    	<div class="six columns">
+      		<label for="pathInput">Path</label>
+      		<input class="u-full-width" type="text" placeholder="/?action=stream" id="pathInput">
+    	</div>
+		<div class="six columns">
+		  <label for="keepaliveInput">Keep Stream Alive?</label>
+		  <select class="u-full-width" id="keepaliveInput">
+			<option value="keepaliveYes">Yes</option>
+			<option value="keepaliveNo">No</option>
+		  </select>
+    	</div>
+  	</div>
+	  
+	<button class="button-primary" type="button" onclick="confirmChanges()">Confirm Settings</button>
+	<button type="button" onClick="loadPreviousSettings()">Load Last Settings</button>
+	  
+		<br> <a href="#" type="button" onClick="showAbout()">About</a>
+		
+  </div>
+	
+<script>
+  document.addEventListener("DOMContentLoaded", function(e) {
+    document.body.classList.remove('fade');
+  });
+</script>
+
+<script>
+	function showAbout() {
+		window.alert("The Web Jetson Camera Client:" + "\n" + "Version 1.11: Feb 23rd 2020." + "\n" + "Created by Mitchell Blaser.")
+	}
+</script>
+	
+<script>
+	//This script section handles the actual streaming. The rest are all for transitions, etc.	
+	function confirmChanges() {
+		localStorage.setItem("IP", document.getElementById("ipInput").value);
+		localStorage.setItem("PORT", document.getElementById("portInput").value);
+		localStorage.setItem("PATH", document.getElementById("pathInput").value);
+		localStorage.setItem("KEEPALIVE", document.getElementById("keepaliveInput").value);
+		
+		window.location.href = "viewer.html";	
+	}
+	
+	var ip, port, path;
+	
+	function loadPreviousSettings() {
+		document.getElementById("ipInput").value = localStorage.getItem("IP");
+		document.getElementById("portInput").value = localStorage.getItem("PORT");
+		document.getElementById("pathInput").value = localStorage.getItem("PATH");
+		document.getElementById("keepaliveInput").value = localStorage.getItem("KEEPALIVE");
+	}
+	
+</script>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>

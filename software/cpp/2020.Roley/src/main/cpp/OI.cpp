@@ -25,6 +25,7 @@
 #include "commands/CmdElevatorBuddy.h"
 #include "commands/CmdShootSequence.h"
 #include "commands/CmdIntakeOutTake.h"
+#include "commands/CmdShuffle.h"
 
 OI::OI() {
 
@@ -47,6 +48,9 @@ OI::OI() {
   btnDeployIntake->WhileHeld(new CmdDeployIntake());
   btnIntake->WhileHeld(new CmdIntake());
   //btnOuttake->WhileHeld(new CmdOuttake());
+
+  btnShuffle.reset(new frc::JoystickButton(joystick1.get(), xBtn));
+  btnShuffle->WhenPressed(new CmdShuffle());
 
   //Intake reverse
 

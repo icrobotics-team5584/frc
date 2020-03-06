@@ -53,8 +53,8 @@ void SubClimber::Periodic(){
   }
   frc::SmartDashboard::PutBoolean("ratchet not engaged", !isElevatorLocked);
   CustomPID(srxClimberLeft->GetSelectedSensorPosition());
-  maxUpSpeed = frc::SmartDashboard::GetNumber("Elevator Up Speed", 0.8);
-  maxDownSpeed = frc::SmartDashboard::GetNumber("Elevator Down Speed", 0.45);
+  //maxUpSpeed = frc::SmartDashboard::GetNumber("Elevator Up Speed", 0.8);
+  //maxDownSpeed = frc::SmartDashboard::GetNumber("Elevator Down Speed", 0.45);
   //target = frc::SmartDashboard::GetNumber("Target ele", 0);
   frc::SmartDashboard::PutNumber("Target ele", target);
   kP = frc::SmartDashboard::GetNumber("kP", -0.0008);
