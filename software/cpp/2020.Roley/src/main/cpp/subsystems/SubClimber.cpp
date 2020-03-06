@@ -61,6 +61,8 @@ void SubClimber::Periodic(){
   frc::SmartDashboard::PutNumber("elevater current speed", srxClimberLeft->GetMotorOutputPercent());
   frc::SmartDashboard::PutNumber("elevater position", srxClimberLeft->GetSelectedSensorPosition());
 
+  std::cout << "Elevator Encoder Position: " << srxClimberLeft->GetSelectedSensorPosition() << std::endl;
+
   frc::SmartDashboard::PutBoolean("limit top", LimitClimbUp->Get());
   frc::SmartDashboard::PutBoolean("limit bottom", LimitClimbDown->Get());
   frc::SmartDashboard::PutBoolean("PID enabled", PIDEnabled);
