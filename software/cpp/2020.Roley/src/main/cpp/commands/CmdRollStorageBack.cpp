@@ -16,7 +16,8 @@ CmdRollStorageBack::CmdRollStorageBack() {
 
 // Called just before this Command runs the first time
 void CmdRollStorageBack::Initialize() {
-  Robot::subStorage->Backward();
+  Robot::subStorage->Forward();
+  Robot::subStorage->BottomRollerBackward();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -28,6 +29,7 @@ bool CmdRollStorageBack::IsFinished() { return false; }
 // Called once after isFinished returns true
 void CmdRollStorageBack::End() {  
   Robot::subStorage->Stop();
+  Robot::subStorage->BottomRollerStop();
 }
 
 // Called when another command which requires one or more of the same
