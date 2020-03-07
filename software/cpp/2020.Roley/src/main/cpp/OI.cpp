@@ -26,6 +26,9 @@
 #include "commands/CmdVisionTrack.h"
 #include "commands/CmdShootSequence.h"
 #include "commands/CmdIntakeOutTake.h"
+#include "commands/CmdShuffle.h"
+#include "commands/CmdManualStorage.h"
+
 
 OI::OI() {
 
@@ -53,6 +56,9 @@ OI::OI() {
   btnVisionTrack->WhileHeld(new CmdVisionTrack());
 
   //btnOuttake->WhileHeld(new CmdOuttake());
+
+  btnShuffle.reset(new frc::JoystickButton(joystick1.get(), xBtn));
+  btnShuffle->WhileHeld(new CmdManualStorage());
 
   //Intake reverse
 

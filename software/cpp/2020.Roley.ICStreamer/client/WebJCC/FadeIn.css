@@ -1,0 +1,11 @@
+@charset "utf-8";
+
+body {
+  opacity: 1;
+  transition: 1s opacity;
+}
+
+body.fade {
+    opacity: 0;
+    transition: none;
+}

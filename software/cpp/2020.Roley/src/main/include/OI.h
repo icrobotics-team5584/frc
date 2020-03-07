@@ -71,6 +71,7 @@ class OI {
   std::unique_ptr<frc::JoystickButton> btnOverride;
   std::unique_ptr<frc::JoystickButton> btnRatchets;
   std::unique_ptr<frc::JoystickButton> btnIntakeReverse;
+  std::unique_ptr<frc::JoystickButton> btnShuffle;
   std::unique_ptr<frc::JoystickButton> btnVisionTrack;
 
   std::unique_ptr<frc::JoystickButton> btnReverseStorage;
