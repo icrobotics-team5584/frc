@@ -61,6 +61,7 @@ class SubClimber : public frc::Subsystem {
 
   bool startedDown;
   bool PIDEnabled = true;
+  const double elevatorUpPos = 30900;
 
  public:
   SubClimber();

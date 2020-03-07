@@ -186,6 +186,16 @@ bool SubClimber::IsOnTarget()
 }
 
 void SubClimber::CustomPID(double PIDIntput){
+  
+  if(!LimitClimbDown->Get() && target < srxClimberLeft->GetSelectedSensorPosition()){
+    srxClimberLeft->SetSelectedSensorPosition(0.0);
+    target = 0;
+  }
+
+  if(!LimitClimbUp->Get() && target > srxClimberLeft->GetSelectedSensorPosition()){
+    srxClimberLeft->SetSelectedSensorPosition(elevatorUpPos);
+    target = elevatorUpPos;
+  }
   error = PIDIntput - target;
   intergral = intergral + error;
   derivative = error - lastError;
@@ -206,7 +216,7 @@ void SubClimber::CustomPID(double PIDIntput){
 }
 
 void SubClimber::ElevatorExtendMax(){
-  target = 30900;
+  target = elevatorUpPos;
 }
 
 void SubClimber::ElevaterExtendMin(){
