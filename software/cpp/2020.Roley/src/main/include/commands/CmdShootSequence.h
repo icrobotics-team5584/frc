@@ -8,6 +8,7 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include "frc/Timer.h"
 
 class CmdShootSequence : public frc::Command {
  public:
@@ -17,4 +18,6 @@ class CmdShootSequence : public frc::Command {
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+ private:
+  frc::Timer timer;
 };
