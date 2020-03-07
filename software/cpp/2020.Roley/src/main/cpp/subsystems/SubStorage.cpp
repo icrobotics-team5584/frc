@@ -31,7 +31,7 @@ SubStorage::SubStorage() : Subsystem("ExampleSubsystem"), lbrTopStorage(0){
     .Add("Bottom Roller Speed", kDefaultBottomRollerSpeed) 
     .GetEntry();
   nteBottomRollerReverseSpeed = frc::Shuffleboard::GetTab(kShuffleBoardSettingsTab)
-    .Add("Bottom Roller Reverse Speed", kDefaultBottomRollerSpeed) 
+    .Add("Bottom Roller Reverse Speed", kDefaultBottomRollerReverseSpeed) 
     .GetEntry();
 }
 

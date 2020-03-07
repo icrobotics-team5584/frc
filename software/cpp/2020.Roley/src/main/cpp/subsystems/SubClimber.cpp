@@ -39,7 +39,7 @@ SubClimber::SubClimber() : Subsystem("ExampleSubsystem") {
   frc::SmartDashboard::PutNumber("Elevator Down Speed", maxDownSpeed);
   frc::SmartDashboard::PutNumber("kP", kP);
 
-
+  frc::SmartDashboard::PutNumber("Buddy Target", buddyTarget);
 }
 
 void SubClimber::Periodic(){
@@ -60,6 +60,10 @@ void SubClimber::Periodic(){
   kP = frc::SmartDashboard::GetNumber("kP", -0.0008);
   frc::SmartDashboard::PutNumber("elevator current speed", srxClimberLeft->GetMotorOutputPercent());
   frc::SmartDashboard::PutNumber("elevator position", srxClimberLeft->GetSelectedSensorPosition());
+
+  buddyTarget = frc::SmartDashboard::GetNumber("Buddy Target", 3634);
+
+  std::cout << "Elevator Encoder Position: " << srxClimberLeft->GetSelectedSensorPosition() << std::endl;
 
   frc::SmartDashboard::PutBoolean("limit top", LimitClimbUp->Get());
   frc::SmartDashboard::PutBoolean("limit bottom", LimitClimbDown->Get());
@@ -224,8 +228,8 @@ void SubClimber::ElevaterExtendMin(){
 }
 
 void SubClimber::ElevatorExtendBuddy(){
-  if(srxClimberLeft->GetSelectedSensorPosition() > 3634){
-    target = 3634;
+  if(srxClimberLeft->GetSelectedSensorPosition() > buddyTarget){
+    target = buddyTarget;
   }
 }
 

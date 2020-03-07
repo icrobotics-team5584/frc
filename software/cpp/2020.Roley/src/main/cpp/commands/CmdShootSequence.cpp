@@ -24,11 +24,18 @@ void CmdShootSequence::Initialize() {
   //storage roll
   Robot::subStorage->Forward();
   //storage bottom roller
-  Robot::subStorage->BottomRollerForward();
+  //Robot::subStorage->BottomRollerForward();
+  timer.Reset();
+  timer.Start();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdShootSequence::Execute() {}
+void CmdShootSequence::Execute() {
+  if (timer.Get() > frc::SmartDashboard::GetNumber("Bottom Roller Delay", 0.5))
+  {
+    Robot::subStorage->BottomRollerForward();
+  }
+}
 
 // Make this return true when this Command no longer needs to run execute()
 bool CmdShootSequence::IsFinished() { return false; }
