@@ -32,4 +32,5 @@ class CmdAutoEncoderDrive : public frc::Command {
   double _TargetAngle = 0;
   double _TargetTurnaround;
   bool isForward;
+  double _TargetAOA;
 };

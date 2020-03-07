@@ -23,11 +23,7 @@
 #include "commands/CmdAutoRoutineOne.h"
 #include "commands/CmdAutoRoutineTwo.h"
 #include "commands/CmdAutoRoutineThree.h"
-
-#include "commands/CmdDeployDolly.h"
-#include "commands/CmdElevatorPowerDown.h"
-#include "commands/CmdElevatorPowerUp.h"
-#include "commands/CmdEngageClimberRatchets.h"
+#include "commands/CmdAutoRoutineFour.h"
 
 #include <ctre/phoenix.h>
 
@@ -60,5 +56,7 @@ class Robot : public frc::TimedRobot {
   CmdAutoRoutineOne* autoOne;
   CmdAutoRoutineTwo* autoTwo;
   CmdAutoRoutineThree* autoThree;
+  CmdAutoRoutineFour* autoFour;
   frc::SendableChooser<frc::Command*> chooser;
+
 };

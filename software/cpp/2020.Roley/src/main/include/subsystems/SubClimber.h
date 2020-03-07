@@ -57,7 +57,9 @@ class SubClimber : public frc::Subsystem {
   double kI = 0;
   double kD = 0;
   double maxUpSpeed = 0.9;
-  double maxDownSpeed = -0.45;
+  double maxDownSpeed = -0.8;
+
+  double buddyTarget = 3634;
 
   bool startedDown;
   bool PIDEnabled = true;

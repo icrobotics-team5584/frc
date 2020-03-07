@@ -5,17 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdAutoRoutineThree.h"
+#include "commands/CmdAutoRoutineOne.h"
 #include "commands/CmdAutoEncoderDrive.h"
-#include "commands/CmdAutoIntake.h"
+#include "commands/CmdIntake.h"
 #include "commands/CmdIntakeStop.h"
-#include "commands/CmdDeployIntake.h"
-#include "commands/CmdStorageExpand.h"
-#include "commands/CmdStorageRetract.h"
+#include "commands/CmdAutoIntakeDeploy.h"
+#include "commands/CmdAutoShoot.h"
 #include "commands/CmdAutoStorage.h"
-#include "commands/CmdAutoStorageStop.h"
-#include "commands/CmdShooterShoot.h"
-#include "commands/CmdAutowait.h"
+#include <iostream>
 
 CmdAutoRoutineThree::CmdAutoRoutineThree() {
   // Add Commands here:
@@ -34,20 +31,18 @@ CmdAutoRoutineThree::CmdAutoRoutineThree() {
   // e.g. if Command1 requires chassis, and Command2 requires arm,
   // a CommandGroup containing them would require both the chassis and the
   // arm.
-  AddParallel(new CmdDeployIntake());
-  AddParallel(new CmdAutoIntake());
-  AddParallel(new CmdStorageExpand(), 0.5);
-  AddParallel(new CmdAutoStorage());
+  AddParallel(new CmdAutoIntakeDeploy());
+  AddParallel(new CmdIntake());
   AddSequential(new CmdAutoEncoderDrive(autoRoutineThreeLegOne)); 
-  AddSequential(new CmdAutoEncoderDrive(autoRoutineThreeLegTwo));  
-  AddSequential(new CmdIntakeStop());
-  AddParallel(new CmdStorageRetract(), 1);
-  AddParallel(new CmdAutoStorageStop());
-  AddSequential(new CmdAutoEncoderDrive(autoRoutineThreeLegThree));
-
-  AddParallel(new CmdShooterShoot(), 4);
-  AddSequential(new CmdAutowait(1));
-  AddParallel(new CmdAutoStorage());
-  AddSequential(new CmdAutowait(3));
-  AddParallel(new CmdAutoStorageStop());
+  //AddSequential(new CmdAutoEncoderDrive(autoRoutineThreeLegTwo));  
+  //AddSequential(new CmdIntakeStop());
+  //AddParallel(new CmdStorageRetract(), 1);
+  //AddParallel(new CmdAutoStorageStop());
+  //AddSequential(new CmdAutoEncoderDrive(autoRoutineThreeLegThree));
+//
+  //AddParallel(new CmdShooterShoot(), 4);
+  //AddSequential(new CmdAutowait(1));
+  //AddParallel(new CmdAutoStorage());
+  //AddSequential(new CmdAutowait(3));
+  //AddParallel(new CmdAutoStorageStop());
 }

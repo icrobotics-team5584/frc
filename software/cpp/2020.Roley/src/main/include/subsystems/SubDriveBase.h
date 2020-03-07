@@ -55,8 +55,9 @@ class SubDriveBase : public frc::Subsystem {
   double AutoSpeed = 0.8;
   double autoYaw = 0;
   double _targetYaw;
+  double position = 0;
 
-  double y_kP = 1.6;
+  double y_kP = 0.8;
   double y_kI = 0;
   double y_kD = 0;
   double y_previousError;
@@ -65,6 +66,7 @@ class SubDriveBase : public frc::Subsystem {
   double y_target;
   double y_error;
 
+
  public:
   SubDriveBase();
   void InitDefaultCommand() override;
@@ -72,7 +74,7 @@ class SubDriveBase : public frc::Subsystem {
   double getYaw();
   double getDistanceTravelled();
   void zeroEncoders();
-  void autoEncoderDrive(double target, double P, double I, double D, double Speed, double TargetY);
+  void autoEncoderDrive(double target, double P, double I, double D, double Speed, double TargetY, double TargetAOA);
   void resetYaw();
   void Periodic() override;
   bool isNavxCal();
@@ -82,4 +84,6 @@ class SubDriveBase : public frc::Subsystem {
   void retractDolly();
   double getJoystickY();
   double getJoystickX();
+  void autoConfig();
+  void teleConfig();
 };

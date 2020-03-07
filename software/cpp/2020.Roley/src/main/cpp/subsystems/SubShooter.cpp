@@ -17,31 +17,31 @@
 #include "frc/smartdashboard/SmartDashboard.h"
 
 SubShooter::SubShooter() : Subsystem("ExampleSubsystem") {
-  leftMotor.reset(new WPI_TalonSRX(can_srxShooterLeft));
-  rightMotor.reset(new WPI_TalonSRX(can_srxShooterRight));
+  leftMotor.reset(new rev::CANSparkMax(SPM_ShooterLeft, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  rightMotor.reset(new rev::CANSparkMax(SPM_ShooterRight, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
 
-  leftMotor->ConfigFactoryDefault();
-  rightMotor->ConfigFactoryDefault();
+  leftMotor->RestoreFactoryDefaults();
+  rightMotor->RestoreFactoryDefaults();
 
   //frc::SmartDashboard::PutNumber("RPM", 0);
 
-  leftMotor->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, kTimeoutMs);
-  leftMotor->SetSensorPhase(true);
-  rightMotor->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, kTimeoutMs);
-  rightMotor->SetSensorPhase(true);
+  //leftMotor->SetSelectedSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, kTimeoutMs);
+  //leftMotor->SetSensorPhase(true);
+  //rightMotor->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, kTimeoutMs);
+  //rightMotor->SetSensorPhase(true);
 
-  leftMotor->ConfigNominalOutputForward(0, kTimeoutMs);
-  leftMotor->ConfigNominalOutputReverse(0, kTimeoutMs);
-  leftMotor->ConfigPeakOutputForward(1, kTimeoutMs);
-  leftMotor->ConfigPeakOutputReverse(-1, kTimeoutMs);
+  //leftMotor->ConfigNominalOutputForward(0, kTimeoutMs);
+  //leftMotor->ConfigNominalOutputReverse(0, kTimeoutMs);
+  //leftMotor->ConfigPeakOutputForward(1, kTimeoutMs);
+  //leftMotor->ConfigPeakOutputReverse(-1, kTimeoutMs);
 
-  rightMotor->ConfigNominalOutputForward(0, kTimeoutMs);
-	rightMotor->ConfigNominalOutputReverse(0, kTimeoutMs);
-	rightMotor->ConfigPeakOutputForward(1, kTimeoutMs);
-	rightMotor->ConfigPeakOutputReverse(-1, kTimeoutMs);
+  //rightMotor->ConfigNominalOutputForward(0, kTimeoutMs);
+	//rightMotor->ConfigNominalOutputReverse(0, kTimeoutMs);
+	//rightMotor->ConfigPeakOutputForward(1, kTimeoutMs);
+	//rightMotor->ConfigPeakOutputReverse(-1, kTimeoutMs);
 
-  leftMotor->SetNeutralMode(NeutralMode::Coast);
-  rightMotor->SetNeutralMode(NeutralMode::Coast);
+  leftMotor->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  rightMotor->SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
 
   // frc::SmartDashboard::PutNumber("P Value Left", SetPLeft);
   // frc::SmartDashboard::PutNumber("I Value Left", SetILeft);
@@ -53,6 +53,7 @@ SubShooter::SubShooter() : Subsystem("ExampleSubsystem") {
   // frc::SmartDashboard::PutNumber("D Value Right", SetDRight);
   // frc::SmartDashboard::PutNumber("F Value Right", SetFRight);
   frc::SmartDashboard::PutNumber("Shooter Speed", shooterSpeed);
+  frc::SmartDashboard::PutNumber("Bottom Roller Delay", 0.5);
 }
 
 void SubShooter::InitDefaultCommand() {
@@ -63,23 +64,29 @@ void SubShooter::InitDefaultCommand() {
   // SetDefaultCommand(new MySpecialCommand());
 }
 double SubShooter::GetLeftRPM(){
-  double sensorUnitVel = leftMotor->GetSelectedSensorVelocity();
-  return sensorUnitVel/4096*600;
-  
+  //double sensorUnitVel = leftMotor->GetSelectedSensorVelocity();
+  //return sensorUnitVel/4096*600;
+  return 0;
 }
 
 double SubShooter::GetRightRPM(){
-  double sensorUnitVel = rightMotor->GetSelectedSensorVelocity();
-  return sensorUnitVel/4096*600;
-  
+  //double sensorUnitVel = rightMotor->GetSelectedSensorVelocity();
+  //return sensorUnitVel/4096*600;
+  return 0;
   
   
 }
 
 void SubShooter::PowerShoot(){
   shooterSpeed = frc::SmartDashboard::GetNumber("Shooter Speed", 0.8);
-  leftMotor->Set(ControlMode::PercentOutput, -shooterSpeed);
-  rightMotor->Set(ControlMode::PercentOutput, shooterSpeed);
+  leftMotor->Set(-shooterSpeed);
+  rightMotor->Set(shooterSpeed);
+}
+
+void SubShooter::PowerShootReverse(){
+  shooterSpeed = frc::SmartDashboard::GetNumber("Shooter Speed", 0.8);
+  leftMotor->Set(shooterSpeed);
+  rightMotor->Set(-shooterSpeed);
 }
 
 void SubShooter::Shoot(){
@@ -98,26 +105,26 @@ void SubShooter::Shoot(){
     // SetDRight = frc::SmartDashboard::GetNumber("D Value Right", 0);
     // SetFRight = frc::SmartDashboard::GetNumber("F Value Right", 0);
 
-    std::cout << "PID Left: " << SetPLeft << ", " << SetILeft << ", " << SetDLeft << ", " << SetFLeft << std::endl;
-    std::cout << "PID Right: " << SetPRight << ", " << SetIRight << ", " << SetDRight << ", " << SetFRight << std::endl;
-    std::cout << "Target RPM: " << RPM << std::endl;
+    // std::cout << "PID Left: " << SetPLeft << ", " << SetILeft << ", " << SetDLeft << ", " << SetFLeft << std::endl;
+    // std::cout << "PID Right: " << SetPRight << ", " << SetIRight << ", " << SetDRight << ", " << SetFRight << std::endl;
+    // std::cout << "Target RPM: " << RPM << std::endl;
 
-    leftMotor->Config_kF(kPIDLoopIdx, SetFLeft, kTimeoutMs);
-    leftMotor->Config_kP(kPIDLoopIdx, SetPLeft, kTimeoutMs);
-    leftMotor->Config_kI(kPIDLoopIdx, SetILeft, kTimeoutMs);
-    leftMotor->Config_kD(kPIDLoopIdx, SetDLeft, kTimeoutMs);
+    // leftMotor->Config_kF(kPIDLoopIdx, SetFLeft, kTimeoutMs);
+    // leftMotor->Config_kP(kPIDLoopIdx, SetPLeft, kTimeoutMs);
+    // leftMotor->Config_kI(kPIDLoopIdx, SetILeft, kTimeoutMs);
+    // leftMotor->Config_kD(kPIDLoopIdx, SetDLeft, kTimeoutMs);
 
-    rightMotor->Config_kF(kPIDLoopIdx, SetFRight, kTimeoutMs);
-    rightMotor->Config_kP(kPIDLoopIdx, SetPRight, kTimeoutMs);
-    rightMotor->Config_kI(kPIDLoopIdx, SetIRight, kTimeoutMs);
-    rightMotor->Config_kD(kPIDLoopIdx, SetDRight, kTimeoutMs);
+    // rightMotor->Config_kF(kPIDLoopIdx, SetFRight, kTimeoutMs);
+    // rightMotor->Config_kP(kPIDLoopIdx, SetPRight, kTimeoutMs);
+    // rightMotor->Config_kI(kPIDLoopIdx, SetIRight, kTimeoutMs);
+    // rightMotor->Config_kD(kPIDLoopIdx, SetDRight, kTimeoutMs);
 
-    double targetVelocity_UnitsPer100ms = RPM * 4096 / 600;
+    // double targetVelocity_UnitsPer100ms = RPM * 4096 / 600;
 
-    std::cout << "targetVelocity_UnitsPer100ms: " << targetVelocity_UnitsPer100ms << std::endl;
+    // std::cout << "targetVelocity_UnitsPer100ms: " << targetVelocity_UnitsPer100ms << std::endl;
 
-    leftMotor->Set(ControlMode::Velocity, targetVelocity_UnitsPer100ms); 
-    rightMotor->Set(ControlMode::Velocity, -targetVelocity_UnitsPer100ms);
+    // leftMotor->Set(ControlMode::Velocity, targetVelocity_UnitsPer100ms); 
+    // rightMotor->Set(ControlMode::Velocity, -targetVelocity_UnitsPer100ms);
 
     // leftMotor->Set(ControlMode::PercentOutput, percentage); 
     // rightMotor->Set(ControlMode::PercentOutput, -percentage);
@@ -130,3 +137,8 @@ void SubShooter::Stop(){
 }
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
+
+void SubShooter::ShootAtSpeed(double shootSpeed){
+  leftMotor->Set(-shootSpeed);
+  rightMotor->Set(shootSpeed);
+}

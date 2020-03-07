@@ -8,6 +8,7 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include <iostream>
 
 class CmdStorageRetract : public frc::Command {
  public:

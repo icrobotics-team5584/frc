@@ -16,8 +16,7 @@ CmdElevatorPowerDown::CmdElevatorPowerDown() {
 
 // Called just before this Command runs the first time
 void CmdElevatorPowerDown::Initialize() {
-  Robot::subClimber->DisablePID();
-  Robot::subClimber->setSpeed(-0.1);
+  //Robot::subClimber->setSpeed(0);
 }
 
 // Called repeatedly when this Command is scheduled to run
