@@ -58,8 +58,8 @@ void SubClimber::Periodic(){
   //target = frc::SmartDashboard::GetNumber("Target ele", 0);
   frc::SmartDashboard::PutNumber("Target ele", target);
   kP = frc::SmartDashboard::GetNumber("kP", -0.0008);
-  frc::SmartDashboard::PutNumber("elevater current speed", srxClimberLeft->GetMotorOutputPercent());
-  frc::SmartDashboard::PutNumber("elevater position", srxClimberLeft->GetSelectedSensorPosition());
+  frc::SmartDashboard::PutNumber("elevator current speed", srxClimberLeft->GetMotorOutputPercent());
+  frc::SmartDashboard::PutNumber("elevator position", srxClimberLeft->GetSelectedSensorPosition());
 
   frc::SmartDashboard::PutBoolean("limit top", LimitClimbUp->Get());
   frc::SmartDashboard::PutBoolean("limit bottom", LimitClimbDown->Get());
@@ -131,6 +131,17 @@ double SubClimber::getPos()
 
 void SubClimber::setSpeed(double speed) //Hardcodes power as %!!!!!
 {
+
+// dont move down when at bottom limit
+  if (!LimitClimbDown->Get() && speed < 0) { // Inverted limit as required. (Elevator=Down.)
+    speed = 0;
+  }
+
+// dont move up when at bottom limit
+  if (!LimitClimbUp->Get() && speed > 0) { // Inverted limit as required. (Elevator=Up.)
+    speed = 0;
+  }
+
   if(startedDown){
     if (speed >= 0 && isElevatorLocked){
       std::cout << "elevator stop" << std::endl;
