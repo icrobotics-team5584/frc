@@ -18,6 +18,7 @@ CmdElevatorFullExtend::CmdElevatorFullExtend() {
 
 // Called just before this Command runs the first time
 void CmdElevatorFullExtend::Initialize() {
+  Robot::subClimber->EnablePID();
   Robot::subClimber->ElevatorExtendMax();
 }
 
