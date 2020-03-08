@@ -108,6 +108,14 @@ int SubClimber::getEncoder()
   return srxClimberLeft->GetSelectedSensorPosition(0);
 }
 
+
+void SubClimber::Up()
+{
+  PIDEnabled = false;
+  RatchetsDisengage();
+  setSpeed(_upSpeed);
+}
+
 void SubClimber::setSpeed(double speed) //Hardcodes power as %!!!!!
 {
   if(startedDown){
@@ -170,6 +178,7 @@ void SubClimber::ElevaterExtendMin(){
 }
 
 void SubClimber::ElevatorExtendBuddy(){
+
   if(srxClimberLeft->GetSelectedSensorPosition() > buddyTarget){
     target = buddyTarget;
   }

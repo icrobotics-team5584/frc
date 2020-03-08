@@ -27,6 +27,7 @@
 #include "commands/CmdIntakeOutTake.h"
 #include "commands/CmdShuffle.h"
 #include "commands/CmdManualStorage.h"
+#include "commands/CmdClimberManualUp.h"
 
 
 OI::OI() {
@@ -89,6 +90,9 @@ OI::OI() {
 
   btnElevaterBuddy.reset(new ButtonPOV(joystick1.get(), RIGHT));
   btnElevaterBuddy->WhenPressed(new CmdElevatorBuddy());
+
+  btnManualClimberUp.reset(new ButtonPOV(joystick1.get(), LEFT));
+  btnManualClimberUp->WhileHeld(new CmdClimberManualUp());
 
 }
 

@@ -5,34 +5,34 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdElevatorFullExtend.h"
-
+#include "commands/CmdClimberManualUp.h"
 #include "Robot.h"
 
-CmdElevatorFullExtend::CmdElevatorFullExtend() {
+CmdClimberManualUp::CmdClimberManualUp() {
+  Requires(Robot::subClimber.get());
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(Robot::subClimber.get());
-
 }
 
 // Called just before this Command runs the first time
-void CmdElevatorFullExtend::Initialize() {
-  Robot::subClimber->EnablePID();
-  Robot::subClimber->ElevatorExtendMax();
+void CmdClimberManualUp::Initialize() {
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdElevatorFullExtend::Execute() {}
+void CmdClimberManualUp::Execute() {
+  Robot::subClimber->Up();
+}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdElevatorFullExtend::IsFinished() { return true; }
+bool CmdClimberManualUp::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdElevatorFullExtend::End() {}
+void CmdClimberManualUp::End() {
+  Robot::subClimber->Stop();
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdElevatorFullExtend::Interrupted() {
+void CmdClimberManualUp::Interrupted() {
   End();
 }

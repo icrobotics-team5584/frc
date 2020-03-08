@@ -73,6 +73,8 @@ class OI {
   std::unique_ptr<frc::JoystickButton> btnIntakeReverse;
   std::unique_ptr<frc::JoystickButton> btnShuffle;
 
+  std::unique_ptr<ButtonPOV> btnManualClimberUp;
+
   std::unique_ptr<frc::JoystickButton> btnReverseStorage;
   std::unique_ptr<ButtonPOV> btnElevaterUp;
   std::unique_ptr<ButtonPOV> btnElevaterDown;

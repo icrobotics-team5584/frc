@@ -63,7 +63,7 @@ class SubClimber : public frc::Subsystem {
 
   bool startedDown;
   bool PIDEnabled = true;
-
+  
  public:
   SubClimber();
   void InitDefaultCommand() override;
@@ -80,6 +80,8 @@ class SubClimber : public frc::Subsystem {
 
 
   virtual void Periodic();
+
+  void Up();
 
   int getEncoder();
   void setSpeed(double speed);
