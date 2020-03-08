@@ -29,5 +29,4 @@ class SubVision : public frc::Subsystem {
   double GetFPS();
   double GetHitrate();
   bool CanSeeTarget();
-
 };

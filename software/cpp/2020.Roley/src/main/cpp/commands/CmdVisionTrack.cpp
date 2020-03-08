@@ -28,7 +28,7 @@ void CmdVisionTrack::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdVisionTrack::Execute() {
-  if (Robot::subVision->CanSeeTarget())
+  if (Robot::ntTable->GetNumber("hitrate", 1) == 0)
   {
     _error = Robot::ntTable->GetNumber("pegy", 0);
 
