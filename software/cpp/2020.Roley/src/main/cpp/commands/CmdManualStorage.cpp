@@ -5,35 +5,35 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CmdRollStorageBack.h"
+#include "commands/CmdManualStorage.h"
 #include "Robot.h"
 
-CmdRollStorageBack::CmdRollStorageBack() {
-    Requires(Robot::subStorage.get());
+
+CmdManualStorage::CmdManualStorage() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
+  Requires(Robot::subStorage.get());
 }
 
 // Called just before this Command runs the first time
-void CmdRollStorageBack::Initialize() {
-  Robot::subStorage->Forward();
-  Robot::subStorage->BottomRollerBackward();
+void CmdManualStorage::Initialize() {
+  Robot::subStorage->Backward();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdRollStorageBack::Execute() {}
+void CmdManualStorage::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdRollStorageBack::IsFinished() { return false; }
+bool CmdManualStorage::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdRollStorageBack::End() {  
+void CmdManualStorage::End() {
   Robot::subStorage->Stop();
-  Robot::subStorage->BottomRollerStop();
+
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdRollStorageBack::Interrupted() {
+void CmdManualStorage::Interrupted() {
   End();
 }

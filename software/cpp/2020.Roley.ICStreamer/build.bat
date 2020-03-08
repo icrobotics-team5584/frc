@@ -65,7 +65,7 @@ ssh %PROJECTACCOUNT% cd %PROJECTWORKSPACE%; sudo date +%%T -s "%PROJECTTIME%"
 
 echo ---------------------------------------------------------------------------
 echo INFO: constructing archive
-tar -cvf ..\%PROJECTARCHIVE% *.md server/
+tar -cvf ..\%PROJECTARCHIVE% *.md server
 
 echo ---------------------------------------------------------------------------
 echo INFO: transporting archive
