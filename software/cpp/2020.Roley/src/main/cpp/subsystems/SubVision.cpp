@@ -25,6 +25,21 @@ void SubVision::Periodic() {
   frc::SmartDashboard::PutNumber("VISION_FPS", Robot::ntTable->GetNumber("fps", 0));
   frc::SmartDashboard::PutNumber("VISION_STATUS", Robot::ntTable->GetNumber("status", 0));
   frc::SmartDashboard::PutNumber("VISION_HITRATE", Robot::ntTable->GetNumber("hitrate", 0));
+
+  pegPos = Robot::ntTable->GetNumber("pegy", 0);
+  pegHeight = Robot::ntTable->GetNumber("pegx", 0);
+
+
+  frc::SmartDashboard::PutNumber("Target Position in FOV", pegPos);
+
+  if (Robot::ntTable->GetNumber("hitrate", 1) == 0 && pegPos > -15 && pegPos < 15 && pegHeight < -15)
+  {
+    frc::SmartDashboard::PutBoolean("Target in Shooting Range", true);
+  }
+  else
+  {
+    frc::SmartDashboard::PutBoolean("Target in Shooting Range", false);
+  }
 }
 
 double GetX() {
@@ -48,7 +63,7 @@ double GetHitrate() {
 }
 
 bool CanSeeTarget() {
-  if (Robot::ntTable->GetNumber("hitrate", 0) == 1)
+  if (Robot::ntTable->GetNumber("hitrate", 1) == 0)
   {
     return true;
   }

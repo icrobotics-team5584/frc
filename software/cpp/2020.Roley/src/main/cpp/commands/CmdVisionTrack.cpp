@@ -23,41 +23,52 @@ void CmdVisionTrack::Initialize() {
   D = frc::SmartDashboard::GetNumber("Vision D", 0);
   _cap = frc::SmartDashboard::GetNumber("Vision Speed Cap", 0);
   _maxIntegral = frc::SmartDashboard::GetNumber("Vision Integral Cap", 0);
-  _error = Robot::ntTable->GetNumber("pegx", 0);
+  _error = Robot::ntTable->GetNumber("pegy", 0);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdVisionTrack::Execute() {
-  _error = Robot::ntTable->GetNumber("pegx", 0);
-
-  if (_integral > _maxIntegral)
+  if (Robot::subVision->CanSeeTarget())
   {
-    _integral = _maxIntegral;
+    _error = Robot::ntTable->GetNumber("pegy", 0);
+
+    if (_integral > _maxIntegral)
+    {
+      _integral = _maxIntegral;
+    }
+    if (_integral < -_maxIntegral)
+    {
+      _integral = -_maxIntegral;
+    }
+
+    _derivative = _error - _lastError;
+
+    _speed = (_error * P) + (_integral * I) + (_derivative * D);
+
+    if (_speed > _cap)
+    {
+      _speed = _cap;
+    }
+    if (_speed < -_cap)
+    {
+      _speed = -_cap;
+    }
+    
+
+    frc::SmartDashboard::PutNumber("Vision Output Speed", _speed);
+    Robot::subDriveBase->drive(Robot::oi->getJoystickY(), _speed, false);
+
+
+    _integral += _error;
   }
-  if (_integral < -_maxIntegral)
+  else
   {
-    _integral = -_maxIntegral;
-  }
-
-  _derivative = _error - _lastError;
-
-  _speed = (_error * P) + (_integral * I) + (_derivative * D);
-
-  if (_speed > _cap)
-  {
-    _speed = _cap;
-  }
-  if (_speed < -_cap)
-  {
-    _speed = -_cap;
+    Robot::subDriveBase->drive(0,0);
+    _error = 0;
+    _integral = 0;
+    _derivative = 0;
   }
   
-
-  frc::SmartDashboard::PutNumber("Vision Output Speed", _speed);
-  Robot::subDriveBase->drive(Robot::oi->getJoystickY(), _speed, false);
-
-
-  _integral += _error;
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -68,4 +79,6 @@ void CmdVisionTrack::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CmdVisionTrack::Interrupted() {}
+void CmdVisionTrack::Interrupted() {
+  End();
+}

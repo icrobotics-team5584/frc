@@ -52,7 +52,7 @@ OI::OI() {
   btnIntake->WhileHeld(new CmdIntake());
 
   //Vision buttons
-  btnVisionTrack.reset(new frc::JoystickButton(joystick1.get(), xBtn));
+  btnVisionTrack.reset(new frc::JoystickButton(joystick1.get(), rightStickBtn));
   btnVisionTrack->WhileHeld(new CmdVisionTrack());
 
   //btnOuttake->WhileHeld(new CmdOuttake());

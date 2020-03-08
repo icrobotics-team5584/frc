@@ -416,7 +416,7 @@ std::cout << "Arrays pushed to network tables." << std::endl;
     {
       status = 1;
       peg_misses++;
-      peg_x =0.0; 
+      peg_x = 0.0; 
       peg_y = 0.0;
       peg_range = 0.0;
       bounding_rectangle_width = 0.0;
