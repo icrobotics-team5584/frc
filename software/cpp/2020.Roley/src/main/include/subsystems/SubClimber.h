@@ -29,7 +29,7 @@ class SubClimber : public frc::Subsystem {
   std::shared_ptr<frc::DigitalInput> LimitClimbUp;
   std::shared_ptr<frc::DigitalInput> LimitClimbDown;
 
-  double _upSpeed = 0.1;
+  double _upSpeed = 0.5;
   double _downSpeed = 0.5;
   double _pos;
   double _top = 3222;
@@ -63,7 +63,9 @@ class SubClimber : public frc::Subsystem {
 
   bool startedDown;
   bool PIDEnabled = true;
-  
+
+  const double elevatorUpPos = 30900;
+
  public:
   SubClimber();
   void InitDefaultCommand() override;
