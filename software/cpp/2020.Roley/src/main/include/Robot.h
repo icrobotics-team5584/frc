@@ -24,6 +24,7 @@
 #include "commands/CmdAutoRoutineTwo.h"
 #include "commands/CmdAutoRoutineThree.h"
 #include "commands/CmdAutoRoutineFour.h"
+#include <frc/Compressor.h>
 
 #include <ctre/phoenix.h>
 
@@ -40,6 +41,7 @@ class Robot : public frc::TimedRobot {
   static std::shared_ptr<CmdResetGyro> cmdResetGyro;
   static std::shared_ptr<frc::Timer> timer;
   static std::shared_ptr<TalonSRX> doubleTalon;
+  static std::unique_ptr<frc::Compressor> compressor;
   
   void RobotInit() override;
   void RobotPeriodic() override;

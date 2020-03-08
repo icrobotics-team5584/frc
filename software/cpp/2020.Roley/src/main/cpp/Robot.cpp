@@ -35,6 +35,7 @@ std::shared_ptr<SubBuddyClimb> Robot::subBuddyClimb;
 std::shared_ptr<frc::Timer> Robot::timer;
 std::unique_ptr<OI> Robot::oi;
 std::shared_ptr<TalonSRX> Robot::doubleTalon;
+std::unique_ptr<frc::Compressor> Robot::compressor;
 
 void Robot::RobotInit() {
 
@@ -50,7 +51,7 @@ void Robot::RobotInit() {
   subStorage.reset(new SubStorage());
   subClimber.reset(new SubClimber());
   subBuddyClimb.reset(new SubBuddyClimb());
-
+  compressor.reset(new frc::Compressor());
   
   std::cout << "after double talon created" << std::endl;
   
@@ -130,6 +131,7 @@ void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 
 void Robot::AutonomousInit() {
+  compressor->Stop();	
   subDriveBase->autoConfig();
   autoOne = new CmdAutoRoutineOne();
   autoTwo = new CmdAutoRoutineTwo();
@@ -157,6 +159,7 @@ void Robot::AutonomousPeriodic() {
   }
 
 void Robot::TeleopInit() {
+  compressor->Start();	
   subDriveBase->teleConfig();
   subDriveBase->retractDolly();
   subClimber->RatchetsDisengage();
