@@ -76,18 +76,6 @@ void SubClimber::InitDefaultCommand() {
   // SetDefaultCommand(new MySpecialCommand());
 }
 
-void SubClimber::MoveUp(){
-// if(!isElevatorLocked){
-//   srxClimberLeft->Set(-_upSpeed);
-// } else {
-//   srxClimberLeft->Set(0);
-// }
-}
-
-void SubClimber::MoveDown(){
-  //srxClimberLeft->Set(_downSpeed);
-}
-
 void SubClimber::Stop(){
   srxClimberLeft->Set(0);
 }
@@ -119,7 +107,6 @@ int SubClimber::getEncoder()
 {
   return srxClimberLeft->GetSelectedSensorPosition(0);
 }
-
 double SubClimber::getPos()
 {
   _pos = getEncoder();
@@ -131,6 +118,13 @@ double SubClimber::getPos()
   frc::SmartDashboard::PutNumber("Actual Climber Position", _dist);
 
   return _dist;
+}
+
+void SubClimber::Up()
+{
+  PIDEnabled = false;
+  RatchetsDisengage();
+  setSpeed(_upSpeed);
 }
 
 void SubClimber::setSpeed(double speed) //Hardcodes power as %!!!!!
@@ -188,7 +182,6 @@ bool SubClimber::IsOnTarget()
     return false;
   }
 }
-
 void SubClimber::CustomPID(double PIDIntput){
   
   if(!LimitClimbDown->Get() && target < srxClimberLeft->GetSelectedSensorPosition()){
@@ -228,6 +221,7 @@ void SubClimber::ElevaterExtendMin(){
 }
 
 void SubClimber::ElevatorExtendBuddy(){
+
   if(srxClimberLeft->GetSelectedSensorPosition() > buddyTarget){
     target = buddyTarget;
   }
