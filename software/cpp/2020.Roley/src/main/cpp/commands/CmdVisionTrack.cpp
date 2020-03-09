@@ -23,14 +23,16 @@ void CmdVisionTrack::Initialize() {
   D = frc::SmartDashboard::GetNumber("Vision D", 0);
   _cap = frc::SmartDashboard::GetNumber("Vision Speed Cap", 0);
   _maxIntegral = frc::SmartDashboard::GetNumber("Vision Integral Cap", 0);
-  _error = Robot::ntTable->GetNumber("pegy", 0);
+  _target = Robot::ntTable->GetNumber("pegy", 0);
+
+  Robot::subDriveBase->resetYaw();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdVisionTrack::Execute() {
   if (Robot::ntTable->GetNumber("hitrate", 1) == 0)
   {
-    _error = Robot::ntTable->GetNumber("pegy", 0);
+    _error = Robot::subDriveBase->getActualYaw();
 
     if (_integral > _maxIntegral)
     {

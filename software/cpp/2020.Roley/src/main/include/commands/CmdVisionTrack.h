@@ -23,6 +23,7 @@ class CmdVisionTrack : public frc::Command {
   double P = 0;
   double I = 0;
   double D = 0;
+  double _target = 0;
   double _error = 0;
   double _integral = 0;
   double _maxIntegral = 0;
