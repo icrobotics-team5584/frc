@@ -31,7 +31,7 @@ void CmdShootSequence::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdShootSequence::Execute() {
-  if (timer.Get() > frc::SmartDashboard::GetNumber("Bottom Roller Delay", 0.5))
+  if (timer.Get() > frc::SmartDashboard::GetNumber("Bottom Roller Delay", 0.2))
   {
     Robot::subStorage->BottomRollerForward();
   }

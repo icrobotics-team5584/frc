@@ -53,7 +53,7 @@ SubShooter::SubShooter() : Subsystem("ExampleSubsystem") {
   // frc::SmartDashboard::PutNumber("D Value Right", SetDRight);
   // frc::SmartDashboard::PutNumber("F Value Right", SetFRight);
   frc::SmartDashboard::PutNumber("Shooter Speed", shooterSpeed);
-  frc::SmartDashboard::PutNumber("Bottom Roller Delay", 0.5);
+  frc::SmartDashboard::PutNumber("Bottom Roller Delay", 0.2);
 }
 
 void SubShooter::InitDefaultCommand() {

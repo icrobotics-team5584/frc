@@ -17,6 +17,7 @@ CmdElevatorBuddy::CmdElevatorBuddy() {
 
 // Called just before this Command runs the first time
 void CmdElevatorBuddy::Initialize() {
+  Robot::subClimber->EnablePID();
   Robot::subClimber->ElevatorExtendBuddy();
 }
 
