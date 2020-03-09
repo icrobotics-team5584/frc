@@ -160,20 +160,20 @@ PIDAutoConfig autoRoutineThreeLegTwo = {
   -0.6,      //speed
   -1.7,     //targetX
   0,    //targetY
-  5, //target y turn around point
-  -22.5,        //targetAngle
-  90        //targetAngle of Attack
+  2.8, //target y turn around point
+  40,        //targetAngle
+  10,        //targetAngle of Attack
 };
 PIDAutoConfig autoRoutineThreeLegThree = {
-  3,        //P
-  -0.0,     //I
-  80,       //D
-  0.5,      //speed
-  1.6,        //targetX
-  -2.553,   //targetY
-  -2.553, //target y turn around point
+  -0.7,       //P
+  0, //I
+  -25,        //D
+  -0.6,      //speed
+  3,     //targetX
+  2.8,    //targetY
+  2.8, //target y turn around point
   0,        //targetAngle
-  90        //targetAoA
+  10        //targetAngle of Attack
 };
 
 /*----------------------------Routine Four Setup-------------------*/

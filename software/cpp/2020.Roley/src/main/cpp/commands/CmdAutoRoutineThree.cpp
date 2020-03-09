@@ -36,6 +36,10 @@ CmdAutoRoutineThree::CmdAutoRoutineThree() {
   AddParallel(new CmdAutoShootSlow(), 3);
   AddSequential(new CmdAutoEncoderDrive(autoRoutineThreeLegOne)); 
   AddSequential(new CmdAutoStorage(), 1);
+  AddSequential(new CmdAutoEncoderDrive(autoRoutineThreeLegTwo));
+  //AddSequential(new CmdAutoEncoderDrive(autoRoutineThreeLegThree)); 
+
+
   //AddSequential(new CmdAutoEncoderDrive(autoRoutineThreeLegTwo));  
   //AddSequential(new CmdIntakeStop());
   //AddParallel(new CmdStorageRetract(), 1);
