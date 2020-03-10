@@ -15,6 +15,7 @@
 #include "frc/smartdashboard/SmartDashboard.h"
 #include <frc/DoubleSolenoid.h>
 #include <frc/DigitalInput.h>
+#include <frc/Timer.h>
 
 class SubClimber : public frc::Subsystem {
  private:
@@ -28,8 +29,8 @@ class SubClimber : public frc::Subsystem {
   std::shared_ptr<frc::DigitalInput> LimitClimbUp;
   std::shared_ptr<frc::DigitalInput> LimitClimbDown;
 
-  double _upSpeed = 0.1;
-  double _downSpeed = 0.1;
+  double _upSpeed = 0.5;
+  double _downSpeed = 0.5;
   double _pos;
   double _top = 3222;
   double _dist;
@@ -40,12 +41,34 @@ class SubClimber : public frc::Subsystem {
 
   double kF;
 
+  bool isElevatorLocked = true;
+
   void configTalon();
+
+  frc::Timer timer;
+
+  double error;
+  double target = 0;
+  double intergral;
+  double derivative;
+  double lastError = 0;
+  double PIDOutput;
+  double kP = -0.0008;
+  double kI = 0;
+  double kD = 0;
+  double maxUpSpeed = 0.9;
+  double maxDownSpeed = -0.8;
+
+  double buddyTarget = 3634;
+
+  bool startedDown;
+  bool PIDEnabled = true;
+
+  const double elevatorUpPos = 30900;
+
  public:
   SubClimber();
   void InitDefaultCommand() override;
-  void MoveUp();
-  void MoveDown();
   void Stop();
   //void Periodic() override;
 
@@ -60,13 +83,20 @@ class SubClimber : public frc::Subsystem {
 
   virtual void Periodic();
 
+  void Up();
+
   int getEncoder();
   double getPos();
   void setSpeed(double speed);
-  void ConfigTalon();//default
-  void ConfigTalonOverride();//PID off
   void SetPosition(double position);
   double MetresToSensorUnits(double metres);
   double SensorUnitsToMetres(double sensorUnits);
   bool IsOnTarget();
+  void CustomPID(double PIDIntput);
+  void ElevatorExtendMax();
+  void ElevaterExtendMin();
+  void ElevatorExtendBuddy();
+  void EnablePID();
+  void DisablePID();
+  bool IsAtTarget();
 };

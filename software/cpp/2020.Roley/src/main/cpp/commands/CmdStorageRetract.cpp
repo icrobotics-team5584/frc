@@ -8,6 +8,8 @@
 #include "commands/CmdStorageRetract.h"
 #include "subsystems/SubStorage.h"
 #include "Robot.h"
+#include <iostream>
+
 
 CmdStorageRetract::CmdStorageRetract() {
   // Use Requires() here to declare subsystem dependencies
@@ -15,7 +17,10 @@ CmdStorageRetract::CmdStorageRetract() {
 }
 
 // Called just before this Command runs the first time
-void CmdStorageRetract::Initialize() {}
+void CmdStorageRetract::Initialize() {
+  std::cout << "------------------------------------------------storage retract init" << std::endl;
+
+}
 
 // Called repeatedly when this Command is scheduled to run
 void CmdStorageRetract::Execute() {
@@ -26,7 +31,10 @@ void CmdStorageRetract::Execute() {
 bool CmdStorageRetract::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CmdStorageRetract::End() {}
+void CmdStorageRetract::End() {
+  std::cout << "------------------------------------------------storage retract end" << std::endl;
+
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run

@@ -22,6 +22,8 @@ CmdAutoEncoderDrive::CmdAutoEncoderDrive(PIDAutoConfig _PIDConfig) : Command("Cm
   _Speed = _PIDConfig.speed;//speed of the robot
   _TargetY = _PIDConfig.targetY;  // position of the end of the target line 
   _TargetAngle = _PIDConfig.targetAngle;
+  _TargetTurnaround = _PIDConfig.targetYstop;
+  _TargetAOA = _PIDConfig.targetAoA;
 }
 
 // Called just before this Command runs the first time
@@ -39,7 +41,7 @@ void CmdAutoEncoderDrive::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdAutoEncoderDrive::Execute() {
-  Robot::subDriveBase->autoEncoderDrive(_target, _P, _I, _D, _Speed);//runs the PID from SubDriveBase.cpp
+  Robot::subDriveBase->autoEncoderDrive(_target, _P, _I, _D, _Speed, _TargetTurnaround, _TargetAOA);//runs the PID from SubDriveBase.cpp
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -57,8 +59,8 @@ bool CmdAutoEncoderDrive::IsFinished() {
       return false; 
     }
   }
-}
 
+}
 // Called once after isFinished returns true
 void CmdAutoEncoderDrive::End() {
   Robot::subDriveBase->drive(0, 0);//robot stops (duh)

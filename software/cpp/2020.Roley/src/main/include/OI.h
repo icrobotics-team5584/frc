@@ -10,6 +10,8 @@
 #include "subsystems/AxisButton.h"
 #include "frc/Joystick.h"
 
+#include "Utilities/ButtonPOV.h"
+
 enum Buttons{
       aBtn = 1, 
       bBtn = 2,
@@ -44,6 +46,8 @@ class OI {
   OI();
   double getJoystickX();
   double getJoystickY();
+  double getJoystick2X();
+  double getJoystick2Y();
   double getJoystickRawAxis(Triggers trigger);
   double GetRightAsix();
   bool GetOverride();
@@ -56,7 +60,7 @@ class OI {
 
   //Button pointers
   std::unique_ptr<AxisButton> btnSlowDown;
-  std::unique_ptr<AxisButton> btnDeployIntake;
+  std::unique_ptr<frc::JoystickButton> btnDeployIntake;
   std::unique_ptr<frc::JoystickButton> btnShoot;
   std::unique_ptr<frc::JoystickButton> btnForward;
   std::unique_ptr<frc::JoystickButton> btnBackward;
@@ -66,6 +70,14 @@ class OI {
   std::unique_ptr<frc::JoystickButton> btnReleaseBuddyClimber;
   std::unique_ptr<frc::JoystickButton> btnOverride;
   std::unique_ptr<frc::JoystickButton> btnRatchets;
+  std::unique_ptr<frc::JoystickButton> btnIntakeReverse;
+  std::unique_ptr<frc::JoystickButton> btnShuffle;
 
-  std::unique_ptr<frc::JoystickButton> btnStorageExpand;
+  std::unique_ptr<ButtonPOV> btnManualClimberUp;
+
+  std::unique_ptr<frc::JoystickButton> btnReverseStorage;
+  std::unique_ptr<ButtonPOV> btnElevaterUp;
+  std::unique_ptr<ButtonPOV> btnElevaterDown;
+  std::unique_ptr<ButtonPOV> btnElevaterBuddy;
+
   };

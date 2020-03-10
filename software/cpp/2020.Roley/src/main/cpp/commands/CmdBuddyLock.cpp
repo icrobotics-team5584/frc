@@ -7,6 +7,7 @@
 
 #include "commands/CmdBuddyLock.h"
 #include "Robot.h"
+#include <frc/DigitalInput.h>
 
 CmdBuddyLock::CmdBuddyLock() {
   // Use Requires() here to declare subsystem dependencies
@@ -26,6 +27,7 @@ void CmdBuddyLock::Initialize() {
   }
   else{
     Robot::subBuddyClimb->Reverse(); 
+    std::cout << "piston fire" << std::endl;
   }
 }
 
@@ -33,11 +35,11 @@ void CmdBuddyLock::Initialize() {
 void CmdBuddyLock::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CmdBuddyLock::IsFinished() { return false; }
+bool CmdBuddyLock::IsFinished() { return true; }
 
 // Called once after isFinished returns true
 void CmdBuddyLock::End() {
-  Robot::subBuddyClimb->Forward();
+  //Robot::subBuddyClimb->Forward();
 }
 
 // Called when another command which requires one or more of the same

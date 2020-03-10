@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>WebJCC</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+  
+	
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link href="FadeIn.css" rel="stylesheet" type="text/css">
+  <link href="StreamBorders.css" rel="stylesheet" type="text/css">
+  <link href="centerElements.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	
+	<script>
+		function refreshStream() {
+			if (keepAlive == "keepaliveYes") {
+				document.getElementById("streamBox").src = "images/loading.gif";
+				document.getElementById("streamBox").src = serverAddr;
+			}
+			
+		}
+	</script>
+	
+	<script>
+		function fadeOut(id, speed) {
+			var s = document.getElementById(id).style;
+			s.opacity = 1;
+			(function fade() {(s.opacity-=.1)<.1?s.display="none":setTimeout(fade,speed)})();
+		}
+	</script>
+	
+	<script>
+	document.body.classList.add('fade');
+	</script>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+	<div class="container">
+    <div class="row">
+      <div class="one-half column" style="margin-top: 16%">
+        <h4>Stream</h4>
+        <p id="statusText">Viewing Stream: None.</p>
+		  
+		  <img id="streamBox" src="" controls></img>
+		  
+      </div>
+    </div>
+	  
+
+	  
+	<button type="button" class="button-primary" onclick="refreshStream()">Refresh Stream</button>
+	<a class="button" href="index.html">Return to Menu</a>
+	  
+  </div>
+	
+<script>
+  document.addEventListener("DOMContentLoaded", function(e) {
+    document.body.classList.remove('fade');
+  });
+</script>
+	
+<script>
+	//This script section handles the actual streaming. The rest are all for transitions, etc.	
+	document.getElementById("streamBox").height = 480;
+	
+	var ip, port, path, serverAddr; //Init variables.
+	var keepAlive;
+	
+	//Grab variables from computer's local storage.
+	ip = localStorage.getItem("IP");
+	port = localStorage.getItem("PORT");
+	path = localStorage.getItem("PATH");
+	keepAlive = localStorage.getItem("KEEPALIVE")
+	
+	//Determine server address from given parameters.
+	serverAddr = "http://" + ip + ":" + port + path;
+	
+	document.getElementById("statusText").innerHTML = "Viewing Stream: " + serverAddr + "." //Update labels.
+	
+	document.getElementById("streamBox").src = serverAddr;
+	
+
+	
+</script>
+
+	<script>
+		window.setInterval(function(){
+			refreshStream();
+		}, 1000);
+		
+	</script>
+	
+	
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>

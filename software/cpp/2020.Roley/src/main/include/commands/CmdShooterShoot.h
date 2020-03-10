@@ -18,6 +18,7 @@ class CmdShooterShoot : public frc::Command {
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+  static bool ShooterShoot;
  private:
   double SetRPM = 1200;
 };

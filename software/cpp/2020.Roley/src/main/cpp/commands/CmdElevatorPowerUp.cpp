@@ -16,7 +16,7 @@ CmdElevatorPowerUp::CmdElevatorPowerUp() {
 
 // Called just before this Command runs the first time
 void CmdElevatorPowerUp::Initialize() {
-  Robot::subClimber->MoveUp();
+  //Robot::subClimber->setSpeed(0); 
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -28,6 +28,8 @@ bool CmdElevatorPowerUp::IsFinished() { return false; }
 // Called once after isFinished returns true
 void CmdElevatorPowerUp::End() {
   Robot::subClimber->Stop();
+  Robot::subClimber->ElevaterExtendMin();
+  Robot::subClimber->EnablePID();
 }
 
 // Called when another command which requires one or more of the same
