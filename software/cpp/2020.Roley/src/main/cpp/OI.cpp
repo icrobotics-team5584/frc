@@ -23,7 +23,6 @@
 #include "commands/CmdElevatorFullExtend.h"
 #include "commands/CmdElevaterExtendMin.h"
 #include "commands/CmdElevatorBuddy.h"
-#include "commands/CmdVisionTrack.h"
 #include "commands/CmdShootSequence.h"
 #include "commands/CmdIntakeOutTake.h"
 #include "commands/CmdShuffle.h"
@@ -51,10 +50,6 @@ OI::OI() {
   //btnOuttake.reset(new frc::JoystickButton(joystick1.get(), rightBtn));
   btnDeployIntake->WhileHeld(new CmdDeployIntake());
   btnIntake->WhileHeld(new CmdIntake());
-
-  //Vision buttons
-  btnVisionTrack.reset(new frc::JoystickButton(joystick1.get(), rightStickBtn));
-  btnVisionTrack->WhileHeld(new CmdVisionTrack());
 
   //btnOuttake->WhileHeld(new CmdOuttake());
 
