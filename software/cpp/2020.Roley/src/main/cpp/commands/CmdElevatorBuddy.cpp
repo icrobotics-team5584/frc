@@ -19,6 +19,7 @@ CmdElevatorBuddy::CmdElevatorBuddy() {
 void CmdElevatorBuddy::Initialize() {
   Robot::subClimber->EnablePID();
   Robot::subClimber->ElevatorExtendBuddy();
+  Robot::subClimber->RatchetsEngage();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -29,7 +30,6 @@ bool CmdElevatorBuddy::IsFinished() { return Robot::subClimber->IsAtTarget(); }
 
 // Called once after isFinished returns true
 void CmdElevatorBuddy::End() {
-  Robot::subClimber->RatchetsEngage();
   Robot::subClimber->DisablePID();
 }
 
