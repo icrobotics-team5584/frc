@@ -32,7 +32,7 @@ void SubVision::Periodic() {
 
   frc::SmartDashboard::PutNumber("Target Position in FOV", pegPos);
 
-  if (Robot::ntTable->GetNumber("hitrate", 1) == 0 && pegPos > -15 && pegPos < 15 && pegHeight < -15)
+  if (Robot::ntTable->GetNumber("status", 1) == 0 && pegPos > -15 && pegPos < 15 && pegHeight < -18)
   {
     frc::SmartDashboard::PutBoolean("Target in Shooting Range", true);
   }

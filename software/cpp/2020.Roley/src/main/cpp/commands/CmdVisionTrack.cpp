@@ -58,7 +58,7 @@ void CmdVisionTrack::Execute() {
     
 
     frc::SmartDashboard::PutNumber("Vision Output Speed", _speed);
-    Robot::subDriveBase->drive(Robot::oi->getJoystickY(), _speed, false);
+    Robot::subDriveBase->drive(Robot::oi->getJoystick2Y(), _speed, false);
 
 
     _integral += _error;
