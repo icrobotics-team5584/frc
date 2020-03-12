@@ -50,6 +50,7 @@ OI::OI() {
   //btnOuttake.reset(new frc::JoystickButton(joystick1.get(), rightBtn));
   btnDeployIntake->WhileHeld(new CmdDeployIntake());
   btnIntake->WhileHeld(new CmdIntake());
+
   //btnOuttake->WhileHeld(new CmdOuttake());
 
   btnShuffle.reset(new frc::JoystickButton(joystick1.get(), xBtn));

@@ -32,9 +32,11 @@ std::shared_ptr<PosEncoderGyro> Robot::posEncoderGyro;
 std::shared_ptr<CmdResetGyro> Robot::cmdResetGyro;
 std::shared_ptr<SubClimber> Robot::subClimber;
 std::shared_ptr<SubBuddyClimb> Robot::subBuddyClimb;
+std::shared_ptr<SubVision> Robot::subVision;
 std::shared_ptr<frc::Timer> Robot::timer;
 std::unique_ptr<OI> Robot::oi;
 std::shared_ptr<TalonSRX> Robot::doubleTalon;
+std::shared_ptr<nt::NetworkTable> Robot::ntTable;
 
 void Robot::RobotInit() {
 
@@ -50,6 +52,11 @@ void Robot::RobotInit() {
   subStorage.reset(new SubStorage());
   subClimber.reset(new SubClimber());
   subBuddyClimb.reset(new SubBuddyClimb());
+  subVision.reset(new SubVision());
+
+  //Setup network table
+  nt::NetworkTableInstance ntTableInstance = nt::NetworkTableInstance::GetDefault();
+  ntTable = ntTableInstance.GetTable("JETSON");
 
   
   std::cout << "after double talon created" << std::endl;
@@ -83,28 +90,37 @@ void Robot::RobotInit() {
 /* "PutData" push up commands used to test most hardware features on the  */
 /*  robot.                                                                */  
 /*------------------------------------------------------------------------*/
+  //Defualt 
+  const int SHUFFLE_WIDTH = 8;
+  const int SHUFFLE_HEIGHT = 4;
   //DRIVEBASE ----------------------------------------------------------------
-  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdDeployDolly", *(new CmdDeployDolly()));
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdDeployDolly", *(new CmdDeployDolly())).WithSize(SHUFFLE_WIDTH,SHUFFLE_HEIGHT);
   //ELEVATOR ----------------------------------------------------------------
   //NOTE: Currently not integrated. DO NOT USE!
-  //frc::Shuffleboard::GetTab("HARDWARE").Add("CmdElevatorPowerUp", *(new CmdElevatorPowerUp())); 
-  //frc::Shuffleboard::GetTab("HARDWARE").Add("CmdElevatorPowerDown", *(new CmdElevatorPowerDown())); 
-  //frc::Shuffleboard::GetTab("HARDWARE").Add("CmdEngageClimberRatchets", *(new CmdEngageClimberRatchets()));  
+  //frc::Shuffleboard::GetTab("HARDWARE").Add("CmdElevatorPowerUp", *(new CmdElevatorPowerUp())).WithSize(SHUFFLE_WIDTH,SHUFFLE_HEIGHT);
+  //frc::Shuffleboard::GetTab("HARDWARE").Add("CmdElevatorPowerDown", *(new CmdElevatorPowerDown())).WithSize(SHUFFLE_WIDTH,SHUFFLE_HEIGHT);
+  //frc::Shuffleboard::GetTab("HARDWARE").Add("CmdEngageClimberRatchets", *(new CmdEngageClimberRatchets())).WithSize(SHUFFLE_WIDTH,SHUFFLE_HEIGHT);
   //BUDDY ----------------------------------------------------------------
-  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdBuddyLock", *(new CmdBuddyLock()));
-  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdBuddyDeploy", *(new CmdBuddyDeploy()));
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdBuddyLock", *(new CmdBuddyLock())).WithSize(SHUFFLE_WIDTH,SHUFFLE_HEIGHT);
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdBuddyDeploy", *(new CmdBuddyDeploy())).WithSize(SHUFFLE_WIDTH,SHUFFLE_HEIGHT);
   //INTAKE ----------------------------------------------------------------
-  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdIntake", *(new CmdIntake()));
-  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdOuttake", *(new CmdOuttake()));
-  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdDeployIntake", *(new CmdDeployIntake()));
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdIntake", *(new CmdIntake())).WithSize(SHUFFLE_WIDTH,SHUFFLE_HEIGHT);
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdOuttake", *(new CmdOuttake())).WithSize(SHUFFLE_WIDTH,SHUFFLE_HEIGHT);
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdDeployIntake", *(new CmdDeployIntake())).WithSize(SHUFFLE_WIDTH,SHUFFLE_HEIGHT);
   //STORAGE ----------------------------------------------------------------
-  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdStorageTogglePneumatic", *(new CmdStorageTogglePneumatic()));
-  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdRollStorage", *(new CmdRollStorage()));
-  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdRollStorageBack", *(new CmdRollStorageBack()));
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdStorageTogglePneumatic", *(new CmdStorageTogglePneumatic())).WithSize(SHUFFLE_WIDTH,SHUFFLE_HEIGHT);
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdRollStorage", *(new CmdRollStorage())).WithSize(SHUFFLE_WIDTH,SHUFFLE_HEIGHT);
+  frc::Shuffleboard::GetTab("HARDWARE").Add("CmdRollStorageBack", *(new CmdRollStorageBack())).WithSize(SHUFFLE_WIDTH,SHUFFLE_HEIGHT);
   //SHOOTER ----------------------------------------------------------------
   frc::Shuffleboard::GetTab("HARDWARE").Add("CmdShooterShoot", *(new CmdShooterShoot()));
   frc::Shuffleboard::GetTab("HARDWARE").Add("CmdShooterShootReverse", *(new CmdShooterShootReverse()));
   frc::Shuffleboard::GetTab("HARDWARE").Add("CmdAutoShoot", *(new CmdAutoShoot()));
+
+  frc::SmartDashboard::PutNumber("Vision P", 0);
+  frc::SmartDashboard::PutNumber("Vision I", 0);
+  frc::SmartDashboard::PutNumber("Vision D", 0);
+  frc::SmartDashboard::PutNumber("Vision Speed Cap", 0);
+  frc::SmartDashboard::PutNumber("Vision Integral Cap", 0);
 }
 
 
@@ -119,7 +135,6 @@ void Robot::RobotPeriodic() {
   posEncoderGyro->updateAbsolutePosition();
   posEncoderGyro->updateRelativePosition();
   //std::cout << "update position" << std::endl;
-  
 }
 
 

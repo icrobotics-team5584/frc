@@ -299,3 +299,16 @@ Code still builds in the normal way ...
   cd build
   cmake ..
   make
+
+
+COMMON ERRORS
+-------------
+
+opencv error: (-217:Gpu API call) invalid argument in function 'bindTexture'
+  Description:  Pipeline is processing an empty Mat
+  Resolution:          Ensure the Mat is being assigned in image before the pipeline attempts to use it. This can be done by having a while loop with the parameter empty(Mat)
+
+VIDIOC_STREAMON: No space left on device
+  Description:  USB bandwidth has been maxed out
+  Resolution:   Resize the input images from the videoCapture object using input.set(cv::CAP_PROP_FRAME_WIDTH, width); and input.set(cv::CAP_PROP_FRAME_HEIGHT, height);
+                To find supported image resolutions, use the command v4l2-ctl -d 0 --list-formats-ext

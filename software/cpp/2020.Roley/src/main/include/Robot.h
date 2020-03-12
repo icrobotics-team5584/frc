@@ -17,6 +17,7 @@
 #include "commands/CmdResetGyro.h"
 #include "subsystems/SubClimber.h"
 #include "subsystems/SubBuddyClimb.h"
+#include "subsystems/SubVision.h"
 
 #include "Utilities/PosEncoderGyro.h"
 
@@ -24,6 +25,9 @@
 #include "commands/CmdAutoRoutineTwo.h"
 #include "commands/CmdAutoRoutineThree.h"
 #include "commands/CmdAutoRoutineFour.h"
+
+#include "networktables/NetworkTable.h"
+#include "networktables/NetworkTableInstance.h"
 
 #include <ctre/phoenix.h>
 
@@ -36,10 +40,12 @@ class Robot : public frc::TimedRobot {
   static std::shared_ptr<SubStorage> subStorage;
   static std::shared_ptr<SubIntake> subIntake;
   static std::shared_ptr<SubDriveBase> subDriveBase;
+  static std::shared_ptr<SubVision> subVision;
   static std::shared_ptr<PosEncoderGyro> posEncoderGyro;
   static std::shared_ptr<CmdResetGyro> cmdResetGyro;
   static std::shared_ptr<frc::Timer> timer;
   static std::shared_ptr<TalonSRX> doubleTalon;
+  static std::shared_ptr<nt::NetworkTable> ntTable;
   
   void RobotInit() override;
   void RobotPeriodic() override;
