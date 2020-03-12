@@ -148,7 +148,7 @@ void SubClimber::setSpeed(double speed) //Hardcodes power as %!!!!!
       srxClimberLeft->Set(-speed);
     }
   } else {
-      srxClimberLeft->Set(0);
+    srxClimberLeft->Set(0);
   }
 }
 
