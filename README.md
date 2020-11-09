@@ -1,3 +1,5 @@
+<img align="right" width="275px" src="https://i.imgur.com/Q261hDN.png">
+
 # ICRobotics 
 
 **FIRST Robotics Team #5584 - student team from Melbourne Australia**
