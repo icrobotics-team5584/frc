@@ -6,6 +6,8 @@
 
 #include "RobotContainer.h"
 
+#include "commands/cmdDriveNeoNT.h"
+
 RobotContainer::RobotContainer() : 
 CmdDrive{&SubDriveBase, &driverController}
 {
@@ -20,6 +22,9 @@ CmdDrive{&SubDriveBase, &driverController}
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
   
+  frc2::JoystickButton btnA{&driverController, Buttons::aBtn};
+
+  btnA.WhileHeld(cmdDriveNeoNT(&SubMaxsNeo));
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

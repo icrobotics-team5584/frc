@@ -11,9 +11,11 @@
 
 //Subsystems
 #include "subsystems/subDriveBase.h"
+#include "subsystems/subMaxsNeo.h"
 
 //Commands
 #include "commands/cmdDrive.h"
+
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -31,7 +33,7 @@ class RobotContainer {
  private:
   // The robot's subsystems and commands are defined here...
   subDriveBase SubDriveBase;
-
+  subMaxsNeo SubMaxsNeo;
   cmdDrive CmdDrive;
 
   frc::Joystick driverController{ContainerConstants::kDriverControllerPort};

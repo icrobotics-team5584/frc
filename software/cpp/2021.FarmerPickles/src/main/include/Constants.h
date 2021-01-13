@@ -24,3 +24,36 @@ namespace DriveConstants{
 namespace ContainerConstants {
     constexpr int kDriverControllerPort = 0;
 }
+
+namespace TestConstants {
+    constexpr int testMotorPort = 5;
+}
+
+namespace Buttons {
+      constexpr int aBtn = 1; 
+      constexpr int bBtn = 2;
+      constexpr int xBtn = 3;
+      constexpr int yBtn = 4;
+      constexpr int leftBtn = 5;
+      constexpr int rightBtn = 6;
+      constexpr int backBtn = 7;
+      constexpr int startBtn = 8;
+      constexpr int leftStickBtn = 9;
+      constexpr int rightStickBtn = 10;
+}
+
+namespace POVPositions {
+      constexpr int UP = 0;
+      constexpr int UP_RIGHT = 45;
+      constexpr int RIGHT = 90;
+      constexpr int DOWN_RIGHT = 135;
+      constexpr int DOWN = 180;
+      constexpr int DOWN_LEFT = 225;
+      constexpr int LEFT = 270;
+      constexpr int UP_LEFT = 315;
+}
+
+namespace Triggers {
+      constexpr int triggerL = 2;
+      constexpr int triggerR = 3;
+}

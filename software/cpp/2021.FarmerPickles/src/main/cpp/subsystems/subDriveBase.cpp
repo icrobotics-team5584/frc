@@ -14,6 +14,9 @@ subDriveBase::subDriveBase() :
         spxFrontLeft.ConfigFactoryDefault(50);
         spxBackRight.ConfigFactoryDefault(50);
         spxBackLeft.ConfigFactoryDefault(50);
+
+        _spxLeftGroup.SetInverted(true);
+
     }
 
 // This method will be called once per scheduler run
