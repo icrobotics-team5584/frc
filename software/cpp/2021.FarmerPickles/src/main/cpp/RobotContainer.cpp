@@ -8,13 +8,18 @@
 
 #include "commands/cmdDriveNeoNT.h"
 
+#include <frc/smartdashboard/SmartDashboard.h>
+
 RobotContainer::RobotContainer() : 
-CmdDrive{&SubDriveBase, &driverController}
+CmdDrive{&SubDriveBase, &driverController},
+SendableSparkMax{TestConstants::testMotorPort2, rev::CANSparkMaxLowLevel::MotorType::kBrushless}
 {
   // Initialize all of your commands and subsystems here
 
   // Configure the button bindings
   ConfigureButtonBindings();
+
+  frc::SmartDashboard::PutData("sendablesparkmax", &SendableSparkMax);
 
   SubDriveBase.SetDefaultCommand(CmdDrive);
 }

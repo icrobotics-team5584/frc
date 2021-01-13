@@ -5,9 +5,17 @@
 #include "sendableSparkMax.h"
 
 sendableSparkMax::sendableSparkMax(int deviceID, MotorType type) :
-    
+    CANSparkMax(deviceID, type)
 {}
 
 void sendableSparkMax::InitSendable(frc::SendableBuilder& builder) {
-
+    builder.SetSmartDashboardType("Speed Controller");
+    builder.SetActuator(true);
+    builder.SetSafeState([=]() { CANSparkMax::Disable(); });
+    builder.AddDoubleProperty(
+        "Value",
+        [=]() { return CANSparkMax::Get(); },
+        [=](double value) { CANSparkMax::Set(value); }
+    );
+    
 }

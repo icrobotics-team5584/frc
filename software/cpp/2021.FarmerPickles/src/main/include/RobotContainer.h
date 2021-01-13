@@ -6,6 +6,7 @@
 
 #include <frc2/command/Command.h>
 #include <frc/Joystick.h>
+#include <sendableSparkMax.h>
 
 #include "Constants.h"
 
@@ -35,6 +36,7 @@ class RobotContainer {
   subDriveBase SubDriveBase;
   subMaxsNeo SubMaxsNeo;
   cmdDrive CmdDrive;
+  sendableSparkMax SendableSparkMax;
 
   frc::Joystick driverController{ContainerConstants::kDriverControllerPort};
 
