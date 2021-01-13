@@ -13,3 +13,14 @@
  * command-specific namespaces within this header, which can then be used where
  * they are needed.
  */
+
+namespace DriveConstants{
+    constexpr int driveLeftFront = 1;
+    constexpr int driveLeftBack = 2;
+    constexpr int driveRightFront = 3;
+    constexpr int driveRightBack = 4;
+}
+
+namespace ContainerConstants {
+    constexpr int kDriverControllerPort = 0;
+}
