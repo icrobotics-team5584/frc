@@ -3,10 +3,13 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "sendableSparkMax.h"
+#include "frc/smartdashboard/SendableRegistry.h"
 
 sendableSparkMax::sendableSparkMax(int deviceID, MotorType type) :
     CANSparkMax(deviceID, type)
-{}
+{
+    _deviceID = deviceID;
+}
 
 void sendableSparkMax::InitSendable(frc::SendableBuilder& builder) {
     builder.SetSmartDashboardType("Speed Controller");
@@ -17,5 +20,8 @@ void sendableSparkMax::InitSendable(frc::SendableBuilder& builder) {
         [=]() { return CANSparkMax::Get(); },
         [=](double value) { CANSparkMax::Set(value); }
     );
-    
+    frc::SendableRegistry::GetInstance().Add(
+        this,
+        "SendableSPM"
+    );
 }

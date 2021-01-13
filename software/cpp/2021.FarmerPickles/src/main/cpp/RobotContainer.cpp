@@ -6,20 +6,24 @@
 
 #include "RobotContainer.h"
 
-#include "commands/cmdDriveNeoNT.h"
 
 #include <frc/smartdashboard/SmartDashboard.h>
 
 RobotContainer::RobotContainer() : 
 CmdDrive{&SubDriveBase, &driverController},
-SendableSparkMax{TestConstants::testMotorPort2, rev::CANSparkMaxLowLevel::MotorType::kBrushless}
+//Set up our Nice Max's.
+SPMTest1{TestConstants::testMotor1, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+SPMTest2{TestConstants::testMotor2, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+SPMTest3{TestConstants::testMotor3, rev::CANSparkMaxLowLevel::MotorType::kBrushless}
 {
   // Initialize all of your commands and subsystems here
 
   // Configure the button bindings
   ConfigureButtonBindings();
 
-  frc::SmartDashboard::PutData("sendablesparkmax", &SendableSparkMax);
+  frc::SmartDashboard::PutData("Max", &SPMTest1);
+  frc::SmartDashboard::PutData("MaxMax", &SPMTest2);
+  frc::SmartDashboard::PutData("MaxMaxMax", &SPMTest3);
 
   SubDriveBase.SetDefaultCommand(CmdDrive);
 }
@@ -29,7 +33,6 @@ void RobotContainer::ConfigureButtonBindings() {
   
   frc2::JoystickButton btnA{&driverController, Buttons::aBtn};
 
-  btnA.WhileHeld(cmdDriveNeoNT(&SubMaxsNeo));
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

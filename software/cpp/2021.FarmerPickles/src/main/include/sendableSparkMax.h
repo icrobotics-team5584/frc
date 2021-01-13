@@ -18,4 +18,5 @@ public frc::Sendable
 
  private:
   void InitSendable(frc::SendableBuilder& builder);
+  int _deviceID;
 };

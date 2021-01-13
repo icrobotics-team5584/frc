@@ -26,8 +26,9 @@ namespace ContainerConstants {
 }
 
 namespace TestConstants {
-    constexpr int testMotorPort = 5;
-    constexpr int testMotorPort2 = 6;
+    constexpr int testMotor1 = 5;
+    constexpr int testMotor2 = 6;
+    constexpr int testMotor3 = 7;
 }
 
 namespace Buttons {

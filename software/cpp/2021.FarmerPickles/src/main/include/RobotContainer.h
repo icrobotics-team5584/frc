@@ -12,7 +12,6 @@
 
 //Subsystems
 #include "subsystems/subDriveBase.h"
-#include "subsystems/subMaxsNeo.h"
 
 //Commands
 #include "commands/cmdDrive.h"
@@ -34,9 +33,10 @@ class RobotContainer {
  private:
   // The robot's subsystems and commands are defined here...
   subDriveBase SubDriveBase;
-  subMaxsNeo SubMaxsNeo;
   cmdDrive CmdDrive;
-  sendableSparkMax SendableSparkMax;
+  sendableSparkMax SPMTest1;
+  sendableSparkMax SPMTest2;
+  sendableSparkMax SPMTest3;
 
   frc::Joystick driverController{ContainerConstants::kDriverControllerPort};
 
