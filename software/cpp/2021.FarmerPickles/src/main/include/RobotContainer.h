@@ -5,9 +5,17 @@
 #pragma once
 
 #include <frc2/command/Command.h>
+#include <frc/Joystick.h>
+#include <sendableSparkMax.h>
 
-#include "commands/ExampleCommand.h"
-#include "subsystems/ExampleSubsystem.h"
+#include "Constants.h"
+
+//Subsystems
+#include "subsystems/subDriveBase.h"
+
+//Commands
+#include "commands/cmdDrive.h"
+
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -24,8 +32,13 @@ class RobotContainer {
 
  private:
   // The robot's subsystems and commands are defined here...
-  ExampleSubsystem m_subsystem;
-  ExampleCommand m_autonomousCommand;
+  subDriveBase SubDriveBase;
+  cmdDrive CmdDrive;
+  sendableSparkMax SPMTest1;
+  sendableSparkMax SPMTest2;
+  sendableSparkMax SPMTest3;
+
+  frc::Joystick driverController{ContainerConstants::kDriverControllerPort};
 
   void ConfigureButtonBindings();
 };

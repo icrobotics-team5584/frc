@@ -6,26 +6,31 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include <frc/Joystick.h>
 
-#include "subsystems/ExampleSubsystem.h"
+#include "subsystems/subDriveBase.h"
 
 /**
- * An example command that uses an example subsystem.
+ * An example command.
  *
  * <p>Note that this extends CommandHelper, rather extending CommandBase
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class ExampleCommand
-    : public frc2::CommandHelper<frc2::CommandBase, ExampleCommand> {
+class cmdDrive : public frc2::CommandHelper<frc2::CommandBase, cmdDrive> {
  public:
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
-  explicit ExampleCommand(ExampleSubsystem* subsystem);
+  cmdDrive(subDriveBase* SubDriveBase, frc::Joystick* driverController);
+
+  void Initialize() override;
+
+  void Execute() override;
+
+  void End(bool interrupted) override;
+
+  bool IsFinished() override;
 
  private:
-  ExampleSubsystem* m_subsystem;
+  subDriveBase* _SubDriveBase;
+  frc::Joystick* _driverController;
+
 };
