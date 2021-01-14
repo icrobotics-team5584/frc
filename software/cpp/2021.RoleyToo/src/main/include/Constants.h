@@ -20,3 +20,15 @@ namespace can {
     constexpr int spmDriveBaseFrontRight = 3;
     constexpr int spmDriveBaseBackRight = 4;
 }
+namespace buttons {
+    constexpr int aBtn = 1;
+    constexpr int bBtn = 2;
+    constexpr int xBtn = 3;
+    constexpr int yBtn = 4; 
+    constexpr int leftBtn = 5;
+    constexpr int rightBtn = 6;
+    constexpr int backBtn = 7; 
+    constexpr int startBtn = 8; 
+    constexpr int leftStickBtn = 9;
+    constexpr int rightStickBtn = 10;
+}
