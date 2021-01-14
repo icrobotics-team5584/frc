@@ -4,11 +4,10 @@
 
 #pragma once
 
+#include <frc/Joystick.h>
 #include <frc2/command/Command.h>
 
-#include "commands/ExampleCommand.h"
-#include "subsystems/ExampleSubsystem.h"
-
+#include "subsystems/subDriveBase.h"
 /**
  * This class is where the bulk of the robot should be declared.  Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -24,8 +23,9 @@ class RobotContainer {
 
  private:
   // The robot's subsystems and commands are defined here...
-  ExampleSubsystem m_subsystem;
-  ExampleCommand m_autonomousCommand;
+  frc::Joystick m_joy{0};
+
+  SubDriveBase _subDriveBase;
 
   void ConfigureButtonBindings();
 };

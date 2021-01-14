@@ -13,3 +13,10 @@
  * command-specific namespaces within this header, which can then be used where
  * they are needed.
  */
+
+namespace can {
+    constexpr int spmDriveBaseFrontLeft = 1;
+    constexpr int spmDriveBaseBackLeft = 2;
+    constexpr int spmDriveBaseFrontRight = 3;
+    constexpr int spmDriveBaseBackRight = 4;
+}
