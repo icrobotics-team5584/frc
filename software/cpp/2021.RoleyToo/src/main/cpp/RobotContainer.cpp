@@ -3,10 +3,11 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "RobotContainer.h"
+#include "commands/CmdJoystickDrive.h"
 
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
-
+  _subDriveBase.SetDefaultCommand(CmdJoystickDrive(&_subDriveBase, &_joystick0));
   // Configure the button bindings
   ConfigureButtonBindings();
 }
