@@ -19,4 +19,10 @@ namespace can {
     constexpr int spmDriveBaseBackLeft = 2;
     constexpr int spmDriveBaseFrontRight = 3;
     constexpr int spmDriveBaseBackRight = 4;
+    constexpr int spmIntake = 5; 
+}
+
+namespace pcm {
+    constexpr int pcm_solIntakeRetract = 0;
+    constexpr int pcm_solIntakeDeploy = 1;
 }
