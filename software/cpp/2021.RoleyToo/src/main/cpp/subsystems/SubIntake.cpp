@@ -9,23 +9,25 @@ SubIntake::SubIntake(){
 }
 
 // This method will be called once per scheduler run
-void SubIntake::Periodic() {}
+void SubIntake::Periodic() {
+
+}
 
 
 void SubIntake::Intake(){
-
+    _spmIntake.Set(kSpeed);
 }
 
 void SubIntake::Outtake(){
-
+    _spmIntake.Set(-kSpeed);
 }
 
 void SubIntake::Deploy(){
-
+    solIntake.Set(frc::DoubleSolenoid::kForward);
 }
 
 void SubIntake::Retract(){
-
+    solIntake.Set(frc::DoubleSolenoid::kReverse);
 }
 
 

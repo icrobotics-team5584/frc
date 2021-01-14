@@ -28,4 +28,6 @@ class SubIntake : public frc2::SubsystemBase {
   rev::CANSparkMax _spmIntake{can::spmIntake, rev::CANSparkMax::MotorType::kBrushless};
   frc::DoubleSolenoid solIntake{pcm::pcm_solIntakeRetract, pcm::pcm_solIntakeDeploy};
 
+  const double kSpeed = 0.3; // Speed of the Intake
+
 };
