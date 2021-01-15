@@ -10,10 +10,17 @@ SubTurret::SubTurret() :
     {
         _turretEncoder.SetDistancePerPulse(360./8192.); // Convert encoder ticks to degrees
         _turretEncoder.SetMaxPeriod(.1);
+
+        _limelight.GetTable("limelight")
     }
 
 // This method will be called once per scheduler run
-void SubTurret::Periodic() {}
+void SubTurret::Periodic() {
+    targetX = _limelight.GetNumber("tx", 0.0);
+    targetY = _limelight.GetNumber("ty", 0.0);
+    targetA = _limelight.GetNumber("ta", 0.0);
+    targetVisible = _limelight.GetNumber("tv", 0.0);
+}
 
 double SubTurret::getTurretAngle() {
     return _turretEncoder.GetDistance();
@@ -36,4 +43,15 @@ void SubTurret::turnTurret(double speed) {
 
 void SubTurret::stopTurret() {
     _spmTurret.StopMotor();
+}
+
+void SubTurret::limeLEDState(bool state) {
+    if (state) {
+        _limelight.PutNumber("ledMode", 3);
+    }
+    else
+    {
+        _limelight.PutNumber("ledMode", 1);
+    }
+    
 }
