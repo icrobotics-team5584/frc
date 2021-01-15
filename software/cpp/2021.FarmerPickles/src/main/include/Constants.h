@@ -21,6 +21,11 @@ namespace DriveConstants{
     constexpr int driveRightBack = 4;
 }
 
+namespace TurretConstants {
+    constexpr int turretEncoderPin1 = 0;
+    constexpr int turretEncoderPin2 = 1;
+}
+
 namespace ContainerConstants {
     constexpr int kDriverControllerPort = 0;
 }
