@@ -5,7 +5,8 @@
 #include "subsystems/SubTurret.h"
 
 SubTurret::SubTurret() :
-    _turretEncoder{TurretConstants::turretEncoderPin1,TurretConstants::turretEncoderPin2}
+    _turretEncoder{TurretConstants::turretEncoderPin1, TurretConstants::turretEncoderPin2},
+    _spmTurret{TurretConstants::turretMotor, rev::CANSparkMax::MotorType::kBrushed}         // CHANGE TO BRUSHLESS ON ACTUAL ROBOT
     {
         _turretEncoder.SetDistancePerPulse(360./8192.); // Convert encoder ticks to degrees
         _turretEncoder.SetMaxPeriod(.1);
@@ -27,4 +28,12 @@ bool SubTurret::getTurretStopped() {
 }
 bool SubTurret::getTurretDirection() {
     return _turretEncoder.GetDirection();
+}
+
+void SubTurret::turnTurret(double speed) {
+    _spmTurret.Set(speed);
+}
+
+void SubTurret::stopTurret() {
+    _spmTurret.StopMotor();
 }

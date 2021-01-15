@@ -23,6 +23,9 @@ class SubTurret : public frc2::SubsystemBase {
   bool getTurretStopped();
   bool getTurretDirection();
 
+  void turnTurret(double speed);
+  void stopTurret();
+
   double targetX;
   double targetY;
 
@@ -33,4 +36,5 @@ class SubTurret : public frc2::SubsystemBase {
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
   frc::Encoder _turretEncoder;
+  rev::CANSparkMax _spmTurret;
 };
