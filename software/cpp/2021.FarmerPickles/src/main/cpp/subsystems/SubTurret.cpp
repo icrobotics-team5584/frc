@@ -9,7 +9,7 @@ SubTurret::SubTurret() :
     _turretEncoder{TurretConstants::turretEncoderPin1, TurretConstants::turretEncoderPin2},
     _spmTurret{TurretConstants::turretMotor, rev::CANSparkMax::MotorType::kBrushed}         // CHANGE TO BRUSHLESS ON ACTUAL ROBOT
     {
-        _turretEncoder.SetDistancePerPulse(360./8192.); // Convert encoder ticks to degrees
+        //_turretEncoder.SetDistancePerPulse(360./2048.); // Convert encoder ticks to degrees
         _networktables = nt::NetworkTableInstance::GetDefault();
         _limelight = _networktables.GetTable("limelight");
     }
