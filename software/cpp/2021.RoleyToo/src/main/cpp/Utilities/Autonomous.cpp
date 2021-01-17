@@ -6,8 +6,11 @@
 
 Autonomous::Autonomous(){
     notifier.StartPeriodic(fasterPeriod);
+    timer.Start();
 }
 
 void Autonomous::Periodic(){
-    std::cout<<"Auto periodic"<<std::endl;
+    
+    std::cout<<timer.Get()-deletthis<<std::endl;
+    deletthis = timer.Get();
 }

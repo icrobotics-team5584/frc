@@ -4,12 +4,14 @@
 
 #pragma once
 #include <frc/Notifier.h>
-
+#include <frc/Timer.h>
 class Autonomous {
  public:
   Autonomous();
   void Periodic();
  private:
+  double deletthis =  0;
   const units::second_t fasterPeriod = 19_ms;
   frc::Notifier notifier{ [this]{Periodic();} };
+  frc::Timer timer;
 };
