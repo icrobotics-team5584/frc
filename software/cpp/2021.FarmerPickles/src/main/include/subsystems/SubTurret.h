@@ -46,5 +46,6 @@ class SubTurret : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
   frc::Encoder _turretEncoder;
   rev::CANSparkMax _spmTurret;
-  nt::NetworkTable _limelight;
+  nt::NetworkTableInstance _networktables;
+  std::shared_ptr<nt::NetworkTable> _limelight;
 };

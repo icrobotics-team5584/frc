@@ -4,22 +4,22 @@
 
 #include "subsystems/SubTurret.h"
 
+
 SubTurret::SubTurret() :
     _turretEncoder{TurretConstants::turretEncoderPin1, TurretConstants::turretEncoderPin2},
     _spmTurret{TurretConstants::turretMotor, rev::CANSparkMax::MotorType::kBrushed}         // CHANGE TO BRUSHLESS ON ACTUAL ROBOT
     {
         _turretEncoder.SetDistancePerPulse(360./8192.); // Convert encoder ticks to degrees
-        _turretEncoder.SetMaxPeriod(.1);
-
-        _limelight.GetTable("limelight")
+        _networktables = nt::NetworkTableInstance::GetDefault();
+        _limelight = _networktables.GetTable("limelight");
     }
 
 // This method will be called once per scheduler run
 void SubTurret::Periodic() {
-    targetX = _limelight.GetNumber("tx", 0.0);
-    targetY = _limelight.GetNumber("ty", 0.0);
-    targetA = _limelight.GetNumber("ta", 0.0);
-    targetVisible = _limelight.GetNumber("tv", 0.0);
+    targetX = _limelight->GetNumber("tx", 0.0);
+    targetY = _limelight->GetNumber("ty", 0.0);
+    targetA = _limelight->GetNumber("ta", 0.0);
+    targetVisible = _limelight->GetNumber("tv", 0.0);
 }
 
 double SubTurret::getTurretAngle() {
@@ -47,11 +47,11 @@ void SubTurret::stopTurret() {
 
 void SubTurret::limeLEDState(bool state) {
     if (state) {
-        _limelight.PutNumber("ledMode", 3);
+        _limelight->PutNumber("ledMode", 3);
     }
     else
     {
-        _limelight.PutNumber("ledMode", 1);
+        _limelight->PutNumber("ledMode", 1);
     }
     
 }
