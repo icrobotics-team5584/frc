@@ -32,3 +32,7 @@ namespace buttons {
     constexpr int leftStickBtn = 9;
     constexpr int rightStickBtn = 10;
 }
+namespace pcm {
+    constexpr int solDollyDeploy = 2;
+    constexpr int solDollyRetract = 3;
+}

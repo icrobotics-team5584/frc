@@ -20,12 +20,11 @@ class RobotContainer {
   RobotContainer();
 
   frc2::Command* GetAutonomousCommand();
-
+  SubDriveBase _subDriveBase;
+  
  private:
   // The robot's subsystems and commands are defined here...
   frc::Joystick _joystick0{0};
-
-  SubDriveBase _subDriveBase;
 
   void ConfigureButtonBindings();
 };
