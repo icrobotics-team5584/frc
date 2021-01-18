@@ -3,16 +3,16 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "subsystems/SubIntake.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 
 SubIntake::SubIntake(){
-
+    frc::SmartDashboard::PutData("Intake Motor", &_spmIntake);
 }
 
 // This method will be called once per scheduler run
 void SubIntake::Periodic() {
 
 }
-
 
 void SubIntake::Intake(){
     _spmIntake.Set(kSpeed);
