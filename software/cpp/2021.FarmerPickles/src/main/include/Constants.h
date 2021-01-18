@@ -25,7 +25,9 @@ namespace TurretConstants {
     constexpr int turretEncoderPin1 = 0;
     constexpr int turretEncoderPin2 = 1;
     constexpr int turretMotor = 8;
-    constexpr  int turretLimit = 9;
+    constexpr int turretLimit = 9;
+
+    constexpr int flywheelMotor = 5;
 }
 
 namespace ContainerConstants {

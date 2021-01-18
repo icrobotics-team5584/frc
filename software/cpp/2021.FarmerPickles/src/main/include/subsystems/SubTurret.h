@@ -43,6 +43,8 @@ class SubTurret : public frc2::SubsystemBase {
   void ResetEncoder();
 
 
+  void SetFlywheel(double speed);
+  double GetFlywheelVelocity();
 
 
 
@@ -56,6 +58,7 @@ class SubTurret : public frc2::SubsystemBase {
   frc::Encoder _turretEncoder;
   frc::DigitalInput _limitSwitch;
   WPI_TalonSRX _spmTurret;
+  rev::CANSparkMax _spmFlywheel;
 
 
   nt::NetworkTableInstance _networktables;
