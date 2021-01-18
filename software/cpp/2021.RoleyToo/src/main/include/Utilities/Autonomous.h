@@ -4,14 +4,22 @@
 
 #pragma once
 #include <frc/Notifier.h>
-#include <frc/Timer.h>
+#include <string>
 class Autonomous {
  public:
-  Autonomous();
+  Autonomous(std::function<double()> getYaw, std::function<double()> getDistance);
   void Periodic();
+  void updatePosition();
+  void setPosition(double x, double y);
+  void setAngle(double theta);
+  void autoDrive(std::string curve);
  private:
-  double deletthis =  0;
-  const units::second_t fasterPeriod = 19_ms;
+  const units::second_t fasterPeriod = 10_ms;
+  double posX;
+  double posY;
+  double angleOffset;
+  double prevDistance;
   frc::Notifier notifier{ [this]{Periodic();} };
-  frc::Timer timer;
+  std::function<double()> _getYaw;
+  std::function<double()> _getDistance;
 };
