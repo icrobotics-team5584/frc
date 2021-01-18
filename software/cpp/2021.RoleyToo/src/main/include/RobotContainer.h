@@ -7,6 +7,7 @@
 #include <frc/Joystick.h>
 #include <frc2/command/Command.h>
 
+#include "subsystems/SubColorWheel.h"
 #include "subsystems/subDriveBase.h"
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -26,6 +27,8 @@ class RobotContainer {
   frc::Joystick _joystick0{0};
 
   SubDriveBase _subDriveBase;
+
+  SubColorWheel _subColorWheel;
 
   void ConfigureButtonBindings();
 };
