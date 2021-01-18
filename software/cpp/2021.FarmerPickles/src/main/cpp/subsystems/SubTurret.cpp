@@ -7,7 +7,8 @@
 
 SubTurret::SubTurret() :
     _turretEncoder{TurretConstants::turretEncoderPin1, TurretConstants::turretEncoderPin2},
-    _spmTurret{8}         // CHANGE TO BRUSHLESS ON ACTUAL ROBOT
+    _spmTurret{8},         // CHANGE TO BRUSHLESS ON ACTUAL ROBOT
+    _limitSwitch{9}
     {
         //_turretEncoder.SetDistancePerPulse(360./2048.); // Convert encoder ticks to degrees
         _networktables = nt::NetworkTableInstance::GetDefault();
@@ -29,6 +30,7 @@ void SubTurret::Periodic() {
     frc::SmartDashboard::GetNumber("turretP", 0.2);
     frc::SmartDashboard::GetNumber("turretI", 0);
     frc::SmartDashboard::GetNumber("turredD", 0);
+    frc::SmartDashboard::PutBoolean("Limit Switch", _limitSwitch.Get());
 
     _spmTurret.Set(turretPID.Calculate(targetX));
 
