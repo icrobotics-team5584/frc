@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "subsystems/SubDriveBase.h"
-
+#include <frc/smartdashboard/SmartDashboard.h>
 SubDriveBase::SubDriveBase() {
     
     metersPerRotation = pi * WHEEL_DIAMETER;
@@ -22,7 +22,9 @@ void SubDriveBase::drive(double speed, double rotation, bool squaredInputs){
 }
 
 // This method will be called once per scheduler run
-void SubDriveBase::Periodic() {}
+void SubDriveBase::Periodic() {
+  frc::SmartDashboard::PutNumber("navx", ahrsNavXGyro.GetYaw());
+}
 
 
 void SubDriveBase::deployDolly(){
@@ -40,7 +42,8 @@ void SubDriveBase::zeroEncoders(){
 }
 
 double SubDriveBase::getDistanceTravelled(){
-  double wheelRotations = _spmFrontLeft.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, ENCODER_TICS_PER_ROTATION).GetPosition();
+  //double wheelRotations = _spmFrontLeft.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, ENCODER_TICS_PER_ROTATION).GetPosition();
+  double wheelRotations = _srxDolly.GetSelectedSensorPosition()/ENCODER_TICS_PER_ROTATION;
   double distance = wheelRotations * metersPerRotation;
   return distance;  
 }

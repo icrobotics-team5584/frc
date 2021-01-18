@@ -11,6 +11,7 @@
 #include <rev/CANEncoder.h>
 #include <AHRS.h>
 #include "Constants.h"
+#include "ctre/phoenix/motorcontrol/can/TalonSRX.h"
 
 class SubDriveBase : public frc2::SubsystemBase {
  public:
@@ -35,6 +36,7 @@ class SubDriveBase : public frc2::SubsystemBase {
   rev::CANSparkMax _spmFrontRight{can::spmDriveBaseFrontRight, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANSparkMax _spmBackLeft{can::spmDriveBaseBackLeft, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANSparkMax _spmBackRight{can::spmDriveBaseBackRight, rev::CANSparkMax::MotorType::kBrushless};
+  ctre::phoenix::motorcontrol::can::TalonSRX _srxDolly{can::srxDolly};
   frc::DifferentialDrive _diffDrive{_spmFrontLeft, _spmFrontRight};
 
   const double WHEEL_DIAMETER = 0.0508; //0.0508 for dolly

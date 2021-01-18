@@ -8,7 +8,8 @@
 #include <frc2/command/Command.h>
 
 #include "subsystems/subDriveBase.h"
-#include "Utilities/Autonomous.h"
+#include "utilities/Autonomous.h"
+#include "commands/CmdAutoCircle.h"
 /**
  * This class is where the bulk of the robot should be declared.  Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -22,8 +23,8 @@ class RobotContainer {
 
   frc2::Command* GetAutonomousCommand();
   SubDriveBase _subDriveBase;
-  Autonomous _autonomous{ [this]{return _subDriveBase.getYaw();}, [this]{return _subDriveBase.getDistanceTravelled();}
-  };
+  //Autonomous _autonomous{ [this]{return _subDriveBase.getYaw();}, [this]{return _subDriveBase.getDistanceTravelled();}};
+  CmdAutoCircle _cmdAutoCircle{&_subDriveBase};
  private:
   // The robot's subsystems and commands are defined here...
   frc::Joystick _joystick0{0};
