@@ -48,6 +48,7 @@ class SubTurret : public frc2::SubsystemBase {
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
   bool _turretHomed = false;
+  bool _inStartingPos = false;
   frc::Encoder _turretEncoder;
   frc::DigitalInput _limitSwitch;
   WPI_TalonSRX _spmTurret;

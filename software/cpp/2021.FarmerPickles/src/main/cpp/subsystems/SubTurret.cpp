@@ -34,6 +34,18 @@ void SubTurret::Periodic() {
         _turretHomed = true;
     }
 
+    if (_turretHomed && !_inStartingPos) {
+        if (_turretEncoder.GetDistance() < 5) {
+            _spmTurret.Set(-0.15);
+        }
+        else
+        {
+            _spmTurret.Set(0);
+            _turretEncoder.Reset();
+            _inStartingPos = true;
+        }
+    }
+
     targetX = _limelight->GetNumber("tx", 0.0);
     targetY = _limelight->GetNumber("ty", 0.0);
     targetA = _limelight->GetNumber("ta", 0.0);
@@ -65,6 +77,18 @@ bool SubTurret::getTurretDirection() {
 }
 
 void SubTurret::turnTurret(double speed) {
+    //if (!_turretHomed) {
+    //    _spmTurret.Set(0);
+    //    return;
+    //}
+    //if (speed > 0 && _limitSwitch.Get()) {
+    //    _spmTurret.Set(0);
+    //    return;
+    //}
+    //if (speed < 0 && _turretEncoder.GetDistance() >= 100) {
+    //    _spmTurret.Set(0);
+    //    return;
+    //}
     _spmTurret.Set(speed);
 }
 
