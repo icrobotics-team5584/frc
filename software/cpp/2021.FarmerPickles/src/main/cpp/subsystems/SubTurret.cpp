@@ -7,8 +7,8 @@
 
 SubTurret::SubTurret() :
     _turretEncoder{TurretConstants::turretEncoderPin1, TurretConstants::turretEncoderPin2},
-    _spmTurret{8},         // CHANGE TO BRUSHLESS ON ACTUAL ROBOT
-    _limitSwitch{9}
+    _spmTurret{TurretConstants::turretMotor},         // CHANGE TO BRUSHLESS ON ACTUAL ROBOT
+    _limitSwitch{TurretConstants::turretLimit}
     {
         _turretEncoder.SetDistancePerPulse(360./2048.); // Convert encoder ticks to degrees
         _networktables = nt::NetworkTableInstance::GetDefault();

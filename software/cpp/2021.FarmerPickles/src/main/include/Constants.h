@@ -24,7 +24,8 @@ namespace DriveConstants{
 namespace TurretConstants {
     constexpr int turretEncoderPin1 = 0;
     constexpr int turretEncoderPin2 = 1;
-    constexpr int turretMotor = 5;
+    constexpr int turretMotor = 8;
+    constexpr  int turretLimit = 9;
 }
 
 namespace ContainerConstants {
