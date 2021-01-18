@@ -27,7 +27,7 @@ class Autonomous {
   double prevDistance;
   double kP = -0.5;
   double kI = 0;
-  double kD = 0;
+  double kD = 5;
   double speed = 0.1;
   double error;
   double steering;

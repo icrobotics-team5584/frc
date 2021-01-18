@@ -22,7 +22,7 @@ void CmdAutoCircle::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdAutoCircle::Execute() {
-  driveInput = _autonomous.autoDrive(0.5, 0, 0.5);
+  driveInput = _autonomous.autoDrive(100.05, 0, 100);
   _subDriveBase->drive(driveInput.speed, driveInput.steering);
 }
 
