@@ -40,6 +40,7 @@ class SubTurret : public frc2::SubsystemBase {
 
   void limeLEDState(bool state);
 
+  void ResetEncoder();
 
 
 

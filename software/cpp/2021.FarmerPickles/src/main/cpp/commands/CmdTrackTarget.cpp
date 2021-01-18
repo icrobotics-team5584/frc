@@ -19,19 +19,36 @@ void CmdTrackTarget::Initialize() {
 void CmdTrackTarget::Execute() {
 
   //LEFT POSITIVE, RIGHT NEGATIVE
+  int PIDOutput;
 
-  int PIDOutput = turretPID.Calculate(_subTurret->GetX());
-
-  if ((_subTurret->getTurretAngle() < 5 && PIDOutput > 0 ) || (_subTurret->getTurretAngle() > 100 && PIDOutput < 0 )) {
-    PIDOutput = 0;
+  if (_subTurret->CheckTarget()) {
+      failureCount = 0;
+      std::cout << "VIS: 1"; 
+      PIDOutput = turretPID.Calculate(_subTurret->GetX());
+  }
+  else {
+    failureCount++;
+    std::cout << "VIS: 0";
+    if (failureCount > 35) {
+      PIDOutput = turretPID.Calculate(40 - _subTurret->getTurretAngle());
+    }
   }
 
+  if ((_subTurret->getTurretAngle() < 10) && (PIDOutput > 0)) { PIDOutput = 0; }
+  if ((_subTurret->getTurretAngle() > 100) && (PIDOutput < 0)) { PIDOutput = 0; }
+
+  std::cout << " PID: " << PIDOutput;
+  std::cout << " LMT: " << _subTurret->GetSwitch();
+  std::cout << " FLC: " << failureCount;
+  std::cout << " ANG: " << _subTurret->getTurretAngle() << "\n";
   _subTurret->setTurret(PIDOutput);
 
 }
 
 // Called once the command ends or is interrupted.
-void CmdTrackTarget::End(bool interrupted) {}
+void CmdTrackTarget::End(bool interrupted) {
+  _subTurret->setTurret(0);
+}
 
 // Returns true when the command should end.
 bool CmdTrackTarget::IsFinished() {

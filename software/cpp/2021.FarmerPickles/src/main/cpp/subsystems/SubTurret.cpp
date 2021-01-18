@@ -25,26 +25,26 @@ SubTurret::SubTurret() :
 
 // This method will be called once per scheduler run
 void SubTurret::Periodic() {
-    if (!_turretHomed) {
-        _spmTurret.Set(0.2);
-    }
-    if (_limitSwitch.Get()) {
-        _spmTurret.Set(0);
-        _turretEncoder.Reset();
-        _turretHomed = true;
-    }
+    // if (!_turretHomed) {
+    //     _spmTurret.Set(0.2);
+    // }
+    // if (_limitSwitch.Get()) {
+    //     _spmTurret.Set(0);
+    //     _turretEncoder.Reset();
+    //     _turretHomed = true;
+    // }
 
-    if (_turretHomed && !_inStartingPos) {
-        if (_turretEncoder.GetDistance() < 5) {
-            _spmTurret.Set(-0.15);
-        }
-        else
-        {
-            _spmTurret.Set(0);
-            _turretEncoder.Reset();
-            _inStartingPos = true;
-        }
-    }
+    // if (_turretHomed && !_inStartingPos) {
+    //     if (_turretEncoder.GetDistance() < 5) {
+    //         _spmTurret.Set(-0.15);
+    //     }
+    //     else
+    //     {
+    //         _spmTurret.Set(0);
+    //         _turretEncoder.Reset();
+    //         _inStartingPos = true;
+    //     }
+    // }
 
     targetX = _limelight->GetNumber("tx", 0.0);
     targetY = _limelight->GetNumber("ty", 0.0);
@@ -92,4 +92,8 @@ void SubTurret::limeLEDState(bool state) {
         _limelight->PutNumber("ledMode", 1);
     }
     
+}
+
+void SubTurret::ResetEncoder() {
+    _turretEncoder.Reset();
 }

@@ -17,6 +17,7 @@
 //Commands
 #include "commands/cmdDrive.h"
 #include "commands/CmdTrackTarget.h"
+#include "commands/CmdHomeTurret.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -30,6 +31,7 @@ class RobotContainer {
   RobotContainer();
 
   frc2::Command* GetAutonomousCommand();
+  CmdHomeTurret cmdHomeTurret;
 
  private:
   // The robot's subsystems and commands are defined here...
@@ -38,7 +40,7 @@ class RobotContainer {
 
   cmdDrive CmdDrive;
   CmdTrackTarget cmdTrackTarget;
-  
+
   sendableSparkMax SPMTest1;
   sendableSparkMax SPMTest2;
   sendableSparkMax SPMTest3;

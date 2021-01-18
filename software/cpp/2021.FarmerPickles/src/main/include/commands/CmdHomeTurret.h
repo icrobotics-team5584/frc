@@ -7,8 +7,7 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 
-#include <subsystems/SubTurret.h>
-#include <frc/controller/PIDController.h>
+#include "subsystems/SubTurret.h"
 
 /**
  * An example command.
@@ -17,10 +16,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class CmdTrackTarget
-    : public frc2::CommandHelper<frc2::CommandBase, CmdTrackTarget> {
+class CmdHomeTurret
+    : public frc2::CommandHelper<frc2::CommandBase, CmdHomeTurret> {
  public:
-  CmdTrackTarget(SubTurret* subTurret);
+  CmdHomeTurret(SubTurret* subTurret);
 
   void Initialize() override;
 
@@ -29,12 +28,8 @@ class CmdTrackTarget
   void End(bool interrupted) override;
 
   bool IsFinished() override;
-
  private:
+  bool targetReached = false;
+
   SubTurret* _subTurret;
-
-  int failureCount = 0;
-
-  frc2::PIDController turretPID{0.2, 0.0, 0.0}; //default values
-
 };
