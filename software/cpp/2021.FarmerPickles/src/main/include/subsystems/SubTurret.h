@@ -29,15 +29,18 @@ class SubTurret : public frc2::SubsystemBase {
   bool getTurretStopped();
   bool getTurretDirection();
 
-  void turnTurret(double speed);
+  double GetX();
+  double GetY();
+  double GetTargetArea();
+  bool CheckTarget();
+  bool GetSwitch();
+
+  void setTurret(double speed);
   void stopTurret();
 
   void limeLEDState(bool state);
 
-  double targetX = 0;
-  double targetY = 0;
-  double targetA = 0;
-  bool targetVisible = false;
+
 
 
 
@@ -57,6 +60,10 @@ class SubTurret : public frc2::SubsystemBase {
   nt::NetworkTableInstance _networktables;
   std::shared_ptr<nt::NetworkTable> _limelight;
 
-  frc2::PIDController turretPID{0.2, 0.0, 0.0}; //default values
+  double targetX = 0;
+  double targetY = 0;
+  double targetA = 0;
+  bool targetVisible = false;
+
 
 };

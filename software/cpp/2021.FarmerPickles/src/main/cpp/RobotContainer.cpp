@@ -11,6 +11,7 @@
 
 RobotContainer::RobotContainer() : 
 CmdDrive{&SubDriveBase, &driverController},
+cmdTrackTarget{&subTurret},
 //Set up our Nice Max's.
 SPMTest1{TestConstants::testMotor1, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
 SPMTest2{TestConstants::testMotor2, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
@@ -32,6 +33,8 @@ void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
   
   frc2::JoystickButton btnA{&driverController, Buttons::aBtn};
+
+  btnA.WhileHeld(cmdTrackTarget);
 
 }
 

@@ -51,15 +51,14 @@ void SubTurret::Periodic() {
     targetA = _limelight->GetNumber("ta", 0.0);
     targetVisible = _limelight->GetNumber("tv", 0.0);
 
-    frc::SmartDashboard::GetNumber("turretP", 0.2);
-    frc::SmartDashboard::GetNumber("turretI", 0);
-    frc::SmartDashboard::GetNumber("turredD", 0);
     frc::SmartDashboard::PutBoolean("Limit Switch", _limitSwitch.Get());
-
-    //_spmTurret.Set(turretPID.Calculate(targetX));
-
-
 }
+
+double SubTurret::GetX() { return targetX; }
+double SubTurret::GetY() { return targetY; }
+double SubTurret::GetTargetArea() { return targetA; }
+bool SubTurret::CheckTarget() { return targetVisible; }
+bool SubTurret::GetSwitch() { return _limitSwitch.Get(); }
 
 double SubTurret::getTurretAngle() {
     return _turretEncoder.GetDistance();
@@ -76,19 +75,7 @@ bool SubTurret::getTurretDirection() {
     return _turretEncoder.GetDirection();
 }
 
-void SubTurret::turnTurret(double speed) {
-    //if (!_turretHomed) {
-    //    _spmTurret.Set(0);
-    //    return;
-    //}
-    //if (speed > 0 && _limitSwitch.Get()) {
-    //    _spmTurret.Set(0);
-    //    return;
-    //}
-    //if (speed < 0 && _turretEncoder.GetDistance() >= 100) {
-    //    _spmTurret.Set(0);
-    //    return;
-    //}
+void SubTurret::setTurret(double speed) {
     _spmTurret.Set(speed);
 }
 

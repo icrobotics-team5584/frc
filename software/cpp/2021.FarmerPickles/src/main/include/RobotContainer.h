@@ -12,10 +12,11 @@
 
 //Subsystems
 #include "subsystems/subDriveBase.h"
+#include "subsystems/SubTurret.h"
 
 //Commands
 #include "commands/cmdDrive.h"
-
+#include "commands/CmdTrackTarget.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -33,7 +34,11 @@ class RobotContainer {
  private:
   // The robot's subsystems and commands are defined here...
   subDriveBase SubDriveBase;
+  SubTurret subTurret;
+
   cmdDrive CmdDrive;
+  CmdTrackTarget cmdTrackTarget;
+  
   sendableSparkMax SPMTest1;
   sendableSparkMax SPMTest2;
   sendableSparkMax SPMTest3;
