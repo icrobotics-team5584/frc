@@ -7,11 +7,16 @@
 
 SubTurret::SubTurret() :
     _turretEncoder{TurretConstants::turretEncoderPin1, TurretConstants::turretEncoderPin2},
-    _spmTurret{TurretConstants::turretMotor, rev::CANSparkMax::MotorType::kBrushed}         // CHANGE TO BRUSHLESS ON ACTUAL ROBOT
+    _spmTurret{8}         // CHANGE TO BRUSHLESS ON ACTUAL ROBOT
     {
         //_turretEncoder.SetDistancePerPulse(360./2048.); // Convert encoder ticks to degrees
         _networktables = nt::NetworkTableInstance::GetDefault();
         _limelight = _networktables.GetTable("limelight");
+
+        frc::SmartDashboard::PutNumber("turretP", 0.2);
+        frc::SmartDashboard::PutNumber("turretI", 0);
+        frc::SmartDashboard::PutNumber("turretD", 0);
+
     }
 
 // This method will be called once per scheduler run
@@ -20,6 +25,14 @@ void SubTurret::Periodic() {
     targetY = _limelight->GetNumber("ty", 0.0);
     targetA = _limelight->GetNumber("ta", 0.0);
     targetVisible = _limelight->GetNumber("tv", 0.0);
+
+    frc::SmartDashboard::GetNumber("turretP", 0.2);
+    frc::SmartDashboard::GetNumber("turretI", 0);
+    frc::SmartDashboard::GetNumber("turredD", 0);
+
+    _spmTurret.Set(turretPID.Calculate(targetX));
+
+
 }
 
 double SubTurret::getTurretAngle() {

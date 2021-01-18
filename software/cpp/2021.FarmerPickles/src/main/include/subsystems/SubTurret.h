@@ -7,11 +7,13 @@
 #include <frc2/command/SubsystemBase.h>
 #include <frc/Encoder.h>
 #include <rev/CANSparkMax.h>
+#include <ctre/Phoenix.h>
 #include "networktables/NetworkTable.h"
 #include "networktables/NetworkTableEntry.h"
 #include "networktables/NetworkTableInstance.h"
-
+#include <frc/controller/PIDController.h>
 #include "Constants.h"
+#include "frc/smartdashboard/SmartDashboard.h"
 
 class SubTurret : public frc2::SubsystemBase {
  public:
@@ -45,7 +47,10 @@ class SubTurret : public frc2::SubsystemBase {
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
   frc::Encoder _turretEncoder;
-  rev::CANSparkMax _spmTurret;
+  WPI_TalonSRX _spmTurret;
   nt::NetworkTableInstance _networktables;
   std::shared_ptr<nt::NetworkTable> _limelight;
+
+  frc2::PIDController turretPID{0.2, 0.0, 0.0}; //default values
+
 };
