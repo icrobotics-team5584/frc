@@ -4,21 +4,10 @@
 
 #pragma once
 
-#include <frc2/command/Command.h>
 #include <frc/Joystick.h>
-#include <sendableSparkMax.h>
+#include <frc2/command/Command.h>
 
-#include "Constants.h"
-
-//Subsystems
 #include "subsystems/subDriveBase.h"
-#include "subsystems/SubTurret.h"
-
-//Commands
-#include "commands/cmdDrive.h"
-#include "commands/CmdTrackTarget.h"
-#include "commands/CmdHomeTurret.h"
-
 /**
  * This class is where the bulk of the robot should be declared.  Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -31,21 +20,12 @@ class RobotContainer {
   RobotContainer();
 
   frc2::Command* GetAutonomousCommand();
-  CmdHomeTurret cmdHomeTurret;
 
  private:
   // The robot's subsystems and commands are defined here...
-  subDriveBase SubDriveBase;
-  SubTurret subTurret;
+  frc::Joystick m_joy{0};
 
-  cmdDrive CmdDrive;
-  CmdTrackTarget cmdTrackTarget;
-
-  sendableSparkMax SPMTest1;
-  sendableSparkMax SPMTest2;
-  sendableSparkMax SPMTest3;
-
-  frc::Joystick driverController{ContainerConstants::kDriverControllerPort};
+  SubDriveBase _subDriveBase;
 
   void ConfigureButtonBindings();
 };
