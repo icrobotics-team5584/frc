@@ -14,6 +14,10 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
+  btnDeployIntake.WhenPressed([this]{_subIntake.Deploy();});
+  btnRetractIntake.WhenPressed([this]{_subIntake.Retract();});
+  btnIntake.WhenPressed([this]{_subIntake.Intake();});
+  btnOuttake.WhenPressed([this]{_subIntake.Outtake();});  
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

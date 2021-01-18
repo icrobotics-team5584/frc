@@ -6,8 +6,13 @@
 
 #include <frc/Joystick.h>
 #include <frc2/command/Command.h>
+#include <frc2/command/button/Button.h>
+#include <frc2/command/button/JoystickButton.h>
 
 #include "subsystems/subDriveBase.h"
+#include "subsystems/SubIntake.h"
+#include "Constants.h"
+
 /**
  * This class is where the bulk of the robot should be declared.  Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -26,6 +31,13 @@ class RobotContainer {
   frc::Joystick _joystick0{0};
 
   SubDriveBase _subDriveBase;
+
+  SubIntake _subIntake; 
+
+  frc2::JoystickButton btnDeployIntake{&_joystick0, buttons::aBtn};
+  frc2::JoystickButton btnRetractIntake{&_joystick0, buttons::bBtn};
+  frc2::JoystickButton btnIntake{&_joystick0, buttons::xBtn};
+  frc2::JoystickButton btnOuttake{&_joystick0, buttons::yBtn};
 
   void ConfigureButtonBindings();
 };
