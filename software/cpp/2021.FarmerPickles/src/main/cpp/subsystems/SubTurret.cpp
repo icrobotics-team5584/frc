@@ -10,7 +10,7 @@ SubTurret::SubTurret() :
     _spmTurret{8},         // CHANGE TO BRUSHLESS ON ACTUAL ROBOT
     _limitSwitch{9}
     {
-        //_turretEncoder.SetDistancePerPulse(360./2048.); // Convert encoder ticks to degrees
+        _turretEncoder.SetDistancePerPulse(360./2048.); // Convert encoder ticks to degrees
         _networktables = nt::NetworkTableInstance::GetDefault();
         _limelight = _networktables.GetTable("limelight");
 
@@ -18,10 +18,22 @@ SubTurret::SubTurret() :
         frc::SmartDashboard::PutNumber("turretI", 0);
         frc::SmartDashboard::PutNumber("turretD", 0);
 
+        //while (!_limitSwitch.Get()) {
+        //    _spmTurret.Set(-0.2);
+        //}
     }
 
 // This method will be called once per scheduler run
 void SubTurret::Periodic() {
+    if (!_turretHomed) {
+        _spmTurret.Set(0.2);
+    }
+    if (_limitSwitch.Get()) {
+        _spmTurret.Set(0);
+        _turretEncoder.Reset();
+        _turretHomed = true;
+    }
+
     targetX = _limelight->GetNumber("tx", 0.0);
     targetY = _limelight->GetNumber("ty", 0.0);
     targetA = _limelight->GetNumber("ta", 0.0);
@@ -32,7 +44,7 @@ void SubTurret::Periodic() {
     frc::SmartDashboard::GetNumber("turredD", 0);
     frc::SmartDashboard::PutBoolean("Limit Switch", _limitSwitch.Get());
 
-    _spmTurret.Set(turretPID.Calculate(targetX));
+    //_spmTurret.Set(turretPID.Calculate(targetX));
 
 
 }
