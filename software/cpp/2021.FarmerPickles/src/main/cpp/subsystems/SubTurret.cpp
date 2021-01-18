@@ -18,6 +18,8 @@ SubTurret::SubTurret() :
         frc::SmartDashboard::PutNumber("turretI", 0);
         frc::SmartDashboard::PutNumber("turretD", 0);
 
+        _limelight->PutNumber("ledMode", 1);
+
         //while (!_limitSwitch.Get()) {
         //    _spmTurret.Set(-0.2);
         //}
