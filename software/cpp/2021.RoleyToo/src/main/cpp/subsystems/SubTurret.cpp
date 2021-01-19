@@ -16,26 +16,26 @@ SubTurret::SubTurret() :
 
 // This method will be called once per scheduler run
 void SubTurret::Periodic() {
-    targetX = _limelight->GetNumber("tx", 0.0);
-    targetY = _limelight->GetNumber("ty", 0.0);
-    targetA = _limelight->GetNumber("ta", 0.0);
-    targetVisible = _limelight->GetNumber("tv", 0.0);
+    _targetX = _limelight->GetNumber("tx", 0.0);
+    _targetY = _limelight->GetNumber("ty", 0.0);
+    _targetA = _limelight->GetNumber("ta", 0.0);
+    _targetVisible = _limelight->GetNumber("tv", 0.0);
 }
 
 double SubTurret::GetX() {
-    return targetX;
+    return _targetX;
 }
 
 double SubTurret::GetY() {
-    return targetY;
+    return _targetY;
 }
 
 double SubTurret::GetTargetArea() {
-    return targetA;
+    return _targetA;
 }
 
 bool SubTurret::CheckTarget() {
-    return targetVisible;
+    return _targetVisible;
 }
 
 bool SubTurret::GetLeftLimit() {

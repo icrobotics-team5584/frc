@@ -47,8 +47,8 @@ class SubTurret : public frc2::SubsystemBase {
   nt::NetworkTableInstance _networktables;
   std::shared_ptr<nt::NetworkTable> _limelight;
 
-  double targetX = 0;
-  double targetY = 0;
-  double targetA = 0;
-  bool targetVisible = false;
+  double _targetX = 0;
+  double _targetY = 0;
+  double _targetA = 0;
+  bool _targetVisible = false;
 };
