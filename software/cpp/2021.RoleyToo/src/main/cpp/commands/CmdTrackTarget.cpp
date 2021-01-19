@@ -14,7 +14,7 @@ CmdTrackTarget::CmdTrackTarget(SubTurret* subTurret) {
 // Called when the command is initially scheduled.
 void CmdTrackTarget::Initialize() {
   frc::SmartDashboard::PutData("PID", &_turretPID);
-  _subTurret->LimeLEDState(true);
+  _subTurret->LimeLEDOn();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -41,7 +41,7 @@ void CmdTrackTarget::Execute() {
 // Called once the command ends or is interrupted.
 void CmdTrackTarget::End(bool interrupted) {
   _subTurret->SetTurret(0);
-  _subTurret->LimeLEDState(false);
+  _subTurret->LimeLEDOff();
 }
 
 // Returns true when the command should end.

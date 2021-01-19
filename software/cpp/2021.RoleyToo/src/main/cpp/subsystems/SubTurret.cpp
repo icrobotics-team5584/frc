@@ -12,6 +12,7 @@ SubTurret::SubTurret() :
         _encTurret.SetDistancePerPulse(360.0/2048.0);
         _networktables = nt::NetworkTableInstance::GetDefault();
         _limelight = _networktables.GetTable("limelight");
+        LimeLEDOff();
     }
 
 // This method will be called once per scheduler run
@@ -54,12 +55,10 @@ void SubTurret::SetTurret(double speed) {
     _spmTurret.Set(speed);
 }
 
-void SubTurret::LimeLEDState(bool state) {
-    if (state) {
-        _limelight->PutNumber("ledMode", 3);
-    }
-    else
-    {
-        _limelight->PutNumber("ledMode", 1);
-    }
+void SubTurret::LimeLEDOn() {
+    _limelight->PutNumber("ledMode", 3);
+}
+
+void SubTurret::LimeLEDOff() {
+    _limelight->PutNumber("ledMode", 1);
 }
