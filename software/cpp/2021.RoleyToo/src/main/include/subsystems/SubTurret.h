@@ -28,13 +28,13 @@ class SubTurret : public frc2::SubsystemBase {
   double GetY();
   double GetTargetArea();
   bool CheckTarget();
-  bool GetSwitch();
-  double getTurretAngle();
+  bool GetLeftLimit();
+  double GetTurretAngle();
   void ResetEncoder();
 
-  void setTurret(double speed);
+  void SetTurret(double speed);
 
-  void limeLEDState(bool state);
+  void LimeLEDState(bool state);
 
 
  private:

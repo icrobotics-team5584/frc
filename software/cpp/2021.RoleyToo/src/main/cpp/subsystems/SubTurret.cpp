@@ -38,11 +38,11 @@ bool SubTurret::CheckTarget() {
     return targetVisible;
 }
 
-bool SubTurret::GetSwitch() {
+bool SubTurret::GetLeftLimit() {
     return _lmtTurretLeft.Get();
 }
 
-double SubTurret::getTurretAngle() {
+double SubTurret::GetTurretAngle() {
     return _encTurret.GetDistance();
 }
 
@@ -50,11 +50,11 @@ void SubTurret::ResetEncoder() {
     _encTurret.Reset();
 }
 
-void SubTurret::setTurret(double speed) {
+void SubTurret::SetTurret(double speed) {
     _spmTurret.Set(speed);
 }
 
-void SubTurret::limeLEDState(bool state) {
+void SubTurret::LimeLEDState(bool state) {
     if (state) {
         _limelight->PutNumber("ledMode", 3);
     }
