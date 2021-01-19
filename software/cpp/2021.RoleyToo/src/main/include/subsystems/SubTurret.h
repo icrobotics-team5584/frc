@@ -42,9 +42,9 @@ class SubTurret : public frc2::SubsystemBase {
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-  rev::CANSparkMax _spmTurret;
-  frc::Encoder _encTurret;
-  frc::DigitalInput _lmtTurretLeft;
+  rev::CANSparkMax _spmTurret{can::spmTurret, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  frc::Encoder _encTurret{dio::encTurret1, dio::encTurret2};
+  frc::DigitalInput _lmtTurretLeft{dio::lmtTurretLeft};
 
   nt::NetworkTableInstance _networktables;
   std::shared_ptr<nt::NetworkTable> _limelight;

@@ -4,10 +4,7 @@
 
 #include "subsystems/SubTurret.h"
 
-SubTurret::SubTurret() :
-    _spmTurret{can::spmTurret, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
-    _encTurret{dio::encTurret1, dio::encTurret2},
-    _lmtTurretLeft{dio::lmtTurretLeft}
+SubTurret::SubTurret()
     {
         _encTurret.SetDistancePerPulse(360.0/2048.0);
         _networktables = nt::NetworkTableInstance::GetDefault();
