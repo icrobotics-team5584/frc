@@ -34,6 +34,7 @@ class SubTurret : public frc2::SubsystemBase {
   double GetTargetArea();
   bool CheckTarget();
   bool GetSwitch();
+  bool GetLinebreak();
 
   void setTurret(double speed);
   void stopTurret();
@@ -57,6 +58,7 @@ class SubTurret : public frc2::SubsystemBase {
   bool _inStartingPos = false;
   frc::Encoder _turretEncoder;
   frc::DigitalInput _limitSwitch;
+  frc::DigitalInput _linebreak;
   WPI_TalonSRX _spmTurret;
   rev::CANSparkMax _spmFlywheel;
 

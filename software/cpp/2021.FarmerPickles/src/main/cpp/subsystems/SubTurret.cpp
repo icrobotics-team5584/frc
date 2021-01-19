@@ -9,6 +9,7 @@ SubTurret::SubTurret() :
     _turretEncoder{TurretConstants::turretEncoderPin1, TurretConstants::turretEncoderPin2},
     _spmTurret{TurretConstants::turretMotor},         // CHANGE TO BRUSHLESS ON ACTUAL ROBOT
     _limitSwitch{TurretConstants::turretLimit},
+    _linebreak{TurretConstants::turretLinebreak},
     _spmFlywheel{TurretConstants::flywheelMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless}
     {
         _turretEncoder.SetDistancePerPulse(360./2048.); // Convert encoder ticks to degrees
@@ -38,6 +39,10 @@ double SubTurret::GetY() { return targetY; }
 double SubTurret::GetTargetArea() { return targetA; }
 bool SubTurret::CheckTarget() { return targetVisible; }
 bool SubTurret::GetSwitch() { return _limitSwitch.Get(); }
+
+bool SubTurret::GetLinebreak() {
+    return _linebreak.Get();
+}
 
 double SubTurret::getTurretAngle() {
     return _turretEncoder.GetDistance();
