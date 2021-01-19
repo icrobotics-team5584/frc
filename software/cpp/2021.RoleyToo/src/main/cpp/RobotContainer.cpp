@@ -7,7 +7,7 @@
 
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
-  _subDriveBase.SetDefaultCommand(CmdJoystickDrive(&_subDriveBase, &_joystick0));
+  //_subDriveBase.SetDefaultCommand(CmdJoystickDrive(&_subDriveBase, &_joystick0)); // Change this when migrating from drive base to actual robot.
   // Configure the button bindings
   ConfigureButtonBindings();
 }
