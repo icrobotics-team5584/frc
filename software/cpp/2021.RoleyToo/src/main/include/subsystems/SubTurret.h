@@ -34,7 +34,9 @@ class SubTurret : public frc2::SubsystemBase {
 
   void SetTurret(double speed);
 
-  void LimeLEDState(bool state);
+  void LimeLEDOn();
+  void LimeLEDOff();
+
 
 
  private:
