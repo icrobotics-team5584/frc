@@ -19,16 +19,6 @@ struct Color{
   }
   double GetError(double detectedRed, double detectedGreen, double detectedBlue){
     double sumError = 0;
-    // std::cout << _name << sumError;
-    // if(detectedRed > _red){sumError += (detectedRed - _red);}
-    // else{sumError += (_red - detectedRed);}
-    // std::cout << sumError;
-    // if(detectedGreen > _green){sumError += (detectedGreen - _green);}
-    // else{sumError += (_green - detectedGreen);}
-    // std::cout << sumError;
-    // if(detectedBlue > _blue){sumError += (detectedBlue - _blue);}
-    // else{sumError += (_blue - detectedBlue);}
-    // std::cout << sumError << std::endl;
     sumError += abs(detectedRed - _red);
     sumError += abs(detectedGreen - _green);
     sumError += abs(detectedBlue - _blue);

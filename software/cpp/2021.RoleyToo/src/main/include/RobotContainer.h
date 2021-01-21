@@ -7,10 +7,8 @@
 #include <frc/Joystick.h>
 #include <frc2/command/Command.h>
 
-<<<<<<< HEAD
 #include "subsystems/SubColorWheel.h"
 #include "subsystems/subDriveBase.h"
-=======
 #include "subsystems/SubDriveBase.h"
 #include "subsystems/SubTurret.h"
 #include "subsystems/SubStorage.h"
@@ -20,7 +18,6 @@
 #include "commands/CmdJoystickDrive.h"
 #include "commands/CmdTrackTarget.h"
 #include "commands/CmdDriveStorage.h"
->>>>>>> master
 /**
  * This class is where the bulk of the robot should be declared.  Since
  * Command-based is a "declarative" paradigm, very little robot logic should

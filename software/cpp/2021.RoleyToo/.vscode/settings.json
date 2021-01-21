@@ -16,7 +16,6 @@
   },
   "C_Cpp.default.configurationProvider": "vscode-wpilib",
   "files.associations": {
-<<<<<<< HEAD
     "string": "cpp",
     "array": "c",
     "atomic": "c",
@@ -78,7 +77,6 @@
     "thread": "c",
     "cinttypes": "c",
     "typeinfo": "c"
-=======
     "ostream": "cpp",
     "array": "cpp",
     "atomic": "cpp",
@@ -140,6 +138,5 @@
     "thread": "cpp",
     "cinttypes": "cpp",
     "typeinfo": "cpp"
->>>>>>> master
   }
 }
