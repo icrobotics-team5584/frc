@@ -37,12 +37,14 @@ class SubTurret : public frc2::SubsystemBase {
   void LimeLEDOn();
   void LimeLEDOff();
 
-
+  void SetFlywheel(double speed);
+  double GetFlywheelRPM();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
   rev::CANSparkMax _spmTurret{can::spmTurret, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  rev::CANSparkMax _spmFlywheelRight{can::spmFlywheelRight, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   frc::Encoder _encTurret{dio::encTurret1, dio::encTurret2};
   frc::DigitalInput _lmtTurretLeft{dio::lmtTurretLeft};
 
