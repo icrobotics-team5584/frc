@@ -7,6 +7,8 @@
 #include <frc/Joystick.h>
 #include <frc2/command/Command.h>
 
+#include "subsystems/SubColorWheel.h"
+#include "subsystems/subDriveBase.h"
 #include "subsystems/SubDriveBase.h"
 #include "subsystems/SubTurret.h"
 #include "subsystems/SubStorage.h"
@@ -40,6 +42,8 @@ class RobotContainer {
 
   CmdTrackTarget _cmdTrackTarget{&_subTurret};
   CmdDriveStorage _cmdDriveStorage{&_subStorage, 1, 0.2};
+
+  SubColorWheel _subColorWheel;
 
   void ConfigureButtonBindings();
 };
