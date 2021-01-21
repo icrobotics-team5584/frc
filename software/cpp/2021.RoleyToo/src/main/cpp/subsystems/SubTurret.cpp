@@ -67,5 +67,5 @@ void SubTurret::SetFlywheel(double speed) {
 }
 
 double SubTurret::GetFlywheelRPM() {
-    _spmFlywheelRight.GetEncoder().GetVelocity();
+    return _spmFlywheelRight.GetEncoder().GetVelocity();
 }
