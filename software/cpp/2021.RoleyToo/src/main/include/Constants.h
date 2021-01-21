@@ -20,6 +20,14 @@ namespace can {
     constexpr int spmDriveBaseFrontRight = 3;
     constexpr int spmDriveBaseBackRight = 4;
     constexpr int srxDolly = 7;
+    constexpr int spmTurret = 8;
+    constexpr int spmStorage = 9;
+    constexpr int spmFlywheelRight = 5;
+}
+namespace dio {
+    constexpr int encTurret1 = 0;
+    constexpr int encTurret2 = 1;
+    constexpr int lmtTurretLeft = 9;
 }
 namespace buttons {
     constexpr int aBtn = 1;
