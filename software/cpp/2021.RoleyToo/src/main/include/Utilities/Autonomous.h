@@ -4,7 +4,6 @@
 
 #pragma once
 #include <frc/Notifier.h>
-#include <string>
 
 struct DriveInput {
     double steering;
@@ -25,9 +24,9 @@ class Autonomous {
   double posY;
   double angleOffset;
   double prevDistance;
-  double kP = -0.5;
-  double kI = 0;
-  double kD = 5;
+  double kP = -2;
+  double kI = 0.00;
+  double kD = -150;
   double speed = 0.1;
   double error;
   double steering;
