@@ -20,7 +20,11 @@ namespace can {
     constexpr int spmDriveBaseFrontRight = 3;
     constexpr int spmDriveBaseBackRight = 4;
     constexpr int spmTurret = 8;
+<<<<<<< HEAD
     constexpr int spmFlywheelRight = 5;
+=======
+    constexpr int spmStorage = 9;
+>>>>>>> 2021.RoleyToo_Storage
 }
 namespace dio {
     constexpr int encTurret1 = 0;

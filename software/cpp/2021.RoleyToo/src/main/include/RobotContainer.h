@@ -9,9 +9,11 @@
 
 #include "subsystems/SubDriveBase.h"
 #include "subsystems/SubTurret.h"
+#include "subsystems/SubStorage.h"
 
 #include "commands/CmdJoystickDrive.h"
 #include "commands/CmdTrackTarget.h"
+#include "commands/CmdDriveStorage.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -31,9 +33,11 @@ class RobotContainer {
   frc::Joystick _joystick0{0};
 
   SubDriveBase _subDriveBase;
-
   SubTurret _subTurret;
+  SubStorage _subStorage;
+
   CmdTrackTarget _cmdTrackTarget{&_subTurret};
+  CmdDriveStorage _cmdDriveStorage{&_subStorage, 1, 0.2};
 
   void ConfigureButtonBindings();
 };
