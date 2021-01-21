@@ -20,7 +20,7 @@ void CmdTrackTarget::Initialize() {
 void CmdTrackTarget::Execute() {
 
   //LEFT POSITIVE, RIGHT NEGATIVE
-  int PIDOutput;
+  double PIDOutput;
 
   if (_subTurret->CheckTarget()) {
       failureCount = 0;

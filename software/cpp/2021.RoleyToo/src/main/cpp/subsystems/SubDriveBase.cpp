@@ -4,7 +4,19 @@
 
 #include "subsystems/SubDriveBase.h"
 
-SubDriveBase::SubDriveBase() = default;
+SubDriveBase::SubDriveBase() {
+    _spmFrontLeft.RestoreFactoryDefaults();
+    _spmFrontRight.RestoreFactoryDefaults();
+    _spmBackLeft.RestoreFactoryDefaults();
+    _spmBackRight.RestoreFactoryDefaults();
+
+    _spmBackLeft.Follow(_spmFrontLeft);
+    _spmBackRight.Follow(_spmFrontRight);
+}
+
+void SubDriveBase::drive(double speed, double rotation, bool squaredInputs){
+  _diffDrive.ArcadeDrive(-speed, rotation, squaredInputs);
+}
 
 // This method will be called once per scheduler run
 void SubDriveBase::Periodic() {}
