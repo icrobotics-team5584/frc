@@ -12,6 +12,8 @@
 
 #include "commands/CmdJoystickDrive.h"
 #include "commands/CmdTrackTarget.h"
+#include "commands/CmdSpinFlywheel.h"
+
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -34,6 +36,8 @@ class RobotContainer {
 
   SubTurret _subTurret;
   CmdTrackTarget _cmdTrackTarget{&_subTurret};
+  CmdSpinFlywheel _cmdSpinFlywheel{&_subTurret};
+
 
   void ConfigureButtonBindings();
 };
