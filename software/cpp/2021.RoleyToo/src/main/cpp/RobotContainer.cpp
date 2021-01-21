@@ -17,8 +17,10 @@ void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
 
   frc2::JoystickButton leftBtn{&_joystick0, buttons::leftBtn};
+  frc2::JoystickButton aBtn{&_joystick0, buttons::aBtn};
 
   leftBtn.WhileHeld(_cmdTrackTarget);
+  aBtn.WhileHeld(_cmdDriveStorage);
   
 }
 

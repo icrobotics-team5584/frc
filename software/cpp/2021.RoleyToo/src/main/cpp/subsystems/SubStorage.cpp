@@ -8,3 +8,17 @@ SubStorage::SubStorage() = default;
 
 // This method will be called once per scheduler run
 void SubStorage::Periodic() {}
+
+void SubStorage::Move(bool direction, double speed) {
+    
+    if (direction) {
+        _spmStorageMotor.Set(speed);
+    }
+    else {
+        _spmStorageMotor.Set(-speed);
+    }
+}
+
+double SubStorage::GetEncoder() {
+    return _spmStorageMotor.Get();
+}

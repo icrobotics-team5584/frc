@@ -12,6 +12,8 @@ class SubStorage : public frc2::SubsystemBase {
  public:
   SubStorage();
 
+  void Move(bool direction, double speed);
+  double GetEncoder();
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
