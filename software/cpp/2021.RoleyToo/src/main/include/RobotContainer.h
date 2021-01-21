@@ -7,8 +7,20 @@
 #include <frc/Joystick.h>
 #include <frc2/command/Command.h>
 
+<<<<<<< HEAD
 #include "subsystems/SubColorWheel.h"
 #include "subsystems/subDriveBase.h"
+=======
+#include "subsystems/SubDriveBase.h"
+#include "subsystems/SubTurret.h"
+#include "subsystems/SubStorage.h"
+#include "utilities/Autonomous.h"
+
+#include "commands/CmdAutoCircle.h"
+#include "commands/CmdJoystickDrive.h"
+#include "commands/CmdTrackTarget.h"
+#include "commands/CmdDriveStorage.h"
+>>>>>>> master
 /**
  * This class is where the bulk of the robot should be declared.  Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -21,12 +33,18 @@ class RobotContainer {
   RobotContainer();
 
   frc2::Command* GetAutonomousCommand();
-
+  SubDriveBase _subDriveBase;
+  //Autonomous _autonomous{ [this]{return _subDriveBase.getYaw();}, [this]{return _subDriveBase.getDistanceTravelled();}};
+  CmdAutoCircle _cmdAutoCircle{&_subDriveBase};
  private:
   // The robot's subsystems and commands are defined here...
   frc::Joystick _joystick0{0};
 
-  SubDriveBase _subDriveBase;
+  SubTurret _subTurret;
+  SubStorage _subStorage;
+
+  CmdTrackTarget _cmdTrackTarget{&_subTurret};
+  CmdDriveStorage _cmdDriveStorage{&_subStorage, 1, 0.2};
 
   SubColorWheel _subColorWheel;
 
