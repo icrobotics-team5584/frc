@@ -17,7 +17,7 @@ class Autonomous {
   void updatePosition();
   void setPosition(double x, double y);
   void setAngle(double theta);
-  DriveInput autoDrive(double x, double y, double radius);
+  DriveInput autoDrive(double startX, double startY, double endX, double endY, double endHeading);
  private:
   const units::second_t fasterPeriod = 10_ms;
   double posX;
@@ -32,6 +32,10 @@ class Autonomous {
   double steering;
   double intergral;
   double previousError = 0;
+  double cenX;
+  double cenY;
+  double radius;
+  double slope;
   DriveInput autoOutput;
   frc::Notifier notifier{ [this]{Periodic();} };
   std::function<double()> _getYaw;

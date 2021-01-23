@@ -40,8 +40,21 @@ void Autonomous::setAngle(double theta){
     angleOffset = theta - _getYaw();
 }
 
-DriveInput Autonomous::autoDrive(double x, double y, double radius){
-    error = sqrt(pow((posX - x), 2) + pow((posY - y), 2)) - radius;
+DriveInput Autonomous::autoDrive(double startX, double startY, double endX, double endY, double endHeading){
+    //Checks if its a straight line
+    /*
+    code 
+    here
+    */
+    //calculates slope
+    slope = endHeading;//to do
+    //****BRUH****
+    cenX = ( ((startX*startX)*-slope) + (2*startX*(startY-endY)) + (slope*((startY*startY) - (2*startY*endY) + (endX*endX) + (endY*endY))) )/( 2*((slope*(endX-startX)) + startY - endY) );
+    cenY = ( (startX*startX) + (2*startX*startY*slope) - (2*startX*endX) - (startY*startY) - (2*startY*endX*slope) + (endX*endX) + (endY) )/( 2*((slope*(endX-startX)) + startY - endY) );
+    //calculates radius
+    radius = 1;//todo
+    //calculates error based off x,y centre point
+    error = sqrt(pow((posX - cenX), 2) + pow((posY - cenY), 2)) - radius;
     //calculates total error or "I"
     intergral = intergral + error;
     //output = kP*Error + kI*Intergral + kD*Derivative
