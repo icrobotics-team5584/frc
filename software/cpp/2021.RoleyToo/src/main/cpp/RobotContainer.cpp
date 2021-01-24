@@ -18,15 +18,17 @@ void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
 
   frc2::JoystickButton leftBtn{&_joystick0, buttons::leftBtn};
+  frc2::JoystickButton aBtn{&_joystick0, buttons::aBtn};
   frc2::JoystickButton rightBtn{&_joystick0, buttons::rightBtn};
 
 
   leftBtn.WhileHeld(_cmdTrackTarget);
+  aBtn.WhileHeld(_cmdDriveStorage);
   rightBtn.WhileHeld(_cmdSpinFlywheel);
   
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous
-  return NULL;
+  return &_cmdAutoCircle;
 }
