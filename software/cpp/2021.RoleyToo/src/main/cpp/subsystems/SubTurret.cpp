@@ -11,7 +11,15 @@ SubTurret::SubTurret()
         _limelight = _networktables.GetTable("limelight");
         LimeLEDOff();
         _spmFlywheelRight.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+        _spmFlywheelLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+        _spmTurret.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+        _spmHood.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+
         _spmFlywheelRight.SetSmartCurrentLimit(50);
+        _spmFlywheelLeft.SetSmartCurrentLimit(50);
+        _spmTurret.SetSmartCurrentLimit(20);
+        _spmHood.SetSmartCurrentLimit(20);
+
         frc::SmartDashboard::PutNumber("wheel max power", 0);
         frc::SmartDashboard::PutNumber("wheel setpoint", 0);
     }
