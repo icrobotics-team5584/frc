@@ -31,7 +31,7 @@ class CmdSpinFlywheel
   bool IsFinished() override;
  private:
   SubTurret* _subTurret;
-  frc2::PIDController _flywheelPID{0.000006, 0.0, 0.0000053}; //default values
+  frc2::PIDController _flywheelPID{0.00005, 0.0, 0.0000053}; //default values
   double _PIDOutput = 0;
   double _maxPower = 1;
   double _setpoint = 3000;
