@@ -51,7 +51,7 @@ class SubTurret : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
   rev::CANSparkMax _spmTurret{can::spmTurret, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::CANSparkMax _spmFlywheelRight{can::spmFlywheelRight, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
-  rev::CANSparkMax _spmFlywheelRight{can::spmFlywheelLeft, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  rev::CANSparkMax _spmFlywheelLeft{can::spmFlywheelLeft, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::CANSparkMax _spmHood{can::spmHood, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
 
   frc::Encoder _encTurret{dio::encTurret1, dio::encTurret2};
