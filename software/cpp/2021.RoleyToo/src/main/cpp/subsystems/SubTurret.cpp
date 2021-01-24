@@ -43,14 +43,18 @@ bool SubTurret::CheckTarget() {
 }
 
 bool SubTurret::GetLeftLimit() {
-    return _lmtTurretLeft.Get();
+    return _hlfTurretLeft.Get();
+}
+
+bool SubTurret::GetRightLimit() {
+    return _hlfTurretRight.Get();
 }
 
 double SubTurret::GetTurretAngle() {
     return _encTurret.GetDistance();
 }
 
-void SubTurret::ResetEncoder() {
+void SubTurret::ResetTurretEncoder() {
     _encTurret.Reset();
 }
 
@@ -72,4 +76,12 @@ void SubTurret::SetFlywheel(double speed) {
 
 double SubTurret::GetFlywheelRPM() {
     return _spmFlywheelRight.GetEncoder().GetVelocity();
+}
+
+void SubTurret::SetHood(double speed) {
+    _spmHood.Set(speed);
+}
+
+double SubTurret::GetHoodPos() {
+    return _encHood.GetDistance();
 }
