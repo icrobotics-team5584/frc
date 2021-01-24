@@ -46,13 +46,22 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
     code 
     here
     */
-    //calculates slope
-    slope = endHeading;//to do
-    //****BRUH****
-    cenX = ( ((startX*startX)*-slope) + (2*startX*(startY-endY)) + (slope*((startY*startY) - (2*startY*endY) + (endX*endX) + (endY*endY))) )/( 2*((slope*(endX-startX)) + startY - endY) );
-    cenY = ( (startX*startX) + (2*startX*startY*slope) - (2*startX*endX) - (startY*startY) - (2*startY*endX*slope) + (endX*endX) + (endY) )/( 2*((slope*(endX-startX)) + startY - endY) );
+
+    //checks if slope is undefined
+    if(endHeading == 0||endHeading == 180){
+        cenX = ((endX*endX) - (startX*startX) - (startY*startY))/((endX - startX));
+        cenY = endY;
+    }else{
+        //calculates slope
+        slope = tan((pi*(endHeading-90))/-180);
+        //****BRUH****
+        cenX = ( ((endX*endX)*-slope) + (2*endX*(endY-startY)) + (slope*((endY*endY) - (2*endY*startY) + (startX*startX) + (startY*startY))) )/( 2*((slope*(startX-endX)) + endY - startY) );
+        cenY = ( (endX*endX) + (2*endX*endY*slope) - (2*endX*startX) - (endY*endY) - (2*endY*startX*slope) + (startX*startX) + (startY) )/( 2*((slope*(startX-endX)) + endY - startY) );
+    }
+    
     //calculates radius
-    radius = 1;//todo
+    radius = sqrt(pow((startX - cenX), 2) + pow((startY - cenY), 2));
+
     //calculates error based off x,y centre point
     error = sqrt(pow((posX - cenX), 2) + pow((posY - cenY), 2)) - radius;
     //calculates total error or "I"
@@ -61,8 +70,13 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
     steering = kP*error + kI*intergral + kD*(error - previousError);
     //Calculates previous error for Derivative
     previousError = error;
-    autoOutput.steering = steering;
-    autoOutput.speed = speed;
+    //autoOutput.steering = steering;
+    //autoOutput.speed = speed;
+    autoOutput.steering = 0;
+    autoOutput.speed = 0;
     frc::SmartDashboard::PutNumber("error", error);
+    frc::SmartDashboard::PutNumber("cenX", cenX);
+    frc::SmartDashboard::PutNumber("cenY", cenY);
+    frc::SmartDashboard::PutNumber("radius", radius);
     return autoOutput;
 }
