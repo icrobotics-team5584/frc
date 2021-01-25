@@ -6,8 +6,8 @@
 #include <frc/Notifier.h>
 
 struct DriveInput {
-    double steering;
-    double speed;
+  double steering;
+  double speed;
 };
 
 class Autonomous {

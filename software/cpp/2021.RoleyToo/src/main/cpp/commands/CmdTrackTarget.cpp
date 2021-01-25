@@ -22,8 +22,8 @@ void CmdTrackTarget::Execute() {
   //LEFT POSITIVE, RIGHT NEGATIVE
 
   if (_subTurret->CheckTarget()) {
-      _failureCount = 0;
-      _PIDOutput = _turretPID.Calculate(_subTurret->GetX());
+    _failureCount = 0;
+    _PIDOutput = _turretPID.Calculate(_subTurret->GetX());
   }
   else {
     _failureCount++;
