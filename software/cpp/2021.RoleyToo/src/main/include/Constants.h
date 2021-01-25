@@ -23,6 +23,8 @@ namespace can {
   constexpr int spmTurret = 8;
   constexpr int spmStorage = 9;
   constexpr int spmFlywheelRight = 5;
+  constexpr int spmClimbLeft = 10;
+  constexpr int spmClimbRight = 11;
 }
 namespace dio {
   constexpr int encTurret1 = 0;
@@ -44,4 +46,6 @@ namespace buttons {
 namespace pcm {
   constexpr int solDollyDeploy = 2;
   constexpr int solDollyRetract = 3;
+  constexpr int solClimbDeploy = 4;
+  constexpr int solClimbRetract = 5;
 }
