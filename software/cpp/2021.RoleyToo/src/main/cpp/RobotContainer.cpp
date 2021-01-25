@@ -18,10 +18,11 @@ void RobotContainer::ConfigureButtonBindings() {
 
   frc2::JoystickButton leftBtn{&_joystick0, buttons::leftBtn};
   frc2::JoystickButton aBtn{&_joystick0, buttons::aBtn};
+  frc2::JoystickButton xBtn{&_joystick0, buttons::xBtn};
 
   leftBtn.WhileHeld(_cmdTrackTarget);
   aBtn.WhileHeld(_cmdDriveStorage);
-  
+  xBtn.WhileHeld([this]{_subColorWheel.SpinColorWheel(40);});
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
