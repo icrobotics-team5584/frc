@@ -6,22 +6,21 @@
 #include "frc/smartdashboard/SendableRegistry.h"
 
 sendableSparkMax::sendableSparkMax(int deviceID, MotorType type) :
-    CANSparkMax(deviceID, type)
+  CANSparkMax(deviceID, type)
 {
-    _deviceID = deviceID;
+  _deviceID = deviceID;
 }
 
 void sendableSparkMax::InitSendable(frc::SendableBuilder& builder) {
-    builder.SetSmartDashboardType("Speed Controller");
-    builder.SetActuator(true);
-    builder.SetSafeState([=]() { CANSparkMax::Disable(); });
-    builder.AddDoubleProperty(
-        "Value",
-        [=]() { return CANSparkMax::Get(); },
-        [=](double value) { CANSparkMax::Set(value); }
-    );
-    frc::SendableRegistry::GetInstance().Add(
-        this,
-        "SendableSPM"
-    );
+  builder.SetSmartDashboardType("Speed Controller");
+  builder.SetActuator(true);
+  builder.SetSafeState([=]() { 
+    CANSparkMax::Disable(); 
+  });
+  builder.AddDoubleProperty("Value", [=]() {
+      return CANSparkMax::Get(); 
+    }, [=](double value) { 
+      CANSparkMax::Set(value); 
+    } );
+  frc::SendableRegistry::GetInstance().Add(this, "SendableSPM");
 }

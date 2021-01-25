@@ -11,14 +11,14 @@ void SubStorage::Periodic() {}
 
 void SubStorage::Move(bool direction, double speed) {
     
-    if (direction) {
-        _spmStorageMotor.Set(speed);
-    }
-    else {
-        _spmStorageMotor.Set(-speed);
-    }
+  if (direction) {
+    _spmStorageMotor.Set(speed);
+  }
+  else {
+    _spmStorageMotor.Set(-speed);
+  }
 }
 
 double SubStorage::GetEncoder() {
-    return _spmStorageMotor.Get();
+  return _spmStorageMotor.Get();
 }
