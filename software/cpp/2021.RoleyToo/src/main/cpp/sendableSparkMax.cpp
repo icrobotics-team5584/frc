@@ -17,10 +17,9 @@ void sendableSparkMax::InitSendable(frc::SendableBuilder& builder) {
   builder.SetSafeState([=]() { 
     CANSparkMax::Disable(); 
   });
-  builder.AddDoubleProperty("Value", [=]() {
-      return CANSparkMax::Get(); 
-    }, [=](double value) { 
-      CANSparkMax::Set(value); 
-    } );
+  builder.AddDoubleProperty("Value",
+                            [=]() {return CANSparkMax::Get();}, 
+                            [=](double value) {CANSparkMax::Set(value);});
+  
   frc::SendableRegistry::GetInstance().Add(this, "SendableSPM");
 }
