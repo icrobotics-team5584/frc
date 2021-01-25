@@ -37,6 +37,7 @@ class Autonomous {
   double cenY;
   double radius;
   double slope;
+  bool isLinear;
   DriveInput autoOutput;
   frc::Notifier notifier{ [this]{Periodic();} };
   std::function<double()> _getYaw;

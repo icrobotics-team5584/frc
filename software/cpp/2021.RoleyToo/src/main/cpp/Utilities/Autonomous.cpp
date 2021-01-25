@@ -42,27 +42,36 @@ void Autonomous::setAngle(double theta){
 
 DriveInput Autonomous::autoDrive(double startX, double startY, double endX, double endY, double endHeading){
   //Checks if its a straight line
-  /*
-  code 
-  here
-  */  
-  //checks if slope is undefined
-  if(endHeading == 0||endHeading == 180){
-    cenX = ((endX*endX) - (startX*startX) - (startY*startY))/((endX - startX));
-    cenY = endY;
+  if (((int)round(endHeading*10))%1800 == 0){
+    if(startX == endX){
+      isLinear = true;
+    }
+  }else if (((int)round(atan((startY-endY)/(startX-endX))-endHeading)*10)%1800 == 0){
+    isLinear = true;
   }else{
-    //calculates slope
-    slope = tan((pi*(endHeading-90))/-180);
-    //****BRUH****
-    cenX = ( ((endX*endX)*-slope) + (2*endX*(endY-startY)) + (slope*((endY*endY) - (2*endY*startY) + (startX*startX) + (startY*startY))) )/( 2*((slope*(startX-endX)) + endY - startY) );
-    cenY = ( (endX*endX) + (2*endX*endY*slope) - (2*endX*startX) - (endY*endY) - (2*endY*startX*slope) + (startX*startX) + (startY) )/( 2*((slope*(startX-endX)) + endY - startY) );
+    isLinear = false;
   }
+  if(isLinear){
+    //follow linear line
+  }else{
+    //checks if slope is undefined
+    if(((int)round(endHeading*10))%1800 == 0){
+      cenX = ((endX*endX) - (startX*startX) - (startY*startY))/((endX - startX));
+      cenY = endY;
+    }else{
+      //calculates slope
+      slope = tan((pi*(endHeading-90))/-180);
+      //calculates center x and y
+      cenX = ( ((endX*endX)*-slope) + (2*endX*(endY-startY)) + (slope*((endY*endY) - (2*endY*startY) + (startX*startX) + (startY*startY))) )/( 2*((slope*(startX-endX)) + endY - startY) );
+      cenY = ( (endX*endX) + (2*endX*endY*slope) - (2*endX*startX) - (endY*endY) - (2*endY*startX*slope) + (startX*startX) + (startY) )/( 2*((slope*(startX-endX)) + endY - startY) );
+    }
     
-  //calculates radius
-  radius = sqrt(pow((startX - cenX), 2) + pow((startY - cenY), 2));
+    //calculates radius
+    radius = sqrt(pow((startX - cenX), 2) + pow((startY - cenY), 2));
 
-  //calculates error based off x,y centre point
-  error = sqrt(pow((posX - cenX), 2) + pow((posY - cenY), 2)) - radius;
+    //calculates error based off x,y centre point
+    error = sqrt(pow((posX - cenX), 2) + pow((posY - cenY), 2)) - radius;
+  }
   //calculates total error or "I"
   intergral = intergral + error;
   //output = kP*Error + kI*Intergral + kD*Derivative
@@ -77,5 +86,6 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
   frc::SmartDashboard::PutNumber("cenX", cenX);
   frc::SmartDashboard::PutNumber("cenY", cenY);
   frc::SmartDashboard::PutNumber("radius", radius);
+  frc::SmartDashboard::PutBoolean("linear", isLinear);
   return autoOutput;
 }
