@@ -16,7 +16,6 @@
   },
   "C_Cpp.default.configurationProvider": "vscode-wpilib",
   "files.associations": {
-    "ostream": "cpp",
     "array": "cpp",
     "atomic": "cpp",
     "hash_map": "cpp",
@@ -71,6 +70,7 @@
     "limits": "cpp",
     "mutex": "cpp",
     "new": "cpp",
+    "ostream": "cpp",
     "sstream": "cpp",
     "stdexcept": "cpp",
     "streambuf": "cpp",

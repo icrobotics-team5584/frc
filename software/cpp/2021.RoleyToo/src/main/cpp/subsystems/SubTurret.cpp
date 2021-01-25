@@ -9,8 +9,11 @@ SubTurret::SubTurret(){
   _networktables = nt::NetworkTableInstance::GetDefault();
   _limelight = _networktables.GetTable("limelight");
   LimeLEDOff();
+  _spmFlywheelRight.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  _spmFlywheelRight.SetSmartCurrentLimit(50);
+  frc::SmartDashboard::PutNumber("wheel setpoint", 0);
+  frc::SmartDashboard::PutNumber("wheel max power", 0);
 }
-
 // This method will be called once per scheduler run
 void SubTurret::Periodic() {
   _targetX = _limelight->GetNumber("tx", 0.0);
@@ -18,6 +21,7 @@ void SubTurret::Periodic() {
   _targetA = _limelight->GetNumber("ta", 0.0);
   _targetVisible = _limelight->GetNumber("tv", 0.0);
   frc::SmartDashboard::PutNumber("Flywheel RPM", GetFlywheelRPM());
+  frc::SmartDashboard::PutNumber("Flywheel Current", _spmFlywheelRight.GetOutputCurrent());
 }
 
 double SubTurret::GetX() {

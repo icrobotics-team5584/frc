@@ -11,6 +11,7 @@ RobotContainer::RobotContainer() {
   _subDriveBase.SetDefaultCommand(CmdJoystickDrive(&_subDriveBase, &_joystick0));
   // Configure the button bindings
   ConfigureButtonBindings();
+
 }
 
 void RobotContainer::ConfigureButtonBindings() {
@@ -18,9 +19,12 @@ void RobotContainer::ConfigureButtonBindings() {
 
   frc2::JoystickButton leftBtn{&_joystick0, buttons::leftBtn};
   frc2::JoystickButton aBtn{&_joystick0, buttons::aBtn};
+  frc2::JoystickButton rightBtn{&_joystick0, buttons::rightBtn};
+
 
   leftBtn.WhileHeld(_cmdTrackTarget);
   aBtn.WhileHeld(_cmdDriveStorage);
+  rightBtn.WhileHeld(_cmdSpinFlywheel);
   
 }
 
