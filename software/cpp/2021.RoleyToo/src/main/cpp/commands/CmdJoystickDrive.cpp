@@ -4,7 +4,7 @@
 
 #include "commands/CmdJoystickDrive.h"
 
-CmdJoystickDrive::CmdJoystickDrive(SubDriveBase* subDriveBase, frc::Joystick* joystick) {
+CmdJoystickDrive::CmdJoystickDrive(SubDriveBase* subDriveBase, JoystickScaler* joystick) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements(subDriveBase);
   _subDriveBase = subDriveBase;
@@ -13,6 +13,6 @@ CmdJoystickDrive::CmdJoystickDrive(SubDriveBase* subDriveBase, frc::Joystick* jo
 
 // Called repeatedly when this Command is scheduled to run
 void CmdJoystickDrive::Execute() {
-  _subDriveBase->drive(_joystick->GetY(), _joystick->GetX(), true);
+  _subDriveBase->drive(_joystick->GetScaledY(frc::GenericHID::kRightHand), _joystick->GetScaledX(frc::GenericHID::kRightHand), false);
 }
 

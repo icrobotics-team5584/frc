@@ -3,9 +3,12 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "commands/CmdClimbToPos.h"
+#include "subsystems/SubClimber.h"
 
-CmdClimbToPos::CmdClimbToPos() {
+CmdClimbToPos::CmdClimbToPos(SubClimber* subClimber, double target) {
   // Use addRequirements() here to declare subsystem dependencies.
+  _subClimber = subClimber;
+  _target = target;
 }
 
 // Called when the command is initially scheduled.

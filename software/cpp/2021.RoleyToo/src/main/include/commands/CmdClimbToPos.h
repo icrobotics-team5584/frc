@@ -6,6 +6,9 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include <rev/CANSparkMax.h>
+
+#include "subsystems/SubClimber.h"
 
 /**
  * An example command.
@@ -17,7 +20,7 @@
 class CmdClimbToPos
     : public frc2::CommandHelper<frc2::CommandBase, CmdClimbToPos> {
  public:
-  CmdClimbToPos();
+  CmdClimbToPos(SubClimber* subClimber, double target);
 
   void Initialize() override;
 
@@ -26,4 +29,7 @@ class CmdClimbToPos
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+ private:
+  SubClimber* _subClimber;
+  double _target;
 };
