@@ -21,8 +21,8 @@ public:
 	AxisButton(GenericHID* joystick, int axisNumber, double deadzone = 0);
 	bool Get();
 	float GetAxis();
-	void WhenPressed(frc2::Command* command);
-	void WhileHeld(frc2::Command* command);
+	void WhenPressed(frc2::Command& command);
+	void WhileHeld(frc2::Command& command);
 private:
 	GenericHID* _joystick;
 	int _axisNumber;
