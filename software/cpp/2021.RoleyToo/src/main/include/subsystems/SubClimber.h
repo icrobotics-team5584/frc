@@ -14,7 +14,12 @@ class SubClimber : public frc2::SubsystemBase {
  public:
   SubClimber();
 
-  int GetEncoder(bool side);
+  enum Side {
+    left = 0,
+    right = 1
+  };
+
+  int GetEncoder(Side side);
   void Drive(double speed);
   void SetPneumatic(frc::DoubleSolenoid::Value value);
 

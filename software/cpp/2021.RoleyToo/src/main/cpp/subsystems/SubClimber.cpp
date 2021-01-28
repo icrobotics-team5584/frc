@@ -12,14 +12,16 @@ SubClimber::SubClimber() {
 // This method will be called once per scheduler run
 void SubClimber::Periodic() {}
 
-int SubClimber::GetEncoder(bool side) {
-    if (side) { return _spmClimbLeft.GetEncoder().GetPosition(); }
+int SubClimber::GetEncoder(Side side) {
+    if (side == Side::left) { return _spmClimbLeft.GetEncoder().GetPosition(); }
     else { return _spmClimbRight.GetEncoder().GetPosition(); }
 }
 
 void SubClimber::Drive(double speed) {
     _spmClimbLeft.Set(speed);
 }
+
+//TODO: Encoder PID Drive
 
 void SubClimber::SetPneumatic(frc::DoubleSolenoid::Value value) {
     _solClimb.Set(value);

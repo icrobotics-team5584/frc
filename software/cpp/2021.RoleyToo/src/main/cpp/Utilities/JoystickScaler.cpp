@@ -5,7 +5,7 @@
  *      Author: Mitch
  */
 
-#include "JoystickScaler.h"
+#include "Utilities/JoystickScaler.h"
 #include "math.h"
 
 JoystickScaler::JoystickScaler(int deviceID, double scaleLeft, double scaleRight) :
