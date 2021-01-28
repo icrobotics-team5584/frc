@@ -43,6 +43,16 @@ namespace buttons {
   constexpr int leftStickBtn = 9;
   constexpr int rightStickBtn = 10;
 }
+namespace POVPositions {
+  constexpr int upBtn = 0;
+  constexpr int uprightBtn = 45;
+  constexpr int rightBtn = 90;
+  constexpr int downrightBtn = 135;
+  constexpr int downBtn = 180;
+  constexpr int downleftBtn = 225;
+  constexpr int leftBtn = 270;
+  constexpr int upleftBtn = 315;
+}
 namespace pcm {
   constexpr int solDollyDeploy = 2;
   constexpr int solDollyRetract = 3;

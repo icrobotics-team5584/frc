@@ -10,7 +10,7 @@
  * 
  */
 
-#include "AxisButton.h"
+#include "Utilities/AxisButton.h"
 #include <iostream>
 
 AxisButton::AxisButton(GenericHID* joystick, int axisNumber, double deadzone) {

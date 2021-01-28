@@ -5,10 +5,11 @@
 #pragma once
 
 #include <frc/Joystick.h>
-#include "JoystickScaler.h"
+#include "Utilities/JoystickScaler.h"
 #include <frc2/command/Command.h>
 
 #include "subsystems/SubColorWheel.h"
+#include "subsystems/SubClimber.h"
 #include "subsystems/subDriveBase.h"
 #include "subsystems/SubDriveBase.h"
 #include "subsystems/SubTurret.h"
@@ -20,6 +21,7 @@
 #include "commands/CmdTrackTarget.h"
 #include "commands/CmdDriveStorage.h"
 #include "commands/CmdSpinFlywheel.h"
+#include "commands/CmdDeployClimber.h"
 
 
 /**
@@ -44,12 +46,13 @@ class RobotContainer {
 
   SubTurret _subTurret;
   SubStorage _subStorage;
+  SubClimber _subClimber;
+  SubColorWheel _subColorWheel;
 
   CmdTrackTarget _cmdTrackTarget{&_subTurret};
   CmdDriveStorage _cmdDriveStorage{&_subStorage, 1, 0.2};
   CmdSpinFlywheel _cmdSpinFlywheel{&_subTurret};
-
-  SubColorWheel _subColorWheel;
+  CmdDeployClimber _cmdDeployClimber{&_subClimber};
 
   void ConfigureButtonBindings();
 };
