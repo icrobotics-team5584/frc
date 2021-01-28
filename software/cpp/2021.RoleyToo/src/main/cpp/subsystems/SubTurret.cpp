@@ -26,28 +26,28 @@ SubTurret::SubTurret()
 
 // This method will be called once per scheduler run
 void SubTurret::Periodic() {
-    _targetX = _limelight->GetNumber("tx", 0.0);
-    _targetY = _limelight->GetNumber("ty", 0.0);
-    _targetA = _limelight->GetNumber("ta", 0.0);
-    _targetVisible = _limelight->GetNumber("tv", 0.0);
-    frc::SmartDashboard::PutNumber("Flywheel RPM", GetFlywheelRPM());
-    frc::SmartDashboard::PutNumber("Flywheel Current", _spmFlywheelRight.GetOutputCurrent());
+  _targetX = _limelight->GetNumber("tx", 0.0);
+  _targetY = _limelight->GetNumber("ty", 0.0);
+  _targetA = _limelight->GetNumber("ta", 0.0);
+  _targetVisible = _limelight->GetNumber("tv", 0.0);
+  frc::SmartDashboard::PutNumber("Flywheel RPM", GetFlywheelRPM());
+  frc::SmartDashboard::PutNumber("Flywheel Current", _spmFlywheelRight.GetOutputCurrent());
 }
 
 double SubTurret::GetX() {
-    return _targetX;
+  return _targetX;
 }
 
 double SubTurret::GetY() {
-    return _targetY;
+  return _targetY;
 }
 
 double SubTurret::GetTargetArea() {
-    return _targetA;
+  return _targetA;
 }
 
 bool SubTurret::CheckTarget() {
-    return _targetVisible;
+  return _targetVisible;
 }
 
 bool SubTurret::GetLeftLimit() {
@@ -59,7 +59,7 @@ bool SubTurret::GetRightLimit() {
 }
 
 double SubTurret::GetTurretAngle() {
-    return _encTurret.GetDistance();
+  return _encTurret.GetDistance();
 }
 
 void SubTurret::ResetTurretEncoder() {
@@ -67,23 +67,23 @@ void SubTurret::ResetTurretEncoder() {
 }
 
 void SubTurret::SetTurret(double speed) {
-    _spmTurret.Set(speed);
+  _spmTurret.Set(speed);
 }
 
 void SubTurret::LimeLEDOn() {
-    _limelight->PutNumber("ledMode", 3);
+  _limelight->PutNumber("ledMode", 3);
 }
 
 void SubTurret::LimeLEDOff() {
-    _limelight->PutNumber("ledMode", 1);
+  _limelight->PutNumber("ledMode", 1);
 }
 
 void SubTurret::SetFlywheel(double speed) {
-    _spmFlywheelRight.Set(speed);
+  _spmFlywheelRight.Set(speed);
 }
 
 double SubTurret::GetFlywheelRPM() {
-    return _spmFlywheelRight.GetEncoder().GetVelocity();
+  return _spmFlywheelRight.GetEncoder().GetVelocity();
 }
 
 void SubTurret::SetHood(double speed) {

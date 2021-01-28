@@ -17,12 +17,11 @@ CmdAutoCircle::CmdAutoCircle(SubDriveBase* subDriveBase) : _autonomous{
 void CmdAutoCircle::Initialize() {
   _subDriveBase->resetYaw();
   _autonomous.setPosition(0,0);
-
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdAutoCircle::Execute() {
-  driveInput = _autonomous.autoDrive(0.5, 0, 0.5);
+  driveInput = _autonomous.autoDrive(-2.0, 0.0, 0.0, 2.0, 180);
   _subDriveBase->drive(driveInput.speed, driveInput.steering);
 }
 

@@ -16,8 +16,7 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class CmdDriveStorage
-    : public frc2::CommandHelper<frc2::CommandBase, CmdDriveStorage> {
+class CmdDriveStorage : public frc2::CommandHelper<frc2::CommandBase, CmdDriveStorage> {
  public:
   CmdDriveStorage(SubStorage* subStorage, bool direction, double speed);
 

@@ -11,8 +11,7 @@
 
 class sendableSparkMax :
 public rev::CANSparkMax,
-public frc::Sendable
-{
+public frc::Sendable{
  public:
   sendableSparkMax(int deviceID, MotorType type);
 
