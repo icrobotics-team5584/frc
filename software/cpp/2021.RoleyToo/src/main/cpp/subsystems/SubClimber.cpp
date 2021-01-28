@@ -17,12 +17,25 @@ int SubClimber::GetEncoder(Side side) {
     else { return _spmClimbRight.GetEncoder().GetPosition(); }
 }
 
+bool SubClimber::GetLimit(Limit limit) {
+    switch (limit) {
+        case EndStop:
+            return _lmtEndStop.Get();
+            break;
+    } 
+    return false;
+}
+
 void SubClimber::Drive(double speed) {
     _spmClimbLeft.Set(speed);
 }
 
 //TODO: Encoder PID Drive
 
-void SubClimber::SetPneumatic(frc::DoubleSolenoid::Value value) {
-    _solClimb.Set(value);
+void SubClimber::SetPneumatic(Solenoids solenoid, frc::DoubleSolenoid::Value value) {
+    switch (solenoid) {
+        case Deploy:
+            _solClimb.Set(value);
+            break;
+    }
 }
