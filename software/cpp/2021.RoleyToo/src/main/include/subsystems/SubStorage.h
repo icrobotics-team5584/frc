@@ -26,6 +26,7 @@ class SubStorage : public frc2::SubsystemBase {
 
   void Move(Direction direction, double speed);
   double GetEncoder();
+  void ResetEncoder();
   void SetBallCount(int ballCount);
   int GetBallCount();
   bool GetSensor(Sensors sensor);

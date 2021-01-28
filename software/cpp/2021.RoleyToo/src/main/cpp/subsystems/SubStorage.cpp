@@ -20,8 +20,12 @@ void SubStorage::Move(Direction direction, double speed) {
   }
 }
 
+void SubStorage::ResetEncoder() {
+  //TODO: Reset Encoder
+}
+
 double SubStorage::GetEncoder() {
-  return _spmStorageMotor.Get();
+  return _spmStorageMotor.GetEncoder().GetPosition();
 }
 
 bool SubStorage::GetSensor(Sensors sensor) {

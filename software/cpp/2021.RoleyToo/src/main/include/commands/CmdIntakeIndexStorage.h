@@ -6,6 +6,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include <frc/controller/PIDController.h>
 
 #include "subsystems/SubStorage.h"
 //#include "subsystems/SubIntake.h" //this does not exist yet.
@@ -32,5 +33,13 @@ class CmdIntakeIndexStorage
 
  private:
   SubStorage* _subStorage;
+
+  frc2::PIDController _storagePID{0.2, 0.0, 0.0};
+
   bool _killCommand = false;
+  bool _indexSwitch;
+  bool _intakeSwitch;
+  bool _index = false;
+  double _target;
+  double _pidOutput;
 };
