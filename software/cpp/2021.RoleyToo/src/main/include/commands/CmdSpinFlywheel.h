@@ -33,7 +33,7 @@ class CmdSpinFlywheel : public frc2::CommandHelper<frc2::CommandBase, CmdSpinFly
   frc2::PIDController _flywheelPID{0.00005, 0.0, 0.0000053}; //default values
   double _PIDOutput = 0;
   double _maxPower = 1;
-  double _setpoint = 3000;
+  double _setpoint = 5000;
   double _currentPower = 0;
   double _error = 0;
 };
