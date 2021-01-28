@@ -4,8 +4,7 @@
 
 #include "subsystems/SubTurret.h"
 
-SubTurret::SubTurret()
-    {
+SubTurret::SubTurret() {
         _encTurret.SetDistancePerPulse(360.0/2048.0);
         _networktables = nt::NetworkTableInstance::GetDefault();
         _limelight = _networktables.GetTable("limelight");
@@ -22,7 +21,7 @@ SubTurret::SubTurret()
         _spmHood.SetSmartCurrentLimit(20);
 
         frc::SmartDashboard::PutNumber("wheel setpoint", 0);
-    }
+}
 
 // This method will be called once per scheduler run
 void SubTurret::Periodic() {
