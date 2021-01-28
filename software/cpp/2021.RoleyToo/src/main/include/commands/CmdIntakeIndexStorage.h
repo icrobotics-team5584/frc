@@ -32,4 +32,5 @@ class CmdIntakeIndexStorage
 
  private:
   SubStorage* _subStorage;
+  bool _killCommand = false;
 };

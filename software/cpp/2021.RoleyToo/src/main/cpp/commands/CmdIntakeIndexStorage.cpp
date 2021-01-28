@@ -19,7 +19,11 @@ void CmdIntakeIndexStorage::Initialize() {
 void CmdIntakeIndexStorage::Execute() {
   //GET INTAKE LINE BREAK
 
-  
+  //INDEX BALLS HERE
+
+  if (_subStorage->GetBallCount() >= 5) { //We shouldn't spin/intake if we already have five balls.
+    _killCommand = true;
+  }
 
 }
 
@@ -28,5 +32,5 @@ void CmdIntakeIndexStorage::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool CmdIntakeIndexStorage::IsFinished() {
-  return false;
+  return _killCommand;
 }

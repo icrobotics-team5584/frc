@@ -4,7 +4,7 @@
 
 #include "commands/CmdDriveStorage.h"
 
-CmdDriveStorage::CmdDriveStorage(SubStorage* subStorage, bool direction, double speed) {
+CmdDriveStorage::CmdDriveStorage(SubStorage* subStorage, SubStorage::Direction direction, double speed) {
   // Use addRequirements() here to declare subsystem dependencies.
   _subStorage = subStorage;
   _direction = direction;
@@ -21,7 +21,7 @@ void CmdDriveStorage::Execute() {}
 
 // Called once the command ends or is interrupted.
 void CmdDriveStorage::End(bool interrupted) {
-  _subStorage->Move(0, 0);
+  _subStorage->Move(SubStorage::Direction::Forward, 0);
 }
 
 // Returns true when the command should end.
