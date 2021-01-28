@@ -23,7 +23,7 @@ namespace can {
     constexpr int spmTurret = 8;
     constexpr int spmStorage = 9;
     constexpr int spmFlywheelRight = 5;
-    constexpr int spmColorWheel = 6;
+    constexpr int spmColorWheel = 13;
 }
 namespace dio {
     constexpr int encTurret1 = 0;
