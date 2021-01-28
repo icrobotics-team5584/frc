@@ -10,7 +10,7 @@
  * 
  */
 
-#include "AxisButton.h"
+#include "Utilities/AxisButton.h"
 #include <iostream>
 
 AxisButton::AxisButton(GenericHID* joystick, int axisNumber, double deadzone) {
@@ -33,7 +33,7 @@ void AxisButton::WhileHeld(frc2::Command* command) {
 }
 
 void AxisButton::WhenPressed(frc2::Command* command) {
-	WhenPressed(command);
+	WhileActiveOnce(command);
 }
 
 float AxisButton::GetAxis(){
