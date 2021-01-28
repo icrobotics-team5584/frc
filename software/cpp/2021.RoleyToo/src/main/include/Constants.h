@@ -47,6 +47,9 @@ namespace buttons {
   constexpr int startBtn = 8; 
   constexpr int leftStickBtn = 9;
   constexpr int rightStickBtn = 10;
+
+  constexpr int leftTrigger = 5;
+  constexpr int rightTrigger = 6;
 }
 namespace POVPositions {
   constexpr int upBtn = 0;

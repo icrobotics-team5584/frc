@@ -6,6 +6,7 @@
 
 #include "frc2/command/button/JoystickButton.h"
 #include "Utilities/ButtonPOV.h"
+#include "Utilities/AxisButton.h"
 
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
@@ -23,8 +24,10 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton rightBtn{&_joystick0, buttons::rightBtn};
   frc2::JoystickButton bBtn{&_joystick0, buttons::bBtn};
   ButtonPOV btnDeployClimber{&_joystick0, POVPositions::upBtn};
+  AxisButton btnTrackTarget{&_joystick0, buttons::leftTrigger};
+  
 
-  leftBtn.WhileHeld(_cmdTrackTarget);
+  btnTrackTarget.WhileHeld(_cmdTrackTarget);
   aBtn.WhileHeld(_cmdDriveStorage);
   rightBtn.WhileHeld(_cmdSpinFlywheel);
   bBtn.WhileHeld(_cmdHomeTurret);
