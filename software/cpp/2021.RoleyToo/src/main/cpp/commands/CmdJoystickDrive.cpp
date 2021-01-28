@@ -13,6 +13,7 @@ CmdJoystickDrive::CmdJoystickDrive(SubDriveBase* subDriveBase, JoystickScaler* j
 
 // Called repeatedly when this Command is scheduled to run
 void CmdJoystickDrive::Execute() {
-  _subDriveBase->drive(_joystick->GetScaledY(frc::GenericHID::kRightHand), _joystick->GetScaledX(frc::GenericHID::kRightHand), false);
+  _subDriveBase->drive(_joystick->GetScaledY(frc::GenericHID::JoystickHand::kRightHand),
+  _joystick->GetScaledX(frc::GenericHID::JoystickHand::kRightHand), false);
 }
 

@@ -40,7 +40,7 @@ class RobotContainer {
  private:
   // The robot's subsystems and commands are defined here...
   //frc::Joystick _joystick0{0};
-  JoystickScaler _joystick0{0, 2.0, 2.0};
+  JoystickScaler _joystick0{0, 3.0, 3.0};
 
   SubTurret _subTurret;
   SubStorage _subStorage;

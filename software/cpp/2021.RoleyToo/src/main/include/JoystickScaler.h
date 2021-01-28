@@ -8,6 +8,7 @@
 #pragma once
 
 #include "frc/Joystick.h"
+#include <iostream>
 
 class JoystickScaler :
 public frc::Joystick{
