@@ -55,7 +55,9 @@ class SubTurret : public frc2::SubsystemBase {
   rev::CANSparkMax _spmFlywheelLeft{can::spmFlywheelLeft, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::CANSparkMax _spmHood{can::spmHood, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
 
-  frc::Encoder _encTurret{dio::encTurret1, dio::encTurret2};
+  rev::CANEncoder _encTurret;
+
+  //frc::Encoder _encTurret{dio::encTurret1, dio::encTurret2};
   frc::Encoder _encHood{dio::encHood1, dio::encHood2};
 
   frc::DigitalInput _hlfTurretLeft{dio::hlfTurretLeft};
@@ -73,4 +75,5 @@ class SubTurret : public frc2::SubsystemBase {
   double _targetHeight = 1300;
   double _limelightHeight = 260;
   double _limelightAngle = 40;
+  double _encTurretConvFac = 360/1;    // 360 points per 1 revolution
 };

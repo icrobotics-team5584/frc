@@ -4,8 +4,9 @@
 
 #include "subsystems/SubTurret.h"
 
-SubTurret::SubTurret() {
-  _encTurret.SetDistancePerPulse(360.0/2048.0);
+SubTurret::SubTurret() : 
+_encTurret{_spmFlywheelRight.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 2048)}
+{
   _networktables = nt::NetworkTableInstance::GetDefault();
   _limelight = _networktables.GetTable("limelight");
   LimeLEDOff();
@@ -14,6 +15,7 @@ SubTurret::SubTurret() {
   _spmFlywheelLeft.RestoreFactoryDefaults();
   _spmTurret.RestoreFactoryDefaults();
   _spmHood.RestoreFactoryDefaults();
+
 
   _spmFlywheelRight.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
   _spmFlywheelLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
@@ -38,6 +40,8 @@ void SubTurret::Periodic() {
   frc::SmartDashboard::PutNumber("Flywheel Current", _spmFlywheelRight.GetOutputCurrent());
 
   frc::SmartDashboard::PutNumber("Distance", EstimateDistance());
+
+  frc::SmartDashboard::PutNumber("Turret Angle", _encTurret.GetPosition());
 }
 
 double SubTurret::GetX() {
@@ -65,11 +69,11 @@ bool SubTurret::GetRightLimit() {
 }
 
 double SubTurret::GetTurretAngle() {
-  return _encTurret.GetDistance();
+  return (_encTurret.GetPosition() / _encTurretConvFac);
 }
 
 void SubTurret::ResetTurretEncoder() {
-    _encTurret.Reset();
+    _encTurret.SetPosition(0);
 }
 
 void SubTurret::SetTurret(double speed) {
