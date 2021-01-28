@@ -46,13 +46,18 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
     if(startX == endX){
       isLinear = true;
     }
-  }else if (((int)round(atan((startY-endY)/(startX-endX))-endHeading)*10)%1800 == 0){
+  }else if (((int)round((atan((startY-endY)/(startX-endX))*(180/pi))-endHeading)*10)%1800 == 0){
     isLinear = true;
   }else{
     isLinear = false;
   }
   if(isLinear){
     //follow linear line
+    double b =  sqrt(pow((startX - endX), 2) + pow((startY - endY), 2));
+    double a = sqrt(pow((startX - posX), 2) + pow((startY - posY), 2));
+    double c = sqrt(pow((posX - endX), 2) + pow((posY - endY), 2));
+    double s = (a+b+c)/2;
+    error = sqrt(s*(s-a)*(s-b)*(s-c))*2/b*((endHeading - atan((startY-endY)/(startX-endX))*(180/pi))/abs(endHeading - atan((startY-endY)/(startX-endX))*(180/pi)));
   }else{
     //checks if slope is undefined
     if(((int)round(endHeading*10))%1800 == 0){
