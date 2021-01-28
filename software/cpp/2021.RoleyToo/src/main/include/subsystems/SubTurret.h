@@ -56,9 +56,8 @@ class SubTurret : public frc2::SubsystemBase {
   rev::CANSparkMax _spmHood{can::spmHood, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
 
   rev::CANEncoder _encTurret;
+  rev::CANEncoder _encHood;
 
-  //frc::Encoder _encTurret{dio::encTurret1, dio::encTurret2};
-  frc::Encoder _encHood{dio::encHood1, dio::encHood2};
 
   frc::DigitalInput _hlfTurretLeft{dio::hlfTurretLeft};
   frc::DigitalInput _hlfTurretRight{dio::hlfTurretRight};

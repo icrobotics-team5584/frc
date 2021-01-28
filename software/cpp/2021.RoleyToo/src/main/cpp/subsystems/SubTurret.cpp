@@ -5,7 +5,8 @@
 #include "subsystems/SubTurret.h"
 
 SubTurret::SubTurret() : 
-_encTurret{_spmFlywheelRight.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 2048)}
+_encTurret{_spmFlywheelRight.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 2048)},
+_encHood{_spmHood.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 2048)}
 {
   _networktables = nt::NetworkTableInstance::GetDefault();
   _limelight = _networktables.GetTable("limelight");
@@ -15,7 +16,6 @@ _encTurret{_spmFlywheelRight.GetAlternateEncoder(rev::CANEncoder::AlternateEncod
   _spmFlywheelLeft.RestoreFactoryDefaults();
   _spmTurret.RestoreFactoryDefaults();
   _spmHood.RestoreFactoryDefaults();
-
 
   _spmFlywheelRight.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
   _spmFlywheelLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
@@ -101,7 +101,7 @@ void SubTurret::SetHood(double speed) {
 }
 
 double SubTurret::GetHoodPos() {
-  return _encHood.GetDistance();
+  return _encHood.GetPosition();
 }
 
 double SubTurret::EstimateDistance() {

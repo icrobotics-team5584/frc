@@ -58,7 +58,5 @@ class RobotContainer {
 
   CmdHomeTurret _cmdHomeTurret{&_subTurret};
 
-  SubColorWheel _subColorWheel;
-
   void ConfigureButtonBindings();
 };

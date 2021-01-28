@@ -29,13 +29,9 @@ namespace can {
   constexpr int spmClimbRight = 12;
 }
 namespace dio {
-    constexpr int encTurret1 = 0;
-    constexpr int encTurret2 = 1;
-    constexpr int hlfTurretLeft = 2;
-    constexpr int hlfTurretRight = 3;
-    constexpr int encHood1 = 4;
-    constexpr int encHood2 = 5;
-    constexpr int hlfHoodDown = 6;
+  constexpr int hlfTurretLeft = 2;
+  constexpr int hlfTurretRight = 3;
+  constexpr int hlfHoodDown = 6;
   constexpr int brkStorageIn = 7;
   constexpr int brkStorageIndex = 8;
   constexpr int brkStorageOut = 9;
