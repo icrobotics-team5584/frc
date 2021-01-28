@@ -15,16 +15,16 @@
  */
 
 namespace can {
-    constexpr int spmDriveBaseFrontLeft = 1;
-    constexpr int spmDriveBaseBackLeft = 2;
-    constexpr int spmDriveBaseFrontRight = 3;
-    constexpr int spmDriveBaseBackRight = 4;
-    constexpr int spmFlywheelRight = 5;
-    constexpr int spmFlywheelLeft = 6;
-    constexpr int srxDolly = 7;
-    constexpr int spmTurret = 8;
-    constexpr int spmStorage = 9;
-    constexpr int spmHood = 10;
+  constexpr int spmDriveBaseFrontLeft = 1;
+  constexpr int spmDriveBaseBackLeft = 2;
+  constexpr int spmDriveBaseFrontRight = 3;
+  constexpr int spmDriveBaseBackRight = 4;
+  constexpr int spmFlywheelRight = 5;
+  constexpr int spmFlywheelLeft = 6;
+  constexpr int srxDolly = 7;
+  constexpr int spmTurret = 8;
+  constexpr int spmStorage = 9;
+  constexpr int spmHood = 10;
   constexpr int spmClimbLeft = 11;
   constexpr int spmClimbRight = 12;
 }
