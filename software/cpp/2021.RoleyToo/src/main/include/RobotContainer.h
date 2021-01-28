@@ -20,6 +20,8 @@
 #include "commands/CmdDriveStorage.h"
 #include "commands/CmdSpinFlywheel.h"
 
+#include "commands/CmdHomeTurret.h"
+
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -46,6 +48,8 @@ class RobotContainer {
   CmdTrackTarget _cmdTrackTarget{&_subTurret};
   CmdDriveStorage _cmdDriveStorage{&_subStorage, 1, 0.2};
   CmdSpinFlywheel _cmdSpinFlywheel{&_subTurret};
+
+  CmdHomeTurret _cmdHomeTurret{&_subTurret};
 
   SubColorWheel _subColorWheel;
 

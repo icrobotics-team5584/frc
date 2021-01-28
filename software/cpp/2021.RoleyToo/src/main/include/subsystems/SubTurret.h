@@ -35,6 +35,7 @@ class SubTurret : public frc2::SubsystemBase {
   void ResetTurretEncoder();
 
   void SetTurret(double speed);
+  double EstimateDistance();
 
   void LimeLEDOn();
   void LimeLEDOff();
@@ -68,4 +69,8 @@ class SubTurret : public frc2::SubsystemBase {
   double _targetY = 0;
   double _targetA = 0;
   bool _targetVisible = false;
+
+  double _targetHeight = 1300;
+  double _limelightHeight = 260;
+  double _limelightAngle = 40;
 };

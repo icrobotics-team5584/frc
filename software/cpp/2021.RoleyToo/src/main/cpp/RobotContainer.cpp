@@ -20,11 +20,13 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton leftBtn{&_joystick0, buttons::leftBtn};
   frc2::JoystickButton aBtn{&_joystick0, buttons::aBtn};
   frc2::JoystickButton rightBtn{&_joystick0, buttons::rightBtn};
+  frc2::JoystickButton bBtn{&_joystick0, buttons::bBtn};
 
 
   leftBtn.WhileHeld(_cmdTrackTarget);
   aBtn.WhileHeld(_cmdDriveStorage);
   rightBtn.WhileHeld(_cmdSpinFlywheel);
+  bBtn.WhileHeld(_cmdHomeTurret);
   
 }
 

@@ -5,22 +5,27 @@
 #include "subsystems/SubTurret.h"
 
 SubTurret::SubTurret() {
-        _encTurret.SetDistancePerPulse(360.0/2048.0);
-        _networktables = nt::NetworkTableInstance::GetDefault();
-        _limelight = _networktables.GetTable("limelight");
-        LimeLEDOff();
+  _encTurret.SetDistancePerPulse(360.0/2048.0);
+  _networktables = nt::NetworkTableInstance::GetDefault();
+  _limelight = _networktables.GetTable("limelight");
+  LimeLEDOff();
 
-        _spmFlywheelRight.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
-        _spmFlywheelLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
-        _spmTurret.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
-        _spmHood.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  _spmFlywheelRight.RestoreFactoryDefaults();
+  _spmFlywheelLeft.RestoreFactoryDefaults();
+  _spmTurret.RestoreFactoryDefaults();
+  _spmHood.RestoreFactoryDefaults();
 
-        _spmFlywheelRight.SetSmartCurrentLimit(50);
-        _spmFlywheelLeft.SetSmartCurrentLimit(50);
-        _spmTurret.SetSmartCurrentLimit(20);
-        _spmHood.SetSmartCurrentLimit(20);
+  _spmFlywheelRight.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  _spmFlywheelLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  _spmTurret.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  _spmHood.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 
-        frc::SmartDashboard::PutNumber("wheel setpoint", 0);
+  _spmFlywheelRight.SetSmartCurrentLimit(50);
+  _spmFlywheelLeft.SetSmartCurrentLimit(50);
+  _spmTurret.SetSmartCurrentLimit(20);
+  _spmHood.SetSmartCurrentLimit(20);
+
+  frc::SmartDashboard::PutNumber("wheel setpoint", 0);
 }
 
 // This method will be called once per scheduler run
@@ -31,6 +36,8 @@ void SubTurret::Periodic() {
   _targetVisible = _limelight->GetNumber("tv", 0.0);
   frc::SmartDashboard::PutNumber("Flywheel RPM", GetFlywheelRPM());
   frc::SmartDashboard::PutNumber("Flywheel Current", _spmFlywheelRight.GetOutputCurrent());
+
+  frc::SmartDashboard::PutNumber("Distance", EstimateDistance());
 }
 
 double SubTurret::GetX() {
@@ -86,9 +93,16 @@ double SubTurret::GetFlywheelRPM() {
 }
 
 void SubTurret::SetHood(double speed) {
-    _spmHood.Set(speed);
+  _spmHood.Set(speed);
 }
 
 double SubTurret::GetHoodPos() {
-    return _encHood.GetDistance();
+  return _encHood.GetDistance();
+}
+
+double SubTurret::EstimateDistance() {
+  if (!_targetVisible) {
+    return 0;
+  }
+  return ((_targetHeight - _limelightHeight) / (tan(_limelightAngle - GetY())));
 }
