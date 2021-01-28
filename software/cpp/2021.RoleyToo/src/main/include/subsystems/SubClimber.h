@@ -6,22 +6,26 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
+#include <frc/SpeedControllerGroup.h>
+#include <frc/DoubleSolenoid.h>
 #include "Constants.h"
-#include <frc/DigitalInput.h>
 
-class SubStorage : public frc2::SubsystemBase {
+class SubClimber : public frc2::SubsystemBase {
  public:
-  SubStorage();
+  SubClimber();
 
-  enum Sensors {
-    Intake = 1,
-    Index = 2,
-    Outtake = 3
+  enum Side {
+    left = 0,
+    right = 1
   };
 
-  void Move(bool direction, double speed);
-  double GetEncoder();
-  bool GetSensor(Sensors sensor);
+  int GetEncoder(Side side);
+  void Drive(double speed);
+  void SetPneumatic(frc::DoubleSolenoid::Value value);
+
+
+  
+
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
@@ -30,8 +34,8 @@ class SubStorage : public frc2::SubsystemBase {
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-  rev::CANSparkMax _spmStorageMotor{can::spmStorage, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
-  frc::DigitalInput _brkIntake{dio::brkStorageIn};
-  frc::DigitalInput _brkIndex{dio::brkStorageIndex};
-  frc::DigitalInput _brkOuttake{dio::brkStorageOut};
+  rev::CANSparkMax _spmClimbLeft{can::spmClimbLeft, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  rev::CANSparkMax _spmClimbRight{can::spmClimbRight, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+
+  frc::DoubleSolenoid _solClimb{pcm::solClimbDeploy, pcm::solClimbRetract};
 };

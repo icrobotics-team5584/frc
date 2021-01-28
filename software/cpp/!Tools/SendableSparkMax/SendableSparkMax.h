@@ -9,11 +9,11 @@
 #include <frc/smartdashboard/SendableBuilder.h>
 #include <frc/smartdashboard/SendableBuilderImpl.h>
 
-class sendableSparkMax :
+class SendableSparkMax :
 public rev::CANSparkMax,
 public frc::Sendable{
  public:
-  sendableSparkMax(int deviceID, MotorType type);
+  SendableSparkMax(int deviceID, MotorType type);
 
  private:
   void InitSendable(frc::SendableBuilder& builder);
