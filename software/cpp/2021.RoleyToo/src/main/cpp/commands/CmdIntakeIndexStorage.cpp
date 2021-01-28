@@ -10,52 +10,70 @@ CmdIntakeIndexStorage::CmdIntakeIndexStorage(SubStorage* subStorage) {
 }
 
 // Called when the command is initially scheduled.
-void CmdIntakeIndexStorage::Initialize() {
-  //RUN INTAKE
-  _subStorage->Move(SubStorage::Direction::Forward, 0.2);
-}
+void CmdIntakeIndexStorage::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void CmdIntakeIndexStorage::Execute() {
-  //GET INTAKE LINE BREAK
-  _intakeSwitch = false; // change this false to intake get sensor()
-  if (_intakeSwitch) {
-    _index = true;
-  }
 
-  //INDEX BALLS HERE
-  if (_index) {
-    _subStorage->Move(SubStorage::Direction::Forward, 0.0);
-    for (int i=0; i <= 5; i++) {
-      //move encoder to pos
-      _pidOutput = 1;
-      while (_pidOutput != 0) {
-        _target = 40; //distance from one divider to another
-        _pidOutput = _storagePID.Calculate(_target - _subStorage->GetEncoder());
-        _subStorage->Move(SubStorage::Direction::Forward, _pidOutput);
+  switch (_commandState) {
+    case Nothing:
+      _subStorage->Move(SubStorage::Direction::Forward, 0.0);
+      break;
+    case Intake:
+      _subStorage->Move(SubStorage::Direction::Forward, 0.2);
+      if (_subStorage->GetSensor(SubStorage::Sensors::Intake)) {
+        _loadTimer = 0;
+        _commandState = LoadBall;
       }
-      _subStorage->ResetEncoder();
-
-      //check if ball is loaded
-      _indexSwitch = _subStorage->GetSensor(SubStorage::Sensors::Index);
-      if (_indexSwitch) {
-        _subStorage->SetBallCount(_subStorage->GetBallCount() + 1);
+      break;
+      
+    case LoadBall:
+      _subStorage->Move(SubStorage::Direction::Forward, 0.2);
+      _loadTimer++;
+      if (_loadTimer > _loadLimit) {
+        _subStorage->Move(SubStorage::Direction::Forward, 0.0);
+        _commandState = IndexMoveFirst;
       }
-    }
+      break;
 
-    _index = false;
-  }
+    case IndexMoveFirst:
+      //Check which position we're closest to
+      //Spin to that position
+      //If we're there, IndexTest.
+      _indexCount = 0;
+      break;
 
-  if (_subStorage->GetBallCount() >= 5) { //We shouldn't spin/intake if we already have five balls.
-    _killCommand = true;
+    case IndexMoveConsecutive:
+      //Get StoragePosition
+      //from that, get, and set the newStoragePosition
+      //spin to newStoragePosition
+      //if we're there, IndexTest.
+      break;
+
+    case IndexTest:
+      //Index the storage
+      if (_indexCount == 5) {
+        _commandState = Intake;
+      }
+      else {
+        _commandState = IndexMoveConsecutive;
+      }
+      break;
+
+    case Exit:
+      _commandState = Nothing;
+      _stopCommand = true;
+      break;
   }
 
 }
 
 // Called once the command ends or is interrupted.
-void CmdIntakeIndexStorage::End(bool interrupted) {}
+void CmdIntakeIndexStorage::End(bool interrupted) {
+  _subStorage->Move(SubStorage::Direction::Forward, 0.0);
+}
 
 // Returns true when the command should end.
 bool CmdIntakeIndexStorage::IsFinished() {
-  return _killCommand;
+  return _stopCommand;
 }
