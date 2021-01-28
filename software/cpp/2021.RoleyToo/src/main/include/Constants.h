@@ -35,6 +35,10 @@ namespace dio {
   constexpr int brkStorageIn = 7;
   constexpr int brkStorageIndex = 8;
   constexpr int brkStorageOut = 9;
+  constexpr int encTurret1 = 0;
+  constexpr int encTurret2 = 1;
+  constexpr int lmtClimbStop = 5;
+  constexpr int lmtTurretLeft = 9;
 }
 namespace buttons {
   constexpr int aBtn = 1;
