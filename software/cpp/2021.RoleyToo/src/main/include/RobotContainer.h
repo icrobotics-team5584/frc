@@ -5,6 +5,7 @@
 #pragma once
 
 #include <frc/Joystick.h>
+#include "JoystickScaler.h"
 #include <frc2/command/Command.h>
 
 #include "subsystems/SubColorWheel.h"
@@ -38,7 +39,8 @@ class RobotContainer {
   CmdAutoCircle _cmdAutoCircle{&_subDriveBase};
  private:
   // The robot's subsystems and commands are defined here...
-  frc::Joystick _joystick0{0};
+  //frc::Joystick _joystick0{0};
+  JoystickScaler _joystick0{0, 3.0, 3.0};
 
   SubTurret _subTurret;
   SubStorage _subStorage;
