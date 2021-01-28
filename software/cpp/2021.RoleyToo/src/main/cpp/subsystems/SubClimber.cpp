@@ -23,6 +23,7 @@ bool SubClimber::GetLimit(Limit limit) {
             return _lmtEndStop.Get();
             break;
     } 
+    return false;
 }
 
 void SubClimber::Drive(double speed) {
