@@ -8,6 +8,7 @@
 #include <frc2/command/CommandHelper.h>
 
 #include "subsystems/SubTurret.h"
+#include <frc/controller/PIDController.h>
 
 /**
  * An example command.
@@ -16,9 +17,9 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class CmdHomeTurret : public frc2::CommandHelper<frc2::CommandBase, CmdHomeTurret> {
+class CmdSpinFlywheel : public frc2::CommandHelper<frc2::CommandBase, CmdSpinFlywheel> {
  public:
-  CmdHomeTurret(SubTurret* subTurret);
+  CmdSpinFlywheel(SubTurret* subTurret);
 
   void Initialize() override;
 
@@ -29,5 +30,10 @@ class CmdHomeTurret : public frc2::CommandHelper<frc2::CommandBase, CmdHomeTurre
   bool IsFinished() override;
  private:
   SubTurret* _subTurret;
-  bool targetReached = false;
+  frc2::PIDController _flywheelPID{0.00005, 0.0, 0.0000053}; //default values
+  double _PIDOutput = 0;
+  double _maxPower = 1;
+  double _setpoint = 3000;
+  double _currentPower = 0;
+  double _error = 0;
 };

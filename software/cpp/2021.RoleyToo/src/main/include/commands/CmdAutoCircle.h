@@ -6,9 +6,8 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-
-#include "subsystems/SubTurret.h"
-
+#include "subsystems/SubDriveBase.h"
+#include "utilities/Autonomous.h"
 /**
  * An example command.
  *
@@ -16,9 +15,9 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class CmdHomeTurret : public frc2::CommandHelper<frc2::CommandBase, CmdHomeTurret> {
+class CmdAutoCircle : public frc2::CommandHelper<frc2::CommandBase, CmdAutoCircle> {
  public:
-  CmdHomeTurret(SubTurret* subTurret);
+  CmdAutoCircle(SubDriveBase* subDriveBase);
 
   void Initialize() override;
 
@@ -28,6 +27,7 @@ class CmdHomeTurret : public frc2::CommandHelper<frc2::CommandBase, CmdHomeTurre
 
   bool IsFinished() override;
  private:
-  SubTurret* _subTurret;
-  bool targetReached = false;
+  DriveInput driveInput;
+  SubDriveBase* _subDriveBase;
+  Autonomous _autonomous;
 };

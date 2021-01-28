@@ -7,6 +7,7 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 #include <frc/Joystick.h>
+#include "Utilities/JoystickScaler.h"
 #include "subsystems/SubDriveBase.h"
 /**
  * An example command.
@@ -17,11 +18,12 @@
  */
 class CmdJoystickDrive : public frc2::CommandHelper<frc2::CommandBase, CmdJoystickDrive> {
  public:
-  CmdJoystickDrive(SubDriveBase* subDriveBase, frc::Joystick* joystick);
+  CmdJoystickDrive(SubDriveBase* subDriveBase, JoystickScaler* joystick);
 
   void Execute() override;
   
   private:
   SubDriveBase* _subDriveBase;
-  frc::Joystick* _joystick;
+  //frc::Joystick* _joystick;
+  JoystickScaler* _joystick;
 };

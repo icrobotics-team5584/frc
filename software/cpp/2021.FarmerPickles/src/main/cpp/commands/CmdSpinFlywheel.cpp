@@ -35,7 +35,7 @@ void CmdSpinFlywheel::Execute() {
 
 // Called once the command ends or is interrupted.
 void CmdSpinFlywheel::End(bool interrupted) {
-  _subTurret->SetFlywheel(0)
+  _subTurret->SetFlywheel(0);
 }
 
 // Returns true when the command should end.

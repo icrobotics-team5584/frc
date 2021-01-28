@@ -15,27 +15,47 @@
  */
 
 namespace can {
-    constexpr int spmDriveBaseFrontLeft = 1;
-    constexpr int spmDriveBaseBackLeft = 2;
-    constexpr int spmDriveBaseFrontRight = 3;
-    constexpr int spmDriveBaseBackRight = 4;
-    constexpr int spmTurret = 8;
-    constexpr int spmStorage = 9;
+  constexpr int spmDriveBaseFrontLeft = 1;
+  constexpr int spmDriveBaseBackLeft = 2;
+  constexpr int spmDriveBaseFrontRight = 3;
+  constexpr int spmDriveBaseBackRight = 4;
+  constexpr int srxDolly = 7;
+  constexpr int spmTurret = 8;
+  constexpr int spmStorage = 9;
+  constexpr int spmFlywheelRight = 5;
+  constexpr int spmClimbLeft = 11;
+  constexpr int spmClimbRight = 12;
 }
 namespace dio {
-    constexpr int encTurret1 = 0;
-    constexpr int encTurret2 = 1;
-    constexpr int lmtTurretLeft = 9;
+  constexpr int encTurret1 = 0;
+  constexpr int encTurret2 = 1;
+  constexpr int lmtTurretLeft = 9;
 }
 namespace buttons {
-    constexpr int aBtn = 1;
-    constexpr int bBtn = 2;
-    constexpr int xBtn = 3;
-    constexpr int yBtn = 4; 
-    constexpr int leftBtn = 5;
-    constexpr int rightBtn = 6;
-    constexpr int backBtn = 7; 
-    constexpr int startBtn = 8; 
-    constexpr int leftStickBtn = 9;
-    constexpr int rightStickBtn = 10;
+  constexpr int aBtn = 1;
+  constexpr int bBtn = 2;
+  constexpr int xBtn = 3;
+  constexpr int yBtn = 4; 
+  constexpr int leftBtn = 5;
+  constexpr int rightBtn = 6;
+  constexpr int backBtn = 7; 
+  constexpr int startBtn = 8; 
+  constexpr int leftStickBtn = 9;
+  constexpr int rightStickBtn = 10;
+}
+namespace POVPositions {
+  constexpr int upBtn = 0;
+  constexpr int uprightBtn = 45;
+  constexpr int rightBtn = 90;
+  constexpr int downrightBtn = 135;
+  constexpr int downBtn = 180;
+  constexpr int downleftBtn = 225;
+  constexpr int leftBtn = 270;
+  constexpr int upleftBtn = 315;
+}
+namespace pcm {
+  constexpr int solDollyDeploy = 2;
+  constexpr int solDollyRetract = 3;
+  constexpr int solClimbDeploy = 4;
+  constexpr int solClimbRetract = 5;
 }

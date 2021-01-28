@@ -35,11 +35,12 @@ void Robot::DisabledPeriodic() {}
  * RobotContainer} class.
  */
 void Robot::AutonomousInit() {
-  m_autonomousCommand = m_container.GetAutonomousCommand();
+  m_autonomousCommand = _robotContainer.GetAutonomousCommand();
 
   if (m_autonomousCommand != nullptr) {
     m_autonomousCommand->Schedule();
   }
+  _robotContainer._subDriveBase.deployDolly();
 }
 
 void Robot::AutonomousPeriodic() {}
@@ -53,6 +54,7 @@ void Robot::TeleopInit() {
     m_autonomousCommand->Cancel();
     m_autonomousCommand = nullptr;
   }
+  _robotContainer._subDriveBase.retractDolly();
 }
 
 /**

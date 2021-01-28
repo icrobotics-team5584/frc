@@ -7,7 +7,7 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 
-#include "subsystems/SubTurret.h"
+#include "subsystems/SubClimber.h"
 
 /**
  * An example command.
@@ -16,9 +16,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class CmdHomeTurret : public frc2::CommandHelper<frc2::CommandBase, CmdHomeTurret> {
+class CmdDeployClimber
+    : public frc2::CommandHelper<frc2::CommandBase, CmdDeployClimber> {
  public:
-  CmdHomeTurret(SubTurret* subTurret);
+  CmdDeployClimber(SubClimber* subClimber);
 
   void Initialize() override;
 
@@ -28,6 +29,5 @@ class CmdHomeTurret : public frc2::CommandHelper<frc2::CommandBase, CmdHomeTurre
 
   bool IsFinished() override;
  private:
-  SubTurret* _subTurret;
-  bool targetReached = false;
+  SubClimber* _subClimber;
 };
