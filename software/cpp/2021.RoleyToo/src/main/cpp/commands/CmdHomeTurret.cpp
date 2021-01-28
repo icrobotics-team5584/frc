@@ -11,13 +11,16 @@ CmdHomeTurret::CmdHomeTurret(SubTurret* subTurret) {
 
 // Called when the command is initially scheduled.
 void CmdHomeTurret::Initialize() {
+  std::cout << "it started" << "\n";
   _subTurret->SetTurret(0.3);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdHomeTurret::Execute() {
+  std::cout << _subTurret->GetLeftLimit() << "\n";
   if (_subTurret->GetLeftLimit()) {
-    _subTurret->ResetEncoder();
+    std::cout << "Its running" << "\n";
+    _subTurret->ResetTurretEncoder();
     while(_subTurret->GetTurretAngle() < 10) {
       _subTurret->SetTurret(-0.3);
     }

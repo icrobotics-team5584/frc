@@ -13,29 +13,32 @@ CmdTrackTarget::CmdTrackTarget(SubTurret* subTurret) {
 
 // Called when the command is initially scheduled.
 void CmdTrackTarget::Initialize() {
-  frc::SmartDashboard::PutData("PID", &_turretPID);
+  frc::SmartDashboard::PutData("Turret PID", &_turretPID);
+  frc::SmartDashboard::PutData("Hood PID", &_hoodPID);
   _subTurret->LimeLEDOn();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdTrackTarget::Execute() {
   //LEFT POSITIVE, RIGHT NEGATIVE
-
   if (_subTurret->CheckTarget()) {
-    _failureCount = 0;
-    _PIDOutput = _turretPID.Calculate(_subTurret->GetX());
+      _failureCount = 0;
+      _TurretPIDOutput = _turretPID.Calculate(_subTurret->GetX());
+      _hoodSetpoint = /*maths*/ 0;
+      _hoodPIDOutput = _hoodPID.Calculate(_hoodSetpoint - _subTurret->GetHoodPos());
   }
   else {
     _failureCount++;
     if (_failureCount > 35) {
-      _PIDOutput = _turretPID.Calculate(40 - _subTurret->GetTurretAngle());
+      _TurretPIDOutput = _turretPID.Calculate(40 - _subTurret->GetTurretAngle());
+      //_hoodPIDOutput = _hoodPID.Calculate(0 - _subTurret->GetHoodPos());
     }
   }
 
-  if ((_subTurret->GetTurretAngle() < 10) && (_PIDOutput > 0)) { _PIDOutput = 0; }
-  if ((_subTurret->GetTurretAngle() > 100) && (_PIDOutput < 0)) { _PIDOutput = 0; }
+  if ((_subTurret->GetTurretAngle() < 10) && (_TurretPIDOutput > 0)) { _TurretPIDOutput = 0; }
+  if ((_subTurret->GetTurretAngle() > 100) && (_TurretPIDOutput < 0)) { _TurretPIDOutput = 0; }
 
-  _subTurret->SetTurret(_PIDOutput);
+  _subTurret->SetTurret(_TurretPIDOutput);
 }
 
 // Called once the command ends or is interrupted.

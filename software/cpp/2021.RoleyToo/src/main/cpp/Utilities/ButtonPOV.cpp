@@ -37,7 +37,7 @@ void ButtonPOV::WhenPressed(frc2::Command& command) {
 	WhenActive(&command);
 }
 
-void ButtonPOV::WhileHeld (frc2::Command& command){
+void ButtonPOV::WhileHeld(frc2::Command& command){
     WhileActiveContinous(&command);
 }
 

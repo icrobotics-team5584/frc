@@ -11,7 +11,7 @@ CmdDeployClimber::CmdDeployClimber(SubClimber* subClimber) {
 
 // Called when the command is initially scheduled.
 void CmdDeployClimber::Initialize() {
-  _subClimber->SetPneumatic(frc::DoubleSolenoid::Value::kForward);
+  _subClimber->SetPneumatic(SubClimber::Solenoids::Deploy, frc::DoubleSolenoid::Value::kForward);
 }
 
 // Called repeatedly when this Command is scheduled to run

@@ -23,6 +23,8 @@
 #include "commands/CmdSpinFlywheel.h"
 #include "commands/CmdDeployClimber.h"
 
+#include "commands/CmdHomeTurret.h"
+
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -53,6 +55,8 @@ class RobotContainer {
   CmdDriveStorage _cmdDriveStorage{&_subStorage, 1, 0.2};
   CmdSpinFlywheel _cmdSpinFlywheel{&_subTurret};
   CmdDeployClimber _cmdDeployClimber{&_subClimber};
+
+  CmdHomeTurret _cmdHomeTurret{&_subTurret};
 
   void ConfigureButtonBindings();
 };
