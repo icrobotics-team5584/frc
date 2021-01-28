@@ -20,7 +20,6 @@ void CmdSpinFlywheel::Initialize() {
 void CmdSpinFlywheel::Execute() {
   _error = _subTurret->GetFlywheelRPM() - _setpoint;
 
-  _maxPower = frc::SmartDashboard::GetNumber("wheel max power", 0);
   _setpoint = frc::SmartDashboard::GetNumber("wheel setpoint", 0);
   frc::SmartDashboard::PutNumber("wheel error", _error);
   _PIDOutput = _flywheelPID.Calculate(_error);
