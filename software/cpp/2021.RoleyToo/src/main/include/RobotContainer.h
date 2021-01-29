@@ -55,13 +55,7 @@ class RobotContainer {
   SubStorage _subStorage;
   SubClimber _subClimber;
   SubColorWheel _subColorWheel;
-
   SubIntake _subIntake; 
-
-  frc2::JoystickButton btnDeployIntake{&_joystick0, buttons::aBtn};
-  frc2::JoystickButton btnRetractIntake{&_joystick0, buttons::bBtn};
-  frc2::JoystickButton btnIntake{&_joystick0, buttons::xBtn};
-  frc2::JoystickButton btnOuttake{&_joystick0, buttons::yBtn};
 
   CmdTrackTarget _cmdTrackTarget{&_subTurret};
   CmdDriveStorage _cmdDriveStorage{&_subStorage, 1, 0.2};

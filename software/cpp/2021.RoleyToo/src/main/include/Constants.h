@@ -27,7 +27,7 @@ namespace can {
   constexpr int spmHood = 10;
   constexpr int spmClimbLeft = 11;
   constexpr int spmClimbRight = 12;
-    constexpr int spmIntake = 13; 
+  constexpr int spmIntake = 13; 
 }
 namespace dio {
   constexpr int hlfTurretLeft = 2;
@@ -40,11 +40,6 @@ namespace dio {
   constexpr int encTurret2 = 1;
   constexpr int lmtClimbStop = 5;
   constexpr int lmtTurretLeft = 9;
-}
-
-namespace pcm {
-    constexpr int pcm_solIntakeRetract = 0;
-    constexpr int pcm_solIntakeDeploy = 1;
 }
 
 namespace buttons {
@@ -73,6 +68,8 @@ namespace POVPositions {
   constexpr int upleftBtn = 315;
 }
 namespace pcm {
+  constexpr int pcm_solIntakeRetract = 0;
+  constexpr int pcm_solIntakeDeploy = 1;
   constexpr int solDollyDeploy = 2;
   constexpr int solDollyRetract = 3;
   constexpr int solClimbDeploy = 4;
