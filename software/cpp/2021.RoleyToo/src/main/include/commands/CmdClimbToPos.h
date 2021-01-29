@@ -7,6 +7,7 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 #include <rev/CANSparkMax.h>
+#include <frc/controller/PIDController.h>
 
 #include "subsystems/SubClimber.h"
 
@@ -30,6 +31,7 @@ class CmdClimbToPos
 
   bool IsFinished() override;
  private:
+  frc2::PIDController _climbPID{0.2, 0.0, 0.0};
   SubClimber* _subClimber;
   double _target;
 };

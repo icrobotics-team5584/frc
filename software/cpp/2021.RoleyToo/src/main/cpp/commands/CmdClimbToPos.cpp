@@ -15,10 +15,19 @@ CmdClimbToPos::CmdClimbToPos(SubClimber* subClimber, double target) {
 void CmdClimbToPos::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void CmdClimbToPos::Execute() {}
+void CmdClimbToPos::Execute() {
+  if (_subClimber->GetLimit(SubClimber::Limit::EndStop)) {
+    _subClimber->Drive(0);
+  }
+  else {
+    _subClimber->Drive(_climbPID.Calculate(_target-_subClimber->GetEncoder(SubClimber::Side::left)));
+  }
+}
 
 // Called once the command ends or is interrupted.
-void CmdClimbToPos::End(bool interrupted) {}
+void CmdClimbToPos::End(bool interrupted) {
+  _subClimber->Drive(0);
+}
 
 // Returns true when the command should end.
 bool CmdClimbToPos::IsFinished() {
