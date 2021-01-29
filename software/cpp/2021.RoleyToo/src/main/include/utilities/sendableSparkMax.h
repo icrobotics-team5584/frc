@@ -1,9 +1,6 @@
-/*
- * SendableSparkMax.h
- *
- *  Created on: 21 Jan. 2021
- *      Author: Mitch
- */
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
 
 #pragma once
 
@@ -12,11 +9,12 @@
 #include <frc/smartdashboard/SendableBuilder.h>
 #include <frc/smartdashboard/SendableBuilderImpl.h>
 
-class SendableSparkMax :
+class sendableSparkMax :
 public rev::CANSparkMax,
-public frc::Sendable{
+public frc::Sendable
+{
  public:
-  SendableSparkMax(int deviceID, MotorType type);
+  sendableSparkMax(int deviceID, MotorType type);
 
  private:
   void InitSendable(frc::SendableBuilder& builder);
