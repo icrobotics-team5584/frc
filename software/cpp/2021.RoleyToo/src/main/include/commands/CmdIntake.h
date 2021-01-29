@@ -9,6 +9,7 @@
 #include <frc/controller/PIDController.h>
 
 #include "subsystems/SubStorage.h"
+#include "subsystems/SubIntake.h"
 
 /**
  * An example command.
@@ -17,10 +18,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class CmdIntakeIndexStorage
-    : public frc2::CommandHelper<frc2::CommandBase, CmdIntakeIndexStorage> {
+class CmdIntake
+    : public frc2::CommandHelper<frc2::CommandBase, CmdIntake> {
  public:
-  CmdIntakeIndexStorage(SubStorage* subStorage);
+  CmdIntake(SubStorage* subStorage, SubIntake* subIntake);
 
   void Initialize() override;
 
@@ -32,6 +33,7 @@ class CmdIntakeIndexStorage
 
  private:
   SubStorage* _subStorage;
+  SubIntake* _subIntake;
   frc2::PIDController _storagePID{0.2, 0.0, 0.0};
   
 };

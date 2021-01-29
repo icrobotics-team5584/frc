@@ -2,30 +2,31 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "commands/CmdIntakeIndexStorage.h"
+#include "commands/CmdIntake.h"
 
-CmdIntakeIndexStorage::CmdIntakeIndexStorage(SubStorage* subStorage) {
+CmdIntake::CmdIntake(SubStorage* subStorage, SubIntake* subIntake) {
   // Use addRequirements() here to declare subsystem dependencies.
   _subStorage = subStorage;
+  _subIntake = subIntake;
 }
 
 // Called when the command is initially scheduled.
-void CmdIntakeIndexStorage::Initialize() {}
+void CmdIntake::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void CmdIntakeIndexStorage::Execute() {
-
+void CmdIntake::Execute() {
+  _subIntake->Intake();
   _subStorage->Move(SubStorage::Direction::Forward, 0.2);
-
 }
 
 // Called once the command ends or is interrupted.
-void CmdIntakeIndexStorage::End(bool interrupted) {
+void CmdIntake::End(bool interrupted) {
+  _subIntake->Stop();
   _subStorage->Move(SubStorage::Direction::Forward, 0.0);
   _subStorage->ScheduleIndexing(true);
 }
 
 // Returns true when the command should end.
-bool CmdIntakeIndexStorage::IsFinished() {
+bool CmdIntake::IsFinished() {
   return false;
 }
