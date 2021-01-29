@@ -5,13 +5,31 @@
 #pragma once
 
 #include <frc/Joystick.h>
+#include "Utilities/JoystickScaler.h"
 #include <frc2/command/Command.h>
 #include <frc2/command/button/Button.h>
 #include <frc2/command/button/JoystickButton.h>
 
+#include "subsystems/SubColorWheel.h"
+#include "subsystems/SubClimber.h"
 #include "subsystems/subDriveBase.h"
 #include "subsystems/SubIntake.h"
 #include "Constants.h"
+
+#include "subsystems/SubDriveBase.h"
+#include "subsystems/SubTurret.h"
+#include "subsystems/SubStorage.h"
+#include "utilities/Autonomous.h"
+
+#include "commands/CmdAutoCircle.h"
+#include "commands/CmdJoystickDrive.h"
+#include "commands/CmdTrackTarget.h"
+#include "commands/CmdDriveStorage.h"
+#include "commands/CmdSpinFlywheel.h"
+#include "commands/CmdDeployClimber.h"
+
+#include "commands/CmdHomeTurret.h"
+
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -25,12 +43,18 @@ class RobotContainer {
   RobotContainer();
 
   frc2::Command* GetAutonomousCommand();
-
+  SubDriveBase _subDriveBase;
+  //Autonomous _autonomous{ [this]{return _subDriveBase.getYaw();}, [this]{return _subDriveBase.getDistanceTravelled();}};
+  CmdAutoCircle _cmdAutoCircle{&_subDriveBase};
  private:
   // The robot's subsystems and commands are defined here...
-  frc::Joystick _joystick0{0};
+  //frc::Joystick _joystick0{0};
+  JoystickScaler _joystick0{0, 3.0, 3.0};
 
-  SubDriveBase _subDriveBase;
+  SubTurret _subTurret;
+  SubStorage _subStorage;
+  SubClimber _subClimber;
+  SubColorWheel _subColorWheel;
 
   SubIntake _subIntake; 
 
@@ -38,6 +62,13 @@ class RobotContainer {
   frc2::JoystickButton btnRetractIntake{&_joystick0, buttons::bBtn};
   frc2::JoystickButton btnIntake{&_joystick0, buttons::xBtn};
   frc2::JoystickButton btnOuttake{&_joystick0, buttons::yBtn};
+
+  CmdTrackTarget _cmdTrackTarget{&_subTurret};
+  CmdDriveStorage _cmdDriveStorage{&_subStorage, 1, 0.2};
+  CmdSpinFlywheel _cmdSpinFlywheel{&_subTurret};
+  CmdDeployClimber _cmdDeployClimber{&_subClimber};
+
+  CmdHomeTurret _cmdHomeTurret{&_subTurret};
 
   void ConfigureButtonBindings();
 };

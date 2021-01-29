@@ -6,9 +6,9 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <frc/Joystick.h>
-#include "Utilities/JoystickScaler.h"
-#include "subsystems/SubDriveBase.h"
+
+#include "subsystems/SubTurret.h"
+
 /**
  * An example command.
  *
@@ -16,14 +16,20 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class CmdJoystickDrive : public frc2::CommandHelper<frc2::CommandBase, CmdJoystickDrive> {
+class CmdHomeTurret
+    : public frc2::CommandHelper<frc2::CommandBase, CmdHomeTurret> {
  public:
-  CmdJoystickDrive(SubDriveBase* subDriveBase, JoystickScaler* joystick);
+  CmdHomeTurret(SubTurret* subTurret);
+
+  void Initialize() override;
 
   void Execute() override;
-  
-  private:
-  SubDriveBase* _subDriveBase;
-  //frc::Joystick* _joystick;
-  JoystickScaler* _joystick;
+
+  void End(bool interrupted) override;
+
+  bool IsFinished() override;
+ private:
+  bool targetReached = false;
+
+  SubTurret* _subTurret;
 };

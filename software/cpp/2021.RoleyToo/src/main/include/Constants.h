@@ -15,11 +15,31 @@
  */
 
 namespace can {
-    constexpr int spmDriveBaseFrontLeft = 1;
-    constexpr int spmDriveBaseBackLeft = 2;
-    constexpr int spmDriveBaseFrontRight = 3;
-    constexpr int spmDriveBaseBackRight = 4;
+  constexpr int spmDriveBaseFrontLeft = 1;
+  constexpr int spmDriveBaseBackLeft = 2;
+  constexpr int spmDriveBaseFrontRight = 3;
+  constexpr int spmDriveBaseBackRight = 4;
+  constexpr int spmFlywheelRight = 5;
+  constexpr int spmFlywheelLeft = 6;
+  constexpr int srxDolly = 7;
+  constexpr int spmTurret = 8;
+  constexpr int spmStorage = 9;
+  constexpr int spmHood = 10;
+  constexpr int spmClimbLeft = 11;
+  constexpr int spmClimbRight = 12;
     constexpr int spmIntake = 13; 
+}
+namespace dio {
+  constexpr int hlfTurretLeft = 2;
+  constexpr int hlfTurretRight = 3;
+  constexpr int hlfHoodDown = 6;
+  constexpr int brkStorageIn = 7;
+  constexpr int brkStorageIndex = 8;
+  constexpr int brkStorageOut = 9;
+  constexpr int encTurret1 = 0;
+  constexpr int encTurret2 = 1;
+  constexpr int lmtClimbStop = 5;
+  constexpr int lmtTurretLeft = 9;
 }
 
 namespace pcm {
@@ -28,14 +48,33 @@ namespace pcm {
 }
 
 namespace buttons {
-    constexpr int aBtn = 1;
-    constexpr int bBtn = 2;
-    constexpr int xBtn = 3;
-    constexpr int yBtn = 4; 
-    constexpr int leftBtn = 5;
-    constexpr int rightBtn = 6;
-    constexpr int backBtn = 7; 
-    constexpr int startBtn = 8; 
-    constexpr int leftStickBtn = 9;
-    constexpr int rightStickBtn = 10;
+  constexpr int aBtn = 1;
+  constexpr int bBtn = 2;
+  constexpr int xBtn = 3;
+  constexpr int yBtn = 4; 
+  constexpr int leftBtn = 5;
+  constexpr int rightBtn = 6;
+  constexpr int backBtn = 7; 
+  constexpr int startBtn = 8; 
+  constexpr int leftStickBtn = 9;
+  constexpr int rightStickBtn = 10;
+
+  constexpr int leftTrigger = 2;
+  constexpr int rightTrigger = 3;
+}
+namespace POVPositions {
+  constexpr int upBtn = 0;
+  constexpr int uprightBtn = 45;
+  constexpr int rightBtn = 90;
+  constexpr int downrightBtn = 135;
+  constexpr int downBtn = 180;
+  constexpr int downleftBtn = 225;
+  constexpr int leftBtn = 270;
+  constexpr int upleftBtn = 315;
+}
+namespace pcm {
+  constexpr int solDollyDeploy = 2;
+  constexpr int solDollyRetract = 3;
+  constexpr int solClimbDeploy = 4;
+  constexpr int solClimbRetract = 5;
 }

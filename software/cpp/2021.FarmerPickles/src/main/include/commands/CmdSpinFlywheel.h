@@ -6,9 +6,10 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <frc/Joystick.h>
-#include "Utilities/JoystickScaler.h"
-#include "subsystems/SubDriveBase.h"
+
+#include <subsystems/SubTurret.h>
+#include <frc/controller/PIDController.h>
+
 /**
  * An example command.
  *
@@ -16,14 +17,22 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class CmdJoystickDrive : public frc2::CommandHelper<frc2::CommandBase, CmdJoystickDrive> {
+class CmdSpinFlywheel
+    : public frc2::CommandHelper<frc2::CommandBase, CmdSpinFlywheel> {
  public:
-  CmdJoystickDrive(SubDriveBase* subDriveBase, JoystickScaler* joystick);
+  CmdSpinFlywheel(SubTurret* subTurret);
+
+  void Initialize() override;
 
   void Execute() override;
-  
-  private:
-  SubDriveBase* _subDriveBase;
-  //frc::Joystick* _joystick;
-  JoystickScaler* _joystick;
+
+  void End(bool interrupted) override;
+
+  bool IsFinished() override;
+ private:
+  SubTurret* _subTurret;
+  frc2::PIDController _flywheelPID{0.0, 0.0, 0.0}; //default values
+  double _flywheelRPM = 0;
+  double _PIDOutput = 0;
+  double _MotorSpeed = 0;
 };
