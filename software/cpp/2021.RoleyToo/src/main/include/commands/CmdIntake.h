@@ -6,8 +6,10 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include <frc/controller/PIDController.h>
 
 #include "subsystems/SubStorage.h"
+#include "subsystems/SubIntake.h"
 
 /**
  * An example command.
@@ -16,9 +18,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class CmdDriveStorage : public frc2::CommandHelper<frc2::CommandBase, CmdDriveStorage> {
+class CmdIntake
+    : public frc2::CommandHelper<frc2::CommandBase, CmdIntake> {
  public:
-  CmdDriveStorage(SubStorage* subStorage, SubStorage::Direction direction, double speed);
+  CmdIntake(SubStorage* subStorage, SubIntake* subIntake);
 
   void Initialize() override;
 
@@ -30,8 +33,7 @@ class CmdDriveStorage : public frc2::CommandHelper<frc2::CommandBase, CmdDriveSt
 
  private:
   SubStorage* _subStorage;
-
-  SubStorage::Direction _direction;
-  double _speed;
-
+  SubIntake* _subIntake;
+  frc2::PIDController _storagePID{0.2, 0.0, 0.0};
+  
 };
