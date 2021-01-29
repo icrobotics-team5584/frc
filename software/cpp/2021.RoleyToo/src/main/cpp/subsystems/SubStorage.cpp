@@ -53,3 +53,16 @@ int SubStorage::GetBallCount() {
 void SubStorage::SetBallCount(int ballCount) {
   _ballCount = ballCount;
 }
+
+void SubStorage::ScheduleIndexing(bool scheduled) {
+  if (scheduled) {
+    _needsIndexing = true;
+  }
+  else {
+    _needsIndexing = false;
+  }
+}
+
+bool SubStorage::NeedsIndexing() {
+  return _needsIndexing;
+}

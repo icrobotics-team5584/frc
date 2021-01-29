@@ -31,37 +31,7 @@ class CmdIntakeIndexStorage
   bool IsFinished() override;
 
  private:
-  //Compile-time configurable options.
-  int _loadLimit = 100;
-  //Init Subs/FRC Stuff
   SubStorage* _subStorage;
   frc2::PIDController _storagePID{0.2, 0.0, 0.0};
-  //Add our state logic
-  bool _storageIndex [5] = {0, 0, 0, 0, 0};
-  enum StoragePosition {
-    Index1 = 0,
-    Index2 = 0,
-    Index3 = 0,
-    Index4 = 0,
-    Index5 = 0
-  };
-  enum CommandState {
-    Nothing,
-    Intake,
-    LoadBall,
-    IndexMoveFirst,
-    IndexMoveConsecutive,
-    IndexTest,
-    Exit
-  };
-  CommandState _commandState = Intake;
-  StoragePosition _storagePosition;
-  StoragePosition _newStoragePosition;
-  //Init other variables
-  int _indexCount;
-  bool _stopCommand = false;
-  int _loadTimer;
-  int _storagePos;
-  double _pidOutput;
   
 };

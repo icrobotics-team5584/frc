@@ -30,6 +30,8 @@ class SubStorage : public frc2::SubsystemBase {
   void SetBallCount(int ballCount);
   int GetBallCount();
   bool GetSensor(Sensors sensor);
+  bool NeedsIndexing();
+  void ScheduleIndexing(bool scheduled);
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
@@ -43,4 +45,5 @@ class SubStorage : public frc2::SubsystemBase {
   frc::DigitalInput _brkIndex{dio::brkStorageIndex};
   frc::DigitalInput _brkOuttake{dio::brkStorageOut};
   int _ballCount;
+  bool _needsIndexing = false;
 };
