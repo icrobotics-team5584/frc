@@ -7,10 +7,15 @@
 #include <frc/Joystick.h>
 #include "Utilities/JoystickScaler.h"
 #include <frc2/command/Command.h>
+#include <frc2/command/button/Button.h>
+#include <frc2/command/button/JoystickButton.h>
 
 #include "subsystems/SubColorWheel.h"
 #include "subsystems/SubClimber.h"
 #include "subsystems/subDriveBase.h"
+#include "subsystems/SubIntake.h"
+#include "Constants.h"
+
 #include "subsystems/SubDriveBase.h"
 #include "subsystems/SubTurret.h"
 #include "subsystems/SubStorage.h"
@@ -50,6 +55,7 @@ class RobotContainer {
   SubStorage _subStorage;
   SubClimber _subClimber;
   SubColorWheel _subColorWheel;
+  SubIntake _subIntake; 
 
   CmdTrackTarget _cmdTrackTarget{&_subTurret};
   CmdDriveStorage _cmdDriveStorage{&_subStorage, SubStorage::Direction::Forward, 0.2};
