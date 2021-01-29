@@ -11,6 +11,7 @@
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
   _subDriveBase.SetDefaultCommand(CmdJoystickDrive(&_subDriveBase, &_joystick0));
+  _subStorage.SetDefaultCommand(CmdIndexStorage(&_subStorage));
   // Configure the button bindings
   ConfigureButtonBindings();
 
@@ -30,16 +31,15 @@ void RobotContainer::ConfigureButtonBindings() {
   AxisButton btnTrackTarget{&_joystick0, buttons::leftTrigger};
   AxisButton btnShoot{&_joystick0, buttons::rightTrigger};
   
-
   btnTrackTarget.WhileHeld(_cmdTrackTarget);
   aBtn.WhileHeld(_cmdDriveStorage);
   btnShoot.WhileHeld(_cmdSpinFlywheel);
   bBtn.WhileHeld(_cmdHomeTurret);
   btnDeployClimber.WhenPressed(_cmdDeployClimber);
+  btnIntake.WhenPressed(_cmdIntake);
 
   btnDeployIntake.WhenPressed([this]{_subIntake.Deploy();});
   btnRetractIntake.WhenPressed([this]{_subIntake.Retract();});
-  btnIntake.WhenPressed([this]{_subIntake.Intake();});
   btnOuttake.WhenPressed([this]{_subIntake.Outtake();});  
 }
 

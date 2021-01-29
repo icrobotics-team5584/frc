@@ -22,6 +22,10 @@ void SubIntake::Outtake(){
     _spmIntake.Set(-kSpeed);
 }
 
+void SubIntake::Stop() {
+    _spmIntake.Set(0);
+}
+
 void SubIntake::Deploy(){
     solIntake.Set(frc::DoubleSolenoid::kForward);
 }

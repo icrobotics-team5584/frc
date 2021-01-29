@@ -27,6 +27,8 @@
 #include "commands/CmdDriveStorage.h"
 #include "commands/CmdSpinFlywheel.h"
 #include "commands/CmdDeployClimber.h"
+#include "commands/CmdIntake.h"
+#include "commands/CmdIndexStorage.h"
 
 #include "commands/CmdHomeTurret.h"
 
@@ -58,11 +60,11 @@ class RobotContainer {
   SubIntake _subIntake; 
 
   CmdTrackTarget _cmdTrackTarget{&_subTurret};
-  CmdDriveStorage _cmdDriveStorage{&_subStorage, 1, 0.2};
+  CmdDriveStorage _cmdDriveStorage{&_subStorage, SubStorage::Direction::Forward, 0.2};
   CmdSpinFlywheel _cmdSpinFlywheel{&_subTurret};
   CmdDeployClimber _cmdDeployClimber{&_subClimber};
-
   CmdHomeTurret _cmdHomeTurret{&_subTurret};
+  CmdIntake _cmdIntake{&_subStorage, &_subIntake};
 
   void ConfigureButtonBindings();
 };
