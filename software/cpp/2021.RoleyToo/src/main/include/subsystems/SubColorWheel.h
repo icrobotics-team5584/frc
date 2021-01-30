@@ -60,7 +60,7 @@ class SubColorWheel : public frc2::SubsystemBase {
   Color red{0.463, 0.38, 0.156, "Red"};       // Target Red Value
   Color yellow{0.31, 0.557, 0.133, "Yellow"}; // Target Yellow value
 
-  double kP = 0, kI = 0, kD = 0, kMaxOutput = 0.5, kMinOutput = -0.5;
+  double kP = 0.1, kI = 0, kD = 0, kMaxOutput = 0.5, kMinOutput = -0.5;
   
   // SparkMax motor controller for the motor that spins the color wheel
   rev::CANSparkMax _spmColorMotor{can::spmColorWheel, rev::CANSparkMax::MotorType::kBrushless};

@@ -19,6 +19,7 @@
 #include "commands/CmdTrackTarget.h"
 #include "commands/CmdDriveStorage.h"
 #include "commands/CmdSpinColorWheel.h"
+#include "commands/CmdMoveCenterColor.h"
 /**
  * This class is where the bulk of the robot should be declared.  Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -47,6 +48,7 @@ class RobotContainer {
   SubColorWheel _subColorWheel;
 
   CmdSpinColorWheel _cmdSpinColorWheel{&_subColorWheel};
+  CmdMoveCenterColor _cmdMoveCenterColor{&_subColorWheel};
 
   void ConfigureButtonBindings();
 };

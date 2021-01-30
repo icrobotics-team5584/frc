@@ -48,8 +48,8 @@ void SubColorWheel::Periodic() {
 }
 
 void SubColorWheel::SpinColorWheel(double rotation){
-  double neededRotations = _colorMotorPID.GetSetpoint() + rotation;
-  _colorMotorPID.SetSetpoint(neededRotations);
+  // double neededRotations = _colorMotorPID.GetSetpoint() + rotation;
+  _colorMotorPID.SetSetpoint(rotation);
   _spmColorMotor.Set(calculated);
 }
 
