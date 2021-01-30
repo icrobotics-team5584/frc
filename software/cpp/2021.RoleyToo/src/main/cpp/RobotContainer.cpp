@@ -11,6 +11,7 @@
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
   _subDriveBase.SetDefaultCommand(CmdJoystickDrive(&_subDriveBase, &_joystick0));
+  _subStorage.SetDefaultCommand(CmdIndexStorage(&_subStorage));
   // Configure the button bindings
   ConfigureButtonBindings();
 
@@ -21,21 +22,25 @@ void RobotContainer::ConfigureButtonBindings() {
 
   frc2::JoystickButton leftBtn{&_joystick0, buttons::leftBtn};
   frc2::JoystickButton aBtn{&_joystick0, buttons::aBtn};
-  //frc2::JoystickButton rightBtn{&_joystick0, buttons::rightBtn};
   frc2::JoystickButton bBtn{&_joystick0, buttons::bBtn};
-
+  frc2::JoystickButton btnDeployIntake{&_joystick0, buttons::aBtn};
+  frc2::JoystickButton btnRetractIntake{&_joystick0, buttons::bBtn};
+  frc2::JoystickButton btnIntake{&_joystick0, buttons::xBtn};
+  frc2::JoystickButton btnOuttake{&_joystick0, buttons::yBtn};
   ButtonPOV btnDeployClimber{&_joystick0, POVPositions::upBtn};
-
   AxisButton btnTrackTarget{&_joystick0, buttons::leftTrigger};
   AxisButton btnShoot{&_joystick0, buttons::rightTrigger};
   
-
   btnTrackTarget.WhileHeld(_cmdTrackTarget);
   aBtn.WhileHeld(_cmdDriveStorage);
   btnShoot.WhileHeld(_cmdSpinFlywheel);
   bBtn.WhileHeld(_cmdHomeTurret);
   btnDeployClimber.WhenPressed(_cmdDeployClimber);
+  btnIntake.WhenPressed(_cmdIntake);
 
+  btnDeployIntake.WhenPressed([this]{_subIntake.Deploy();});
+  btnRetractIntake.WhenPressed([this]{_subIntake.Retract();});
+  btnOuttake.WhenPressed([this]{_subIntake.Outtake();});  
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
