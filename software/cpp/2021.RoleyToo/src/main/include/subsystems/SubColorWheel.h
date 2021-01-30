@@ -30,6 +30,9 @@ struct Color{
     sumError += abs(detectedBlue - _blue);
     return sumError;
   }
+
+  std::string GetName(){return _name;}
+
   // Stored variables for the struct with rgb color value and the name of the string
   double _red;
   double _blue;
@@ -45,6 +48,9 @@ class SubColorWheel : public frc2::SubsystemBase {
   // Takes speed and how many rotation the motor spins
   void SpinColorWheel(double rotation);
 
+  Color DetectSensorColor();
+
+  void spinMotor(double speed);
  private:
   rev::ColorSensorV3 _colorSensor{frc::I2C::Port::kOnboard};
 
@@ -54,10 +60,6 @@ class SubColorWheel : public frc2::SubsystemBase {
   Color red{0.463, 0.38, 0.156, "Red"};       // Target Red Value
   Color yellow{0.31, 0.557, 0.133, "Yellow"}; // Target Yellow value
 
-  // Those values are used for calculating the nearest color with the targets above
-  double smallestError = 1;
-  Color smallestColor{0, 0, 0, "None"};
-
   double kP = 0, kI = 0, kD = 0, kMaxOutput = 0.5, kMinOutput = -0.5;
   
   // SparkMax motor controller for the motor that spins the color wheel
@@ -65,5 +67,4 @@ class SubColorWheel : public frc2::SubsystemBase {
   rev::CANEncoder _colorMotorEncoder = _spmColorMotor.GetEncoder();
   frc2::PIDController _colorMotorPID{kP, kI, kD};
   double calculated = 0;
-
 };

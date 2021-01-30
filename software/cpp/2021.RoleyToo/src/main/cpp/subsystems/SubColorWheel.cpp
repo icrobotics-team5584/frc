@@ -4,6 +4,7 @@
 
 #include "subsystems/SubColorWheel.h"
 #include <frc/smartdashboard/smartdashboard.h>
+#include <frc/DriverStation.h>
 #include <array>
 #include <iostream>
 
@@ -17,41 +18,69 @@ SubColorWheel::SubColorWheel(){
 }
 
 void SubColorWheel::Periodic() {
-    // Gets the value form the color sensor
-    frc::Color detectedColor = _colorSensor.GetColor();
-    double _red = detectedColor.red;
-    double _green = detectedColor.green;
-    double _blue = detectedColor.blue;
-
-    // Gets the lowest error percentage from the values detected from the sensor
-    std::array<Color, 4> colorArray {red, green, blue, yellow}; 
-    for(Color currentColor : colorArray){
-        double currentError = currentColor.GetError(_red, _green, _blue);
-        if(smallestError > currentError){
-            smallestError = currentError;
-            smallestColor = currentColor;
-        } 
-    }
-
-    // Put the result got from the calculations above on shuffleboard
-    frc::SmartDashboard::PutString("Color", smallestColor._name);
-    
-    // Reset Variables
-    smallestError = 1;
-    smallestColor = Color{0, 0, 0, "None"};
-
     // frc::SmartDashboard::PutNumber("Red", detectedColor.red);
     // frc::SmartDashboard::PutNumber("Green", detectedColor.green);
     // frc::SmartDashboard::PutNumber("Blue", detectedColor.blue);
 
     frc::SmartDashboard::PutNumber("Encoder valude", _colorMotorEncoder.GetPosition());
     frc::SmartDashboard::PutNumber("color wheel pid error", _colorMotorPID.GetPositionError());
-    calculated = _colorMotorPID.Calculate(_colorMotorEncoder.GetPosition() );
+    calculated = _colorMotorPID.Calculate(_colorMotorEncoder.GetPosition());
+
+    // std::string gameData;
+    // gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
+    // if(gameData.length() > 0)
+    // {
+    //   switch (gameData[0])
+    //   {
+    //     case 'B' :
+          
+    //       break;
+    //     case 'G' :
+    //       break;
+    //     case 'R' :
+    //       break;
+    //     case 'Y' :
+    //       break;
+    //     default :
+    //       break;
+    //   }
+    // }
 }
 
 void SubColorWheel::SpinColorWheel(double rotation){
-    _colorMotorPID.SetSetpoint(rotation);
-    _spmColorMotor.Set(calculated);
+  double neededRotations = _colorMotorPID.GetSetpoint() + rotation;
+  _colorMotorPID.SetSetpoint(neededRotations);
+  _spmColorMotor.Set(calculated);
 }
 
+Color SubColorWheel::DetectSensorColor(){
+  // Those values are used for calculating the nearest color with the targets above
+  double smallestError = 1;
+  Color smallestColor{0, 0, 0, "None"};
+  
+  // Gets the value form the color sensor
+  frc::Color detectedColor = _colorSensor.GetColor();
+  double _red = detectedColor.red;
+  double _green = detectedColor.green;
+  double _blue = detectedColor.blue;
+
+  // Gets the lowest error percentage from the values detected from the sensor
+  std::array<Color, 4> colorArray {red, green, blue, yellow}; 
+  for(Color currentColor : colorArray){
+      double currentError = currentColor.GetError(_red, _green, _blue);
+      if(smallestError > currentError){
+          smallestError = currentError;
+          smallestColor = currentColor;
+      } 
+  }
+
+  // Put the result got from the calculations above on shuffleboard
+  frc::SmartDashboard::PutString("Color", smallestColor._name);
+
+  return smallestColor;
+}
+
+void SubColorWheel::spinMotor(double speed){
+  _spmColorMotor.Set(speed);
+}
 

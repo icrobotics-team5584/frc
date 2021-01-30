@@ -22,7 +22,7 @@ void RobotContainer::ConfigureButtonBindings() {
 
   leftBtn.WhileHeld(_cmdTrackTarget);
   aBtn.WhileHeld(_cmdDriveStorage);
-  xBtn.WhileHeld([this]{_subColorWheel.SpinColorWheel(40);});
+  xBtn.WhenPressed(_cmdSpinColorWheel);
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
