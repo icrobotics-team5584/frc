@@ -4,10 +4,7 @@
 
 #include "subsystems/SubTurret.h"
 
-SubTurret::SubTurret() : 
-_encTurret{_spmFlywheelRight.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 2048)},
-_encHood{_spmHood.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 2048)}
-{
+SubTurret::SubTurret() {
   _networktables = nt::NetworkTableInstance::GetDefault();
   _limelight = _networktables.GetTable("limelight");
   LimeLEDOff();
@@ -73,7 +70,7 @@ double SubTurret::GetTurretAngle() {
 }
 
 void SubTurret::ResetTurretEncoder() {
-    _encTurret.SetPosition(0);
+  _encTurret.SetPosition(0);
 }
 
 void SubTurret::SetTurret(double speed) {
@@ -93,7 +90,7 @@ void SubTurret::SetFlywheel(double speed) {
 }
 
 double SubTurret::GetFlywheelRPM() {
-  return _spmFlywheelRight.GetEncoder().GetVelocity();
+  return _encFlywheel.GetVelocity();
 }
 
 void SubTurret::SetHood(double speed) {
