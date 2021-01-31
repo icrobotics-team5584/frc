@@ -65,9 +65,8 @@ class RobotContainer {
   CmdDeployClimber _cmdDeployClimber{&_subClimber};
   CmdIntake _cmdIntake{&_subStorage, &_subIntake};
 
-  AxisButton btnTrackTarget{&_joystick0, buttons::leftTrigger};
-  AxisButton btnShoot{&_joystick0, buttons::rightTrigger};
-  ButtonPOV btnDeployClimber{&_joystick0, POVPositions::upBtn};
+
+  // ButtonPOV btnDeployClimber{&_joystick0, POVPositions::upBtn};
 
   void ConfigureButtonBindings();
 };

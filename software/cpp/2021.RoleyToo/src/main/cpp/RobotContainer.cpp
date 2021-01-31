@@ -25,12 +25,14 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton btnRetractIntake{&_joystick0, buttons::bBtn};
   frc2::JoystickButton btnIntake{&_joystick0, buttons::xBtn};
   frc2::JoystickButton btnOuttake{&_joystick0, buttons::yBtn};
+  AxisButton btnTrackTarget{&_joystick0, buttons::leftTrigger};
+  AxisButton btnShoot{&_joystick0, buttons::rightTrigger};
 
   
-  btnTrackTarget.WhileHeld(&_cmdTrackTarget);
+  btnTrackTarget.WhileHeld(_cmdTrackTarget);
   aBtn.WhileHeld(_cmdDriveStorage);
-  btnShoot.WhileHeld(&_cmdSpinFlywheel);
-  btnDeployClimber.WhenPressed(&_cmdDeployClimber);
+  btnShoot.WhileHeld(_cmdSpinFlywheel);
+  // btnDeployClimber.WhenPressed(&_cmdDeployClimber);
   btnIntake.WhenPressed(_cmdIntake);
 
   btnDeployIntake.WhenPressed([this]{_subIntake.Deploy();});
