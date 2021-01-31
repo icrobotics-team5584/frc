@@ -5,7 +5,6 @@
 #include "RobotContainer.h"
 
 #include "frc2/command/button/JoystickButton.h"
-#include "Utilities/ButtonPOV.h"
 #include <frc2/command/PrintCommand.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
@@ -20,15 +19,12 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
-  frc::SmartDashboard::PutData(&_cmdSpinFlywheel);
-
   frc2::JoystickButton leftBtn{&_joystick0, buttons::leftBtn};
   frc2::JoystickButton aBtn{&_joystick0, buttons::aBtn};
   frc2::JoystickButton btnDeployIntake{&_joystick0, buttons::aBtn};
   frc2::JoystickButton btnRetractIntake{&_joystick0, buttons::bBtn};
   frc2::JoystickButton btnIntake{&_joystick0, buttons::xBtn};
   frc2::JoystickButton btnOuttake{&_joystick0, buttons::yBtn};
-  ButtonPOV btnDeployClimber{&_joystick0, POVPositions::upBtn};
 
   
   btnTrackTarget.WhileHeld(&_cmdTrackTarget);
