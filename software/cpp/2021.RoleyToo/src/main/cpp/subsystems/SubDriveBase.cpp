@@ -14,6 +14,11 @@ SubDriveBase::SubDriveBase() {
 
   _spmBackLeft.Follow(_spmFrontLeft);
   _spmBackRight.Follow(_spmFrontRight);
+
+  _spmFrontLeft.SetSmartCurrentLimit(50);
+  _spmFrontRight.SetSmartCurrentLimit(50);
+  _spmBackLeft.SetSmartCurrentLimit(50);
+  _spmBackRight.SetSmartCurrentLimit(50);
 }
 
 void SubDriveBase::drive(double speed, double rotation, bool squaredInputs){
