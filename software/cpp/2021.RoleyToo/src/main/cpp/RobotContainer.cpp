@@ -37,7 +37,7 @@ void RobotContainer::ConfigureButtonBindings() {
   aBtn.WhileHeld(_cmdDriveStorage);
   btnShoot.WhileHeld(&_cmdSpinFlywheel);
   bBtn.WhileHeld(_cmdHomeTurret);
-  btnDeployClimber.WhenPressed(_cmdDeployClimber);
+  btnDeployClimber.WhenPressed(&_cmdDeployClimber);
   btnIntake.WhenPressed(_cmdIntake);
 
   btnDeployIntake.WhenPressed([this]{_subIntake.Deploy();});
