@@ -30,21 +30,18 @@ namespace can {
   constexpr int spmIntake = 13; 
 }
 namespace dio {
+  constexpr int hlfHoodDown = 1;
   constexpr int hlfTurretLeft = 2;
   constexpr int hlfTurretRight = 3;
-  constexpr int hlfHoodDown = 6;
+  constexpr int lmtClimbStop = 5;
   constexpr int brkStorageIn = 7;
   constexpr int brkStorageIndex = 8;
   constexpr int brkStorageOut = 9;
-  constexpr int encTurret1 = 0;
-  constexpr int encTurret2 = 1;
-  constexpr int lmtClimbStop = 5;
-  constexpr int lmtTurretLeft = 9;
 }
 
 namespace buttons {
-  constexpr int aBtn = 1;
-  constexpr int bBtn = 2;
+  constexpr int aBtn =          1;
+  constexpr int bBtn =        2;
   constexpr int xBtn = 3;
   constexpr int yBtn = 4; 
   constexpr int leftBtn = 5;
