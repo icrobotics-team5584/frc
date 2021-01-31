@@ -6,7 +6,8 @@
 
 #include "frc2/command/button/JoystickButton.h"
 #include "Utilities/ButtonPOV.h"
-#include "Utilities/AxisButton.h"
+#include <frc2/command/PrintCommand.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
@@ -19,6 +20,7 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
+  frc::SmartDashboard::PutData(&_cmdSpinFlywheel);
 
   frc2::JoystickButton leftBtn{&_joystick0, buttons::leftBtn};
   frc2::JoystickButton aBtn{&_joystick0, buttons::aBtn};
@@ -28,13 +30,12 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton btnIntake{&_joystick0, buttons::xBtn};
   frc2::JoystickButton btnOuttake{&_joystick0, buttons::yBtn};
   ButtonPOV btnDeployClimber{&_joystick0, POVPositions::upBtn};
-  AxisButton btnTrackTarget{&_joystick0, buttons::leftTrigger};
-  //AxisButton btnShoot{&_joystick0, buttons::rightTrigger};
-  frc2::JoystickButton btnShoot{&_joystick0, buttons::rightBtn};
+
+  //frc2::JoystickButton btnShoot{&_joystick0, buttons::rightBtn};
   
-  btnTrackTarget.WhileHeld(_cmdTrackTarget);
+  btnTrackTarget.WhileHeld(&_cmdTrackTarget);
   aBtn.WhileHeld(_cmdDriveStorage);
-  btnShoot.WhileHeld(_cmdSpinFlywheel);
+  btnShoot.WhileHeld(&_cmdSpinFlywheel);
   bBtn.WhileHeld(_cmdHomeTurret);
   btnDeployClimber.WhenPressed(_cmdDeployClimber);
   btnIntake.WhenPressed(_cmdIntake);

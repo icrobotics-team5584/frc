@@ -33,6 +33,9 @@
 #include "commands/CmdHomeTurret.h"
 
 
+#include "Utilities/AxisButton.h"
+
+
 /**
  * This class is where the bulk of the robot should be declared.  Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -65,6 +68,9 @@ class RobotContainer {
   CmdDeployClimber _cmdDeployClimber{&_subClimber};
   CmdHomeTurret _cmdHomeTurret{&_subTurret};
   CmdIntake _cmdIntake{&_subStorage, &_subIntake};
+
+  AxisButton btnTrackTarget{&_joystick0, buttons::leftTrigger};
+  AxisButton btnShoot{&_joystick0, buttons::rightTrigger};
 
   void ConfigureButtonBindings();
 };
