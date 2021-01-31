@@ -29,7 +29,8 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton btnOuttake{&_joystick0, buttons::yBtn};
   ButtonPOV btnDeployClimber{&_joystick0, POVPositions::upBtn};
   AxisButton btnTrackTarget{&_joystick0, buttons::leftTrigger};
-  AxisButton btnShoot{&_joystick0, buttons::rightTrigger};
+  //AxisButton btnShoot{&_joystick0, buttons::rightTrigger};
+  frc2::JoystickButton btnShoot{&_joystick0, buttons::rightBtn};
   
   btnTrackTarget.WhileHeld(_cmdTrackTarget);
   aBtn.WhileHeld(_cmdDriveStorage);

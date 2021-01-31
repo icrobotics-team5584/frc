@@ -14,10 +14,12 @@ CmdSpinFlywheel::CmdSpinFlywheel(SubTurret* subTurret) {
 // Called when the command is initially scheduled.
 void CmdSpinFlywheel::Initialize() {
   frc::SmartDashboard::PutData("Wheel PID", &_flywheelPID);
+  std::cout << "start" << "\n";
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdSpinFlywheel::Execute() {
+  std::cout << "run" << "\n";
   _error = _subTurret->GetFlywheelRPM() - _setpoint;
 
   _setpoint = frc::SmartDashboard::GetNumber("wheel setpoint", 0);

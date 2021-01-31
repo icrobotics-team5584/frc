@@ -74,5 +74,7 @@ class SubTurret : public frc2::SubsystemBase {
   double _targetHeight = 1300;
   double _limelightHeight = 260;
   double _limelightAngle = 40;
-  double _encTurretConvFac = 360/1;    // 360 points per 1 revolution
+  double _encTurretConvFac = 360/1;     // 360 points per 1 revolution
+
+  double _hoodPosOffset = 0;            // Allows 0 to be the home point while using an absolute encoder
 };
