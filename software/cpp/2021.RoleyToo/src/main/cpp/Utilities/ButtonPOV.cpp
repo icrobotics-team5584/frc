@@ -7,7 +7,9 @@
 
 #include <Utilities/ButtonPOV.h>
 
-ButtonPOV::ButtonPOV(GenericHID* joystick, int position) {
+ButtonPOV::ButtonPOV(GenericHID* joystick, int position):
+    frc2::Trigger{[this]{return Get();}}
+{
 	_joystick = joystick;
 	_position = position;
 }
@@ -33,11 +35,11 @@ bool ButtonPOV::Get(){
     //}
 }
 
-void ButtonPOV::WhenPressed(frc2::Command& command) {
-	WhenActive(&command);
+void ButtonPOV::WhenPressed(frc2::Command* command) {
+	WhenActive(command);
 }
 
-void ButtonPOV::WhileHeld(frc2::Command& command){
-    WhileActiveContinous(&command);
+void ButtonPOV::WhileHeld(frc2::Command* command){
+    WhileActiveContinous(command);
 }
 
