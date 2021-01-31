@@ -19,6 +19,8 @@ SubTurret::SubTurret() {
   _spmTurret.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
   _spmHood.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 
+  _spmFlywheelLeft.Follow(_spmFlywheelRight, true);
+
   _spmFlywheelRight.SetSmartCurrentLimit(50);
   _spmFlywheelLeft.SetSmartCurrentLimit(50);
   _spmTurret.SetSmartCurrentLimit(20);
@@ -98,7 +100,7 @@ void SubTurret::SetHood(double speed) {
 }
 
 double SubTurret::GetHoodPos() {
-  return _encHood.GetPosition();
+  return _encHood.GetPosition() - _hoodPosOffset;
 }
 
 double SubTurret::EstimateDistance() {
