@@ -29,9 +29,6 @@
 #include "commands/CmdTrackTarget.h"
 
 #include "Utilities/Autonomous.h"
-#include "Utilities/AxisButton.h"
-#include "Utilities/ButtonPOV.h"
-
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -64,9 +61,6 @@ class RobotContainer {
   CmdSpinFlywheel _cmdSpinFlywheel{&_subTurret};
   CmdDeployClimber _cmdDeployClimber{&_subClimber};
   CmdIntake _cmdIntake{&_subStorage, &_subIntake};
-
-
-  // ButtonPOV btnDeployClimber{&_joystick0, POVPositions::upBtn};
 
   void ConfigureButtonBindings();
 };

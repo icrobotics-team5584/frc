@@ -3,8 +3,10 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "RobotContainer.h"
+#include "Utilities/AxisButton.h"
+#include "Utilities/POVButton.h"
 
-#include "frc2/command/button/JoystickButton.h"
+#include <frc2/command/button/JoystickButton.h>
 #include <frc2/command/PrintCommand.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
@@ -27,14 +29,13 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton btnOuttake{&_joystick0, buttons::yBtn};
   AxisButton btnTrackTarget{&_joystick0, buttons::leftTrigger};
   AxisButton btnShoot{&_joystick0, buttons::rightTrigger};
-
+  POVButton btnDeployClimber{&_joystick0, POVButton::Position::up};
   
   btnTrackTarget.WhileHeld(_cmdTrackTarget);
   aBtn.WhileHeld(_cmdDriveStorage);
   btnShoot.WhileHeld(_cmdSpinFlywheel);
-  // btnDeployClimber.WhenPressed(&_cmdDeployClimber);
+  btnDeployClimber.WhenPressed(_cmdDeployClimber);
   btnIntake.WhenPressed(_cmdIntake);
-
   btnDeployIntake.WhenPressed([this]{_subIntake.Deploy();});
   btnRetractIntake.WhenPressed([this]{_subIntake.Retract();});
   btnOuttake.WhenPressed([this]{_subIntake.Outtake();});  

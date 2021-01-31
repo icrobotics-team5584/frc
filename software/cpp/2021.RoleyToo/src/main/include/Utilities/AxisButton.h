@@ -6,7 +6,7 @@
  *
  * 	Updated 20190204_2325 Darcy
  *  Updated 20191204_1954 Mitch
- *  Reauthored 20210131_1521 Liam
+ *  Updated 20210131_1521 Liam
  */
 
 #pragma once

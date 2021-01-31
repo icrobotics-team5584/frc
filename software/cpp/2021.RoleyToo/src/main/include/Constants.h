@@ -56,17 +56,6 @@ namespace buttons {
   constexpr int rightTrigger = 3;
 }
 
-namespace POVPositions {
-  constexpr int upBtn = 0;
-  constexpr int uprightBtn = 45;
-  constexpr int rightBtn = 90;
-  constexpr int downrightBtn = 135;
-  constexpr int downBtn = 180;
-  constexpr int downleftBtn = 225;
-  constexpr int leftBtn = 270;
-  constexpr int upleftBtn = 315;
-}
-
 namespace pcm {
   constexpr int pcm_solIntakeRetract = 0;
   constexpr int pcm_solIntakeDeploy = 1;
