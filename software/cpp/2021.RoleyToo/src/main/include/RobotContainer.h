@@ -30,7 +30,6 @@
 #include "commands/CmdIntake.h"
 #include "commands/CmdIndexStorage.h"
 
-#include "commands/CmdHomeTurret.h"
 
 
 #include "Utilities/AxisButton.h"
@@ -66,7 +65,6 @@ class RobotContainer {
   CmdDriveStorage _cmdDriveStorage{&_subStorage, SubStorage::Direction::Forward, 0.2};
   CmdSpinFlywheel _cmdSpinFlywheel{&_subTurret};
   CmdDeployClimber _cmdDeployClimber{&_subClimber};
-  CmdHomeTurret _cmdHomeTurret{&_subTurret};
   CmdIntake _cmdIntake{&_subStorage, &_subIntake};
 
   AxisButton btnTrackTarget{&_joystick0, buttons::leftTrigger};
