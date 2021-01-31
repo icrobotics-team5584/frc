@@ -67,6 +67,7 @@ class RobotContainer {
 
   AxisButton btnTrackTarget{&_joystick0, buttons::leftTrigger};
   AxisButton btnShoot{&_joystick0, buttons::rightTrigger};
+  ButtonPOV btnDeployClimber{&_joystick0, POVPositions::upBtn};
 
   void ConfigureButtonBindings();
 };

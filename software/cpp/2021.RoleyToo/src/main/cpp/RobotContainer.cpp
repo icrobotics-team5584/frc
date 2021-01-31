@@ -25,7 +25,6 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton btnRetractIntake{&_joystick0, buttons::bBtn};
   frc2::JoystickButton btnIntake{&_joystick0, buttons::xBtn};
   frc2::JoystickButton btnOuttake{&_joystick0, buttons::yBtn};
-  ButtonPOV btnDeployClimber{&_joystick0, POVPositions::upBtn};
 
   
   btnTrackTarget.WhileHeld(&_cmdTrackTarget);
