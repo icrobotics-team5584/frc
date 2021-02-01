@@ -62,7 +62,7 @@ class RobotContainer {
   CmdSpinFlywheel _cmdSpinFlywheel{&_subTurret};
   CmdDeployClimber _cmdDeployClimber{&_subClimber};
   CmdIntake _cmdIntake{&_subStorage, &_subIntake};
-  CmdClimbToPos _cmdClimbToPos{&_subClimber, 200};
+  CmdClimbToPos _cmdClimbToPos{&_subClimber, 20};
 
   void ConfigureButtonBindings();
 };

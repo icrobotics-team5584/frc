@@ -9,6 +9,7 @@
 CmdClimbToPos::CmdClimbToPos(SubClimber* subClimber, double target) {
   // Use addRequirements() here to declare subsystem dependencies.
   _subClimber = subClimber;
+  _target = target;
   
 }
 
@@ -22,11 +23,9 @@ void CmdClimbToPos::Initialize() {
 void CmdClimbToPos::Execute() {
   int _encoder = _subClimber->GetEncoder(SubClimber::Side::left);
 
-  std::cout << "encoder " << _encoder << "\n";
-
   frc::SmartDashboard::PutNumber("climbencoder", _encoder);
 
-  _pidOutput = _climbPID.Calculate(_encoder);
+  _pidOutput = _climbPID.Calculate(_encoder, _target);
   _subClimber->Drive(_pidOutput);
 }
 
