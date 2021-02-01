@@ -7,6 +7,9 @@
 SubClimber::SubClimber() {
     _spmClimbLeft.SetInverted(false);
     _spmClimbRight.Follow(_spmClimbLeft, true);
+
+    _spmClimbLeft.SetSmartCurrentLimit(50);
+    _spmClimbRight.SetSmartCurrentLimit(50);
 }
 
 // This method will be called once per scheduler run
