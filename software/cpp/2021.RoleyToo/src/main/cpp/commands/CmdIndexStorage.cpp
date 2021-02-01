@@ -17,7 +17,6 @@ void CmdIndexStorage::Execute() {
   if (_subStorage->NeedsIndexing()) {
 
     //Index here.
-    std::cout << "Storage Indexing." << "\n";
 
     //Don't index again until next requested.
     _subStorage->ScheduleIndexing(false);
