@@ -6,10 +6,8 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <rev/CANSparkMax.h>
-#include <frc/controller/PIDController.h>
 
-#include "subsystems/SubClimber.h"
+#include <subsystems/SubStorage.h>
 
 /**
  * An example command.
@@ -18,10 +16,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class CmdClimbToPos
-    : public frc2::CommandHelper<frc2::CommandBase, CmdClimbToPos> {
+class CmdIndexStorage
+    : public frc2::CommandHelper<frc2::CommandBase, CmdIndexStorage> {
  public:
-  CmdClimbToPos(SubClimber* subClimber, double target);
+  CmdIndexStorage(SubStorage* subStorage);
 
   void Initialize() override;
 
@@ -30,10 +28,7 @@ class CmdClimbToPos
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+ 
  private:
-  frc2::PIDController _climbPID{0.1, 0.0, 0.0};
-  SubClimber* _subClimber;
-
-  double _target;
-  int _pidOutput = 0;
+  SubStorage* _subStorage;
 };

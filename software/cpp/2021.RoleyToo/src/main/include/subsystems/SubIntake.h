@@ -16,6 +16,7 @@ class SubIntake : public frc2::SubsystemBase {
   SubIntake();  
   void Intake();
   void Outtake();
+  void Stop();
   void Deploy();
   void Retract();
   /**

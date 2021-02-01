@@ -10,26 +10,33 @@
 #include <frc2/command/button/Button.h>
 #include <frc2/command/button/JoystickButton.h>
 
-#include "subsystems/SubColorWheel.h"
-#include "subsystems/SubClimber.h"
-#include "subsystems/subDriveBase.h"
-#include "subsystems/SubIntake.h"
 #include "Constants.h"
 
-#include "subsystems/SubDriveBase.h"
-#include "subsystems/SubTurret.h"
+#include "subsystems/SubClimber.h"
+#include "subsystems/SubColorWheel.h"
+#include "subsystems/subDriveBase.h"
+#include "subsystems/SubIntake.h"
 #include "subsystems/SubStorage.h"
-#include "utilities/Autonomous.h"
+#include "subsystems/SubTurret.h"
 
 #include "commands/CmdAutoCircle.h"
 #include "commands/CmdJoystickDrive.h"
 #include "commands/CmdTrackTarget.h"
 #include "commands/CmdDriveStorage.h"
+#include "commands/CmdSpinColorWheel.h"
+#include "commands/CmdMoveCenterColor.h"
+#include "commands/CmdSpinToColor.h"
 #include "commands/CmdSpinFlywheel.h"
 #include "commands/CmdDeployClimber.h"
+#include "commands/CmdDriveStorage.h"
+#include "commands/CmdIndexStorage.h"
+#include "commands/CmdIntake.h"
+#include "commands/CmdJoystickDrive.h"
+#include "commands/CmdSpinFlywheel.h"
+#include "commands/CmdTrackTarget.h"
+#include "commands/CmdClimbToPos.h"
 
-#include "commands/CmdHomeTurret.h"
-
+#include "Utilities/Autonomous.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -58,11 +65,15 @@ class RobotContainer {
   SubIntake _subIntake; 
 
   CmdTrackTarget _cmdTrackTarget{&_subTurret};
-  CmdDriveStorage _cmdDriveStorage{&_subStorage, 1, 0.2};
+  CmdDriveStorage _cmdDriveStorage{&_subStorage, SubStorage::Direction::Forward, 0.2};
   CmdSpinFlywheel _cmdSpinFlywheel{&_subTurret};
   CmdDeployClimber _cmdDeployClimber{&_subClimber};
+  CmdIntake _cmdIntake{&_subStorage, &_subIntake};
+  CmdClimbToPos _cmdClimbToPos{&_subClimber, 20};
 
-  CmdHomeTurret _cmdHomeTurret{&_subTurret};
+  CmdSpinColorWheel _cmdSpinColorWheel{&_subColorWheel};
+  CmdMoveCenterColor _cmdMoveCenterColor{&_subColorWheel};
+  CmdSpinToColor _cmdSpinToColor{&_subColorWheel};
 
   void ConfigureButtonBindings();
 };

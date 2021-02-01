@@ -7,6 +7,7 @@
 
 SubIntake::SubIntake(){
     frc::SmartDashboard::PutData("Intake Motor", &_spmIntake);
+    _spmIntake.SetSmartCurrentLimit(20);
 }
 
 // This method will be called once per scheduler run
@@ -20,6 +21,10 @@ void SubIntake::Intake(){
 
 void SubIntake::Outtake(){
     _spmIntake.Set(-kSpeed);
+}
+
+void SubIntake::Stop() {
+    _spmIntake.Set(0);
 }
 
 void SubIntake::Deploy(){

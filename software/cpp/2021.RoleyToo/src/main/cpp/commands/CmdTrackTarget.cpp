@@ -38,7 +38,11 @@ void CmdTrackTarget::Execute() {
   if ((_subTurret->GetTurretAngle() < 10) && (_TurretPIDOutput > 0)) { _TurretPIDOutput = 0; }
   if ((_subTurret->GetTurretAngle() > 100) && (_TurretPIDOutput < 0)) { _TurretPIDOutput = 0; }
 
+  if ((_subTurret->GetHoodPos() < 10) && (_hoodPIDOutput < 0)) { _hoodPIDOutput = 0; }
+  if ((_subTurret->GetHoodPos() > 10) && (_hoodPIDOutput > 0)) { _hoodPIDOutput = 0; }
+
   _subTurret->SetTurret(_TurretPIDOutput);
+  _subTurret->SetHood(_TurretPIDOutput);
 }
 
 // Called once the command ends or is interrupted.

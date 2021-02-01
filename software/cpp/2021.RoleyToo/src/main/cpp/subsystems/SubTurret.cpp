@@ -4,10 +4,7 @@
 
 #include "subsystems/SubTurret.h"
 
-SubTurret::SubTurret() : 
-_encTurret{_spmFlywheelRight.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 2048)},
-_encHood{_spmHood.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 2048)}
-{
+SubTurret::SubTurret() {
   _networktables = nt::NetworkTableInstance::GetDefault();
   _limelight = _networktables.GetTable("limelight");
   LimeLEDOff();
@@ -21,6 +18,8 @@ _encHood{_spmHood.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQu
   _spmFlywheelLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
   _spmTurret.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
   _spmHood.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+
+  _spmFlywheelLeft.Follow(_spmFlywheelRight, true);
 
   _spmFlywheelRight.SetSmartCurrentLimit(50);
   _spmFlywheelLeft.SetSmartCurrentLimit(50);
@@ -73,7 +72,7 @@ double SubTurret::GetTurretAngle() {
 }
 
 void SubTurret::ResetTurretEncoder() {
-    _encTurret.SetPosition(0);
+  _encTurret.SetPosition(0);
 }
 
 void SubTurret::SetTurret(double speed) {
@@ -93,7 +92,7 @@ void SubTurret::SetFlywheel(double speed) {
 }
 
 double SubTurret::GetFlywheelRPM() {
-  return _spmFlywheelRight.GetEncoder().GetVelocity();
+  return _encFlywheel.GetVelocity();
 }
 
 void SubTurret::SetHood(double speed) {
@@ -101,7 +100,7 @@ void SubTurret::SetHood(double speed) {
 }
 
 double SubTurret::GetHoodPos() {
-  return _encHood.GetPosition();
+  return _encHood.GetPosition() - _hoodPosOffset;
 }
 
 double SubTurret::EstimateDistance() {

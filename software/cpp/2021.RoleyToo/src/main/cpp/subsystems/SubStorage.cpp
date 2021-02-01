@@ -4,27 +4,34 @@
 
 #include "subsystems/SubStorage.h"
 
-SubStorage::SubStorage() = default;
+SubStorage::SubStorage() {
+  _spmStorageMotor.SetSmartCurrentLimit(20);
+}
 
 // This method will be called once per scheduler run
 void SubStorage::Periodic() {}
 
-void SubStorage::Move(bool direction, double speed) {
-    
-  if (direction) {
-    _spmStorageMotor.Set(speed);
+void SubStorage::Move(Direction direction, double speed) {
+  switch (direction) {
+    case Forward:
+      _spmStorageMotor.Set(speed);
+      break;
+    case Backward:
+      _spmStorageMotor.Set(-speed);
+      break;
   }
-  else {
-    _spmStorageMotor.Set(-speed);
-  }
+}
+
+void SubStorage::ResetEncoder() {
+  //TODO: Reset Encoder
 }
 
 double SubStorage::GetEncoder() {
-  return _spmStorageMotor.Get();
+  return _spmStorageMotor.GetEncoder().GetPosition();
 }
 
 bool SubStorage::GetSensor(Sensors sensor) {
-  switch (sensor) { //TODO: Add sensors to subsystem and get() here.
+  switch (sensor) {
     case Intake:
       return _brkIntake.Get();
       break;
@@ -39,4 +46,25 @@ bool SubStorage::GetSensor(Sensors sensor) {
     }
 
   return false; //Make the compiler happy in case none of these choices are made
+}
+
+int SubStorage::GetBallCount() {
+  return _ballCount;
+}
+
+void SubStorage::SetBallCount(int ballCount) {
+  _ballCount = ballCount;
+}
+
+void SubStorage::ScheduleIndexing(bool scheduled) {
+  if (scheduled) {
+    _needsIndexing = true;
+  }
+  else {
+    _needsIndexing = false;
+  }
+}
+
+bool SubStorage::NeedsIndexing() {
+  return _needsIndexing;
 }
