@@ -121,9 +121,11 @@
               "_source0": "network_table:///SmartDashboard/RPM",
               "_title": "Shooter RPM",
               "Graph/Visible time": 30.0,
+              "Graph/X-axis auto scrolling": true,
               "Y-axis/Automatic bounds": true,
               "Y-axis/Upper bound": 1.0,
-              "Y-axis/Lower bound": -1.0
+              "Y-axis/Lower bound": -1.0,
+              "Y-axis/Unit": "ul"
             }
           },
           "9,0": {
@@ -766,9 +768,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -6.285714149475098,
-    "y": 0.0,
-    "width": 1726.857177734375,
-    "height": 1109.142822265625
+    "x": -293.0,
+    "y": 32.0,
+    "width": 1386.0,
+    "height": 788.0
   }
 }

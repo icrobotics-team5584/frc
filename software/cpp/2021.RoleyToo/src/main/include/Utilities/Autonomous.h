@@ -38,6 +38,7 @@ class Autonomous {
   double radius;
   double slope;
   bool isLinear;
+  double pidReverse = 0;
   DriveInput autoOutput;
   frc::Notifier notifier{ [this]{Periodic();} };
   std::function<double()> _getYaw;

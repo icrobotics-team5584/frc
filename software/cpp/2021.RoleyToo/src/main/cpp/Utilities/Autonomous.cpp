@@ -57,7 +57,13 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
     double a = sqrt(pow((startX - posX), 2) + pow((startY - posY), 2));
     double c = sqrt(pow((posX - endX), 2) + pow((posY - endY), 2));
     double s = (a+b+c)/2;
-    error = sqrt(s*(s-a)*(s-b)*(s-c))*2/b*((endHeading - atan((startY-endY)/(startX-endX))*(180/pi))/abs(endHeading - atan((startY-endY)/(startX-endX))*(180/pi)));
+    if(endHeading > (endHeading - atan((posY-endY)/(posX-endX))*(180/pi))){
+      pidReverse = -1;
+    }else{
+      pidReverse = 1;
+    }
+    
+    error = sqrt(s*(s-a)*(s-b)*(s-c))*2/b*pidReverse;
   }else{
     //checks if slope is undefined
     if(((int)round(endHeading*10))%1800 == 0){
@@ -83,10 +89,10 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
   steering = kP*error + kI*intergral + kD*(error - previousError);
   //Calculates previous error for Derivative
   previousError = error;
-  //autoOutput.steering = steering;
-  //autoOutput.speed = speed;
-  autoOutput.steering = 0;
-  autoOutput.speed = 0;
+  autoOutput.steering = steering;
+  autoOutput.speed = speed;
+  //autoOutput.steering = 0;
+  //autoOutput.speed = 0;
   frc::SmartDashboard::PutNumber("error", error);
   frc::SmartDashboard::PutNumber("cenX", cenX);
   frc::SmartDashboard::PutNumber("cenY", cenY);
