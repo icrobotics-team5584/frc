@@ -5,10 +5,17 @@
 #pragma once
 
 #include <frc/Joystick.h>
+#include "Utilities/JoystickScaler.h"
 #include <frc2/command/Command.h>
+#include <frc2/command/button/Button.h>
+#include <frc2/command/button/JoystickButton.h>
 
 #include "subsystems/SubColorWheel.h"
+#include "subsystems/SubClimber.h"
 #include "subsystems/subDriveBase.h"
+#include "subsystems/SubIntake.h"
+#include "Constants.h"
+
 #include "subsystems/SubDriveBase.h"
 #include "subsystems/SubTurret.h"
 #include "subsystems/SubStorage.h"
@@ -21,6 +28,14 @@
 #include "commands/CmdSpinColorWheel.h"
 #include "commands/CmdMoveCenterColor.h"
 #include "commands/CmdSpinToColor.h"
+#include "commands/CmdSpinFlywheel.h"
+#include "commands/CmdDeployClimber.h"
+#include "commands/CmdIntake.h"
+#include "commands/CmdIndexStorage.h"
+
+#include "commands/CmdHomeTurret.h"
+
+
 /**
  * This class is where the bulk of the robot should be declared.  Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -38,15 +53,21 @@ class RobotContainer {
   CmdAutoCircle _cmdAutoCircle{&_subDriveBase};
  private:
   // The robot's subsystems and commands are defined here...
-  frc::Joystick _joystick0{0};
+  //frc::Joystick _joystick0{0};
+  JoystickScaler _joystick0{0, 3.0, 3.0};
 
   SubTurret _subTurret;
   SubStorage _subStorage;
+  SubClimber _subClimber;
+  SubColorWheel _subColorWheel;
+  SubIntake _subIntake; 
 
   CmdTrackTarget _cmdTrackTarget{&_subTurret};
-  CmdDriveStorage _cmdDriveStorage{&_subStorage, 1, 0.2};
-
-  SubColorWheel _subColorWheel;
+  CmdDriveStorage _cmdDriveStorage{&_subStorage, SubStorage::Direction::Forward, 0.2};
+  CmdSpinFlywheel _cmdSpinFlywheel{&_subTurret};
+  CmdDeployClimber _cmdDeployClimber{&_subClimber};
+  CmdHomeTurret _cmdHomeTurret{&_subTurret};
+  CmdIntake _cmdIntake{&_subStorage, &_subIntake};
 
   CmdSpinColorWheel _cmdSpinColorWheel{&_subColorWheel};
   CmdMoveCenterColor _cmdMoveCenterColor{&_subColorWheel};

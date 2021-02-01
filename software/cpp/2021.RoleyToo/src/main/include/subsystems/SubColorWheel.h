@@ -11,7 +11,7 @@
 #include <string>
 #include <stdlib.h>
 
-#include "sendableSparkMax.h"
+#include "Utilities/sendableSparkMax.h"
 #include "Constants.h"
 
 struct Color{

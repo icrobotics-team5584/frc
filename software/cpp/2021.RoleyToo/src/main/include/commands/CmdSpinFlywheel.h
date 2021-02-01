@@ -17,9 +17,9 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class CmdTrackTarget : public frc2::CommandHelper<frc2::CommandBase, CmdTrackTarget> {
+class CmdSpinFlywheel : public frc2::CommandHelper<frc2::CommandBase, CmdSpinFlywheel> {
  public:
-  CmdTrackTarget(SubTurret* subTurret);
+  CmdSpinFlywheel(SubTurret* subTurret);
 
   void Initialize() override;
 
@@ -30,12 +30,10 @@ class CmdTrackTarget : public frc2::CommandHelper<frc2::CommandBase, CmdTrackTar
   bool IsFinished() override;
  private:
   SubTurret* _subTurret;
-  frc2::PIDController _turretPID{0.2, 0.0, 0.0}; //default values
-  frc2::PIDController _hoodPID{0.0, 0.0, 0.0};
-
-  int _failureCount = 0;
-  double _TurretPIDOutput = 0;
-  double _hoodPIDOutput = 0;
-
-  double _hoodSetpoint = 0;
+  frc2::PIDController _flywheelPID{0.00005, 0.0, 0.0000053}; //default values
+  double _PIDOutput = 0;
+  double _maxPower = 1;
+  double _setpoint = 5000;
+  double _currentPower = 0;
+  double _error = 0;
 };

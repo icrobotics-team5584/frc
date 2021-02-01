@@ -6,8 +6,8 @@
 #include <frc/Notifier.h>
 
 struct DriveInput {
-    double steering;
-    double speed;
+  double steering;
+  double speed;
 };
 
 class Autonomous {
@@ -17,9 +17,10 @@ class Autonomous {
   void updatePosition();
   void setPosition(double x, double y);
   void setAngle(double theta);
-  DriveInput autoDrive(double x, double y, double radius);
+  DriveInput autoDrive(double startX, double startY, double endX, double endY, double endHeading);
  private:
   const units::second_t fasterPeriod = 10_ms;
+  const double pi = 3.1415926535897932384626433832795028841971693993751;
   double posX;
   double posY;
   double angleOffset;
@@ -32,6 +33,10 @@ class Autonomous {
   double steering;
   double intergral;
   double previousError = 0;
+  double cenX;
+  double cenY;
+  double radius;
+  double slope;
   DriveInput autoOutput;
   frc::Notifier notifier{ [this]{Periodic();} };
   std::function<double()> _getYaw;

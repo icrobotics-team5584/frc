@@ -2,29 +2,25 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "commands/CmdDriveStorage.h"
+#include "commands/CmdDeployClimber.h"
 
-CmdDriveStorage::CmdDriveStorage(SubStorage* subStorage, SubStorage::Direction direction, double speed) {
+CmdDeployClimber::CmdDeployClimber(SubClimber* subClimber) {
   // Use addRequirements() here to declare subsystem dependencies.
-  _subStorage = subStorage;
-  _direction = direction;
-  _speed = speed;
+  _subClimber = subClimber;
 }
 
 // Called when the command is initially scheduled.
-void CmdDriveStorage::Initialize() {
-  _subStorage->Move(_direction, _speed);
+void CmdDeployClimber::Initialize() {
+  _subClimber->SetPneumatic(SubClimber::Solenoids::Deploy, frc::DoubleSolenoid::Value::kForward);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdDriveStorage::Execute() {}
+void CmdDeployClimber::Execute() {}
 
 // Called once the command ends or is interrupted.
-void CmdDriveStorage::End(bool interrupted) {
-  _subStorage->Move(SubStorage::Direction::Forward, 0);
-}
+void CmdDeployClimber::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool CmdDriveStorage::IsFinished() {
+bool CmdDeployClimber::IsFinished() {
   return false;
 }

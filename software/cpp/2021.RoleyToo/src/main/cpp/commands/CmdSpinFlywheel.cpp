@@ -7,30 +7,36 @@
 CmdSpinFlywheel::CmdSpinFlywheel(SubTurret* subTurret) {
   // Use addRequirements() here to declare subsystem dependencies.
   _subTurret = subTurret;
+  //#frc::SmartDashboard::PutNumber("Flywheel Max Power", _maxPower);
+  //frc::SmartDashboard::PutNumber("Flywheel Setpoint", _setpoint);
 }
 
 // Called when the command is initially scheduled.
 void CmdSpinFlywheel::Initialize() {
-    frc::SmartDashboard::PutData("PID", &_flywheelPID);
-    frc::SmartDashboard::PutNumber("Flywheel RPM", _flywheelRPM);
+  frc::SmartDashboard::PutData("Wheel PID", &_flywheelPID);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdSpinFlywheel::Execute() {
-  _flywheelRPM = frc::SmartDashboard::GetNumber("Flywheel RPM", 0);
+  _error = _subTurret->GetFlywheelRPM() - _setpoint;
 
-  _PIDOutput = _flywheelPID.Calculate(_subTurret->GetFlywheelVelocity());
+  _setpoint = frc::SmartDashboard::GetNumber("wheel setpoint", 0);
+  frc::SmartDashboard::PutNumber("wheel error", _error);
+  _PIDOutput = _flywheelPID.Calculate(_error);
+  _currentPower += _PIDOutput;
+  std::cout << "output: " << _PIDOutput << "\n";
 
-  _MotorSpeed += _PIDOutput;
-
-  if (_MotorSpeed > 1) {
-    _MotorSpeed = 1;
+  if (_currentPower > _maxPower) {
+    _currentPower = _maxPower;
+    std::cout << "too fast" << "\n";
   }
-  if (_MotorSpeed < 0) {
-    _MotorSpeed = 0;
+  if (_currentPower < 0) {
+    _currentPower = 0;
+    std::cout << "too slow" << "\n";
   }
 
-  _subTurret->SetFlywheel(_MotorSpeed);
+  frc::SmartDashboard::PutNumber("current flywheel power", _currentPower);
+  _subTurret->SetFlywheel(_currentPower);
 }
 
 // Called once the command ends or is interrupted.

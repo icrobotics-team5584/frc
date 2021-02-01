@@ -5,16 +5,15 @@
 #include "subsystems/SubDriveBase.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 SubDriveBase::SubDriveBase() {
-    
-    metersPerRotation = pi * WHEEL_DIAMETER;
+  metersPerRotation = pi * WHEEL_DIAMETER;
 
-    _spmFrontLeft.RestoreFactoryDefaults();
-    _spmFrontRight.RestoreFactoryDefaults();
-    _spmBackLeft.RestoreFactoryDefaults();
-    _spmBackRight.RestoreFactoryDefaults();
+  _spmFrontLeft.RestoreFactoryDefaults();
+  _spmFrontRight.RestoreFactoryDefaults();
+  _spmBackLeft.RestoreFactoryDefaults();
+  _spmBackRight.RestoreFactoryDefaults();
 
-    _spmBackLeft.Follow(_spmFrontLeft);
-    _spmBackRight.Follow(_spmFrontRight);
+  _spmBackLeft.Follow(_spmFrontLeft);
+  _spmBackRight.Follow(_spmFrontRight);
 }
 
 void SubDriveBase::drive(double speed, double rotation, bool squaredInputs){
