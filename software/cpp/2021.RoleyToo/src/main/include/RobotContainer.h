@@ -29,6 +29,7 @@
 #include "commands/CmdDeployClimber.h"
 #include "commands/CmdIntake.h"
 #include "commands/CmdIndexStorage.h"
+#include "commands/CmdClimbToPos.h"
 
 #include "commands/CmdHomeTurret.h"
 
@@ -65,6 +66,7 @@ class RobotContainer {
   CmdDeployClimber _cmdDeployClimber{&_subClimber};
   CmdHomeTurret _cmdHomeTurret{&_subTurret};
   CmdIntake _cmdIntake{&_subStorage, &_subIntake};
+  CmdClimbToPos _cmdClimbToPos{&_subClimber, 200};
 
   void ConfigureButtonBindings();
 };
