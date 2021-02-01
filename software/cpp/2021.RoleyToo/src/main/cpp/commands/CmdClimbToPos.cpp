@@ -4,24 +4,30 @@
 
 #include "commands/CmdClimbToPos.h"
 #include "subsystems/SubClimber.h"
+#include "frc/smartdashboard/SmartDashboard.h"
 
 CmdClimbToPos::CmdClimbToPos(SubClimber* subClimber, double target) {
   // Use addRequirements() here to declare subsystem dependencies.
   _subClimber = subClimber;
-  _target = target;
+  
 }
 
 // Called when the command is initially scheduled.
-void CmdClimbToPos::Initialize() {}
+void CmdClimbToPos::Initialize() {
+  _climbPID.SetIntegratorRange(-1, 1);
+  frc::SmartDashboard::PutData("ClimbPID", &_climbPID);
+}
 
 // Called repeatedly when this Command is scheduled to run
 void CmdClimbToPos::Execute() {
-  if (_subClimber->GetLimit(SubClimber::Limit::EndStop)) {
-    _subClimber->Drive(0);
-  }
-  else {
-    _subClimber->Drive(_climbPID.Calculate(_target-_subClimber->GetEncoder(SubClimber::Side::left)));
-  }
+  int _encoder = _subClimber->GetEncoder(SubClimber::Side::left);
+
+  std::cout << "encoder " << _encoder << "\n";
+
+  frc::SmartDashboard::PutNumber("climbencoder", _encoder);
+
+  _pidOutput = _climbPID.Calculate(_encoder);
+  _subClimber->Drive(_pidOutput);
 }
 
 // Called once the command ends or is interrupted.

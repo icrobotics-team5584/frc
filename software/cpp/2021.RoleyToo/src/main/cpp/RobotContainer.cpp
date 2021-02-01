@@ -27,6 +27,7 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton btnRetractIntake{&_joystick0, buttons::bBtn};
   frc2::JoystickButton btnIntake{&_joystick0, buttons::xBtn};
   frc2::JoystickButton btnOuttake{&_joystick0, buttons::yBtn};
+  frc2::JoystickButton btnClimbToPos{&_joystick0, buttons::rightBtn};
   AxisButton btnTrackTarget{&_joystick0, buttons::leftTrigger};
   AxisButton btnShoot{&_joystick0, buttons::rightTrigger};
   POVButton btnDeployClimber{&_joystick0, POVButton::Position::up};
@@ -36,6 +37,7 @@ void RobotContainer::ConfigureButtonBindings() {
   btnShoot.WhileHeld(_cmdSpinFlywheel);
   btnDeployClimber.WhenPressed(_cmdDeployClimber);
   btnIntake.WhenPressed(_cmdIntake);
+  btnClimbToPos.WhileHeld(_cmdClimbToPos);
   btnDeployIntake.WhenPressed([this]{_subIntake.Deploy();});
   btnRetractIntake.WhenPressed([this]{_subIntake.Retract();});
   btnOuttake.WhenPressed([this]{_subIntake.Outtake();});  

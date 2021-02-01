@@ -31,7 +31,8 @@ class CmdClimbToPos
 
   bool IsFinished() override;
  private:
-  frc2::PIDController _climbPID{0.2, 0.0, 0.0};
+  frc2::PIDController _climbPID{0.02, 0.0, 0.0};
   SubClimber* _subClimber;
-  double _target;
+
+  int _pidOutput = 0;
 };
