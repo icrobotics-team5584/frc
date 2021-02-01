@@ -7,8 +7,7 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 
-#include "subsystems/SubTurret.h"
-#include <frc/controller/PIDController.h>
+#include "subsystems/SubColorWheel.h"
 
 /**
  * An example command.
@@ -17,9 +16,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class CmdTrackTarget : public frc2::CommandHelper<frc2::CommandBase, CmdTrackTarget> {
+class CmdMoveCenterColor
+    : public frc2::CommandHelper<frc2::CommandBase, CmdMoveCenterColor> {
  public:
-  CmdTrackTarget(SubTurret* subTurret);
+  CmdMoveCenterColor(SubColorWheel* subColorWheel);
 
   void Initialize() override;
 
@@ -29,13 +29,6 @@ class CmdTrackTarget : public frc2::CommandHelper<frc2::CommandBase, CmdTrackTar
 
   bool IsFinished() override;
  private:
-  SubTurret* _subTurret;
-  frc2::PIDController _turretPID{0.2, 0.0, 0.0}; //default values
-  frc2::PIDController _hoodPID{0.0, 0.0, 0.0};
+  SubColorWheel* _subColorWheel;
 
-  int _failureCount = 0;
-  double _TurretPIDOutput = 0;
-  double _hoodPIDOutput = 0;
-
-  double _hoodSetpoint = 0;
 };

@@ -20,20 +20,19 @@ void CmdSpinFlywheel::Initialize() {
 void CmdSpinFlywheel::Execute() {
   _error = _subTurret->GetFlywheelRPM() - _setpoint;
 
-  _maxPower = frc::SmartDashboard::GetNumber("wheel max power", 0);
   _setpoint = frc::SmartDashboard::GetNumber("wheel setpoint", 0);
   frc::SmartDashboard::PutNumber("wheel error", _error);
   _PIDOutput = _flywheelPID.Calculate(_error);
   _currentPower += _PIDOutput;
-  std::cout << "output: " << _PIDOutput << "\n";
+  //std::cout << "output: " << _PIDOutput << "\n";
 
   if (_currentPower > _maxPower) {
     _currentPower = _maxPower;
-    std::cout << "too fast" << "\n";
+    //std::cout << "too fast" << "\n";
   }
   if (_currentPower < 0) {
     _currentPower = 0;
-    std::cout << "too slow" << "\n";
+    //std::cout << "too slow" << "\n";
   }
 
   frc::SmartDashboard::PutNumber("current flywheel power", _currentPower);

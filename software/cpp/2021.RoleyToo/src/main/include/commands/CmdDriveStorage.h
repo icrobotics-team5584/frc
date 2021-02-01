@@ -18,7 +18,7 @@
  */
 class CmdDriveStorage : public frc2::CommandHelper<frc2::CommandBase, CmdDriveStorage> {
  public:
-  CmdDriveStorage(SubStorage* subStorage, bool direction, double speed);
+  CmdDriveStorage(SubStorage* subStorage, SubStorage::Direction direction, double speed);
 
   void Initialize() override;
 
@@ -31,7 +31,7 @@ class CmdDriveStorage : public frc2::CommandHelper<frc2::CommandBase, CmdDriveSt
  private:
   SubStorage* _subStorage;
 
-  bool _direction;
+  SubStorage::Direction _direction;
   double _speed;
 
 };

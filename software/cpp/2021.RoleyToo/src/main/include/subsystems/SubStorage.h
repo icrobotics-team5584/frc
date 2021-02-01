@@ -7,13 +7,31 @@
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
 #include "Constants.h"
+#include <frc/DigitalInput.h>
 
 class SubStorage : public frc2::SubsystemBase {
  public:
   SubStorage();
 
-  void Move(bool direction, double speed);
+  enum Sensors {
+    Intake = 1,
+    Index = 2,
+    Outtake = 3
+  };
+
+  enum Direction {
+    Forward = 0,
+    Backward = 1
+  };
+
+  void Move(Direction direction, double speed);
   double GetEncoder();
+  void ResetEncoder();
+  void SetBallCount(int ballCount);
+  int GetBallCount();
+  bool GetSensor(Sensors sensor);
+  bool NeedsIndexing();
+  void ScheduleIndexing(bool scheduled);
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
@@ -23,4 +41,9 @@ class SubStorage : public frc2::SubsystemBase {
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
   rev::CANSparkMax _spmStorageMotor{can::spmStorage, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  frc::DigitalInput _brkIntake{dio::brkStorageIn};
+  frc::DigitalInput _brkIndex{dio::brkStorageIndex};
+  frc::DigitalInput _brkOuttake{dio::brkStorageOut};
+  int _ballCount;
+  bool _needsIndexing = false;
 };

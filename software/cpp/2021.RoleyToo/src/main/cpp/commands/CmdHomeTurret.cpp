@@ -17,7 +17,7 @@ void CmdHomeTurret::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void CmdHomeTurret::Execute() {
   if (_subTurret->GetLeftLimit()) {
-    _subTurret->ResetEncoder();
+    _subTurret->ResetTurretEncoder();
     while(_subTurret->GetTurretAngle() < 10) {
       _subTurret->SetTurret(-0.3);
     }
