@@ -25,17 +25,24 @@ void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
   frc2::JoystickButton btnIntake{&_joystick0, buttons::leftBtn};
   frc2::JoystickButton btnClimbToPos{&_joystick0, buttons::rightBtn};
+
+  // Turret
   AxisButton btnTrackTarget{&_joystick0, buttons::leftTrigger};
   AxisButton btnShoot{&_joystick0, buttons::rightTrigger};
+  POVButton btnTurretOverride{&_joystick0, POVButton::Position::down};
+  frc2::JoystickButton btnShootOverride{&_joystick0, buttons::xBtn};
+
   POVButton btnDeployClimber{&_joystick0, POVButton::Position::up};
-  frc2::JoystickButton xBtn{&_joystick0, buttons::xBtn};
+  //frc2::JoystickButton xBtn{&_joystick0, buttons::xBtn};
   
+  // Turret
   btnTrackTarget.WhileHeld(_cmdTrackTarget);
   btnShoot.WhileHeld(_cmdSpinFlywheel);
+
   btnDeployClimber.WhenPressed(_cmdDeployClimber);
   btnIntake.WhenPressed(_cmdIntake);
   btnClimbToPos.WhileHeld(_cmdClimbToPos);
-  xBtn.WhenHeld(frc2::SequentialCommandGroup{_cmdSpinColorWheel, _cmdMoveCenterColor, _cmdSpinToColor}); 
+  //xBtn.WhenHeld(frc2::SequentialCommandGroup{_cmdSpinColorWheel, _cmdMoveCenterColor, _cmdSpinToColor}); 
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
