@@ -23,13 +23,9 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
-  frc2::JoystickButton leftBtn{&_joystick0, buttons::leftBtn};
   frc2::JoystickButton aBtn{&_joystick0, buttons::aBtn};
-  frc2::JoystickButton xBtn{&_joystick0, buttons::xBtn};
 
-  leftBtn.WhileHeld(_cmdTrackTarget);
   aBtn.WhileHeld(_cmdDriveStorage);
-  xBtn.WhenHeld(frc2::SequentialCommandGroup{_cmdSpinColorWheel, _cmdMoveCenterColor, _cmdSpinToColor}); 
   // We're on a whenpressed, the second command doesnt stop calling execute to move to position 40
   frc2::JoystickButton bBtn{&_joystick0, buttons::bBtn};
   frc2::JoystickButton btnDeployIntake{&_joystick0, buttons::aBtn};
@@ -37,13 +33,20 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton btnIntake{&_joystick0, buttons::xBtn};
   frc2::JoystickButton btnOuttake{&_joystick0, buttons::yBtn};
   frc2::JoystickButton btnClimbToPos{&_joystick0, buttons::rightBtn};
+
+  // Turret
   AxisButton btnTrackTarget{&_joystick0, buttons::leftTrigger};
   AxisButton btnShoot{&_joystick0, buttons::rightTrigger};
+  POVButton btnTurretOverride{&_joystick0, POVButton::Position::down};
+  frc2::JoystickButton btnShootOverride{&_joystick0, buttons::xBtn};
+
   POVButton btnDeployClimber{&_joystick0, POVButton::Position::up};
   
+  // Turret
   btnTrackTarget.WhileHeld(_cmdTrackTarget);
-  aBtn.WhileHeld(_cmdDriveStorage);
   btnShoot.WhileHeld(_cmdSpinFlywheel);
+
+  aBtn.WhileHeld(_cmdDriveStorage);
   btnDeployClimber.WhenPressed(_cmdDeployClimber);
   btnIntake.WhenPressed(_cmdIntake);
   btnClimbToPos.WhileHeld(_cmdClimbToPos);
