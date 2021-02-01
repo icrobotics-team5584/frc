@@ -6,10 +6,8 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <rev/CANSparkMax.h>
-#include <frc/controller/PIDController.h>
 
-#include "subsystems/SubClimber.h"
+#include "subsystems/SubColorWheel.h"
 
 /**
  * An example command.
@@ -18,10 +16,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class CmdClimbToPos
-    : public frc2::CommandHelper<frc2::CommandBase, CmdClimbToPos> {
+class CmdMoveCenterColor
+    : public frc2::CommandHelper<frc2::CommandBase, CmdMoveCenterColor> {
  public:
-  CmdClimbToPos(SubClimber* subClimber, double target);
+  CmdMoveCenterColor(SubColorWheel* subColorWheel);
 
   void Initialize() override;
 
@@ -31,9 +29,6 @@ class CmdClimbToPos
 
   bool IsFinished() override;
  private:
-  frc2::PIDController _climbPID{0.1, 0.0, 0.0};
-  SubClimber* _subClimber;
+  SubColorWheel* _subColorWheel;
 
-  double _target;
-  int _pidOutput = 0;
 };
