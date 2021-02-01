@@ -7,6 +7,7 @@
 #include <frc/DriverStation.h>
 #include <array>
 #include <iostream>
+#include <map>
 
 SubColorWheel::SubColorWheel(){
     // Reset PID
@@ -18,33 +19,9 @@ SubColorWheel::SubColorWheel(){
 }
 
 void SubColorWheel::Periodic() {
-    // frc::SmartDashboard::PutNumber("Red", detectedColor.red);
-    // frc::SmartDashboard::PutNumber("Green", detectedColor.green);
-    // frc::SmartDashboard::PutNumber("Blue", detectedColor.blue);
-
-    frc::SmartDashboard::PutNumber("Encoder valude", _colorMotorEncoder.GetPosition());
-    frc::SmartDashboard::PutNumber("color wheel pid error", _colorMotorPID.GetPositionError());
-    calculated = _colorMotorPID.Calculate(_colorMotorEncoder.GetPosition());
-
-    // std::string gameData;
-    // gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
-    // if(gameData.length() > 0)
-    // {
-    //   switch (gameData[0])
-    //   {
-    //     case 'B' :
-          
-    //       break;
-    //     case 'G' :
-    //       break;
-    //     case 'R' :
-    //       break;
-    //     case 'Y' :
-    //       break;
-    //     default :
-    //       break;
-    //   }
-    // }
+  frc::SmartDashboard::PutNumber("Encoder valude", _colorMotorEncoder.GetPosition());
+  frc::SmartDashboard::PutNumber("color wheel pid error", _colorMotorPID.GetPositionError());
+  calculated = _colorMotorPID.Calculate(_colorMotorEncoder.GetPosition());  
 }
 
 void SubColorWheel::SpinColorWheel(double rotation){
@@ -82,5 +59,36 @@ Color SubColorWheel::DetectSensorColor(){
 
 void SubColorWheel::spinMotor(double speed){
   _spmColorMotor.Set(speed);
+}
+
+std::string SubColorWheel::GetWantedColor(){
+  std::string gameData;
+  gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
+  if(gameData.length() > 0)
+  {
+    switch (gameData[0])
+    {
+      case 'B' :
+        wantedColor = "Blue";
+        break;
+      case 'G' :
+        wantedColor = "Green";
+        break;
+      case 'R' :
+        wantedColor = "Red";
+        break;
+      case 'Y' :
+        wantedColor = "Yellow";
+        break;
+      default :
+        break;
+    }
+  }
+  std::cout << ControlPanelColorMap[wantedColor] << std::endl;
+  return ControlPanelColorMap[wantedColor];
+}
+
+bool SubColorWheel::CheckSetPoint(){
+  return _colorMotorPID.AtSetpoint();
 }
 

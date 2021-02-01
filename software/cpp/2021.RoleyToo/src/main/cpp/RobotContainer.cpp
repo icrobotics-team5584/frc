@@ -24,7 +24,7 @@ void RobotContainer::ConfigureButtonBindings() {
 
   leftBtn.WhileHeld(_cmdTrackTarget);
   aBtn.WhileHeld(_cmdDriveStorage);
-  xBtn.WhileHeld(frc2::SequentialCommandGroup{_cmdSpinColorWheel, _cmdMoveCenterColor}); 
+  xBtn.WhenHeld(frc2::SequentialCommandGroup{_cmdSpinColorWheel, _cmdMoveCenterColor, _cmdSpinToColor}); 
   // We're on a whenpressed, the second command doesnt stop calling execute to move to position 40
 }
 

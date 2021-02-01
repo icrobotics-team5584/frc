@@ -42,6 +42,20 @@ struct Color{
 
 class SubColorWheel : public frc2::SubsystemBase {
  public:
+  std::map<std::string, std::string> RobotColorMap = {
+      { "Yellow" , "Green"},
+      { "Blue" , "Red" },
+      { "Green" , "Yellow" },
+      { "Red" , "Blue" }
+  };
+
+  std::map<std::string, std::string> ControlPanelColorMap = {
+      { "Green", "Yellow"},
+      { "Red" , "Blue"},
+      { "Yellow" , "Green"},
+      { "Blue" , "Red"}
+  };
+
   SubColorWheel();
   void Periodic() override;
 
@@ -51,6 +65,10 @@ class SubColorWheel : public frc2::SubsystemBase {
   Color DetectSensorColor();
 
   void spinMotor(double speed);
+
+  std::string GetWantedColor();
+
+  bool CheckSetPoint();
  private:
   rev::ColorSensorV3 _colorSensor{frc::I2C::Port::kOnboard};
 
@@ -67,4 +85,6 @@ class SubColorWheel : public frc2::SubsystemBase {
   rev::CANEncoder _colorMotorEncoder = _spmColorMotor.GetEncoder();
   frc2::PIDController _colorMotorPID{kP, kI, kD};
   double calculated = 0;
+
+  std::string wantedColor;
 };
