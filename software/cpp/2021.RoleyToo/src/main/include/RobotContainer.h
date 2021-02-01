@@ -34,6 +34,7 @@
 #include "commands/CmdJoystickDrive.h"
 #include "commands/CmdSpinFlywheel.h"
 #include "commands/CmdTrackTarget.h"
+#include "commands/CmdClimbToPos.h"
 
 #include "Utilities/Autonomous.h"
 
@@ -68,6 +69,7 @@ class RobotContainer {
   CmdSpinFlywheel _cmdSpinFlywheel{&_subTurret};
   CmdDeployClimber _cmdDeployClimber{&_subClimber};
   CmdIntake _cmdIntake{&_subStorage, &_subIntake};
+  CmdClimbToPos _cmdClimbToPos{&_subClimber, 20};
 
   CmdSpinColorWheel _cmdSpinColorWheel{&_subColorWheel};
   CmdMoveCenterColor _cmdMoveCenterColor{&_subColorWheel};

@@ -32,6 +32,7 @@ class SubClimber : public frc2::SubsystemBase {
   int GetEncoder(Side side);
   void Drive(double speed);
   void SetPneumatic(Solenoids solenoid, frc::DoubleSolenoid::Value value);
+  void SetCoast(bool mode);
 
 
   
@@ -50,4 +51,7 @@ class SubClimber : public frc2::SubsystemBase {
   frc::DoubleSolenoid _solClimb{pcm::solClimbDeploy, pcm::solClimbRetract};
 
   frc::DigitalInput _lmtEndStop{dio::lmtClimbStop};
+
+  rev::CANEncoder _leftEncoder{_spmClimbLeft.GetEncoder()};
+  rev::CANEncoder _rightEncoder{_spmClimbRight.GetEncoder()};
 };
