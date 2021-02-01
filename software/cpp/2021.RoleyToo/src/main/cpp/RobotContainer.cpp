@@ -23,15 +23,7 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
-  frc2::JoystickButton aBtn{&_joystick0, buttons::aBtn};
-
-  aBtn.WhileHeld(_cmdDriveStorage);
-  // We're on a whenpressed, the second command doesnt stop calling execute to move to position 40
-  frc2::JoystickButton bBtn{&_joystick0, buttons::bBtn};
-  frc2::JoystickButton btnDeployIntake{&_joystick0, buttons::aBtn};
-  frc2::JoystickButton btnRetractIntake{&_joystick0, buttons::bBtn};
-  frc2::JoystickButton btnIntake{&_joystick0, buttons::xBtn};
-  frc2::JoystickButton btnOuttake{&_joystick0, buttons::yBtn};
+  frc2::JoystickButton btnIntake{&_joystick0, buttons::leftBtn};
   frc2::JoystickButton btnClimbToPos{&_joystick0, buttons::rightBtn};
 
   // Turret
@@ -41,18 +33,16 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton btnShootOverride{&_joystick0, buttons::xBtn};
 
   POVButton btnDeployClimber{&_joystick0, POVButton::Position::up};
+  //frc2::JoystickButton xBtn{&_joystick0, buttons::xBtn};
   
   // Turret
   btnTrackTarget.WhileHeld(_cmdTrackTarget);
   btnShoot.WhileHeld(_cmdSpinFlywheel);
 
-  aBtn.WhileHeld(_cmdDriveStorage);
   btnDeployClimber.WhenPressed(_cmdDeployClimber);
   btnIntake.WhenPressed(_cmdIntake);
   btnClimbToPos.WhileHeld(_cmdClimbToPos);
-  btnDeployIntake.WhenPressed([this]{_subIntake.Deploy();});
-  btnRetractIntake.WhenPressed([this]{_subIntake.Retract();});
-  btnOuttake.WhenPressed([this]{_subIntake.Outtake();});  
+  //xBtn.WhenHeld(frc2::SequentialCommandGroup{_cmdSpinColorWheel, _cmdMoveCenterColor, _cmdSpinToColor}); 
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
