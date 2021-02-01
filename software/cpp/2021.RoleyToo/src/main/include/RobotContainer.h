@@ -10,30 +10,25 @@
 #include <frc2/command/button/Button.h>
 #include <frc2/command/button/JoystickButton.h>
 
-#include "subsystems/SubColorWheel.h"
-#include "subsystems/SubClimber.h"
-#include "subsystems/subDriveBase.h"
-#include "subsystems/SubIntake.h"
 #include "Constants.h"
 
-#include "subsystems/SubDriveBase.h"
-#include "subsystems/SubTurret.h"
+#include "subsystems/SubClimber.h"
+#include "subsystems/SubColorWheel.h"
+#include "subsystems/subDriveBase.h"
+#include "subsystems/SubIntake.h"
 #include "subsystems/SubStorage.h"
-#include "utilities/Autonomous.h"
+#include "subsystems/SubTurret.h"
 
 #include "commands/CmdAutoCircle.h"
-#include "commands/CmdJoystickDrive.h"
-#include "commands/CmdTrackTarget.h"
-#include "commands/CmdDriveStorage.h"
-#include "commands/CmdSpinFlywheel.h"
 #include "commands/CmdDeployClimber.h"
-#include "commands/CmdIntake.h"
+#include "commands/CmdDriveStorage.h"
 #include "commands/CmdIndexStorage.h"
+#include "commands/CmdIntake.h"
+#include "commands/CmdJoystickDrive.h"
+#include "commands/CmdSpinFlywheel.h"
+#include "commands/CmdTrackTarget.h"
 
-
-
-#include "Utilities/AxisButton.h"
-
+#include "Utilities/Autonomous.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -66,9 +61,6 @@ class RobotContainer {
   CmdSpinFlywheel _cmdSpinFlywheel{&_subTurret};
   CmdDeployClimber _cmdDeployClimber{&_subClimber};
   CmdIntake _cmdIntake{&_subStorage, &_subIntake};
-
-  AxisButton btnTrackTarget{&_joystick0, buttons::leftTrigger};
-  AxisButton btnShoot{&_joystick0, buttons::rightTrigger};
 
   void ConfigureButtonBindings();
 };
