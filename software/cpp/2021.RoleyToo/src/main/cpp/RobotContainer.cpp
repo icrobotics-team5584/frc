@@ -2,6 +2,8 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+#include <frc2/command/SequentialCommandGroup.h>
+
 #include "RobotContainer.h"
 #include "Utilities/AxisButton.h"
 #include "Utilities/POVButton.h"
@@ -23,6 +25,13 @@ void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
   frc2::JoystickButton leftBtn{&_joystick0, buttons::leftBtn};
   frc2::JoystickButton aBtn{&_joystick0, buttons::aBtn};
+  frc2::JoystickButton xBtn{&_joystick0, buttons::xBtn};
+
+  leftBtn.WhileHeld(_cmdTrackTarget);
+  aBtn.WhileHeld(_cmdDriveStorage);
+  xBtn.WhenHeld(frc2::SequentialCommandGroup{_cmdSpinColorWheel, _cmdMoveCenterColor, _cmdSpinToColor}); 
+  // We're on a whenpressed, the second command doesnt stop calling execute to move to position 40
+  frc2::JoystickButton bBtn{&_joystick0, buttons::bBtn};
   frc2::JoystickButton btnDeployIntake{&_joystick0, buttons::aBtn};
   frc2::JoystickButton btnRetractIntake{&_joystick0, buttons::bBtn};
   frc2::JoystickButton btnIntake{&_joystick0, buttons::xBtn};
