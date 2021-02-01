@@ -84,7 +84,6 @@ std::string SubColorWheel::GetWantedColor(){
         break;
     }
   }
-  std::cout << ControlPanelColorMap[wantedColor] << std::endl;
   return ControlPanelColorMap[wantedColor];
 }
 
