@@ -19,8 +19,8 @@ namespace can {
   constexpr int spmDriveBaseBackLeft = 2;
   constexpr int spmDriveBaseFrontRight = 3;
   constexpr int spmDriveBaseBackRight = 4;
-  constexpr int spmFlywheelRight = 5;
-  constexpr int spmFlywheelLeft = 6;
+  constexpr int spmFlywheelLeft = 5;
+  constexpr int spmFlywheelRight = 6;
   constexpr int srxDolly = 7;
   constexpr int spmTurret = 8;
   constexpr int spmStorage = 9;
