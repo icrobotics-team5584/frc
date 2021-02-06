@@ -14,6 +14,7 @@ SubColorWheel::SubColorWheel(){
     _colorMotorPID.SetP(kP);
     _colorMotorPID.SetI(kI);
     _colorMotorPID.SetD(kD);
+    _spmColorMotor.SetSmartCurrentLimit(20);
 
     frc::SmartDashboard::PutData("Color wheel pid", &_colorMotorPID);
 }
