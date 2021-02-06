@@ -5,8 +5,11 @@
 #include "subsystems/SubClimber.h"
 
 SubClimber::SubClimber() {
-    _spmClimbLeft.SetInverted(false);
-    _spmClimbRight.Follow(_spmClimbLeft, true);
+    _spmClimbLeft.RestoreFactoryDefaults();
+    _spmClimbRight.RestoreFactoryDefaults();
+
+    _leftEncoder.SetPosition(0);
+    _rightEncoder.SetPosition(0);
 
     _spmClimbLeft.SetSmartCurrentLimit(50);
     _spmClimbRight.SetSmartCurrentLimit(50);
@@ -16,8 +19,8 @@ SubClimber::SubClimber() {
 void SubClimber::Periodic() {}
 
 int SubClimber::GetEncoder(Side side) {
-    if (side == Side::left) { return _spmClimbLeft.GetEncoder().GetPosition(); }
-    else { return _spmClimbRight.GetEncoder().GetPosition(); }
+    if (side == Side::left) { return _leftEncoder.GetPosition(); }
+    else { return _rightEncoder.GetPosition(); }
 }
 
 bool SubClimber::GetLimit(Limit limit) {
@@ -31,6 +34,7 @@ bool SubClimber::GetLimit(Limit limit) {
 
 void SubClimber::Drive(double speed) {
     _spmClimbLeft.Set(speed);
+    _spmClimbRight.Set(speed);
 }
 
 //TODO: Encoder PID Drive
@@ -40,5 +44,16 @@ void SubClimber::SetPneumatic(Solenoids solenoid, frc::DoubleSolenoid::Value val
         case Deploy:
             _solClimb.Set(value);
             break;
+    }
+}
+
+void SubClimber::SetCoast(bool mode) {
+    if (mode) {
+        _spmClimbLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+        _spmClimbRight.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+    }
+    else {
+        _spmClimbLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+        _spmClimbRight.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
     }
 }
