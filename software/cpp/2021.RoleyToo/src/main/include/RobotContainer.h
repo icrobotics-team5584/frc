@@ -20,6 +20,13 @@
 #include "subsystems/SubTurret.h"
 
 #include "commands/CmdAutoCircle.h"
+#include "commands/CmdJoystickDrive.h"
+#include "commands/CmdTrackTarget.h"
+#include "commands/CmdDriveStorage.h"
+#include "commands/CmdSpinColorWheel.h"
+#include "commands/CmdMoveCenterColor.h"
+#include "commands/CmdSpinToColor.h"
+#include "commands/CmdSpinFlywheel.h"
 #include "commands/CmdDeployClimber.h"
 #include "commands/CmdDriveStorage.h"
 #include "commands/CmdIndexStorage.h"
@@ -63,6 +70,10 @@ class RobotContainer {
   CmdDeployClimber _cmdDeployClimber{&_subClimber};
   CmdIntake _cmdIntake{&_subStorage, &_subIntake};
   CmdClimbToPos _cmdClimbToPos{&_subClimber, 20};
+
+  CmdSpinColorWheel _cmdSpinColorWheel{&_subColorWheel};
+  CmdMoveCenterColor _cmdMoveCenterColor{&_subColorWheel};
+  CmdSpinToColor _cmdSpinToColor{&_subColorWheel};
 
   void ConfigureButtonBindings();
 };

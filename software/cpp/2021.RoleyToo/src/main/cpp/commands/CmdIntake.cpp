@@ -15,6 +15,7 @@ void CmdIntake::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void CmdIntake::Execute() {
+  _subIntake->Deploy();
   _subIntake->Intake();
   _subStorage->Move(SubStorage::Direction::Forward, 0.2);
 }
@@ -24,6 +25,7 @@ void CmdIntake::End(bool interrupted) {
   _subIntake->Stop();
   _subStorage->Move(SubStorage::Direction::Forward, 0.0);
   _subStorage->ScheduleIndexing(true);
+  _subIntake->Retract();
 }
 
 // Returns true when the command should end.
