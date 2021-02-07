@@ -33,7 +33,7 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton btnShootOverride{&_joystick0, buttons::xBtn};
 
   POVButton btnDeployClimber{&_joystick0, POVButton::Position::up};
-  //frc2::JoystickButton xBtn{&_joystick0, buttons::xBtn};
+  POVButton btnStartColorWheel{&_joystick0, POVButton::Position::right};
   
   // Turret
   btnTrackTarget.WhileHeld(_cmdTrackTarget);
@@ -42,7 +42,7 @@ void RobotContainer::ConfigureButtonBindings() {
   btnDeployClimber.WhenPressed(_cmdDeployClimber);
   btnIntake.WhenPressed(_cmdIntake);
   btnClimbToPos.WhileHeld(_cmdClimbToPos);
-  //xBtn.WhenHeld(frc2::SequentialCommandGroup{_cmdSpinColorWheel, _cmdMoveCenterColor, _cmdSpinToColor}); 
+  btnStartColorWheel.WhenHeld(frc2::SequentialCommandGroup{_cmdSpinColorWheel, _cmdMoveCenterColor, _cmdSpinToColor}); 
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
