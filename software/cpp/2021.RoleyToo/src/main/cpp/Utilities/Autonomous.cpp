@@ -25,22 +25,27 @@ void Autonomous::updatePosition(){//calculates position, gets called in a period
   double currentDistance = _getDistance();//total distance
   double distanceDelta = currentDistance - prevDistance;//distance since last 10 milliseconds
   // Determine current position
-  posX += distanceDelta * sin(currentAngle);
-  posY += distanceDelta * cos(currentAngle);
+  dollyPosX += distanceDelta * sin(currentAngle);
+  dollyPosY += distanceDelta * cos(currentAngle);
+  frontPosX = dollyPosX + (metersToFront * sin(currentAngle));
+  frontPosY = dollyPosY + (metersToFront * cos(currentAngle));
+  backPosX = dollyPosX - (metersToBack * sin(currentAngle));
+  backPosY = dollyPosY - (metersToBack * cos(currentAngle));
   // Save values for next iteration
   prevDistance = currentDistance;
 }
 
 void Autonomous::setPosition(double x, double y){
-  posX = x;
-  posY = y;
+  dollyPosX = x;
+  dollyPosY = y;
 }
 
 void Autonomous::setAngle(double theta){
   angleOffset = theta - _getYaw();
 }
 
-DriveInput Autonomous::autoDrive(double startX, double startY, double endX, double endY, double endHeading){
+DriveInput Autonomous::autoDrive(double startX, double startY, double endX, double endY, double endHeading, double cenX, double cenY){
+  
   //Checks if its a straight line
   if (((int)round(endHeading*10))%1800 == 0){
     if(startX == endX){
@@ -51,6 +56,7 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
   }else{
     isLinear = false;
   }
+
   if(isLinear){
     //follow linear line
     double b =  sqrt(pow((startX - endX), 2) + pow((startY - endY), 2));
@@ -58,15 +64,15 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
     double c = sqrt(pow((posX - endX), 2) + pow((posY - endY), 2));
     double s = (a+b+c)/2;
     if(endHeading > (endHeading - atan((posY-endY)/(posX-endX))*(180/pi))){
-      pidReverse = -1;
-    }else{
       pidReverse = 1;
+    }else{
+      pidReverse = -1;
     }
     
     error = sqrt(s*(s-a)*(s-b)*(s-c))*2/b*pidReverse;
   }else{
     //checks if slope is undefined
-    if(((int)round(endHeading*10))%1800 == 0){
+    /*if(((int)round(endHeading*10))%1800 == 0){
       cenX = ((endX*endX) - (startX*startX) - (startY*startY))/((endX - startX));
       cenY = endY;
     }else{
@@ -75,12 +81,17 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
       //calculates center x and y
       cenX = ( ((endX*endX)*-slope) + (2*endX*(endY-startY)) + (slope*((endY*endY) - (2*endY*startY) + (startX*startX) + (startY*startY))) )/( 2*((slope*(startX-endX)) + endY - startY) );
       cenY = ( (endX*endX) + (2*endX*endY*slope) - (2*endX*startX) - (endY*endY) - (2*endY*startX*slope) + (startX*startX) + (startY) )/( 2*((slope*(startX-endX)) + endY - startY) );
-    }
+    }*/
     
     //calculates radius
     radius = sqrt(pow((startX - cenX), 2) + pow((startY - cenY), 2));
-
+    //Checks the direction  
+    //frc::SmartDashboard::PutNumber("Heading of line to end", (atan((cenY-endY)/(cenX-endX))*(-180/pi)));
+    //frc::SmartDashboard::PutNumber("Heading of line to start", (atan((cenY-startY)/(cenX-startX))*(-180/pi)));
+    //frc::SmartDashboard::PutNumber("difference", (atan((endY-cenY)/(endX-cenX))*(180/pi))-(atan((startY-cenY)/(startX-cenX))*(180/pi)));
     //calculates error based off x,y centre point
+    frc::SmartDashboard::PutNumber("slope of end", (cenY-endY)/(cenX-endX));
+    frc::SmartDashboard::PutNumber("slope of start", (cenY-startY)/(cenX-startX));
     error = sqrt(pow((posX - cenX), 2) + pow((posY - cenY), 2)) - radius;
   }
   //calculates total error or "I"
@@ -89,10 +100,10 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
   steering = kP*error + kI*intergral + kD*(error - previousError);
   //Calculates previous error for Derivative
   previousError = error;
-  autoOutput.steering = steering;
-  autoOutput.speed = speed;
-  //autoOutput.steering = 0;
-  //autoOutput.speed = 0;
+  //autoOutput.steering = steering;
+  //autoOutput.speed = speed;
+  autoOutput.steering = 0;
+  autoOutput.speed = 0;
   frc::SmartDashboard::PutNumber("error", error);
   frc::SmartDashboard::PutNumber("cenX", cenX);
   frc::SmartDashboard::PutNumber("cenY", cenY);

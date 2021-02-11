@@ -17,12 +17,14 @@ class Autonomous {
   void updatePosition();
   void setPosition(double x, double y);
   void setAngle(double theta);
-  DriveInput autoDrive(double startX, double startY, double endX, double endY, double endHeading);
+  DriveInput autoDrive(double startX, double startY, double endX, double endY, double endHeading, double cenX, double cenY);
  private:
   const units::second_t fasterPeriod = 10_ms;
   const double pi = 3.1415926535897932384626433832795028841971693993751;
   double posX;
   double posY;
+  double dollyPosX;
+  double dollyPosY;
   double angleOffset;
   double prevDistance;
   double kP = -2;
@@ -38,6 +40,13 @@ class Autonomous {
   double radius;
   double slope;
   bool isLinear;
+  double frontPosX;
+  double frontPosY;
+  double backPosX;
+  double backPosY;
+  double leftRight; //
+  const double metersToFront = 0.4;
+  const double metersToBack = 0.45;
   double pidReverse = 0;
   DriveInput autoOutput;
   frc::Notifier notifier{ [this]{Periodic();} };

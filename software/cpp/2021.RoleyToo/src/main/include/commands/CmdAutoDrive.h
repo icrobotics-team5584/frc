@@ -15,9 +15,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class CmdAutoCircle : public frc2::CommandHelper<frc2::CommandBase, CmdAutoCircle> {
+class CmdAutoDrive
+    : public frc2::CommandHelper<frc2::CommandBase, CmdAutoDrive> {
  public:
-  CmdAutoCircle(SubDriveBase* subDriveBase);
+  CmdAutoDrive(SubDriveBase* subDriveBase, Autonomous* autonomous, double startX, double startY, double endX, double endY, double endHeading, double cenX, double cenY);
 
   void Initialize() override;
 
@@ -26,8 +27,16 @@ class CmdAutoCircle : public frc2::CommandHelper<frc2::CommandBase, CmdAutoCircl
   void End(bool interrupted) override;
 
   bool IsFinished() override;
- private:
+
   DriveInput driveInput;
   SubDriveBase* _subDriveBase;
-  Autonomous _autonomous;
+  Autonomous* _autonomous;
+
+  double _startX;
+  double _startY;
+  double _endX;
+  double _endY;
+  double _endHeading;
+  double _cenX;
+  double _cenY;
 };
