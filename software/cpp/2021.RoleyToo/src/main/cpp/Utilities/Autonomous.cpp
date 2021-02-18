@@ -23,6 +23,8 @@ void Autonomous::updatePosition(){//calculates position, gets called in a period
   // Get relevant values
   double currentAngle = (_getYaw() + angleOffset) * 0.01745329251;  // Convert to radians with * 0.01745329251
   double currentDistance = _getDistance();//total distance
+  
+  frc::SmartDashboard::PutNumber("distance", currentDistance);
   double distanceDelta = currentDistance - prevDistance;//distance since last 10 milliseconds
   // Determine current position
   dollyPosX += distanceDelta * sin(currentAngle);
@@ -44,8 +46,11 @@ void Autonomous::setAngle(double theta){
   angleOffset = theta - _getYaw();
 }
 
-DriveInput Autonomous::autoDrive(double startX, double startY, double endX, double endY, double endHeading, double cenX, double cenY){
-  
+  DriveInput Autonomous::autoDrive(double startX, double startY, double endX, double endY, double endHeading, double cenX, double cenY){
+  if(true){
+    posX = frontPosX;
+    posY = frontPosY;
+  }
   //Checks if its a straight line
   if (((int)round(endHeading*10))%1800 == 0){
     if(startX == endX){
@@ -100,14 +105,19 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
   steering = kP*error + kI*intergral + kD*(error - previousError);
   //Calculates previous error for Derivative
   previousError = error;
-  //autoOutput.steering = steering;
-  //autoOutput.speed = speed;
-  autoOutput.steering = 0;
-  autoOutput.speed = 0;
+  autoOutput.steering = steering;
+  autoOutput.speed = speed;
+  //autoOutput.steering = 0;
+  //autoOutput.speed = 0;
+  std::cout<<"Running"<<std::endl;
   frc::SmartDashboard::PutNumber("error", error);
   frc::SmartDashboard::PutNumber("cenX", cenX);
   frc::SmartDashboard::PutNumber("cenY", cenY);
   frc::SmartDashboard::PutNumber("radius", radius);
   frc::SmartDashboard::PutBoolean("linear", isLinear);
+  frc::SmartDashboard::PutNumber("midx", dollyPosX);
+  frc::SmartDashboard::PutNumber("midy", dollyPosY);
+  frc::SmartDashboard::PutNumber("front y", frontPosY);
+  frc::SmartDashboard::PutNumber("frontx", frontPosX);
   return autoOutput;
 }

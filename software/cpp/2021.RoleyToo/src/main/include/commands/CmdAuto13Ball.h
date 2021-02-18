@@ -8,6 +8,7 @@
 #include <frc2/command/SequentialCommandGroup.h>
 #include "subsystems/SubDriveBase.h"
 #include "commands/CmdAutoDrive.h"
+#include "commands/CmdAutoSetPose.h"
 #include "utilities/Autonomous.h"
 
 class CmdAuto13Ball
