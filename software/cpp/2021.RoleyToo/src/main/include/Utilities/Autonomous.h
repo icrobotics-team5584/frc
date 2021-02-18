@@ -27,10 +27,10 @@ class Autonomous {
   double dollyPosY;
   double angleOffset;
   double prevDistance;
-  double kP = -2;
+  double kP = 3.25;
   double kI = 0.00;
-  double kD = -150;
-  double speed = 0.1;
+  double kD = 20;
+  const double speed = -0.1;
   double error;
   double steering;
   double intergral;

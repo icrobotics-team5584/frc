@@ -26,5 +26,5 @@ void CmdAutoSetPose::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool CmdAutoSetPose::IsFinished() {
-  return false;
+  return true;
 }
