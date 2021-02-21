@@ -108,7 +108,7 @@ void Autonomous::setAngle(double theta){
   //autoOutput.steering = 0;
   //autoOutput.speed = 0;
   
-  std::cout<<"Running"<<std::endl;
+  //std::cout<<"Running"<<std::endl;
   frc::SmartDashboard::PutNumber("error", error);
   frc::SmartDashboard::PutNumber("cenX", cenX);
   frc::SmartDashboard::PutNumber("cenY", cenY);
@@ -118,5 +118,6 @@ void Autonomous::setAngle(double theta){
   frc::SmartDashboard::PutNumber("midy", dollyPosY);
   frc::SmartDashboard::PutNumber("front y", frontPosY);
   frc::SmartDashboard::PutNumber("frontx", frontPosX);
+  frc::SmartDashboard::PutNumber("auto angle", _getYaw() + angleOffset);
   return autoOutput;
 }
