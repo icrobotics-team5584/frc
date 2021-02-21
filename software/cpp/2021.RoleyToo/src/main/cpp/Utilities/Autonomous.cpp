@@ -103,10 +103,10 @@ void Autonomous::setAngle(double theta){
   steering = PIDk.p*error + PIDk.i*intergral + PIDk.d*(error - previousError);
   //Calculates previous error for Derivative
   previousError = error;
-  //autoOutput.steering = steering;
-  //autoOutput.speed = speed;
-  autoOutput.steering = 0;
-  autoOutput.speed = 0;
+  autoOutput.steering = steering;
+  autoOutput.speed = speed;
+  //autoOutput.steering = 0;
+  //autoOutput.speed = 0;
   
   //std::cout<<"Running"<<std::endl;
   frc::SmartDashboard::PutNumber("error", error);
