@@ -46,10 +46,13 @@ void Autonomous::setAngle(double theta){
   angleOffset = theta - _getYaw();
 }
 
-  DriveInput Autonomous::autoDrive(double startX, double startY, double endX, double endY, double endHeading, double cenX, double cenY){
-  if(true){
+  DriveInput Autonomous::autoDrive(double startX, double startY, double endX, double endY, double endHeading, double cenX, double cenY, PIDk PIDk, double speed){
+  if(speed >= 0){
     posX = frontPosX;
     posY = frontPosY;
+  }else{
+    posX = backPosX;
+    posY = backPosY;
   }
   //Checks if its a straight line
   if (((int)round(endHeading*10))%1800 == 0){
@@ -68,13 +71,8 @@ void Autonomous::setAngle(double theta){
     double a = sqrt(pow((startX - posX), 2) + pow((startY - posY), 2));
     double c = sqrt(pow((posX - endX), 2) + pow((posY - endY), 2));
     double s = (a+b+c)/2;
-    if(endHeading > (endHeading - atan((posY-endY)/(posX-endX))*(180/pi))){
-      pidReverse = 1;
-    }else{
-      pidReverse = -1;
-    }
     
-    error = sqrt(s*(s-a)*(s-b)*(s-c))*2/b*pidReverse;
+    error = sqrt(s*(s-a)*(s-b)*(s-c))*2/b;
   }else{
     //checks if slope is undefined
     /*if(((int)round(endHeading*10))%1800 == 0){
@@ -102,13 +100,14 @@ void Autonomous::setAngle(double theta){
   //calculates total error or "I"
   intergral = intergral + error;
   //output = kP*Error + kI*Intergral + kD*Derivative
-  steering = kP*error + kI*intergral + kD*(error - previousError);
+  steering = PIDk.p*error + PIDk.i*intergral + PIDk.d*(error - previousError);
   //Calculates previous error for Derivative
   previousError = error;
   autoOutput.steering = steering;
   autoOutput.speed = speed;
   //autoOutput.steering = 0;
   //autoOutput.speed = 0;
+  
   std::cout<<"Running"<<std::endl;
   frc::SmartDashboard::PutNumber("error", error);
   frc::SmartDashboard::PutNumber("cenX", cenX);

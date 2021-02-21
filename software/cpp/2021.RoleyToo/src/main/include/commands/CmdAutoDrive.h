@@ -8,6 +8,7 @@
 #include <frc2/command/CommandHelper.h>
 #include "subsystems/SubDriveBase.h"
 #include "utilities/Autonomous.h"
+#include "Utilities/PIDk.h"
 /**
  * An example command.
  *
@@ -18,7 +19,8 @@
 class CmdAutoDrive
     : public frc2::CommandHelper<frc2::CommandBase, CmdAutoDrive> {
  public:
-  CmdAutoDrive(SubDriveBase* subDriveBase, Autonomous* autonomous, double startX, double startY, double endX, double endY, double endHeading, double cenX, double cenY);
+  CmdAutoDrive(SubDriveBase* subDriveBase, Autonomous* autonomous, double startX, double startY, double endX, 
+               double endY, double endHeading, double cenX, double cenY, PIDk PIDconstants, double speed);
 
   void Initialize() override;
 
@@ -39,4 +41,6 @@ class CmdAutoDrive
   double _endHeading;
   double _cenX;
   double _cenY;
+  PIDk _PIDconstants;
+  double _speed;
 };

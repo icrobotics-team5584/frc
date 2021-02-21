@@ -4,7 +4,7 @@
 
 #pragma once
 #include <frc/Notifier.h>
-
+#include "Utilities/PIDk.h"
 struct DriveInput {
   double steering;
   double speed;
@@ -17,7 +17,7 @@ class Autonomous {
   void updatePosition();
   void setPosition(double x, double y);
   void setAngle(double theta);
-  DriveInput autoDrive(double startX, double startY, double endX, double endY, double endHeading, double cenX, double cenY);
+  DriveInput autoDrive(double startX, double startY, double endX, double endY, double endHeading, double cenX, double cenY, PIDk PIDk, double speed);
  private:
   const units::second_t fasterPeriod = 10_ms;
   const double pi = 3.1415926535897932384626433832795028841971693993751;
@@ -27,10 +27,6 @@ class Autonomous {
   double dollyPosY;
   double angleOffset;
   double prevDistance;
-  double kP = 3.25;
-  double kI = 0.00;
-  double kD = 20;
-  const double speed = -0.1;
   double error;
   double steering;
   double intergral;
@@ -44,10 +40,8 @@ class Autonomous {
   double frontPosY;
   double backPosX;
   double backPosY;
-  double leftRight; //
   const double metersToFront = 0.4;
   const double metersToBack = 0.45;
-  double pidReverse = 0;
   DriveInput autoOutput;
   frc::Notifier notifier{ [this]{Periodic();} };
   std::function<double()> _getYaw;
