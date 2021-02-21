@@ -4,7 +4,9 @@
 
 #include "subsystems/SubStorage.h"
 
-SubStorage::SubStorage() = default;
+SubStorage::SubStorage() {
+  _spmStorageMotor.SetSmartCurrentLimit(20);
+}
 
 // This method will be called once per scheduler run
 void SubStorage::Periodic() {}

@@ -19,27 +19,26 @@ namespace can {
   constexpr int spmDriveBaseBackLeft = 2;
   constexpr int spmDriveBaseFrontRight = 3;
   constexpr int spmDriveBaseBackRight = 4;
-  constexpr int spmFlywheelRight = 5;
-  constexpr int spmFlywheelLeft = 6;
+  constexpr int spmFlywheelLeft = 5;
+  constexpr int spmFlywheelRight = 6;
   constexpr int srxDolly = 7;
   constexpr int spmTurret = 8;
   constexpr int spmStorage = 9;
   constexpr int spmHood = 10;
   constexpr int spmClimbLeft = 11;
   constexpr int spmClimbRight = 12;
-  constexpr int spmIntake = 13; 
+  constexpr int spmColorWheel = 13;
+  constexpr int spmIntake = 14; 
 }
+
 namespace dio {
+  constexpr int hlfHoodDown = 1;
   constexpr int hlfTurretLeft = 2;
   constexpr int hlfTurretRight = 3;
-  constexpr int hlfHoodDown = 6;
+  constexpr int lmtClimbStop = 5;
   constexpr int brkStorageIn = 7;
   constexpr int brkStorageIndex = 8;
   constexpr int brkStorageOut = 9;
-  constexpr int encTurret1 = 0;
-  constexpr int encTurret2 = 1;
-  constexpr int lmtClimbStop = 5;
-  constexpr int lmtTurretLeft = 9;
 }
 
 namespace buttons {
@@ -57,16 +56,7 @@ namespace buttons {
   constexpr int leftTrigger = 2;
   constexpr int rightTrigger = 3;
 }
-namespace POVPositions {
-  constexpr int upBtn = 0;
-  constexpr int uprightBtn = 45;
-  constexpr int rightBtn = 90;
-  constexpr int downrightBtn = 135;
-  constexpr int downBtn = 180;
-  constexpr int downleftBtn = 225;
-  constexpr int leftBtn = 270;
-  constexpr int upleftBtn = 315;
-}
+
 namespace pcm {
   constexpr int pcm_solIntakeRetract = 0;
   constexpr int pcm_solIntakeDeploy = 1;
