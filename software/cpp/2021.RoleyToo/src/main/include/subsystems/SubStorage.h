@@ -25,6 +25,7 @@ class SubStorage : public frc2::SubsystemBase {
   };
 
   void Move(Direction direction, double speed);
+  void MoveFeeder(Direction direction, double speed);
   double GetEncoder();
   void ResetEncoder();
   void SetBallCount(int ballCount);
@@ -41,6 +42,7 @@ class SubStorage : public frc2::SubsystemBase {
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
   rev::CANSparkMax _spmStorageMotor{can::spmStorage, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  rev::CANSparkMax _spmFeederMotor{can::spmFeeder, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   frc::DigitalInput _brkIntake{dio::brkStorageIn};
   frc::DigitalInput _brkIndex{dio::brkStorageIndex};
   frc::DigitalInput _brkOuttake{dio::brkStorageOut};

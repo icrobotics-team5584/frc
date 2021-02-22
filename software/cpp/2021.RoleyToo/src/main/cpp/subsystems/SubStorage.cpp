@@ -6,6 +6,7 @@
 
 SubStorage::SubStorage() {
   _spmStorageMotor.SetSmartCurrentLimit(20);
+  _spmFeederMotor.SetSmartCurrentLimit(20);
 }
 
 // This method will be called once per scheduler run
@@ -18,6 +19,17 @@ void SubStorage::Move(Direction direction, double speed) {
       break;
     case Backward:
       _spmStorageMotor.Set(-speed);
+      break;
+  }
+}
+
+void SubStorage::MoveFeeder(Direction direction, double speed) {
+  switch (direction) {
+    case Forward:
+      _spmFeederMotor.Set(speed);
+      break;
+    case Backward:
+      _spmFeederMotor.Set(-speed);
       break;
   }
 }
