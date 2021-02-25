@@ -36,5 +36,5 @@ void CmdAutoDrive::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool CmdAutoDrive::IsFinished() {
-  return false;
+  return _autonomous->end(_endX, _endY, _endHeading);
 }

@@ -18,6 +18,7 @@ class Autonomous {
   void setPosition(double x, double y);
   void setAngle(double theta);
   DriveInput autoDrive(double startX, double startY, double endX, double endY, double endHeading, double cenX, double cenY, PIDk PIDk, double speed);
+  bool end(double endx, double endy, double endHeading);
  private:
   const units::second_t fasterPeriod = 10_ms;
   const double pi = 3.1415926535897932384626433832795028841971693993751;

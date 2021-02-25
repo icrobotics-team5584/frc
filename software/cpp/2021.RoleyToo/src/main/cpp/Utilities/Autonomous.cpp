@@ -46,7 +46,7 @@ void Autonomous::setAngle(double theta){
   angleOffset = theta - _getYaw();
 }
 
-  DriveInput Autonomous::autoDrive(double startX, double startY, double endX, double endY, double endHeading, double cenX, double cenY, PIDk PIDk, double speed){
+DriveInput Autonomous::autoDrive(double startX, double startY, double endX, double endY, double endHeading, double cenX, double cenY, PIDk PIDk, double speed){
   if(speed >= 0){
     posX = frontPosX;
     posY = frontPosY;
@@ -120,4 +120,13 @@ void Autonomous::setAngle(double theta){
   frc::SmartDashboard::PutNumber("frontx", frontPosX);
   frc::SmartDashboard::PutNumber("auto angle", _getYaw() + angleOffset);
   return autoOutput;
+}
+
+bool Autonomous::end(double endx, double endy, double endHeading){
+  frc::SmartDashboard::PutNumber("angle thing", abs(endHeading-(atan2(posY-endy, posX-endx)*(-180/pi)+90)));
+  if(abs(endHeading-(atan2(posY-endy, posX-endx)*(-180/pi)+90)) < 90){
+    return true;
+  }else{
+    return false;
+  }
 }
