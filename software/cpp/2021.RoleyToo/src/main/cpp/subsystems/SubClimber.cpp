@@ -11,8 +11,8 @@ SubClimber::SubClimber() {
     _leftEncoder.SetPosition(0);
     _rightEncoder.SetPosition(0);
 
-    _spmClimbLeft.SetSmartCurrentLimit(50);
-    _spmClimbRight.SetSmartCurrentLimit(50);
+    _spmClimbLeft.SetSmartCurrentLimit(30);
+    _spmClimbRight.SetSmartCurrentLimit(30);
 }
 
 // This method will be called once per scheduler run
