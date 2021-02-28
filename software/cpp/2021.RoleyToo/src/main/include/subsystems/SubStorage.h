@@ -27,6 +27,7 @@ class SubStorage : public frc2::SubsystemBase {
   void Move(Direction direction, double speed);
   void MoveFeeder(Direction direction, double speed);
   double GetEncoder();
+  double GetEncoderSpeed();
   void ResetEncoder();
   void SetBallCount(int ballCount);
   int GetBallCount();
@@ -43,6 +44,7 @@ class SubStorage : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
   rev::CANSparkMax _spmStorageMotor{can::spmStorage, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::CANSparkMax _spmFeederMotor{can::spmFeeder, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  rev::CANEncoder _encStorageMotor{_spmStorageMotor.GetEncoder()};
   frc::DigitalInput _brkIntake{dio::brkStorageIn};
   frc::DigitalInput _brkIndex{dio::brkStorageIndex};
   frc::DigitalInput _brkOuttake{dio::brkStorageOut};

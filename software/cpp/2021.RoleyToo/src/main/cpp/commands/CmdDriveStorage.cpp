@@ -13,7 +13,7 @@ CmdDriveStorage::CmdDriveStorage(SubStorage* subStorage, SubStorage::Direction d
 
 // Called when the command is initially scheduled.
 void CmdDriveStorage::Initialize() {
-  _subStorage->Move(_direction, _speed);
+  // _subStorage->Move(_direction, _speed);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -21,7 +21,7 @@ void CmdDriveStorage::Execute() {}
 
 // Called once the command ends or is interrupted.
 void CmdDriveStorage::End(bool interrupted) {
-  _subStorage->Move(SubStorage::Direction::Forward, 0);
+  // _subStorage->Move(SubStorage::Direction::Forward, 0);
 }
 
 // Returns true when the command should end.

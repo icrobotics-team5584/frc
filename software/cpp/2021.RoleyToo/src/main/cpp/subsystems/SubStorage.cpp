@@ -39,7 +39,12 @@ void SubStorage::ResetEncoder() {
 }
 
 double SubStorage::GetEncoder() {
-  return _spmStorageMotor.GetEncoder().GetPosition();
+  return _encStorageMotor.GetPosition();
+}
+double SubStorage::GetEncoderSpeed() {
+  std::cout << _encStorageMotor.GetVelocity() << "\n";
+  return _encStorageMotor.GetVelocity();
+  
 }
 
 bool SubStorage::GetSensor(Sensors sensor) {
