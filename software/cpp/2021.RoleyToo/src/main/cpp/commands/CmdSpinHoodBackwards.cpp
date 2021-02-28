@@ -11,7 +11,7 @@ CmdSpinHoodBackwards::CmdSpinHoodBackwards(SubTurret* subTurret) {
 
 // Called when the command is initially scheduled.
 void CmdSpinHoodBackwards::Initialize() {
-  _subTurret->SetHood(-0.1);
+  _subTurret->SetHood(-0.5);
 }
 
 // Called repeatedly when this Command is scheduled to run

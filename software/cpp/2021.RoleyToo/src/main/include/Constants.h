@@ -24,7 +24,7 @@ namespace can {
   constexpr int srxDolly = 7;
   constexpr int spmTurret = 8;
   constexpr int spmStorage = 9;
-  constexpr int spmHood = 10;
+  constexpr int spmHood = 15;
   constexpr int spmClimbLeft = 11;
   constexpr int spmClimbRight = 12;
   constexpr int spmColorWheel = 13;
