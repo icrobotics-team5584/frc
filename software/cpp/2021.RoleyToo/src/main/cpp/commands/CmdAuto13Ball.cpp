@@ -15,7 +15,7 @@ CmdAuto13Ball::CmdAuto13Ball(SubDriveBase* subDriveBase) : _autonomous{
   // AddCommands(FooCommand(), BarCommand());
   AddCommands(CmdAutoSetPose{&_autonomous, 0, -0.4, 0},
               CmdAutoDrive{subDriveBase, &_autonomous, 0,0,-1.5,1.5,-90,-1.5,0, PIDk{-3.2, 0, -20}, 0.1},
-              CmdAutoDrive{subDriveBase, &_autonomous, -1.5,1.5,-2.35,1.5,-90,0,0,PIDk{-3.2, 0, -20},0.1},
+              CmdAutoDrive{subDriveBase, &_autonomous, -1.5,1.5,-2.35,1.5,-90,-1.5,1.5,PIDk{-3.2, 0, -20},0.1},
               CmdAutoDrive{subDriveBase, &_autonomous, -1.5,1.5,0,0,180,-1.5,0, PIDk{3.2, 0, 20}, -0.1},
               CmdAutoDrive{subDriveBase, &_autonomous, 0,0,0,-0.85,180,0,0, PIDk{3.2, 0, 20}, -0.1}
               );

@@ -55,11 +55,7 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
     posY = backPosY;
   }
   //Checks if its a straight line
-  if (((int)round(endHeading*10))%1800 == 0){
-    if(startX == endX){
-      isLinear = true;
-    }
-  }else if (((int)round((atan((startY-endY)/(startX-endX))*(180/pi))-endHeading)*10)%1800 == 0){
+  if (((int)round((atan2(endX-startX,endY-startY)*(180/pi))-endHeading)*10)%1800 == 0){
     isLinear = true;
   }else{
     isLinear = false;
