@@ -15,10 +15,10 @@
  */
 
 namespace can {
-  constexpr int spmDriveBaseFrontLeft = 1;
-  constexpr int spmDriveBaseBackLeft = 2;
-  constexpr int spmDriveBaseFrontRight = 3;
-  constexpr int spmDriveBaseBackRight = 4;
+  constexpr int spmDriveBaseFrontRight = 1;
+  constexpr int spmDriveBaseBackRight = 2;
+  constexpr int spmDriveBaseFrontLeft = 3;
+  constexpr int spmDriveBaseBackLeft = 4;
   constexpr int spmFlywheelLeft = 5;
   constexpr int spmFlywheelRight = 6;
   constexpr int srxDolly = 7;
@@ -29,6 +29,7 @@ namespace can {
   constexpr int spmClimbRight = 12;
   constexpr int spmColorWheel = 13;
   constexpr int spmIntake = 14; 
+  constexpr int spmFeeder = 15;
 }
 
 namespace dio {
