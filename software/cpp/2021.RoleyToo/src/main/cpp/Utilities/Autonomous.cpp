@@ -126,3 +126,24 @@ bool Autonomous::end(double endx, double endy, double endHeading){
     return false;
   }
 }
+
+DriveInput Autonomous::turnTo(double angle, PIDk PIDk){
+  error = (_getYaw() + angleOffset) - angle;
+  intergral = intergral + error;
+  steering = PIDk.p*error + PIDk.i*intergral + PIDk.d*(error - previousError);
+  frc::SmartDashboard::PutNumber("Steering", steering);
+  frc::SmartDashboard::PutNumber("angle", _getYaw() + angleOffset);
+  frc::SmartDashboard::PutNumber("error", error);
+  previousError = error;
+  autoOutput.steering = steering;
+  autoOutput.speed = 0;
+  return autoOutput;
+}
+
+bool Autonomous::turnToEnd(double angle){
+  if(/*round((_getYaw() + angleOffset) - angle) == 0 &&*/ abs(steering) < 0.1){
+    return true;
+  }else{
+    return false;
+  }
+}

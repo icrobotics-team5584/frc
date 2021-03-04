@@ -9,6 +9,7 @@
 #include "subsystems/SubDriveBase.h"
 #include "commands/CmdAutoDrive.h"
 #include "commands/CmdAutoSetPose.h"
+#include "commands/CmdAutoTurn.h"
 #include "utilities/Autonomous.h"
 #include "Utilities/PIDk.h"
 class CmdAuto13Ball
