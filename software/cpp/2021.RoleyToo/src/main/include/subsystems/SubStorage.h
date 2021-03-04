@@ -28,6 +28,7 @@ class SubStorage : public frc2::SubsystemBase {
   void MoveFeeder(Direction direction, double speed);
   double GetEncoder();
   double GetEncoderSpeed();
+  double GetStorageCurrent();
   void ResetEncoder();
   void SetBallCount(int ballCount);
   int GetBallCount();

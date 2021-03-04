@@ -7,6 +7,7 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 #include <frc/controller/PIDController.h>
+#include <frc/Timer.h>
 
 #include "subsystems/SubStorage.h"
 #include "subsystems/SubIntake.h"
@@ -35,5 +36,9 @@ class CmdIntake
   SubStorage* _subStorage;
   SubIntake* _subIntake;
   frc2::PIDController _storagePID{0.2, 0.0, 0.0};
-  
+  frc::Timer _timer;
+  frc::Timer _overcurrenttime;
+  SubStorage::Direction _currentdir = SubStorage::Direction::Forward;
+  double setpoint = 1000;
+
 };

@@ -47,6 +47,10 @@ double SubStorage::GetEncoderSpeed() {
   
 }
 
+double SubStorage::GetStorageCurrent() {
+  return _spmStorageMotor.GetOutputCurrent();
+}
+
 bool SubStorage::GetSensor(Sensors sensor) {
   switch (sensor) {
     case Intake:

@@ -27,9 +27,9 @@ namespace can {
   constexpr int spmHood = 10;
   constexpr int spmClimbLeft = 11;
   constexpr int spmClimbRight = 12;
-  constexpr int spmColorWheel = 999;
+  constexpr int spmColorWheel = 13;
   constexpr int spmIntake = 14; 
-  constexpr int spmFeeder = 13;
+  constexpr int spmFeeder = 15;
 }
 
 namespace dio {
