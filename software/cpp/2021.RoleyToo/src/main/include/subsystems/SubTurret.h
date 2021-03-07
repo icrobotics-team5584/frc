@@ -34,6 +34,9 @@ class SubTurret : public frc2::SubsystemBase {
   double GetTurretAngle();
   void ResetTurretEncoder();
 
+  void SetReady(bool ready);
+  bool IsReady();
+
   void SetTurret(double speed);
   double EstimateDistance();
 
@@ -65,6 +68,8 @@ class SubTurret : public frc2::SubsystemBase {
 
   nt::NetworkTableInstance _networktables;
   std::shared_ptr<nt::NetworkTable> _limelight;
+
+  bool ReadyToShoot = false;
 
   double _targetX = 0;
   double _targetY = 0;

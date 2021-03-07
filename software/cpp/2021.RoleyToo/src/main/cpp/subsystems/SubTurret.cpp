@@ -108,3 +108,11 @@ double SubTurret::EstimateDistance() {
   }
   return ((_targetHeight - _limelightHeight) / (tan(_limelightAngle - GetY())));
 }
+
+void SubTurret::SetReady(bool ready) {
+  ReadyToShoot = ready;
+}
+
+bool SubTurret::IsReady() {
+  return ReadyToShoot;
+}
