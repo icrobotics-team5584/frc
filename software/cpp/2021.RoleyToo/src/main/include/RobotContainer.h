@@ -39,6 +39,9 @@
 #include "commands/CmdSpinHoodForward.h"
 #include "commands/CmdSpinHoodBackwards.h"
 
+#include "commands/CmdSpinTurretLeft.h"
+#include "commands/CmdSpinTurretRight.h"
+
 #include "Utilities/Autonomous.h"
 
 /**
@@ -80,6 +83,9 @@ class RobotContainer {
 
   CmdSpinHoodForward _cmdSpinHoodForward{&_subTurret};
   CmdSpinHoodBackwards _cmdSpinHoodBackwards{&_subTurret};
+
+  CmdSpinTurretLeft _cmdSpinTurretLeft{&_subTurret};
+  CmdSpinTurretRight _cmdSpinTurretRight{&_subTurret};
 
   void ConfigureButtonBindings();
 };
