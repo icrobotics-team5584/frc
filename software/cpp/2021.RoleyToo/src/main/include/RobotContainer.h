@@ -35,6 +35,8 @@
 #include "commands/CmdSpinFlywheel.h"
 #include "commands/CmdTrackTarget.h"
 #include "commands/CmdClimbToPos.h"
+#include "commands/CmdMoveFeeder.h"
+#include "commands/CmdShoot.h"
 
 #include "commands/CmdSpinHoodForward.h"
 #include "commands/CmdSpinHoodBackwards.h"
@@ -76,10 +78,11 @@ class RobotContainer {
   CmdDeployClimber _cmdDeployClimber{&_subClimber};
   CmdIntake _cmdIntake{&_subStorage, &_subIntake};
   CmdClimbToPos _cmdClimbToPos{&_subClimber, 20};
-
+  CmdMoveFeeder _cmdMoveFeeder{&_subStorage, SubStorage::Direction::Forward, 1};
   CmdSpinColorWheel _cmdSpinColorWheel{&_subColorWheel};
   CmdMoveCenterColor _cmdMoveCenterColor{&_subColorWheel};
   CmdSpinToColor _cmdSpinToColor{&_subColorWheel};
+  CmdShoot _cmdShoot{&_subStorage, &_subTurret};
 
   CmdSpinHoodForward _cmdSpinHoodForward{&_subTurret};
   CmdSpinHoodBackwards _cmdSpinHoodBackwards{&_subTurret};

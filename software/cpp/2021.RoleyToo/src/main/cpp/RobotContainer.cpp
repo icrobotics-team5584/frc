@@ -31,7 +31,7 @@ void RobotContainer::ConfigureButtonBindings() {
   AxisButton btnShoot{&_joystick0, buttons::rightTrigger};
   POVButton btnTurretOverride{&_joystick0, POVButton::Position::down};
   frc2::JoystickButton btnShootOverride{&_joystick0, buttons::xBtn};
-
+  frc2::JoystickButton btnMoveFeeder{&_joystick0, buttons::bBtn};
   POVButton btnDeployClimber{&_joystick0, POVButton::Position::up};
   //frc2::JoystickButton xBtn{&_joystick0, buttons::xBtn};
 
@@ -42,10 +42,10 @@ void RobotContainer::ConfigureButtonBindings() {
   
   // Turret
   btnTrackTarget.WhileHeld(_cmdTrackTarget);
-  btnShoot.WhileHeld(_cmdSpinFlywheel);
-
+  btnShoot.WhileHeld(_cmdShoot);
+  btnMoveFeeder.WhileHeld(_cmdMoveFeeder);
   btnDeployClimber.WhenPressed(_cmdDeployClimber);
-  btnIntake.WhenPressed(_cmdIntake);
+  btnIntake.WhileHeld(_cmdIntake);
   btnClimbToPos.WhileHeld(_cmdClimbToPos);
 
   //btnHoodForward.WhileHeld(_cmdSpinHoodForward);
