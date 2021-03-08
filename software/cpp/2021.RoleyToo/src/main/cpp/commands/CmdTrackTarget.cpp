@@ -44,8 +44,8 @@ void CmdTrackTarget::Execute() {
 
   std::cout << "Turret PID Output: " << _TurretPIDOutput;
   std::cout << "Hood PID Output: " << _hoodPIDOutput << "\n";
-  _subTurret->SetTurret(_TurretPIDOutput);
-  _subTurret->SetHood(_hoodPIDOutput);
+  //_subTurret->SetTurret(_TurretPIDOutput);
+  //_subTurret->SetHood(_hoodPIDOutput);
 }
 
 // Called once the command ends or is interrupted.
