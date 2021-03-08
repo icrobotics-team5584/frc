@@ -26,7 +26,7 @@ class CmdShoot
   double FlywheelRPMTarget = 5000;
   double FlywheelPID[3] = {0.00005, 0.0, 0.0000053};
   double StorageSpeed = 0.4;
-  double FeederSpeed = 0.5;
+  double FeederSpeed = 1;
   //////////////
 
   void StopEverythingAndPanic();

@@ -36,6 +36,7 @@
 #include "commands/CmdTrackTarget.h"
 #include "commands/CmdClimbToPos.h"
 #include "commands/CmdMoveFeeder.h"
+#include "commands/CmdShoot.h"
 
 #include "Utilities/Autonomous.h"
 
@@ -75,6 +76,7 @@ class RobotContainer {
   CmdSpinColorWheel _cmdSpinColorWheel{&_subColorWheel};
   CmdMoveCenterColor _cmdMoveCenterColor{&_subColorWheel};
   CmdSpinToColor _cmdSpinToColor{&_subColorWheel};
+  CmdShoot _cmdShoot{&_subStorage, &_subTurret};
 
   void ConfigureButtonBindings();
 };

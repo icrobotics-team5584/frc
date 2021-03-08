@@ -3,17 +3,19 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "commands/CmdShoot.h"
+#include "frc/smartdashboard/SmartDashboard.h"
 
 CmdShoot::CmdShoot(SubStorage* subStorage, SubTurret* subTurret) {
   // Use addRequirements() here to declare subsystem dependencies.
   _subStorage = subStorage;
   _subTurret = subTurret;
+  frc::SmartDashboard::PutNumber("Shooter Speedies", 0);
 }
 
 void CmdShoot::StopEverythingAndPanic() {
   _subStorage->MoveFeeder(SubStorage::Forward, 0);
   _subStorage->Move(SubStorage::Forward, 0);
-  _subTurret->SetTurret(0);
+  _subTurret->SetFlywheel(0);
 }
 
 // Called when the command is initially scheduled.
@@ -27,8 +29,9 @@ void CmdShoot::Execute() {
   if (_subTurret->IsReady()) {
     _subStorage->MoveFeeder(SubStorage::Forward, FeederSpeed);
     _subStorage->Move(SubStorage::Forward, StorageSpeed);
-    FlywheelPIDOutput = _turretPID.Calculate(_subTurret->GetFlywheelRPM(), FlywheelRPMTarget);
-    _subTurret->SetFlywheel(FlywheelPIDOutput);
+    // FlywheelPIDOutput = _turretPID.Calculate(_subTurret->GetFlywheelRPM(), FlywheelRPMTarget);
+    // _subTurret->SetFlywheel(FlywheelPIDOutput);
+    _subTurret->SetFlywheel(frc::SmartDashboard::GetNumber("Shooter Speedies", 0));
   }
   else {
     StopEverythingAndPanic();

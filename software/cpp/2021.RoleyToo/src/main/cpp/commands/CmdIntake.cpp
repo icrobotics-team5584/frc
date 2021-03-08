@@ -10,7 +10,7 @@ CmdIntake::CmdIntake(SubStorage* subStorage, SubIntake* subIntake) {
   _subStorage = subStorage;
   _subIntake = subIntake;
   //frc::SmartDashboard::PutData("Storage PID", &_storagePID);
-  frc::SmartDashboard::PutNumber("Storage Setpoint", 100);
+  frc::SmartDashboard::PutNumber("Storage Setpoint", 1000);
   frc::SmartDashboard::PutNumber("Storage P", 0.2);
   frc::SmartDashboard::PutNumber("Storage I", 0.0);
   frc::SmartDashboard::PutNumber("Storage D", 0.0);
@@ -56,7 +56,7 @@ void CmdIntake::Execute() {
   double StorageI = 0;
   double StorageD = 0;
   double StorageFF = 0.135;
-  //double setpoint = frc::SmartDashboard::GetNumber("Storage Setpoint", 0);
+  double setpoint = frc::SmartDashboard::GetNumber("Storage Setpoint", 0);
   double storageRPM = _subStorage->GetEncoderSpeed();
   _storagePID.SetP(StorageP);
   _storagePID.SetI(StorageI);
