@@ -30,7 +30,7 @@ class CmdTrackTarget : public frc2::CommandHelper<frc2::CommandBase, CmdTrackTar
   bool IsFinished() override;
  private:
   SubTurret* _subTurret;
-  frc2::PIDController _turretPID{0.2, 0.0, 0.0}; //default values
+  frc2::PIDController _turretPID{0.012, 0.0, 0.003}; //default values
   frc2::PIDController _hoodPID{0.0005, 0.0, 0.0};
 
   int _failureCount = 0;

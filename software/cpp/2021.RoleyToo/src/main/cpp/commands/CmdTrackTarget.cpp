@@ -24,23 +24,26 @@ void CmdTrackTarget::Execute() {
   //LEFT POSITIVE, RIGHT NEGATIVE
   if (_subTurret->CheckTarget()) {
       _failureCount = 0;
-      _TurretPIDOutput = _turretPID.Calculate(_subTurret->GetX());
-      _hoodPIDOutput = _hoodPID.Calculate(_subTurret->GetHoodPos(), _subTurret->EstimateDistance());
+      std::cout << "Target Visible\n";
+      _TurretPIDOutput = std::clamp(_turretPID.Calculate(_subTurret->GetX()), -0.25, 0.25);
+      _hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _subTurret->EstimateDistance()), -0.1, 0.1);
   }
   else {
     _failureCount++;
-    if (_failureCount > 35) {
-      _TurretPIDOutput = _turretPID.Calculate(40 - _subTurret->GetTurretAngle());
-      _hoodPIDOutput = _hoodPID.Calculate(_subTurret->GetHoodPos(), 0);
+    if (_failureCount > 20) {
+      _TurretPIDOutput = 0;
+      _hoodPIDOutput = 0;
     }
   }
 
-  if ((_subTurret->GetTurretAngle() < 10) && (_TurretPIDOutput > 0)) { _TurretPIDOutput = 0; }
-  if ((_subTurret->GetTurretAngle() > 100) && (_TurretPIDOutput < 0)) { _TurretPIDOutput = 0; }
+  //if ((_subTurret->GetTurretAngle() < 10) && (_TurretPIDOutput > 0)) { _TurretPIDOutput = 0; }
+  //if ((_subTurret->GetTurretAngle() > 100) && (_TurretPIDOutput < 0)) { _TurretPIDOutput = 0; }
 
   //if ((_subTurret->GetHoodPos() < 10) && (_hoodPIDOutput < 0)) { _hoodPIDOutput = 0; }
   //if ((_subTurret->GetHoodPos() > 10) && (_hoodPIDOutput > 0)) { _hoodPIDOutput = 0; }
 
+  std::cout << "Turret PID Output: " << _TurretPIDOutput;
+  std::cout << "Hood PID Output: " << _hoodPIDOutput << "\n";
   _subTurret->SetTurret(_TurretPIDOutput);
   _subTurret->SetHood(_hoodPIDOutput);
 }

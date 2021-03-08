@@ -43,7 +43,7 @@ void SubTurret::Periodic() {
   frc::SmartDashboard::PutNumber("Turret Angle", _encTurret.GetPosition());
   frc::SmartDashboard::PutNumber("Hood Angle", GetHoodPos());
 
-  std::cout << _spmTurret.Get() << "   " << _spmTurret.GetOutputCurrent() << "\n";
+  //std::cout << _spmTurret.Get() << "   " << _spmTurret.GetOutputCurrent() << "\n";
 }
 
 double SubTurret::GetX() {
