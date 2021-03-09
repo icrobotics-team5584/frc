@@ -18,7 +18,7 @@ CmdShoot::CmdShoot(SubStorage* subStorage, SubTurret* subTurret) {
 void CmdShoot::StopEverythingAndPanic() {
   _subStorage->MoveFeeder(SubStorage::Forward, 0);
   _subStorage->Move(SubStorage::Forward, 0);
-  _subTurret->SetFlywheel(0);
+  //_subTurret->SetFlywheel(0);
 }
 
 // Called when the command is initially scheduled.
@@ -29,14 +29,14 @@ void CmdShoot::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdShoot::Execute() {
-  _turretPID.SetPID(frc::SmartDashboard::GetNumber("Turret P", 0), frc::SmartDashboard::GetNumber("Turret I", 0), frc::SmartDashboard::GetNumber("Turret D", 0));
+  //_turretPID.SetPID(frc::SmartDashboard::GetNumber("Turret P", 0), frc::SmartDashboard::GetNumber("Turret I", 0), frc::SmartDashboard::GetNumber("Turret D", 0));
 
   if (_subTurret->IsReady()) {
     _subStorage->MoveFeeder(SubStorage::Forward, FeederSpeed);
     _subStorage->Move(SubStorage::Forward, StorageSpeed);
-    FlywheelPIDOutput = _turretPID.Calculate(_subTurret->GetFlywheelRPM(), FlywheelRPMTarget);
-    frc::SmartDashboard::PutNumber("current flywheel power", FlywheelPIDOutput);
-    _subTurret->SetFlywheel(FlywheelPIDOutput);
+    //FlywheelPIDOutput = _turretPID.Calculate(_subTurret->GetFlywheelRPM(), FlywheelRPMTarget);
+    //frc::SmartDashboard::PutNumber("current flywheel power", FlywheelPIDOutput);
+    //_subTurret->SetFlywheel(FlywheelPIDOutput);
     //_subTurret->SetFlywheel(frc::SmartDashboard::GetNumber("Shooter Speedies", 0));
   }
   else {
