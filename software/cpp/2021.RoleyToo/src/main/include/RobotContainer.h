@@ -53,7 +53,7 @@ class RobotContainer {
   frc2::Command* GetAutonomousCommand();
   SubDriveBase _subDriveBase;
   //Autonomous _autonomous{ [this]{return _subDriveBase.getYaw();}, [this]{return _subDriveBase.getDistanceTravelled();}};
-  CmdAuto13Ball _cmdAuto13Ball{&_subDriveBase};
+  CmdAuto13Ball _cmdAuto13Ball{&_subDriveBase, &_subIntake};
  private:
   // The robot's subsystems and commands are defined here...
   //frc::Joystick _joystick0{0};

@@ -7,7 +7,7 @@
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/co     nvenience-features.html
-CmdAuto13Ball::CmdAuto13Ball(SubDriveBase* subDriveBase) : _autonomous{
+CmdAuto13Ball::CmdAuto13Ball(SubDriveBase* subDriveBase, SubIntake* subIntake) : _autonomous{
   [subDriveBase]{return subDriveBase->getYaw();}, 
   [subDriveBase]{return subDriveBase->getDistanceTravelled();}
 } {
@@ -20,5 +20,6 @@ CmdAuto13Ball::CmdAuto13Ball(SubDriveBase* subDriveBase) : _autonomous{
               CmdAutoDrive{subDriveBase, &_autonomous, 0,0,0,-0.85,180,0,0, PIDk{3.2, 0, 20}, -0.1}
               );*/
   
-  AddCommands(CmdAutoSetPose{&_autonomous, 0, -0.4, 0}, CmdAutoTurn{subDriveBase, &_autonomous, PIDk{-0.01, 0, 0}, 90});
+  //AddCommands(CmdAutoSetPose{&_autonomous, 0, -0.4, 0}, CmdAutoTurn{subDriveBase, &_autonomous, PIDk{-0.01, 0, 0}, 90});
+  AddCommands(CmdAutoIntakeDeploy{subIntake}, CmdAutoIntake{subIntake, 2, 2}, CmdAutoIntakeRetract{subIntake});
 }

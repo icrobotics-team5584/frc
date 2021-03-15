@@ -7,6 +7,8 @@
 
 CmdIntake::CmdIntake(SubStorage* subStorage, SubIntake* subIntake) {
   // Use addRequirements() here to declare subsystem dependencies.
+  AddRequirements(_subIntake);
+  AddRequirements(_subStorage);
   _subStorage = subStorage;
   _subIntake = subIntake;
   //frc::SmartDashboard::PutData("Storage PID", &_storagePID);
