@@ -55,7 +55,7 @@ class SubTurret : public frc2::SubsystemBase {
   rev::CANSparkMax _spmFlywheelLeft{can::spmFlywheelLeft, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::CANSparkMax _spmHood{can::spmHood, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
 
-  rev::CANEncoder _encTurret{_spmFlywheelRight.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 2048)};
+  rev::CANEncoder _encTurret{_spmTurret.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 2048)};
   rev::CANEncoder _encHood{_spmHood.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 2048)};
   rev::CANEncoder _encFlywheel{_spmFlywheelRight.GetEncoder()};
 

@@ -8,6 +8,7 @@
 SubIntake::SubIntake(){
     frc::SmartDashboard::PutData("Intake Motor", &_spmIntake);
     _spmIntake.SetSmartCurrentLimit(20);
+    solIntake.Set(frc::DoubleSolenoid::kReverse);
 }
 
 // This method will be called once per scheduler run

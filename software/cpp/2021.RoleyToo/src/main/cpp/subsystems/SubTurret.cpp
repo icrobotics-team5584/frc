@@ -25,8 +25,6 @@ SubTurret::SubTurret() {
   _spmFlywheelLeft.SetSmartCurrentLimit(50);
   _spmTurret.SetSmartCurrentLimit(20);
   _spmHood.SetSmartCurrentLimit(20);
-
-  frc::SmartDashboard::PutNumber("wheel setpoint", 0);
 }
 
 // This method will be called once per scheduler run
@@ -41,6 +39,7 @@ void SubTurret::Periodic() {
   frc::SmartDashboard::PutNumber("Distance", EstimateDistance());
 
   frc::SmartDashboard::PutNumber("Turret Angle", _encTurret.GetPosition());
+  frc::SmartDashboard::PutNumber("Hood Angle", GetHoodPos());
 }
 
 double SubTurret::GetX() {
@@ -100,7 +99,7 @@ void SubTurret::SetHood(double speed) {
 }
 
 double SubTurret::GetHoodPos() {
-  return _encHood.GetPosition() - _hoodPosOffset;
+  return (_encHood.GetPosition() * 360) - _hoodPosOffset;
 }
 
 double SubTurret::EstimateDistance() {

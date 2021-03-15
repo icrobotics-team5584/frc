@@ -6,6 +6,7 @@
 
 SubStorage::SubStorage() {
   _spmStorageMotor.SetSmartCurrentLimit(20);
+  _spmFeederMotor.SetSmartCurrentLimit(20);
 }
 
 // This method will be called once per scheduler run
@@ -22,12 +23,32 @@ void SubStorage::Move(Direction direction, double speed) {
   }
 }
 
+void SubStorage::MoveFeeder(Direction direction, double speed) {
+  switch (direction) {
+    case Forward:
+      _spmFeederMotor.Set(speed);
+      break;
+    case Backward:
+      _spmFeederMotor.Set(-speed);
+      break;
+  }
+}
+
 void SubStorage::ResetEncoder() {
   //TODO: Reset Encoder
 }
 
 double SubStorage::GetEncoder() {
-  return _spmStorageMotor.GetEncoder().GetPosition();
+  return _encStorageMotor.GetPosition();
+}
+double SubStorage::GetEncoderSpeed() {
+  std::cout << _encStorageMotor.GetVelocity() << "\n";
+  return _encStorageMotor.GetVelocity();
+  
+}
+
+double SubStorage::GetStorageCurrent() {
+  return _spmStorageMotor.GetOutputCurrent();
 }
 
 bool SubStorage::GetSensor(Sensors sensor) {
