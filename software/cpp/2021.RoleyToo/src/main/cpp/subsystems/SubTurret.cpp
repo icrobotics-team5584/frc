@@ -25,6 +25,8 @@ SubTurret::SubTurret() {
   _spmFlywheelLeft.SetSmartCurrentLimit(50);
   _spmTurret.SetSmartCurrentLimit(20);
   _spmHood.SetSmartCurrentLimit(20);
+
+  frc::SmartDashboard::PutNumber("Turret Speed", 0);
 }
 
 // This method will be called once per scheduler run
@@ -40,6 +42,8 @@ void SubTurret::Periodic() {
 
   frc::SmartDashboard::PutNumber("Turret Angle", _encTurret.GetPosition());
   frc::SmartDashboard::PutNumber("Hood Angle", GetHoodPos());
+
+  //std::cout << _spmTurret.Get() << "   " << _spmTurret.GetOutputCurrent() << "\n";
 }
 
 double SubTurret::GetX() {

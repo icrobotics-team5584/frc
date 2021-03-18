@@ -38,6 +38,12 @@
 #include "commands/CmdMoveFeeder.h"
 #include "commands/CmdShoot.h"
 
+#include "commands/CmdSpinHoodForward.h"
+#include "commands/CmdSpinHoodBackwards.h"
+
+#include "commands/CmdSpinTurretLeft.h"
+#include "commands/CmdSpinTurretRight.h"
+
 #include "Utilities/Autonomous.h"
 
 /**
@@ -77,6 +83,12 @@ class RobotContainer {
   CmdMoveCenterColor _cmdMoveCenterColor{&_subColorWheel};
   CmdSpinToColor _cmdSpinToColor{&_subColorWheel};
   CmdShoot _cmdShoot{&_subStorage, &_subTurret};
+
+  CmdSpinHoodForward _cmdSpinHoodForward{&_subTurret};
+  CmdSpinHoodBackwards _cmdSpinHoodBackwards{&_subTurret};
+
+  CmdSpinTurretLeft _cmdSpinTurretLeft{&_subTurret};
+  CmdSpinTurretRight _cmdSpinTurretRight{&_subTurret};
 
   void ConfigureButtonBindings();
 };
