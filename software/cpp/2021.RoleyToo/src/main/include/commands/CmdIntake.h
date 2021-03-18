@@ -45,6 +45,6 @@ class CmdIntake
   frc::Timer _timer;
   frc::Timer _overcurrenttime;
   SubStorage::Direction _currentdir = SubStorage::Direction::Forward;
-  double Setpoint = 1000;
+  double Setpoint = 10000;
 
 };
