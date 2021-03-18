@@ -23,10 +23,10 @@ double JoystickScaler::GetScaledX(frc::GenericHID::JoystickHand hand) {
     //std::cout << "xS " << pow(Joystick::GetX(hand), _scale) << "xR " << Joystick::GetX(hand);
     
     if (Joystick::GetX(hand) < 0) {
-        return -1 * pow(abs(Joystick::GetX(hand)), _scale);
+        return pow(abs(Joystick::GetX(hand)), _scale);
     }
     else {
-        return pow(abs(Joystick::GetX(hand)), _scale);
+        return -1 * pow(abs(Joystick::GetX(hand)), _scale);
     }
 }
 
