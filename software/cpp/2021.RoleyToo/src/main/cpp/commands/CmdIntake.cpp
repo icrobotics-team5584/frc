@@ -10,11 +10,11 @@ CmdIntake::CmdIntake(SubStorage* subStorage, SubIntake* subIntake) {
   _subStorage = subStorage;
   _subIntake = subIntake;
   //frc::SmartDashboard::PutData("Storage PID", &_storagePID);
-  frc::SmartDashboard::PutNumber("Storage Setpoint", 1000);
-  frc::SmartDashboard::PutNumber("Storage P", 0.2);
-  frc::SmartDashboard::PutNumber("Storage I", 0.0);
-  frc::SmartDashboard::PutNumber("Storage D", 0.0);
-  frc::SmartDashboard::PutNumber("Storage FF", 0.0);
+  frc::SmartDashboard::PutNumber("Storage Setpoint", Setpoint);
+  frc::SmartDashboard::PutNumber("Storage P", StorageP);
+  frc::SmartDashboard::PutNumber("Storage I", StorageI);
+  frc::SmartDashboard::PutNumber("Storage D", StorageD);
+  frc::SmartDashboard::PutNumber("Storage FF", StorageF);
 }
 
 // Called when the command is initially scheduled.
@@ -52,22 +52,20 @@ void CmdIntake::Execute() {
     }
   }
 
-  double StorageP = 0.00017;
-  double StorageI = 0;
-  double StorageD = 0;
-  double StorageFF = 0.135;
-  double setpoint = frc::SmartDashboard::GetNumber("Storage Setpoint", 0);
+  double storageF = frc::SmartDashboard::GetNumber("Storage FF", StorageF);
+
   double storageRPM = _subStorage->GetEncoderSpeed();
-  _storagePID.SetP(StorageP);
-  _storagePID.SetI(StorageI);
-  _storagePID.SetD(StorageD);
+  double setpoint = frc::SmartDashboard::GetNumber("Storage Setpoint", Setpoint);
+  _storagePID.SetP(frc::SmartDashboard::GetNumber("Storage P", StorageP));
+  _storagePID.SetI(frc::SmartDashboard::GetNumber("Storage I", StorageI));
+  _storagePID.SetD(frc::SmartDashboard::GetNumber("Storage D", StorageD));
 
   double power = 0;
   if (_currentdir == SubStorage::Direction::Forward) {
-    power = std::clamp(_storagePID.Calculate(storageRPM, setpoint) + StorageFF, -1.0, 1.0);
+    power = std::clamp(_storagePID.Calculate(storageRPM, setpoint) + storageF, -1.0, 1.0);
   }
   else {
-    power = std::clamp(_storagePID.Calculate(storageRPM, -setpoint) - StorageFF, -1.0, 1.0);
+    power = std::clamp(_storagePID.Calculate(storageRPM, -setpoint) - storageF, -1.0, 1.0);
   }
   frc::SmartDashboard::PutNumber("Storage RPM", storageRPM);
   frc::SmartDashboard::PutNumber("storage power", power);
