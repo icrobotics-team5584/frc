@@ -36,10 +36,10 @@ class CmdIntake
   SubStorage* _subStorage;
   SubIntake* _subIntake;
 
-  double StorageP = 0.00017;
+  double StorageP = 0.00006;
   double StorageI = 0.0;
   double StorageD = 0.0;
-  double StorageF = 0.135;
+  double StorageF = 0.85;
 
   frc2::PIDController _storagePID{StorageP, StorageI, StorageD};
   frc::Timer _timer;
