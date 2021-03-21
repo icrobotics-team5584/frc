@@ -16,17 +16,19 @@ CmdTrackTarget::CmdTrackTarget(SubTurret* subTurret) {
 void CmdTrackTarget::Initialize() {
   frc::SmartDashboard::PutData("Turret PID", &_turretPID);
   frc::SmartDashboard::PutData("Hood PID", &_hoodPID);
+  frc::SmartDashboard::PutNumber("Hood Target", 0);
   _subTurret->LimeLEDOn();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdTrackTarget::Execute() {
   //LEFT POSITIVE, RIGHT NEGATIVE
+  _hoodTarget = frc::SmartDashboard::GetNumber("Hood Target", 0);
   if (_subTurret->CheckTarget()) {
       _failureCount = 0;
       std::cout << "Target Visible\n";
       _TurretPIDOutput = std::clamp(_turretPID.Calculate(_subTurret->GetX()), -0.25, 0.25);
-      _hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _subTurret->EstimateDistance()), -0.1, 0.1);
+      _hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _hoodTarget), -0.5, 0.5);
   }
   else {
     _failureCount++;
@@ -42,10 +44,15 @@ void CmdTrackTarget::Execute() {
   //if ((_subTurret->GetHoodPos() < 10) && (_hoodPIDOutput < 0)) { _hoodPIDOutput = 0; }
   //if ((_subTurret->GetHoodPos() > 10) && (_hoodPIDOutput > 0)) { _hoodPIDOutput = 0; }
 
+  if (_hoodPIDOutput < 0 && _subTurret->GetHoodLimit())
+  {
+    _hoodPIDOutput = 0;
+  }
+
   std::cout << "Turret PID Output: " << _TurretPIDOutput;
   std::cout << "Hood PID Output: " << _hoodPIDOutput << "\n";
-  //_subTurret->SetTurret(_TurretPIDOutput);
-  //_subTurret->SetHood(_hoodPIDOutput);
+  _subTurret->SetTurret(_TurretPIDOutput);
+  _subTurret->SetHood(_hoodPIDOutput);
 }
 
 // Called once the command ends or is interrupted.

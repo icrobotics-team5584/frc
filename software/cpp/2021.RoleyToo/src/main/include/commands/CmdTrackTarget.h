@@ -38,4 +38,5 @@ class CmdTrackTarget : public frc2::CommandHelper<frc2::CommandBase, CmdTrackTar
   double _hoodPIDOutput = 0;
 
   double _hoodError = 0;
+  double _hoodTarget = 0;
 };
