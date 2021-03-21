@@ -35,10 +35,16 @@ class CmdIntake
  private:
   SubStorage* _subStorage;
   SubIntake* _subIntake;
-  frc2::PIDController _storagePID{0.2, 0.0, 0.0};
+
+  double StorageP = 0.00006;
+  double StorageI = 0.0;
+  double StorageD = 0.0;
+  double StorageF = 0.85;
+
+  frc2::PIDController _storagePID{StorageP, StorageI, StorageD};
   frc::Timer _timer;
   frc::Timer _overcurrenttime;
   SubStorage::Direction _currentdir = SubStorage::Direction::Forward;
-  double setpoint = 1000;
+  double Setpoint = 10000;
 
 };
