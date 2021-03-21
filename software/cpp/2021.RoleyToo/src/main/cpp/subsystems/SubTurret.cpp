@@ -26,6 +26,8 @@ SubTurret::SubTurret() {
   _spmTurret.SetSmartCurrentLimit(20);
   _spmHood.SetSmartCurrentLimit(20);
 
+  _spmHood.SetInverted(true);
+
   _encHood.SetPosition(0);
 
   frc::SmartDashboard::PutNumber("Turret Speed", 0);
@@ -107,7 +109,7 @@ void SubTurret::SetHood(double speed) {
 }
 
 double SubTurret::GetHoodPos() {
-  return (_encHood.GetPosition());
+  return (_encHood.GetPosition() + _hoodInitialAngle);
 }
 
 void SubTurret::ResetHoodEncoder() {

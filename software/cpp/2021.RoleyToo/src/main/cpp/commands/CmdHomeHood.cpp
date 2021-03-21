@@ -11,7 +11,9 @@ CmdHomeHood::CmdHomeHood(SubTurret* subTurret) {
 
 // Called when the command is initially scheduled.
 void CmdHomeHood::Initialize() {
-  _subTurret->SetHood(_homingSpeed);
+  if (!_subTurret->GetHoodLimit()) {
+    _subTurret->SetHood(_homingSpeed);
+  }
 }
 
 // Called repeatedly when this Command is scheduled to run

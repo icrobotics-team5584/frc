@@ -30,5 +30,5 @@ class CmdHomeHood
   bool IsFinished() override;
  private:
   SubTurret* _subTurret;
-  double _homingSpeed = -0.1;
+  double _homingSpeed = -0.05;
 };

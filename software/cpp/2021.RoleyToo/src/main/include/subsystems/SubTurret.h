@@ -80,8 +80,11 @@ class SubTurret : public frc2::SubsystemBase {
 
   /* These values are in mm
      Measure from ground to target height.*/ 
-  double _targetHeight = 1480;
+  double _targetHeight = 2494.026;
   double _limelightHeight = 1190;
   double _limelightAngle = 26.5;
-  double _encTurretConvFac = 360/1;     // 360 points per 1 revolution
+  double _encTurretConvFac = _hoodDegreesPerRotation/1;     // 360 points per 1 revolution
+
+  double _hoodDegreesPerRotation = 13.2;
+  double _hoodInitialAngle = 7.15;
 };

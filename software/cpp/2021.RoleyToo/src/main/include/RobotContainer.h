@@ -45,6 +45,8 @@
 #include "commands/CmdSpinTurretLeft.h"
 #include "commands/CmdSpinTurretRight.h"
 
+#include "commands/CmdHomeHood.h"
+
 #include "Utilities/Autonomous.h"
 
 /**
@@ -84,6 +86,8 @@ class RobotContainer {
   CmdMoveCenterColor _cmdMoveCenterColor{&_subColorWheel};
   CmdSpinToColor _cmdSpinToColor{&_subColorWheel};
   CmdShoot _cmdShoot{&_subStorage, &_subTurret};
+
+  CmdHomeHood _cmdHomeHood{&_subTurret};
 
 
   CmdSpinHoodForward _cmdSpinHoodForward{&_subTurret};
