@@ -10,10 +10,10 @@ CmdShoot::CmdShoot(SubStorage* subStorage, SubTurret* subTurret) {
   _subStorage = subStorage;
   _subTurret = subTurret;
   //frc::SmartDashboard::PutNumber("Shooter Speedies", 0);
-  frc::SmartDashboard::PutNumber("Turret P", 0.01);
+  frc::SmartDashboard::PutNumber("Turret P", 0.0007);
   frc::SmartDashboard::PutNumber("Turret I", 0);
-  frc::SmartDashboard::PutNumber("Turret D", 0.0000004);
-  frc::SmartDashboard::PutNumber("Turret F", 100);
+  frc::SmartDashboard::PutNumber("Turret D", 0.00004);
+  frc::SmartDashboard::PutNumber("Turret F", 0.6);
 }
 
 void CmdShoot::StopEverythingAndPanic() {
@@ -38,9 +38,7 @@ void CmdShoot::Execute() {
 
   FlywheelPIDOutput += frc::SmartDashboard::GetNumber("Turret F", 0);
   frc::SmartDashboard::PutNumber("current flywheel power", FlywheelPIDOutput);
-  //_subTurret->SetFlywheel(FlywheelPIDOutput);
-  _subTurret->SetFlywheel(1);
-  std::cout << "shoot" << "\n";
+  _subTurret->SetFlywheel(FlywheelPIDOutput);
   //_subTurret->SetFlywheel(frc::SmartDashboard::GetNumber("Shooter Speedies", 0));
 }
 

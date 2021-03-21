@@ -26,6 +26,8 @@ SubTurret::SubTurret() {
   _spmTurret.SetSmartCurrentLimit(20);
   _spmHood.SetSmartCurrentLimit(20);
 
+  _encHood.SetPosition(0);
+
   frc::SmartDashboard::PutNumber("Turret Speed", 0);
 }
 
@@ -42,6 +44,8 @@ void SubTurret::Periodic() {
 
   frc::SmartDashboard::PutNumber("Turret Angle", _encTurret.GetPosition());
   frc::SmartDashboard::PutNumber("Hood Angle", GetHoodPos());
+
+  frc::SmartDashboard::PutBoolean("Hood Limit", GetHoodLimit());
 
   //std::cout << _spmTurret.Get() << "   " << _spmTurret.GetOutputCurrent() << "\n";
 }
@@ -103,7 +107,15 @@ void SubTurret::SetHood(double speed) {
 }
 
 double SubTurret::GetHoodPos() {
-  return (_encHood.GetPosition() * 360) - _hoodPosOffset;
+  return (_encHood.GetPosition());
+}
+
+void SubTurret::ResetHoodEncoder() {
+  _encHood.SetPosition(0);
+}
+
+bool SubTurret::GetHoodLimit() {
+  return !_hlfHoodDown.Get();
 }
 
 double SubTurret::EstimateDistance() {

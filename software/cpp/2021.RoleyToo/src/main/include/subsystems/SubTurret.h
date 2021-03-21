@@ -47,7 +47,9 @@ class SubTurret : public frc2::SubsystemBase {
   double GetFlywheelRPM();
 
   void SetHood(double speed);
+  void ResetHoodEncoder();
   double GetHoodPos();
+  bool GetHoodLimit();
   
 
  private:
@@ -59,7 +61,7 @@ class SubTurret : public frc2::SubsystemBase {
   rev::CANSparkMax _spmHood{can::spmHood, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
 
   rev::CANEncoder _encTurret{_spmTurret.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 2048)};
-  rev::CANEncoder _encHood{_spmHood.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 2048)};
+  rev::CANEncoder _encHood{_spmFlywheelRight.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 8192)};
   rev::CANEncoder _encFlywheel{_spmFlywheelRight.GetEncoder()};
 
   frc::DigitalInput _hlfTurretLeft{dio::hlfTurretLeft};
@@ -82,6 +84,4 @@ class SubTurret : public frc2::SubsystemBase {
   double _limelightHeight = 1190;
   double _limelightAngle = 26.5;
   double _encTurretConvFac = 360/1;     // 360 points per 1 revolution
-
-  double _hoodPosOffset = 0;            // Allows 0 to be the home point while using an absolute encoder
 };
