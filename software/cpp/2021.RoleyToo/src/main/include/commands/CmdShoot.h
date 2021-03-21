@@ -25,7 +25,7 @@ class CmdShoot
   //PARAMETERS//
   double FlywheelRPMTarget = 5000;
   double FlywheelPID[3] = {0.01, 0.0, 0.0000053};
-  double StorageSpeed = 0.1;
+  double StorageSpeed = -0.8;
   double FeederSpeed = 1;
   //////////////
 

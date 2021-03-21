@@ -13,12 +13,13 @@ CmdShoot::CmdShoot(SubStorage* subStorage, SubTurret* subTurret) {
   frc::SmartDashboard::PutNumber("Turret P", 0.01);
   frc::SmartDashboard::PutNumber("Turret I", 0);
   frc::SmartDashboard::PutNumber("Turret D", 0.0000004);
+  frc::SmartDashboard::PutNumber("Turret F", 100);
 }
 
 void CmdShoot::StopEverythingAndPanic() {
-  _subStorage->MoveFeeder(SubStorage::Forward, 0);
+  //_subStorage->MoveFeeder(SubStorage::Forward, 0);
   _subStorage->Move(SubStorage::Forward, 0);
-  //_subTurret->SetFlywheel(0);
+  _subTurret->SetFlywheel(0);
 }
 
 // Called when the command is initially scheduled.
@@ -29,20 +30,18 @@ void CmdShoot::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdShoot::Execute() {
-  //_turretPID.SetPID(frc::SmartDashboard::GetNumber("Turret P", 0), frc::SmartDashboard::GetNumber("Turret I", 0), frc::SmartDashboard::GetNumber("Turret D", 0));
+  _turretPID.SetPID(frc::SmartDashboard::GetNumber("Turret P", 0), frc::SmartDashboard::GetNumber("Turret I", 0), frc::SmartDashboard::GetNumber("Turret D", 0));
 
-  if (_subTurret->IsReady()) {
-    _subStorage->MoveFeeder(SubStorage::Forward, FeederSpeed);
-    _subStorage->Move(SubStorage::Forward, StorageSpeed);
-    //FlywheelPIDOutput = _turretPID.Calculate(_subTurret->GetFlywheelRPM(), FlywheelRPMTarget);
-    //frc::SmartDashboard::PutNumber("current flywheel power", FlywheelPIDOutput);
-    //_subTurret->SetFlywheel(FlywheelPIDOutput);
-    //_subTurret->SetFlywheel(frc::SmartDashboard::GetNumber("Shooter Speedies", 0));
-  }
-  else {
-    StopEverythingAndPanic();
-  }
+  //_subStorage->MoveFeeder(SubStorage::Forward, FeederSpeed);
+  _subStorage->Move(SubStorage::Forward, StorageSpeed);
+  FlywheelPIDOutput = _turretPID.Calculate(_subTurret->GetFlywheelRPM(), FlywheelRPMTarget);
 
+  FlywheelPIDOutput += frc::SmartDashboard::GetNumber("Turret F", 0);
+  frc::SmartDashboard::PutNumber("current flywheel power", FlywheelPIDOutput);
+  //_subTurret->SetFlywheel(FlywheelPIDOutput);
+  _subTurret->SetFlywheel(1);
+  std::cout << "shoot" << "\n";
+  //_subTurret->SetFlywheel(frc::SmartDashboard::GetNumber("Shooter Speedies", 0));
 }
 
 // Called once the command ends or is interrupted.

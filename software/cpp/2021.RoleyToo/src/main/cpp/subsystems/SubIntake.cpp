@@ -7,6 +7,8 @@
 
 SubIntake::SubIntake(){
     frc::SmartDashboard::PutData("Intake Motor", &_spmIntake);
+
+    _spmIntake.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
     _spmIntake.SetSmartCurrentLimit(20);
     solIntake.Set(frc::DoubleSolenoid::kReverse);
 }
