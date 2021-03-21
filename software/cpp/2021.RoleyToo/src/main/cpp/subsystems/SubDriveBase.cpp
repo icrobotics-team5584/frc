@@ -33,21 +33,21 @@ void SubDriveBase::Periodic() {
 
 void SubDriveBase::deployDolly(){
   std::cout << "deploy dolly" << std::endl;
-  solDollyAcuator.Set(frc::DoubleSolenoid::kForward);
+  solDollyAcuator.Set(frc::DoubleSolenoid::Value::kForward);
 }
 
 void SubDriveBase::retractDolly(){
   std::cout << "retract dolly" << std::endl;
-  solDollyAcuator.Set(frc::DoubleSolenoid::kReverse);
+  solDollyAcuator.Set(frc::DoubleSolenoid::Value::kReverse);
 }
 
 void SubDriveBase::zeroEncoders(){
-  _spmFrontLeft.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, ENCODER_TICS_PER_ROTATION).SetPosition(0.0);
+  dollyEncoder.SetPosition(0.0);
 }
 
 double SubDriveBase::getDistanceTravelled(){
-  //double wheelRotations = _spmFrontLeft.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, ENCODER_TICS_PER_ROTATION).GetPosition();
-  double wheelRotations = _srxDolly.GetSelectedSensorPosition()/ENCODER_TICS_PER_ROTATION;
+  double wheelRotations = dollyEncoder.GetPosition();
+  //double wheelRotations = _srxDolly.GetSelectedSensorPosition()/ENCODER_TICS_PER_ROTATION;
   double distance = wheelRotations * metersPerRotation;
   return distance;  
 }

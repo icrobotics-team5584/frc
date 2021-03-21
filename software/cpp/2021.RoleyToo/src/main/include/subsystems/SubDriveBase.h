@@ -38,12 +38,14 @@ class SubDriveBase : public frc2::SubsystemBase {
   rev::CANSparkMax _spmBackRight{can::spmDriveBaseBackRight, rev::CANSparkMax::MotorType::kBrushless};
   ctre::phoenix::motorcontrol::can::TalonSRX _srxDolly{can::srxDolly};
   frc::DifferentialDrive _diffDrive{_spmFrontLeft, _spmFrontRight};
+  const int ENCODER_TICS_PER_ROTATION = 8192;
+  rev::CANEncoder dollyEncoder = _spmFrontLeft.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, ENCODER_TICS_PER_ROTATION);
 
   const double WHEEL_DIAMETER = 0.0508; //0.0508 for dolly
-  const int ENCODER_TICS_PER_ROTATION = 4096; 
+   
   const double pi = 3.1415926535897932384626433832795028841971693993751;
   double metersPerRotation; // calculated in constructor
 
-  frc::DoubleSolenoid solDollyAcuator{pcm::solDollyDeploy, pcm::solDollyRetract};
+  frc::DoubleSolenoid solDollyAcuator{1, pcm::solDollyDeploy, pcm::solDollyRetract};
   AHRS ahrsNavXGyro{frc::SPI::kMXP};
 };

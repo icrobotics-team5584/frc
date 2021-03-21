@@ -20,6 +20,6 @@ CmdAuto13Ball::CmdAuto13Ball(SubDriveBase* subDriveBase, SubIntake* subIntake) :
               CmdAutoDrive{subDriveBase, &_autonomous, 0,0,0,-0.85,180,0,0, PIDk{3.2, 0, 20}, -0.1}
               );*/
   
-  //AddCommands(CmdAutoSetPose{&_autonomous, 0, -0.4, 0}, CmdAutoTurn{subDriveBase, &_autonomous, PIDk{-0.01, 0, 0}, 90});
-  AddCommands(CmdAutoIntakeDeploy{subIntake}, CmdAutoIntake{subIntake, 2, 2}, CmdAutoIntakeRetract{subIntake});
+  AddCommands(CmdAutoSetPose{&_autonomous, 0, -0.4, 0}, CmdAutoTurn{subDriveBase, &_autonomous, PIDk{-0.01, 0, 0}, 90});
+  //AddCommands(CmdAutoIntakeDeploy{subIntake}, CmdAutoIntake{subIntake, 2, 2}, CmdAutoIntakeRetract{subIntake});
 }

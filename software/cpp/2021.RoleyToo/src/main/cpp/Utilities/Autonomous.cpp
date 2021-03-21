@@ -23,7 +23,6 @@ void Autonomous::updatePosition(){//calculates position, gets called in a period
   // Get relevant values
   double currentAngle = (_getYaw() + angleOffset) * 0.01745329251;  // Convert to radians with * 0.01745329251
   double currentDistance = _getDistance();//total distance
-  
   frc::SmartDashboard::PutNumber("distance", currentDistance);
   double distanceDelta = currentDistance - prevDistance;//distance since last 10 milliseconds
   // Determine current position
@@ -101,8 +100,8 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
   previousError = error;
   autoOutput.steering = steering;
   autoOutput.speed = speed;
-  //autoOutput.steering = 0;
-  //autoOutput.speed = 0;
+  autoOutput.steering = 0;
+  autoOutput.speed = 0;
   
   //std::cout<<"Running"<<std::endl;
   frc::SmartDashboard::PutNumber("error", error);
@@ -137,6 +136,7 @@ DriveInput Autonomous::turnTo(double angle, PIDk PIDk){
   previousError = error;
   autoOutput.steering = steering;
   autoOutput.speed = 0;
+  autoOutput.steering = 0;
   return autoOutput;
 }
 
