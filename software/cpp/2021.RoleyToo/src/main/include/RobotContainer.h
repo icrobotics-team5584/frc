@@ -9,6 +9,7 @@
 #include <frc2/command/Command.h>
 #include <frc2/command/button/Button.h>
 #include <frc2/command/button/JoystickButton.h>
+#include <frc2/command/ParallelCommandGroup.h>
 
 #include "Constants.h"
 
@@ -36,6 +37,13 @@
 #include "commands/CmdTrackTarget.h"
 #include "commands/CmdClimbToPos.h"
 #include "commands/CmdMoveFeeder.h"
+#include "commands/CmdShoot.h"
+
+#include "commands/CmdSpinHoodForward.h"
+#include "commands/CmdSpinHoodBackwards.h"
+
+#include "commands/CmdSpinTurretLeft.h"
+#include "commands/CmdSpinTurretRight.h"
 
 #include "Utilities/Autonomous.h"
 
@@ -71,10 +79,18 @@ class RobotContainer {
   CmdDeployClimber _cmdDeployClimber{&_subClimber};
   CmdIntake _cmdIntake{&_subStorage, &_subIntake};
   CmdClimbToPos _cmdClimbToPos{&_subClimber, 20};
-  CmdMoveFeeder _cmdMoveFeeder{&_subStorage, SubStorage::Direction::Forward, 1};
+  CmdMoveFeeder _cmdMoveFeeder{&_subStorage};
   CmdSpinColorWheel _cmdSpinColorWheel{&_subColorWheel};
   CmdMoveCenterColor _cmdMoveCenterColor{&_subColorWheel};
   CmdSpinToColor _cmdSpinToColor{&_subColorWheel};
+  CmdShoot _cmdShoot{&_subStorage, &_subTurret};
+
+
+  CmdSpinHoodForward _cmdSpinHoodForward{&_subTurret};
+  CmdSpinHoodBackwards _cmdSpinHoodBackwards{&_subTurret};
+
+  CmdSpinTurretLeft _cmdSpinTurretLeft{&_subTurret};
+  CmdSpinTurretRight _cmdSpinTurretRight{&_subTurret};
 
   void ConfigureButtonBindings();
 };
