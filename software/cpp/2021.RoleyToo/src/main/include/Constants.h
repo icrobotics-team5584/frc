@@ -40,6 +40,7 @@ namespace dio {
   constexpr int brkStorageIn = 7;
   constexpr int brkStorageIndex = 8;
   constexpr int brkStorageOut = 9;
+  constexpr int lmtHoodBottom = 0;
 }
 
 namespace buttons {
