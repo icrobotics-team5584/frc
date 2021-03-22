@@ -24,7 +24,7 @@ namespace can {
   constexpr int srxDolly = 7;
   constexpr int spmTurret = 8;
   constexpr int spmStorage = 9;
-  constexpr int spmHood = 14;
+  constexpr int spmHood = 10;
   constexpr int spmClimbLeft = 999;
   constexpr int spmClimbRight = 12;
   constexpr int spmColorWheel = 13;
@@ -40,6 +40,7 @@ namespace dio {
   constexpr int brkStorageIn = 7;
   constexpr int brkStorageIndex = 8;
   constexpr int brkStorageOut = 9;
+  constexpr int lmtHoodBottom = 0;
 }
 
 namespace buttons {

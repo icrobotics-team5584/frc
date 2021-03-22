@@ -23,9 +23,8 @@ class CmdShoot
 
  private:
   //PARAMETERS//
-  double FlywheelRPMTarget = 5000;
-  double FlywheelPID[3] = {0.01, 0.0, 0.0000053};
-  double StorageSpeed = 0.1;
+  
+  double StorageSpeed = 0.85;
   double FeederSpeed = 1;
   //////////////
 
@@ -33,6 +32,5 @@ class CmdShoot
 
   SubTurret* _subTurret;
   SubStorage* _subStorage;
-  frc2::PIDController _turretPID{FlywheelPID[0], FlywheelPID[1], FlywheelPID[2]};
-  double FlywheelPIDOutput;
+  
 };

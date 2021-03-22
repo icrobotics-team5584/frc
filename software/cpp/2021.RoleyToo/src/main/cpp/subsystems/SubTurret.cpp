@@ -120,3 +120,11 @@ void SubTurret::SetReady(bool ready) {
 bool SubTurret::IsReady() {
   return ReadyToShoot;
 }
+
+void SubTurret::ResetHoodEncoder() {
+  _encHood.SetPosition(0);
+}
+
+bool SubTurret::GetHoodLimit() {
+  return _lmtHoodDown.Get();
+}
