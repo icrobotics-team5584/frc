@@ -42,7 +42,7 @@ void SubTurret::Periodic() {
   frc::SmartDashboard::PutNumber("Flywheel RPM", GetFlywheelRPM());
   frc::SmartDashboard::PutNumber("Flywheel Current", _spmFlywheelRight.GetOutputCurrent());
 
-  frc::SmartDashboard::PutNumber("Distance", EstimateDistance());
+  frc::SmartDashboard::PutNumber("Target Angle", GetY());
 
   frc::SmartDashboard::PutNumber("Turret Angle", _encTurret.GetPosition());
   frc::SmartDashboard::PutNumber("Hood Angle", GetHoodPos());
@@ -117,7 +117,7 @@ void SubTurret::ResetHoodEncoder() {
 }
 
 bool SubTurret::GetHoodLimit() {
-  return !_hlfHoodDown.Get();
+  return _hlfHoodDown.Get();
 }
 
 double SubTurret::EstimateDistance() {
@@ -133,4 +133,8 @@ void SubTurret::SetReady(bool ready) {
 
 bool SubTurret::IsReady() {
   return ReadyToShoot;
+}
+
+double SubTurret::CalculateHoodAngle(double x) {
+  return (-0.000008*pow(x,4)) + (0.004*pow(x,3)) - (0.0666*pow(x,2)) + (0.3915*x) + (9.5094);
 }

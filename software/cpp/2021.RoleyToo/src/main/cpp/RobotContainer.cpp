@@ -42,6 +42,7 @@ void RobotContainer::ConfigureButtonBindings() {
   
   // Turret
   btnTrackTarget.WhileHeld(frc2::ParallelCommandGroup{_cmdTrackTarget, _cmdShoot});
+  //btnTrackTarget.WhileHeld(_cmdTrackTarget);
   btnShoot.WhileHeld(_cmdMoveFeeder);
   btnDeployClimber.WhenPressed(_cmdDeployClimber);
   btnIntake.WhileHeld(_cmdIntake);

@@ -14,6 +14,7 @@
 #include <frc/DigitalInput.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "Constants.h"
+#include "math.h"
 
 
 class SubTurret : public frc2::SubsystemBase {
@@ -50,6 +51,7 @@ class SubTurret : public frc2::SubsystemBase {
   void ResetHoodEncoder();
   double GetHoodPos();
   bool GetHoodLimit();
+  double CalculateHoodAngle(double x);
   
 
  private:
@@ -80,8 +82,8 @@ class SubTurret : public frc2::SubsystemBase {
 
   /* These values are in mm
      Measure from ground to target height.*/ 
-  double _targetHeight = 2494.026;
-  double _limelightHeight = 1190;
+  double _targetHeight = 2113;
+  double _limelightHeight = 560;
   double _limelightAngle = 26.5;
   double _encTurretConvFac = _hoodDegreesPerRotation/1;     // 360 points per 1 revolution
 
