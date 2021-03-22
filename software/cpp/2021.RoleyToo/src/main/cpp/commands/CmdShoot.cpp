@@ -25,9 +25,7 @@ void CmdShoot::Initialize() {
 void CmdShoot::Execute() {
   
 
-    _subStorage->MoveFeeder(SubStorage::Forward, 1.0);
-    std::cout << "Fuck\n";
-    
+    _subStorage->MoveFeeder(SubStorage::Forward, 1.0);    
 
   FlywheelPIDOutput += frc::SmartDashboard::GetNumber("Turret F", 0);
   frc::SmartDashboard::PutNumber("current flywheel power", FlywheelPIDOutput);
@@ -40,7 +38,6 @@ void CmdShoot::Execute() {
 // Called once the command ends or is interrupted.
 void CmdShoot::End(bool interrupted) {
   _subStorage->MoveFeeder(SubStorage::Forward, 0.0);
-  std::cout << "Not Fuck\n";
 }
 
 // Returns true when the command should end.
