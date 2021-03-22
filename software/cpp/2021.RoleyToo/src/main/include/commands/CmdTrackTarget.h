@@ -20,7 +20,7 @@
  */
 class CmdTrackTarget : public frc2::CommandHelper<frc2::CommandBase, CmdTrackTarget> {
  public:
-  CmdTrackTarget(SubTurret* subTurret, SubStorage* subStorage);
+  CmdTrackTarget(SubTurret* subTurret);
 
   void Initialize() override;
 
