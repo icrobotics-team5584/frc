@@ -40,6 +40,7 @@ namespace dio {
   constexpr int brkStorageIn = 7;
   constexpr int brkStorageIndex = 8;
   constexpr int brkStorageOut = 9;
+  constexpr int lmtHoodBottom = 0;
 }
 
 namespace buttons {
@@ -59,10 +60,10 @@ namespace buttons {
 }
 
 namespace pcm {
-  constexpr int pcm_solIntakeRetract = 1;
-  constexpr int pcm_solIntakeDeploy = 0;
-  constexpr int solDollyDeploy = 2;
-  constexpr int solDollyRetract = 3;
+  constexpr int pcm_solIntakeRetract = 2;
+  constexpr int pcm_solIntakeDeploy = 6;
+  constexpr int solDollyDeploy = 1;
+  constexpr int solDollyRetract = 7;
   constexpr int solClimbDeploy = 4;
   constexpr int solClimbRetract = 5;
 }

@@ -37,9 +37,10 @@ void RobotContainer::ConfigureButtonBindings() {
 
   //POVButton btnHoodForward{&_joystick0, POVButton::Position::right};
   //POVButton btnHoodBackward{&_joystick0, POVButton::Position::left};
-  POVButton btnTurretLeft{&_joystick0, POVButton::Position::right};
-  POVButton btnTurretRight{&_joystick0, POVButton::Position::left};
-  
+  //POVButton btnTurretLeft{&_joystick0, POVButton::Position::right};
+  //POVButton btnTurretRight{&_joystick0, POVButton::Position::left};
+  POVButton btnHomeHood{&_joystick0, POVButton::Position::left};
+
   // Turret
   btnTrackTarget.WhileHeld(frc2::ParallelCommandGroup{_cmdTrackTarget, _cmdShoot});
   //btnTrackTarget.WhileHeld(_cmdTrackTarget);
@@ -51,8 +52,9 @@ void RobotContainer::ConfigureButtonBindings() {
 
   //btnHoodForward.WhileHeld(_cmdSpinHoodForward);
   //btnHoodBackward.WhileHeld(_cmdSpinHoodBackwards);
-  btnTurretLeft.WhileHeld(_cmdSpinTurretLeft);
-  btnTurretRight.WhileHeld(_cmdSpinTurretRight);
+  //btnTurretLeft.WhileHeld(_cmdSpinTurretLeft);
+  //btnTurretRight.WhileHeld(_cmdSpinTurretRight);
+  btnHomeHood.WhileHeld(_cmdHomeHood);
 
   //xBtn.WhenHeld(frc2::SequentialCommandGroup{_cmdSpinColorWheel, _cmdMoveCenterColor, _cmdSpinToColor}); 
 }
