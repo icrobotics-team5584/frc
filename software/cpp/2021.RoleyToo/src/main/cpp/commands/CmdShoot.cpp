@@ -7,7 +7,7 @@
 
 CmdShoot::CmdShoot(SubStorage* subStorage, SubTurret* subTurret) {
   // Use addRequirements() here to declare subsystem dependencies.
-  _subTurret = subTurret;
+  _subStorage = subStorage;
   //frc::SmartDashboard::PutNumber("Shooter Speedies", 0);
 
 }
@@ -25,20 +25,16 @@ void CmdShoot::Initialize() {
 void CmdShoot::Execute() {
   
 
-  if (_subTurret->IsReady()) {
-    _subStorage->MoveFeeder(SubStorage::Forward, FeederSpeed);
+    _subStorage->MoveFeeder(SubStorage::Forward, 1.0);
+    std::cout << "Fuck\n";
     
-    //_subTurret->SetFlywheel(frc::SmartDashboard::GetNumber("Shooter Speedies", 0));
-  }
-  else {
-    StopEverythingAndPanic();
-  }
 
 }
 
 // Called once the command ends or is interrupted.
 void CmdShoot::End(bool interrupted) {
-  StopEverythingAndPanic();
+  _subStorage->MoveFeeder(SubStorage::Forward, 0.0);
+  std::cout << "Not Fuck\n";
 }
 
 // Returns true when the command should end.
