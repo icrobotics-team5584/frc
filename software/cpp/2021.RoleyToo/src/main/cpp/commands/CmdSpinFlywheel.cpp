@@ -18,25 +18,10 @@ void CmdSpinFlywheel::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdSpinFlywheel::Execute() {
-  _error = _subTurret->GetFlywheelRPM() - _setpoint;
-
-  _setpoint = frc::SmartDashboard::GetNumber("wheel setpoint", 0);
-  frc::SmartDashboard::PutNumber("wheel error", _error);
-  _PIDOutput = _flywheelPID.Calculate(_error);
-  _currentPower += _PIDOutput;
+  _PIDOutput = _flywheelPID.Calculate(_subTurret->GetFlywheelRPM(), _setpoint);
   //std::cout << "output: " << _PIDOutput << "\n";
-
-  if (_currentPower > _maxPower) {
-    _currentPower = _maxPower;
-    //std::cout << "too fast" << "\n";
-  }
-  if (_currentPower < 0) {
-    _currentPower = 0;
-    //std::cout << "too slow" << "\n";
-  }
-
-  frc::SmartDashboard::PutNumber("current flywheel power", _currentPower);
-  _subTurret->SetFlywheel(_currentPower);
+  frc::SmartDashboard::PutNumber("current flywheel power", _PIDOutput);
+  _subTurret->SetFlywheel(_PIDOutput);
 }
 
 // Called once the command ends or is interrupted.

@@ -7,29 +7,30 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 
+#include <frc/controller/PIDController.h>
+
+#include "subsystems/SubTurret.h"
 #include "subsystems/SubStorage.h"
 
-/**
- * An example command.
- *
- * <p>Note that this extends CommandHelper, rather extending CommandBase
- * directly; this is crucially important, or else the decorator functions in
- * Command will *not* work!
- */
-class CmdMoveFeeder
-    : public frc2::CommandHelper<frc2::CommandBase, CmdMoveFeeder> {
+class CmdShoot
+    : public frc2::CommandHelper<frc2::CommandBase, CmdShoot> {
  public:
-  CmdMoveFeeder(SubStorage* subStorage);
-
+  CmdShoot(SubStorage* subStorage, SubTurret* subTurret);
   void Initialize() override;
-
   void Execute() override;
-
   void End(bool interrupted) override;
-
   bool IsFinished() override;
+
  private:
+  //PARAMETERS//
+  
+  double StorageSpeed = 0.85;
+  double FeederSpeed = 1;
+  //////////////
+
+  void StopEverythingAndPanic();
+
+  SubTurret* _subTurret;
   SubStorage* _subStorage;
-  double _speed = 1;
-  SubStorage::Direction _direction;
+  
 };
