@@ -31,17 +31,28 @@ void RobotContainer::ConfigureButtonBindings() {
   AxisButton btnShoot{&_joystick0, buttons::rightTrigger};
   POVButton btnTurretOverride{&_joystick0, POVButton::Position::down};
   frc2::JoystickButton btnShootOverride{&_joystick0, buttons::xBtn};
-
   POVButton btnDeployClimber{&_joystick0, POVButton::Position::up};
   //frc2::JoystickButton xBtn{&_joystick0, buttons::xBtn};
-  
-  // Turret
-  btnTrackTarget.WhileHeld(_cmdTrackTarget);
-  btnShoot.WhileHeld(_cmdSpinFlywheel);
 
+  //POVButton btnHoodForward{&_joystick0, POVButton::Position::right};
+  //POVButton btnHoodBackward{&_joystick0, POVButton::Position::left};
+  //POVButton btnTurretLeft{&_joystick0, POVButton::Position::right};
+  //POVButton btnTurretRight{&_joystick0, POVButton::Position::left};
+  POVButton btnHomeHood{&_joystick0, POVButton::Position::left};
+
+  // Turret
+  btnTrackTarget.WhileHeld(frc2::ParallelCommandGroup{_cmdTrackTarget, _cmdShoot});
+  btnShoot.WhileHeld(_cmdMoveFeeder);
   btnDeployClimber.WhenPressed(_cmdDeployClimber);
-  btnIntake.WhenPressed(_cmdIntake);
+  btnIntake.WhileHeld(_cmdIntake);
   btnClimbToPos.WhileHeld(_cmdClimbToPos);
+
+  //btnHoodForward.WhileHeld(_cmdSpinHoodForward);
+  //btnHoodBackward.WhileHeld(_cmdSpinHoodBackwards);
+  //btnTurretLeft.WhileHeld(_cmdSpinTurretLeft);
+  //btnTurretRight.WhileHeld(_cmdSpinTurretRight);
+  btnHomeHood.WhileHeld(_cmdHomeHood);
+
   //xBtn.WhenHeld(frc2::SequentialCommandGroup{_cmdSpinColorWheel, _cmdMoveCenterColor, _cmdSpinToColor}); 
 }
 
