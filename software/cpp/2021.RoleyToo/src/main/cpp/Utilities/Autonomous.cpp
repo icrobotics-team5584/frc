@@ -99,9 +99,9 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
   //Calculates previous error for Derivative
   previousError = error;
   autoOutput.steering = steering;
-  autoOutput.speed = speed;
-  autoOutput.steering = 0;
-  autoOutput.speed = 0;
+  autoOutput.speed = -speed;
+  //autoOutput.steering = 0;
+  //autoOutput.speed = 0;
   
   //std::cout<<"Running"<<std::endl;
   frc::SmartDashboard::PutNumber("error", error);
@@ -135,8 +135,8 @@ DriveInput Autonomous::turnTo(double angle, PIDk PIDk){
   frc::SmartDashboard::PutNumber("error", error);
   previousError = error;
   autoOutput.steering = steering;
-  autoOutput.speed = 0;
-  autoOutput.steering = 0;
+  //autoOutput.speed = 0;
+  //autoOutput.steering = 0;
   return autoOutput;
 }
 

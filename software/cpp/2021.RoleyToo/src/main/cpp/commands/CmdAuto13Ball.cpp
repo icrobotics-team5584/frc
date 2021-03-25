@@ -13,13 +13,16 @@ CmdAuto13Ball::CmdAuto13Ball(SubDriveBase* subDriveBase, SubIntake* subIntake) :
 } {
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
-  /*AddCommands(CmdAutoSetPose{&_autonomous, 0, -0.4, 0},
-              CmdAutoDrive{subDriveBase, &_autonomous, 0,0,-1.5,1.5,-90,-1.5,0, PIDk{-3.2, 0, -20}, 0.1},
-              CmdAutoDrive{subDriveBase, &_autonomous, -1.5,1.5,-2.35,1.5,-90,-1.5,1.5,PIDk{-3.2, 0, -20},0.1},
-              CmdAutoDrive{subDriveBase, &_autonomous, -1.5,1.5,0,0,180,-1.5,0, PIDk{3.2, 0, 20}, -0.1},
-              CmdAutoDrive{subDriveBase, &_autonomous, 0,0,0,-0.85,180,0,0, PIDk{3.2, 0, 20}, -0.1}
-              );*/
-  
+  ///*
+  AddCommands(CmdAutoSetPose{&_autonomous, 0, -0.4, 0},
+              CmdAutoDrive{subDriveBase, &_autonomous, 0,0,-1.5,1.5,-90,-1.5,0, PIDk{3.2, 0, 20}, 0.1},
+              CmdAutoDrive{subDriveBase, &_autonomous, -1.5,1.5,-2.35,1.5,-90,-1.5,1.5,PIDk{3.2, 0, 20},0.1},
+              CmdAutoDrive{subDriveBase, &_autonomous, -1.5,1.5,0,0,180,-1.5,0, PIDk{-3.2, 0, -20}, -0.1},
+              CmdAutoDrive{subDriveBase, &_autonomous, 0,0,0,-0.85,180,0,0, PIDk{-3.2, 0, -20}, -0.1}
+              );
+  //*/
+  /*
   AddCommands(CmdAutoSetPose{&_autonomous, 0, -0.4, 0}, CmdAutoTurn{subDriveBase, &_autonomous, PIDk{-0.01, 0, 0}, 90});
-  //AddCommands(CmdAutoIntakeDeploy{subIntake}, CmdAutoIntake{subIntake, 2, 2}, CmdAutoIntakeRetract{subIntake});
+  AddCommands(CmdAutoIntakeDeploy{subIntake}, CmdAutoIntake{subIntake, 2, 2}, CmdAutoIntakeRetract{subIntake});
+  //*/
 }
