@@ -9,6 +9,7 @@
 
 #include "subsystems/SubTurret.h"
 #include "subsystems/SubStorage.h"
+#include "subsystems/SubIntake.h"
 #include <frc/controller/PIDController.h>
 
 /**
@@ -20,7 +21,7 @@
  */
 class CmdTrackTarget : public frc2::CommandHelper<frc2::CommandBase, CmdTrackTarget> {
  public:
-  CmdTrackTarget(SubTurret* subTurret);
+  CmdTrackTarget(SubTurret* subTurret, SubIntake* subIntake);
 
   void Initialize() override;
 
@@ -31,7 +32,7 @@ class CmdTrackTarget : public frc2::CommandHelper<frc2::CommandBase, CmdTrackTar
   bool IsFinished() override;
  private:
   SubTurret* _subTurret;
-  SubStorage* _subStorage;
+  SubIntake* _subIntake;
 
   double FlywheelRPMTarget = 5000;
   double FlywheelPID[3] = {0.01, 0.0, 0.0000053};

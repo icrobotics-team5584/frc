@@ -6,9 +6,10 @@
 #include "frc/smartdashboard/SmartDashboard.h"
 
 
-CmdTrackTarget::CmdTrackTarget(SubTurret* subTurret) {
+CmdTrackTarget::CmdTrackTarget(SubTurret* subTurret, SubIntake* subIntake) {
   // Use addRequirements() here to declare subsystem dependencies.
   _subTurret = subTurret;
+  _subIntake = subIntake;
   frc::SmartDashboard::PutNumber("Hood Target", 7.15);
   frc::SmartDashboard::PutNumber("Hood F", _hoodF);
 }
@@ -18,6 +19,7 @@ void CmdTrackTarget::Initialize() {
   frc::SmartDashboard::PutData("Turret PID", &_turretPID);
   frc::SmartDashboard::PutData("Hood PID", &_hoodPID);
   _subTurret->LimeLEDOn();
+  _subIntake->Deploy();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -60,6 +62,7 @@ void CmdTrackTarget::End(bool interrupted) {
   _subTurret->SetTurret(0);
   _subTurret->SetHood(0);
   //_subTurret->LimeLEDOff();
+  _subIntake->Retract();
 }
 
 // Returns true when the command should end.
