@@ -33,6 +33,8 @@ class SubTurret : public frc2::SubsystemBase {
   bool GetRightLimit();
   double GetTurretAngle();
   void ResetTurretEncoder();
+  void ResetHoodEncoder();
+  bool GetHoodLimit();
 
   void SetReady(bool ready);
   bool IsReady();
@@ -59,12 +61,12 @@ class SubTurret : public frc2::SubsystemBase {
   rev::CANSparkMax _spmHood{can::spmHood, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
 
   rev::CANEncoder _encTurret{_spmTurret.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 2048)};
-  rev::CANEncoder _encHood{_spmHood.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 2048)};
+  rev::CANEncoder _encHood{_spmHood.GetEncoder()};
   rev::CANEncoder _encFlywheel{_spmFlywheelRight.GetEncoder()};
 
   frc::DigitalInput _hlfTurretLeft{dio::hlfTurretLeft};
   frc::DigitalInput _hlfTurretRight{dio::hlfTurretRight};
-  frc::DigitalInput _hlfHoodDown{dio::hlfHoodDown};
+  frc::DigitalInput _lmtHoodDown{dio::lmtHoodBottom};
 
   nt::NetworkTableInstance _networktables;
   std::shared_ptr<nt::NetworkTable> _limelight;
@@ -78,8 +80,8 @@ class SubTurret : public frc2::SubsystemBase {
 
   /* These values are in mm
      Measure from ground to target height.*/ 
-  double _targetHeight = 1480;
-  double _limelightHeight = 1190;
+  double _targetHeight = 2500;
+  double _limelightHeight = 583;
   double _limelightAngle = 26.5;
   double _encTurretConvFac = 360/1;     // 360 points per 1 revolution
 
