@@ -46,7 +46,7 @@ void SubDriveBase::zeroEncoders(){
 }
 
 double SubDriveBase::getDistanceTravelled(){
-  double wheelRotations = dollyEncoder.GetPosition();
+  double wheelRotations = dollyEncoder.GetPosition() / 2;
   frc::SmartDashboard::PutNumber("dolly rotations", wheelRotations);
   //double wheelRotations = _srxDolly.GetSelectedSensorPosition()/ENCODER_TICS_PER_ROTATION;
   double distance = wheelRotations * metersPerRotation;
