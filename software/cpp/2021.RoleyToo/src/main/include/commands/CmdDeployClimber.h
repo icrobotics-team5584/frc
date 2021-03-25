@@ -30,4 +30,5 @@ class CmdDeployClimber
   bool IsFinished() override;
  private:
   SubClimber* _subClimber;
+  bool HasDeployed = false;
 };

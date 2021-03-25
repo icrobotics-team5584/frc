@@ -7,6 +7,8 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
 
+#include <Utilities/GameTimer.h>
+
 void Robot::RobotInit() {}
 
 /**
@@ -19,6 +21,7 @@ void Robot::RobotInit() {}
  */
 void Robot::RobotPeriodic() {
   frc2::CommandScheduler::GetInstance().Run();
+  GameTimer::GetInstance()->UpdateTime();
 }
 
 /**

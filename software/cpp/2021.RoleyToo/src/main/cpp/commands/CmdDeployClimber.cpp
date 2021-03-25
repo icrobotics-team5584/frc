@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "commands/CmdDeployClimber.h"
+#include <Utilities/GameTimer.h>
 
 CmdDeployClimber::CmdDeployClimber(SubClimber* subClimber) {
   // Use addRequirements() here to declare subsystem dependencies.
@@ -10,12 +11,19 @@ CmdDeployClimber::CmdDeployClimber(SubClimber* subClimber) {
 }
 
 // Called when the command is initially scheduled.
-void CmdDeployClimber::Initialize() {
-  _subClimber->SetPneumatic(SubClimber::Solenoids::Deploy, frc::DoubleSolenoid::Value::kForward);
-}
+void CmdDeployClimber::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void CmdDeployClimber::Execute() {}
+void CmdDeployClimber::Execute() {
+
+  if (HasDeployed == false) {
+    if (GameTimer::GetInstance()->GetTime(GameTimer::Seconds) < 30) {
+      _subClimber->SetPneumatic(SubClimber::Solenoids::Deploy, frc::DoubleSolenoid::Value::kForward);
+      HasDeployed = true;
+    }
+  }
+
+}
 
 // Called once the command ends or is interrupted.
 void CmdDeployClimber::End(bool interrupted) {}

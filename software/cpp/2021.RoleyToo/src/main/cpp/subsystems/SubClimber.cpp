@@ -36,8 +36,10 @@ void SubClimber::Retract(double speed, Side side) {
     switch (side) {
         case left:
             _spmClimbLeft.Set(speed);
+            break;
         case right:
             _spmClimbRight.Set(speed);
+            break;
     }
 }
 

@@ -23,7 +23,7 @@ class CmdShoot
 
  private:
   //PARAMETERS//
-  
+  double FlywheelPIDOutput;
   double StorageSpeed = 0.85;
   double FeederSpeed = 1;
   //////////////
