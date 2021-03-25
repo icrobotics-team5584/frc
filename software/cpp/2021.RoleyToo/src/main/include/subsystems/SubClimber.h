@@ -30,9 +30,9 @@ class SubClimber : public frc2::SubsystemBase {
 
   bool GetLimit(Limit limit);
   int GetEncoder(Side side);
-  void Drive(double speed);
+  void Retract(double speed, Side side);
   void SetPneumatic(Solenoids solenoid, frc::DoubleSolenoid::Value value);
-  void SetCoast(bool mode);
+  void SetMode(bool mode);
 
 
   

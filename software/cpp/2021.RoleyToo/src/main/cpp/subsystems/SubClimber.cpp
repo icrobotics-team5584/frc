@@ -32,9 +32,13 @@ bool SubClimber::GetLimit(Limit limit) {
     return false;
 }
 
-void SubClimber::Drive(double speed) {
-    _spmClimbLeft.Set(speed);
-    _spmClimbRight.Set(speed);
+void SubClimber::Retract(double speed, Side side) {
+    switch (side) {
+        case left:
+            _spmClimbLeft.Set(speed);
+        case right:
+            _spmClimbRight.Set(speed);
+    }
 }
 
 //TODO: Encoder PID Drive
@@ -47,7 +51,7 @@ void SubClimber::SetPneumatic(Solenoids solenoid, frc::DoubleSolenoid::Value val
     }
 }
 
-void SubClimber::SetCoast(bool mode) {
+void SubClimber::SetMode(bool mode) {
     if (mode) {
         _spmClimbLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
         _spmClimbRight.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
