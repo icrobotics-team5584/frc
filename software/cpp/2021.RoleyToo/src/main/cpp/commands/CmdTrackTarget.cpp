@@ -61,7 +61,7 @@ void CmdTrackTarget::Execute() {
 void CmdTrackTarget::End(bool interrupted) {
   _subTurret->SetTurret(0);
   _subTurret->SetHood(0);
-  //_subTurret->LimeLEDOff();
+  _subTurret->LimeLEDOff();
   _subIntake->Retract();
 }
 
