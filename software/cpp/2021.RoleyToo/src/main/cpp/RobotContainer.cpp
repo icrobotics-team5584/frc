@@ -48,7 +48,7 @@ void RobotContainer::ConfigureButtonBindings() {
   btnDeployClimber.WhenPressed(_cmdDeployClimber);
   btnIntake.WhileHeld(_cmdIntake);
   btnClimbToPos.WhileHeld(_cmdClimbToPos);
-  btnHomeTurret.WhileHeld(_cmdHomeHood);
+  btnHomeTurret.WhileHeld(_cmdHomeTurret);
 
   //btnHoodForward.WhileHeld(_cmdSpinHoodForward);
   //btnHoodBackward.WhileHeld(_cmdSpinHoodBackwards);
