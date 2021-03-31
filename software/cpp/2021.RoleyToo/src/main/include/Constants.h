@@ -33,7 +33,7 @@ namespace can {
 }
 
 namespace dio {
-  constexpr int hlfHoodDown = 1;
+  constexpr int hlfHoodDown = 0;
   constexpr int hlfTurretLeft = 2;
   constexpr int hlfTurretRight = 3;
   constexpr int lmtClimbStop = 5;
