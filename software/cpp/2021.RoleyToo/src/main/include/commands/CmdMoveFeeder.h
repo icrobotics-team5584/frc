@@ -19,7 +19,7 @@
 class CmdMoveFeeder
     : public frc2::CommandHelper<frc2::CommandBase, CmdMoveFeeder> {
  public:
-  CmdMoveFeeder(SubStorage* subStorage, SubStorage::Direction direction, double speed);
+  CmdMoveFeeder(SubStorage* subStorage);
 
   void Initialize() override;
 
@@ -30,6 +30,6 @@ class CmdMoveFeeder
   bool IsFinished() override;
  private:
   SubStorage* _subStorage;
-  double _speed;
+  double _speed = 1;
   SubStorage::Direction _direction;
 };

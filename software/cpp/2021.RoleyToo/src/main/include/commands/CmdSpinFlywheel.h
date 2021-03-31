@@ -30,10 +30,13 @@ class CmdSpinFlywheel : public frc2::CommandHelper<frc2::CommandBase, CmdSpinFly
   bool IsFinished() override;
  private:
   SubTurret* _subTurret;
-  frc2::PIDController _flywheelPID{0.00005, 0.0, 0.0000053}; //default values
+
+  double FlywheelPID[3] = {0.01, 0.0, 0.0000053};
   double _PIDOutput = 0;
-  double _maxPower = 1;
   double _setpoint = 5000;
   double _currentPower = 0;
   double _error = 0;
+
+  frc2::PIDController _flywheelPID{FlywheelPID[0], FlywheelPID[1], FlywheelPID[2]}; //default values
+  
 };

@@ -14,6 +14,7 @@
 #include <frc/DigitalInput.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "Constants.h"
+#include "math.h"
 
 
 class SubTurret : public frc2::SubsystemBase {
@@ -34,6 +35,9 @@ class SubTurret : public frc2::SubsystemBase {
   double GetTurretAngle();
   void ResetTurretEncoder();
 
+  void SetReady(bool ready);
+  bool IsReady();
+
   void SetTurret(double speed);
   double EstimateDistance();
 
@@ -44,7 +48,10 @@ class SubTurret : public frc2::SubsystemBase {
   double GetFlywheelRPM();
 
   void SetHood(double speed);
+  void ResetHoodEncoder();
   double GetHoodPos();
+  bool GetHoodLimit();
+  double CalculateHoodAngle(double x);
   
 
  private:
@@ -56,7 +63,7 @@ class SubTurret : public frc2::SubsystemBase {
   rev::CANSparkMax _spmHood{can::spmHood, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
 
   rev::CANEncoder _encTurret{_spmTurret.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 2048)};
-  rev::CANEncoder _encHood{_spmHood.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 2048)};
+  rev::CANEncoder _encHood{_spmFlywheelRight.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 8192)};
   rev::CANEncoder _encFlywheel{_spmFlywheelRight.GetEncoder()};
 
   frc::DigitalInput _hlfTurretLeft{dio::hlfTurretLeft};
@@ -66,15 +73,20 @@ class SubTurret : public frc2::SubsystemBase {
   nt::NetworkTableInstance _networktables;
   std::shared_ptr<nt::NetworkTable> _limelight;
 
+  bool ReadyToShoot = false;
+
   double _targetX = 0;
   double _targetY = 0;
   double _targetA = 0;
   bool _targetVisible = false;
 
-  double _targetHeight = 1300;
-  double _limelightHeight = 260;
-  double _limelightAngle = 40;
-  double _encTurretConvFac = 360/1;     // 360 points per 1 revolution
+  /* These values are in mm
+     Measure from ground to target height.*/ 
+  double _targetHeight = 2113;
+  double _limelightHeight = 560;
+  double _limelightAngle = 26.5;
+  double _encTurretConvFac = _hoodDegreesPerRotation/1;     // 360 points per 1 revolution
 
-  double _hoodPosOffset = 0;            // Allows 0 to be the home point while using an absolute encoder
+  double _hoodDegreesPerRotation = 13.2;
+  double _hoodInitialAngle = 7.15;
 };
