@@ -32,7 +32,7 @@ void CmdIntake::Execute() {
 
   frc::SmartDashboard::PutNumber("Storage Current", _subStorage->GetStorageCurrent());
   
-  if (_delayIntake.Get() > 1)
+  if (_delayIntake.Get() > 0.7)
   {
     _subIntake->Intake();
   }
