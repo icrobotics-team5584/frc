@@ -35,7 +35,7 @@
 #include "commands/CmdSpinFlywheel.h"
 #include "commands/CmdTrackTarget.h"
 #include "commands/CmdClimbToPos.h"
-#include "commands/CmdAuto13Ball.h"
+#include "commands/CmdAuto10Ball.h"
 #include "commands/CmdMoveFeeder.h"
 #include "commands/CmdShoot.h"
 #include "commands/CmdHomeHood.h"
@@ -64,7 +64,7 @@ class RobotContainer {
   frc2::Command* GetAutonomousCommand();
   SubDriveBase _subDriveBase;
   //Autonomous _autonomous{ [this]{return _subDriveBase.getYaw();}, [this]{return _subDriveBase.getDistanceTravelled();}};
-  CmdAuto13Ball _cmdAuto13Ball{&_subDriveBase, &_subIntake};
+  CmdAuto10Ball _cmdAuto10Ball{&_subDriveBase, &_subIntake};
  private:
   // The robot's subsystems and commands are defined here...
   //frc::Joystick _joystick0{0};

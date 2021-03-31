@@ -61,5 +61,5 @@ void RobotContainer::ConfigureButtonBindings() {
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous
-  return &_cmdAuto13Ball;
+  return &_cmdAuto10Ball;
 }
