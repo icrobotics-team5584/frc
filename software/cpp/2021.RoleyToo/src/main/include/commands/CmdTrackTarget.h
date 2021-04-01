@@ -53,5 +53,5 @@ class CmdTrackTarget : public frc2::CommandHelper<frc2::CommandBase, CmdTrackTar
 
   double _turretLeftLimit = 43;
   double _turretRightLimit = -60;
-  double _turretCenterPoint = 0;
+  double _turretCenterPoint = 3.73;
 };

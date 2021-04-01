@@ -37,16 +37,13 @@ void CmdTrackTarget::Execute() {
   else {
     _failureCount++;
     if (_failureCount > 20) {
-      _TurretPIDOutput = 0;
+      _TurretPIDOutput = std::clamp(_turretPID.Calculate(_subTurret->GetTurretAngle(), _turretCenterPoint), -0.25, 0.25);
       _hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), 8.25), -0.5, 0.5);
     }
   }
 
   if ((_subTurret->GetTurretAngle() < _turretRightLimit) && (_TurretPIDOutput < 0)) { _TurretPIDOutput = 0; }     // Right Limit
   if ((_subTurret->GetTurretAngle() > _turretLeftLimit) && (_TurretPIDOutput > 0)) { _TurretPIDOutput = 0; }      // Left Limit
-
-  //if ((_subTurret->GetHoodPos() < 10) && (_hoodPIDOutput < 0)) { _hoodPIDOutput = 0; }
-  //if ((_subTurret->GetHoodPos() > 10) && (_hoodPIDOutput > 0)) { _hoodPIDOutput = 0; }
 
   if (_hoodPIDOutput < 0 && !_subTurret->GetHoodLimit()) { _hoodPIDOutput = 0; }
   if (_hoodPIDOutput > 0 && _subTurret->GetHoodPos() > _hoodUpperLimit) { _hoodPIDOutput = 0; }
