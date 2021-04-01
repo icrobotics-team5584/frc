@@ -41,12 +41,6 @@
 #include "commands/CmdHomeHood.h"
 #include "commands/CmdMoveStorage.h"
 
-#include "commands/CmdSpinHoodForward.h"
-#include "commands/CmdSpinHoodBackwards.h"
-
-#include "commands/CmdSpinTurretLeft.h"
-#include "commands/CmdSpinTurretRight.h"
-
 #include "commands/CmdHomeHood.h"
 #include "commands/CmdHomeTurret.h"
 
@@ -92,12 +86,6 @@ class RobotContainer {
   CmdHomeHood _cmdHomeHood{&_subTurret};
   CmdHomeTurret _cmdHomeTurret{&_subTurret};
   CmdMoveStorage _cmdMoveStorage{&_subStorage, 9750};
-
-  CmdSpinHoodForward _cmdSpinHoodForward{&_subTurret};
-  CmdSpinHoodBackwards _cmdSpinHoodBackwards{&_subTurret};
-
-  CmdSpinTurretLeft _cmdSpinTurretLeft{&_subTurret};
-  CmdSpinTurretRight _cmdSpinTurretRight{&_subTurret};
 
   void ConfigureButtonBindings();
 };
