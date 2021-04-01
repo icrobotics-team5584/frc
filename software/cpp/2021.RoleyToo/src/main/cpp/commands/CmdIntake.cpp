@@ -15,6 +15,9 @@ CmdIntake::CmdIntake(SubIntake* subIntake) {
 void CmdIntake::Initialize() {
   _timer.Reset();
   _timer.Start();
+
+  _delayIntake.Reset();
+  _delayIntake.Start();
 }
 
 // Called repeatedly when this Command is scheduled to run
