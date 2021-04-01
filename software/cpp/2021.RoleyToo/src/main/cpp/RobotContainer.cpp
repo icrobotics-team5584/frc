@@ -11,6 +11,7 @@
 #include <frc2/command/button/JoystickButton.h>
 #include <frc2/command/PrintCommand.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <frc2/command/ParallelCommandGroup.h>
 
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
@@ -46,7 +47,7 @@ void RobotContainer::ConfigureButtonBindings() {
   btnShoot.WhileHeld(_cmdShoot);
   btnMoveFeeder.WhileHeld(_cmdMoveFeeder);
   btnDeployClimber.WhenPressed(_cmdDeployClimber);
-  btnIntake.WhileHeld(_cmdIntake);
+  btnIntake.WhileHeld(frc2::ParallelCommandGroup{CmdIntake(&_subIntake), CmdMoveStorage(&_subStorage, 9750)});
   btnClimbToPos.WhileHeld(_cmdClimbToPos);
 
   //btnHoodForward.WhileHeld(_cmdSpinHoodForward);
