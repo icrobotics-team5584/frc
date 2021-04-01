@@ -22,7 +22,7 @@
 class CmdIntake
     : public frc2::CommandHelper<frc2::CommandBase, CmdIntake> {
  public:
-  CmdIntake(SubStorage* subStorage, SubIntake* subIntake);
+  CmdIntake(SubIntake* subIntake);
 
   void Initialize() override;
 

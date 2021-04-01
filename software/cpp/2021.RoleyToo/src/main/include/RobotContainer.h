@@ -39,6 +39,7 @@
 #include "commands/CmdMoveFeeder.h"
 #include "commands/CmdShoot.h"
 #include "commands/CmdHomeHood.h"
+#include "commands/CmdMoveStorage.h"
 
 #include "commands/CmdSpinHoodForward.h"
 #include "commands/CmdSpinHoodBackwards.h"
