@@ -82,7 +82,7 @@ class RobotContainer {
   CmdDriveStorage _cmdDriveStorage{&_subStorage, SubStorage::Direction::Forward, 0.2};
   CmdSpinFlywheel _cmdSpinFlywheel{&_subTurret};
   CmdDeployClimber _cmdDeployClimber{&_subClimber};
-  CmdIntake _cmdIntake{&_subStorage, &_subIntake};
+  CmdIntake _cmdIntake{&_subIntake};
   CmdClimbToPos _cmdClimbToPos{&_subClimber, 20};
   CmdMoveFeeder _cmdMoveFeeder{&_subStorage};
   CmdSpinColorWheel _cmdSpinColorWheel{&_subColorWheel};
@@ -91,7 +91,7 @@ class RobotContainer {
   CmdShoot _cmdShoot{&_subStorage, &_subTurret};
   CmdHomeHood _cmdHomeHood{&_subTurret};
   CmdHomeTurret _cmdHomeTurret{&_subTurret};
-
+  CmdMoveStorage _cmdMoveStorage{&_subStorage, 9750};
 
   CmdSpinHoodForward _cmdSpinHoodForward{&_subTurret};
   CmdSpinHoodBackwards _cmdSpinHoodBackwards{&_subTurret};

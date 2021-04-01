@@ -43,11 +43,11 @@ void RobotContainer::ConfigureButtonBindings() {
   POVButton btnHomeHood{&_joystick0, POVButton::Position::left};
 
   // Turret
-  btnTrackTarget.WhileHeld(frc2::ParallelCommandGroup{_cmdTrackTarget, _cmdShoot});
+  btnTrackTarget.WhileHeld(frc2::ParallelCommandGroup{_cmdTrackTarget, _cmdShoot, _cmdMoveStorage});
   //btnTrackTarget.WhileHeld(_cmdTrackTarget);
   btnShoot.WhileHeld(_cmdMoveFeeder);
   btnDeployClimber.WhenPressed(_cmdDeployClimber);
-  btnIntake.WhileHeld(frc2::ParallelCommandGroup{CmdIntake(&_subIntake), CmdMoveStorage(&_subStorage, 9750)});
+  btnIntake.WhileHeld(frc2::ParallelCommandGroup{_cmdIntake, _cmdMoveStorage});
   btnClimbToPos.WhileHeld(_cmdClimbToPos);
   btnHomeTurret.WhileHeld(_cmdHomeTurret);
 
