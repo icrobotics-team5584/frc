@@ -17,8 +17,8 @@ CmdShoot::CmdShoot(SubStorage* subStorage, SubTurret* subTurret) {
 }
 
 void CmdShoot::StopEverythingAndPanic() {
-  //_subStorage->MoveFeeder(SubStorage::Forward, 0);
-  _subStorage->Move(SubStorage::Forward, 0);
+  _subStorage->MoveFeeder(SubStorage::Forward, 0);
+  // _subStorage->Move(SubStorage::Forward, 0);
   _subTurret->SetFlywheel(0);
 }
 
@@ -32,8 +32,8 @@ void CmdShoot::Initialize() {
 void CmdShoot::Execute() {
   _turretPID.SetPID(frc::SmartDashboard::GetNumber("Turret P", 0), frc::SmartDashboard::GetNumber("Turret I", 0), frc::SmartDashboard::GetNumber("Turret D", 0));
 
-  //_subStorage->MoveFeeder(SubStorage::Forward, FeederSpeed);
-  _subStorage->Move(SubStorage::Forward, StorageSpeed);
+  _subStorage->MoveFeeder(SubStorage::Forward, FeederSpeed);
+  // _subStorage->Move(SubStorage::Forward, StorageSpeed);
   FlywheelPIDOutput = _turretPID.Calculate(_subTurret->GetFlywheelRPM(), FlywheelRPMTarget);
 
   FlywheelPIDOutput += frc::SmartDashboard::GetNumber("Turret F", 0);

@@ -11,6 +11,7 @@
 #include <frc2/command/button/JoystickButton.h>
 #include <frc2/command/PrintCommand.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <frc2/command/ParallelCommandGroup.h>
 
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
@@ -38,11 +39,11 @@ void RobotContainer::ConfigureButtonBindings() {
   POVButton btnHomeHood{&_joystick0, POVButton::Position::left};
 
   // Turret
-  btnTrackTarget.WhileHeld(frc2::ParallelCommandGroup{_cmdTrackTarget, _cmdShoot});
+  btnTrackTarget.WhileHeld(frc2::ParallelCommandGroup{_cmdTrackTarget, _cmdShoot, _cmdMoveStorage});
   //btnTrackTarget.WhileHeld(_cmdTrackTarget);
   btnShoot.WhileHeld(_cmdMoveFeeder);
   btnDeployClimber.WhenPressed(_cmdDeployClimber);
-  btnIntake.WhileHeld(_cmdIntake);
+  btnIntake.WhileHeld(frc2::ParallelCommandGroup{_cmdIntake, _cmdMoveStorage});
   btnClimbToPos.WhileHeld(_cmdClimbToPos);
 
   //btnHomeHood.WhileHeld(_cmdHomeHood);
