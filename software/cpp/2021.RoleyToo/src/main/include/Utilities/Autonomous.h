@@ -18,7 +18,7 @@ class Autonomous {
   void setPosition(double x, double y);
   void setAngle(double theta);
   DriveInput autoDrive(double startX, double startY, double endX, double endY, double endHeading, double cenX, double cenY, PIDk PIDk, double speed);
-  bool end(double endx, double endy, double endHeading);
+  bool end(double endx, double endy, double endHeading, double power);
   DriveInput turnTo(double angle, PIDk PIDk);
   bool turnToEnd(double angle);
  private:
@@ -43,8 +43,9 @@ class Autonomous {
   double frontPosY;
   double backPosX;
   double backPosY;
-  const double metersToFront = 0.4;
-  const double metersToBack = 0.45;
+  double pidReverse;
+  const double metersToFront = 0.5;
+  const double metersToBack = 0.5;
   DriveInput autoOutput;
   frc::Notifier notifier{ [this]{Periodic();} };
   std::function<double()> _getYaw;

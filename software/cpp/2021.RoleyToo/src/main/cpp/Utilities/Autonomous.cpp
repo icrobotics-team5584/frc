@@ -11,6 +11,8 @@ Autonomous::Autonomous(std::function<double()> getYaw, std::function<double()> g
   _getDistance = getDistance;
   prevDistance = _getDistance();
   notifier.StartPeriodic(fasterPeriod);
+  frc::SmartDashboard::PutNumber("back y", backPosY);
+  frc::SmartDashboard::PutNumber("back ", backPosX);
 }
 
 void Autonomous::Periodic(){
@@ -66,8 +68,12 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
     double a = sqrt(pow((startX - posX), 2) + pow((startY - posY), 2));
     double c = sqrt(pow((posX - endX), 2) + pow((posY - endY), 2));
     double s = (a+b+c)/2;
-    
-    error = sqrt(s*(s-a)*(s-b)*(s-c))*2/b;
+    if(endHeading > (endHeading - atan((posY-endY)/(posX-endX))*(180/pi))){
+      pidReverse = 1;
+    }else{
+      pidReverse = -1;
+    }
+    error = sqrt(s*(s-a)*(s-b)*(s-c))*2/b*pidReverse;
   }else{
     //checks if slope is undefined
     /*if(((int)round(endHeading*10))%1800 == 0){
@@ -113,17 +119,32 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
   frc::SmartDashboard::PutNumber("midy", dollyPosY);
   frc::SmartDashboard::PutNumber("front y", frontPosY);
   frc::SmartDashboard::PutNumber("frontx", frontPosX);
+  frc::SmartDashboard::PutNumber("back y", backPosY);
+  frc::SmartDashboard::PutNumber("back ", backPosX);
   frc::SmartDashboard::PutNumber("auto angle", _getYaw() + angleOffset);
   return autoOutput;
 }
 
-bool Autonomous::end(double endx, double endy, double endHeading){
-  frc::SmartDashboard::PutNumber("angle thing", abs(endHeading-(atan2(posY-endy, posX-endx)*(-180/pi)+90)));
-  if(abs(endHeading-(atan2(posY-endy, posX-endx)*(-180/pi)+90)) < 90){
-    return true;
+bool Autonomous::end(double endx, double endy, double endHeading, double power){
+  //frc::SmartDashboard::PutNumber("angle thing", abs(endHeading-(atan2(posY-endy, posX-endx)*(-180/pi)+90)));
+  //if(abs(endHeading-(atan2(posY-endy, posX-endx)*(-180/pi)+90)) < 90){
+  if(power > 0){
+    
+      if(sqrt(pow((frontPosX - endx), 2) + pow((frontPosY - endy), 2)) < 0.01){
+        return true;
+      }else{
+        return false;
+      }
   }else{
-    return false;
+    std::cout<< sqrt(pow((backPosX - endx), 2) + pow((backPosY - endy), 2))<< std::endl;
+
+    if(sqrt(pow((backPosX - endx), 2) + pow((backPosY - endy), 2)) < 0.01){
+        return true;
+      }else{
+        return false;
+      }
   }
+  
 }
 
 DriveInput Autonomous::turnTo(double angle, PIDk PIDk){
