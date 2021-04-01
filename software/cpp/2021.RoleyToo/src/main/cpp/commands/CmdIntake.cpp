@@ -29,9 +29,14 @@ void CmdIntake::Execute() {
   _subIntake->Intake();
 
   frc::SmartDashboard::PutNumber("Storage Current", _subStorage->GetStorageCurrent());
+  frc::SmartDashboard::PutNumber("Storage Speed", _subStorage->GetEncoderSpeed());
+
+  double MinimumVelocity = 9750;
 
   if (_timer.Get() > 1.5) {
-    if (_subStorage->GetStorageCurrent() > 15) {
+    /* WARNING: Long Code Ahead!
+       If storage is slower than minimum velocity, switch direction of storage and reset timer */
+    if ((_subStorage->GetEncoderSpeed() < MinimumVelocity and _subStorage->GetEncoderSpeed() > 0) || (_subStorage->GetEncoderSpeed() > -MinimumVelocity and _subStorage->GetEncoderSpeed() < 0)) {
       _overcurrenttime.Start();
       if (_overcurrenttime.Get() > 0.7) {
         switch (_currentdir) {
