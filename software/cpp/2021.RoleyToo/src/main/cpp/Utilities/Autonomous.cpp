@@ -136,8 +136,6 @@ bool Autonomous::end(double endx, double endy, double endHeading, double power){
         return false;
       }
   }else{
-    std::cout<< sqrt(pow((backPosX - endx), 2) + pow((backPosY - endy), 2))<< std::endl;
-
     if(sqrt(pow((backPosX - endx), 2) + pow((backPosY - endy), 2)) < 0.01){
         return true;
       }else{
@@ -161,8 +159,9 @@ DriveInput Autonomous::turnTo(double angle, PIDk PIDk){
   return autoOutput;
 }
 
-bool Autonomous::turnToEnd(double angle){
-  if(/*round((_getYaw() + angleOffset) - angle) == 0 &&*/ abs(steering) < 0.1){
+bool Autonomous::turnToEnd(double angle, double tolerance){
+  
+  if(abs(round((_getYaw()) - angle - angleOffset)) < tolerance){
     return true;
   }else{
     return false;

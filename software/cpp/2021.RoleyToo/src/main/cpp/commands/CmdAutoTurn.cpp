@@ -4,13 +4,14 @@
 
 #include "commands/CmdAutoTurn.h"
 
-CmdAutoTurn::CmdAutoTurn(SubDriveBase* subDriveBase, Autonomous* autonomous, PIDk PIDconstants, double angle) {
+CmdAutoTurn::CmdAutoTurn(SubDriveBase* subDriveBase, Autonomous* autonomous, PIDk PIDconstants, double angle, double tolerance) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements(subDriveBase);
   _autonomous = autonomous;
   _subDriveBase = subDriveBase;
   _PIDconstants = PIDconstants;
   _angle = angle;
+  _tolerance = tolerance;
 }
 
 // Called when the command is initially scheduled.
@@ -27,5 +28,5 @@ void CmdAutoTurn::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool CmdAutoTurn::IsFinished() {
-  return _autonomous->turnToEnd(_angle);
+  return _autonomous->turnToEnd(_angle, _tolerance);
 }

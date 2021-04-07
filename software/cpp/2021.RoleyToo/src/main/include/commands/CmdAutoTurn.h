@@ -20,7 +20,7 @@
 class CmdAutoTurn
     : public frc2::CommandHelper<frc2::CommandBase, CmdAutoTurn> {
  public:
-  CmdAutoTurn(SubDriveBase* subDriveBase, Autonomous* autonomous, PIDk PIDconstants, double angle);
+  CmdAutoTurn(SubDriveBase* subDriveBase, Autonomous* autonomous, PIDk PIDconstants, double angle, double tolerance);
 
   void Initialize() override;
 
@@ -34,5 +34,6 @@ class CmdAutoTurn
   SubDriveBase* _subDriveBase;
   Autonomous* _autonomous;
   PIDk _PIDconstants;
+  double _tolerance;
   double _angle;
 };
