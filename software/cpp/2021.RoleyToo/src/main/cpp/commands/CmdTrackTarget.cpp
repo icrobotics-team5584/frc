@@ -25,14 +25,16 @@ void CmdTrackTarget::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void CmdTrackTarget::Execute() {
   //LEFT POSITIVE, RIGHT NEGATIVE
-  _hoodTarget = frc::SmartDashboard::GetNumber("Hood Target", 0);
   _hoodF = frc::SmartDashboard::GetNumber("Hood F", 0);
+  _hoodTarget = frc::SmartDashboard::GetNumber("Hood Target", 0);
   frc::SmartDashboard::PutNumber("Estimated Hood Angle", _subTurret->CalculateHoodAngle(_subTurret->GetY()));
   if (_subTurret->CheckTarget()) {
       _failureCount = 0;
       std::cout << "Target Visible\n";
       _TurretPIDOutput = std::clamp(_turretPID.Calculate(_subTurret->GetX()), -0.25, 0.25);
-      _hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _subTurret->CalculateHoodAngle(_subTurret->GetY())), -0.5, 0.5);
+      //_hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _subTurret->CalculateHoodAngle(_subTurret->GetY())), -0.5, 0.5);
+      _hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _hoodTarget), -0.5, 0.5);
+
   }
   else {
     _failureCount++;
@@ -52,6 +54,8 @@ void CmdTrackTarget::Execute() {
   std::cout << "Hood PID Output: " << _hoodPIDOutput << "\n";
   _subTurret->SetTurret(_TurretPIDOutput);
   _subTurret->SetHood(_hoodPIDOutput);
+
+  frc::SmartDashboard::PutNumber("Hood Angle", _subTurret->GetHoodPos());
 }
 
 // Called once the command ends or is interrupted.
