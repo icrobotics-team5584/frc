@@ -30,6 +30,8 @@ class SubTurret : public frc2::SubsystemBase {
   double GetY();
   double GetTargetArea();
   bool CheckTarget();
+  std::pair<double, double> GetCrosshair();
+
   bool GetLeftLimit();
   bool GetRightLimit();
   double GetTurretAngle();
