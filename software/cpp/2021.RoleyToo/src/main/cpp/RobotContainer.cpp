@@ -11,6 +11,7 @@
 #include <frc2/command/button/JoystickButton.h>
 #include <frc2/command/PrintCommand.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <frc2/command/ParallelCommandGroup.h>
 
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
@@ -35,26 +36,19 @@ void RobotContainer::ConfigureButtonBindings() {
   POVButton btnDeployClimber{&_joystick0, POVButton::Position::up};
   //frc2::JoystickButton xBtn{&_joystick0, buttons::xBtn};
 
-  //POVButton btnHoodForward{&_joystick0, POVButton::Position::right};
-  //POVButton btnHoodBackward{&_joystick0, POVButton::Position::left};
-  //POVButton btnTurretLeft{&_joystick0, POVButton::Position::right};
-  //POVButton btnTurretRight{&_joystick0, POVButton::Position::left};
   POVButton btnHomeHood{&_joystick0, POVButton::Position::left};
 
   // Turret
-  btnTrackTarget.WhileHeld(frc2::ParallelCommandGroup{_cmdTrackTarget, _cmdShoot});
+  btnTrackTarget.WhileHeld(frc2::ParallelCommandGroup{_cmdTrackTarget, _cmdShoot, _cmdMoveStorage});
   //btnTrackTarget.WhileHeld(_cmdTrackTarget);
   btnShoot.WhileHeld(_cmdMoveFeeder);
   btnDeployClimber.WhenPressed(_cmdDeployClimber);
-  btnIntake.WhileHeld(_cmdIntake);
+  btnIntake.WhileHeld(frc2::ParallelCommandGroup{_cmdIntake, _cmdMoveStorage});
   btnClimbToPos.WhileHeld(_cmdClimbToPos);
-  btnHomeTurret.WhileHeld(_cmdHomeHood);
 
-  //btnHoodForward.WhileHeld(_cmdSpinHoodForward);
-  //btnHoodBackward.WhileHeld(_cmdSpinHoodBackwards);
-  //btnTurretLeft.WhileHeld(_cmdSpinTurretLeft);
-  //btnTurretRight.WhileHeld(_cmdSpinTurretRight);
-  btnHomeHood.WhileHeld(_cmdHomeHood);
+  //btnHomeHood.WhileHeld(_cmdHomeHood);
+  btnHomeTurret.WhileHeld(frc2::ParallelCommandGroup{_cmdHomeHood, _cmdHomeTurret});
+
 
   //xBtn.WhenHeld(frc2::SequentialCommandGroup{_cmdSpinColorWheel, _cmdMoveCenterColor, _cmdSpinToColor}); 
 }

@@ -11,26 +11,22 @@ CmdHomeTurret::CmdHomeTurret(SubTurret* subTurret) {
 
 // Called when the command is initially scheduled.
 void CmdHomeTurret::Initialize() {
-  _subTurret->SetTurret(0.3);
+  if (!_subTurret->GetRightLimit())
+  {
+    _subTurret->SetTurret(_homingSpeed);
+  }
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdHomeTurret::Execute() {
-  if (_subTurret->GetLeftLimit()) {
-    _subTurret->ResetTurretEncoder();
-    while(_subTurret->GetTurretAngle() < 10) {
-      _subTurret->SetTurret(-0.3);
-    }
-    targetReached = true;
-  }
-}
+void CmdHomeTurret::Execute() {}
 
 // Called once the command ends or is interrupted.
 void CmdHomeTurret::End(bool interrupted) {
   _subTurret->SetTurret(0);
+  _subTurret->ResetTurretEncoder();
 }
 
 // Returns true when the command should end.
 bool CmdHomeTurret::IsFinished() {
-  return targetReached;
+  return _subTurret->GetRightLimit();
 }
