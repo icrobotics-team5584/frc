@@ -21,14 +21,26 @@ CmdIntake::CmdIntake(SubStorage* subStorage, SubIntake* subIntake) {
 void CmdIntake::Initialize() {
   _timer.Reset();
   _timer.Start();
+
+  _delayIntake.Reset();
+  _delayIntake.Start();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdIntake::Execute() {
   _subIntake->Deploy();
-  _subIntake->Intake();
 
   frc::SmartDashboard::PutNumber("Storage Current", _subStorage->GetStorageCurrent());
+  
+  if (_delayIntake.Get() > 0.7)
+  {
+    _subIntake->Intake();
+  }
+  else
+  {
+    _subIntake->Outtake();
+  }
+  
 
   if (_timer.Get() > 1.5) {
     if (_subStorage->GetStorageCurrent() > 15) {
