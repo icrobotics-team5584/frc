@@ -24,7 +24,8 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
-  frc2::JoystickButton btnIntake{&_joystick0, buttons::leftBtn};
+  frc2::JoystickButton btnDeployIntake{&_joystick0, buttons::yBtn};
+  frc2::JoystickButton btnSpinIntake{&_joystick0, buttons::leftBtn};
   frc2::JoystickButton btnClimbToPos{&_joystick0, buttons::rightBtn};
 
   // Turret
@@ -43,7 +44,9 @@ void RobotContainer::ConfigureButtonBindings() {
   //btnTrackTarget.WhileHeld(_cmdTrackTarget);
   btnShoot.WhileHeld(_cmdMoveFeeder);
   btnDeployClimber.WhenPressed(_cmdDeployClimber);
-  btnIntake.WhileHeld(frc2::ParallelCommandGroup{_cmdIntake, _cmdMoveStorage});
+  btnDeployIntake.ToggleWhenPressed(_cmdDeployIntake);
+  btnSpinIntake.WhenPressed(_cmdIntake);
+  // btnIntake.WhileHeld(frcx2::ParallelCommandGroup{_cmdIntake, _cmdMoveStorage});
   btnClimbToPos.WhileHeld(_cmdClimbToPos);
 
   //btnHomeHood.WhileHeld(_cmdHomeHood);
