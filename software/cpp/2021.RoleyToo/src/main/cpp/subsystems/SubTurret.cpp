@@ -27,6 +27,8 @@ SubTurret::SubTurret() {
   _spmHood.SetSmartCurrentLimit(20);
 
   _spmHood.SetInverted(true);
+  _spmFlywheelLeft.SetInverted(true);
+  _spmFlywheelRight.SetInverted(true);
 
   _encHood.SetPosition(0);
 
@@ -44,7 +46,7 @@ void SubTurret::Periodic() {
 
   frc::SmartDashboard::PutNumber("Target Angle", GetY());
 
-  frc::SmartDashboard::PutNumber("Turret Angle", _encTurret.GetPosition());
+  frc::SmartDashboard::PutNumber("Turret Angle", GetTurretAngle());
   frc::SmartDashboard::PutNumber("Hood Angle", GetHoodPos());
 
   frc::SmartDashboard::PutBoolean("Hood Limit", GetHoodLimit());
@@ -73,11 +75,11 @@ bool SubTurret::GetLeftLimit() {
 }
 
 bool SubTurret::GetRightLimit() {
-    return _hlfTurretRight.Get();
+    return !_hlfTurretRight.Get();  // Returns true when turret hits limit
 }
 
 double SubTurret::GetTurretAngle() {
-  return (_encTurret.GetPosition() / _encTurretConvFac);
+  return (_encTurret.GetPosition());
 }
 
 void SubTurret::ResetTurretEncoder() {

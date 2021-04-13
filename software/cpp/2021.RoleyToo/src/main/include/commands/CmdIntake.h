@@ -22,7 +22,7 @@
 class CmdIntake
     : public frc2::CommandHelper<frc2::CommandBase, CmdIntake> {
  public:
-  CmdIntake(SubStorage* subStorage, SubIntake* subIntake);
+  CmdIntake(SubIntake* subIntake);
 
   void Initialize() override;
 
@@ -44,6 +44,7 @@ class CmdIntake
   frc2::PIDController _storagePID{StorageP, StorageI, StorageD};
   frc::Timer _timer;
   frc::Timer _overcurrenttime;
+  frc::Timer _delayIntake;
   SubStorage::Direction _currentdir = SubStorage::Direction::Forward;
   double Setpoint = 10000;
 
