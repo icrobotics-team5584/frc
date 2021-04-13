@@ -64,3 +64,17 @@ bool SubDriveBase::isNavxCal(){
 double SubDriveBase::getYaw(){
   return ahrsNavXGyro.GetYaw();
 }
+
+void SubDriveBase::Brake(){
+  _spmFrontLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  _spmFrontRight.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  _spmBackLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  _spmBackRight.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+}
+
+void SubDriveBase::Coast(){
+  _spmFrontLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  _spmFrontRight.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  _spmBackLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  _spmBackRight.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+}

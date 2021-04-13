@@ -28,6 +28,8 @@ class SubDriveBase : public frc2::SubsystemBase {
   void resetYaw();
   double getYaw();
   bool isNavxCal();
+  void Brake();
+  void Coast();
  
  private:
   // Components (e.g. motor controllers and sensors) should generally be

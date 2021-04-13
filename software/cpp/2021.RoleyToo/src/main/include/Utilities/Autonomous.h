@@ -17,7 +17,7 @@ class Autonomous {
   void updatePosition();
   void setPosition(double x, double y);
   void setAngle(double theta);
-  DriveInput autoDrive(double startX, double startY, double endX, double endY, double endHeading, double cenX, double cenY, PIDk PIDk, double speed);
+  DriveInput autoDrive(double startX, double startY, double endX, double endY, double endHeading, double cenX, double cenY, PIDk pidSpeed, PIDk PIDk, double maxSpeed, double endSpeed);
   bool end(double endx, double endy, double endHeading, double power);
   DriveInput turnTo(double angle, PIDk PIDk);
   bool turnToEnd(double angle, double tolerance);
@@ -34,6 +34,7 @@ class Autonomous {
   double steering;
   double intergral;
   double previousError = 0;
+  double previousDistError = 0;
   double cenX;
   double cenY;
   double radius;
@@ -44,6 +45,7 @@ class Autonomous {
   double backPosX;
   double backPosY;
   double pidReverse;
+  double speed;
   const double metersToFront = 0.5;
   const double metersToBack = 0.5;
   DriveInput autoOutput;

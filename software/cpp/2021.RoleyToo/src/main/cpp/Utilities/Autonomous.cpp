@@ -13,6 +13,10 @@ Autonomous::Autonomous(std::function<double()> getYaw, std::function<double()> g
   notifier.StartPeriodic(fasterPeriod);
   frc::SmartDashboard::PutNumber("back y", backPosY);
   frc::SmartDashboard::PutNumber("back ", backPosX);
+  frc::SmartDashboard::PutNumber("error", error);
+  frc::SmartDashboard::PutNumber("steering error", error);
+  frc::SmartDashboard::PutNumber("speed", speed);
+  frc::SmartDashboard::PutNumber("steering", steering);
 }
 
 void Autonomous::Periodic(){
@@ -47,7 +51,7 @@ void Autonomous::setAngle(double theta){
   angleOffset = theta - _getYaw();
 }
 
-DriveInput Autonomous::autoDrive(double startX, double startY, double endX, double endY, double endHeading, double cenX, double cenY, PIDk PIDk, double speed){
+DriveInput Autonomous::autoDrive(double startX, double startY, double endX, double endY, double endHeading, double cenX, double cenY, PIDk pidSpeed, PIDk PIDk, double maxSpeed, double endSpeed){
   if(speed >= 0){
     posX = frontPosX;
     posY = frontPosY;
@@ -105,7 +109,24 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
   //Calculates previous error for Derivative
   previousError = error;
   autoOutput.steering = steering;
+  frc::SmartDashboard::PutNumber("steering error", error);
+  frc::SmartDashboard::PutNumber("steering", steering);
+
+
+  //speed pid
+  error = sqrt(pow((posX - endX), 2) + pow((posY - endY), 2));
+  intergral = intergral + error;
+  //output = kP*Error + kI*Intergral + kD*Derivative
+  speed = pidSpeed.p*error + pidSpeed.i*intergral + pidSpeed.d*(error - previousDistError);
+  previousDistError = error;
+  if (abs(speed) > abs(maxSpeed)){
+    speed = maxSpeed;
+  }
+  if (abs(speed) < abs(endSpeed)){
+    speed = endSpeed;
+  }
   autoOutput.speed = -speed;
+  frc::SmartDashboard::PutNumber("speed", speed);
   //autoOutput.steering = 0;
   //autoOutput.speed = 0;
   
@@ -130,13 +151,13 @@ bool Autonomous::end(double endx, double endy, double endHeading, double power){
   //if(abs(endHeading-(atan2(posY-endy, posX-endx)*(-180/pi)+90)) < 90){
   if(power > 0){
     
-      if(sqrt(pow((frontPosX - endx), 2) + pow((frontPosY - endy), 2)) < 0.01){
+      if(sqrt(pow((frontPosX - endx), 2) + pow((frontPosY - endy), 2)) < 0.05){
         return true;
       }else{
         return false;
       }
   }else{
-    if(sqrt(pow((backPosX - endx), 2) + pow((backPosY - endy), 2)) < 0.01){
+    if(sqrt(pow((backPosX - endx), 2) + pow((backPosY - endy), 2)) < 0.05){
         return true;
       }else{
         return false;

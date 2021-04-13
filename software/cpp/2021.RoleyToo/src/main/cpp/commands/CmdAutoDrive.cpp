@@ -6,7 +6,7 @@
 
 CmdAutoDrive::CmdAutoDrive(SubDriveBase* subDriveBase, Autonomous* autonomous, double startX, double startY, 
                            double endX, double endY, double endHeading, double cenX, double cenY, 
-                           PIDk PIDconstants, double speed){
+                           PIDk PIDconstants, double speed, double endSpeed, PIDk pidSpeed){
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements(subDriveBase);
   _subDriveBase = subDriveBase;
@@ -20,6 +20,8 @@ CmdAutoDrive::CmdAutoDrive(SubDriveBase* subDriveBase, Autonomous* autonomous, d
   _cenY = cenY;
   _PIDconstants = PIDconstants;
   _speed = speed;
+  _endSpeed = endSpeed;
+  _pidSpeed = pidSpeed;
 }
 
 // Called when the command is initially scheduled.
@@ -27,7 +29,7 @@ void CmdAutoDrive::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void CmdAutoDrive::Execute() {
-  driveInput = _autonomous->autoDrive(_startX, _startY, _endX, _endY, _endHeading, _cenX, _cenY, _PIDconstants, _speed);
+  driveInput = _autonomous->autoDrive(_startX, _startY, _endX, _endY, _endHeading, _cenX, _cenY,  _pidSpeed, _PIDconstants, _speed, _endSpeed);
   _subDriveBase->drive(driveInput.speed, driveInput.steering);
 }
 

@@ -41,6 +41,7 @@ void Robot::AutonomousInit() {
     m_autonomousCommand->Schedule();
   }
   _robotContainer._subDriveBase.deployDolly();
+  _robotContainer._subDriveBase.Brake();
 }
 
 void Robot::AutonomousPeriodic() {}
@@ -55,6 +56,7 @@ void Robot::TeleopInit() {
     m_autonomousCommand = nullptr;
   }
   _robotContainer._subDriveBase.retractDolly();
+  _robotContainer._subDriveBase.Coast();
 }
 
 /**

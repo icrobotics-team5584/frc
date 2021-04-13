@@ -20,7 +20,7 @@ class CmdAutoDrive
     : public frc2::CommandHelper<frc2::CommandBase, CmdAutoDrive> {
  public:
   CmdAutoDrive(SubDriveBase* subDriveBase, Autonomous* autonomous, double startX, double startY, double endX, 
-               double endY, double endHeading, double cenX, double cenY, PIDk PIDconstants, double speed);
+               double endY, double endHeading, double cenX, double cenY, PIDk PIDconstants, double speed, double endSpeed, PIDk pidSpeed);
 
   void Initialize() override;
 
@@ -43,4 +43,6 @@ class CmdAutoDrive
   double _cenY;
   PIDk _PIDconstants;
   double _speed;
+  double _endSpeed;
+  PIDk _pidSpeed;
 };
