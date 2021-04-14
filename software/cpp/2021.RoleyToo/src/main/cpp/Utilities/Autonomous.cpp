@@ -146,24 +146,24 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
   return autoOutput;
 }
 
-bool Autonomous::end(double endx, double endy, double endHeading, double power){
+bool Autonomous::end(double endx, double endy, double startx, double starty, double power){
   //frc::SmartDashboard::PutNumber("angle thing", abs(endHeading-(atan2(posY-endy, posX-endx)*(-180/pi)+90)));
   //if(abs(endHeading-(atan2(posY-endy, posX-endx)*(-180/pi)+90)) < 90){
   if(power > 0){
     
-      if(sqrt(pow((frontPosX - endx), 2) + pow((frontPosY - endy), 2)) < 0.05){
+      if(sqrt(pow((frontPosX - startx), 2) + pow((frontPosY - starty), 2)) > (sqrt(pow((startx - endx), 2) + pow((starty - endy), 2)))-0.1 ){
         return true;
       }else{
         return false;
       }
   }else{
-    if(sqrt(pow((backPosX - endx), 2) + pow((backPosY - endy), 2)) < 0.05){
+    std::cout << sqrt(pow((backPosX - startx), 2) + pow((backPosY - starty), 2)) << " robot \n line: "  << (sqrt(pow((startx - endx), 2) + pow((starty - endy), 2)))-0.1 << std::endl;
+    if(sqrt(pow((backPosX - startx), 2) + pow((backPosY - starty), 2)) > (sqrt(pow((startx - endx), 2) + pow((starty - endy), 2)))-0.1 ){
         return true;
       }else{
         return false;
       }
-  }
-  
+  }  
 }
 
 DriveInput Autonomous::turnTo(double angle, PIDk PIDk){

@@ -18,7 +18,7 @@ class Autonomous {
   void setPosition(double x, double y);
   void setAngle(double theta);
   DriveInput autoDrive(double startX, double startY, double endX, double endY, double endHeading, double cenX, double cenY, PIDk pidSpeed, PIDk PIDk, double maxSpeed, double endSpeed);
-  bool end(double endx, double endy, double endHeading, double power);
+  bool end(double endx, double endy, double startx, double starty,double power);
   DriveInput turnTo(double angle, PIDk PIDk);
   bool turnToEnd(double angle, double tolerance);
  private:
