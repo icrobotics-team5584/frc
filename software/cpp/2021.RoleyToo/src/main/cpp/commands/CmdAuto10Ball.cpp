@@ -18,15 +18,16 @@ CmdAuto10Ball::CmdAuto10Ball(SubDriveBase* subDriveBase, SubIntake* subIntake, S
               frc2::SequentialCommandGroup{
                 //frc2::InstantCommand([subStorage] {subStorage->Move(SubStorage::Direction::Forward, -0.8);}, {subStorage}),
                 
-                CmdAutoSetPose{&_autonomous, -1.7, 3.548,  0},
+                //CmdAutoSetPose{&_autonomous, -1.7, 3.548,  0},
+                CmdAutoSetPose{&_autonomous, -1.7, 6.732,  0},
                 //                                    startx, starty, endx, endy, endheading, cenx, ceny
                 CmdAutoIntakeDeploy(subIntake),
                 frc2::InstantCommand([subIntake]{subIntake->Intake(1);}),
 
-                CmdAutoDrive{subDriveBase, &_autonomous, -1.7, 4.048, -1.7, 8.128, 0, 0, 0, PIDk{-5, 0, -50}, 0.8, 0.5, PIDk{1, 0, 0}},
+                CmdAutoDrive{subDriveBase, &_autonomous, -1.7, 4.048, -1.7, 8.053, 0, 0, 0, PIDk{-5, 0, -50}, 0.1, 0.1, PIDk{1, 0, 0}},
                 
                 
-                CmdAutoDrive{subDriveBase, &_autonomous, -1.7, 8.128, -1.43, 9.028, 16.7, 0, 0, PIDk{-5, 0, -50}, 0.5, 0.2, PIDk{1, 0, 0}},
+                //CmdAutoDrive{subDriveBase, &_autonomous, -1.7, 8.053, -1.235, 9.46, 18.3, 0, 0, PIDk{-5, 0, -50}, 0.1, 0.1, PIDk{1, 0, 0}},
                 //CmdAutoDrive{subDriveBase, &_autonomous, -1.7, 9.514, -1.7, 2.348, 180, 0, 0, PIDk{5, 0, 50}, 0.9, 0.0, PIDk{1, 0, 0}},
 
                 frc2::InstantCommand([subIntake]{subIntake->Stop();}),
