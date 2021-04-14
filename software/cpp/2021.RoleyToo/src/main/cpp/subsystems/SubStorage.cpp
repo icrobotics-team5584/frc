@@ -42,7 +42,7 @@ double SubStorage::GetEncoder() {
   return _encStorageMotor.GetPosition();
 }
 double SubStorage::GetEncoderSpeed() {
-  std::cout << _encStorageMotor.GetVelocity() << "\n";
+  //std::cout << _encStorageMotor.GetVelocity() << "\n";
   return _encStorageMotor.GetVelocity();
   
 }
