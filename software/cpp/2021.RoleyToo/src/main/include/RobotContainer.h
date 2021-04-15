@@ -85,7 +85,7 @@ class RobotContainer {
   CmdShoot _cmdShoot{&_subStorage, &_subTurret};
   CmdHomeHood _cmdHomeHood{&_subTurret};
   CmdHomeTurret _cmdHomeTurret{&_subTurret};
-  CmdMoveStorage _cmdMoveStorage{&_subStorage, 9750};
+  CmdMoveStorage _cmdMoveStorage{&_subStorage, 0};
 
   void ConfigureButtonBindings();
 };

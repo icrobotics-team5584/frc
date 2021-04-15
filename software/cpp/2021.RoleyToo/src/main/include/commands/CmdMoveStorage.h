@@ -35,7 +35,7 @@ class CmdMoveStorage
     frc::Timer _timer;
     frc::Timer _overcurrenttime;
     SubStorage::Direction _currentdir = SubStorage::Direction::Forward;
-    double Setpoint = 10000;
+    double Setpoint = 1000;
     double power = 0;
 
     double _antiJamRPM = 0;
