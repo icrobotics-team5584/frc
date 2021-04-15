@@ -24,7 +24,9 @@ void CmdAutoTurn::Execute() {
 }
 
 // Called once the command ends or is interrupted.
-void CmdAutoTurn::End(bool interrupted) {}
+void CmdAutoTurn::End(bool interrupted) {
+  _subDriveBase->drive(0, 0);
+}
 
 // Returns true when the command should end.
 bool CmdAutoTurn::IsFinished() {

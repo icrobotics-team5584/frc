@@ -21,6 +21,7 @@ class Autonomous {
   bool end(double endx, double endy, double startx, double starty,double power);
   DriveInput turnTo(double angle, PIDk PIDk);
   bool turnToEnd(double angle, double tolerance);
+  double getTurretPower(double turretAngle);
  private:
   const units::second_t fasterPeriod = 10_ms;
   const double pi = 3.1415926535897932384626433832795028841971693993751;
@@ -46,6 +47,9 @@ class Autonomous {
   double backPosY;
   double pidReverse;
   double speed;
+  double power;
+  double turretPreviousError;
+  PIDk tPID;
   const double metersToFront = 0.5;
   const double metersToBack = 0.5;
   DriveInput autoOutput;

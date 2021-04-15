@@ -89,3 +89,7 @@ void SubStorage::ScheduleIndexing(bool scheduled) {
 bool SubStorage::NeedsIndexing() {
   return _needsIndexing;
 }
+
+void SubStorage::Feed(double speed){
+  _spmFeederMotor.Set(speed);
+}

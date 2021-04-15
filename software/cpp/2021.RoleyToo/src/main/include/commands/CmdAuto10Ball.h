@@ -17,10 +17,16 @@
 #include "utilities/Autonomous.h"
 #include "Utilities/PIDk.h"
 #include "commands/CmdMoveStorage.h"
+#include "subsystems/SubTurret.h"
+#include "commands/CmdAutoShooterSpin.h"
+#include "commands/CmdAutoShooterStop.h"
+#include "commands/CmdTrackTarget.h"
+#include "commands/CmdAutoFeederFeed.h"
+#include "commands/CmdAutoFeedStop.h"
 class CmdAuto10Ball
     : public frc2::CommandHelper<frc2::ParallelCommandGroup,
                                  CmdAuto10Ball> {
  public:
   Autonomous _autonomous;
-  CmdAuto10Ball(SubDriveBase* subDriveBase, SubIntake* subIntake, SubStorage* subStorage);
+  CmdAuto10Ball(SubDriveBase* subDriveBase, SubIntake* subIntake, SubStorage* subStorage, SubTurret* subTurret);
 };

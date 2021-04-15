@@ -17,6 +17,10 @@ Autonomous::Autonomous(std::function<double()> getYaw, std::function<double()> g
   frc::SmartDashboard::PutNumber("steering error", error);
   frc::SmartDashboard::PutNumber("speed", speed);
   frc::SmartDashboard::PutNumber("steering", steering);
+  frc::SmartDashboard::PutNumber("turreterror", error);
+  frc::SmartDashboard::PutNumber("turretAngle", 0);
+
+
 }
 
 void Autonomous::Periodic(){
@@ -188,4 +192,22 @@ bool Autonomous::turnToEnd(double angle, double tolerance){
   }else{
     return false;
   }
+}
+
+double Autonomous::getTurretPower(double turretAngle){
+  tPID.p = 0.0;
+  tPID.i = 0;
+  tPID.d = 0;
+  
+  frc::SmartDashboard::PutNumber("turretAngle", turretAngle);
+
+  error = atan2(-posY, -posX) - (_getYaw() + angleOffset) - turretAngle;
+  
+  frc::SmartDashboard::PutNumber("turreterror", error);
+  intergral = intergral + error;
+  //output = kP*Error + kI*Intergral + kD*Derivative
+  power = tPID.p*error + tPID.i*intergral + tPID.d*(error - previousError);
+  //Calculates previous error for Derivative
+  previousError = error;
+  return power;
 }
