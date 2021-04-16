@@ -30,7 +30,7 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton btnSpinIntake{&_joystick0, buttons::leftBtn};
 
   btnDeployIntake.ToggleWhenPressed(_cmdDeployIntake);
-  btnSpinIntake.WhenPressed(_cmdIntake);
+  btnSpinIntake.WhileHeld(_cmdIntake);
   btnTrackTarget.WhileHeld(frc2::ParallelCommandGroup{_cmdTrackTarget, _cmdShoot, _cmdMoveStorage});
   btnShoot.WhileHeld(_cmdMoveFeeder);
 
