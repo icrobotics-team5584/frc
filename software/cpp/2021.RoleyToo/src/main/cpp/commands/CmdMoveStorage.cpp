@@ -16,10 +16,13 @@ CmdMoveStorage::CmdMoveStorage(SubStorage* subStorage, int antiJamRPM) {
 void CmdMoveStorage::Initialize() {
   _timer.Reset();
   _timer.Start();
+  frc::SmartDashboard::PutNumber("Storage Anti-Jam RPM Target", _antiJamRPM);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdMoveStorage::Execute() {
+
+  _antiJamRPM = frc::SmartDashboard::GetNumber("Storage Anti-Jam RPM Target", _antiJamRPM);
 
   if (_timer.Get() > 1.5) {
     /* WARNING: Long Code Ahead!
