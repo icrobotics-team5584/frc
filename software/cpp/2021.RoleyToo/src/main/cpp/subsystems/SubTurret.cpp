@@ -27,6 +27,8 @@ SubTurret::SubTurret() {
   _spmHood.SetSmartCurrentLimit(20);
 
   _spmHood.SetInverted(true);
+  _spmFlywheelLeft.SetInverted(true);
+  _spmFlywheelRight.SetInverted(true);
 
   _encHood.SetPosition(0);
 
