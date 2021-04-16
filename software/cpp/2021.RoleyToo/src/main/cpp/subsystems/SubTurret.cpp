@@ -141,7 +141,8 @@ bool SubTurret::IsReady() {
 }
 
 double SubTurret::CalculateHoodAngle(double x) {
-  return (-0.000008*pow(x,4)) + (0.004*pow(x,3)) - (0.0666*pow(x,2)) + (0.3915*x) + (9.5094);
+  return (0.00036*pow(x,3)) - (0.0060*pow(x,2)) + (0.08827*x) + (13.4);
+  //0.00036x^{3}-0.0060x^{2}-0.08827x+13.4
 }
 
 std::pair<double, double> SubTurret::GetCrosshair() {
