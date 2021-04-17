@@ -10,13 +10,13 @@ CmdMoveStorage::CmdMoveStorage(SubStorage* subStorage, int antiJamRPM) {
   // Use addRequirements() here to declare subsystem dependencies.
   _subStorage = subStorage;
   _antiJamRPM = antiJamRPM;
+  frc::SmartDashboard::PutNumber("Storage Anti-Jam RPM Target", _antiJamRPM);
 }
 
 // Called when the command is initially scheduled.
 void CmdMoveStorage::Initialize() {
   _timer.Reset();
   _timer.Start();
-  frc::SmartDashboard::PutNumber("Storage Anti-Jam RPM Target", _antiJamRPM);
 }
 
 // Called repeatedly when this Command is scheduled to run

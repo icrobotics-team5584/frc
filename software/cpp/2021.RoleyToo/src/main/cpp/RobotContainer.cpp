@@ -29,10 +29,14 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton btnDeployIntake{&_joystick0, buttons::yBtn};
   frc2::JoystickButton btnSpinIntake{&_joystick0, buttons::leftBtn};
 
+  POVButton btnHomeTurret(&_joystick0, POVButton::Position::down);
+
   btnDeployIntake.ToggleWhenPressed(_cmdDeployIntake);
   btnSpinIntake.WhileHeld(_cmdIntake);
   btnTrackTarget.WhileHeld(frc2::ParallelCommandGroup{_cmdTrackTarget, _cmdShoot, _cmdMoveStorage});
   btnShoot.WhileHeld(_cmdMoveFeeder);
+
+  btnHomeTurret.WhileHeld(frc2::ParallelCommandGroup{_cmdHomeHood, _cmdHomeTurret});
 
   //TODO: Intake Toggle Up/Down (Right Trigger)
   //TODO: Color Wheel (B)
