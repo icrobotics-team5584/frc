@@ -32,8 +32,8 @@ void CmdTrackTarget::Execute() {
       _failureCount = 0;
       std::cout << "Target Visible\n";
       _TurretPIDOutput = std::clamp(_turretPID.Calculate(_subTurret->GetX()), -0.25, 0.25);
-      //_hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _subTurret->CalculateHoodAngle(_subTurret->GetY())), -0.5, 0.5);
-      _hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _hoodTarget), -0.5, 0.5);
+      _hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _subTurret->CalculateHoodAngle(_subTurret->GetY()) + 1), -0.5, 0.5);
+      //_hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _hoodTarget), -0.5, 0.5);
 
   }
   else {
@@ -41,13 +41,14 @@ void CmdTrackTarget::Execute() {
     if (_failureCount > 20) {
       _TurretPIDOutput = std::clamp(_turretPID.Calculate(_subTurret->GetTurretAngle(), _turretCenterPoint), -0.25, 0.25);
       _hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), 8.25), -0.5, 0.5);
+      //_hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _hoodTarget), -0.5, 0.5);
     }
   }
 
   if ((_subTurret->GetTurretAngle() < _turretRightLimit) && (_TurretPIDOutput < 0)) { _TurretPIDOutput = 0; }     // Right Limit
   if ((_subTurret->GetTurretAngle() > _turretLeftLimit) && (_TurretPIDOutput > 0)) { _TurretPIDOutput = 0; }      // Left Limit
 
-  if (_hoodPIDOutput < 0 && !_subTurret->GetHoodLimit()) { _hoodPIDOutput = 0; }
+  if (_hoodPIDOutput < 0 && _subTurret->GetHoodLimit()) { _hoodPIDOutput = 0; }
   if (_hoodPIDOutput > 0 && _subTurret->GetHoodPos() > _hoodUpperLimit) { _hoodPIDOutput = 0; }
 
   std::cout << "Turret PID Output: " << _TurretPIDOutput;
@@ -63,7 +64,7 @@ void CmdTrackTarget::End(bool interrupted) {
   _subTurret->SetTurret(0);
   _subTurret->SetHood(0);
   _subTurret->LimeLEDOff();
-  _subIntake->Retract();
+  //_subIntake->Retract();
 }
 
 // Returns true when the command should end.
