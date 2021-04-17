@@ -32,7 +32,8 @@ void RobotContainer::ConfigureButtonBindings() {
   POVButton btnHomeTurret(&_joystick0, POVButton::Position::down);
 
   btnDeployIntake.ToggleWhenPressed(_cmdDeployIntake);
-  btnSpinIntake.WhileHeld(_cmdIntake);
+  // btnSpinIntake.WhileHeld(_cmdIntake);
+  btnSpinIntake.WhileHeld(frc2::ParallelCommandGroup{_cmdIntake, _cmdMoveStorage});
   btnTrackTarget.WhileHeld(frc2::ParallelCommandGroup{_cmdTrackTarget, _cmdShoot, _cmdMoveStorage});
   btnShoot.WhileHeld(_cmdMoveFeeder);
 

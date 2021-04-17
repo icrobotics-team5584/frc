@@ -21,7 +21,7 @@
  */
 class CmdTrackTarget : public frc2::CommandHelper<frc2::CommandBase, CmdTrackTarget> {
  public:
-  CmdTrackTarget(SubTurret* subTurret, SubIntake* subIntake);
+  CmdTrackTarget(SubTurret* subTurret, SubIntake* subIntake, double turretSetpoint = 9999999, double hoodSetpoint = 9999999);
 
   void Initialize() override;
 
@@ -54,4 +54,9 @@ class CmdTrackTarget : public frc2::CommandHelper<frc2::CommandBase, CmdTrackTar
   double _turretLeftLimit = 43;
   double _turretRightLimit = -60;
   double _turretCenterPoint = 3.73;
+
+  bool _overrideHood = false;
+  bool _overrideTurret = false;
+  double _overrideHoodTarget = 0;
+  double _overrideTurretTarget = 0;
 };
