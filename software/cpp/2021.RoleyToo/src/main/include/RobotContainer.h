@@ -65,7 +65,7 @@ class RobotContainer {
  private:
   // The robot's subsystems and commands are defined here...
   //frc::Joystick _joystick0{0};
-  JoystickScaler _joystick0{0, 3.0, 3.0};
+  JoystickScaler _joystick0{0, 4.0, 4.0};
 
   SubTurret _subTurret;
   SubStorage _subStorage;
@@ -86,7 +86,7 @@ class RobotContainer {
   CmdShoot _cmdShoot{&_subStorage, &_subTurret};
   CmdHomeHood _cmdHomeHood{&_subTurret};
   CmdHomeTurret _cmdHomeTurret{&_subTurret};
-  CmdMoveStorage _cmdMoveStorage{&_subStorage, 9700};
+  CmdMoveStorage _cmdMoveStorage{&_subStorage, 5800};
   CmdDeployIntake _cmdDeployIntake{&_subIntake};
 
   void ConfigureButtonBindings();
