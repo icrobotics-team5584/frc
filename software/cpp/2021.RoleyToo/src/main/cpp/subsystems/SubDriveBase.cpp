@@ -22,7 +22,7 @@ SubDriveBase::SubDriveBase() {
 }
 
 void SubDriveBase::drive(double speed, double rotation, bool squaredInputs){
-  _diffDrive.ArcadeDrive(-speed, rotation, squaredInputs);
+  _diffDrive.ArcadeDrive(speed, rotation, squaredInputs);
 }
 
 // This method will be called once per scheduler run

@@ -6,9 +6,10 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include <frc/controller/PIDController.h>
+#include <frc/Timer.h>
 
-#include "subsystems/SubTurret.h"
-#include "subsystems/SubIntake.h"
+#include "subsystems/SubStorage.h"
 
 /**
  * An example command.
@@ -17,10 +18,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class CmdHomeTurret
-    : public frc2::CommandHelper<frc2::CommandBase, CmdHomeTurret> {
+class CmdIntakeStorage
+    : public frc2::CommandHelper<frc2::CommandBase, CmdIntakeStorage> {
  public:
-  CmdHomeTurret(SubTurret* subTurret);
+  CmdIntakeStorage(SubStorage* subStorage);
 
   void Initialize() override;
 
@@ -30,6 +31,10 @@ class CmdHomeTurret
 
   bool IsFinished() override;
  private:
-  SubTurret* _subTurret;
-  double _homingSpeed = -0.1;
+  SubStorage* _subStorage;
+  frc2::PIDController _storagePID{0.2, 0.0, 0.0};
+  frc::Timer _timer;
+  frc::Timer _overcurrenttime;
+  SubStorage::Direction _currentdir = SubStorage::Direction::Forward;
+  double setpoint = 1000;
 };

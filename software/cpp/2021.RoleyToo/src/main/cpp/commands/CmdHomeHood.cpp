@@ -2,31 +2,30 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "commands/CmdHomeTurret.h"
+#include "commands/CmdHomeHood.h"
 
-CmdHomeTurret::CmdHomeTurret(SubTurret* subTurret) {
+CmdHomeHood::CmdHomeHood(SubTurret* subTurret) {
   // Use addRequirements() here to declare subsystem dependencies.
   _subTurret = subTurret;
 }
 
 // Called when the command is initially scheduled.
-void CmdHomeTurret::Initialize() {
-  if (!_subTurret->GetRightLimit())
-  {
-    _subTurret->SetTurret(_homingSpeed);
+void CmdHomeHood::Initialize() {
+  if (!_subTurret->GetHoodLimit()) {
+    _subTurret->SetHood(_homingSpeed);
   }
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdHomeTurret::Execute() {}
+void CmdHomeHood::Execute() {}
 
 // Called once the command ends or is interrupted.
-void CmdHomeTurret::End(bool interrupted) {
-  _subTurret->SetTurret(0);
-  _subTurret->ResetTurretEncoder();
+void CmdHomeHood::End(bool interrupted) {
+  _subTurret->SetHood(0);
+  _subTurret->ResetHoodEncoder();
 }
 
 // Returns true when the command should end.
-bool CmdHomeTurret::IsFinished() {
-  return _subTurret->GetRightLimit();
+bool CmdHomeHood::IsFinished() {
+  return _subTurret->GetHoodLimit();
 }

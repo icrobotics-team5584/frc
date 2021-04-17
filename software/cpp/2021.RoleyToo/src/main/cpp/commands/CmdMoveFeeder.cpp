@@ -2,31 +2,27 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "commands/CmdHomeTurret.h"
+#include "commands/CmdMoveFeeder.h"
 
-CmdHomeTurret::CmdHomeTurret(SubTurret* subTurret) {
+CmdMoveFeeder::CmdMoveFeeder(SubStorage* subStorage) {
   // Use addRequirements() here to declare subsystem dependencies.
-  _subTurret = subTurret;
+  _subStorage = subStorage;
 }
 
 // Called when the command is initially scheduled.
-void CmdHomeTurret::Initialize() {
-  if (!_subTurret->GetRightLimit())
-  {
-    _subTurret->SetTurret(_homingSpeed);
-  }
-}
+void CmdMoveFeeder::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void CmdHomeTurret::Execute() {}
+void CmdMoveFeeder::Execute() {
+  _subStorage->MoveFeeder(SubStorage::Forward, _speed);
+}
 
 // Called once the command ends or is interrupted.
-void CmdHomeTurret::End(bool interrupted) {
-  _subTurret->SetTurret(0);
-  _subTurret->ResetTurretEncoder();
+void CmdMoveFeeder::End(bool interrupted) {
+  _subStorage->MoveFeeder(SubStorage::Forward, 0);
 }
 
 // Returns true when the command should end.
-bool CmdHomeTurret::IsFinished() {
-  return _subTurret->GetRightLimit();
+bool CmdMoveFeeder::IsFinished() {
+  return false;
 }

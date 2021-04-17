@@ -8,6 +8,8 @@
 #include <frc2/command/CommandHelper.h>
 
 #include "subsystems/SubTurret.h"
+#include "subsystems/SubStorage.h"
+#include "subsystems/SubIntake.h"
 #include <frc/controller/PIDController.h>
 
 /**
@@ -19,7 +21,7 @@
  */
 class CmdTrackTarget : public frc2::CommandHelper<frc2::CommandBase, CmdTrackTarget> {
  public:
-  CmdTrackTarget(SubTurret* subTurret);
+  CmdTrackTarget(SubTurret* subTurret, SubIntake* subIntake);
 
   void Initialize() override;
 
@@ -30,12 +32,26 @@ class CmdTrackTarget : public frc2::CommandHelper<frc2::CommandBase, CmdTrackTar
   bool IsFinished() override;
  private:
   SubTurret* _subTurret;
-  frc2::PIDController _turretPID{0.2, 0.0, 0.0}; //default values
-  frc2::PIDController _hoodPID{0.0005, 0.0, 0.0};
+  SubIntake* _subIntake;
+
+  double FlywheelRPMTarget = 5000;
+  double FlywheelPID[3] = {0.01, 0.0, 0.0000053};
+
+  frc2::PIDController _flywheelPID{FlywheelPID[0], FlywheelPID[1], FlywheelPID[2]};
+  frc2::PIDController _turretPID{0.012, 0.0, 0.003}; //default values
+  frc2::PIDController _hoodPID{0.4, 0.0, 0.0};
+  double _hoodF = 0;
 
   int _failureCount = 0;
   double _TurretPIDOutput = 0;
   double _hoodPIDOutput = 0;
+  double FlywheelPIDOutput;
 
   double _hoodError = 0;
+  double _hoodTarget = 0;
+  double _hoodUpperLimit = 14.7;
+
+  double _turretLeftLimit = 43;
+  double _turretRightLimit = -60;
+  double _turretCenterPoint = 3.73;
 };

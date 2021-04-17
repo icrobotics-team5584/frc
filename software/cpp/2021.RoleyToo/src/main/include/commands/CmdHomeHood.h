@@ -8,7 +8,6 @@
 #include <frc2/command/CommandHelper.h>
 
 #include "subsystems/SubTurret.h"
-#include "subsystems/SubIntake.h"
 
 /**
  * An example command.
@@ -17,10 +16,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class CmdHomeTurret
-    : public frc2::CommandHelper<frc2::CommandBase, CmdHomeTurret> {
+class CmdHomeHood
+    : public frc2::CommandHelper<frc2::CommandBase, CmdHomeHood> {
  public:
-  CmdHomeTurret(SubTurret* subTurret);
+  CmdHomeHood(SubTurret* subTurret);
 
   void Initialize() override;
 
@@ -31,5 +30,5 @@ class CmdHomeTurret
   bool IsFinished() override;
  private:
   SubTurret* _subTurret;
-  double _homingSpeed = -0.1;
+  double _homingSpeed = -0.05;
 };
