@@ -8,7 +8,7 @@ Using MJPEG Server from https://github.com/jacksonliam/mjpg-streamer, and wrappe
 
 We use the Cool Outstanding Online Link © to connect to a Driver Station laptop. I call it this, because we've found it to be extremely fast. I recommend you either use [VLC Media Player](https://www.videolan.org/vlc/) to view the stream hosted at port ip:8080/?action=stream, or navigate to that link in your browser (tested and working in Chrome) and access it manually that way.
 
-![](C:\Users\mblaser\repos\frc\software\cpp\2021.RoleyToo.CameraServer\iclogo.jpg)
+![](https://github.com/icrobotics-team5584/frc/blob/master/software/cpp/2021.RoleyToo.CameraServer/iclogo.jpg?raw=true)
 
 
 
