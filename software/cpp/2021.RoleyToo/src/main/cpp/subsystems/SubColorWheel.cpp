@@ -92,3 +92,11 @@ bool SubColorWheel::CheckSetPoint(){
   return _colorMotorPID.AtSetpoint();
 }
 
+void SubColorWheel::DeployColorWheel(){
+  solColorWheel.Set(frc::DoubleSolenoid::kForward);
+}
+
+void SubColorWheel::RetractColorWheel(){
+  solColorWheel.Set(frc::DoubleSolenoid::kReverse);
+}
+

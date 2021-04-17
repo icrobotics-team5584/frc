@@ -66,4 +66,6 @@ namespace pcm {
   constexpr int solDollyRetract = 7;
   constexpr int solClimbDeploy = 4;
   constexpr int solClimbRetract = 5;
+  constexpr int solColorWheelRetract = 9;
+  constexpr int solColorWheelDeploy = 8;
 }

@@ -41,7 +41,7 @@ void RobotContainer::ConfigureButtonBindings() {
   //TODO: Start: Deploy Climber - Down
   //TODO: Back: Deploy Climber - Up
   //TODO: Shoot Override (X)
-  btnStartColorWheel.WhenHeld(frc2::SequentialCommandGroup{_cmdSpinColorWheel, _cmdMoveCenterColor, _cmdSpinToColor}); 
+  btnStartColorWheel.WhenHeld(frc2::SequentialCommandGroup{_cmdDeployColorwheel, _cmdSpinColorWheel, _cmdMoveCenterColor, _cmdSpinToColor, _cmdRetractColorWheel}); 
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

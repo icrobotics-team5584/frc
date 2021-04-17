@@ -10,6 +10,7 @@
 #include <map>
 #include <string>
 #include <stdlib.h>
+#include <frc/DoubleSolenoid.h>
 
 #include "Utilities/sendableSparkMax.h"
 #include "Constants.h"
@@ -69,6 +70,9 @@ class SubColorWheel : public frc2::SubsystemBase {
   std::string GetWantedColor();
 
   bool CheckSetPoint();
+
+  void DeployColorWheel();
+  void RetractColorWheel();
  private:
   rev::ColorSensorV3 _colorSensor{frc::I2C::Port::kOnboard};
 
@@ -87,4 +91,6 @@ class SubColorWheel : public frc2::SubsystemBase {
   double calculated = 0;
 
   std::string wantedColor;
+
+  frc::DoubleSolenoid solColorWheel{1, pcm::solColorWheelRetract, pcm::pcm_solIntakeDeploy};
 };

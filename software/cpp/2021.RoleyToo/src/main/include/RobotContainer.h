@@ -41,6 +41,8 @@
 #include "commands/CmdHomeHood.h"
 #include "commands/CmdMoveStorage.h"
 #include "commands/CmdDeployIntake.h"
+#include "commands/CmdRetractColorWheel.h"
+#include "commands/CmdDeployColorwheel.h"
 
 #include "commands/CmdHomeHood.h"
 #include "commands/CmdHomeTurret.h"
@@ -88,6 +90,8 @@ class RobotContainer {
   CmdHomeTurret _cmdHomeTurret{&_subTurret};
   CmdMoveStorage _cmdMoveStorage{&_subStorage, 9750};
   CmdDeployIntake _cmdDeployIntake{&_subIntake};
+  CmdDeployColorwheel _cmdDeployColorwheel{&_subColorWheel};
+  CmdRetractColorWheel _cmdRetractColorWheel{&_subColorWheel};
 
   void ConfigureButtonBindings();
 };
