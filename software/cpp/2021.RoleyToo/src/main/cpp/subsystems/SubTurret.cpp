@@ -34,6 +34,7 @@ SubTurret::SubTurret() {
   _encHood.SetPosition(0);
 
   frc::SmartDashboard::PutNumber("Turret Speed", 0);
+
 }
 
 // This method will be called once per scheduler run
@@ -141,8 +142,8 @@ bool SubTurret::IsReady() {
 }
 
 double SubTurret::CalculateHoodAngle(double x) {
-  return (0.00036*pow(x,3)) - (0.0060*pow(x,2)) + (0.08827*x) + (13.4);
-  //0.00036x^{3}-0.0060x^{2}-0.08827x+13.4
+  return (0.00002*pow(x,4)) + (0.0002*pow(x,3)) - (0.0071*pow(x,2)) - (0.0819*x) + (13.156);
+  //0.00002x^{4}+0.0002x^{3}-0.0071x^{2}-0.0819x+13.156
 }
 
 std::pair<double, double> SubTurret::GetCrosshair() {
