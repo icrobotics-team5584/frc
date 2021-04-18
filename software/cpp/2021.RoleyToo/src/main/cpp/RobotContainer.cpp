@@ -24,33 +24,27 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
-  frc2::JoystickButton btnIntake{&_joystick0, buttons::leftBtn};
-  frc2::JoystickButton btnClimbToPos{&_joystick0, buttons::rightBtn};
-
-  // Turret
   AxisButton btnTrackTarget{&_joystick0, buttons::leftTrigger};
   AxisButton btnShoot{&_joystick0, buttons::rightTrigger};
-  POVButton btnTurretOverride{&_joystick0, POVButton::Position::down};
-  frc2::JoystickButton btnShootOverride{&_joystick0, buttons::xBtn};
-  frc2::JoystickButton btnHomeTurret{&_joystick0, buttons::aBtn};
-  POVButton btnDeployClimber{&_joystick0, POVButton::Position::up};
-  //frc2::JoystickButton xBtn{&_joystick0, buttons::xBtn};
+  frc2::JoystickButton btnDeployIntake{&_joystick0, buttons::yBtn};
+  frc2::JoystickButton btnSpinIntake{&_joystick0, buttons::leftBtn};
 
-  POVButton btnHomeHood{&_joystick0, POVButton::Position::left};
+  POVButton btnHomeTurret(&_joystick0, POVButton::Position::down);
 
-  // Turret
+  btnDeployIntake.ToggleWhenPressed(_cmdDeployIntake);
+  // btnSpinIntake.WhileHeld(_cmdIntake);
+  btnSpinIntake.WhileHeld(frc2::ParallelCommandGroup{_cmdIntake, _cmdMoveStorage});
   btnTrackTarget.WhileHeld(frc2::ParallelCommandGroup{_cmdTrackTarget, _cmdShoot, _cmdMoveStorage});
-  //btnTrackTarget.WhileHeld(_cmdTrackTarget);
   btnShoot.WhileHeld(_cmdMoveFeeder);
-  btnDeployClimber.WhenPressed(_cmdDeployClimber);
-  btnIntake.WhileHeld(frc2::ParallelCommandGroup{_cmdIntake, _cmdMoveStorage});
-  btnClimbToPos.WhileHeld(_cmdClimbToPos);
 
-  //btnHomeHood.WhileHeld(_cmdHomeHood);
   btnHomeTurret.WhileHeld(frc2::ParallelCommandGroup{_cmdHomeHood, _cmdHomeTurret});
 
-
-  //xBtn.WhenHeld(frc2::SequentialCommandGroup{_cmdSpinColorWheel, _cmdMoveCenterColor, _cmdSpinToColor}); 
+  //TODO: Intake Toggle Up/Down (Right Trigger)
+  //TODO: Color Wheel (B)
+  //TODO: Climber on UP DPAD Push
+  //TODO: Start: Deploy Climber - Down
+  //TODO: Back: Deploy Climber - Up
+  //TODO: Shoot Override (X)
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

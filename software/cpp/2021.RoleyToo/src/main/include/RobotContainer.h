@@ -40,6 +40,7 @@
 #include "commands/CmdShoot.h"
 #include "commands/CmdHomeHood.h"
 #include "commands/CmdMoveStorage.h"
+#include "commands/CmdDeployIntake.h"
 
 #include "commands/CmdHomeHood.h"
 #include "commands/CmdHomeTurret.h"
@@ -64,7 +65,7 @@ class RobotContainer {
  private:
   // The robot's subsystems and commands are defined here...
   //frc::Joystick _joystick0{0};
-  JoystickScaler _joystick0{0, 3.0, 3.0};
+  JoystickScaler _joystick0{0, 4.0, 4.0};
 
   SubTurret _subTurret;
   SubStorage _subStorage;
@@ -76,7 +77,7 @@ class RobotContainer {
   CmdDriveStorage _cmdDriveStorage{&_subStorage, SubStorage::Direction::Forward, 0.2};
   CmdSpinFlywheel _cmdSpinFlywheel{&_subTurret};
   CmdDeployClimber _cmdDeployClimber{&_subClimber};
-  CmdIntake _cmdIntake{&_subIntake};
+  CmdIntake _cmdIntake{&_subStorage, &_subIntake};
   CmdClimbToPos _cmdClimbToPos{&_subClimber, 20};
   CmdMoveFeeder _cmdMoveFeeder{&_subStorage};
   CmdSpinColorWheel _cmdSpinColorWheel{&_subColorWheel};
@@ -85,7 +86,8 @@ class RobotContainer {
   CmdShoot _cmdShoot{&_subStorage, &_subTurret};
   CmdHomeHood _cmdHomeHood{&_subTurret};
   CmdHomeTurret _cmdHomeTurret{&_subTurret};
-  CmdMoveStorage _cmdMoveStorage{&_subStorage, 9750};
+  CmdMoveStorage _cmdMoveStorage{&_subStorage, 5800};
+  CmdDeployIntake _cmdDeployIntake{&_subIntake};
 
   void ConfigureButtonBindings();
 };

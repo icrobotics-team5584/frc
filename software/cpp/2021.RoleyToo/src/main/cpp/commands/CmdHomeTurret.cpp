@@ -13,7 +13,7 @@ CmdHomeTurret::CmdHomeTurret(SubTurret* subTurret) {
 void CmdHomeTurret::Initialize() {
   if (!_subTurret->GetRightLimit())
   {
-    _subTurret->SetTurret(_homingSpeed);
+    //_subTurret->SetTurret(_homingSpeed);
   }
 }
 
@@ -28,5 +28,6 @@ void CmdHomeTurret::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool CmdHomeTurret::IsFinished() {
-  return _subTurret->GetRightLimit();
+  //return _subTurret->GetRightLimit();
+  return true;
 }

@@ -6,10 +6,23 @@
 #include "frc/smartdashboard/SmartDashboard.h"
 
 
-CmdTrackTarget::CmdTrackTarget(SubTurret* subTurret, SubIntake* subIntake) {
+CmdTrackTarget::CmdTrackTarget(SubTurret* subTurret, SubIntake* subIntake, double turretSetpoint, double hoodSetpoint) {
   // Use addRequirements() here to declare subsystem dependencies.
+  AddRequirements(subTurret);
   _subTurret = subTurret;
   _subIntake = subIntake;
+
+  if (turretSetpoint != 9999999)
+  {
+    _overrideTurret = true;
+    _overrideTurretTarget = turretSetpoint;
+  }
+  if (hoodSetpoint != 9999999)
+  {
+    _overrideHood = true;
+    _overrideHoodTarget = hoodSetpoint;
+  }
+
   frc::SmartDashboard::PutNumber("Hood Target", 7.15);
   frc::SmartDashboard::PutNumber("Hood F", _hoodF);
 }
@@ -31,9 +44,9 @@ void CmdTrackTarget::Execute() {
   if (_subTurret->CheckTarget()) {
       _failureCount = 0;
       std::cout << "Target Visible\n";
-      _TurretPIDOutput = std::clamp(_turretPID.Calculate(_subTurret->GetX()), -0.25, 0.25);
-      //_hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _subTurret->CalculateHoodAngle(_subTurret->GetY())), -0.5, 0.5);
-      _hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _hoodTarget), -0.5, 0.5);
+      _TurretPIDOutput = std::clamp(_turretPID.Calculate(_subTurret->GetX(), 0), -0.25, 0.25);
+      _hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _subTurret->CalculateHoodAngle(_subTurret->GetY()) + 0), -0.5, 0.5);
+      //_hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _hoodTarget), -0.5, 0.5);
 
   }
   else {
@@ -41,13 +54,23 @@ void CmdTrackTarget::Execute() {
     if (_failureCount > 20) {
       _TurretPIDOutput = std::clamp(_turretPID.Calculate(_subTurret->GetTurretAngle(), _turretCenterPoint), -0.25, 0.25);
       _hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), 8.25), -0.5, 0.5);
+      //_hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _hoodTarget), -0.5, 0.5);
     }
+  }
+
+  if (_overrideHood)
+  {
+    _hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _overrideHoodTarget), -0.5, 0.5);
+  }
+  if (_overrideTurret)
+  {
+    _TurretPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _overrideTurretTarget), -0.25, 0.25);
   }
 
   if ((_subTurret->GetTurretAngle() < _turretRightLimit) && (_TurretPIDOutput < 0)) { _TurretPIDOutput = 0; }     // Right Limit
   if ((_subTurret->GetTurretAngle() > _turretLeftLimit) && (_TurretPIDOutput > 0)) { _TurretPIDOutput = 0; }      // Left Limit
 
-  if (_hoodPIDOutput < 0 && !_subTurret->GetHoodLimit()) { _hoodPIDOutput = 0; }
+  if (_hoodPIDOutput < 0 && _subTurret->GetHoodLimit()) { _hoodPIDOutput = 0; }
   if (_hoodPIDOutput > 0 && _subTurret->GetHoodPos() > _hoodUpperLimit) { _hoodPIDOutput = 0; }
 
   std::cout << "Turret PID Output: " << _TurretPIDOutput;
@@ -62,8 +85,8 @@ void CmdTrackTarget::Execute() {
 void CmdTrackTarget::End(bool interrupted) {
   _subTurret->SetTurret(0);
   _subTurret->SetHood(0);
-  _subTurret->LimeLEDOff();
-  _subIntake->Retract();
+  //_subTurret->LimeLEDOff();
+  //_subIntake->Retract();
 }
 
 // Returns true when the command should end.

@@ -5,11 +5,16 @@
 #include "commands/CmdIntake.h"
 #include "frc/smartdashboard/SmartDashboard.h"
 
-CmdIntake::CmdIntake(SubIntake* subIntake) {
+CmdIntake::CmdIntake(SubStorage* subStorage, SubIntake* subIntake) {
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements(_subIntake);
+  _subStorage = subStorage;
   _subIntake = subIntake;
   //frc::SmartDashboard::PutData("Storage PID", &_storagePID);
+  frc::SmartDashboard::PutNumber("Storage Setpoint", Setpoint);
+  frc::SmartDashboard::PutNumber("Storage P", StorageP);
+  frc::SmartDashboard::PutNumber("Storage I", StorageI);
+  frc::SmartDashboard::PutNumber("Storage D", StorageD);
+  frc::SmartDashboard::PutNumber("Storage FF", StorageF);
 }
 
 // Called when the command is initially scheduled.
@@ -22,8 +27,7 @@ void CmdIntake::Initialize() {
 }
 
 // Called repeatedly when this Command is scheduled to run
-void CmdIntake::Execute() {
-  _subIntake->Deploy();
+void CmdIntake::Execute() {  
   _subIntake->Intake();
 }
 
@@ -31,7 +35,6 @@ void CmdIntake::Execute() {
 void CmdIntake::End(bool interrupted) {
   std::cout << "running CmdIntake::End()" << std::endl;
   _subIntake->Stop();
-  _subIntake->Retract();
 }
 
 // Returns true when the command should end.

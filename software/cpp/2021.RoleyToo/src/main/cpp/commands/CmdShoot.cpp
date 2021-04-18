@@ -13,7 +13,7 @@ CmdShoot::CmdShoot(SubStorage* subStorage, SubTurret* subTurret) {
   frc::SmartDashboard::PutNumber("Turret P", 0.0007);
   frc::SmartDashboard::PutNumber("Turret I", 0);
   frc::SmartDashboard::PutNumber("Turret D", 0.00004);
-  frc::SmartDashboard::PutNumber("Turret F", 0.6);
+  frc::SmartDashboard::PutNumber("Turret F", 99.6);
 }
 
 void CmdShoot::StopEverythingAndPanic() {

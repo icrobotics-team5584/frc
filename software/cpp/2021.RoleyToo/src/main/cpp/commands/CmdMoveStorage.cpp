@@ -10,6 +10,7 @@ CmdMoveStorage::CmdMoveStorage(SubStorage* subStorage, int antiJamRPM) {
   // Use addRequirements() here to declare subsystem dependencies.
   _subStorage = subStorage;
   _antiJamRPM = antiJamRPM;
+  frc::SmartDashboard::PutNumber("Storage Anti-Jam RPM Target", _antiJamRPM);
 }
 
 // Called when the command is initially scheduled.
@@ -21,12 +22,14 @@ void CmdMoveStorage::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void CmdMoveStorage::Execute() {
 
-  if (_timer.Get() > 1.5) {
+  _antiJamRPM = frc::SmartDashboard::GetNumber("Storage Anti-Jam RPM Target", _antiJamRPM);
+
+  if (_timer.Get() > 0.7) {
     /* WARNING: Long Code Ahead!
        If storage is slower than minimum velocity, switch direction of storage and reset timer */
     if ((_subStorage->GetEncoderSpeed() < _antiJamRPM and _subStorage->GetEncoderSpeed() > 0) || (_subStorage->GetEncoderSpeed() > -_antiJamRPM and _subStorage->GetEncoderSpeed() < 0)) {
       _overcurrenttime.Start();
-      if (_overcurrenttime.Get() > 0.7) {
+      if (_overcurrenttime.Get() > 0.3) {
         switch (_currentdir) {
           case SubStorage::Direction::Forward:
             _currentdir = SubStorage::Direction::Backward;
