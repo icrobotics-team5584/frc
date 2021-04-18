@@ -11,7 +11,8 @@ CmdHomeHood::CmdHomeHood(SubTurret* subTurret) {
 
 // Called when the command is initially scheduled.
 void CmdHomeHood::Initialize() {
-  if (!_subTurret->GetHoodLimit()) {
+  if (!_subTurret->GetHoodLimit())
+  {
     _subTurret->SetHood(_homingSpeed);
   }
 }
@@ -23,6 +24,7 @@ void CmdHomeHood::Execute() {}
 void CmdHomeHood::End(bool interrupted) {
   _subTurret->SetHood(0);
   _subTurret->ResetHoodEncoder();
+  _subTurret->SetHoodHomed(true);
 }
 
 // Returns true when the command should end.

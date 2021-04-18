@@ -73,7 +73,7 @@ class RobotContainer {
   SubColorWheel _subColorWheel;
   SubIntake _subIntake; 
 
-  CmdTrackTarget _cmdTrackTarget{&_subTurret, &_subIntake};
+  CmdTrackTarget _cmdTrackTarget{&_subTurret};
   CmdDriveStorage _cmdDriveStorage{&_subStorage, SubStorage::Direction::Forward, 0.2};
   CmdSpinFlywheel _cmdSpinFlywheel{&_subTurret};
   CmdDeployClimber _cmdDeployClimber{&_subClimber};
