@@ -7,7 +7,7 @@
 CmdAutoShooterSpin::CmdAutoShooterSpin(SubTurret* subTurret) {
   // Use addRequirements() here to declare subsystem dependencies.
   _subTurret = subTurret;
-  AddRequirements(_subTurret);
+  //AddRequirements(_subTurret);
 }
 
 // Called when the command is initially scheduled.

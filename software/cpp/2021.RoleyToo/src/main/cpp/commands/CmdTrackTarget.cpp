@@ -79,8 +79,8 @@ void CmdTrackTarget::Execute() {
   if (_hoodPIDOutput < 0 && _subTurret->GetHoodLimit()) { _hoodPIDOutput = 0; }
   if (_hoodPIDOutput > 0 && _subTurret->GetHoodPos() > _hoodUpperLimit) { _hoodPIDOutput = 0; }
 
-  std::cout << "Turret PID Output: " << _TurretPIDOutput;
-  std::cout << "Hood PID Output: " << _hoodPIDOutput << "\n";
+  //std::cout << "Turret PID Output: " << _TurretPIDOutput;
+  //std::cout << "Hood PID Output: " << _hoodPIDOutput << "\n";
   _subTurret->SetTurret(_TurretPIDOutput);
   _subTurret->SetHood(_hoodPIDOutput);
 

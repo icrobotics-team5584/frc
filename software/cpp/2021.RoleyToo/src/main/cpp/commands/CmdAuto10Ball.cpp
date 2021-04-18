@@ -16,19 +16,21 @@ CmdAuto10Ball::CmdAuto10Ball(SubDriveBase* subDriveBase, SubIntake* subIntake, S
   [subDriveBase]{return subDriveBase->getDistanceTravelled();}
 } {
   AddCommands(
-              CmdMoveStorage(subStorage, 5800),
-              CmdTrackTarget(subTurret, subIntake),
+              CmdMoveStorage(subStorage, 5000),
+              CmdTrackTarget(subTurret),
               frc2::SequentialCommandGroup{
                 //frc2::InstantCommand([subStorage] {subStorage->Move(SubStorage::Direction::Forward, -0.8);}, {subStorage}),
                 
                 CmdAutoSetPose{&_autonomous, -1.7, 3.548,  0},
+                CmdAutoIntakeDeploy(subIntake),
                 CmdAutoShooterSpin(subTurret),
+                frc2::PrintCommand{"shooter spin"},
                 frc2::WaitCommand(3.0_s),
                 CmdAutoFeederFeed(subStorage),
                 frc2::WaitCommand(3.0_s),
                 CmdAutoFeedStop(subStorage),
-                /*
-                CmdAutoTurn{subDriveBase, &_autonomous, PIDk{0.5, 0, 0}, -90, 20},
+                
+                CmdAutoTurn{subDriveBase, &_autonomous, PIDk{0.5, 0, 0}, -180, 20},
                 
                 
                 //                                    startx, starty, endx, endy, endheading, cenx, ceny
@@ -49,7 +51,7 @@ CmdAuto10Ball::CmdAuto10Ball(SubDriveBase* subDriveBase, SubIntake* subIntake, S
                 CmdAutoShooterStop(subTurret)
                 //CmdAutoTurn{subDriveBase, &_autonomous, PIDk{1, 0, 20}, 70, 20},
                 //CmdAutoIntakeRetract(subIntake)
-                */
+                
               }
               
               );

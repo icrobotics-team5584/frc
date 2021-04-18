@@ -7,7 +7,6 @@
 CmdAutoFeederFeed::CmdAutoFeederFeed(SubStorage* subStorage) {
   // Use addRequirements() here to declare subsystem dependencies.
   _subStorage = subStorage;
-  AddRequirements(_subStorage);
 }
 
 // Called when the command is initially scheduled.
