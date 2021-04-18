@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "subsystems/SubTurret.h"
+#include "commands/CmdTrackTarget.h"
 
 SubTurret::SubTurret() {
   _networktables = nt::NetworkTableInstance::GetDefault();
@@ -35,6 +36,8 @@ SubTurret::SubTurret() {
 
   frc::SmartDashboard::PutNumber("Turret Speed", 0);
 
+  SetDefaultCommand(CmdTrackTarget(this, 0, 7.15));
+
 }
 
 // This method will be called once per scheduler run
@@ -54,8 +57,29 @@ void SubTurret::Periodic() {
   frc::SmartDashboard::PutNumber("Limelight y Angle", GetY());
 
   frc::SmartDashboard::PutBoolean("Hood Limit", GetHoodLimit());
+  frc::SmartDashboard::PutBoolean("Turret Limit", GetRightLimit());
 
   //std::cout << _spmTurret.Get() << "   " << _spmTurret.GetOutputCurrent() << "\n";
+}
+
+bool SubTurret::GetHoodHomed()
+{
+  return _hoodHomed;
+}
+
+bool SubTurret::GetTurretHomed()
+{
+  return _turretHomed;
+}
+
+bool SubTurret::SetHoodHomed(bool value)
+{
+  _hoodHomed = value;
+}
+
+bool SubTurret::SetTurretHomed(bool value)
+{
+  _turretHomed = value;
 }
 
 double SubTurret::GetX() {
@@ -86,8 +110,8 @@ double SubTurret::GetTurretAngle() {
   return (_encTurret.GetPosition());
 }
 
-void SubTurret::ResetTurretEncoder() {
-  _encTurret.SetPosition(0);
+void SubTurret::ResetTurretEncoder(double angle = 0) {
+  _encTurret.SetPosition(angle);
 }
 
 void SubTurret::SetTurret(double speed) {

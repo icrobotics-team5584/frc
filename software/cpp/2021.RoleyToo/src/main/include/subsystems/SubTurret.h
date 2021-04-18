@@ -35,7 +35,8 @@ class SubTurret : public frc2::SubsystemBase {
   bool GetLeftLimit();
   bool GetRightLimit();
   double GetTurretAngle();
-  void ResetTurretEncoder();
+  void ResetTurretEncoder(double angle);
+
 
   void SetReady(bool ready);
   bool IsReady();
@@ -54,6 +55,11 @@ class SubTurret : public frc2::SubsystemBase {
   double GetHoodPos();
   bool GetHoodLimit();
   double CalculateHoodAngle(double x);
+
+  bool GetHoodHomed();
+  bool GetTurretHomed();
+  bool SetHoodHomed(bool value);
+  bool SetTurretHomed(bool value);
   
 
  private:
@@ -91,4 +97,7 @@ class SubTurret : public frc2::SubsystemBase {
 
   double _hoodDegreesPerRotation = 13.2;
   double _hoodInitialAngle = 7.15;
+
+  bool _hoodHomed = false;
+  bool _turretHomed = false;
 };

@@ -6,11 +6,10 @@
 #include "frc/smartdashboard/SmartDashboard.h"
 
 
-CmdTrackTarget::CmdTrackTarget(SubTurret* subTurret, SubIntake* subIntake, double turretSetpoint, double hoodSetpoint) {
+CmdTrackTarget::CmdTrackTarget(SubTurret* subTurret, double turretSetpoint, double hoodSetpoint) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements(subTurret);
   _subTurret = subTurret;
-  _subIntake = subIntake;
 
   if (turretSetpoint != 9999999)
   {
@@ -32,7 +31,6 @@ void CmdTrackTarget::Initialize() {
   frc::SmartDashboard::PutData("Turret PID", &_turretPID);
   frc::SmartDashboard::PutData("Hood PID", &_hoodPID);
   _subTurret->LimeLEDOn();
-  _subIntake->Deploy();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -61,10 +59,18 @@ void CmdTrackTarget::Execute() {
   if (_overrideHood)
   {
     _hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _overrideHoodTarget), -0.5, 0.5);
+    if (!_subTurret->GetHoodHomed())
+    {
+      _hoodPIDOutput = 0;
+    }
   }
   if (_overrideTurret)
   {
-    _TurretPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _overrideTurretTarget), -0.25, 0.25);
+    _TurretPIDOutput = std::clamp(_turretPID.Calculate(_subTurret->GetTurretAngle(), _overrideTurretTarget), -0.25, 0.25);
+    if (!_subTurret->GetTurretHomed())
+    {
+      _TurretPIDOutput = 0;
+    }
   }
 
   if ((_subTurret->GetTurretAngle() < _turretRightLimit) && (_TurretPIDOutput < 0)) { _TurretPIDOutput = 0; }     // Right Limit
