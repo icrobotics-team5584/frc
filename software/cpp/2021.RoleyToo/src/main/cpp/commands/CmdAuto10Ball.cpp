@@ -16,7 +16,10 @@ CmdAuto10Ball::CmdAuto10Ball(SubDriveBase* subDriveBase, SubIntake* subIntake, S
   [subDriveBase]{return subDriveBase->getDistanceTravelled();}
 } {
   AddCommands(
-              CmdMoveStorage(subStorage, 5000),
+              frc2::SequentialCommandGroup{
+                frc2::WaitCommand(3.0_s),
+                CmdMoveStorage(subStorage, 0),
+              },
               CmdTrackTarget(subTurret),
               frc2::SequentialCommandGroup{
                 //frc2::InstantCommand([subStorage] {subStorage->Move(SubStorage::Direction::Forward, -0.8);}, {subStorage}),
@@ -30,7 +33,7 @@ CmdAuto10Ball::CmdAuto10Ball(SubDriveBase* subDriveBase, SubIntake* subIntake, S
                 frc2::WaitCommand(3.0_s),
                 CmdAutoFeedStop(subStorage),
                 
-                CmdAutoTurn{subDriveBase, &_autonomous, PIDk{0.5, 0, 0}, -180, 20},
+                CmdAutoTurn{subDriveBase, &_autonomous, PIDk{0.05, 0, 0}, -150, 30},
                 
                 
                 //                                    startx, starty, endx, endy, endheading, cenx, ceny

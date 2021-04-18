@@ -10,6 +10,8 @@ CmdTrackTarget::CmdTrackTarget(SubTurret* subTurret, double turretSetpoint, doub
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements(subTurret);
   _subTurret = subTurret;
+  frc::SmartDashboard::PutNumber("Estimated Hood Angle", 0);
+
 
   if (turretSetpoint != 9999999)
   {
@@ -84,7 +86,7 @@ void CmdTrackTarget::Execute() {
   _subTurret->SetTurret(_TurretPIDOutput);
   _subTurret->SetHood(_hoodPIDOutput);
 
-  frc::SmartDashboard::PutNumber("Hood Angle", _subTurret->GetHoodPos());
+  //frc::SmartDashboard::PutNumber("Hood Angle", _subTurret->GetHoodPos());
 }
 
 // Called once the command ends or is interrupted.
