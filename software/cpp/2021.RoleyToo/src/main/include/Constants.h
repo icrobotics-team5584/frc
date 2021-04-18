@@ -34,8 +34,8 @@ namespace can {
 
 namespace dio {
   constexpr int hlfHoodDown = 0;
-  constexpr int hlfTurretLeft = 2;
-  constexpr int hlfTurretRight = 1;
+  constexpr int hlfTurretLeft = 1;
+  constexpr int hlfTurretRight = 2;
   constexpr int lmtClimbStop = 5;
   constexpr int brkStorageIn = 7;
   constexpr int brkStorageIndex = 8;

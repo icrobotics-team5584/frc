@@ -6,6 +6,7 @@
 
 CmdHomeTurret::CmdHomeTurret(SubTurret* subTurret) {
   // Use addRequirements() here to declare subsystem dependencies.
+  AddRequirements(subTurret);
   _subTurret = subTurret;
 }
 
@@ -13,7 +14,7 @@ CmdHomeTurret::CmdHomeTurret(SubTurret* subTurret) {
 void CmdHomeTurret::Initialize() {
   if (!_subTurret->GetRightLimit())
   {
-    //_subTurret->SetTurret(_homingSpeed);
+    _subTurret->SetTurret(_homingSpeed);
   }
 }
 
@@ -23,11 +24,11 @@ void CmdHomeTurret::Execute() {}
 // Called once the command ends or is interrupted.
 void CmdHomeTurret::End(bool interrupted) {
   _subTurret->SetTurret(0);
-  _subTurret->ResetTurretEncoder();
+  _subTurret->ResetTurretEncoder(6);
+  _subTurret->SetTurretHomed(true);
 }
 
 // Returns true when the command should end.
 bool CmdHomeTurret::IsFinished() {
-  //return _subTurret->GetRightLimit();
-  return true;
+  return _subTurret->GetRightLimit();
 }
