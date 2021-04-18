@@ -30,12 +30,11 @@ class SubTurret : public frc2::SubsystemBase {
   double GetY();
   double GetTargetArea();
   bool CheckTarget();
-  std::pair<double, double> GetCrosshair();
 
   bool GetLeftLimit();
   bool GetRightLimit();
   double GetTurretAngle();
-  void ResetTurretEncoder(double angle);
+  void ResetTurretEncoder(double angle = 0);
 
 
   void SetReady(bool ready);
@@ -58,8 +57,8 @@ class SubTurret : public frc2::SubsystemBase {
 
   bool GetHoodHomed();
   bool GetTurretHomed();
-  bool SetHoodHomed(bool value);
-  bool SetTurretHomed(bool value);
+  void SetHoodHomed(bool value);
+  void SetTurretHomed(bool value);
   
 
  private:
