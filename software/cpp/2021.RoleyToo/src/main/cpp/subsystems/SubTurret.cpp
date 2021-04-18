@@ -72,12 +72,12 @@ bool SubTurret::GetTurretHomed()
   return _turretHomed;
 }
 
-bool SubTurret::SetHoodHomed(bool value)
+void SubTurret::SetHoodHomed(bool value)
 {
   _hoodHomed = value;
 }
 
-bool SubTurret::SetTurretHomed(bool value)
+void SubTurret::SetTurretHomed(bool value)
 {
   _turretHomed = value;
 }
@@ -110,7 +110,7 @@ double SubTurret::GetTurretAngle() {
   return (_encTurret.GetPosition());
 }
 
-void SubTurret::ResetTurretEncoder(double angle = 0) {
+void SubTurret::ResetTurretEncoder(double angle) {
   _encTurret.SetPosition(angle);
 }
 
@@ -168,103 +168,4 @@ bool SubTurret::IsReady() {
 double SubTurret::CalculateHoodAngle(double x) {
   return (0.00002*pow(x,4)) + (0.0002*pow(x,3)) - (0.0071*pow(x,2)) - (0.0819*x) + (13.156);
   //0.00002x^{4}+0.0002x^{3}-0.0071x^{2}-0.0819x+13.156
-}
-
-std::pair<double, double> SubTurret::GetCrosshair() {
-  std::vector<double> x = _limelight->GetEntry("tcornx").GetDoubleArray(std::vector<double>());
-  std::vector<double> y = _limelight->GetEntry("tcorny").GetDoubleArray(std::vector<double>());
-
-  // Initialise 4x4 matrix
-  double dist[4][4] =
-  {
-    {0,0,0,0},
-    {0,0,0,0},
-    {0,0,0,0},
-    {0,0,0,0}
-  };
-
-  // Calculate distance between all nodes and store in matrix
-  for (int i=0; i<4; i++)
-  {
-    for (int j=i+1; j<4; j++)
-    {
-      double x1 = x[i];
-      double x2 = x[j];
-      double y1 = y[i];
-      double y2 = y[j];
-      dist[i][j] = std::sqrt(pow(x2-x1,2)+pow(y2-y1,2));
-    }
-  }
-
-  // Associate distances to node pairs
-  double distSort[6][3] =
-  {
-    {0,0,0},
-    {0,0,0},
-    {0,0,0},
-    {0,0,0},
-    {0,0,0},
-    {0,0,0}
-  };
-
-  int k = 0;
-  for (int i=0; i<4; i++)
-  {
-    for (int j=i+1; j<4; j++)
-    {
-      distSort[k][0] = i;
-      distSort[k][0] = j;
-      distSort[k][0] = dist[i][j];
-      k++;
-    }
-  }
-
-  // Get the third and fourth longest lines (the long sides on the rectangle)
-  double longSides[2][3] =
-  {
-    {0,0,0},
-    {0,0,0}
-  };
-
-  for (int i=0; i<4; i++)
-  {
-    double maxItem[4];
-    for (int j=0; j<6; j++)
-    {
-      if (distSort[j][2] > maxItem[2])
-      {
-        maxItem[0] = distSort[j][0];
-        maxItem[1] = distSort[j][1];
-        maxItem[2] = distSort[j][2];
-        maxItem[3] = i;
-      }
-    }
-    distSort[(int)maxItem[3]][0] = 0;
-    distSort[(int)maxItem[3]][1] = 0;
-    distSort[(int)maxItem[3]][2] = 0;
-    if (i > 1)      // Exclude the first 2 values (diagonal lines)
-    {
-      longSides[i-2][0] = maxItem[0];
-      longSides[i-2][1] = maxItem[1];
-      longSides[i-2][2] = maxItem[2];
-    }
-  }
-
-  // Find the midpoints of each long side
-  std::array<std::pair<double, double>, 2> midpoints;
-  for (int i=0; i<2; i++)
-  {
-    double x1 = x[longSides[i][0]];
-    double y1 = y[longSides[i][0]];
-    double x2 = x[longSides[i][1]];
-    double y2 = y[longSides[i][1]];
-
-    midpoints[i].first = (x1+x2)/2;
-    midpoints[i].second = (y1+y2)/2;
-  }
-
-  // Return the coordinate of the lower midpoint
-  std::pair<double, double> target;
-  target = midpoints[0].second < midpoints[1].second ? midpoints[0] : midpoints[1];
-  return target;
 }
