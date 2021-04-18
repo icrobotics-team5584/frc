@@ -7,6 +7,7 @@
 #include <frc2/command/SequentialCommandGroup.h>
 #include <frc2/command/PrintCommand.h>
 #include <frc2/command/WaitCommand.h>
+#include <frc2/command/ParallelRaceGroup.h>
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
@@ -15,7 +16,7 @@ CmdAuto10Ball::CmdAuto10Ball(SubDriveBase* subDriveBase, SubIntake* subIntake, S
   [subDriveBase]{return subDriveBase->getDistanceTravelled();}
 } {
   AddCommands(
-              CmdMoveStorage(subStorage, 9750),
+              CmdMoveStorage(subStorage, 5800),
               CmdTrackTarget(subTurret, subIntake),
               frc2::SequentialCommandGroup{
                 //frc2::InstantCommand([subStorage] {subStorage->Move(SubStorage::Direction::Forward, -0.8);}, {subStorage}),
@@ -26,7 +27,8 @@ CmdAuto10Ball::CmdAuto10Ball(SubDriveBase* subDriveBase, SubIntake* subIntake, S
                 CmdAutoFeederFeed(subStorage),
                 frc2::WaitCommand(3.0_s),
                 CmdAutoFeedStop(subStorage),
-                CmdAutoTurn{subDriveBase, &_autonomous, PIDk{1, 0, 20}, 90, 20},
+                /*
+                CmdAutoTurn{subDriveBase, &_autonomous, PIDk{0.5, 0, 0}, -90, 20},
                 
                 
                 //                                    startx, starty, endx, endy, endheading, cenx, ceny
@@ -47,7 +49,7 @@ CmdAuto10Ball::CmdAuto10Ball(SubDriveBase* subDriveBase, SubIntake* subIntake, S
                 CmdAutoShooterStop(subTurret)
                 //CmdAutoTurn{subDriveBase, &_autonomous, PIDk{1, 0, 20}, 70, 20},
                 //CmdAutoIntakeRetract(subIntake)
-                
+                */
               }
               
               );
