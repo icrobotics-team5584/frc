@@ -19,6 +19,9 @@ Autonomous::Autonomous(std::function<double()> getYaw, std::function<double()> g
   frc::SmartDashboard::PutNumber("steering", steering);
   frc::SmartDashboard::PutNumber("turreterror", error);
   frc::SmartDashboard::PutNumber("turretAngle", 0);
+  frc::SmartDashboard::PutNumber("auto angle", _getYaw());
+  frc::SmartDashboard::PutNumber("front y", frontPosY);
+  frc::SmartDashboard::PutNumber("back y", backPosY);
 
 
 }
@@ -31,7 +34,7 @@ void Autonomous::Periodic(){
 
 void Autonomous::updatePosition(){//calculates position, gets called in a periodic
   // Get relevant values
-  double currentAngle = (_getYaw() + angleOffset) * 0.01745329251;  // Convert to radians with * 0.01745329251
+  double currentAngle = (_getYaw()) * 0.01745329251;  // Convert to radians with * 0.01745329251
   double currentDistance = _getDistance();//total distance
   frc::SmartDashboard::PutNumber("distance", currentDistance);
   double distanceDelta = currentDistance - prevDistance;//distance since last 10 milliseconds
@@ -42,6 +45,7 @@ void Autonomous::updatePosition(){//calculates position, gets called in a period
   frontPosY = dollyPosY + (metersToFront * cos(currentAngle));
   backPosX = dollyPosX - (metersToBack * sin(currentAngle));
   backPosY = dollyPosY - (metersToBack * cos(currentAngle));
+  
   // Save values for next iteration
   prevDistance = currentDistance;
 }
@@ -147,7 +151,7 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
   frc::SmartDashboard::PutNumber("frontx", frontPosX);
   frc::SmartDashboard::PutNumber("back y", backPosY);
   frc::SmartDashboard::PutNumber("back ", backPosX);
-  frc::SmartDashboard::PutNumber("auto angle", _getYaw() + angleOffset);
+  frc::SmartDashboard::PutNumber("auto angle", _getYaw());
   return autoOutput;
 }
 
@@ -172,11 +176,11 @@ bool Autonomous::end(double endx, double endy, double startx, double starty, dou
 }
 
 DriveInput Autonomous::turnTo(double angle, PIDk PIDk){
-  error = (_getYaw() + angleOffset) - angle;
+  error = (_getYaw()) - angle;
   intergral = intergral + error;
   steering = PIDk.p*error + PIDk.i*intergral + PIDk.d*(error - previousError);
   frc::SmartDashboard::PutNumber("Steering", steering);
-  frc::SmartDashboard::PutNumber("angle", _getYaw() + angleOffset);
+  frc::SmartDashboard::PutNumber("auto angle", _getYaw());
   frc::SmartDashboard::PutNumber("error", error);
   previousError = error;
   autoOutput.steering = steering;
@@ -187,7 +191,7 @@ DriveInput Autonomous::turnTo(double angle, PIDk PIDk){
 
 bool Autonomous::turnToEnd(double angle, double tolerance){
   
-  if(abs(round((_getYaw()) - angle - angleOffset)) < tolerance){
+  if(abs(round((_getYaw()) - angle)) < tolerance){
     return true;
   }else{
     return false;
@@ -201,7 +205,7 @@ double Autonomous::getTurretPower(double turretAngle){
   
   frc::SmartDashboard::PutNumber("turretAngle", turretAngle);
 
-  error = atan2(-posY, -posX) - (_getYaw() + angleOffset) - turretAngle;
+  error = atan2(-posY, -posX) - (_getYaw()) - turretAngle;
   
   frc::SmartDashboard::PutNumber("turreterror", error);
   intergral = intergral + error;
