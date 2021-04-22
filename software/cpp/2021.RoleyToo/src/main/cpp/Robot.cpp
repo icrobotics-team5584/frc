@@ -40,8 +40,6 @@ void Robot::DisabledPeriodic() {}
  * RobotContainer} class.
  */
 void Robot::AutonomousInit() {
-  _subTurret.ResetHoodEncoder();
-  _subTurret.ResetTurretEncoder();
   m_autonomousCommand = _robotContainer.GetAutonomousCommand();
 
   if (m_autonomousCommand != nullptr) {
