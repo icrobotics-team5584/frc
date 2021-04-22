@@ -24,7 +24,7 @@ CmdAuto10Ball::CmdAuto10Ball(SubDriveBase* subDriveBase, SubIntake* subIntake, S
               frc2::SequentialCommandGroup{
                 //frc2::InstantCommand([subStorage] {subStorage->Move(SubStorage::Direction::Forward, -0.8);}, {subStorage}),
                 
-                CmdAutoSetPose{&_autonomous, -1.7, 3.548,  0},
+                CmdAutoSetPose{&_autonomous, 1.7, -3.548,  0},
                 CmdAutoIntakeDeploy(subIntake),
                 CmdAutoShooterSpin(subTurret),
                 frc2::PrintCommand{"shooter spin"},
@@ -40,9 +40,9 @@ CmdAuto10Ball::CmdAuto10Ball(SubDriveBase* subDriveBase, SubIntake* subIntake, S
                 //CmdAutoIntakeDeploy(subIntake),
                 frc2::InstantCommand([subIntake]{subIntake->Intake(1);}),
 
-                CmdAutoDrive{subDriveBase, &_autonomous, -1.7, 4.048, -1.7, 6.053, 180, 0, 0, PIDk{5, 0, 50}, 0.1, 0, PIDk{1, 0, 0}},
+                CmdAutoDrive{subDriveBase, &_autonomous, 1.7, -4.048, 1.7, -6.053, 180, 0, 0, PIDk{-5, 0, -50}, 0.1, 0, PIDk{1, 0, 0}},
                 CmdAutoTurn{subDriveBase, &_autonomous, PIDk{1, 0, 20}, 0, 20},
-                CmdAutoDrive{subDriveBase, &_autonomous, -1.7, 6.053, -1.7, 3.548, 0, 0, 0, PIDk{-5, 0, -50}, -0.1, 0, PIDk{-1, 0, 0}},
+                CmdAutoDrive{subDriveBase, &_autonomous, 1.7, -6.053, 1.7, -3.548, 0, 0, 0, PIDk{-5, 0, -50}, 0.1, 0, PIDk{1, 0, 0}},
                 frc2::InstantCommand([subIntake]{subIntake->Stop();}),
                 
                 CmdAutoFeederFeed(subStorage),
