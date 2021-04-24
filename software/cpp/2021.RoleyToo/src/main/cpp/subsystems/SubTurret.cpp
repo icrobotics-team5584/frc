@@ -49,15 +49,15 @@ void SubTurret::Periodic() {
   frc::SmartDashboard::PutNumber("Flywheel RPM", GetFlywheelRPM());
   frc::SmartDashboard::PutNumber("Flywheel Current", _spmFlywheelRight.GetOutputCurrent());
 
-  frc::SmartDashboard::PutNumber("Target Angle", GetY());
-
   frc::SmartDashboard::PutNumber("Turret Angle", GetTurretAngle());
   frc::SmartDashboard::PutNumber("Hood Angle", GetHoodPos());
 
-  frc::SmartDashboard::PutNumber("Limelight y Angle", GetY());
-
   frc::SmartDashboard::PutBoolean("Hood Limit", GetHoodLimit());
   frc::SmartDashboard::PutBoolean("Turret Limit", GetRightLimit());
+
+  frc::SmartDashboard::PutBoolean("Flywheel At Speed", GetFlywheelRPM() > 5000);
+  frc::SmartDashboard::PutBoolean("Can See Target", CheckTarget());
+  frc::SmartDashboard::PutBoolean("Locked On", GetX() > -1 && GetX() < 1);
 
   //std::cout << _spmTurret.Get() << "   " << _spmTurret.GetOutputCurrent() << "\n";
 }
@@ -95,7 +95,7 @@ double SubTurret::GetTargetArea() {
 }
 
 bool SubTurret::CheckTarget() {
-  return _targetVisible;
+  return _targetVisible && (GetY() <= _targetMaxHeight);
 }
 
 bool SubTurret::GetLeftLimit() {
@@ -166,6 +166,6 @@ bool SubTurret::IsReady() {
 }
 
 double SubTurret::CalculateHoodAngle(double x) {
-  return (0.00002*pow(x,4)) + (0.0002*pow(x,3)) - (0.0071*pow(x,2)) - (0.0819*x) + (13.156);
-  //0.00002x^{4}+0.0002x^{3}-0.0071x^{2}-0.0819x+13.156
+  return (-0.00000008*pow(x,4)) + (0.00006*pow(x,3)) - (0.0009*pow(x,2)) - (0.0666*x) + (13.237);
+  //-0.00000008x^{4}+0.00006x^{3}-0.0009x^{2}-0.0666x+13.237
 }

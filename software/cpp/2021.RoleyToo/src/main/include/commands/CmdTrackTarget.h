@@ -39,6 +39,8 @@ class CmdTrackTarget : public frc2::CommandHelper<frc2::CommandBase, CmdTrackTar
   frc2::PIDController _hoodPID{0.4, 0.0, 0.0};
   double _hoodF = 0;
 
+  double _hoodDefaultAngle = 10;
+
   int _failureCount = 0;
   double _TurretPIDOutput = 0;
   double _hoodPIDOutput = 0;
