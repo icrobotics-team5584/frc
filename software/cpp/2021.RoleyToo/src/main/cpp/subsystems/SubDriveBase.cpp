@@ -47,7 +47,7 @@ void SubDriveBase::zeroEncoders(){
 
 double SubDriveBase::getDistanceTravelled(){
   //double wheelRotations = _spmFrontLeft.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, ENCODER_TICS_PER_ROTATION).GetPosition();
-  double wheelRotations = _srxDolly.GetSelectedSensorPosition()/ENCODER_TICS_PER_ROTATION;
+  double wheelRotations = 0; //_srxDolly.GetSelectedSensorPosition()/ENCODER_TICS_PER_ROTATION;
   double distance = wheelRotations * metersPerRotation;
   return distance;  
 }
