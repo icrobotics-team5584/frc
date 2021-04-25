@@ -20,7 +20,14 @@ CmdAuto10Ball::CmdAuto10Ball(SubDriveBase* subDriveBase, SubIntake* subIntake, S
                 frc2::WaitCommand(3.0_s),
                 CmdMoveStorage(subStorage, 0),
               },
-              CmdTrackTarget(subTurret),
+              frc2::SequentialCommandGroup{
+                CmdTrackTarget(subTurret).WithTimeout(6.0_s),
+                frc2::PrintCommand{"home start ************"},
+                CmdHomeTurret(),
+                frc2::PrintCommand{"home end **************"},
+                CmdTrackTarget(subTurret)
+
+              },
               frc2::SequentialCommandGroup{
                 //frc2::InstantCommand([subStorage] {subStorage->Move(SubStorage::Direction::Forward, -0.8);}, {subStorage}),
                 

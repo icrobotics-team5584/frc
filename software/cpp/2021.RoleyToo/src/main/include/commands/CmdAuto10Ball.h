@@ -23,6 +23,7 @@
 #include "commands/CmdTrackTarget.h"
 #include "commands/CmdAutoFeederFeed.h"
 #include "commands/CmdAutoFeedStop.h"
+#include "commands/CmdHomeTurret.h"
 class CmdAuto10Ball
     : public frc2::CommandHelper<frc2::ParallelCommandGroup,
                                  CmdAuto10Ball> {
