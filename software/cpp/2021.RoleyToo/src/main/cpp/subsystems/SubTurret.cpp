@@ -59,7 +59,7 @@ void SubTurret::Periodic() {
 
   frc::SmartDashboard::PutBoolean("Flywheel At Speed", GetFlywheelRPM() > 5000);
   frc::SmartDashboard::PutBoolean("Can See Target", CheckTarget());
-  frc::SmartDashboard::PutBoolean("Locked On", GetX() > -1 && GetX() < 1);
+  frc::SmartDashboard::PutBoolean("Locked On", GetX() > -1 && GetX() < 1 && CheckTarget());
 
   //std::cout << _spmTurret.Get() << "   " << _spmTurret.GetOutputCurrent() << "\n";
 }
