@@ -38,7 +38,7 @@ class SubDriveBase : public frc2::SubsystemBase {
   rev::CANSparkMax _spmFrontRight{can::spmDriveBaseFrontRight, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANSparkMax _spmBackLeft{can::spmDriveBaseBackLeft, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANSparkMax _spmBackRight{can::spmDriveBaseBackRight, rev::CANSparkMax::MotorType::kBrushless};
-  ctre::phoenix::motorcontrol::can::TalonSRX _srxDolly{can::srxDolly};
+  //ctre::phoenix::motorcontrol::can::TalonSRX _srxDolly{can::srxDolly};
   frc::DifferentialDrive _diffDrive{_spmFrontLeft, _spmFrontRight};
   const int ENCODER_TICS_PER_ROTATION = 4096;
   rev::CANEncoder dollyEncoder = _spmFrontLeft.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, ENCODER_TICS_PER_ROTATION);
