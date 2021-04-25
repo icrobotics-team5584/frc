@@ -50,7 +50,7 @@ void CmdTrackTarget::Execute() {
   else {
     _failureCount++;
     if (_failureCount > 20) {
-      _TurretPIDOutput = std::clamp(_turretPID.Calculate(_subTurret->GetTurretAngle(), _turretCenterPoint), -0.25, 0.25);
+      _TurretPIDOutput = std::clamp(_turretPIDEncoder.Calculate(_subTurret->GetTurretAngle(), _turretCenterPoint), -0.25, 0.25);
       _hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _hoodDefaultAngle), -0.5, 0.5);
       //_hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _hoodTarget), -0.5, 0.5);
     }
@@ -66,7 +66,7 @@ void CmdTrackTarget::Execute() {
   }
   if (_overrideTurret)
   {
-    _TurretPIDOutput = std::clamp(_turretPID.Calculate(_subTurret->GetTurretAngle(), _overrideTurretTarget), -0.25, 0.25);
+    _TurretPIDOutput = std::clamp(_turretPIDEncoder.Calculate(_subTurret->GetTurretAngle(), _overrideTurretTarget), -0.25, 0.25);
     if (!_subTurret->GetTurretHomed())
     {
       _TurretPIDOutput = 0;

@@ -36,6 +36,7 @@ class CmdTrackTarget : public frc2::CommandHelper<frc2::CommandBase, CmdTrackTar
 
   frc2::PIDController _flywheelPID{FlywheelPID[0], FlywheelPID[1], FlywheelPID[2]};
   frc2::PIDController _turretPID{0.012, 0.0, 0.003}; //default values
+  frc2::PIDController _turretPIDEncoder{0.06, 0.0, 0.003}; //default values
   frc2::PIDController _hoodPID{0.4, 0.0, 0.0};
   double _hoodF = 0;
 
