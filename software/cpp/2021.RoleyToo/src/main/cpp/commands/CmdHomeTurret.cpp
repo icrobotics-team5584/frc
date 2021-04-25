@@ -6,22 +6,40 @@
 
 CmdHomeTurret::CmdHomeTurret(SubTurret* subTurret) {
   // Use addRequirements() here to declare subsystem dependencies.
+  AddRequirements(subTurret);
   _subTurret = subTurret;
 }
 
 // Called when the command is initially scheduled.
-void CmdHomeTurret::Initialize() {
-  _subTurret->SetTurret(0.3);
-}
+void CmdHomeTurret::Initialize() { }
 
 // Called repeatedly when this Command is scheduled to run
 void CmdHomeTurret::Execute() {
-  if (_subTurret->GetLeftLimit()) {
-    _subTurret->ResetTurretEncoder();
-    while(_subTurret->GetTurretAngle() < 10) {
-      _subTurret->SetTurret(-0.3);
+  if (_state == 0)
+  {
+    if (_subTurret->GetTurretAngle() < 1 && _subTurret->GetTurretAngle() > -1)
+    {
+      _subTurret->SetTurret(0);
+      _state = 1;
     }
-    targetReached = true;
+    else
+    {
+      _subTurret->SetTurret(std::clamp(_turretPID.Calculate(_subTurret->GetTurretAngle(), 0), -0.25, 0.25));
+    }
+    
+  }
+  else if (_state == 1)
+  {
+    if (_subTurret->GetRightLimit())
+    {
+      _subTurret->ResetTurretEncoder(6);
+      _subTurret->SetTurretHomed(true);
+      _state = 2;
+    }
+    else
+    {
+      _subTurret->SetTurret(_homingSpeed);
+    }
   }
 }
 
@@ -32,5 +50,5 @@ void CmdHomeTurret::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool CmdHomeTurret::IsFinished() {
-  return targetReached;
+  return _state == 2;
 }

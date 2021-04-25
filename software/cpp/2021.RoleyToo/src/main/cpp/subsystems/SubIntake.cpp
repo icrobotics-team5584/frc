@@ -10,6 +10,7 @@ SubIntake::SubIntake(){
 
     _spmIntake.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
     _spmIntake.SetSmartCurrentLimit(20);
+    _spmIntake.SetInverted(true);
     solIntake.Set(frc::DoubleSolenoid::kReverse);
 }
 
@@ -20,6 +21,10 @@ void SubIntake::Periodic() {
 
 void SubIntake::Intake(){
     _spmIntake.Set(kSpeed);
+}
+
+void SubIntake::Intake(double speed){
+    _spmIntake.Set(speed);
 }
 
 void SubIntake::Outtake(){

@@ -14,6 +14,7 @@
 #include <frc/DigitalInput.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "Constants.h"
+#include "math.h"
 
 
 class SubTurret : public frc2::SubsystemBase {
@@ -29,12 +30,12 @@ class SubTurret : public frc2::SubsystemBase {
   double GetY();
   double GetTargetArea();
   bool CheckTarget();
+
   bool GetLeftLimit();
   bool GetRightLimit();
   double GetTurretAngle();
-  void ResetTurretEncoder();
-  void ResetHoodEncoder();
-  bool GetHoodLimit();
+  void ResetTurretEncoder(double angle = 0);
+
 
   void SetReady(bool ready);
   bool IsReady();
@@ -49,7 +50,15 @@ class SubTurret : public frc2::SubsystemBase {
   double GetFlywheelRPM();
 
   void SetHood(double speed);
+  void ResetHoodEncoder();
   double GetHoodPos();
+  bool GetHoodLimit();
+  double CalculateHoodAngle(double x);
+
+  bool GetHoodHomed();
+  bool GetTurretHomed();
+  void SetHoodHomed(bool value);
+  void SetTurretHomed(bool value);
   
 
  private:
@@ -60,13 +69,13 @@ class SubTurret : public frc2::SubsystemBase {
   rev::CANSparkMax _spmFlywheelLeft{can::spmFlywheelLeft, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::CANSparkMax _spmHood{can::spmHood, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
 
-  rev::CANEncoder _encTurret{_spmTurret.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 2048)};
-  rev::CANEncoder _encHood{_spmHood.GetEncoder()};
+  rev::CANEncoder _encTurret{_spmTurret.GetEncoder()};
+  rev::CANEncoder _encHood{_spmHood.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 8192)};
   rev::CANEncoder _encFlywheel{_spmFlywheelRight.GetEncoder()};
 
   frc::DigitalInput _hlfTurretLeft{dio::hlfTurretLeft};
   frc::DigitalInput _hlfTurretRight{dio::hlfTurretRight};
-  frc::DigitalInput _lmtHoodDown{dio::lmtHoodBottom};
+  frc::DigitalInput _hlfHoodDown{dio::hlfHoodDown};
 
   nt::NetworkTableInstance _networktables;
   std::shared_ptr<nt::NetworkTable> _limelight;
@@ -80,10 +89,16 @@ class SubTurret : public frc2::SubsystemBase {
 
   /* These values are in mm
      Measure from ground to target height.*/ 
-  double _targetHeight = 2500;
-  double _limelightHeight = 583;
+  double _targetHeight = 2113;
+  double _limelightHeight = 560;
   double _limelightAngle = 26.5;
-  double _encTurretConvFac = 360/1;     // 360 points per 1 revolution
+  double _encTurretConvFac = _hoodDegreesPerRotation/1;     // 360 points per 1 revolution
 
-  double _hoodPosOffset = 0;            // Allows 0 to be the home point while using an absolute encoder
+  double _hoodDegreesPerRotation = 13.2;
+  double _hoodInitialAngle = 7.15;
+
+  bool _hoodHomed = false;
+  bool _turretHomed = false;
+
+  double _targetMaxHeight = 18.8;
 };

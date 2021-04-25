@@ -20,7 +20,6 @@
 #include "subsystems/SubStorage.h"
 #include "subsystems/SubTurret.h"
 
-#include "commands/CmdAutoCircle.h"
 #include "commands/CmdJoystickDrive.h"
 #include "commands/CmdTrackTarget.h"
 #include "commands/CmdDriveStorage.h"
@@ -36,15 +35,15 @@
 #include "commands/CmdSpinFlywheel.h"
 #include "commands/CmdTrackTarget.h"
 #include "commands/CmdClimbToPos.h"
+#include "commands/CmdAuto10Ball.h"
 #include "commands/CmdMoveFeeder.h"
 #include "commands/CmdShoot.h"
 #include "commands/CmdHomeHood.h"
+#include "commands/CmdMoveStorage.h"
+#include "commands/CmdDeployIntake.h"
 
-#include "commands/CmdSpinHoodForward.h"
-#include "commands/CmdSpinHoodBackwards.h"
-
-#include "commands/CmdSpinTurretLeft.h"
-#include "commands/CmdSpinTurretRight.h"
+#include "commands/CmdHomeHood.h"
+#include "commands/CmdHomeTurret.h"
 
 #include "Utilities/Autonomous.h"
 
@@ -61,20 +60,21 @@ class RobotContainer {
 
   frc2::Command* GetAutonomousCommand();
   SubDriveBase _subDriveBase;
+  SubTurret _subTurret;
   //Autonomous _autonomous{ [this]{return _subDriveBase.getYaw();}, [this]{return _subDriveBase.getDistanceTravelled();}};
-  CmdAutoCircle _cmdAutoCircle{&_subDriveBase};
+  CmdAuto10Ball _cmdAuto10Ball{&_subDriveBase, &_subIntake, &_subStorage, &_subTurret};
  private:
   // The robot's subsystems and commands are defined here...
   //frc::Joystick _joystick0{0};
-  JoystickScaler _joystick0{0, 3.0, 3.0};
+  JoystickScaler _joystick0{0, 4.0, 4.0};
 
-  SubTurret _subTurret;
+  
   SubStorage _subStorage;
   SubClimber _subClimber;
   SubColorWheel _subColorWheel;
   SubIntake _subIntake; 
 
-  CmdTrackTarget _cmdTrackTarget{&_subTurret, &_subStorage};
+  CmdTrackTarget _cmdTrackTarget{&_subTurret};
   CmdDriveStorage _cmdDriveStorage{&_subStorage, SubStorage::Direction::Forward, 0.2};
   CmdSpinFlywheel _cmdSpinFlywheel{&_subTurret};
   CmdDeployClimber _cmdDeployClimber{&_subClimber};
@@ -86,13 +86,9 @@ class RobotContainer {
   CmdSpinToColor _cmdSpinToColor{&_subColorWheel};
   CmdShoot _cmdShoot{&_subStorage, &_subTurret};
   CmdHomeHood _cmdHomeHood{&_subTurret};
-
-
-  CmdSpinHoodForward _cmdSpinHoodForward{&_subTurret};
-  CmdSpinHoodBackwards _cmdSpinHoodBackwards{&_subTurret};
-
-  CmdSpinTurretLeft _cmdSpinTurretLeft{&_subTurret};
-  CmdSpinTurretRight _cmdSpinTurretRight{&_subTurret};
+  CmdHomeTurret _cmdHomeTurret{&_subTurret};
+  CmdMoveStorage _cmdMoveStorage{&_subStorage, 5300};
+  CmdDeployIntake _cmdDeployIntake{&_subIntake};
 
   void ConfigureButtonBindings();
 };

@@ -6,6 +6,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+
 #include "subsystems/SubTurret.h"
 
 /**
@@ -29,4 +30,5 @@ class CmdHomeHood
   bool IsFinished() override;
  private:
   SubTurret* _subTurret;
+  double _homingSpeed = -0.1;
 };

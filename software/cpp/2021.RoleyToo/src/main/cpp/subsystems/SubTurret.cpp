@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "subsystems/SubTurret.h"
+#include "commands/CmdTrackTarget.h"
 
 SubTurret::SubTurret() {
   _networktables = nt::NetworkTableInstance::GetDefault();
@@ -26,7 +27,19 @@ SubTurret::SubTurret() {
   _spmTurret.SetSmartCurrentLimit(20);
   _spmHood.SetSmartCurrentLimit(20);
 
+  _spmHood.SetInverted(true);
+  _spmFlywheelLeft.SetInverted(true);
+  _spmFlywheelRight.SetInverted(true);
+
+
+  _encHood.SetPosition(0);
+  _encTurret.SetPosition(0);
+
+
   frc::SmartDashboard::PutNumber("Turret Speed", 0);
+
+  //SetDefaultCommand(CmdTrackTarget(this, 0, 7.15));
+
 }
 
 // This method will be called once per scheduler run
@@ -38,12 +51,37 @@ void SubTurret::Periodic() {
   frc::SmartDashboard::PutNumber("Flywheel RPM", GetFlywheelRPM());
   frc::SmartDashboard::PutNumber("Flywheel Current", _spmFlywheelRight.GetOutputCurrent());
 
-  frc::SmartDashboard::PutNumber("Distance", EstimateDistance());
-
-  frc::SmartDashboard::PutNumber("Turret Angle", _encTurret.GetPosition());
+  frc::SmartDashboard::PutNumber("Turret Angle", GetTurretAngle());
   frc::SmartDashboard::PutNumber("Hood Angle", GetHoodPos());
 
+  frc::SmartDashboard::PutBoolean("Hood Limit", GetHoodLimit());
+  frc::SmartDashboard::PutBoolean("Turret Limit", GetRightLimit());
+
+  frc::SmartDashboard::PutBoolean("Flywheel At Speed", GetFlywheelRPM() > 5000);
+  frc::SmartDashboard::PutBoolean("Can See Target", CheckTarget());
+  frc::SmartDashboard::PutBoolean("Locked On", GetX() > -1 && GetX() < 1 && CheckTarget());
+
   //std::cout << _spmTurret.Get() << "   " << _spmTurret.GetOutputCurrent() << "\n";
+}
+
+bool SubTurret::GetHoodHomed()
+{
+  return _hoodHomed;
+}
+
+bool SubTurret::GetTurretHomed()
+{
+  return _turretHomed;
+}
+
+void SubTurret::SetHoodHomed(bool value)
+{
+  _hoodHomed = value;
+}
+
+void SubTurret::SetTurretHomed(bool value)
+{
+  _turretHomed = value;
 }
 
 double SubTurret::GetX() {
@@ -59,7 +97,7 @@ double SubTurret::GetTargetArea() {
 }
 
 bool SubTurret::CheckTarget() {
-  return _targetVisible;
+  return _targetVisible && (GetY() <= _targetMaxHeight);
 }
 
 bool SubTurret::GetLeftLimit() {
@@ -67,15 +105,15 @@ bool SubTurret::GetLeftLimit() {
 }
 
 bool SubTurret::GetRightLimit() {
-    return _hlfTurretRight.Get();
+    return !_hlfTurretRight.Get();  // Returns true when turret hits limit
 }
 
 double SubTurret::GetTurretAngle() {
-  return (_encTurret.GetPosition() / _encTurretConvFac);
+  return (_encTurret.GetPosition());
 }
 
-void SubTurret::ResetTurretEncoder() {
-  _encTurret.SetPosition(0);
+void SubTurret::ResetTurretEncoder(double angle) {
+  _encTurret.SetPosition(angle);
 }
 
 void SubTurret::SetTurret(double speed) {
@@ -103,7 +141,15 @@ void SubTurret::SetHood(double speed) {
 }
 
 double SubTurret::GetHoodPos() {
-  return (_encHood.GetPosition() * 360) - _hoodPosOffset;
+  return (_encHood.GetPosition() + _hoodInitialAngle);
+}
+
+void SubTurret::ResetHoodEncoder() {
+  _encHood.SetPosition(0);
+}
+
+bool SubTurret::GetHoodLimit() {
+  return !_hlfHoodDown.Get();
 }
 
 double SubTurret::EstimateDistance() {
@@ -121,10 +167,7 @@ bool SubTurret::IsReady() {
   return ReadyToShoot;
 }
 
-void SubTurret::ResetHoodEncoder() {
-  _encHood.SetPosition(0);
-}
-
-bool SubTurret::GetHoodLimit() {
-  return _lmtHoodDown.Get();
+double SubTurret::CalculateHoodAngle(double x) {
+  return (-0.00000008*pow(x,4)) + (0.00006*pow(x,3)) - (0.0009*pow(x,2)) - (0.0666*x) + (13.237);
+  //-0.00000008x^{4}+0.00006x^{3}-0.0009x^{2}-0.0666x+13.237
 }
