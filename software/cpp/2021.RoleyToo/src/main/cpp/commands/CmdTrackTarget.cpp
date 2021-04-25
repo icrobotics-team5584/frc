@@ -86,7 +86,7 @@ void CmdTrackTarget::Execute() {
   _subTurret->SetTurret(_TurretPIDOutput);
   _subTurret->SetHood(_hoodPIDOutput);
 
-  //frc::SmartDashboard::PutNumber("Hood Angle", _subTurret->GetHoodPos());
+  frc::SmartDashboard::PutNumber("Hood Angle", _subTurret->GetHoodPos());
 }
 
 // Called once the command ends or is interrupted.
