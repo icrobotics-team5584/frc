@@ -16,12 +16,14 @@ void CmdDeployClimber::Initialize() {}
 // Called repeatedly when this Command is scheduled to run
 void CmdDeployClimber::Execute() {
 
-  if (HasDeployed == false) {
-    if (GameTimer::GetInstance()->GetTime(GameTimer::Seconds) < 30) {
-      _subClimber->SetPneumatic(SubClimber::Solenoids::Deploy, frc::DoubleSolenoid::Value::kForward);
-      HasDeployed = true;
-    }
-  }
+  // if (HasDeployed == false) {
+  //   if (GameTimer::GetInstance()->GetTime(GameTimer::Seconds) < 30) {
+  //     _subClimber->SetPneumatic(SubClimber::Solenoids::Deploy, frc::DoubleSolenoid::Value::kForward);
+  //     HasDeployed = true;
+  //   }
+  // }
+
+  _subClimber->SetPneumatic(SubClimber::Solenoids::Deploy, frc::DoubleSolenoid::Value::kForward);
 
 }
 

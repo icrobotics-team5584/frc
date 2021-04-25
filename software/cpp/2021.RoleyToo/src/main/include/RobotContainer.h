@@ -41,9 +41,9 @@
 #include "commands/CmdHomeHood.h"
 #include "commands/CmdMoveStorage.h"
 #include "commands/CmdDeployIntake.h"
-
 #include "commands/CmdHomeHood.h"
 #include "commands/CmdHomeTurret.h"
+#include "commands/CmdClimbManual.h"
 
 #include "Utilities/Autonomous.h"
 
@@ -89,6 +89,7 @@ class RobotContainer {
   CmdHomeTurret _cmdHomeTurret{&_subTurret};
   CmdMoveStorage _cmdMoveStorage{&_subStorage, 5300};
   CmdDeployIntake _cmdDeployIntake{&_subIntake};
+  CmdClimbManual _cmdClimbManual{&_subClimber};
 
   void ConfigureButtonBindings();
 };
