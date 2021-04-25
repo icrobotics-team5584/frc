@@ -48,6 +48,7 @@ void Robot::AutonomousInit() {
   _robotContainer._subDriveBase.resetYaw();
   _robotContainer._subDriveBase.deployDolly();
   _robotContainer._subDriveBase.Brake();
+  _robotContainer._subTurret.ResetHoodEncoder();
 }
 
 void Robot::AutonomousPeriodic() {}

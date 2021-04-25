@@ -60,6 +60,7 @@ class RobotContainer {
 
   frc2::Command* GetAutonomousCommand();
   SubDriveBase _subDriveBase;
+  SubTurret _subTurret;
   //Autonomous _autonomous{ [this]{return _subDriveBase.getYaw();}, [this]{return _subDriveBase.getDistanceTravelled();}};
   CmdAuto10Ball _cmdAuto10Ball{&_subDriveBase, &_subIntake, &_subStorage, &_subTurret};
  private:
@@ -67,7 +68,7 @@ class RobotContainer {
   //frc::Joystick _joystick0{0};
   JoystickScaler _joystick0{0, 4.0, 4.0};
 
-  SubTurret _subTurret;
+  
   SubStorage _subStorage;
   SubClimber _subClimber;
   SubColorWheel _subColorWheel;

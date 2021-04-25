@@ -18,19 +18,20 @@ CmdAuto10Ball::CmdAuto10Ball(SubDriveBase* subDriveBase, SubIntake* subIntake, S
   AddCommands(
               frc2::SequentialCommandGroup{
                 frc2::WaitCommand(3.0_s),
-                CmdMoveStorage(subStorage, 0),
+                CmdMoveStorage(subStorage, 0)
               },
+              //CmdTrackTarget(subTurret),
               frc2::SequentialCommandGroup{
-                CmdTrackTarget(subTurret).WithTimeout(6.0_s),
+                //frc2::WaitCommand(6.0_s),
                 frc2::PrintCommand{"home start ************"},
-                CmdHomeTurret(),
+                CmdHomeTurret(subTurret),
                 frc2::PrintCommand{"home end **************"},
                 CmdTrackTarget(subTurret)
 
               },
               frc2::SequentialCommandGroup{
                 //frc2::InstantCommand([subStorage] {subStorage->Move(SubStorage::Direction::Forward, -0.8);}, {subStorage}),
-                
+                frc2::PrintCommand{"************LIAM WAS THIS IN THE RIOLOG??"},
                 CmdAutoSetPose{&_autonomous, 1.7, -3.548,  0},
                 CmdAutoIntakeDeploy(subIntake),
                 CmdAutoShooterSpin(subTurret),
@@ -47,9 +48,9 @@ CmdAuto10Ball::CmdAuto10Ball(SubDriveBase* subDriveBase, SubIntake* subIntake, S
                 //CmdAutoIntakeDeploy(subIntake),
                 frc2::InstantCommand([subIntake]{subIntake->Intake(1);}),
 
-                CmdAutoDrive{subDriveBase, &_autonomous, 1.7, -4.048, 1.7, -6.053, 180, 0, 0, PIDk{-5, 0, -50}, 0.1, 0, PIDk{1, 0, 0}},
+                CmdAutoDrive{subDriveBase, &_autonomous, 1.7, -4.048, 1.7, -8.053, 180, 0, 0, PIDk{-5, 0, -50}, 0.7, 0, PIDk{1, 0, 0}},
                 CmdAutoTurn{subDriveBase, &_autonomous, PIDk{1, 0, 20}, 0, 20},
-                CmdAutoDrive{subDriveBase, &_autonomous, 1.7, -6.053, 1.7, -3.548, 0, 0, 0, PIDk{-5, 0, -50}, 0.1, 0, PIDk{1, 0, 0}},
+                CmdAutoDrive{subDriveBase, &_autonomous, 1.7, -8.053, 1.7, -4.548, 0, 0, 0, PIDk{-5, 0, -50}, 1, 0, PIDk{1, 0, 0}},
                 frc2::InstantCommand([subIntake]{subIntake->Stop();}),
                 
                 CmdAutoFeederFeed(subStorage),

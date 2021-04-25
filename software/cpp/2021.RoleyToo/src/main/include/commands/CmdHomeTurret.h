@@ -34,7 +34,7 @@ class CmdHomeTurret
   SubTurret* _subTurret;
   frc2::PIDController _turretPID{0.06, 0.0, 0.003}; //default values
 
-  double _homingSpeed = -0.1;
+  double _homingSpeed = -0.05;
 
   int _state = 0;
 };
