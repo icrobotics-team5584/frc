@@ -33,6 +33,8 @@ SubTurret::SubTurret() {
 
 
   _encHood.SetPosition(0);
+  _encTurret.SetPosition(0);
+
 
   frc::SmartDashboard::PutNumber("Turret Speed", 0);
 
@@ -147,7 +149,7 @@ void SubTurret::ResetHoodEncoder() {
 }
 
 bool SubTurret::GetHoodLimit() {
-  return _hlfHoodDown.Get();
+  return !_hlfHoodDown.Get();
 }
 
 double SubTurret::EstimateDistance() {
