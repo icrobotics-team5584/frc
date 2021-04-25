@@ -22,7 +22,8 @@ Autonomous::Autonomous(std::function<double()> getYaw, std::function<double()> g
   frc::SmartDashboard::PutNumber("auto angle", _getYaw());
   frc::SmartDashboard::PutNumber("front y", frontPosY);
   frc::SmartDashboard::PutNumber("back y", backPosY);
-
+  frc::SmartDashboard::PutNumber("AUTO OPTIONS", autoop);
+  frc::SmartDashboard::GetNumber("AUTO OPTIONS", autoop);
 
 }
 
@@ -116,8 +117,9 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
   //output = kP*Error + kI*Intergral + kD*Derivative
   steering = PIDk.p*error + PIDk.i*intergral + PIDk.d*(error - previousError);
   //Calculates previous error for Derivative
+  autoop = frc::SmartDashboard::GetNumber("AUTO OPTIONS", autoop);
   previousError = error;
-  autoOutput.steering = steering;
+  autoOutput.steering = steering*autoop;
   frc::SmartDashboard::PutNumber("steering error", error);
   frc::SmartDashboard::PutNumber("steering", steering);
 
@@ -134,7 +136,7 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
   if (abs(speed) < abs(endSpeed)){
     speed = endSpeed;
   }
-  autoOutput.speed = -speed;
+  autoOutput.speed = -speed*autoop;
   frc::SmartDashboard::PutNumber("speed", speed);
   //autoOutput.steering = 0;
   //autoOutput.speed = 0;
@@ -178,12 +180,14 @@ bool Autonomous::end(double endx, double endy, double startx, double starty, dou
 DriveInput Autonomous::turnTo(double angle, PIDk PIDk){
   error = (_getYaw()) - angle;
   intergral = intergral + error;
-  steering = PIDk.p*error + PIDk.i*intergral + PIDk.d*(error - previousError);
+  
+  autoop = frc::SmartDashboard::GetNumber("AUTO OPTIONS", autoop);
+  steering = PIDk.p*error + PIDk.i*intergral + PIDk.d*(error - previousError)*autoop;
   frc::SmartDashboard::PutNumber("Steering", steering);
   frc::SmartDashboard::PutNumber("auto angle", _getYaw());
   frc::SmartDashboard::PutNumber("error", error);
   previousError = error;
-  autoOutput.steering = steering;
+  autoOutput.steering = steering*autoop;
   //autoOutput.speed = 0;
   //autoOutput.steering = 0;
   return autoOutput;
