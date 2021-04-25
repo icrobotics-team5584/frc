@@ -20,7 +20,6 @@
 #include "subsystems/SubStorage.h"
 #include "subsystems/SubTurret.h"
 
-#include "commands/CmdAutoCircle.h"
 #include "commands/CmdJoystickDrive.h"
 #include "commands/CmdTrackTarget.h"
 #include "commands/CmdDriveStorage.h"
@@ -36,6 +35,7 @@
 #include "commands/CmdSpinFlywheel.h"
 #include "commands/CmdTrackTarget.h"
 #include "commands/CmdClimbToPos.h"
+#include "commands/CmdAuto10Ball.h"
 #include "commands/CmdMoveFeeder.h"
 #include "commands/CmdShoot.h"
 #include "commands/CmdHomeHood.h"
@@ -60,14 +60,15 @@ class RobotContainer {
 
   frc2::Command* GetAutonomousCommand();
   SubDriveBase _subDriveBase;
+  SubTurret _subTurret;
   //Autonomous _autonomous{ [this]{return _subDriveBase.getYaw();}, [this]{return _subDriveBase.getDistanceTravelled();}};
-  CmdAutoCircle _cmdAutoCircle{&_subDriveBase};
+  CmdAuto10Ball _cmdAuto10Ball{&_subDriveBase, &_subIntake, &_subStorage, &_subTurret};
  private:
   // The robot's subsystems and commands are defined here...
   //frc::Joystick _joystick0{0};
   JoystickScaler _joystick0{0, 4.0, 4.0};
 
-  SubTurret _subTurret;
+  
   SubStorage _subStorage;
   SubClimber _subClimber;
   SubColorWheel _subColorWheel;
@@ -86,7 +87,7 @@ class RobotContainer {
   CmdShoot _cmdShoot{&_subStorage, &_subTurret};
   CmdHomeHood _cmdHomeHood{&_subTurret};
   CmdHomeTurret _cmdHomeTurret{&_subTurret};
-  CmdMoveStorage _cmdMoveStorage{&_subStorage, 5800};
+  CmdMoveStorage _cmdMoveStorage{&_subStorage, 5300};
   CmdDeployIntake _cmdDeployIntake{&_subIntake};
 
   void ConfigureButtonBindings();

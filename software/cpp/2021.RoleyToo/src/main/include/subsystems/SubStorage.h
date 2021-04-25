@@ -35,6 +35,7 @@ class SubStorage : public frc2::SubsystemBase {
   bool GetSensor(Sensors sensor);
   bool NeedsIndexing();
   void ScheduleIndexing(bool scheduled);
+  void Feed(double speed);
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */

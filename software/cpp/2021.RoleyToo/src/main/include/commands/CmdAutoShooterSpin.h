@@ -6,11 +6,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <frc/controller/PIDController.h>
-
 #include "subsystems/SubTurret.h"
-#include "subsystems/SubIntake.h"
-
 /**
  * An example command.
  *
@@ -18,11 +14,11 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class CmdHomeTurret
-    : public frc2::CommandHelper<frc2::CommandBase, CmdHomeTurret> {
+class CmdAutoShooterSpin
+    : public frc2::CommandHelper<frc2::CommandBase, CmdAutoShooterSpin> {
  public:
-  CmdHomeTurret(SubTurret* subTurret);
-
+  CmdAutoShooterSpin(SubTurret* subTurret);
+  SubTurret* _subTurret;
   void Initialize() override;
 
   void Execute() override;
@@ -30,11 +26,4 @@ class CmdHomeTurret
   void End(bool interrupted) override;
 
   bool IsFinished() override;
- private:
-  SubTurret* _subTurret;
-  frc2::PIDController _turretPID{0.06, 0.0, 0.003}; //default values
-
-  double _homingSpeed = -0.05;
-
-  int _state = 0;
 };

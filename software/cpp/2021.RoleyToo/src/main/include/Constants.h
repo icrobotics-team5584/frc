@@ -60,10 +60,10 @@ namespace buttons {
 }
 
 namespace pcm {
-  constexpr int pcm_solIntakeRetract = 2;
-  constexpr int pcm_solIntakeDeploy = 6;
   constexpr int solDollyDeploy = 1;
-  constexpr int solDollyRetract = 7;
+  constexpr int pcm_solIntakeRetract = 2;
   constexpr int solClimbDeploy = 4;
-  constexpr int solClimbRetract = 5;
+  constexpr int solClimbRetract = 5; 
+  constexpr int pcm_solIntakeDeploy = 6;
+  constexpr int solDollyRetract = 7;
 }
