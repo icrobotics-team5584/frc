@@ -6,8 +6,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include "subsystems/SubDriveBase.h"
-#include "utilities/Autonomous.h"
+#include "subsystems/SubIntake.h"
 /**
  * An example command.
  *
@@ -15,9 +14,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class CmdAutoCircle : public frc2::CommandHelper<frc2::CommandBase, CmdAutoCircle> {
+class CmdAutoIntakeDeploy
+    : public frc2::CommandHelper<frc2::CommandBase, CmdAutoIntakeDeploy> {
  public:
-  CmdAutoCircle(SubDriveBase* subDriveBase);
+  CmdAutoIntakeDeploy(SubIntake* subIntake);
 
   void Initialize() override;
 
@@ -27,7 +27,5 @@ class CmdAutoCircle : public frc2::CommandHelper<frc2::CommandBase, CmdAutoCircl
 
   bool IsFinished() override;
  private:
-  DriveInput driveInput;
-  SubDriveBase* _subDriveBase;
-  Autonomous _autonomous;
+  SubIntake* _subIntake;
 };

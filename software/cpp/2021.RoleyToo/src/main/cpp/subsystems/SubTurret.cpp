@@ -38,7 +38,7 @@ SubTurret::SubTurret() {
 
   frc::SmartDashboard::PutNumber("Turret Speed", 0);
 
-  SetDefaultCommand(CmdTrackTarget(this, 0, 7.15));
+  //SetDefaultCommand(CmdTrackTarget(this, 0, 7.15));
 
 }
 

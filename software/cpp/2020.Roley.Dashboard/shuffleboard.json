@@ -121,9 +121,11 @@
               "_source0": "network_table:///SmartDashboard/RPM",
               "_title": "Shooter RPM",
               "Graph/Visible time": 30.0,
+              "Graph/X-axis auto scrolling": true,
               "Y-axis/Automatic bounds": true,
               "Y-axis/Upper bound": 1.0,
-              "Y-axis/Lower bound": -1.0
+              "Y-axis/Lower bound": -1.0,
+              "Y-axis/Unit": "ul"
             }
           },
           "9,0": {
@@ -620,7 +622,101 @@
         "showGrid": true,
         "hgap": 16.0,
         "vgap": 16.0,
-        "tiles": {}
+        "tiles": {
+          "0,1": {
+            "size": [
+              9,
+              3
+            ],
+            "content": {
+              "_type": "Number Bar",
+              "_source0": "network_table:///SmartDashboard/error",
+              "_title": "SmartDashboard/error",
+              "Range/Min": -1.0,
+              "Range/Max": 1.0,
+              "Range/Center": 0.0,
+              "Visuals/Num tick marks": 5,
+              "Visuals/Show text": true
+            }
+          },
+          "6,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/difference",
+              "_title": "/SmartDashboard/difference"
+            }
+          },
+          "4,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Heading of line to start",
+              "_title": "/SmartDashboard/Heading of line to start"
+            }
+          },
+          "5,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Heading of line to end",
+              "_title": "/SmartDashboard/Heading of line to end"
+            }
+          },
+          "3,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/slope of end",
+              "_title": "/SmartDashboard/slope of end"
+            }
+          },
+          "7,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/slope of start",
+              "_title": "/SmartDashboard/slope of start"
+            }
+          },
+          "1,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/cenX",
+              "_title": "/SmartDashboard/cenX"
+            }
+          },
+          "2,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/cenY",
+              "_title": "/SmartDashboard/cenY"
+            }
+          }
+        }
       }
     },
     {
@@ -766,9 +862,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -6.285714149475098,
-    "y": 0.0,
-    "width": 1726.857177734375,
-    "height": 1109.142822265625
+    "x": -8.0,
+    "y": -8.0,
+    "width": 1382.0,
+    "height": 744.0
   }
 }

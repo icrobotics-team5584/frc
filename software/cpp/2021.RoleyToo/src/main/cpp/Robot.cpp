@@ -45,7 +45,10 @@ void Robot::AutonomousInit() {
   if (m_autonomousCommand != nullptr) {
     m_autonomousCommand->Schedule();
   }
+  _robotContainer._subDriveBase.resetYaw();
   _robotContainer._subDriveBase.deployDolly();
+  _robotContainer._subDriveBase.Brake();
+  _robotContainer._subTurret.ResetHoodEncoder();
 }
 
 void Robot::AutonomousPeriodic() {}
@@ -60,6 +63,7 @@ void Robot::TeleopInit() {
     m_autonomousCommand = nullptr;
   }
   _robotContainer._subDriveBase.retractDolly();
+  _robotContainer._subDriveBase.Coast();
 }
 
 /**

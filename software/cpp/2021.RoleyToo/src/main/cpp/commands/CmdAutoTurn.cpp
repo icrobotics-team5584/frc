@@ -2,33 +2,33 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "commands/CmdAutoCircle.h"
+#include "commands/CmdAutoTurn.h"
 
-CmdAutoCircle::CmdAutoCircle(SubDriveBase* subDriveBase) : _autonomous{
-  [subDriveBase]{return subDriveBase->getYaw();}, 
-  [subDriveBase]{return subDriveBase->getDistanceTravelled();}
-}{
+CmdAutoTurn::CmdAutoTurn(SubDriveBase* subDriveBase, Autonomous* autonomous, PIDk PIDconstants, double angle, double tolerance) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements(subDriveBase);
+  _autonomous = autonomous;
   _subDriveBase = subDriveBase;
+  _PIDconstants = PIDconstants;
+  _angle = angle;
+  _tolerance = tolerance;
 }
 
 // Called when the command is initially scheduled.
-void CmdAutoCircle::Initialize() {
-  _subDriveBase->resetYaw();
-  _autonomous.setPosition(0,0);
-}
+void CmdAutoTurn::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void CmdAutoCircle::Execute() {
-  driveInput = _autonomous.autoDrive(-2.0, 0.0, 0.0, 2.0, 180);
+void CmdAutoTurn::Execute() {
+  driveInput = _autonomous->turnTo(_angle, _PIDconstants);
   _subDriveBase->drive(driveInput.speed, driveInput.steering);
 }
 
 // Called once the command ends or is interrupted.
-void CmdAutoCircle::End(bool interrupted) {}
+void CmdAutoTurn::End(bool interrupted) {
+  _subDriveBase->drive(0, 0);
+}
 
 // Returns true when the command should end.
-bool CmdAutoCircle::IsFinished() {
-  return false;
+bool CmdAutoTurn::IsFinished() {
+  return _autonomous->turnToEnd(_angle, _tolerance);
 }

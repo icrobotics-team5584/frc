@@ -23,6 +23,10 @@ void SubIntake::Intake(){
     _spmIntake.Set(kSpeed);
 }
 
+void SubIntake::Intake(double speed){
+    _spmIntake.Set(speed);
+}
+
 void SubIntake::Outtake(){
     _spmIntake.Set(-kSpeed);
 }

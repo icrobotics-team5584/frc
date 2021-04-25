@@ -33,21 +33,22 @@ void SubDriveBase::Periodic() {
 
 void SubDriveBase::deployDolly(){
   std::cout << "deploy dolly" << std::endl;
-  solDollyAcuator.Set(frc::DoubleSolenoid::kForward);
+  solDollyAcuator.Set(frc::DoubleSolenoid::Value::kForward);
 }
 
 void SubDriveBase::retractDolly(){
   std::cout << "retract dolly" << std::endl;
-  solDollyAcuator.Set(frc::DoubleSolenoid::kReverse);
+  solDollyAcuator.Set(frc::DoubleSolenoid::Value::kReverse);
 }
 
 void SubDriveBase::zeroEncoders(){
-  _spmFrontLeft.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, ENCODER_TICS_PER_ROTATION).SetPosition(0.0);
+  dollyEncoder.SetPosition(0.0);
 }
 
 double SubDriveBase::getDistanceTravelled(){
-  //double wheelRotations = _spmFrontLeft.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, ENCODER_TICS_PER_ROTATION).GetPosition();
-  double wheelRotations = 0; //_srxDolly.GetSelectedSensorPosition()/ENCODER_TICS_PER_ROTATION;
+  double wheelRotations = dollyEncoder.GetPosition() / 2;
+  frc::SmartDashboard::PutNumber("dolly rotations", wheelRotations);
+  //double wheelRotations = _srxDolly.GetSelectedSensorPosition()/ENCODER_TICS_PER_ROTATION;
   double distance = wheelRotations * metersPerRotation;
   return distance;  
 }
@@ -62,4 +63,18 @@ bool SubDriveBase::isNavxCal(){
 
 double SubDriveBase::getYaw(){
   return ahrsNavXGyro.GetYaw();
+}
+
+void SubDriveBase::Brake(){
+  _spmFrontLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  _spmFrontRight.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  _spmBackLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  _spmBackRight.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+}
+
+void SubDriveBase::Coast(){
+  _spmFrontLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  _spmFrontRight.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  _spmBackLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  _spmBackRight.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
 }
