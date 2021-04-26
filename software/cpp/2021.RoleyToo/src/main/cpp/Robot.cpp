@@ -62,6 +62,8 @@ void Robot::TeleopInit() {
   }
   _robotContainer._subDriveBase.retractDolly();
   _robotContainer._subDriveBase.Coast();
+
+  _robotContainer._subClimber.SetPneumatic(0);
 }
 
 /**

@@ -4,6 +4,7 @@
 
 #include "commands/CmdDeployClimber.h"
 #include <Utilities/GameTimer.h>
+#include "Constants.h"
 
 CmdDeployClimber::CmdDeployClimber(SubClimber* subClimber) {
   // Use addRequirements() here to declare subsystem dependencies.
@@ -22,13 +23,17 @@ void CmdDeployClimber::Execute() {
   //     HasDeployed = true;
   //   }
   // }
-
-  _subClimber->SetPneumatic(SubClimber::Solenoids::Deploy, frc::DoubleSolenoid::Value::kForward);
+  _subClimber->SetPneumatic(0); // 1= reverse, 2= forward, 0= off
+  _subClimber->Retract(-0.8, SubClimber::left);
+  _subClimber->Retract(0.8, SubClimber::right);
 
 }
 
 // Called once the command ends or is interrupted.
-void CmdDeployClimber::End(bool interrupted) {}
+void CmdDeployClimber::End(bool interrupted) {
+  _subClimber->Retract(0, SubClimber::left);
+  _subClimber->Retract(0, SubClimber::right);
+}
 
 // Returns true when the command should end.
 bool CmdDeployClimber::IsFinished() {

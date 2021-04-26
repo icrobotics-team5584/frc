@@ -8,16 +8,17 @@
 CmdClimbManual::CmdClimbManual(SubClimber* subClimber) {
   // Use addRequirements() here to declare subsystem dependencies.
   _subClimber = subClimber;
-  frc::SmartDashboard::PutNumber("Climb Retract Speed", 0);
 }
 
 // Called when the command is initially scheduled.
-void CmdClimbManual::Initialize() {}
+void CmdClimbManual::Initialize() {
+  _subClimber->SetPneumatic(1);
+}
 
 // Called repeatedly when this Command is scheduled to run
 void CmdClimbManual::Execute() {
-  _subClimber->Retract(frc::SmartDashboard::GetNumber("Climb Retract Speed", 0.4), SubClimber::left);
-  _subClimber->Retract(frc::SmartDashboard::GetNumber("Climb Retract Speed", 0.4), SubClimber::right);
+  _subClimber->Retract(0.8, SubClimber::left);
+  _subClimber->Retract(-0.8, SubClimber::right);
 }
 
 // Called once the command ends or is interrupted.
