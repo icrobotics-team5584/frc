@@ -27,9 +27,11 @@ void SubStorage::MoveFeeder(Direction direction, double speed) {
   switch (direction) {
     case Forward:
       _spmFeederMotor.Set(speed);
+      _currentDirection = Forward;
       break;
     case Backward:
       _spmFeederMotor.Set(-speed);
+      _currentDirection = Backward;
       break;
   }
 }
@@ -92,4 +94,8 @@ bool SubStorage::NeedsIndexing() {
 
 void SubStorage::Feed(double speed){
   _spmFeederMotor.Set(speed);
+}
+
+int SubStorage::GetDirection() {
+  return _currentDirection;
 }

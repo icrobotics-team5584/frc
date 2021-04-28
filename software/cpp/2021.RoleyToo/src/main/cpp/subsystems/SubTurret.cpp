@@ -4,6 +4,7 @@
 
 #include "subsystems/SubTurret.h"
 #include "commands/CmdTrackTarget.h"
+#include "subsystems/SubStorage.h"
 
 SubTurret::SubTurret() {
   _networktables = nt::NetworkTableInstance::GetDefault();
@@ -38,7 +39,8 @@ SubTurret::SubTurret() {
 
   frc::SmartDashboard::PutNumber("Turret Speed", 0);
 
-  //SetDefaultCommand(CmdTrackTarget(this, 0, 7.15));
+  SubStorage _subStorage;
+  SetDefaultCommand(CmdTrackTarget(this, &_subStorage, 0, 7.15));
 
 }
 

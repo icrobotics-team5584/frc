@@ -26,7 +26,7 @@ CmdAuto10Ball::CmdAuto10Ball(SubDriveBase* subDriveBase, SubIntake* subIntake, S
                 frc2::PrintCommand{"home start ************"},
                 CmdHomeTurret(subTurret),
                 frc2::PrintCommand{"home end **************"},
-                CmdTrackTarget(subTurret)
+                CmdTrackTarget(subTurret, subStorage)
 
               },
               frc2::SequentialCommandGroup{

@@ -6,10 +6,11 @@
 #include "frc/smartdashboard/SmartDashboard.h"
 
 
-CmdTrackTarget::CmdTrackTarget(SubTurret* subTurret, double turretSetpoint, double hoodSetpoint) {
+CmdTrackTarget::CmdTrackTarget(SubTurret* subTurret, SubStorage* subStorage, double turretSetpoint, double hoodSetpoint) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements(subTurret);
   _subTurret = subTurret;
+  _subStorage = subStorage;
   frc::SmartDashboard::PutNumber("Estimated Hood Angle", 0);
 
 
@@ -41,10 +42,22 @@ void CmdTrackTarget::Execute() {
   _hoodF = frc::SmartDashboard::GetNumber("Hood F", 0);
   _hoodTarget = frc::SmartDashboard::GetNumber("Hood Target", 0);
   frc::SmartDashboard::PutNumber("Estimated Hood Angle", _subTurret->CalculateHoodAngle(_subTurret->GetY()));
+
+  _targetX = _subTurret->GetX();
+  if (_subStorage->GetDirection() == SubStorage::Forward)
+  {
+    _targetX += _leftOffset;
+  }
+  else
+  {
+    _targetX -= _rightOffset;
+  }
+  
+
   if (_subTurret->CheckTarget()) {
       _failureCount = 0;
       std::cout << "Target Visible\n";
-      _TurretPIDOutput = std::clamp(_turretPID.Calculate(_subTurret->GetX(), 0), -0.25, 0.25);
+      _TurretPIDOutput = std::clamp(_turretPID.Calculate(_targetX, 0), -0.25, 0.25);
       _hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _subTurret->CalculateHoodAngle(_subTurret->GetY()) + 0), -0.5, 0.5);
       //_hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _hoodTarget), -0.5, 0.5);
 
