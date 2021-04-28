@@ -23,9 +23,9 @@ void CmdDeployClimber::Execute() {
   //     HasDeployed = true;
   //   }
   // }
-  _subClimber->SetPneumatic(0); // 1= reverse, 2= forward, 0= off
+  // _subClimber->SetPneumatic(0); // 1= reverse, 2= forward, 0= off
   _subClimber->Retract(-0.8, SubClimber::left);
-  _subClimber->Retract(0.8, SubClimber::right);
+  _subClimber->Retract(-0.8, SubClimber::right);
 
 }
 
