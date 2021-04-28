@@ -7,8 +7,7 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
 
-#include <cameraserver/CameraServer.h>
-
+#include <Utilities/GameTimer.h>
 
 void Robot::RobotInit() {}
 
@@ -22,6 +21,7 @@ void Robot::RobotInit() {}
  */
 void Robot::RobotPeriodic() {
   frc2::CommandScheduler::GetInstance().Run();
+  GameTimer::GetInstance()->UpdateTime();
 }
 
 /**
@@ -38,6 +38,7 @@ void Robot::DisabledPeriodic() {}
  * RobotContainer} class.
  */
 void Robot::AutonomousInit() {
+  _robotContainer._subClimber.SetPneumatic(1);
   m_autonomousCommand = _robotContainer.GetAutonomousCommand();
 
   if (m_autonomousCommand != nullptr) {
@@ -52,6 +53,7 @@ void Robot::AutonomousInit() {
 void Robot::AutonomousPeriodic() {}
 
 void Robot::TeleopInit() {
+  _robotContainer._subClimber.SetPneumatic(1);
   // This makes sure that the autonomous stops running when
   // teleop starts running. If you want the autonomous to
   // continue until interrupted by another command, remove
@@ -62,6 +64,8 @@ void Robot::TeleopInit() {
   }
   _robotContainer._subDriveBase.retractDolly();
   _robotContainer._subDriveBase.Coast();
+
+  _robotContainer._subClimber.SetPneumatic(0);
 }
 
 /**

@@ -11,8 +11,11 @@ SubClimber::SubClimber() {
     _leftEncoder.SetPosition(0);
     _rightEncoder.SetPosition(0);
 
-    _spmClimbLeft.SetSmartCurrentLimit(30);
-    _spmClimbRight.SetSmartCurrentLimit(30);
+    _spmClimbLeft.SetSmartCurrentLimit(35);
+    _spmClimbRight.SetSmartCurrentLimit(35);
+
+    _spmClimbLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+    _spmClimbRight.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 }
 
 // This method will be called once per scheduler run
@@ -32,22 +35,28 @@ bool SubClimber::GetLimit(Limit limit) {
     return false;
 }
 
-void SubClimber::Drive(double speed) {
-    _spmClimbLeft.Set(speed);
-    _spmClimbRight.Set(speed);
-}
-
-//TODO: Encoder PID Drive
-
-void SubClimber::SetPneumatic(Solenoids solenoid, frc::DoubleSolenoid::Value value) {
-    switch (solenoid) {
-        case Deploy:
-            _solClimb.Set(value);
+void SubClimber::Retract(double speed, Side side) {
+    switch (side) {
+        case left:
+            _spmClimbLeft.Set(speed);
+            break;
+        case right:
+            _spmClimbRight.Set(speed);
             break;
     }
 }
 
-void SubClimber::SetCoast(bool mode) {
+//TODO: Encoder PID Drive
+
+void SubClimber::SetPneumatic(int value) {
+    if (value == 1) {
+        _solClimb.Set(frc::DoubleSolenoid::kReverse);
+    } else {
+        _solClimb.Set(frc::DoubleSolenoid::kForward);
+    }
+}
+
+void SubClimber::SetMode(bool mode) {
     if (mode) {
         _spmClimbLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
         _spmClimbRight.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
