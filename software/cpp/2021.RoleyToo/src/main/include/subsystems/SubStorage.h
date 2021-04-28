@@ -36,6 +36,8 @@ class SubStorage : public frc2::SubsystemBase {
   bool NeedsIndexing();
   void ScheduleIndexing(bool scheduled);
   void Feed(double speed);
+
+  int GetDirection();
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
@@ -52,4 +54,5 @@ class SubStorage : public frc2::SubsystemBase {
   frc::DigitalInput _brkOuttake{dio::brkStorageOut};
   int _ballCount;
   bool _needsIndexing = false;
+  int _currentDirection = 0;
 };

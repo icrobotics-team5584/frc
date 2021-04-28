@@ -38,7 +38,7 @@ void CmdShoot::Execute() {
 
   FlywheelPIDOutput += frc::SmartDashboard::GetNumber("Turret F", 0);
   frc::SmartDashboard::PutNumber("current flywheel power", FlywheelPIDOutput);
-  _subTurret->SetFlywheel(FlywheelPIDOutput);
+  _subTurret->SetFlywheel(1);
   //_subTurret->SetFlywheel(frc::SmartDashboard::GetNumber("Shooter Speedies", 0));
 }
 
