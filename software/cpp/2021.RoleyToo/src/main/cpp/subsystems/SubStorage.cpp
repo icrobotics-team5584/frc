@@ -6,7 +6,7 @@
 
 SubStorage::SubStorage() {
   _spmStorageMotor.SetSmartCurrentLimit(20);
-  _spmFeederMotor.SetSmartCurrentLimit(20);
+  _spmFeederMotor.SetSmartCurrentLimit(40);
 }
 
 // This method will be called once per scheduler run

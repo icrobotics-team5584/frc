@@ -168,6 +168,6 @@ bool SubTurret::IsReady() {
 }
 
 double SubTurret::CalculateHoodAngle(double x) {
-  return (-0.00000008*pow(x,4)) + (0.00006*pow(x,3)) - (0.0009*pow(x,2)) - (0.0666*x) + (13.237);
-  //-0.00000008x^{4}+0.00006x^{3}-0.0009x^{2}-0.0666x+13.237
+  return (-0.00002*pow(x,4)) + (0.00004*pow(x,3)) - (0.0084*pow(x,2)) - (0.029*x) + (13.148);
+  //2E-05x4 - 4E-05x3 - 0.0084x2 - 0.029x + 13.148
 }
