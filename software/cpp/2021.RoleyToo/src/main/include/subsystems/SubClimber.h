@@ -8,6 +8,7 @@
 #include <rev/CANSparkMax.h>
 #include <frc/SpeedControllerGroup.h>
 #include <frc/DoubleSolenoid.h>
+#include <frc/Solenoid.h>
 #include <frc/DigitalInput.h>
 #include "Constants.h"
 
@@ -25,14 +26,15 @@ class SubClimber : public frc2::SubsystemBase {
   };
 
   enum Solenoids {
-    Deploy = 0
+    SDeploy = 3,
+    SRetract = 0
   };
 
   bool GetLimit(Limit limit);
   int GetEncoder(Side side);
-  void Drive(double speed);
-  void SetPneumatic(Solenoids solenoid, frc::DoubleSolenoid::Value value);
-  void SetCoast(bool mode);
+  void Retract(double speed, Side side);
+  void SetPneumatic(int value);
+  void SetMode(bool mode);
 
 
   
@@ -48,7 +50,7 @@ class SubClimber : public frc2::SubsystemBase {
   rev::CANSparkMax _spmClimbLeft{can::spmClimbLeft, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::CANSparkMax _spmClimbRight{can::spmClimbRight, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
 
-  frc::DoubleSolenoid _solClimb{pcm::solClimbDeploy, pcm::solClimbRetract};
+  frc::DoubleSolenoid _solClimb{1, pcm::solClimbDeploy, pcm::solClimbRetract};
 
   frc::DigitalInput _lmtEndStop{dio::lmtClimbStop};
 

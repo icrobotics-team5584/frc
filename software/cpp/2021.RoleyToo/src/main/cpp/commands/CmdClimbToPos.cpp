@@ -26,12 +26,14 @@ void CmdClimbToPos::Execute() {
   frc::SmartDashboard::PutNumber("climbencoder", _encoder);
 
   _pidOutput = _climbPID.Calculate(_encoder, _target);
-  _subClimber->Drive(_pidOutput);
+  _subClimber->Retract(_pidOutput, SubClimber::left);
+  _subClimber->Retract(_pidOutput, SubClimber::right);
 }
 
 // Called once the command ends or is interrupted.
 void CmdClimbToPos::End(bool interrupted) {
-  _subClimber->Drive(0);
+  _subClimber->Retract(0.0, SubClimber::left);
+  _subClimber->Retract(0.0, SubClimber::right);
 }
 
 // Returns true when the command should end.

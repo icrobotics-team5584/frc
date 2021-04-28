@@ -41,9 +41,12 @@
 #include "commands/CmdHomeHood.h"
 #include "commands/CmdMoveStorage.h"
 #include "commands/CmdDeployIntake.h"
-
 #include "commands/CmdHomeHood.h"
 #include "commands/CmdHomeTurret.h"
+#include "commands/CmdClimbManual.h"
+#include "commands/CmdManualClimbL.h"
+#include "commands/CmdManualClimbR.h"
+#include "commands/CmdDeployBrakes.h"
 
 #include "Utilities/Autonomous.h"
 
@@ -61,6 +64,7 @@ class RobotContainer {
   frc2::Command* GetAutonomousCommand();
   SubDriveBase _subDriveBase;
   SubTurret _subTurret;
+  SubClimber _subClimber;
   //Autonomous _autonomous{ [this]{return _subDriveBase.getYaw();}, [this]{return _subDriveBase.getDistanceTravelled();}};
   CmdAuto10Ball _cmdAuto10Ball{&_subDriveBase, &_subIntake, &_subStorage, &_subTurret};
  private:
@@ -70,7 +74,6 @@ class RobotContainer {
 
   
   SubStorage _subStorage;
-  SubClimber _subClimber;
   SubColorWheel _subColorWheel;
   SubIntake _subIntake; 
 
@@ -89,6 +92,10 @@ class RobotContainer {
   CmdHomeTurret _cmdHomeTurret{&_subTurret};
   CmdMoveStorage _cmdMoveStorage{&_subStorage, 5500};
   CmdDeployIntake _cmdDeployIntake{&_subIntake};
+  CmdClimbManual _cmdClimbManual{&_subClimber};
+  CmdManualClimbL _cmdManualClimbL{&_subClimber};
+  CmdManualClimbR _cmdManualClimbR{&_subClimber};
+  CmdDeployBrakes _cmdDeployBrakes{&_subClimber};
 
   void ConfigureButtonBindings();
 };

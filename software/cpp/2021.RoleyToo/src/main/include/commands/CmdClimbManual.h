@@ -16,10 +16,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class CmdDeployClimber
-    : public frc2::CommandHelper<frc2::CommandBase, CmdDeployClimber> {
+class CmdClimbManual
+    : public frc2::CommandHelper<frc2::CommandBase, CmdClimbManual> {
  public:
-  CmdDeployClimber(SubClimber* subClimber);
+  CmdClimbManual(SubClimber* subClimber);
 
   void Initialize() override;
 
@@ -30,5 +30,4 @@ class CmdDeployClimber
   bool IsFinished() override;
  private:
   SubClimber* _subClimber;
-  bool HasDeployed = false;
 };
