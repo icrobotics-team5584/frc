@@ -97,5 +97,9 @@ void SubStorage::Feed(double speed){
 }
 
 int SubStorage::GetDirection() {
-  return _currentDirection;
+  if (_spmStorageMotor.Get() > 0)
+  {
+    return Forward;
+  }
+  return Backward;
 }

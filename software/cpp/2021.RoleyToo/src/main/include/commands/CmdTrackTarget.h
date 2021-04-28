@@ -59,8 +59,8 @@ class CmdTrackTarget : public frc2::CommandHelper<frc2::CommandBase, CmdTrackTar
   double _turretRightLimit = -36;
   double _turretCenterPoint = 0;
 
-  double _leftOffset = 1;     // Offset from the left to get balls to hit the center of the goal rather than veering off to the right
-  double _rightOffset = 1;
+  double _leftOffset = 1.5;     // Offset from the left to get balls to hit the center of the goal rather than veering off to the right
+  double _rightOffset = 1.5;
 
   bool _overrideHood = false;
   bool _overrideTurret = false;
