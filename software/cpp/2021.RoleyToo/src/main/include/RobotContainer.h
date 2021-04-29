@@ -92,6 +92,7 @@ class RobotContainer {
   CmdHomeTurret _cmdHomeTurret{&_subTurret};
   CmdMoveStorage _cmdMoveStorage{&_subStorage, 5500};
   CmdDeployIntake _cmdDeployIntake{&_subIntake};
+  CmdDeployIntake _cmdOnlyDeployIntake{&_subIntake, false};
   CmdClimbManual _cmdClimbManual{&_subClimber};
   CmdManualClimbL _cmdManualClimbL{&_subClimber};
   CmdManualClimbR _cmdManualClimbR{&_subClimber};

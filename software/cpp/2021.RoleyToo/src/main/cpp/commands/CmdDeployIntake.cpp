@@ -4,10 +4,11 @@
 
 #include "commands/CmdDeployIntake.h"
 
-CmdDeployIntake::CmdDeployIntake(SubIntake* subIntake) {
+CmdDeployIntake::CmdDeployIntake(SubIntake* subIntake, bool retract) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements(subIntake);
   _subIntake = subIntake;
+  _retract = retract;
 }
 
 // Called when the command is initially scheduled.
@@ -20,7 +21,10 @@ void CmdDeployIntake::Execute() {}
 
 // Called once the command ends or is interrupted.
 void CmdDeployIntake::End(bool interrupted) {
-  _subIntake->Retract();
+  if (_retract)
+  {
+    _subIntake->Retract();
+  }
 }
 
 // Returns true when the command should end.

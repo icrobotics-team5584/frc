@@ -19,7 +19,7 @@
 class CmdDeployIntake
     : public frc2::CommandHelper<frc2::CommandBase, CmdDeployIntake> {
  public:
-  CmdDeployIntake(SubIntake* subIntake);
+  CmdDeployIntake(SubIntake* subIntake, bool retract = true);
 
   void Initialize() override;
 
@@ -31,4 +31,5 @@ class CmdDeployIntake
 
  private:
   SubIntake* _subIntake;
+  bool _retract = true;
 };
