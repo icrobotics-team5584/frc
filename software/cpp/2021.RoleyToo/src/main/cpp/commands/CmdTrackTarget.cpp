@@ -67,7 +67,10 @@ void CmdTrackTarget::Execute() {
       _failureCount = 0;
       //std::cout << "Target Visible\n";
       _TurretPIDOutput = std::clamp(_turretPID.Calculate(_targetX, 0), -0.25, 0.25);
-      _hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _subTurret->CalculateHoodAngle(_subTurret->GetY()) + 0), -0.5, 0.5);
+
+
+      
+      _hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _subTurret->CalculateHoodAngle(_subTurret->GetY()) + _hoodAngleOffset), -0.5, 0.5);
       //_hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _hoodTarget), -0.5, 0.5);
 
   }

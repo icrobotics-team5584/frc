@@ -15,7 +15,7 @@ CmdJoystickDrive::CmdJoystickDrive(SubDriveBase* subDriveBase, JoystickScaler* j
 void CmdJoystickDrive::Execute() {
   double speed = _joystick->GetScaledY(frc::GenericHID::JoystickHand::kRightHand);
   double turning = _joystick->GetScaledX(frc::GenericHID::JoystickHand::kRightHand);
-  if (_joystick->GetRawButton(5)) {
+  if (_joystick->GetRawButton(9)) { // left stick button
     speed = speed / 2;
     turning = turning / 2;
   }

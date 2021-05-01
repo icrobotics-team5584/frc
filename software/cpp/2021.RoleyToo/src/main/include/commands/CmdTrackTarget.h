@@ -67,5 +67,5 @@ class CmdTrackTarget : public frc2::CommandHelper<frc2::CommandBase, CmdTrackTar
   double _overrideHoodTarget = 0;
   double _overrideTurretTarget = 0;
 
-  double _hoodAngleOffset = 2;
+  double _hoodAngleOffset = 1.2;
 };
