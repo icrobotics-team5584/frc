@@ -33,7 +33,7 @@ void RobotContainer::ConfigureButtonBindings() {
   // frc2::JoystickButton btnManualClimb{&_joystick0, buttons::backBtn};
   frc2::JoystickButton btnManualClimbL{&_joystick0, buttons::startBtn};
   frc2::JoystickButton btnManualClimbR{&_joystick0, buttons::backBtn};
-  // frc::SmartDashboard::PutData("Deploy Brakes", &_cmdDeployBrakes);
+  frc::SmartDashboard::PutData("Deploy Brakes", &_cmdDeployBrakes);
 
   POVButton btnHomeTurret(&_joystick0, POVButton::Position::down);
 
@@ -46,7 +46,7 @@ void RobotContainer::ConfigureButtonBindings() {
   btnManualClimbL.WhileHeld(_cmdManualClimbL);
   btnManualClimbR.WhileHeld(_cmdManualClimbR);
   btnDeployClimber.WhileHeld(_cmdDeployClimber);
-  btnDeployBreaks.ToggleWhenPressed(_cmdDeployBrakes);
+  //btnDeployBreaks.ToggleWhenPressed(_cmdDeployBrakes);
 
   //TODO: Intake Toggle Up/Down (Right Trigger)
 }

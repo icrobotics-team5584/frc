@@ -62,6 +62,8 @@ void Autonomous::setAngle(double theta){
 }
 
 DriveInput Autonomous::autoDrive(double startX, double startY, double endX, double endY, double endHeading, double cenX, double cenY, PIDk pidSpeed, PIDk PIDk, double maxSpeed, double endSpeed){
+  maxSpeed = maxSpeed*autoop;
+  endSpeed = endSpeed*autoop;
   if(speed >= 0){
     posX = frontPosX;
     posY = frontPosY;
@@ -136,7 +138,7 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
   if (abs(speed) < abs(endSpeed)){
     speed = endSpeed;
   }
-  autoOutput.speed = -speed*autoop;
+  autoOutput.speed = -speed;
   frc::SmartDashboard::PutNumber("speed", speed);
   //autoOutput.steering = 0;
   //autoOutput.speed = 0;
@@ -182,7 +184,7 @@ DriveInput Autonomous::turnTo(double angle, PIDk PIDk){
   intergral = intergral + error;
   
   autoop = frc::SmartDashboard::GetNumber("AUTO OPTIONS", autoop);
-  steering = PIDk.p*error + PIDk.i*intergral + PIDk.d*(error - previousError)*autoop;
+  steering = PIDk.p*error + PIDk.i*intergral + PIDk.d*(error - previousError);
   frc::SmartDashboard::PutNumber("Steering", steering);
   frc::SmartDashboard::PutNumber("auto angle", _getYaw());
   frc::SmartDashboard::PutNumber("error", error);
