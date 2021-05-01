@@ -12,6 +12,7 @@
 #include <frc2/command/PrintCommand.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/ParallelCommandGroup.h>
+#include <frc2/command/InstantCommand.h>
 
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
@@ -40,7 +41,7 @@ void RobotContainer::ConfigureButtonBindings() {
   btnDeployIntake.ToggleWhenPressed(_cmdDeployIntake);
   // btnSpinIntake.WhileHeld(_cmdIntake);
   btnSpinIntake.WhileHeld(frc2::ParallelCommandGroup{_cmdIntake, _cmdMoveStorage});
-  btnTrackTarget.WhileHeld(frc2::ParallelCommandGroup{_cmdTrackTarget, _cmdShoot, _cmdMoveStorage, _cmdDeployIntake});
+  btnTrackTarget.WhileHeld(frc2::ParallelCommandGroup{_cmdTrackTarget, _cmdShoot, _cmdMoveStorage, frc2::InstantCommand([this]{_subIntake.Deploy();})});
   btnShoot.WhileHeld(_cmdMoveFeeder);
   btnHomeTurret.WhileHeld(_cmdHomeHood);
   btnManualClimbL.WhileHeld(_cmdManualClimbL);
