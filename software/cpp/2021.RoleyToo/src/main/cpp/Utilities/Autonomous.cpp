@@ -189,8 +189,8 @@ DriveInput Autonomous::turnTo(double angle, PIDk PIDk){
   frc::SmartDashboard::PutNumber("auto angle", _getYaw());
   frc::SmartDashboard::PutNumber("error", error);
   previousError = error;
-  autoOutput.steering = steering*autoop;
-  //autoOutput.speed = 0;
+  autoOutput.steering = steering;
+  autoOutput.speed = 0;
   //autoOutput.steering = 0;
   return autoOutput;
 }
