@@ -179,5 +179,5 @@ double SubTurret::CalculateHoodAngle(double x) {
 
 double SubTurret::HoodOffsetFunction(double x, double y1, double y2, double y3)
 {
-  return ((y1*(x - _x2)*(x - _x3))/((_x1 - _x2)*(_x1 - _x2))) + ((y2*(x - _x1)*(x - _x3))/((_x2 - _x1)*(_x2 - _x3))) + ((y3*(x - _x1)*(x - _x2))/((_x3 - _x1)*(_x3 - _x2)));
+  return ((y1*(x - _x2)*(x - _x3))/((_x1 - _x2)*(_x1 - _x3))) + ((y2*(x - _x1)*(x - _x3))/((_x2 - _x1)*(_x2 - _x3))) + ((y3*(x - _x1)*(x - _x2))/((_x3 - _x1)*(_x3 - _x2)));
 }
