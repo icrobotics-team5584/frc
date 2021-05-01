@@ -39,6 +39,10 @@ SubTurret::SubTurret() {
 
   frc::SmartDashboard::PutNumber("Turret Speed", 0);
 
+  frc::SmartDashboard::PutNumber("Near Goal Offset", 0.9);
+  frc::SmartDashboard::PutNumber("Init Line Offset", 1.2);
+  frc::SmartDashboard::PutNumber("Trench Offset", 1.4);
+
   SubStorage _subStorage;
   SetDefaultCommand(CmdTrackTarget(this, &_subStorage, 0, 7.15));
 }
@@ -169,6 +173,11 @@ bool SubTurret::IsReady() {
 }
 
 double SubTurret::CalculateHoodAngle(double x) {
-  return (0.00002*pow(x,4)) - (0.00004*pow(x,3)) - (0.0084*pow(x,2)) - (0.029*x) + (13.148);
+  return (0.00002*pow(x,4)) - (0.00004*pow(x,3)) - (0.0084*pow(x,2)) - (0.029*x) + (13.148) + HoodOffsetFunction(x, frc::SmartDashboard::GetNumber("Near Goal Offset", 0.9), frc::SmartDashboard::GetNumber("Init Line Offset", 1.2), frc::SmartDashboard::GetNumber("Trench Offset", 1.4));
   //2E-05x4 - 4E-05x3 - 0.0084x2 - 0.029x + 13.148
+}
+
+double SubTurret::HoodOffsetFunction(double x, double y1, double y2, double y3)
+{
+  return ((y1*(x - _x2)*(x - _x3))/((_x1 - _x2)*(_x1 - _x2))) + ((y2*(x - _x1)*(x - _x3))/((_x2 - _x1)*(_x2 - _x3))) + ((y3*(x - _x1)*(x - _x2))/((_x3 - _x1)*(_x3 - _x2)));
 }

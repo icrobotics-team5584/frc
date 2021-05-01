@@ -101,4 +101,10 @@ class SubTurret : public frc2::SubsystemBase {
   bool _turretHomed = false;
 
   double _targetMaxHeight = 18.8;
+
+  double _x1 = -14;
+  double _x2 = 1.5;
+  double _x3 = 15.5;
+
+  double HoodOffsetFunction(double x, double y1, double y2, double y3);
 };
