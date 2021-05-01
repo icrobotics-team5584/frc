@@ -42,7 +42,7 @@ void RobotContainer::ConfigureButtonBindings() {
   btnSpinIntake.WhileHeld(frc2::ParallelCommandGroup{_cmdIntake, _cmdMoveStorage});
   btnTrackTarget.WhileHeld(frc2::ParallelCommandGroup{_cmdTrackTarget, _cmdShoot, _cmdMoveStorage, _cmdDeployIntake});
   btnShoot.WhileHeld(_cmdMoveFeeder);
-  btnHomeTurret.WhileHeld(frc2::ParallelCommandGroup{_cmdHomeHood, _cmdHomeTurret});
+  btnHomeTurret.WhileHeld(_cmdHomeHood);
   btnManualClimbL.WhileHeld(_cmdManualClimbL);
   btnManualClimbR.WhileHeld(_cmdManualClimbR);
   btnDeployClimber.WhileHeld(_cmdDeployClimber);

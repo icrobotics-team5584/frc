@@ -12,6 +12,7 @@ CmdTrackTarget::CmdTrackTarget(SubTurret* subTurret, SubStorage* subStorage, dou
   _subTurret = subTurret;
   _subStorage = subStorage;
   frc::SmartDashboard::PutNumber("Estimated Hood Angle", 0);
+  frc::SmartDashboard::PutNumber("HOOD ANGLE OFFSET", _hoodAngleOffset);
   //frc::SmartDashboard::PutNumber("Left Offset", 0);
   //frc::SmartDashboard::PutNumber("Right Offset", 0);
 
@@ -43,7 +44,8 @@ void CmdTrackTarget::Execute() {
   //LEFT POSITIVE, RIGHT NEGATIVE
   _hoodF = frc::SmartDashboard::GetNumber("Hood F", 0);
   _hoodTarget = frc::SmartDashboard::GetNumber("Hood Target", 0);
-  frc::SmartDashboard::PutNumber("Estimated Hood Angle", _subTurret->CalculateHoodAngle(_subTurret->GetY()));
+  _hoodAngleOffset = frc::SmartDashboard::GetNumber("HOOD ANGLE OFFSET", _hoodAngleOffset);
+  frc::SmartDashboard::PutNumber("Estimated Hood Angle", _subTurret->CalculateHoodAngle(_subTurret->GetY())+_hoodAngleOffset);
 
   //_leftOffset = frc::SmartDashboard::GetNumber("Left Offset", 0);
   //_rightOffset = frc::SmartDashboard::GetNumber("Right Offset", 0);
@@ -81,10 +83,10 @@ void CmdTrackTarget::Execute() {
   if (_overrideHood)
   {
     _hoodPIDOutput = std::clamp(_hoodPID.Calculate(_subTurret->GetHoodPos(), _overrideHoodTarget), -0.5, 0.5);
-    if (!_subTurret->GetHoodHomed())
-    {
-      _hoodPIDOutput = 0;
-    }
+    //if (!_subTurret->GetHoodHomed())
+    //{
+    //  _hoodPIDOutput = 0;
+    //}
   }
   if (_overrideTurret)
   {

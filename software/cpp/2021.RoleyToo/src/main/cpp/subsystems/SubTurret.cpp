@@ -41,7 +41,6 @@ SubTurret::SubTurret() {
 
   SubStorage _subStorage;
   SetDefaultCommand(CmdTrackTarget(this, &_subStorage, 0, 7.15));
-
 }
 
 // This method will be called once per scheduler run
