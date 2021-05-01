@@ -49,7 +49,11 @@ CmdAuto10Ball::CmdAuto10Ball(SubDriveBase* subDriveBase, SubIntake* subIntake, S
                 frc2::InstantCommand([subIntake]{subIntake->Intake(1);}),
 
                 CmdAutoDrive{subDriveBase, &_autonomous, 1.7, -4.048, 1.7, -8.053, 180, 0, 0, PIDk{-5, 0, -50}, 0.7, 0, PIDk{1, 0, 0}},
+                frc2::InstantCommand([subIntake]{subIntake->Stop();}),
+                frc2::InstantCommand([subIntake]{subIntake->Retract();}),
                 CmdAutoTurn{subDriveBase, &_autonomous, PIDk{1, 0, 20}, 0, 20},
+                frc2::InstantCommand([subIntake]{subIntake->Deploy();}),
+                frc2::InstantCommand([subIntake]{subIntake->Intake();}),
                 CmdAutoDrive{subDriveBase, &_autonomous, 1.7, -8.053, 1.7, -4.548, 0, 0, 0, PIDk{-5, 0, -50}, 1, 0, PIDk{1, 0, 0}},
                 frc2::InstantCommand([subIntake]{subIntake->Stop();}),
                 
