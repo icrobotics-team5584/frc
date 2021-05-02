@@ -41,7 +41,7 @@ CmdAuto10Ball::CmdAuto10Ball(SubDriveBase* subDriveBase, SubIntake* subIntake, S
                 frc2::WaitCommand(3.0_s),
                 CmdAutoFeedStop(subStorage),
                 frc2::PrintCommand{"spin start"},
-                CmdAutoTurn{subDriveBase, &_autonomous, PIDk{0.05, 0, 0}, -150, 30},
+                CmdAutoTurn{subDriveBase, &_autonomous, PIDk{1, 0, 20}, -150, 30},
                 frc2::PrintCommand{"spin end"},
                 
                 //                                    startx, starty, endx, endy, endheading, cenx, ceny
