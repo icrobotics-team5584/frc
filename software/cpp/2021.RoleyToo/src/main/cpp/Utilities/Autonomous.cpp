@@ -23,7 +23,7 @@ Autonomous::Autonomous(std::function<double()> getYaw, std::function<double()> g
   frc::SmartDashboard::PutNumber("front y", frontPosY);
   frc::SmartDashboard::PutNumber("back y", backPosY);
   frc::SmartDashboard::PutNumber("AUTO OPTIONS", autoop);
-  frc::SmartDashboard::GetNumber("AUTO OPTIONS", autoop);
+  //frc::SmartDashboard::GetNumber("AUTO OPTIONS", autoop);
 
 }
 
@@ -119,7 +119,7 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
   //output = kP*Error + kI*Intergral + kD*Derivative
   steering = PIDk.p*error + PIDk.i*intergral + PIDk.d*(error - previousError);
   //Calculates previous error for Derivative
-  autoop = frc::SmartDashboard::GetNumber("AUTO OPTIONS", autoop);
+  //autoop = frc::SmartDashboard::GetNumber("AUTO OPTIONS", autoop);
   previousError = error;
   autoOutput.steering = steering*autoop;
   frc::SmartDashboard::PutNumber("steering error", error);
@@ -183,7 +183,7 @@ DriveInput Autonomous::turnTo(double angle, PIDk PIDk){
   error = (_getYaw()) - angle;
   intergral = intergral + error;
   
-  autoop = frc::SmartDashboard::GetNumber("AUTO OPTIONS", autoop);
+  //autoop = frc::SmartDashboard::GetNumber("AUTO OPTIONS", autoop);
   steering = PIDk.p*error + PIDk.i*intergral + PIDk.d*(error - previousError);
   frc::SmartDashboard::PutNumber("Steering", steering);
   frc::SmartDashboard::PutNumber("auto angle", _getYaw());
