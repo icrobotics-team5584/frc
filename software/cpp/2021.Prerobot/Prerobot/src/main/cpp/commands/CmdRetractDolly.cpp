@@ -4,12 +4,16 @@
 
 #include "commands/CmdRetractDolly.h"
 
-CmdRetractDolly::CmdRetractDolly() {
+CmdRetractDolly::CmdRetractDolly(SubDrivebase* subDrivebase) {
   // Use addRequirements() here to declare subsystem dependencies.
+  AddRequirements(subDrivebase);
+  _subDrivebase = subDrivebase;
 }
 
 // Called when the command is initially scheduled.
-void CmdRetractDolly::Initialize() {}
+void CmdRetractDolly::Initialize() {
+  _subDrivebase->DollyRetract();
+}
 
 // Called repeatedly when this Command is scheduled to run
 void CmdRetractDolly::Execute() {}

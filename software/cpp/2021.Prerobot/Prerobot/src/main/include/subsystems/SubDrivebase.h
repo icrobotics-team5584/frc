@@ -7,6 +7,8 @@
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
 #include <frc/drive/DifferentialDrive.h>
+#include <frc/DoubleSolenoid.h>
+#include "Constants.h"
 
 class SubDrivebase : public frc2::SubsystemBase {
  public:
@@ -18,6 +20,8 @@ class SubDrivebase : public frc2::SubsystemBase {
   void Periodic() override;
 
   void Drive(double speed, double steering);
+  void DollyDeploy();
+  void DollyRetract();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
@@ -28,5 +32,6 @@ class SubDrivebase : public frc2::SubsystemBase {
   rev::CANSparkMax backRight{1, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   frc::DifferentialDrive Diffdrive{frontLeft, frontRight};
 
+  frc::DoubleSolenoid solDolly{1,pcm::solDollyDeploy,pcm::solDollyRetract};
   // this is a change
 };

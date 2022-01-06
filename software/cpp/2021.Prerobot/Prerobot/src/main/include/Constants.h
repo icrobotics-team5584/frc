@@ -13,3 +13,10 @@
  * command-specific namespaces within this header, which can then be used where
  * they are needed.
  */
+
+namespace pcm{
+  constexpr int solDollyDeploy = 1;
+  constexpr int solDollyRetract = 0;
+  
+
+}

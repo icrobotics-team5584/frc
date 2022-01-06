@@ -6,6 +6,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include "subsystems/SubDrivebase.h"
 
 /**
  * An example command.
@@ -16,8 +17,9 @@
  */
 class CmdDeployDolly
     : public frc2::CommandHelper<frc2::CommandBase, CmdDeployDolly> {
+
  public:
-  CmdDeployDolly();
+  CmdDeployDolly(SubDrivebase* subDrivebase);
 
   void Initialize() override;
 
@@ -26,4 +28,9 @@ class CmdDeployDolly
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+
+ private:
+  SubDrivebase* _subDrivebase;
+
+
 };

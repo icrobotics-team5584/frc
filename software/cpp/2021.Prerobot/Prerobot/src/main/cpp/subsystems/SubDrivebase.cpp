@@ -11,9 +11,19 @@ SubDrivebase::SubDrivebase()
 };
 
 // This method will be called once per scheduler run
-void SubDrivebase::Periodic() {}
+void SubDrivebase::Periodic() {
+
+}
+
 void SubDrivebase::Drive(double speed, double steering)
 {
     Diffdrive.ArcadeDrive(speed, steering);
 }
 
+void SubDrivebase::DollyDeploy(){
+    solDolly.Set(frc::DoubleSolenoid::kForward);
+}
+
+void SubDrivebase::DollyRetract(){
+    solDolly.Set(frc::DoubleSolenoid::kReverse); 
+}
