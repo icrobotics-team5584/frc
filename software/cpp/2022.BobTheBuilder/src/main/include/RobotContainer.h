@@ -5,6 +5,10 @@
 #pragma once
 
 #include <frc2/command/Command.h>
+#include "Utilities/JoystickScaler.h"
+#include "subsystems/SubDriveBase.h"
+
+#include "commands/CmdJoystickDrive.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -18,8 +22,11 @@ class RobotContainer {
   RobotContainer();
 
   frc2::Command* GetAutonomousCommand();
+  SubDriveBase _subDriveBase;
 
  private:
+  // Create new joystick to control the robot
+  JoystickScaler _joystick0{0, 2.0, 2.0};
 
   void ConfigureButtonBindings();
 };

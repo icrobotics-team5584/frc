@@ -5,15 +5,15 @@
 #include "RobotContainer.h"
 
 RobotContainer::RobotContainer() {
-  // Initialize all of your commands and subsystems here
-
+  _subDriveBase.SetDefaultCommand(CmdJoystickDrive(&_subDriveBase, &_joystick0));
   // Configure the button bindings
   ConfigureButtonBindings();
 }
 
 void RobotContainer::ConfigureButtonBindings() {
-  // Configure your button bindings here
+  
 }
+
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous
