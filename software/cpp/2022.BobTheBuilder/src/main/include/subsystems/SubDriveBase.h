@@ -7,6 +7,7 @@
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
 #include <frc/drive/DifferentialDrive.h>
+#include <AHRS.h>
 
 #include "Constants.h"
 
@@ -27,7 +28,19 @@ class SubDriveBase : public frc2::SubsystemBase {
 
   void Periodic() override;
 
+  double getYaw();
+  bool isNavxCal();
+  double getDistanceTravelled();
+
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
+  rev::SparkMaxRelativeEncoder _dollyWheel = _spmFrontLeft.GetEncoder();
+  AHRS ahrsNavXGyro{frc::SPI::kMXP};
+
+  double metersPerRotation; // calculated in constructor
+
+  const double WHEEL_DIAMETER = 0.0508; //0.0508 for dolly
+   
+  const double pi = 3.1415926535897932384626433832795028841971693993751;
 };

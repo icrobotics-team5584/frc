@@ -9,6 +9,7 @@
 #include "subsystems/SubDriveBase.h"
 
 #include "commands/CmdJoystickDrive.h"
+#include "commands/Cmd2BallAuto.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -23,6 +24,7 @@ class RobotContainer {
 
   frc2::Command* GetAutonomousCommand();
   SubDriveBase _subDriveBase;
+  Cmd2BallAuto _cmd2BallAuto{&_subDriveBase};
 
  private:
   // Create new joystick to control the robot
