@@ -10,6 +10,9 @@
 
 #include "commands/CmdJoystickDrive.h"
 
+#include "subsystems/SubIntake.h"
+#include "commands/CmdIntake.h"
+
 /**
  * This class is where the bulk of the robot should be declared.  Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -24,9 +27,13 @@ class RobotContainer {
   frc2::Command* GetAutonomousCommand();
   SubDriveBase _subDriveBase;
 
+  SubIntake _subIntake;
+
  private:
   // Create new joystick to control the robot
   JoystickScaler _joystick0{0, 2.0, 2.0};
 
   void ConfigureButtonBindings();
+
+  CmdIntake _cmdIntake {&_subIntake};
 };
