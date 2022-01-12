@@ -5,9 +5,14 @@
 #pragma once
 
 #include <frc2/command/Command.h>
+#include <frc/Joystick.h>
 
 #include "commands/ExampleCommand.h"
 #include "subsystems/ExampleSubsystem.h"
+#include "commands/CmdDeployDolly.h"
+#include "commands/CmdRetractDolly.h"
+#include "subsystems/SubDrivebase.h"
+
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -24,8 +29,17 @@ class RobotContainer {
 
  private:
   // The robot's subsystems and commands are defined here...
+  SubDrivebase _subDrivebase;
+
   ExampleSubsystem m_subsystem;
   ExampleCommand m_autonomousCommand;
+
+  CmdDeployDolly _cmdDeployDolly{&_subDrivebase};
+  CmdRetractDolly _cmdRetractDolly{&_subDrivebase};
+
+  frc::Joystick _joystick0{0};
+
+
  
 
 
