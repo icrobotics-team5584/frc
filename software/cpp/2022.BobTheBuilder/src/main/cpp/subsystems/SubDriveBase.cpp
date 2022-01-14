@@ -6,6 +6,8 @@
 #include "frc/smartdashboard/SmartDashboard.h"
 
 SubDriveBase::SubDriveBase(){
+
+
 	// Reset all the motor controllers to factory default
   _spmFrontLeft.RestoreFactoryDefaults();
   _spmFrontRight.RestoreFactoryDefaults();
@@ -17,6 +19,9 @@ SubDriveBase::SubDriveBase(){
   _spmBackRight.Follow(_spmFrontRight);
 
   metersPerRotation = pi * WHEEL_DIAMETER;
+  _spmFrontRight.SetInverted(true);
+
+
 }
 
 void SubDriveBase::drive(double speed, double rotation, bool squaredInputs){
