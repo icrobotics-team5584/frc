@@ -17,3 +17,11 @@ void SubIntake::Intake(){
 void SubIntake::Outtake() {
   _spmIntake.Set(-.4);
 }
+
+void SubIntake::Extend() {
+  _solPnuematics.Set(frc::DoubleSolenoid::Value::kForward);
+}
+void SubIntake::Retract() {
+  _solPnuematics.Set(frc::DoubleSolenoid::Value::kReverse);
+}
+

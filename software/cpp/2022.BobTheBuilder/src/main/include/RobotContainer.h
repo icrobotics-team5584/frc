@@ -12,6 +12,7 @@
 
 #include "subsystems/SubIntake.h"
 #include "commands/CmdIntake.h"
+#include "commands/CmdOuttake.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -36,4 +37,5 @@ class RobotContainer {
   void ConfigureButtonBindings();
 
   CmdIntake _cmdIntake {&_subIntake};
+  CmdOuttake _cmdOuttake {&_subIntake};
 };
