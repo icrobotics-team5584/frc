@@ -14,7 +14,7 @@ CmdJoystickDrive::CmdJoystickDrive(SubDriveBase* subDriveBase, JoystickScaler* j
 // Called repeatedly when this Command is scheduled to run
 void CmdJoystickDrive::Execute() {
   double speed = _joystick->GetScaledY(JoystickScaler::Hand::left);
-  double turning = _joystick->GetScaledX(JoystickScaler::Hand::right);
+  double turning = _joystick->GetScaledX(JoystickScaler::Hand::left);
   if (_joystick->GetRawButton(9)) { // left stick button
     speed = speed / 2;
     turning = turning / 2;
