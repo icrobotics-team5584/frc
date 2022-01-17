@@ -19,6 +19,8 @@ class SubDriveBase : public frc2::SubsystemBase {
   SubDriveBase();
 
   void drive(double speed, double rotation, bool squaredInputs = false);
+  
+  double GetTalonDistanceTravelled();
 
   TalonSRX _talonDolly{10};
 
@@ -44,6 +46,8 @@ class SubDriveBase : public frc2::SubsystemBase {
   double metersPerRotation; // calculated in constructor
 
   const double WHEEL_DIAMETER = 0.0508; //0.0508 for dolly
+
+  const int ENCODER_TICS_PER_ROTATION = 4096;
    
   const double pi = 3.1415926535897932384626433832795028841971693993751;
 };
