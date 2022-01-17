@@ -18,9 +18,11 @@ void CmdDeployIntake::Initialize() {
 void CmdDeployIntake::Execute() {}
 
 // Called once the command ends or is interrupted.
-void CmdDeployIntake::End(bool interrupted) {}
+void CmdDeployIntake::End(bool interrupted) {
+  _subIntake->Retract();
+}
 
 // Returns true when the command should end.
 bool CmdDeployIntake::IsFinished() {
-  return true;
+  return false;
 }
