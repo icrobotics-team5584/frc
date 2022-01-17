@@ -19,7 +19,7 @@ SubDriveBase::SubDriveBase(){
   _spmBackRight.Follow(_spmFrontRight);
 
   metersPerRotation = pi * WHEEL_DIAMETER;
-  _spmFrontRight.SetInverted(true);
+  _spmFrontLeft.SetInverted(true);
 
 
 }
@@ -37,7 +37,7 @@ double SubDriveBase::getYaw(){
 }
 
 double SubDriveBase::getDistanceTravelled(){
-  double wheelRotations = _dollyWheel.GetPosition() / 2;
+  double wheelRotations = _talonDolly.GetSelectedSensorPosition() / 2;
   frc::SmartDashboard::PutNumber("dolly rotations", wheelRotations);
   //double wheelRotations = _srxDolly.GetSelectedSensorPosition()/ENCODER_TICS_PER_ROTATION;
   double distance = wheelRotations * metersPerRotation;
@@ -46,6 +46,6 @@ double SubDriveBase::getDistanceTravelled(){
 
 // This method will be called once per scheduler run
 void SubDriveBase::Periodic() {
-  frc::SmartDashboard::PutNumber("Encoder Position", _dollyWheel.GetPosition());
-  frc::SmartDashboard::PutNumber("Encoder Velocity", _dollyWheel.GetVelocity());
+  frc::SmartDashboard::PutNumber("Encoder Position", _talonDolly.GetSelectedSensorPosition());
+  frc::SmartDashboard::PutNumber("Encoder Velocity", _talonDolly.GetSelectedSensorVelocity());
 }

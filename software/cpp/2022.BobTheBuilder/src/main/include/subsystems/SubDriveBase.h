@@ -8,6 +8,7 @@
 #include <rev/CANSparkMax.h>
 #include <frc/drive/DifferentialDrive.h>
 #include <AHRS.h>
+#include "ctre/Phoenix.h"
 
 #include "Constants.h"
 
@@ -19,11 +20,13 @@ class SubDriveBase : public frc2::SubsystemBase {
 
   void drive(double speed, double rotation, bool squaredInputs = false);
 
+  TalonSRX _talonDolly{10};
+
   // Create instances of motor controllers
-  rev::CANSparkMax _spmFrontLeft{can::spmDriveBaseFrontLeft, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax _spmFrontRight{can::spmDriveBaseFrontRight, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax _spmBackLeft{can::spmDriveBaseBackLeft, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax _spmBackRight{can::spmDriveBaseBackRight, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax _spmFrontLeft{4, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax _spmFrontRight{3, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax _spmBackLeft{2, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax _spmBackRight{1, rev::CANSparkMax::MotorType::kBrushless};
   frc::DifferentialDrive _diffDrive{_spmFrontLeft, _spmFrontRight};
 
   void Periodic() override;
