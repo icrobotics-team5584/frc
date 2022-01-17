@@ -17,7 +17,7 @@ SubDriveBase::SubDriveBase(){
   _spmBackLeft.Follow(_spmFrontLeft);
   _spmBackRight.Follow(_spmFrontRight);
 
-  _spmFrontRight.SetInverted(true);
+  _spmFrontLeft.SetInverted(true);
 
 
 }
