@@ -5,6 +5,8 @@
 #include "subsystems/SubDriveBase.h"
 
 SubDriveBase::SubDriveBase(){
+
+
 	// Reset all the motor controllers to factory default
   _spmFrontLeft.RestoreFactoryDefaults();
   _spmFrontRight.RestoreFactoryDefaults();
@@ -14,6 +16,10 @@ SubDriveBase::SubDriveBase(){
 	// make back left follow front left and make back right follow front right
   _spmBackLeft.Follow(_spmFrontLeft);
   _spmBackRight.Follow(_spmFrontRight);
+
+  _spmFrontLeft.SetInverted(true);
+
+
 }
 
 void SubDriveBase::drive(double speed, double rotation, bool squaredInputs){

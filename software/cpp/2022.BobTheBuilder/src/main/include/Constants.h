@@ -15,8 +15,8 @@
  */
 
 namespace can {
-  constexpr int spmDriveBaseFrontRight = 1;
-  constexpr int spmDriveBaseBackRight = 2;
-  constexpr int spmDriveBaseFrontLeft = 3;
-  constexpr int spmDriveBaseBackLeft = 4;
+  constexpr int spmDriveBaseFrontRight = 3;
+  constexpr int spmDriveBaseBackRight = 1;
+  constexpr int spmDriveBaseFrontLeft = 4;
+  constexpr int spmDriveBaseBackLeft = 2;
 }
