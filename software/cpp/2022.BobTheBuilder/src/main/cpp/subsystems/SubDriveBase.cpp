@@ -5,8 +5,6 @@
 #include "subsystems/SubDriveBase.h"
 
 SubDriveBase::SubDriveBase(){
-
-
 	// Reset all the motor controllers to factory default
   _spmFrontLeft.RestoreFactoryDefaults();
   _spmFrontRight.RestoreFactoryDefaults();
@@ -17,13 +15,22 @@ SubDriveBase::SubDriveBase(){
   _spmBackLeft.Follow(_spmFrontLeft);
   _spmBackRight.Follow(_spmFrontRight);
 
+  // Invert Front left spark max
   _spmFrontLeft.SetInverted(true);
 
+  // Initialize left and right encoders
+  _leftEncoder.SetDistancePerPulse(kEncoderDistancePerPulse);
+  _rightEncoder.SetDistancePerPulse(kEncoderDistancePerPulse);
 
 }
 
 void SubDriveBase::drive(double speed, double rotation, bool squaredInputs){
   _diffDrive.ArcadeDrive(speed, rotation, squaredInputs);
+}
+
+frc::DifferentialDriveWheelSpeeds SubDriveBase::GetWheelSpeeds() {
+  return {units::meters_per_second_t(_leftEncoder.GetRate()),
+        units::meters_per_second_t(_rightEncoder.GetRate())};
 }
 
 // This method will be called once per scheduler run

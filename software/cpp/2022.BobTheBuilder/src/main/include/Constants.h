@@ -2,6 +2,8 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+#include <wpi/numbers>
+
 #pragma once
 
 /**
@@ -20,3 +22,10 @@ namespace can {
   constexpr int spmDriveBaseFrontLeft = 4;
   constexpr int spmDriveBaseBackLeft = 2;
 }
+
+constexpr int kEncoderCPR = 1024;
+constexpr double kWheelDiameterInches = 6; 
+constexpr double kEncoderDistancePerPulse =
+    // Assumes the encoders are directly mounted on the wheel shafts
+    (kWheelDiameterInches * wpi::numbers::pi) /
+    static_cast<double>(kEncoderCPR);
