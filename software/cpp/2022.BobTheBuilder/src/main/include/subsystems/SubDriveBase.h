@@ -41,6 +41,76 @@ class SubDriveBase : public frc2::SubsystemBase {
    */
   frc::DifferentialDriveWheelSpeeds GetWheelSpeeds();
 
+    /**
+   * Resets the odometry to the specified pose.
+   *
+   * @param pose The pose to which to set the odometry.
+   */
+  void ResetOdometry(frc::Pose2d pose);
+
+    /**
+   * Controls each side of the drive directly with a voltage.
+   *
+   * @param left the commanded left output
+   * @param right the commanded right output
+   */
+  void TankDriveVolts(units::volt_t left, units::volt_t right);
+
+  /**
+   * Resets the drive encoders to currently read a position of 0.
+   */
+  void ResetEncoders();
+
+  /**
+   * Gets the average distance of the TWO encoders.
+   *
+   * @return the average of the TWO encoder readings
+   */
+  double GetAverageEncoderDistance();
+
+  /**
+   * Gets the left drive encoder.
+   *
+   * @return the left drive encoder
+   */
+  frc::Encoder& GetLeftEncoder();
+
+  /**
+   * Gets the right drive encoder.
+   *
+   * @return the right drive encoder
+   */
+  frc::Encoder& GetRightEncoder();
+
+  /**
+   * Sets the max output of the drive.  Useful for scaling the drive to drive
+   * more slowly.
+   *
+   * @param maxOutput the maximum output to which the drive will be constrained
+   */
+  void SetMaxOutput(double maxOutput);
+
+  /**
+   * Returns the heading of the robot.
+   *
+   * @return the robot's heading in degrees, from -180 to 180
+   */
+  units::degree_t GetHeading() const;
+
+  /**
+   * Returns the turn rate of the robot.
+   *
+   * @return The turn rate of the robot, in degrees per second
+   */
+  double GetTurnRate();
+
+  /**
+   * Returns the currently-estimated pose of the robot.
+   *
+   * @return The pose.
+   */
+  frc::Pose2d GetPose();
+
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
@@ -48,4 +118,8 @@ class SubDriveBase : public frc2::SubsystemBase {
   // Encoder for autonomous drive
   frc::Encoder _leftEncoder{can::spmDriveBaseFrontLeft, can::spmDriveBaseBackLeft}; 
   frc::Encoder _rightEncoder{can::spmDriveBaseFrontRight, can::spmDriveBaseBackRight};
+
+  // The gyro sensor
+  frc::ADXRS450_Gyro _gyro;
+  frc::DifferentialDriveOdometry _odometry{_gyro.GetRotation2d()};
 };

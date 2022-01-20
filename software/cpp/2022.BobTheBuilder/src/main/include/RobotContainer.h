@@ -4,10 +4,16 @@
 
 #pragma once
 
+#include <frc/controller/PIDController.h>
+#include <frc/smartdashboard/SendableChooser.h>
 #include <frc2/command/Command.h>
+#include <frc2/command/InstantCommand.h>
+#include <frc2/command/PIDCommand.h>
+#include <frc2/command/ParallelRaceGroup.h>
+#include <frc2/command/RunCommand.h>
+
 #include "Utilities/JoystickScaler.h"
 #include "subsystems/SubDriveBase.h"
-
 #include "commands/CmdJoystickDrive.h"
 
 /**
@@ -27,6 +33,9 @@ class RobotContainer {
  private:
   // Create new joystick to control the robot
   JoystickScaler _joystick0{0, 2.0, 2.0};
+
+  // The chooser for the autonomous routines
+  frc::SendableChooser<frc2::Command*> _chooser;
 
   void ConfigureButtonBindings();
 };
