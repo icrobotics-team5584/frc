@@ -19,4 +19,13 @@ namespace can {
   constexpr int spmDriveBaseBackRight = 1;
   constexpr int spmDriveBaseFrontLeft = 4;
   constexpr int spmDriveBaseBackLeft = 2;
+  constexpr int spmClimber = 5;
+}
+namespace pcm {
+  constexpr int solTilterForward = 0;
+  constexpr int solTilterReverse = 1;
+}
+namespace dio {
+  constexpr int lmtClimberTop = 0;
+  constexpr int lmtClimberBottom = 1;
 }
