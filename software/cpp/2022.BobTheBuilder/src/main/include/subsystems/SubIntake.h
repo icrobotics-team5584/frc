@@ -20,6 +20,7 @@ class SubIntake : public frc2::SubsystemBase {
   void Outtake();
   void Extend();
   void Retract();
+  void Stop();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
