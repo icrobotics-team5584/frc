@@ -3,8 +3,18 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "subsystems/SubShooter.h"
+ // to make shooter 2 follow shooter 1
+SubShooter::SubShooter(){
 
-SubShooter::SubShooter() = default;
+_spmShooter2.Follow(_spmShooter1);
+}
 
 // This method will be called once per scheduler run
-void SubShooter::Periodic() {}
+void SubShooter::Periodic() {
+}
+
+void SubShooter::Shoot(){
+_spmShooter1.Set(.7);
+}
+ 
+ 

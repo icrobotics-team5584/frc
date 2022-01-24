@@ -5,8 +5,10 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
-#include "RobotContainer.h"
-#include "SubDriveBase.h"
+#include <rev/CANSparkMax.h>
+#include <frc/DoubleSolenoid.h>
+
+#include "Constants.h"
 
 class SubShooter : public frc2::SubsystemBase {
  public:
@@ -16,8 +18,12 @@ class SubShooter : public frc2::SubsystemBase {
    * Will be called periodically whenever the CommandScheduler runs.
    */
   void Periodic() override;
+  void Shoot();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
+  rev::CANSparkMax _spmShooter1{5, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  rev::CANSparkMax _spmShooter2{6, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+
 };
