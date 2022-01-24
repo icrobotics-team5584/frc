@@ -1,0 +1,10 @@
+{
+  "fast-backward": [],
+  "fast-forward": [],
+  "slow-backward": [],
+  "slow-forward": [],
+  "sysid": true,
+  "test": "Drivetrain",
+  "units": "Meters",
+  "unitsPerRotation": 0.479
+}
