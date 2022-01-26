@@ -7,17 +7,13 @@
 #include <frc/controller/PIDController.h>
 #include <frc/controller/RamseteController.h>
 #include <frc/shuffleboard/Shuffleboard.h>
-#include <frc/trajectory/Trajectory.h>
-#include <frc/trajectory/TrajectoryGenerator.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/trajectory/constraint/DifferentialDriveVoltageConstraint.h>
 #include <frc2/command/InstantCommand.h>
 #include <frc2/command/RamseteCommand.h>
 #include <frc2/command/SequentialCommandGroup.h>
 #include <frc2/command/button/JoystickButton.h>
 
-#include <frc/Filesystem.h>
-#include <frc/trajectory/TrajectoryUtil.h>
-#include <wpi/fs.h>
 
 #include "RobotContainer.h"
 
@@ -25,6 +21,7 @@ RobotContainer::RobotContainer() {
   _subDriveBase.SetDefaultCommand(CmdJoystickDrive(&_subDriveBase, &_joystick0));
   // Configure the button bindings
   ConfigureButtonBindings();
+  frc::SmartDashboard::PutNumber("Kp velocity", DriveConstants::kPDriveVel);
 }
 
 void RobotContainer::ConfigureButtonBindings() {
@@ -57,10 +54,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       frc::Pose2d(1_m, 0_m, frc::Rotation2d(0_deg)),
       // Pass the config
       config);
-    frc::Trajectory trajectory;
-    fs::path deployDirectory = frc::filesystem::GetDeployDirectory();
-    deployDirectory = deployDirectory / "Paths" / "MoveForward.wpilib.json";
-    trajectory = frc::TrajectoryUtil::FromPathweaverJson(deployDirectory.string());
+
 
   frc2::RamseteCommand ramseteCommand(
       trajectory, [this]() { return _subDriveBase.GetPose(); },
@@ -70,8 +64,8 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
           DriveConstants::ks, DriveConstants::kv, DriveConstants::ka),
       kDriveKinematics,
       [this] { return _subDriveBase.GetWheelSpeeds(); },
-      frc2::PIDController(DriveConstants::kPDriveVel, 0, 0),
-      frc2::PIDController(DriveConstants::kPDriveVel, 0, 0),
+      frc2::PIDController(frc::SmartDashboard::GetNumber("Kp velocity", 0), 0, 0),
+      frc2::PIDController(frc::SmartDashboard::GetNumber("Kp velocity", 0), 0, 0),
       [this](auto left, auto right) { _subDriveBase.TankDriveVolts(left, right); },
       {&_subDriveBase});
 
