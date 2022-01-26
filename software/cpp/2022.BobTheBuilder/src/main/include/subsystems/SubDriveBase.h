@@ -5,7 +5,6 @@
 #pragma once
 
 #include <rev/CANSparkMax.h>
-#include <frc/ADXRS450_Gyro.h>
 #include <frc/Encoder.h>
 #include <frc/drive/DifferentialDrive.h>
 #include <frc/geometry/Pose2d.h>
@@ -14,6 +13,9 @@
 #include <frc/motorcontrol/PWMSparkMax.h>
 #include <frc2/command/SubsystemBase.h>
 #include <units/voltage.h>
+#include <AHRS.h>
+#include <frc/smartdashboard/Field2d.h>
+#include <frc/Timer.h>
 
 #include "Constants.h"
 
@@ -73,14 +75,14 @@ class SubDriveBase : public frc2::SubsystemBase {
    *
    * @return the left drive encoder
    */
-  frc::Encoder& GetLeftEncoder();
+  rev::RelativeEncoder& GetLeftEncoder();
 
   /**
    * Gets the right drive encoder.
    *
    * @return the right drive encoder
    */
-  frc::Encoder& GetRightEncoder();
+  rev::RelativeEncoder& GetRightEncoder();
 
   /**
    * Sets the max output of the drive.  Useful for scaling the drive to drive
@@ -95,7 +97,7 @@ class SubDriveBase : public frc2::SubsystemBase {
    *
    * @return the robot's heading in degrees, from -180 to 180
    */
-  units::degree_t GetHeading() const;
+  float GetHeading();
 
   /**
    * Returns the turn rate of the robot.
@@ -111,15 +113,25 @@ class SubDriveBase : public frc2::SubsystemBase {
    */
   frc::Pose2d GetPose();
 
+  void resetYaw();
+
+  bool isNavxCal();
+
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 
   // Encoder for autonomous drive
-  frc::Encoder _leftEncoder{can::spmDriveBaseFrontLeft, can::spmDriveBaseBackLeft}; 
-  frc::Encoder _rightEncoder{can::spmDriveBaseFrontRight, can::spmDriveBaseBackRight};
+  rev::SparkMaxRelativeEncoder _leftEncoder{_spmFrontLeft.GetEncoder()}; 
+  rev::SparkMaxRelativeEncoder _rightEncoder{_spmFrontRight.GetEncoder()};
 
   // The gyro sensor
-  frc::ADXRS450_Gyro _gyro;
+  AHRS _gyro{frc::SerialPort::kMXP};
   frc::DifferentialDriveOdometry _odometry{_gyro.GetRotation2d()};
+
+  frc::Field2d _fieldSim;
+
+  double encoderPos = 0;
+  double time = 0;
+  frc::Timer timer;
 };

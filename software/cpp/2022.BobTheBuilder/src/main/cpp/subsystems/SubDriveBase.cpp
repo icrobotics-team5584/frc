@@ -3,6 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "subsystems/SubDriveBase.h"
+#include <frc/smartdashboard/SmartDashboard.h>
+#include <iostream>
 
 SubDriveBase::SubDriveBase(){
 	// Reset all the motor controllers to factory default
@@ -10,6 +12,10 @@ SubDriveBase::SubDriveBase(){
   _spmFrontRight.RestoreFactoryDefaults();
   _spmBackLeft.RestoreFactoryDefaults();
   _spmBackRight.RestoreFactoryDefaults();
+  _spmFrontLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  _spmFrontRight.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  _spmBackLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  _spmBackRight.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 
 	// make back left follow front left and make back right follow front right
   _spmBackLeft.Follow(_spmFrontLeft);
@@ -19,10 +25,15 @@ SubDriveBase::SubDriveBase(){
   _spmFrontLeft.SetInverted(true);
 
   // Initialize left and right encoders
-  _leftEncoder.SetDistancePerPulse(kEncoderDistancePerPulse);
-  _rightEncoder.SetDistancePerPulse(kEncoderDistancePerPulse);
-
   ResetEncoders();
+  _leftEncoder.SetPositionConversionFactor(kEncoderDistancePerPulse);
+  _rightEncoder.SetPositionConversionFactor(kEncoderDistancePerPulse);
+  _leftEncoder.SetVelocityConversionFactor(kEncoderVelocityPerPulse);
+  _rightEncoder.SetVelocityConversionFactor(kEncoderVelocityPerPulse);
+  frc::SmartDashboard::PutData("Field", &_fieldSim);
+
+  timer.Start();
+
 }
 
 void SubDriveBase::drive(double speed, double rotation, bool squaredInputs){
@@ -36,19 +47,19 @@ void SubDriveBase::TankDriveVolts(units::volt_t left, units::volt_t right) {
 }
 
 void SubDriveBase::ResetEncoders() {
-  _leftEncoder.Reset();
-  _rightEncoder.Reset();
+  _leftEncoder.SetPosition(0);
+  _rightEncoder.SetPosition(0);
 }
 
 double SubDriveBase::GetAverageEncoderDistance() {
-  return (_leftEncoder.GetDistance() + _rightEncoder.GetDistance()) / 2.0;
+  return (_leftEncoder.GetPosition() + _rightEncoder.GetPosition()) / 2.0;
 }
 
-frc::Encoder& SubDriveBase::GetLeftEncoder() {
+rev::RelativeEncoder& SubDriveBase::GetLeftEncoder() {
   return _leftEncoder;
 }
 
-frc::Encoder& SubDriveBase::GetRightEncoder() {
+rev::RelativeEncoder& SubDriveBase::GetRightEncoder() {
   return _rightEncoder;
 }
 
@@ -56,8 +67,8 @@ void SubDriveBase::SetMaxOutput(double maxOutput) {
   _diffDrive.SetMaxOutput(maxOutput);
 }
 
-units::degree_t SubDriveBase::GetHeading() const {
-  return _gyro.GetRotation2d().Degrees();
+float SubDriveBase::GetHeading(){
+  return _gyro.GetYaw();
 }
 
 double SubDriveBase::GetTurnRate() {
@@ -69,14 +80,37 @@ frc::Pose2d SubDriveBase::GetPose() {
 }
 
 frc::DifferentialDriveWheelSpeeds SubDriveBase::GetWheelSpeeds() {
-  return {units::meters_per_second_t(_leftEncoder.GetRate()),
-        units::meters_per_second_t(_rightEncoder.GetRate())};
+  std::cout << _leftEncoder.GetVelocity() << "....." << _rightEncoder.GetVelocity() << std::endl;
+  return {units::meters_per_second_t(_leftEncoder.GetVelocity()),
+        units::meters_per_second_t(_rightEncoder.GetVelocity())};
 }
 
 void SubDriveBase::ResetOdometry(frc::Pose2d pose) {
   ResetEncoders();
-  _odometry.ResetPosition(pose, _gyro.GetRotation2d());
+  _odometry.ResetPosition(pose, frc::Rotation2d{(units::degree_t)_gyro.GetYaw()});
 }
 
 // This method will be called once per scheduler run
-void SubDriveBase::Periodic() {}
+void SubDriveBase::Periodic() {
+  _odometry.Update(frc::Rotation2d{(units::degree_t)_gyro.GetYaw()},
+                    units::meter_t(_leftEncoder.GetPosition()),
+                    units::meter_t(_rightEncoder.GetPosition()));
+  _fieldSim.SetRobotPose(_odometry.GetPose());
+  frc::SmartDashboard::PutNumber("Left Encoder", _leftEncoder.GetVelocity());
+  frc::SmartDashboard::PutNumber("Right Encoder", _rightEncoder.GetVelocity());
+  frc::SmartDashboard::PutNumber("Gyro Rotation", _gyro.GetYaw());
+  frc::SmartDashboard::PutNumber("LEncoder pos", _leftEncoder.GetPosition());
+  frc::SmartDashboard::PutNumber("REncoder pos", _rightEncoder.GetPosition());
+  frc::SmartDashboard::PutNumber("Encoder Vol: ", (_leftEncoder.GetPosition()-encoderPos)/(timer.Get().value()-time));
+  time = timer.Get().value();
+  encoderPos = _leftEncoder.GetPosition();
+}
+
+
+void SubDriveBase::resetYaw(){
+  _gyro.ZeroYaw();
+}
+
+bool SubDriveBase::isNavxCal(){
+  return _gyro.IsCalibrating();
+}

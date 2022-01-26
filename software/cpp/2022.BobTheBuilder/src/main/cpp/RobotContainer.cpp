@@ -15,6 +15,10 @@
 #include <frc2/command/SequentialCommandGroup.h>
 #include <frc2/command/button/JoystickButton.h>
 
+#include <frc/Filesystem.h>
+#include <frc/trajectory/TrajectoryUtil.h>
+#include <wpi/fs.h>
+
 #include "RobotContainer.h"
 
 RobotContainer::RobotContainer() {
@@ -48,14 +52,18 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       // Start at the origin facing the +X direction
       frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
       // Pass through these two interior waypoints, making an 's' curve path
-      {frc::Translation2d(1_m, 1_m), frc::Translation2d(2_m, -1_m)},
+      {frc::Translation2d(1_m, 0_m)},
       // End 3 meters straight ahead of where we started, facing forward
-      frc::Pose2d(3_m, 0_m, frc::Rotation2d(0_deg)),
+      frc::Pose2d(1_m, 0_m, frc::Rotation2d(0_deg)),
       // Pass the config
       config);
+    frc::Trajectory trajectory;
+    fs::path deployDirectory = frc::filesystem::GetDeployDirectory();
+    deployDirectory = deployDirectory / "Paths" / "MoveForward.wpilib.json";
+    trajectory = frc::TrajectoryUtil::FromPathweaverJson(deployDirectory.string());
 
   frc2::RamseteCommand ramseteCommand(
-      exampleTrajectory, [this]() { return _subDriveBase.GetPose(); },
+      trajectory, [this]() { return _subDriveBase.GetPose(); },
       frc::RamseteController(AutoConstants::kRamseteB,
                              AutoConstants::kRamseteZeta),
       frc::SimpleMotorFeedforward<units::meters>(
@@ -68,7 +76,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       {&_subDriveBase});
 
   // Reset odometry to the starting pose of the trajectory.
-  _subDriveBase.ResetOdometry(exampleTrajectory.InitialPose());
+  _subDriveBase.ResetOdometry(trajectory.InitialPose());
 
   return new frc2::SequentialCommandGroup(
       std::move(ramseteCommand),
