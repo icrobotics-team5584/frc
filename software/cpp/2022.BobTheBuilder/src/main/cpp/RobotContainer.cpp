@@ -22,6 +22,8 @@ RobotContainer::RobotContainer() {
   // Configure the button bindings
   ConfigureButtonBindings();
   frc::SmartDashboard::PutNumber("Kp velocity", DriveConstants::kPDriveVel);
+  frc::SmartDashboard::PutNumber("Ki velocity", DriveConstants::kIDriveVel);
+  frc::SmartDashboard::PutNumber("Kd velocity", DriveConstants::KDDdriveVel);
 }
 
 void RobotContainer::ConfigureButtonBindings() {
@@ -67,8 +69,8 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
           DriveConstants::ks, DriveConstants::kv, DriveConstants::ka),
       kDriveKinematics,
       [this] { return _subDriveBase.GetWheelSpeeds(); },
-      frc2::PIDController(frc::SmartDashboard::GetNumber("Kp velocity", 0), 0, 0),
-      frc2::PIDController(frc::SmartDashboard::GetNumber("Kp velocity", 0), 0, 0),
+      frc2::PIDController(frc::SmartDashboard::GetNumber("Kp velocity", 0), frc::SmartDashboard::GetNumber("Ki velocity", 0), frc::SmartDashboard::GetNumber("Kd velocity", 0)),
+      frc2::PIDController(frc::SmartDashboard::GetNumber("Kp velocity", 0), frc::SmartDashboard::GetNumber("Ki velocity", 0), frc::SmartDashboard::GetNumber("Kd velocity", 0)),
       [this](auto left, auto right) { _subDriveBase.TankDriveVolts(left, right); },
       {&_subDriveBase});
 

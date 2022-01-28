@@ -46,6 +46,8 @@ namespace DriveConstants{
 
   // Example value only - as above, this must be tuned for your drive!
   constexpr double kPDriveVel = 0.029512;
+  constexpr double kIDriveVel = 0;
+  constexpr double KDDdriveVel = 0;
 }
 
 namespace AutoConstants {
