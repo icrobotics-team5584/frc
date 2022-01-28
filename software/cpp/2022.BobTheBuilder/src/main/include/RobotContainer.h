@@ -8,6 +8,7 @@
 #include "Utilities/JoystickScaler.h"
 #include "subsystems/SubDriveBase.h"
 #include "commands/CmdShooter.h"
+#include "subsystems/SubShooter.h"
 
 #include "commands/CmdJoystickDrive.h"
 
@@ -25,6 +26,7 @@ class RobotContainer {
   frc2::Command* GetAutonomousCommand();
   SubDriveBase _subDriveBase;
 
+  SubShooter _subShooter;
  private:
   // Create new joystick to control the robot
   JoystickScaler _joystick0{0, 2.0, 2.0};

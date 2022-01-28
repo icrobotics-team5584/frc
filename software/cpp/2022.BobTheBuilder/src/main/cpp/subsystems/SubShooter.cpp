@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "subsystems/SubShooter.h"
+
  // to make shooter 2 follow shooter 1
 SubShooter::SubShooter(){
 
