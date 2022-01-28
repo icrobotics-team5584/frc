@@ -6,6 +6,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include "subsystems/SubShooter.h"
 
 /**
  * An example command.
@@ -17,7 +18,7 @@
 class CmdShooter
     : public frc2::CommandHelper<frc2::CommandBase, CmdShooter> {
  public:
-  CmdShooter();
+  CmdShooter(SubShooter* subShooter);
 
   void Initialize() override;
 
@@ -26,4 +27,7 @@ class CmdShooter
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+
+  private:
+  SubShooter* _subShooter;
 };

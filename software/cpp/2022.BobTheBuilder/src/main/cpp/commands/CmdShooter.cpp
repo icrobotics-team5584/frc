@@ -4,16 +4,19 @@
 
 #include "commands/CmdShooter.h"
 
-CmdShooter::CmdShooter() {
+
+CmdShooter::CmdShooter(SubShooter* subShooter) {
   // Use addRequirements() here to declare subsystem dependencies.
+  _subShooter = subShooter;
 }
 
 // Called when the command is initially scheduled.
 void CmdShooter::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void CmdShooter::Execute() {}
-
+void CmdShooter::Execute() {
+  _subShooter -> Shoot;
+}; 
 // Called once the command ends or is interrupted.
 void CmdShooter::End(bool interrupted) {}
 

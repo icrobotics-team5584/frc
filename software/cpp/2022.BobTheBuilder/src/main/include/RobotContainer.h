@@ -7,6 +7,7 @@
 #include <frc2/command/Command.h>
 #include "Utilities/JoystickScaler.h"
 #include "subsystems/SubDriveBase.h"
+#include "commands/CmdShooter.h"
 
 #include "commands/CmdJoystickDrive.h"
 
@@ -29,4 +30,7 @@ class RobotContainer {
   JoystickScaler _joystick0{0, 2.0, 2.0};
 
   void ConfigureButtonBindings();
+
+  CmdShooter _cmdShooter;
+  
 };
