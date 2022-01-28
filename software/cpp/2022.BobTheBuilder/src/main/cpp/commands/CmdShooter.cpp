@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "commands/CmdShooter.h"
+  #include "commands/CmdShooter.h"
 
 
 CmdShooter::CmdShooter(SubShooter* subShooter) {
@@ -15,8 +15,8 @@ void CmdShooter::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void CmdShooter::Execute() {
-  _subShooter -> Shoot;
-}; 
+  _subShooter->Shoot();
+} 
 // Called once the command ends or is interrupted.
 void CmdShooter::End(bool interrupted) {}
 
