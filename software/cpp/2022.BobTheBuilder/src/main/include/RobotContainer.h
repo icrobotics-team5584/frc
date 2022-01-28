@@ -11,6 +11,12 @@
 #include <frc2/command/PIDCommand.h>
 #include <frc2/command/ParallelRaceGroup.h>
 #include <frc2/command/RunCommand.h>
+#include <wpi/fs.h>
+#include <frc/Filesystem.h>
+#include <frc/trajectory/Trajectory.h>
+#include <frc/trajectory/TrajectoryGenerator.h>
+#include <frc/trajectory/TrajectoryUtil.h>
+
 
 #include "Utilities/JoystickScaler.h"
 #include "subsystems/SubDriveBase.h"
@@ -29,6 +35,9 @@ class RobotContainer {
 
   frc2::Command* GetAutonomousCommand();
   SubDriveBase _subDriveBase;
+
+    fs::path deployDirectory = frc::filesystem::GetDeployDirectory() + "/Paths/MoveForward.wpilib.json";
+    frc::Trajectory trajectory{frc::TrajectoryUtil::FromPathweaverJson(deployDirectory.string())};
 
  private:
   // Create new joystick to control the robot

@@ -6,6 +6,7 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
+#include <frc/trajectory/Trajectory.h>
 
 void Robot::RobotInit() {}
 
@@ -43,9 +44,19 @@ void Robot::AutonomousInit() {
   if (m_autonomousCommand != nullptr) {
     m_autonomousCommand->Schedule();
   }
+
+  _timer.Reset();
+  _timer.Start();
 }
 
-void Robot::AutonomousPeriodic() {}
+void Robot::AutonomousPeriodic() {
+  frc::Trajectory::State currentTargetState = m_container.trajectory.Sample(_timer.Get());
+  double targetVelocity = (double)currentTargetState.velocity();
+  double actualVelocity = m_container._subDriveBase.GetWheelSpeeds().left();
+  double error = targetVelocity - actualVelocity;
+  frc::SmartDashboard::PutNumber("ramsete vel error", error);
+  frc::SmartDashboard::PutNumber("ramsete target vel", targetVelocity);
+}
 
 void Robot::TeleopInit() {
   // This makes sure that the autonomous stops running when
