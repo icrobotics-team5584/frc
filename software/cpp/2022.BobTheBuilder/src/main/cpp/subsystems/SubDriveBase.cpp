@@ -41,8 +41,9 @@ void SubDriveBase::drive(double speed, double rotation, bool squaredInputs){
 }
 
 void SubDriveBase::TankDriveVolts(units::volt_t left, units::volt_t right) {
-  _spmFrontLeft.SetVoltage(left);
-  _spmFrontRight.SetVoltage(right);
+  std::cout << left.value() << "/n" << right.value() << "/n" << std::endl;
+  _spmFrontLeft.SetVoltage(-left);
+  _spmFrontRight.SetVoltage(-right);
   _diffDrive.Feed();
 }
 
@@ -52,7 +53,7 @@ void SubDriveBase::ResetEncoders() {
 }
 
 double SubDriveBase::GetAverageEncoderDistance() {
-  return (_leftEncoder.GetPosition() + _rightEncoder.GetPosition()) / 2.0;
+  return (getLeftPos() + getRightPos()) / 2.0;
 }
 
 rev::RelativeEncoder& SubDriveBase::GetLeftEncoder() {
@@ -68,7 +69,7 @@ void SubDriveBase::SetMaxOutput(double maxOutput) {
 }
 
 float SubDriveBase::GetHeading(){
-  return _gyro.GetYaw();
+  return -_gyro.GetYaw();
 }
 
 double SubDriveBase::GetTurnRate() {
@@ -80,30 +81,29 @@ frc::Pose2d SubDriveBase::GetPose() {
 }
 
 frc::DifferentialDriveWheelSpeeds SubDriveBase::GetWheelSpeeds() {
-  std::cout << _leftEncoder.GetVelocity() << "....." << _rightEncoder.GetVelocity() << std::endl;
-  return {units::meters_per_second_t(_leftEncoder.GetVelocity()),
-        units::meters_per_second_t(_rightEncoder.GetVelocity())};
+  return {units::meters_per_second_t(getLeftVel()),
+        units::meters_per_second_t(getRightVel())};
 }
 
 void SubDriveBase::ResetOdometry(frc::Pose2d pose) {
   ResetEncoders();
-  _odometry.ResetPosition(pose, frc::Rotation2d{(units::degree_t)_gyro.GetYaw()});
+  _odometry.ResetPosition(pose, frc::Rotation2d{(units::degree_t)GetHeading()});
 }
 
 // This method will be called once per scheduler run
 void SubDriveBase::Periodic() {
-  _odometry.Update(frc::Rotation2d{(units::degree_t)_gyro.GetYaw()},
-                    units::meter_t(_leftEncoder.GetPosition()),
-                    units::meter_t(_rightEncoder.GetPosition()));
+  _odometry.Update(frc::Rotation2d{(units::degree_t)GetHeading()},
+                    units::meter_t(getLeftPos()),
+                    units::meter_t(getRightPos()));
   _fieldSim.SetRobotPose(_odometry.GetPose());
-  frc::SmartDashboard::PutNumber("Left Encoder", _leftEncoder.GetVelocity());
-  frc::SmartDashboard::PutNumber("Right Encoder", _rightEncoder.GetVelocity());
-  frc::SmartDashboard::PutNumber("Gyro Rotation", _gyro.GetYaw());
-  frc::SmartDashboard::PutNumber("LEncoder pos", _leftEncoder.GetPosition());
-  frc::SmartDashboard::PutNumber("REncoder pos", _rightEncoder.GetPosition());
-  frc::SmartDashboard::PutNumber("Encoder Vol: ", (_leftEncoder.GetPosition()-encoderPos)/(timer.Get().value()-time));
+  frc::SmartDashboard::PutNumber("Left Encoder", getLeftVel());
+  frc::SmartDashboard::PutNumber("Right Encoder", getRightVel());
+  frc::SmartDashboard::PutNumber("Gyro Rotation", GetHeading());
+  frc::SmartDashboard::PutNumber("LEncoder pos", getLeftPos());
+  frc::SmartDashboard::PutNumber("REncoder pos", getRightPos());
+  frc::SmartDashboard::PutNumber("Encoder Vol: ", (getLeftPos()-encoderPos)/(timer.Get().value()-time));
   time = timer.Get().value();
-  encoderPos = _leftEncoder.GetPosition();
+  encoderPos = getLeftPos();
 }
 
 
@@ -113,4 +113,20 @@ void SubDriveBase::resetYaw(){
 
 bool SubDriveBase::isNavxCal(){
   return _gyro.IsCalibrating();
+}
+
+double SubDriveBase::getLeftPos() {
+  return -_leftEncoder.GetPosition();
+}
+
+double SubDriveBase::getRightPos() {
+  return -_rightEncoder.GetPosition();  
+}
+
+double SubDriveBase::getLeftVel() {
+  return -_leftEncoder.GetVelocity();
+}
+
+double SubDriveBase::getRightVel() {
+  return -_rightEncoder.GetVelocity();
 }

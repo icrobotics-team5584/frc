@@ -8,6 +8,8 @@
 #include <frc2/command/CommandScheduler.h>
 #include <frc/trajectory/Trajectory.h>
 
+#include <frc2/command/RamseteCommand.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 void Robot::RobotInit() {}
 
 /**
@@ -36,7 +38,8 @@ void Robot::DisabledPeriodic() {}
  * RobotContainer} class.
  */
 void Robot::AutonomousInit() {
-
+  m_timer.Reset();
+  m_timer.Start();
   m_container._subDriveBase.resetYaw();
 
   m_autonomousCommand = m_container.GetAutonomousCommand();

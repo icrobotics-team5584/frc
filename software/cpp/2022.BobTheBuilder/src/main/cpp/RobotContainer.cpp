@@ -54,7 +54,10 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       frc::Pose2d(1_m, 0_m, frc::Rotation2d(0_deg)),
       // Pass the config
       config);
-
+    
+    fs::path deployDirectory = frc::filesystem::GetDeployDirectory();
+    deployDirectory = deployDirectory / "Paths" / "MoveForward.wpilib.json";
+    trajectory = frc::TrajectoryUtil::FromPathweaverJson(deployDirectory.string());
 
   frc2::RamseteCommand ramseteCommand(
       trajectory, [this]() { return _subDriveBase.GetPose(); },
