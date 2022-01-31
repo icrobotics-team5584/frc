@@ -20,3 +20,8 @@ namespace can {
   constexpr int spmDriveBaseFrontLeft = 4;
   constexpr int spmDriveBaseBackLeft = 2;
 }
+
+namespace pcm {
+  constexpr int solDollyDeploy = 0;
+  constexpr int solDollyRetract = 1;
+}

@@ -9,6 +9,7 @@
 #include <frc/drive/DifferentialDrive.h>
 #include <AHRS.h>
 #include "ctre/Phoenix.h"
+#include <frc/DoubleSolenoid.h>
 
 #include "Constants.h"
 
@@ -37,6 +38,9 @@ class SubDriveBase : public frc2::SubsystemBase {
   bool isNavxCal();
   double getDistanceTravelled();
 
+  void deployDolly();
+  void retractDolly();
+
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
@@ -50,4 +54,6 @@ class SubDriveBase : public frc2::SubsystemBase {
   const int ENCODER_TICS_PER_ROTATION = 4096;
    
   const double pi = 3.1415926535897932384626433832795028841971693993751;
+
+  frc::DoubleSolenoid solDolly{0, frc::PneumaticsModuleType::CTREPCM, pcm::solDollyRetract, pcm::solDollyDeploy};
 };

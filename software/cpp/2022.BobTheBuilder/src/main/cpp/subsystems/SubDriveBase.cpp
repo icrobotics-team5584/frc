@@ -36,6 +36,14 @@ double SubDriveBase::getYaw(){
   return ahrsNavXGyro.GetYaw();
 }
 
+void SubDriveBase::deployDolly(){
+  solDolly.Set(frc::DoubleSolenoid::Value::kForward);
+}
+
+void SubDriveBase::retractDolly(){
+  solDolly.Set(frc::DoubleSolenoid::Value::kReverse);
+}
+
 double SubDriveBase::getDistanceTravelled(){
   double wheelRotations = _dollyWheel.GetPosition() / 2;
   frc::SmartDashboard::PutNumber("dolly rotations", wheelRotations);
