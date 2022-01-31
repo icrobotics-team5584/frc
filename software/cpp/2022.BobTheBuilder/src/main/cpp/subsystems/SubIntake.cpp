@@ -4,7 +4,10 @@
 
 #include "subsystems/SubIntake.h"
 
-SubIntake::SubIntake() = default;
+SubIntake::SubIntake()  {
+  _spmIntake.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);	
+  _spmIntake.SetSmartCurrentLimit(20);
+}
 
 // This method will be called once per scheduler run
 void SubIntake::Periodic() {
@@ -24,5 +27,9 @@ void SubIntake::Extend() {
 }
 void SubIntake::Retract() {
   _solPnuematics.Set(frc::DoubleSolenoid::Value::kReverse);
+}
+
+void SubIntake::Stop(){
+  _spmIntake.Set(0);
 }
 

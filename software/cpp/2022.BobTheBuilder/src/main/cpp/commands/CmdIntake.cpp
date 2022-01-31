@@ -19,7 +19,7 @@ _subIntake->Intake();
 
 // Called once the command ends or is interrupted.
 void CmdIntake::End(bool interrupted) {
-  
+_subIntake->Stop();
 }
 
 // Returns true when the command should end.

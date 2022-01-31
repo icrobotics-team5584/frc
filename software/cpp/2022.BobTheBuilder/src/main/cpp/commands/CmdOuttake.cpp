@@ -19,7 +19,9 @@ void CmdOuttake::Execute() {
 }
 
 // Called once the command ends or is interrupted.
-void CmdOuttake::End(bool interrupted) {}
+void CmdOuttake::End(bool interrupted) {
+  _subIntake->Stop();
+}
 
 // Returns true when the command should end.
 bool CmdOuttake::IsFinished() {
