@@ -10,6 +10,7 @@
 #include "subsystems/SubDriveBase.h"
 #include "commands/CmdAutoDrive.h"
 #include "Utilities/PIDk.h"
+#include "CmdAutoSetPose.h"
 
 class Cmd2BallAuto
     : public frc2::CommandHelper<frc2::ParallelCommandGroup,

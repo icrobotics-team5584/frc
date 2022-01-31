@@ -4,24 +4,22 @@
 
 #include "commands/CmdAutoDrive.h"
 
-CmdAutoDrive::CmdAutoDrive(SubDriveBase* subDriveBase, Autonomous* autonomous, double startX, double startY, 
-                           double endX, double endY, double endHeading, double cenX, double cenY, 
-                           PIDk PIDconstants, double speed, double endSpeed, PIDk pidSpeed){
+CmdAutoDrive::CmdAutoDrive(SubDriveBase* subDriveBase, Autonomous* autonomous, PIDAutoConfig _PIDConfig){
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements(subDriveBase);
   _subDriveBase = subDriveBase;
   _autonomous = autonomous;
-  _startX = startX;
-  _startY = startY;
-  _endX = endX;
-  _endY = endY;
-  _endHeading = endHeading;
-  _cenX = cenX;
-  _cenY = cenY;
-  _PIDconstants = PIDconstants;
-  _speed = speed;
-  _endSpeed = endSpeed;
-  _pidSpeed = pidSpeed;
+  _startX = _PIDConfig.startX;
+  _startY = _PIDConfig.startY;
+  _endX = _PIDConfig.endX;
+  _endY = _PIDConfig.endY;
+  _endHeading = _PIDConfig.endHeading;
+  _cenX = _PIDConfig.cenX;
+  _cenY = _PIDConfig.cenY;
+  _PIDconstants = _PIDConfig.PIDconstants;
+  _speed = _PIDConfig.speed;
+  _endSpeed = _PIDConfig.endSpeed;
+  _pidSpeed = _PIDConfig.pidSpeed;
 }
 
 // Called when the command is initially scheduled.
