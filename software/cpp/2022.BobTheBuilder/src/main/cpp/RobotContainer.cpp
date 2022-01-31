@@ -15,9 +15,9 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton IntakeButton{ &_joystick0,frc::XboxController::Button::kRightBumper };
-  IntakeButton.ToggleWhenPressed(_cmdIntake);
+  IntakeButton.WhileHeld(_cmdIntake);
   frc2::JoystickButton OuttakeButton{ &_joystick0,frc::XboxController::Button::kLeftBumper };
-  OuttakeButton.ToggleWhenPressed(_cmdOuttake);
+  OuttakeButton.WhileHeld(_cmdOuttake);
   frc2::JoystickButton DeployIntakeButton{ &_joystick0,frc::XboxController::Button::kA};
   DeployIntakeButton.ToggleWhenPressed(_cmdDeployIntake);
 }

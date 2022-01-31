@@ -14,11 +14,11 @@ void SubIntake::Periodic() {
 
 }
 void SubIntake::Intake(){
-  _spmIntake.Set(1);
+  _spmIntake.Set(-1);
 }
 
 void SubIntake::Outtake() {
-  _spmIntake.Set(-1);
+  _spmIntake.Set(1);
 }
 
 
