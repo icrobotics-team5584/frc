@@ -18,7 +18,9 @@ _subIntake->Intake();
 }
 
 // Called once the command ends or is interrupted.
-void CmdIntake::End(bool interrupted) {}
+void CmdIntake::End(bool interrupted) {
+  
+}
 
 // Returns true when the command should end.
 bool CmdIntake::IsFinished() {

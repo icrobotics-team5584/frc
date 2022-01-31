@@ -11,12 +11,13 @@ void SubIntake::Periodic() {
 
 }
 void SubIntake::Intake(){
-  _spmIntake.Set(.4);
+  _spmIntake.Set(1);
 }
 
 void SubIntake::Outtake() {
-  _spmIntake.Set(-.4);
+  _spmIntake.Set(-1);
 }
+
 
 void SubIntake::Extend() {
   _solPnuematics.Set(frc::DoubleSolenoid::Value::kForward);
