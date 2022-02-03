@@ -18,7 +18,9 @@ void CmdShooter::Execute() {
   _subShooter->Shoot();
 } 
 // Called once the command ends or is interrupted.
-void CmdShooter::End(bool interrupted) {}
+void CmdShooter::End(bool interrupted) {
+  _subShooter->Stop();
+}
 
 // Returns true when the command should end.
 bool CmdShooter::IsFinished() {
