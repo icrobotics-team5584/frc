@@ -13,6 +13,12 @@
 
 #include "commands/CmdJoystickDrive.h"
 
+#include "subsystems/SubIntake.h"
+#include "commands/CmdIntake.h"
+#include "commands/CmdOuttake.h"
+#include "commands/CmdDeployIntake.h"
+#include "commands/CmdRetractIntake.h"
+
 /**
  * This class is where the bulk of the robot should be declared.  Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -28,6 +34,8 @@ class RobotContainer {
   SubDriveBase _subDriveBase;
 
   SubShooter _subShooter;
+  SubIntake _subIntake;
+
  private:
   // Create new joystick to control the robot
   JoystickScaler _joystick0{0, 2.0, 2.0};
@@ -35,5 +43,9 @@ class RobotContainer {
   void ConfigureButtonBindings();
 
   CmdShooter _cmdShooter {&_subShooter};
-  
+  CmdIntake _cmdIntake {&_subIntake};
+  CmdOuttake _cmdOuttake {&_subIntake};
+  CmdDeployIntake _cmdDeployIntake {&_subIntake};
+  CmdRetractIntake _cmdRetractIntake {&_subIntake};
+
 };

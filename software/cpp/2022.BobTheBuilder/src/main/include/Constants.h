@@ -21,4 +21,5 @@ namespace can {
   constexpr int spmDriveBaseBackLeft = 2;
   constexpr int spmShooter1 = 5;
   constexpr int spmShooter2 = 6;
+  constexpr int spmIntake = 7;
 }
