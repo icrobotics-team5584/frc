@@ -40,6 +40,7 @@ class SubDriveBase : public frc2::SubsystemBase {
 
   void deployDolly();
   void retractDolly();
+  void resetYaw();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be

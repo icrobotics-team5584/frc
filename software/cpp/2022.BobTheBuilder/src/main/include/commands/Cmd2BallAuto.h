@@ -11,6 +11,7 @@
 #include "commands/CmdAutoDrive.h"
 #include "Utilities/PIDk.h"
 #include "CmdAutoSetPose.h"
+#include "commands/CmdAutoTurn.h"
 
 class Cmd2BallAuto
     : public frc2::CommandHelper<frc2::ParallelCommandGroup,

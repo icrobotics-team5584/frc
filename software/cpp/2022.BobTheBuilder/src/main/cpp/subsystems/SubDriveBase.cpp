@@ -36,6 +36,10 @@ double SubDriveBase::getYaw(){
   return ahrsNavXGyro.GetYaw();
 }
 
+void SubDriveBase::resetYaw(){
+  ahrsNavXGyro.ZeroYaw();
+}
+
 void SubDriveBase::deployDolly(){
   solDolly.Set(frc::DoubleSolenoid::Value::kForward);
 }
@@ -45,9 +49,10 @@ void SubDriveBase::retractDolly(){
 }
 
 double SubDriveBase::getDistanceTravelled(){
-  double wheelRotations = _dollyWheel.GetPosition() / 2;
+  // double wheelRotations = _talonDolly.GetSelectedSensorPosition() / 2;
+
+  double wheelRotations = _talonDolly.GetSelectedSensorPosition()/ENCODER_TICS_PER_ROTATION;
   frc::SmartDashboard::PutNumber("dolly rotations", wheelRotations);
-  //double wheelRotations = _srxDolly.GetSelectedSensorPosition()/ENCODER_TICS_PER_ROTATION;
   double distance = wheelRotations * metersPerRotation;
   return distance;  
 }

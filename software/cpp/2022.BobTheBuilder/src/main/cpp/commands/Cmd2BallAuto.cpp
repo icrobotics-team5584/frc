@@ -19,9 +19,10 @@ Cmd2BallAuto::Cmd2BallAuto(SubDriveBase* subDriveBase) : _autonomous {
 }{
   AddCommands(
     frc2::SequentialCommandGroup{
-      CmdAutoSetPose{&_autonomous, 0.1, 0, 0},
+      CmdAutoSetPose{&_autonomous, 0, 0, 0},
       frc2::WaitCommand(6.1_s),
-      CmdAutoDrive{subDriveBase, &_autonomous, autoRoutineOneLegOne}
+      CmdAutoDrive{subDriveBase, &_autonomous, autoRoutineOneLegOne},
+      CmdAutoTurn{subDriveBase, &_autonomous, PIDk{0.1, 0, 0}, -173, 5}
       // 1.7 - 
     }
   );

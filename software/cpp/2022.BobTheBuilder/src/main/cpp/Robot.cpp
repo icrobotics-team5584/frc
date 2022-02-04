@@ -40,7 +40,7 @@ void Robot::AutonomousInit() {
   if (m_autonomousCommand != nullptr) {
     m_autonomousCommand->Schedule();
   }
-
+  m_container._subDriveBase.resetYaw();
   m_container._subDriveBase.deployDolly();
 }
 

@@ -39,14 +39,14 @@ void Autonomous::updatePosition(){//calculates position, gets called in a period
   double currentDistance = _getDistance();//total distance
   frc::SmartDashboard::PutNumber("distance", currentDistance);
   frc::SmartDashboard::PutNumber("Current Angle", _getYaw());
-  double distanceDelta = currentDistance - prevDistance;//distance since last 10 milliseconds
+  double distanceDelta = -(currentDistance - prevDistance);//distance since last 10 milliseconds
   // Determine current position
   dollyPosX += distanceDelta * sin(currentAngle);
   dollyPosY += distanceDelta * cos(currentAngle);
-  frontPosX = dollyPosX + (metersToFront * sin(currentAngle));
-  frontPosY = dollyPosY + (metersToFront * cos(currentAngle));
-  backPosX = dollyPosX - (metersToBack * sin(currentAngle));
-  backPosY = dollyPosY - (metersToBack * cos(currentAngle));
+  backPosX = dollyPosX + (metersToFront * sin(currentAngle));
+  backPosY = dollyPosY + (metersToFront * cos(currentAngle));
+  frontPosX = dollyPosX - (metersToBack * sin(currentAngle));
+  frontPosY = dollyPosY - (metersToBack * cos(currentAngle));
   
   // Save values for next iteration
   prevDistance = currentDistance;
@@ -186,6 +186,9 @@ DriveInput Autonomous::turnTo(double angle, PIDk PIDk){
   
   //autoop = frc::SmartDashboard::GetNumber("AUTO OPTIONS", autoop);
   steering = PIDk.p*error + PIDk.i*intergral + PIDk.d*(error - previousError);
+  // Limit speed to 0.2 while turning (DELETE FOR FINAL TESTING)
+  if(abs(steering) > 0.2) steering=0.2*steering/abs(steering);
+  
   frc::SmartDashboard::PutNumber("Steering", steering);
   frc::SmartDashboard::PutNumber("auto angle", _getYaw());
   frc::SmartDashboard::PutNumber("error", error);

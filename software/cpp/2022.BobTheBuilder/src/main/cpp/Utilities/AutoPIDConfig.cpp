@@ -7,9 +7,9 @@
 //One
 PIDAutoConfig autoRoutineOneLegOne = {
     0, //   double startX;
-    0, //   double startY;
+    -0.5, //   double startY;
     0, //   double endX;
-    -1, //   double endY;
+    -2.5, //   double endY;
     0, //   double endHeading;
     0, //   double cenX;
     0, //   double cenY;
