@@ -24,7 +24,8 @@ RobotContainer::RobotContainer() {
 }
 
 void RobotContainer::ConfigureButtonBindings() {
-  
+  frc2::JoystickButton DriveButton{&_joystick0, frc::XboxController::Button::kRightBumper};
+  DriveButton.WhileHeld(_cmdMotorDriver);
 }
 
 

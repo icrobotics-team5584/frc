@@ -14,7 +14,9 @@
 
 #include "Utilities/JoystickScaler.h"
 #include "subsystems/SubDriveBase.h"
+#include "subsystems/SubMotorDriver.h"
 #include "commands/CmdJoystickDrive.h"
+#include "commands/CmdMotorDriver.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -29,6 +31,7 @@ class RobotContainer {
 
   frc2::Command* GetAutonomousCommand();
   SubDriveBase _subDriveBase;
+  SubMotorDriver _subMotorDriver;
 
  private:
   // Create new joystick to control the robot
@@ -38,4 +41,7 @@ class RobotContainer {
   frc::SendableChooser<frc2::Command*> _chooser;
 
   void ConfigureButtonBindings();
+
+  CmdMotorDriver _cmdMotorDriver{&_subMotorDriver};
+
 };
