@@ -29,7 +29,7 @@ void SubShooter::Periodic() {
 }
 
 void SubShooter::Shoot(){
-    _spmShooter1.Set(_controller.Calculate(_encShooter1.GetVelocity(), frc::SmartDashboard::GetNumber("ShooterTargetVelocity", 0)) - _controllerF);
+    _spmShooter1.Set(_controller.Calculate(_encShooter1.GetVelocity(), frc::SmartDashboard::GetNumber("ShooterTargetVelocity", 0)) + _controllerF);
 }
 
 void SubShooter::Stop() {

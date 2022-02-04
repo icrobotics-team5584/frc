@@ -30,7 +30,7 @@ class SubShooter : public frc2::SubsystemBase {
   rev::CANSparkMax _spmShooter1{8, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::CANSparkMax _spmShooter2{12, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::SparkMaxRelativeEncoder _encShooter1{_spmShooter1.GetEncoder()};
-  frc2::PIDController _controller{1,0,0};
+  frc2::PIDController _controller{0.1,0,0};
   double _controllerF = 0;
 
 };
