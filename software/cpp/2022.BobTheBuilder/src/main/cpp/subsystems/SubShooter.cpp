@@ -6,6 +6,10 @@
 
  // to make shooter 2 follow shooter 1
 SubShooter::SubShooter(){
+    _spmShooter1.SetSmartCurrentLimit(20);
+    _spmShooter2.SetSmartCurrentLimit(20);
+    _spmShooter1.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+    _spmShooter2.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
     _spmShooter2.Follow(_spmShooter1, true);
     frc::SmartDashboard::PutNumber("ShooterTargetVelocity", 0);
 
