@@ -13,12 +13,19 @@ SubDriveBase::SubDriveBase(){
   _spmBackLeft.RestoreFactoryDefaults();
   _spmBackRight.RestoreFactoryDefaults();
 
+	// Set Current Limiting on all drive motors
+  _spmFrontLeft.SetSmartCurrentLimit(_currentLimit);
+  _spmFrontRight.SetSmartCurrentLimit(_currentLimit);
+  _spmBackLeft.SetSmartCurrentLimit(_currentLimit);
+  _spmBackRight.SetSmartCurrentLimit(_currentLimit);
+
 	// make back left follow front left and make back right follow front right
   _spmBackLeft.Follow(_spmFrontLeft);
   _spmBackRight.Follow(_spmFrontRight);
 
   _spmFrontLeft.SetInverted(true);
 
+  SetBreakMode();
 
 }
 
@@ -28,3 +35,19 @@ void SubDriveBase::drive(double speed, double rotation, bool squaredInputs){
 
 // This method will be called once per scheduler run
 void SubDriveBase::Periodic() {}
+
+
+void SubDriveBase::SetCoastMode() {
+  _spmFrontLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  _spmFrontRight.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  _spmBackLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  _spmBackRight.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+}
+
+
+void SubDriveBase::SetBreakMode() {
+  _spmFrontLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  _spmFrontRight.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  _spmBackLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  _spmBackRight.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+}

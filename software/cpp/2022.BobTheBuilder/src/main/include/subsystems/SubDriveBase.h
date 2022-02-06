@@ -27,7 +27,12 @@ class SubDriveBase : public frc2::SubsystemBase {
 
   void Periodic() override;
 
+  void SetCoastMode(); 
+  void SetBreakMode();
+
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
+  unsigned int _currentLimit = 50;
+
 };
