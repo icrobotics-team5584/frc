@@ -25,4 +25,7 @@ namespace can {
 namespace pcm {
   constexpr int solDollyDeploy = 0;
   constexpr int solDollyRetract = 1;
+  constexpr int spmShooter1 = 5;
+  constexpr int spmShooter2 = 6;
+  constexpr int spmIntake = 7;
 }
