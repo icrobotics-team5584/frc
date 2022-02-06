@@ -19,6 +19,7 @@ namespace can {
   constexpr int spmDriveBaseBackRight = 1;
   constexpr int spmDriveBaseFrontLeft = 4;
   constexpr int spmDriveBaseBackLeft = 2;
+  constexpr int spmDolly = 5;
 }
 
 namespace pcm {
