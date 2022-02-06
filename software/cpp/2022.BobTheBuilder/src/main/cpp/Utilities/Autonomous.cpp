@@ -23,6 +23,7 @@ Autonomous::Autonomous(std::function<double()> getYaw, std::function<double()> g
   frc::SmartDashboard::PutNumber("front y", frontPosY);
   frc::SmartDashboard::PutNumber("back y", backPosY);
   frc::SmartDashboard::PutNumber("AUTO OPTIONS", autoop);
+  frc::SmartDashboard::PutNumber("lineDistance", 0);
   //frc::SmartDashboard::GetNumber("AUTO OPTIONS", autoop);
 
 }
@@ -114,6 +115,8 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
     frc::SmartDashboard::PutNumber("slope of end", (cenY-endY)/(cenX-endX));
     frc::SmartDashboard::PutNumber("slope of start", (cenY-startY)/(cenX-startX));
     error = sqrt(pow((posX - cenX), 2) + pow((posY - cenY), 2)) - radius;
+    _cenX = cenX;
+    _cenY = cenY;
   }
   //calculates total error or "I"
   intergral = intergral + error;
@@ -163,6 +166,20 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
 bool Autonomous::end(double endx, double endy, double startx, double starty, double power){
   //frc::SmartDashboard::PutNumber("angle thing", abs(endHeading-(atan2(posY-endy, posX-endx)*(-180/pi)+90)));
   //if(abs(endHeading-(atan2(posY-endy, posX-endx)*(-180/pi)+90)) < 90){
+  if(!isLinear){
+    double vecPosX = dollyPosX-_cenX;
+    double vecPosY = dollyPosY-_cenY;
+    vecPosX /= sqrt(pow(vecPosX, 2)+pow(vecPosY, 2)) * sqrt(pow(_cenX-endx, 2) + pow(_cenY-endy, 2));
+    vecPosY /= sqrt(pow(vecPosX, 2)+pow(vecPosY, 2)) * sqrt(pow(_cenX-endx, 2) + pow(_cenY-endy, 2));
+    double lineDistance = sqrt(pow(vecPosX - (endx-_cenX), 2)+pow(vecPosY-(endy-_cenY),2));
+    frc::SmartDashboard::PutNumber("lineDistance", lineDistance);
+    if(lineDistance < 0.05){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
   if(power > 0){
     
       if(sqrt(pow((frontPosX - startx), 2) + pow((frontPosY - starty), 2)) > (sqrt(pow((startx - endx), 2) + pow((starty - endy), 2)))-0.1 ){

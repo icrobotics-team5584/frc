@@ -20,3 +20,4 @@ struct PIDAutoConfig{
 };
 
 extern PIDAutoConfig autoRoutineOneLegOne;
+extern PIDAutoConfig autoRoutineOneLegTwo;

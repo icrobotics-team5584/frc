@@ -22,7 +22,11 @@ Cmd2BallAuto::Cmd2BallAuto(SubDriveBase* subDriveBase) : _autonomous {
       CmdAutoSetPose{&_autonomous, 0, 0, 0},
       frc2::WaitCommand(6.1_s),
       CmdAutoDrive{subDriveBase, &_autonomous, autoRoutineOneLegOne},
-      CmdAutoTurn{subDriveBase, &_autonomous, PIDk{0.1, 0, 0}, -173, 5}
+      
+      CmdAutoTurn{subDriveBase, &_autonomous, PIDk{0.1, 0, 0}, -173, 5},
+
+      CmdAutoDrive{subDriveBase, &_autonomous, autoRoutineOneLegTwo}
+
       // 1.7 - 
     }
   );

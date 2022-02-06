@@ -19,6 +19,21 @@ PIDAutoConfig autoRoutineOneLegOne = {
     PIDk{1, 0, 0} //   PIDk pidSpeed;
 };
 
+PIDAutoConfig autoRoutineOneLegTwo = {
+    0, //   double startX;
+    -2, //   double startY;
+    -1, //   double endX;
+    -1, //   double endY;
+    90, //   double endHeading;
+    -1, //   double cenX;
+    -2, //   double cenY;
+    PIDk{2, 0, 0}, //   PIDk PIDconstants;
+    0.2, //   double speed;
+    0, //   double endSpeed;
+    PIDk{2, 0, 0} //   PIDk pidSpeed;
+};
+
+
 
 
 
