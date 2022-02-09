@@ -51,6 +51,8 @@ class Autonomous {
   double power;
   double turretPreviousError;
   double autoop = 1;
+  double _cenX;
+  double _cenY;
   PIDk tPID;
   const double metersToFront = 0.5;
   const double metersToBack = 0.5;

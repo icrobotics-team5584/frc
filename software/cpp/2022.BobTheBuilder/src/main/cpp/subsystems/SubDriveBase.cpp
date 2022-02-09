@@ -51,14 +51,14 @@ void SubDriveBase::retractDolly(){
 double SubDriveBase::getDistanceTravelled(){
   // double wheelRotations = _talonDolly.GetSelectedSensorPosition() / 2;
 
-  double wheelRotations = _talonDolly.GetSelectedSensorPosition()/ENCODER_TICS_PER_ROTATION;
+  double wheelRotations = _dollyWheel.GetPosition()/2;
   frc::SmartDashboard::PutNumber("dolly rotations", wheelRotations);
   double distance = wheelRotations * metersPerRotation;
   return distance;  
 }
 
 double SubDriveBase::GetTalonDistanceTravelled() {
-  double encoderTics = _talonDolly.GetSelectedSensorPosition();
+  double encoderTics = _dollyWheel.GetPosition();
   double wheelRotations = encoderTics / ENCODER_TICS_PER_ROTATION;
   double distance = wheelRotations * metersPerRotation;
   return distance;  
@@ -67,5 +67,5 @@ double SubDriveBase::GetTalonDistanceTravelled() {
 // This method will be called once per scheduler run
 void SubDriveBase::Periodic() {
   frc::SmartDashboard::PutNumber("Encoder Position", GetTalonDistanceTravelled());
-  frc::SmartDashboard::PutNumber("Encoder Velocity", _talonDolly.GetSelectedSensorVelocity());
+  frc::SmartDashboard::PutNumber("Encoder Velocity", _dollyWheel.GetVelocity());
 }

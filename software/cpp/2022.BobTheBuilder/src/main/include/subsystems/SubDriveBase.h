@@ -8,7 +8,6 @@
 #include <rev/CANSparkMax.h>
 #include <frc/drive/DifferentialDrive.h>
 #include <AHRS.h>
-#include "ctre/Phoenix.h"
 #include <frc/DoubleSolenoid.h>
 
 #include "Constants.h"
@@ -23,13 +22,12 @@ class SubDriveBase : public frc2::SubsystemBase {
   
   double GetTalonDistanceTravelled();
 
-  TalonSRX _talonDolly{10};
-
   // Create instances of motor controllers
-  rev::CANSparkMax _spmFrontLeft{4, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax _spmFrontRight{3, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax _spmBackLeft{2, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax _spmBackRight{1, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax _spmFrontLeft{can::spmDriveBaseFrontLeft, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax _spmFrontRight{can::spmDriveBaseFrontRight, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax _spmBackLeft{can::spmDriveBaseBackLeft, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax _spmBackRight{can::spmDriveBaseBackRight, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax _spmDolly{can::spmDolly, rev::CANSparkMax::MotorType::kBrushless};
   frc::DifferentialDrive _diffDrive{_spmFrontLeft, _spmFrontRight};
 
   void Periodic() override;
@@ -45,16 +43,18 @@ class SubDriveBase : public frc2::SubsystemBase {
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-  rev::SparkMaxRelativeEncoder _dollyWheel = _spmFrontLeft.GetEncoder();
+  const int ENCODER_TICS_PER_ROTATION = 2048;
+
+  rev::SparkMaxAlternateEncoder _dollyWheel = _spmDolly.GetAlternateEncoder(rev::SparkMaxAlternateEncoder::Type::kQuadrature, ENCODER_TICS_PER_ROTATION);
   AHRS ahrsNavXGyro{frc::SPI::kMXP};
 
   double metersPerRotation; // calculated in constructor
 
   const double WHEEL_DIAMETER = 0.0508; //0.0508 for dolly
 
-  const int ENCODER_TICS_PER_ROTATION = 4096;
+
    
   const double pi = 3.1415926535897932384626433832795028841971693993751;
 
-  frc::DoubleSolenoid solDolly{0, frc::PneumaticsModuleType::CTREPCM, pcm::solDollyRetract, pcm::solDollyDeploy};
+  frc::DoubleSolenoid solDolly{1, frc::PneumaticsModuleType::CTREPCM, pcm::solDollyRetract, pcm::solDollyDeploy};
 };
