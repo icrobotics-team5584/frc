@@ -77,7 +77,6 @@ void SubDriveBase::Periodic() {
   frc::SmartDashboard::PutNumber("Encoder Velocity", _dollyWheel.GetVelocity());
 }
 
-
 void SubDriveBase::SetCoastMode() {
   _spmFrontLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
   _spmFrontRight.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
