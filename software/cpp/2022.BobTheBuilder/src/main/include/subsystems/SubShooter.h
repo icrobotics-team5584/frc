@@ -10,6 +10,9 @@
 #include <frc/controller/PIDController.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/shuffleboard/Shuffleboard.h>
+#include <networktables/NetworkTable.h>
+#include <networktables/NetworkTableEntry.h>
+#include <networktables/NetworkTableInstance.h>
 
 #include "Constants.h"
 
@@ -32,5 +35,11 @@ class SubShooter : public frc2::SubsystemBase {
   rev::SparkMaxRelativeEncoder _encShooter1{_spmShooter1.GetEncoder()};
   frc2::PIDController _controller{0.1,0,0};
   double _controllerF = 0;
+  nt::NetworkTableInstance _inst;
+  std::shared_ptr<nt::NetworkTable> _table;  
+  nt::NetworkTableEntry _tx;
+  nt::NetworkTableEntry _ty;
+  nt::NetworkTableEntry _thor;
+  nt::NetworkTableEntry _tvert;
 
 };
