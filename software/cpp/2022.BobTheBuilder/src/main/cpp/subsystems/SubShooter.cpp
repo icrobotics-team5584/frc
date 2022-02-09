@@ -54,4 +54,11 @@ void SubShooter::Stop() {
     _spmShooter1.Set(0);
 }
  
- 
+LimelightData SubShooter::GetLimelight() {
+    return LimelightData(
+        SubShooter::_tx.GetDouble(0),
+        SubShooter::_ty.GetDouble(0),
+        SubShooter::_thor.GetDouble(0),
+        SubShooter::_tvert.GetDouble(0)
+    );
+}

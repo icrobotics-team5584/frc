@@ -16,16 +16,32 @@
 
 #include "Constants.h"
 
+class LimelightData {
+  public:
+    LimelightData(double _tx, double _ty, double _thor, double _tvert) {
+      tx = _tx;
+      ty = _ty;
+      thor = _thor;
+      tvert = _tvert;
+    }
+    
+    double tx;
+    double ty;
+    double thor;
+    double tvert;
+  };
+
 class SubShooter : public frc2::SubsystemBase {
+ friend LimelightData;
  public:
   SubShooter();
-
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
   void Periodic() override;
   void Shoot();
   void Stop();
+  LimelightData GetLimelight();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
