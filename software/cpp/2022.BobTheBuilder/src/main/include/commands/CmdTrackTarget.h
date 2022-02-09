@@ -7,6 +7,8 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 
+#include <frc/controller/PIDController.h>
+
 #include <networktables/NetworkTable.h>
 
 #include "subsystems/SubDriveBase.h"
@@ -33,8 +35,12 @@ class CmdTrackTarget
   bool IsFinished() override;
 
  private:
-  int VisionToleranceLevel = 6.0;
+  int VisionToleranceLevel = 0.04;
 
   SubDriveBase* _subDriveBase;
   SubShooter* _subShooter;
+
+  frc2::PIDController _controller{0.1,0,0};
+  double _controllerF = 0;
+
 };
