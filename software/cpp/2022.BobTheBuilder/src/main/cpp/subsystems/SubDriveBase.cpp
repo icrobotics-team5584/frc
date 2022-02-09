@@ -19,7 +19,7 @@ SubDriveBase::SubDriveBase(){
   _spmBackRight.Follow(_spmFrontRight);
 
   metersPerRotation = pi * WHEEL_DIAMETER;
-  _spmFrontLeft.SetInverted(true);
+  _spmFrontRight.SetInverted(true);
 
 
 }
