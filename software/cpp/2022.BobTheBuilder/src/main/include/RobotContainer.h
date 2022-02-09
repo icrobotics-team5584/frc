@@ -13,12 +13,14 @@
 
 #include "commands/CmdJoystickDrive.h"
 #include "commands/Cmd2BallAuto.h"
+#include "commands/Cmd5BallAuto.h"
 
 #include "subsystems/SubIntake.h"
 #include "commands/CmdIntake.h"
 #include "commands/CmdOuttake.h"
 #include "commands/CmdDeployIntake.h"
 #include "commands/CmdRetractIntake.h"
+#include "frc/smartdashboard/SendableChooser.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -34,6 +36,7 @@ class RobotContainer {
   frc2::Command* GetAutonomousCommand();
   SubDriveBase _subDriveBase;
   Cmd2BallAuto _cmd2BallAuto{&_subDriveBase};
+  Cmd5BallAuto _cmd5BallAuto;
 
   SubShooter _subShooter;
   SubIntake _subIntake;
@@ -49,5 +52,7 @@ class RobotContainer {
   CmdOuttake _cmdOuttake {&_subIntake};
   CmdDeployIntake _cmdDeployIntake {&_subIntake};
   CmdRetractIntake _cmdRetractIntake {&_subIntake};
+
+  frc::SendableChooser<frc2::Command*> _autoChooser;
 
 };

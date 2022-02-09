@@ -12,7 +12,7 @@ Autonomous::Autonomous(std::function<double()> getYaw, std::function<double()> g
   prevDistance = _getDistance();
   notifier.StartPeriodic(fasterPeriod);
   frc::SmartDashboard::PutNumber("back y", backPosY);
-  frc::SmartDashboard::PutNumber("back ", backPosX);
+  frc::SmartDashboard::PutNumber("back x", backPosX);
   frc::SmartDashboard::PutNumber("error", error);
   frc::SmartDashboard::PutNumber("steering error", error);
   frc::SmartDashboard::PutNumber("speed", speed);
@@ -21,7 +21,7 @@ Autonomous::Autonomous(std::function<double()> getYaw, std::function<double()> g
   frc::SmartDashboard::PutNumber("turretAngle", 0);
   frc::SmartDashboard::PutNumber("auto angle", _getYaw());
   frc::SmartDashboard::PutNumber("front y", frontPosY);
-  frc::SmartDashboard::PutNumber("back y", backPosY);
+  frc::SmartDashboard::PutNumber("front x", frontPosX);
   frc::SmartDashboard::PutNumber("AUTO OPTIONS", autoop);
   frc::SmartDashboard::PutNumber("lineDistance", 0);
   //frc::SmartDashboard::GetNumber("AUTO OPTIONS", autoop);
@@ -32,6 +32,10 @@ void Autonomous::Periodic(){
   updatePosition();
   frc::SmartDashboard::PutNumber("Auto - x", dollyPosX);
   frc::SmartDashboard::PutNumber("Auto - y", dollyPosY);
+  frc::SmartDashboard::PutNumber("front y", frontPosY);
+  frc::SmartDashboard::PutNumber("front x", frontPosX);
+  frc::SmartDashboard::PutNumber("back y", backPosY);
+  frc::SmartDashboard::PutNumber("back x", backPosX);
 }
 
 void Autonomous::updatePosition(){//calculates position, gets called in a periodic
@@ -44,10 +48,10 @@ void Autonomous::updatePosition(){//calculates position, gets called in a period
   // Determine current position
   dollyPosX += distanceDelta * sin(currentAngle);
   dollyPosY += distanceDelta * cos(currentAngle);
-  backPosX = dollyPosX + (metersToFront * sin(currentAngle));
-  backPosY = dollyPosY + (metersToFront * cos(currentAngle));
-  frontPosX = dollyPosX - (metersToBack * sin(currentAngle));
-  frontPosY = dollyPosY - (metersToBack * cos(currentAngle));
+  backPosX = dollyPosX - (metersToFront * sin(currentAngle));
+  backPosY = dollyPosY - (metersToFront * cos(currentAngle));
+  frontPosX = dollyPosX + (metersToBack * sin(currentAngle));
+  frontPosY = dollyPosY + (metersToBack * cos(currentAngle));
   
   // Save values for next iteration
   prevDistance = currentDistance;
@@ -155,10 +159,7 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
   frc::SmartDashboard::PutBoolean("linear", isLinear);
   frc::SmartDashboard::PutNumber("midx", dollyPosX);
   frc::SmartDashboard::PutNumber("midy", dollyPosY);
-  frc::SmartDashboard::PutNumber("front y", frontPosY);
-  frc::SmartDashboard::PutNumber("frontx", frontPosX);
-  frc::SmartDashboard::PutNumber("back y", backPosY);
-  frc::SmartDashboard::PutNumber("back ", backPosX);
+
   frc::SmartDashboard::PutNumber("auto angle", _getYaw());
   return autoOutput;
 }
