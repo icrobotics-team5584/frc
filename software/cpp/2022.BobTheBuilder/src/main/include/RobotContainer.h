@@ -19,6 +19,7 @@
 #include "commands/CmdOuttake.h"
 #include "commands/CmdDeployIntake.h"
 #include "commands/CmdRetractIntake.h"
+#include "commands/CmdTrackTarget.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -49,5 +50,6 @@ class RobotContainer {
   CmdOuttake _cmdOuttake {&_subIntake};
   CmdDeployIntake _cmdDeployIntake {&_subIntake};
   CmdRetractIntake _cmdRetractIntake {&_subIntake};
+  CmdTrackTarget _cmdTrackTarget {&_subDriveBase, &_subShooter};
 
 };

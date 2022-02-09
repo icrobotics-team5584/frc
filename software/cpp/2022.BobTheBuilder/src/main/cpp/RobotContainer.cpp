@@ -6,6 +6,7 @@
 #include "commands/CmdIntake.h"
 #include <frc2/command/button/JoystickButton.h>
 #include <frc/XboxController.h>
+#include <frc2/command/ParallelCommandGroup.h>
 
 RobotContainer::RobotContainer() {
   _subDriveBase.SetDefaultCommand(CmdJoystickDrive(&_subDriveBase, &_joystick0));
@@ -22,6 +23,9 @@ void RobotContainer::ConfigureButtonBindings() {
   OuttakeButton.WhileHeld(_cmdOuttake);
   frc2::JoystickButton DeployIntakeButton{ &_joystick0,frc::XboxController::Button::kA};
   DeployIntakeButton.ToggleWhenPressed(_cmdDeployIntake);
+
+  frc2::JoystickButton TrackTargetButton{&_joystick0, frc::XboxController::Button::kX};
+  TrackTargetButton.WhileHeld(frc2::ParallelCommandGroup(_cmdTrackTarget, _cmdShooter));
 }
 
 

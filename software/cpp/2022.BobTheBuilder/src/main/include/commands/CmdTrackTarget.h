@@ -33,7 +33,7 @@ class CmdTrackTarget
   bool IsFinished() override;
 
  private:
-  int VisionToleranceLevel = 0.4;
+  int VisionToleranceLevel = 6.0;
 
   SubDriveBase* _subDriveBase;
   SubShooter* _subShooter;

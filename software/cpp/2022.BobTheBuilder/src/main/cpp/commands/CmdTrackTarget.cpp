@@ -20,10 +20,10 @@ void CmdTrackTarget::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void CmdTrackTarget::Execute() {
   if (_subShooter->GetLimelight().tx > 0 + VisionToleranceLevel) {
-    _subDriveBase->drive(0.0, -0.2, false);
+    _subDriveBase->drive(0.0, -0.12, false);
   }
   else if (_subShooter->GetLimelight().tx < 0 - VisionToleranceLevel) {
-    _subDriveBase->drive(0.0, 0.2, false);
+    _subDriveBase->drive(0.0, 0.12, false);
   }
   else {
     _subDriveBase->drive(0.0, 0.0, false);
