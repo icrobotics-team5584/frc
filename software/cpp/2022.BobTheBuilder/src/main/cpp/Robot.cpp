@@ -40,6 +40,8 @@ void Robot::AutonomousInit() {
   if (m_autonomousCommand != nullptr) {
     m_autonomousCommand->Schedule();
   }
+  m_container._subDriveBase.resetYaw();
+  m_container._subDriveBase.deployDolly();
 }
 
 void Robot::AutonomousPeriodic() {}
@@ -53,6 +55,7 @@ void Robot::TeleopInit() {
     m_autonomousCommand->Cancel();
     m_autonomousCommand = nullptr;
   }
+  m_container._subDriveBase.retractDolly();
 }
 
 /**

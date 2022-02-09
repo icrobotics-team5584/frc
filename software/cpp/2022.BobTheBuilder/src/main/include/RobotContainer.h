@@ -12,6 +12,7 @@
 
 
 #include "commands/CmdJoystickDrive.h"
+#include "commands/Cmd2BallAuto.h"
 
 #include "subsystems/SubIntake.h"
 #include "commands/CmdIntake.h"
@@ -32,6 +33,7 @@ class RobotContainer {
 
   frc2::Command* GetAutonomousCommand();
   SubDriveBase _subDriveBase;
+  Cmd2BallAuto _cmd2BallAuto{&_subDriveBase};
 
   SubShooter _subShooter;
   SubIntake _subIntake;

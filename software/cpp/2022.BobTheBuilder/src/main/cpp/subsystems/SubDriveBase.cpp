@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "subsystems/SubDriveBase.h"
+#include "frc/smartdashboard/SmartDashboard.h"
 
 SubDriveBase::SubDriveBase(){
 
@@ -17,6 +18,7 @@ SubDriveBase::SubDriveBase(){
   _spmBackLeft.Follow(_spmFrontLeft);
   _spmBackRight.Follow(_spmFrontRight);
 
+  metersPerRotation = pi * WHEEL_DIAMETER;
   _spmFrontLeft.SetInverted(true);
 
 
@@ -26,5 +28,44 @@ void SubDriveBase::drive(double speed, double rotation, bool squaredInputs){
   _diffDrive.ArcadeDrive(speed, rotation, squaredInputs);
 }
 
+bool SubDriveBase::isNavxCal(){
+  return ahrsNavXGyro.IsCalibrating();
+}
+
+double SubDriveBase::getYaw(){
+  return ahrsNavXGyro.GetYaw();
+}
+
+void SubDriveBase::resetYaw(){
+  ahrsNavXGyro.ZeroYaw();
+}
+
+void SubDriveBase::deployDolly(){
+  solDolly.Set(frc::DoubleSolenoid::Value::kForward);
+}
+
+void SubDriveBase::retractDolly(){
+  solDolly.Set(frc::DoubleSolenoid::Value::kReverse);
+}
+
+double SubDriveBase::getDistanceTravelled(){
+  // double wheelRotations = _talonDolly.GetSelectedSensorPosition() / 2;
+
+  double wheelRotations = _dollyWheel.GetPosition()/2;
+  frc::SmartDashboard::PutNumber("dolly rotations", wheelRotations);
+  double distance = wheelRotations * metersPerRotation;
+  return distance;  
+}
+
+double SubDriveBase::GetTalonDistanceTravelled() {
+  double encoderTics = _dollyWheel.GetPosition();
+  double wheelRotations = encoderTics / ENCODER_TICS_PER_ROTATION;
+  double distance = wheelRotations * metersPerRotation;
+  return distance;  
+}
+
 // This method will be called once per scheduler run
-void SubDriveBase::Periodic() {}
+void SubDriveBase::Periodic() {
+  frc::SmartDashboard::PutNumber("Encoder Position", GetTalonDistanceTravelled());
+  frc::SmartDashboard::PutNumber("Encoder Velocity", _dollyWheel.GetVelocity());
+}
