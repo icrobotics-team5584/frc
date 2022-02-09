@@ -6,7 +6,7 @@
 
 SubIntake::SubIntake()  {
   _spmIntake.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);	
-  _spmIntake.SetSmartCurrentLimit(20);
+  _spmIntake.SetSmartCurrentLimit(40);
 }
 
 // This method will be called once per scheduler run

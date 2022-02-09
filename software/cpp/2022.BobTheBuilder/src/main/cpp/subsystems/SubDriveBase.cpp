@@ -14,6 +14,12 @@ SubDriveBase::SubDriveBase(){
   _spmBackLeft.RestoreFactoryDefaults();
   _spmBackRight.RestoreFactoryDefaults();
 
+	// Set Current Limiting on all drive motors
+  _spmFrontLeft.SetSmartCurrentLimit(_currentLimit);
+  _spmFrontRight.SetSmartCurrentLimit(_currentLimit);
+  _spmBackLeft.SetSmartCurrentLimit(_currentLimit);
+  _spmBackRight.SetSmartCurrentLimit(_currentLimit);
+
 	// make back left follow front left and make back right follow front right
   _spmBackLeft.Follow(_spmFrontLeft);
   _spmBackRight.Follow(_spmFrontRight);
@@ -21,6 +27,7 @@ SubDriveBase::SubDriveBase(){
   metersPerRotation = pi * WHEEL_DIAMETER;
   _spmFrontRight.SetInverted(true);
 
+  SetBreakMode();
 
 }
 
@@ -68,4 +75,20 @@ double SubDriveBase::GetTalonDistanceTravelled() {
 void SubDriveBase::Periodic() {
   frc::SmartDashboard::PutNumber("Encoder Position", GetTalonDistanceTravelled());
   frc::SmartDashboard::PutNumber("Encoder Velocity", _dollyWheel.GetVelocity());
+}
+
+
+void SubDriveBase::SetCoastMode() {
+  _spmFrontLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  _spmFrontRight.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  _spmBackLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  _spmBackRight.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+}
+
+
+void SubDriveBase::SetBreakMode() {
+  _spmFrontLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  _spmFrontRight.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  _spmBackLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  _spmBackRight.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 }
