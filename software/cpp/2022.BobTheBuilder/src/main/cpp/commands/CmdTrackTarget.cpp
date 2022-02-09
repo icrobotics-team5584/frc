@@ -3,6 +3,10 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "commands/CmdTrackTarget.h"
+#include <frc/smartdashboard/SmartDashboard.h>
+
+#include <iostream>
+#include <stdio.h>
 
 CmdTrackTarget::CmdTrackTarget(SubDriveBase* subDriveBase, SubShooter* subShooter) {
   // Use addRequirements() here to declare subsystem dependencies.
@@ -19,15 +23,26 @@ void CmdTrackTarget::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdTrackTarget::Execute() {
-  if (_subShooter->GetLimelight().tx > 0 + VisionToleranceLevel) {
-    _subDriveBase->drive(0.0, -0.12, false);
+
+  _controller.SetP(frc::SmartDashboard::GetNumber("LimelightP", 0.0));
+  _controller.SetI(frc::SmartDashboard::GetNumber("LimelightI", 0.0));
+  _controller.SetD(frc::SmartDashboard::GetNumber("LimelightD", 0.0));
+  _controllerF = frc::SmartDashboard::GetNumber("LimelightF", 0.0); //0.08
+
+  double _output = _controller.Calculate(_subShooter->GetLimelight().tx, 0.0);
+  std::cout << _output << std::endl;
+  if (_output > 0 + VisionToleranceLevel) {
+    _output = _output + _controllerF;
+    _subDriveBase->drive(0.0, _output, false);
   }
-  else if (_subShooter->GetLimelight().tx < 0 - VisionToleranceLevel) {
-    _subDriveBase->drive(0.0, 0.12, false);
+  else if (_output < 0 - VisionToleranceLevel) {
+    _output = _output - _controllerF;
+    _subDriveBase->drive(0.0, _output, false);
   }
   else {
     _subDriveBase->drive(0.0, 0.0, false);
   }
+
 }
 
 // Called once the command ends or is interrupted.

@@ -29,6 +29,11 @@ SubDriveBase::SubDriveBase(){
 
   SetBreakMode();
 
+  frc::SmartDashboard::PutNumber("LimelightP", 0.005);
+  frc::SmartDashboard::PutNumber("LimelightI", 0.0);
+  frc::SmartDashboard::PutNumber("LimelightD", 0.0001);
+  frc::SmartDashboard::PutNumber("LimelightF", 0.08);
+
 }
 
 void SubDriveBase::drive(double speed, double rotation, bool squaredInputs){
