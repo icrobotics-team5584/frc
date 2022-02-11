@@ -7,7 +7,7 @@
 SubStorage::SubStorage() {
     _spmStorage.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
     _spmStorage.SetSmartCurrentLimit(20);
-};
+}
 
 // This method will be called once per scheduler run
 void SubStorage::Periodic() {}
