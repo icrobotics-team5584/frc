@@ -8,3 +8,7 @@ SubStorage::SubStorage() = default;
 
 // This method will be called once per scheduler run
 void SubStorage::Periodic() {}
+
+void SubStorage::In() {
+    _spmStorage.Set(0.4);
+}
