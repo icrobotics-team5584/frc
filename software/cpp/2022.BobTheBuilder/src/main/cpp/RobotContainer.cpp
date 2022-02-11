@@ -35,7 +35,16 @@ void RobotContainer::ConfigureButtonBindings() {
       [this]{_subStorage.Stop();}
     )
   );
+
+   frc2::JoystickButton StorageOuttakeButton{ &_joystick0,frc::XboxController::Button::kBack};
+  StorageOuttakeButton.WhenHeld(
+    frc2::StartEndCommand(
+      [this]{_subStorage.Out();},
+      [this]{_subStorage.Stop();}
+    )
+  );
 }
+
 
 
 

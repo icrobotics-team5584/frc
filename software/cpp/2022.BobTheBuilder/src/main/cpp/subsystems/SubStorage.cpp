@@ -19,3 +19,7 @@ void SubStorage::In() {
 void SubStorage::Stop() {
     _spmStorage.Set(0);
 }
+
+void SubStorage::Out() {
+    _spmStorage.Set(-0.4);
+}
