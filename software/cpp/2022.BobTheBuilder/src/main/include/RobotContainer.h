@@ -8,6 +8,7 @@
 #include "Utilities/JoystickScaler.h"
 #include "subsystems/SubDriveBase.h"
 #include "subsystems/SubShooter.h"
+#include "subsystems/SubStorage.h"
 #include "commands/CmdShooter.h"
 
 
@@ -38,6 +39,7 @@ class RobotContainer {
 
   SubShooter _subShooter;
   SubIntake _subIntake;
+  SubStorage _subStorage;
 
  private:
   // Create new joystick to control the robot

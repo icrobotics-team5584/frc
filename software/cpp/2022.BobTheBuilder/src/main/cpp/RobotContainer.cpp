@@ -7,6 +7,7 @@
 #include <frc2/command/button/JoystickButton.h>
 #include <frc/XboxController.h>
 #include <frc2/command/ParallelCommandGroup.h>
+#include <frc2/command/StartEndCommand.h>
 
 RobotContainer::RobotContainer() {
   _subDriveBase.SetDefaultCommand(CmdJoystickDrive(&_subDriveBase, &_joystick0));
@@ -26,6 +27,14 @@ void RobotContainer::ConfigureButtonBindings() {
 
   frc2::JoystickButton TrackTargetButton{&_joystick0, frc::XboxController::Button::kX};
   TrackTargetButton.WhileHeld(frc2::ParallelCommandGroup(_cmdTrackTarget, _cmdShooter));
+
+  frc2::JoystickButton StorageButton{ &_joystick0,frc::XboxController::Button::kStart};
+  StorageButton.WhenHeld(
+    frc2::StartEndCommand(
+      [this]{_subStorage.In();},
+      [this]{_subStorage.Stop();}
+    )
+  );
 }
 
 

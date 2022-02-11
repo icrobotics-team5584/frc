@@ -17,7 +17,7 @@ class SubStorage : public frc2::SubsystemBase {
    */
   void Periodic() override;
   void In ();
-
+  void Stop();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
