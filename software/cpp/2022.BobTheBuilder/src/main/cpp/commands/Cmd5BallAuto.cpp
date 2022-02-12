@@ -23,7 +23,7 @@ Cmd5BallAuto::Cmd5BallAuto(SubDriveBase* subDriveBase) : _autonomous {
       frc2::WaitCommand(2_s),
       CmdAutoDrive(subDriveBase, &_autonomous, auto5BallP3),
       CmdAutoTurn(subDriveBase, &_autonomous, PIDk{0.1, 0, 0}, 180, 5),
-      CmdAutoDrive(subDriveBase, &_autonomous, auto5BallP4),
+      // CmdAutoDrive(subDriveBase, &_autonomous, auto5BallP4),
     }
   );
   // Add your commands here, e.g.

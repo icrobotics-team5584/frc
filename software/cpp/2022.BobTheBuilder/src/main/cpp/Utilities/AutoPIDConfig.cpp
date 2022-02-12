@@ -69,10 +69,10 @@ PIDAutoConfig auto5BallP3 = {
     90, //   double endHeading;
     0, //   double cenX;
     0, //   double cenY;
-    PIDk{1, 0, 0}, //   PIDk PIDconstants;
-    0.5, //   double speed;
+    PIDk{3, 0, 30}, //   PIDk PIDconstants;
+    1, //   double speed;
     0, //   double endSpeed;
-    PIDk{2, 0, 0} //   PIDk pidSpeed;
+    PIDk{1, 0, 9} //   PIDk pidSpeed;
 };
 
 PIDAutoConfig auto5BallP4 = {
@@ -83,10 +83,10 @@ PIDAutoConfig auto5BallP4 = {
     -90, //   double endHeading;
     0, //   double cenX;
     0, //   double cenY;
-    PIDk{1, 0, 0}, //   PIDk PIDconstants;
-    0.5, //   double speed;
+    PIDk{3, 0, 30}, //   PIDk PIDconstants;
+    1, //   double speed;
     0, //   double endSpeed;
-    PIDk{2, 0, 0} //   PIDk pidSpeed;
+    PIDk{1, 0, 9} //   PIDk pidSpeed;
 };
 
 
