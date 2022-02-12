@@ -27,5 +27,5 @@ class SubIntake : public frc2::SubsystemBase {
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
   rev::CANSparkMax _spmIntake{can::spmIntake, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
-   frc::DoubleSolenoid _solPnuematics{1,frc::PneumaticsModuleType::CTREPCM,pcm::solIntakeOut,pcm::solIntakeIn};
+   frc::DoubleSolenoid _solPnuematics{0,frc::PneumaticsModuleType::CTREPCM,pcm::solIntakeOut,pcm::solIntakeIn};
 };

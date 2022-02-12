@@ -58,7 +58,7 @@ class SubDriveBase : public frc2::SubsystemBase {
    
   const double pi = 3.1415926535897932384626433832795028841971693993751;
 
-  frc::DoubleSolenoid solDolly{1, frc::PneumaticsModuleType::CTREPCM, pcm::solDollyRetract, pcm::solDollyDeploy};
+  frc::DoubleSolenoid solDolly{0, frc::PneumaticsModuleType::CTREPCM, pcm::solDollyRetract, pcm::solDollyDeploy};
   unsigned int _currentLimit = 50;
 
 };
