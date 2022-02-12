@@ -36,7 +36,7 @@ class RobotContainer {
   frc2::Command* GetAutonomousCommand();
   SubDriveBase _subDriveBase;
   Cmd2BallAuto _cmd2BallAuto{&_subDriveBase};
-  Cmd5BallAuto _cmd5BallAuto;
+  Cmd5BallAuto _cmd5BallAuto{&_subDriveBase};
 
   SubShooter _subShooter;
   SubIntake _subIntake;

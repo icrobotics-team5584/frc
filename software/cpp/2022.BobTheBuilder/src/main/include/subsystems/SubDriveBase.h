@@ -41,6 +41,7 @@ class SubDriveBase : public frc2::SubsystemBase {
   void resetYaw();
   void SetCoastMode(); 
   void SetBreakMode();
+  void setYaw(double angle);
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be

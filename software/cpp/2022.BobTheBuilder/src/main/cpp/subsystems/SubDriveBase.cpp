@@ -40,11 +40,15 @@ bool SubDriveBase::isNavxCal(){
 }
 
 double SubDriveBase::getYaw(){
-  return ahrsNavXGyro.GetYaw();
+  return ahrsNavXGyro.GetAngle();
 }
 
 void SubDriveBase::resetYaw(){
   ahrsNavXGyro.ZeroYaw();
+}
+
+void SubDriveBase::setYaw(double angle){
+  ahrsNavXGyro.SetAngleAdjustment(angle-ahrsNavXGyro.GetYaw());
 }
 
 void SubDriveBase::deployDolly(){

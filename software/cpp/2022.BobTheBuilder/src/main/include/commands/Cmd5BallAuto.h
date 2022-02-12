@@ -7,9 +7,18 @@
 #include <frc2/command/CommandHelper.h>
 #include <frc2/command/ParallelCommandGroup.h>
 
+#include "subsystems/SubDriveBase.h"
+#include "commands/CmdAutoDrive.h"
+#include "Utilities/PIDk.h"
+#include "CmdAutoSetPose.h"
+#include "commands/CmdAutoTurn.h"
+
 class Cmd5BallAuto
     : public frc2::CommandHelper<frc2::ParallelCommandGroup,
                                  Cmd5BallAuto> {
  public:
-  Cmd5BallAuto();
+  Cmd5BallAuto(SubDriveBase* subDriveBase);
+  
+ private:
+  Autonomous _autonomous;
 };
