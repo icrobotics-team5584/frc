@@ -12,6 +12,8 @@ SubShooter::SubShooter(){
     _spmShooter2.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
     _spmShooter1.SetInverted(true);
     _spmShooter2.Follow(_spmShooter1, true);
+     _inst = nt::NetworkTableInstance::GetDefault();
+     _table = _inst.GetTable("limelight");
     frc::SmartDashboard::PutNumber("ShooterTargetVelocity", 0);
 
     frc::SmartDashboard::PutNumber("ShooterP", 0.001);
@@ -32,6 +34,10 @@ void SubShooter::Periodic() {
     frc::SmartDashboard::PutNumber("Shooter Speed", _spmShooter1.Get());
     frc::SmartDashboard::PutNumber("Shooter Velocity", _encShooter1.GetVelocity());
     frc::SmartDashboard::PutNumber("ControllerF",_controllerF);
+    _tx = _table->GetEntry("tx");
+    _ty = _table->GetEntry("ty");
+    _thor = _table->GetEntry("thor");
+    _tvert = _table->GetEntry("tvert");
 }
 
 void SubShooter::Shoot(){
@@ -48,4 +54,11 @@ void SubShooter::Stop() {
     _spmShooter1.Set(0);
 }
  
- 
+LimelightData SubShooter::GetLimelight() {
+    return LimelightData(
+        SubShooter::_tx.GetDouble(0),
+        SubShooter::_ty.GetDouble(0),
+        SubShooter::_thor.GetDouble(0),
+        SubShooter::_tvert.GetDouble(0)
+    );
+}

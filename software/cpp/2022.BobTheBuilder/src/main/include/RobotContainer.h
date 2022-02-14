@@ -8,6 +8,7 @@
 #include "Utilities/JoystickScaler.h"
 #include "subsystems/SubDriveBase.h"
 #include "subsystems/SubShooter.h"
+#include "subsystems/SubStorage.h"
 #include "commands/CmdShooter.h"
 
 
@@ -20,7 +21,11 @@
 #include "commands/CmdOuttake.h"
 #include "commands/CmdDeployIntake.h"
 #include "commands/CmdRetractIntake.h"
+<<<<<<< HEAD
 #include "frc/smartdashboard/SendableChooser.h"
+=======
+#include "commands/CmdTrackTarget.h"
+>>>>>>> master
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -40,6 +45,7 @@ class RobotContainer {
 
   SubShooter _subShooter;
   SubIntake _subIntake;
+  SubStorage _subStorage;
 
  private:
   // Create new joystick to control the robot
@@ -52,6 +58,7 @@ class RobotContainer {
   CmdOuttake _cmdOuttake {&_subIntake};
   CmdDeployIntake _cmdDeployIntake {&_subIntake};
   CmdRetractIntake _cmdRetractIntake {&_subIntake};
+  CmdTrackTarget _cmdTrackTarget {&_subDriveBase, &_subShooter};
 
   frc::SendableChooser<frc2::Command*> _autoChooser;
 

@@ -29,6 +29,11 @@ SubDriveBase::SubDriveBase(){
 
   SetBreakMode();
 
+  frc::SmartDashboard::PutNumber("LimelightP", 0.005);
+  frc::SmartDashboard::PutNumber("LimelightI", 0.0);
+  frc::SmartDashboard::PutNumber("LimelightD", 0.0001);
+  frc::SmartDashboard::PutNumber("LimelightF", 0.08);
+
 }
 
 void SubDriveBase::drive(double speed, double rotation, bool squaredInputs){
@@ -80,7 +85,6 @@ void SubDriveBase::Periodic() {
   frc::SmartDashboard::PutNumber("Encoder Position", GetTalonDistanceTravelled());
   frc::SmartDashboard::PutNumber("Encoder Velocity", _dollyWheel.GetVelocity());
 }
-
 
 void SubDriveBase::SetCoastMode() {
   _spmFrontLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
