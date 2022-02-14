@@ -30,12 +30,7 @@ void RobotContainer::ConfigureButtonBindings() {
   TrackTargetButton.WhileHeld(frc2::ParallelCommandGroup(_cmdTrackTarget, _cmdShooter));
 
   frc2::JoystickButton StorageButton{ &_joystick0,frc::XboxController::Button::kStart};
-  StorageButton.WhenHeld(
-    frc2::StartEndCommand(
-      [this]{_subStorage.In();},
-      [this]{_subStorage.Stop();}
-    )
-  );
+  StorageButton.WhenHeld( _cmdStorageIn );
 
    frc2::JoystickButton StorageOuttakeButton{ &_joystick0,frc::XboxController::Button::kBack};
   StorageOuttakeButton.WhenHeld(
