@@ -37,9 +37,9 @@ class RobotContainer {
   SubDriveBase _subDriveBase;
   Cmd2BallAuto _cmd2BallAuto{&_subDriveBase};
 
-  SubShooter _subShooter;
-  SubIntake _subIntake;
-  SubStorage _subStorage;
+//  SubShooter _subShooter;
+  //SubIntake _subIntake;
+  //SubStorage _subStorage;
 
  private:
   // Create new joystick to control the robot
@@ -47,11 +47,11 @@ class RobotContainer {
 
   void ConfigureButtonBindings();
 
-  CmdShooter _cmdShooter {&_subShooter};
-  CmdIntake _cmdIntake {&_subIntake};
-  CmdOuttake _cmdOuttake {&_subIntake};
-  CmdDeployIntake _cmdDeployIntake {&_subIntake};
-  CmdRetractIntake _cmdRetractIntake {&_subIntake};
-  CmdTrackTarget _cmdTrackTarget {&_subDriveBase, &_subShooter};
+ // CmdShooter _cmdShooter {&_subShooter};
+  //CmdIntake _cmdIntake {&_subIntake};
+  //CmdOuttake _cmdOuttake {&_subIntake};
+  //CmdDeployIntake _cmdDeployIntake {&_subIntake};
+  //CmdRetractIntake _cmdRetractIntake {&_subIntake};
+  //CmdTrackTarget _cmdTrackTarget {&_subDriveBase, &_subShooter};
 
 };
