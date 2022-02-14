@@ -9,6 +9,7 @@
 #include <frc2/command/ParallelCommandGroup.h>
 #include <frc2/command/StartEndCommand.h>
 
+
 RobotContainer::RobotContainer() {
   _subDriveBase.SetDefaultCommand(CmdJoystickDrive(&_subDriveBase, &_joystick0));
   // Configure the button bindings
@@ -43,6 +44,7 @@ void RobotContainer::ConfigureButtonBindings() {
       [this]{_subStorage.Stop();}
     )
   );
+  frc::SmartDashboard::PutData("SpinUpCommand", &_cmdSpinUpShooter);
 }
 
 
