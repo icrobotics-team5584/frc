@@ -15,17 +15,15 @@
 #include "commands/CmdJoystickDrive.h"
 #include "commands/Cmd2BallAuto.h"
 #include "commands/Cmd5BallAuto.h"
+#include "commands/Cmd1BallAuto.h"
 
 #include "subsystems/SubIntake.h"
 #include "commands/CmdIntake.h"
 #include "commands/CmdOuttake.h"
 #include "commands/CmdDeployIntake.h"
 #include "commands/CmdRetractIntake.h"
-<<<<<<< HEAD
 #include "frc/smartdashboard/SendableChooser.h"
-=======
 #include "commands/CmdTrackTarget.h"
->>>>>>> master
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -40,12 +38,13 @@ class RobotContainer {
 
   frc2::Command* GetAutonomousCommand();
   SubDriveBase _subDriveBase;
-  Cmd2BallAuto _cmd2BallAuto{&_subDriveBase};
-  Cmd5BallAuto _cmd5BallAuto{&_subDriveBase};
-
   SubShooter _subShooter;
   SubIntake _subIntake;
   SubStorage _subStorage;
+
+  Cmd2BallAuto _cmd2BallAuto{&_subDriveBase, &_subIntake, &_subShooter, &_subStorage};
+  Cmd5BallAuto _cmd5BallAuto{&_subDriveBase, &_subIntake, &_subShooter, &_subStorage};
+  Cmd1BallAuto _cmd1BallAuto{&_subDriveBase, &_subIntake, &_subShooter, &_subStorage};
 
  private:
   // Create new joystick to control the robot

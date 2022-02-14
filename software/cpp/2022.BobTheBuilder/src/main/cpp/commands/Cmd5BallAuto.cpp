@@ -13,7 +13,7 @@
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-Cmd5BallAuto::Cmd5BallAuto(SubDriveBase* subDriveBase) : _autonomous {  
+Cmd5BallAuto::Cmd5BallAuto(SubDriveBase* subDriveBase, SubIntake* subIntake, SubShooter* subShooter, SubStorage* subStorage) : _autonomous {  
   [subDriveBase]{return subDriveBase->getYaw();}, 
   [subDriveBase]{return subDriveBase->getDistanceTravelled();}
 }{
