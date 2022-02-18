@@ -21,6 +21,7 @@ struct PIDAutoConfig{
 
 extern PIDAutoConfig autoRoutineOneLegOne;
 extern PIDAutoConfig autoRoutineOneLegTwo;
+extern PIDAutoConfig autoRoutineOneLegThree;
 
 extern PIDAutoConfig auto5BallP1;
 extern PIDAutoConfig auto5BallP2;

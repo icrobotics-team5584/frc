@@ -9,26 +9,40 @@ PIDAutoConfig autoRoutineOneLegOne = {
     0, //   double startX;
     0.5, //   double startY;
     0, //   double endX;
-    2.0, //   double endY;
+    1.5, //   double endY;
     0, //   double endHeading;
     0, //   double cenX;
     0, //   dou ble cenY;
-    PIDk{-1, 0, 0}, //   PIDk PIDconstants;
+    PIDk{-3, 0, -3}, //   PIDk PIDconstants;
     0.2, //   double speed;
     0, //   double endSpeed;
-    PIDk{1, 0, 0} //   PIDk pidSpeed;
+    PIDk{2, 0, 0} //   PIDk pidSpeed;
 };
 
 PIDAutoConfig autoRoutineOneLegTwo = {
     0, //   double startX;
-    1, //   double startY;
+    0.5, //   double startY;
     0, //   double endX;
     -0.5, //   double endY;
     180, //   double endHeading;
     0, //   double cenX;
     0, //   double cenY;
-    PIDk{1, 0, 0}, //   PIDk PIDconstants;
+    PIDk{-3, 0, -3}, //   PIDk PIDconstants;
     0.2, //   double speed;
+    0, //   double endSpeed;
+    PIDk{2, 0, 0} //   PIDk pidSpeed;
+};
+
+PIDAutoConfig autoRoutineOneLegThree = {
+    0, //   double startX;
+    0.5, //   double startY;
+    0, //   double endX;
+    2, //   double endY;
+    180, //   double endHeading;
+    0, //   double cenX;
+    0, //   dou ble cenY;
+    PIDk{-3, 0, -3}, //   PIDk PIDconstants;
+    -0.2, //   double speed;
     0, //   double endSpeed;
     PIDk{2, 0, 0} //   PIDk pidSpeed;
 };

@@ -14,6 +14,7 @@ struct DriveInput {
 
 class Autonomous {
  public:
+  Autonomous();
   Autonomous(std::function<double()> getYaw, std::function<double()> getDistance);
   void Periodic();
   void updatePosition();

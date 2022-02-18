@@ -20,8 +20,8 @@ class Cmd5BallAuto
     : public frc2::CommandHelper<frc2::ParallelCommandGroup,
                                  Cmd5BallAuto> {
  public:
-  Cmd5BallAuto(SubDriveBase* subDriveBase, SubIntake* subIntake, SubShooter* subShooter, SubStorage* subStorage);
+  Cmd5BallAuto(SubDriveBase* subDriveBase, SubIntake* subIntake, SubShooter* subShooter, SubStorage* subStorage, Autonomous* autonomous);
   
  private:
-  Autonomous _autonomous;
+  // Autonomous _autonomous;
 };

@@ -14,13 +14,11 @@
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-Cmd1BallAuto::Cmd1BallAuto(SubDriveBase* subDriveBase, SubIntake* subIntake, SubShooter* subShooter, SubStorage* subStorage) : _autonomous {  
-  [subDriveBase]{return subDriveBase->getYaw();}, 
-  [subDriveBase]{return subDriveBase->getDistanceTravelled();}
-}{
+Cmd1BallAuto::Cmd1BallAuto(SubDriveBase* subDriveBase, SubIntake* subIntake, SubShooter* subShooter, SubStorage* subStorage, Autonomous* autonomous)
+{
   AddCommands(
     frc2::SequentialCommandGroup{
-      CmdAutoSetPose{&_autonomous, subDriveBase, 0, 0, 0},
+      CmdAutoSetPose{autonomous, subDriveBase, 0, 0, 0},
       
       // Set Shooter RPM to 2100rpm
       frc2::WaitCommand(5_s),
@@ -30,7 +28,7 @@ Cmd1BallAuto::Cmd1BallAuto(SubDriveBase* subDriveBase, SubIntake* subIntake, Sub
 
       frc2::WaitCommand(3_s),
 
-      CmdAutoDrive{subDriveBase, &_autonomous, PIDAutoConfig{0, -0.5, 0, -2 , 0, 0, 0, PIDk{-1, 0, 0}, -0.2, 0, PIDk{1, 0, 0}}},
+      CmdAutoDrive{subDriveBase, autonomous, PIDAutoConfig{0, -0.5, 0, -2 , 0, 0, 0, PIDk{-1, 0, 0}, -0.2, 0, PIDk{1, 0, 0}}},
     }
   );
 }

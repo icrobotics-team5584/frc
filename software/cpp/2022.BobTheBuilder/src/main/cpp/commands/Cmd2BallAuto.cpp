@@ -12,29 +12,36 @@
 #include "commands/CmdIntake.h"
 #include "commands/CmdDeployIntake.h"
 #include "commands/CmdRetractIntake.h"
+#include "commands/CmdStorageIn.h"
+#include "commands/CmdSpinUpShooter.h"
+#include <frc2/command/WaitUntilCommand.h>
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-Cmd2BallAuto::Cmd2BallAuto(SubDriveBase* subDriveBase, SubIntake* subIntake, SubShooter* subShooter, SubStorage* subStorage) : _autonomous {  
-  [subDriveBase]{return subDriveBase->getYaw();}, 
-  [subDriveBase]{return subDriveBase->getDistanceTravelled();}
-}{
+Cmd2BallAuto::Cmd2BallAuto(SubDriveBase* subDriveBase, SubIntake* subIntake, SubShooter* subShooter, SubStorage* subStorage, Autonomous* autonomous){
   AddCommands(
     frc2::SequentialCommandGroup{
-      CmdAutoSetPose{&_autonomous, subDriveBase, 0, 0, 0},
-      // Set Shooter RPM to 2100RPM
-      CmdAutoDrive{subDriveBase, &_autonomous, autoRoutineOneLegOne},
-      CmdAutoTurn{subDriveBase, &_autonomous, PIDk{0.1, 0, 0}, -173, 5},
-      CmdAutoDrive{subDriveBase, &_autonomous, autoRoutineOneLegTwo},
+      CmdAutoSetPose{autonomous, subDriveBase, 0, 0, 0},
+      CmdAutoDrive{subDriveBase, autonomous, autoRoutineOneLegOne},
+      frc2::WaitCommand(0.5_s),
+
+      CmdAutoTurn{subDriveBase, autonomous, PIDk{0.1, 0, 0.6 }, 180, 5},
+      CmdAutoDrive{subDriveBase, autonomous, autoRoutineOneLegTwo},
+      frc2::WaitUntilCommand([subShooter]{return subShooter->IsAtTargetSpeed();}),
       // Acuate Storage Pistons
-      // Run Storage
-      // Stop Shooter
+      frc2::WaitCommand(3_s),
+      
+      CmdAutoDrive{subDriveBase, autonomous, autoRoutineOneLegThree},
+      CmdSpinUpShooter{subShooter, 0},
+      
 
 
     },
     CmdIntake{subIntake}.WithTimeout(5_s),
-    CmdDeployIntake{subIntake}.WithTimeout(15_s)
+    CmdDeployIntake{subIntake}.WithTimeout(15_s),
+    CmdStorageIn{subStorage}.WithTimeout(15_s),
+    CmdSpinUpShooter{subShooter, 2100}
   );
 
 }

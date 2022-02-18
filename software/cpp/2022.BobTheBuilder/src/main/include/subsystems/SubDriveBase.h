@@ -46,7 +46,7 @@ class SubDriveBase : public frc2::SubsystemBase {
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-  const int ENCODER_TICS_PER_ROTATION = 2048;
+  const int ENCODER_TICS_PER_ROTATION = 8192;
 
   rev::SparkMaxAlternateEncoder _dollyWheel = _spmDolly.GetAlternateEncoder(rev::SparkMaxAlternateEncoder::Type::kQuadrature, ENCODER_TICS_PER_ROTATION);
   AHRS ahrsNavXGyro{frc::SPI::kMXP};

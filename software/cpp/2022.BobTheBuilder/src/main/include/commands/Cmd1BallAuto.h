@@ -20,7 +20,6 @@ class Cmd1BallAuto
     : public frc2::CommandHelper<frc2::ParallelCommandGroup,
                                  Cmd1BallAuto> {
  public:
-  Cmd1BallAuto(SubDriveBase* subDriveBase, SubIntake* subIntake, SubShooter* subShooter, SubStorage* subStorage);
+  Cmd1BallAuto(SubDriveBase* subDriveBase, SubIntake* subIntake, SubShooter* subShooter, SubStorage* subStorage, Autonomous* autonomous);
  private:
-  Autonomous _autonomous;
 };

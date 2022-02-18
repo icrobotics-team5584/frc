@@ -26,6 +26,7 @@
 #include "commands/CmdTrackTarget.h"
 #include "commands/CmdSpinUpShooter.h"
 #include "commands/CmdStorageIn.h"
+#include "Utilities/Autonomous.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -43,10 +44,11 @@ class RobotContainer {
   SubShooter _subShooter;
   SubIntake _subIntake;
   SubStorage _subStorage;
+  Autonomous _autonomous{[this]{return _subDriveBase.getYaw();}, [this]{return _subDriveBase.getDistanceTravelled();}};
 
-  Cmd2BallAuto _cmd2BallAuto{&_subDriveBase, &_subIntake, &_subShooter, &_subStorage};
-  Cmd5BallAuto _cmd5BallAuto{&_subDriveBase, &_subIntake, &_subShooter, &_subStorage};
-  Cmd1BallAuto _cmd1BallAuto{&_subDriveBase, &_subIntake, &_subShooter, &_subStorage};
+  Cmd2BallAuto _cmd2BallAuto{&_subDriveBase, &_subIntake, &_subShooter, &_subStorage, &_autonomous};
+  Cmd5BallAuto _cmd5BallAuto{&_subDriveBase, &_subIntake, &_subShooter, &_subStorage, &_autonomous};
+  Cmd1BallAuto _cmd1BallAuto{&_subDriveBase, &_subIntake, &_subShooter, &_subStorage, &_autonomous};
 
  private:
   // Create new joystick to control the robot
@@ -63,4 +65,5 @@ class RobotContainer {
   CmdSpinUpShooter _cmdSpinUpShooter {&_subShooter,500};
   CmdStorageIn _cmdStorageIn {&_subStorage};
   frc::SendableChooser<frc2::Command*> _autoChooser;
+  
 };
