@@ -27,8 +27,7 @@ CmdShootSequence::CmdShootSequence(SubStorage* subStorage,
       frc2::InstantCommand([subStorage] { subStorage->RetractStopper(); }),
       frc2::WaitCommand(0.5_s),
       frc2::InstantCommand([subStorage] { subStorage->Stop(); }),
-      frc2::InstantCommand([subStorage] { subStorage->ExtendStopper(); }),
-      frc2::InstantCommand([subShooter] { subShooter->RunAtIdle(); })
+      frc2::InstantCommand([subStorage] { subStorage->ExtendStopper(); })
     )
   );
 }
