@@ -40,7 +40,7 @@ void CmdTrackTarget::Execute() {
     _subDriveBase->drive(0.0, _output, false);
   }
   else {
-    _subDriveBase->drive(0.0, 0.0, false);
+    isFinished = true;
   }
 
 }
@@ -52,5 +52,5 @@ void CmdTrackTarget::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool CmdTrackTarget::IsFinished() {
-  return false;
+  return isFinished;
 }

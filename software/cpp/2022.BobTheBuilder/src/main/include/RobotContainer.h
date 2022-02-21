@@ -23,6 +23,7 @@
 #include "commands/CmdTrackTarget.h"
 #include "commands/CmdSpinUpShooter.h"
 #include "commands/CmdStorageIn.h"
+#include "commands/CmdStorageOut.h"
 #include "commands/CmdShootSequence.h"
 
 /**
@@ -58,5 +59,6 @@ class RobotContainer {
   CmdTrackTarget _cmdTrackTarget {&_subDriveBase, &_subShooter};
   CmdSpinUpShooter _cmdSpinUpShooter {&_subShooter,500};
   CmdStorageIn _cmdStorageIn {&_subStorage};
+  CmdStorageOut _cmdStorageOut {&_subStorage};
   CmdShootSequence _cmdShootSequence{&_subStorage, &_subShooter, &_subIntake};
 };
