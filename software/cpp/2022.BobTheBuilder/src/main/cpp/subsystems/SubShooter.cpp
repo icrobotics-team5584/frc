@@ -15,24 +15,12 @@ SubShooter::SubShooter(){
      _inst = nt::NetworkTableInstance::GetDefault();
      _table = _inst.GetTable("limelight");
 
-    frc::SmartDashboard::PutNumber("ShooterP", 0.001);
-    frc::SmartDashboard::PutNumber("ShooterI", 0);
-    frc::SmartDashboard::PutNumber("ShooterD", 0.00008);
-
-    frc::SmartDashboard::PutNumber("ShooterF", _controllerF);
     _controller.SetTolerance(100);
 }
 
 // This method will be called once per scheduler run
 void SubShooter::Periodic() {
-    _controller.SetPID(
-        frc::SmartDashboard::GetNumber("ShooterP", 0),
-        frc::SmartDashboard::GetNumber("ShooterI", 0),
-        frc::SmartDashboard::GetNumber("ShooterD", 0)
-    );
-     
     frc::SmartDashboard::PutNumber("Shooter Velocity", _encShooter1.GetVelocity());
-    frc::SmartDashboard::PutNumber("ControllerF",_controllerF);
     frc::SmartDashboard::PutNumber("ShooterTargetSpeed",_controller.GetSetpoint());
 
     _tx = _table->GetEntry("tx");
