@@ -32,8 +32,8 @@ namespace pcm {
   constexpr int solDollyRetract = 1;
   constexpr int solClimberForward = 2;
   constexpr int solClimberReverse = 3;
-  constexpr int solStorageStopperForward = 4;
-  constexpr int solStorageStopperReverse = 5;
+  constexpr int solStorageStopperForward = 5;
+  constexpr int solStorageStopperReverse = 4;
   constexpr int solIntakeOut = 6;
   constexpr int solIntakeIn = 7;
 }

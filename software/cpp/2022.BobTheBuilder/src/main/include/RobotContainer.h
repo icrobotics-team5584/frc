@@ -16,7 +16,7 @@
 #include "commands/Cmd2BallAuto.h"
 
 #include "subsystems/SubIntake.h"
-#include "commands/CmdIntake.h"
+#include "commands/CmdIntakeSequence.h"
 #include "commands/CmdOuttake.h"
 #include "commands/CmdDeployIntake.h"
 #include "commands/CmdRetractIntake.h"
@@ -52,7 +52,7 @@ class RobotContainer {
   void ConfigureButtonBindings();
 
   CmdShooter _cmdShooter {&_subShooter};
-  CmdIntake _cmdIntake {&_subIntake};
+  CmdIntakeSequence _cmdIntake {&_subIntake, &_subStorage};
   CmdOuttake _cmdOuttake {&_subIntake};
   CmdDeployIntake _cmdDeployIntake {&_subIntake};
   CmdRetractIntake _cmdRetractIntake {&_subIntake};
