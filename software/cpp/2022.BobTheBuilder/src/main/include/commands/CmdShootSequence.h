@@ -7,6 +7,7 @@
 #include "subsystems/SubIntake.h"
 #include "subsystems/SubShooter.h"
 #include "subsystems/SubStorage.h"
+#include "subsystems/SubDriveBase.h"
 
 class CmdShootSequence
     : public frc2::CommandHelper<frc2::ParallelCommandGroup,

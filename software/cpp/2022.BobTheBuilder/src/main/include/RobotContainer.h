@@ -60,5 +60,5 @@ class RobotContainer {
   CmdSpinUpShooter _cmdSpinUpShooter {&_subShooter,500};
   CmdStorageIn _cmdStorageIn {&_subStorage};
   CmdStorageOut _cmdStorageOut {&_subStorage};
-  CmdShootSequence _cmdShootSequence{&_subStorage, &_subShooter, &_subIntake};
+  CmdShootSequence _cmdShootSequence{&_subStorage, &_subShooter, &_subIntake, &_subDriveBase};
 };
