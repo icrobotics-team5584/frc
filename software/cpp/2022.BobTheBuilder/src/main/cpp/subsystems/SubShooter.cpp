@@ -32,8 +32,6 @@ void SubShooter::Periodic() {
     if (frc::DriverStation::IsTeleopEnabled() && _shouldTrackTarget && _table->GetEntry("tv").GetDouble(0.0) == 1.0) {
         // TODO: Here is where we need to implement limelight target calculation.
         SetTargetRpm(GetLimelight().ty*100);
-    } else if (!_shouldTrackTarget) {
-        SetTargetRpm(IdleRPM); //Disable shooter completely.
     }
 
 }
