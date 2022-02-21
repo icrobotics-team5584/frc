@@ -30,7 +30,6 @@ void CmdTrackTarget::Execute() {
   _controllerF = frc::SmartDashboard::GetNumber("LimelightF", 0.0); //0.08
 
   double _output = _controller.Calculate(_subShooter->GetLimelight().tx, 0.0);
-  std::cout << _output << std::endl;
   if (_output > 0 + VisionToleranceLevel) {
     _output = _output + _controllerF;
     _subDriveBase->drive(0.0, _output, false);
