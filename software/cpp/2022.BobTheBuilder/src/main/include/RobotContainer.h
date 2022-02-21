@@ -16,13 +16,15 @@
 #include "commands/Cmd2BallAuto.h"
 
 #include "subsystems/SubIntake.h"
-#include "commands/CmdIntake.h"
+#include "commands/CmdIntakeSequence.h"
 #include "commands/CmdOuttake.h"
 #include "commands/CmdDeployIntake.h"
 #include "commands/CmdRetractIntake.h"
 #include "commands/CmdTrackTarget.h"
 #include "commands/CmdSpinUpShooter.h"
 #include "commands/CmdStorageIn.h"
+#include "commands/CmdStorageOut.h"
+#include "commands/CmdShootSequence.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -50,7 +52,7 @@ class RobotContainer {
   void ConfigureButtonBindings();
 
   CmdShooter _cmdShooter {&_subShooter};
-  CmdIntake _cmdIntake {&_subIntake};
+  CmdIntakeSequence _cmdIntake {&_subIntake, &_subStorage};
   CmdOuttake _cmdOuttake {&_subIntake};
   CmdDeployIntake _cmdDeployIntake {&_subIntake};
   CmdRetractIntake _cmdRetractIntake {&_subIntake};
@@ -58,4 +60,6 @@ class RobotContainer {
   CmdSpinUpShooter _cmdSpinUpShooter {&_subShooter,500};
   CmdStorageIn _cmdStorageIn {&_subStorage};
   CmdVisionShoot _cmdVisionShoot {&_subShooter};
+  CmdStorageOut _cmdStorageOut {&_subStorage};
+  CmdShootSequence _cmdShootSequence{&_subStorage, &_subShooter, &_subIntake, &_subDriveBase};
 };
