@@ -9,6 +9,7 @@
 #include <frc2/command/ParallelCommandGroup.h>
 #include <frc2/command/StartEndCommand.h>
 
+
 RobotContainer::RobotContainer() {
   _subDriveBase.SetDefaultCommand(CmdJoystickDrive(&_subDriveBase, &_joystick0));
   // Configure the button bindings
@@ -29,12 +30,7 @@ void RobotContainer::ConfigureButtonBindings() {
   TrackTargetButton.WhileHeld(frc2::ParallelCommandGroup(_cmdTrackTarget, _cmdShooter));
 
   frc2::JoystickButton StorageButton{ &_joystick0,frc::XboxController::Button::kStart};
-  StorageButton.WhenHeld(
-    frc2::StartEndCommand(
-      [this]{_subStorage.In();},
-      [this]{_subStorage.Stop();}
-    )
-  );
+  StorageButton.WhenHeld( _cmdStorageIn );
 
    frc2::JoystickButton StorageOuttakeButton{ &_joystick0,frc::XboxController::Button::kBack};
   StorageOuttakeButton.WhenHeld(
@@ -43,6 +39,7 @@ void RobotContainer::ConfigureButtonBindings() {
       [this]{_subStorage.Stop();}
     )
   );
+  frc::SmartDashboard::PutData("SpinUpCommand", &_cmdSpinUpShooter);
 }
 
 

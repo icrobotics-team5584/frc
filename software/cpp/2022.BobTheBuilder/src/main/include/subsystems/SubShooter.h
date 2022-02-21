@@ -39,9 +39,11 @@ class SubShooter : public frc2::SubsystemBase {
    * Will be called periodically whenever the CommandScheduler runs.
    */
   void Periodic() override;
-  void Shoot();
+  void SetTargetRpm(int rpm);
   void Stop();
+  bool IsAtTargetSpeed();
   LimelightData GetLimelight();
+  void UpdatePidController();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
