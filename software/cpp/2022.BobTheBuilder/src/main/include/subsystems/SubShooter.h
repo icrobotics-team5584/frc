@@ -39,15 +39,17 @@ class SubShooter : public frc2::SubsystemBase {
    * Will be called periodically whenever the CommandScheduler runs.
    */
   void Periodic() override;
-  void Shoot();
+  void SetTargetRpm(int rpm);
   void Stop();
+  bool IsAtTargetSpeed();
   LimelightData GetLimelight();
+  void UpdatePidController();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-  rev::CANSparkMax _spmShooter1{8, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
-  rev::CANSparkMax _spmShooter2{12, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  rev::CANSparkMax _spmShooter1{can::spmShooter1, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  rev::CANSparkMax _spmShooter2{can::spmShooter2, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::SparkMaxRelativeEncoder _encShooter1{_spmShooter1.GetEncoder()};
   frc2::PIDController _controller{0.1,0,0};
   double _controllerF = 0;

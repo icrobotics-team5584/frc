@@ -8,6 +8,7 @@
 #include "Utilities/JoystickScaler.h"
 #include "subsystems/SubDriveBase.h"
 #include "subsystems/SubShooter.h"
+#include "subsystems/SubStorage.h"
 #include "commands/CmdShooter.h"
 
 
@@ -20,6 +21,8 @@
 #include "commands/CmdDeployIntake.h"
 #include "commands/CmdRetractIntake.h"
 #include "commands/CmdTrackTarget.h"
+#include "commands/CmdSpinUpShooter.h"
+#include "commands/CmdStorageIn.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -38,6 +41,7 @@ class RobotContainer {
 
   SubShooter _subShooter;
   SubIntake _subIntake;
+  SubStorage _subStorage;
 
  private:
   // Create new joystick to control the robot
@@ -51,5 +55,6 @@ class RobotContainer {
   CmdDeployIntake _cmdDeployIntake {&_subIntake};
   CmdRetractIntake _cmdRetractIntake {&_subIntake};
   CmdTrackTarget _cmdTrackTarget {&_subDriveBase, &_subShooter};
-
+  CmdSpinUpShooter _cmdSpinUpShooter {&_subShooter,500};
+  CmdStorageIn _cmdStorageIn {&_subStorage};
 };

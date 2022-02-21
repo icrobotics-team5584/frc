@@ -2,29 +2,28 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-  #include "commands/CmdShooter.h"
-  #include <frc/smartdashboard/SmartDashboard.h>
+#include "commands/CmdStorageIn.h"
+#include "subsystems/SubStorage.h"
 
-
-CmdShooter::CmdShooter(SubShooter* subShooter) {
+CmdStorageIn::CmdStorageIn(SubStorage* subStorage) {
   // Use addRequirements() here to declare subsystem dependencies.
-  _subShooter = subShooter;
-  frc::SmartDashboard::PutNumber("ManualShooterTargetVel",0);
+  _subStorage = subStorage;
 }
 
 // Called when the command is initially scheduled.
-void CmdShooter::Initialize() {}
+void CmdStorageIn::Initialize() {
+  _subStorage->In();
+}
 
 // Called repeatedly when this Command is scheduled to run
-void CmdShooter::Execute() {
-  _subShooter->SetTargetRpm(frc::SmartDashboard::GetNumber("ManualShooterTargetVel",0));
-} 
+void CmdStorageIn::Execute() {}
+
 // Called once the command ends or is interrupted.
-void CmdShooter::End(bool interrupted) {
-  _subShooter->Stop();
+void CmdStorageIn::End(bool interrupted) {
+  _subStorage->Stop();
 }
 
 // Returns true when the command should end.
-bool CmdShooter::IsFinished() {
+bool CmdStorageIn::IsFinished() {
   return false;
 }

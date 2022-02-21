@@ -2,29 +2,22 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-  #include "commands/CmdShooter.h"
-  #include <frc/smartdashboard/SmartDashboard.h>
+#include "commands/CmdAutoShoot.h"
 
-
-CmdShooter::CmdShooter(SubShooter* subShooter) {
+CmdAutoShoot::CmdAutoShoot() {
   // Use addRequirements() here to declare subsystem dependencies.
-  _subShooter = subShooter;
-  frc::SmartDashboard::PutNumber("ManualShooterTargetVel",0);
 }
 
 // Called when the command is initially scheduled.
-void CmdShooter::Initialize() {}
+void CmdAutoShoot::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void CmdShooter::Execute() {
-  _subShooter->SetTargetRpm(frc::SmartDashboard::GetNumber("ManualShooterTargetVel",0));
-} 
+void CmdAutoShoot::Execute() {}
+
 // Called once the command ends or is interrupted.
-void CmdShooter::End(bool interrupted) {
-  _subShooter->Stop();
-}
+void CmdAutoShoot::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool CmdShooter::IsFinished() {
+bool CmdAutoShoot::IsFinished() {
   return false;
 }
