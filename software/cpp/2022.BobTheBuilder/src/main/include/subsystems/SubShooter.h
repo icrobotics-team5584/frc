@@ -40,6 +40,7 @@ class SubShooter : public frc2::SubsystemBase {
    */
   void Periodic() override;
   void SetTargetRpm(int rpm);
+  void RunAtIdle();
   void Stop();
   bool IsAtTargetSpeed();
   LimelightData GetLimelight();
@@ -59,5 +60,7 @@ class SubShooter : public frc2::SubsystemBase {
   nt::NetworkTableEntry _ty;
   nt::NetworkTableEntry _thor;
   nt::NetworkTableEntry _tvert;
+
+  static constexpr int idleRPM = 1000;
 
 };

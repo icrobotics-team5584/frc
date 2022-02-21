@@ -45,9 +45,12 @@ void SubShooter::Periodic() {
 void SubShooter::SetTargetRpm(int rpm){
     _controllerF = (1.0f/5800.0f)* rpm;
     _controller.SetSetpoint(rpm);
-   
-    
 }
+
+void SubShooter::RunAtIdle() {
+    SetTargetRpm(idleRPM);
+}
+
 void SubShooter::UpdatePidController() {
       double _output = _controller.Calculate(_encShooter1.GetVelocity()) + _controllerF;
     if (_output >= 0) {

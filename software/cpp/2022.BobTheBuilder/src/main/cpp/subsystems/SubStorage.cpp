@@ -23,3 +23,11 @@ void SubStorage::Stop() {
 void SubStorage::Out() {
     _spmStorage.Set(-0.4);
 }
+
+void SubStorage::ExtendStopper() {
+    _solStopper.Set(frc::DoubleSolenoid::Value::kForward);
+}
+
+void SubStorage::RetractStopper() {
+    _solStopper.Set(frc::DoubleSolenoid::Value::kReverse);
+}
