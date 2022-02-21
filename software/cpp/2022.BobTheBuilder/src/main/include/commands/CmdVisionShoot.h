@@ -20,4 +20,7 @@ class CmdVisionShoot
 
  private:
   SubShooter* _subShooter;
+  
+  double _thr = 3;
+  double _lock = false;
 };

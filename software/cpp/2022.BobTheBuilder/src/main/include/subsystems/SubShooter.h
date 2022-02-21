@@ -13,6 +13,7 @@
 #include <networktables/NetworkTable.h>
 #include <networktables/NetworkTableEntry.h>
 #include <networktables/NetworkTableInstance.h>
+#include <frc/DriverStation.h>
 
 #include "Constants.h"
 
@@ -44,6 +45,15 @@ class SubShooter : public frc2::SubsystemBase {
   bool IsAtTargetSpeed();
   LimelightData GetLimelight();
   void UpdatePidController();
+  void SetShooterTracking(bool enableTracking);
+  
+  /**
+  * Returns error of shooter velocity relative to the
+  * intended target speed calculated from the limelight.
+  *
+  * @return [double] error
+  */
+  double GetVisionVelocityError();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
@@ -59,5 +69,7 @@ class SubShooter : public frc2::SubsystemBase {
   nt::NetworkTableEntry _ty;
   nt::NetworkTableEntry _thor;
   nt::NetworkTableEntry _tvert;
-
+  double _visionVelocityOutput = 0;
+  bool _shouldTrackTarget = false;
+  double IdleRPM = 1000;
 };

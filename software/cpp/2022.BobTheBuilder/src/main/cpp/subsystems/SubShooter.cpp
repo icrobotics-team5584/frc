@@ -28,20 +28,34 @@ void SubShooter::Periodic() {
     _thor = _table->GetEntry("thor");
     _tvert = _table->GetEntry("tvert");
     UpdatePidController();
+
+    if (frc::DriverStation::IsTeleopEnabled() && _shouldTrackTarget && _table->GetEntry("tv").GetDouble(0.0) == 1.0) {
+        // TODO: Here is where we need to implement limelight target calculation.
+        SetTargetRpm(GetLimelight().ty*100);
+    } else if (!_shouldTrackTarget) {
+        SetTargetRpm(IdleRPM); //Disable shooter completely.
+    }
+
+}
+
+void SubShooter::SetShooterTracking(bool enableTracking) {
+    _shouldTrackTarget = enableTracking;
 }
 
 void SubShooter::SetTargetRpm(int rpm){
     _controllerF = (1.0f/5800.0f)* rpm;
     _controller.SetSetpoint(rpm);
-   
-    
 }
+
 void SubShooter::UpdatePidController() {
-      double _output = _controller.Calculate(_encShooter1.GetVelocity()) + _controllerF;
+    double _output = _controller.Calculate(_encShooter1.GetVelocity()) + _controllerF;
+
     if (_output >= 0) {
         _spmShooter1.Set(_output);
+        _visionVelocityOutput = _output;
     } else {
         _spmShooter1.Set(0);
+        _visionVelocityOutput = 0;
     }
 }
 void SubShooter::Stop() {
@@ -62,3 +76,6 @@ bool SubShooter::IsAtTargetSpeed() {
     
 }
 
+double SubShooter::GetVisionVelocityError() {
+    return _visionVelocityOutput - _encShooter1.GetVelocity();
+}
