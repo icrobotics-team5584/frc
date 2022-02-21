@@ -6,13 +6,19 @@
 #include "frc/smartdashboard/SmartDashboard.h"
 
 SubClimber::SubClimber(){
+  _spmLeftElevator.RestoreFactoryDefaults();
+  _spmRightElevator.RestoreFactoryDefaults();
+
+  _spmLeftElevator.SetSmartCurrentLimit(40);
+  _spmRightElevator.SetSmartCurrentLimit(40);
+
   double kP = 0.001, kI = 0, kD = 0, KIz = 0, kFF = 0, kMaxOutPut = 1, kMinOutput = -1;
   double kMaxVel = 2600, kMinVel = 0, kMaxAcc = 2600, kAllErr = 0;
 
   _spmLeftElevator.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
   _spmRightElevator.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 
-  _pidLeftMotorController.SetP(-kP);
+  _pidLeftMotorController.SetP(kP);
   _pidLeftMotorController.SetI(kI);
   _pidLeftMotorController.SetD(kD);
   _pidLeftMotorController.SetIZone(KIz);
@@ -46,20 +52,22 @@ void SubClimber::ResetEncoder(){
 void SubClimber::Periodic() {
   frc::SmartDashboard::PutNumber("Left Climber Position", _encLeftElevator.GetPosition());
   frc::SmartDashboard::PutNumber("Right Climber Position", _encRightElevator.GetPosition());
-  frc::SmartDashboard::PutNumber("Left Climber Speed", _spmLeftElevator.Get());
-  frc::SmartDashboard::PutNumber("Right Climber Speed", _spmRightElevator.Get());
+  frc::SmartDashboard::PutNumber("Left Climber duty cycle", _spmLeftElevator.GetAppliedOutput());
+  frc::SmartDashboard::PutNumber("Right Climber duty cycle", _spmRightElevator.GetAppliedOutput());
+  frc::SmartDashboard::PutNumber("Left Climber duty cycle", _spmLeftElevator.Get());
+  frc::SmartDashboard::PutNumber("Right Climber duty cycle", _spmRightElevator.Get());
 }
 
 void SubClimber::Extend() {
   double maxHeight = 0;
-  _pidLeftMotorController.SetReference((maxHeight+2), rev::ControlType::kSmartMotion);
-  _pidRightMotorController.SetReference(-(maxHeight+2), rev::ControlType::kSmartMotion);
+  _pidLeftMotorController.SetReference((maxHeight+2), rev::CANSparkMax::ControlType::kSmartMotion);
+  _pidRightMotorController.SetReference(-(maxHeight+2), rev::CANSparkMax::ControlType::kSmartMotion);
 }
 
 void SubClimber::Retract() {
   double minHeight = 35;
-  _pidLeftMotorController.SetReference((minHeight-10), rev::ControlType::kSmartMotion);
-  _pidRightMotorController.SetReference(-(minHeight-10), rev::ControlType::kSmartMotion);
+  _pidLeftMotorController.SetReference((minHeight-10), rev::CANSparkMax::ControlType::kSmartMotion);
+  _pidRightMotorController.SetReference(-(minHeight-10), rev::CANSparkMax::ControlType::kSmartMotion);
 }
 
 void SubClimber::Rotate() {
