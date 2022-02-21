@@ -6,14 +6,8 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-
-#include <frc/controller/PIDController.h>
-
-#include <networktables/NetworkTable.h>
-
-#include "subsystems/SubDriveBase.h"
-#include "subsystems/SubShooter.h"
-
+#include "subsystems/SubIntake.h"
+#include  "subsystems/SubStorage.h"
 /**
  * An example command.
  *
@@ -21,10 +15,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class CmdTrackTarget
-    : public frc2::CommandHelper<frc2::CommandBase, CmdTrackTarget> {
+class CmdIntakeSequence
+    : public frc2::CommandHelper<frc2::CommandBase, CmdIntakeSequence> {
  public:
-  CmdTrackTarget(SubDriveBase* subDriveBase, SubShooter* subShooter);
+  CmdIntakeSequence(SubIntake* subIntake, SubStorage* subStorage);
 
   void Initialize() override;
 
@@ -33,14 +27,7 @@ class CmdTrackTarget
   void End(bool interrupted) override;
 
   bool IsFinished() override;
-
  private:
-  int VisionToleranceLevel = 0.04;
-
-  SubDriveBase* _subDriveBase;
-  SubShooter* _subShooter;
-
-  frc2::PIDController _controller{0.1,0,0};
-  double _controllerF = 0;
-  bool isFinished = false;
+    SubIntake* _subIntake;
+    SubStorage* _subStorage;
 };
