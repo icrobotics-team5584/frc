@@ -10,11 +10,8 @@
 #include "subsystems/SubShooter.h"
 #include "subsystems/SubStorage.h"
 #include "commands/CmdShooter.h"
-
-
 #include "commands/CmdJoystickDrive.h"
 #include "commands/Cmd2BallAuto.h"
-
 #include "subsystems/SubIntake.h"
 #include "commands/CmdIntake.h"
 #include "commands/CmdOuttake.h"
@@ -23,6 +20,9 @@
 #include "commands/CmdTrackTarget.h"
 #include "commands/CmdSpinUpShooter.h"
 #include "commands/CmdStorageIn.h"
+#include "subsystems/SubClimber.h"
+#include "commands/CmdExtendClimber.h"
+#include "commands/CmdRetractClimber.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -42,6 +42,7 @@ class RobotContainer {
   SubShooter _subShooter;
   SubIntake _subIntake;
   SubStorage _subStorage;
+  SubClimber _subClimber;
 
  private:
   // Create new joystick to control the robot
@@ -57,4 +58,6 @@ class RobotContainer {
   CmdTrackTarget _cmdTrackTarget {&_subDriveBase, &_subShooter};
   CmdSpinUpShooter _cmdSpinUpShooter {&_subShooter,500};
   CmdStorageIn _cmdStorageIn {&_subStorage};
+  CmdExtendClimber _cmdExtendClimber {&_subClimber};
+  CmdRetractClimber _cmdRetractClimber {&_subClimber};
 };

@@ -7,7 +7,9 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
 
-void Robot::RobotInit() {}
+void Robot::RobotInit() {
+  m_container._subClimber.ResetEncoder();
+}
 
 /**
  * This function is called every robot packet, no matter the mode. Use

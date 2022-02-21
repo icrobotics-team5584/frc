@@ -23,14 +23,20 @@ void RobotContainer::ConfigureButtonBindings() {
   IntakeButton.WhileHeld(_cmdIntake);
   frc2::JoystickButton OuttakeButton{ &_joystick0,frc::XboxController::Button::kLeftBumper };
   OuttakeButton.WhileHeld(_cmdOuttake);
-  frc2::JoystickButton DeployIntakeButton{ &_joystick0,frc::XboxController::Button::kA};
-  DeployIntakeButton.ToggleWhenPressed(_cmdDeployIntake);
+  // frc2::JoystickButton DeployIntakeButton{ &_joystick0,frc::XboxController::Button::kA};
+  // DeployIntakeButton.ToggleWhenPressed(_cmdDeployIntake);
 
   frc2::JoystickButton TrackTargetButton{&_joystick0, frc::XboxController::Button::kX};
   TrackTargetButton.WhileHeld(frc2::ParallelCommandGroup(_cmdTrackTarget, _cmdShooter));
 
   frc2::JoystickButton StorageButton{ &_joystick0,frc::XboxController::Button::kStart};
   StorageButton.WhenHeld( _cmdStorageIn );
+
+  frc2::JoystickButton ExtendClimberButton{ &_joystick0,frc::XboxController::Button::kY};
+  ExtendClimberButton.WhenHeld( _cmdExtendClimber );
+
+  frc2::JoystickButton RetractClimberButton{ &_joystick0,frc::XboxController::Button::kA};
+  RetractClimberButton.WhenHeld( _cmdRetractClimber );
 
    frc2::JoystickButton StorageOuttakeButton{ &_joystick0,frc::XboxController::Button::kBack};
   StorageOuttakeButton.WhenHeld(
@@ -41,10 +47,6 @@ void RobotContainer::ConfigureButtonBindings() {
   );
   frc::SmartDashboard::PutData("SpinUpCommand", &_cmdSpinUpShooter);
 }
-
-
-
-
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous

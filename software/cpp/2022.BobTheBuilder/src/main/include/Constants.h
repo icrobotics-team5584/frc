@@ -19,7 +19,8 @@ namespace can {
   constexpr int spmDriveBaseBackRight = 1;
   constexpr int spmDriveBaseFrontLeft = 4;
   constexpr int spmDriveBaseBackLeft = 2;
-  constexpr int spmClimber = 5;
+  constexpr int spmLeftClimber = 5;
+  constexpr int spmRightClimber = 6;
   constexpr int spmStorage = 11;
   constexpr int spmDolly = 15;
   constexpr int spmIntake = 7;
@@ -35,13 +36,6 @@ namespace pcm {
   constexpr int solClimbTilterReverse = 3;
   constexpr int solIntakeOut = 6;
   constexpr int solIntakeIn = 7;
-<<<<<<< HEAD
-}
-namespace pcm {
-  constexpr int solTilterForward = 0;
-  constexpr int solTilterReverse = 1;
-=======
->>>>>>> f76e0964e3ba52b41c01af72527d397c6c661149
 }
 
 namespace dio {
