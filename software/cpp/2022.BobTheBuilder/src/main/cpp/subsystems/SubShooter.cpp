@@ -31,10 +31,6 @@ void SubShooter::Periodic() {
         frc::SmartDashboard::GetNumber("ShooterD", 0)
     );
      
-    frc::SmartDashboard::PutNumber("Shooter Velocity", _encShooter1.GetVelocity());
-    frc::SmartDashboard::PutNumber("ControllerF",_controllerF);
-    frc::SmartDashboard::PutNumber("ShooterTargetSpeed",_controller.GetSetpoint());
-
     _tx = _table->GetEntry("tx");
     _ty = _table->GetEntry("ty");
     _thor = _table->GetEntry("thor");

@@ -22,7 +22,7 @@ namespace can {
   constexpr int spmLeftClimber = 5;
   constexpr int spmRightClimber = 6;
   constexpr int spmStorage = 11;
-  constexpr int spmDolly = 15;
+  constexpr int spmDolly = 9;
   constexpr int spmIntake = 7;
   constexpr int spmShooter1 = 8;
   constexpr int spmShooter2 = 12;
@@ -38,7 +38,12 @@ namespace pcm {
   constexpr int solIntakeIn = 7;
 }
 
+namespace pcm2 {
+  constexpr int solClimbLockForward = 0;
+  constexpr int solClimbLockReverse = 1;
+}
+
 namespace dio {
-  constexpr int lmtClimberTop = 0;
-  constexpr int lmtClimberBottom = 1;
+  constexpr int lmtClimberLeft = 1;
+  constexpr int lmtClimberRight = 2;
 }

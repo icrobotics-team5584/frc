@@ -23,6 +23,8 @@
 #include "subsystems/SubClimber.h"
 #include "commands/CmdExtendClimber.h"
 #include "commands/CmdRetractClimber.h"
+#include <frc2/command/InstantCommand.h>
+
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -60,4 +62,11 @@ class RobotContainer {
   CmdStorageIn _cmdStorageIn {&_subStorage};
   CmdExtendClimber _cmdExtendClimber {&_subClimber};
   CmdRetractClimber _cmdRetractClimber {&_subClimber};
+
+  frc2::InstantCommand _cmdLockClimber{[&]{_subClimber.Lock();}};
+  frc2::InstantCommand _cmdUnlockClimber{[&]{_subClimber.Unlock();}};
+  frc2::InstantCommand _cmdRotateClimber{[&]{_subClimber.Rotate();}};
+  frc2::InstantCommand _cmdStowClimber{[&]{_subClimber.Stow();}};
+  frc2::InstantCommand _cmdNearExtend{[&]{_subClimber.DriveTo(90);}};
+  frc2::InstantCommand _cmdResetClimbSeq{[&]{_subClimber.ResetClimbSequence();}};
 };

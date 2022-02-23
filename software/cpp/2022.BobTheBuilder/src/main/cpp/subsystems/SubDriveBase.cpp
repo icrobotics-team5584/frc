@@ -64,7 +64,6 @@ double SubDriveBase::getDistanceTravelled(){
   // double wheelRotations = _talonDolly.GetSelectedSensorPosition() / 2;
 
   double wheelRotations = _dollyWheel.GetPosition()/2;
-  frc::SmartDashboard::PutNumber("dolly rotations", wheelRotations);
   double distance = wheelRotations * metersPerRotation;
   return distance;  
 }
@@ -78,8 +77,6 @@ double SubDriveBase::GetTalonDistanceTravelled() {
 
 // This method will be called once per scheduler run
 void SubDriveBase::Periodic() {
-  frc::SmartDashboard::PutNumber("Encoder Position", GetTalonDistanceTravelled());
-  frc::SmartDashboard::PutNumber("Encoder Velocity", _dollyWheel.GetVelocity());
 }
 
 void SubDriveBase::SetCoastMode() {
