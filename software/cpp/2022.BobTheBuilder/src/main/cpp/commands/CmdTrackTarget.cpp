@@ -30,17 +30,9 @@ void CmdTrackTarget::Execute() {
   _controllerF = frc::SmartDashboard::GetNumber("LimelightF", 0.0); //0.08
 
   double _output = _controller.Calculate(_subShooter->GetLimelight().tx, 0.0);
-  if (_output > 0 + VisionToleranceLevel) {
-    _output = _output + _controllerF;
-    _subDriveBase->drive(0.0, _output, false);
-  }
-  else if (_output < 0 - VisionToleranceLevel) {
-    _output = _output - _controllerF;
-    _subDriveBase->drive(0.0, _output, false);
-  }
-  else {
-    isFinished = true;
-  }
+  _subDriveBase->drive(0.0, _output, false);
+  
+  
 
 }
 
@@ -51,5 +43,5 @@ void CmdTrackTarget::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool CmdTrackTarget::IsFinished() {
-  return isFinished;
+  return (abs(_subShooter->GetLimelight().tx) < VisionToleranceLevel);
 }

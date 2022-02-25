@@ -29,7 +29,6 @@ class SubStorage : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
   rev::CANSparkMax _spmStorage{can::spmStorage,
                                rev::CANSparkMaxLowLevel::MotorType::kBrushless};
-  frc::DoubleSolenoid _solStopper{1, frc::PneumaticsModuleType::CTREPCM,
-                                  pcm::solStorageStopperForward,
-                                  pcm::solStorageStopperReverse};
+  frc::DoubleSolenoid _solStopper{1, frc::PneumaticsModuleType::CTREPCM, pcm::solStorageStopperForward, pcm::solStorageStopperReverse};
+
 };

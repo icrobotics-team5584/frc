@@ -10,7 +10,7 @@
 #include "subsystems/SubDriveBase.h"
 
 class CmdShootSequence
-    : public frc2::CommandHelper<frc2::ParallelCommandGroup,
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
                                  CmdShootSequence> {
  public:
   CmdShootSequence(SubStorage* subStorage, SubShooter* subShooter,
