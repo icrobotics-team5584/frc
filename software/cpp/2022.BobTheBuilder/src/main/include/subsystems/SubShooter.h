@@ -40,7 +40,7 @@ class SubShooter : public frc2::SubsystemBase {
    * Will be called periodically whenever the CommandScheduler runs.
    */
   void Periodic() override;
-  void SetTargetRpm(int rpm);
+  void SetTargetRpm(double rpm);
   void RunAtIdle();
   void Stop();
   bool IsAtTargetSpeed();

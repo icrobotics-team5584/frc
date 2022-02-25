@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "subsystems/SubShooter.h"
+#include "math.h"
 
  // to make shooter 2 follow shooter 1
 SubShooter::SubShooter(){
@@ -18,6 +19,7 @@ SubShooter::SubShooter(){
     _controller.SetTolerance(100);
 
     frc::SmartDashboard::PutBoolean("ShooterTarget", _shootingLow);
+    frc::SmartDashboard::PutNumber("ShooterSetRPM", 0);
 }
 
 // This method will be called once per scheduler run
@@ -35,9 +37,13 @@ void SubShooter::Periodic() {
         SetTargetRpm(500);
     } else {
         if (frc::DriverStation::IsTeleopEnabled() && _shouldTrackTarget && _table->GetEntry("tv").GetDouble(0.0) == 1.0) {
-            // TODO: Here is where we need to implement limelight target calculation.
-            // SetTargetRpm(GetLimelight().ty*100);
-            SetTargetRpm(1500);
+            // https://mycurvefit.com/
+            double x = GetLimelight().ty;
+            // double out = 1658.681 - 32.44681*x - 0.5100554*x^2;
+            double out = 1658.681 - 32.44681*x - 0.5100554*pow(x, 2);
+            SetTargetRpm(out);
+            // SetTargetRpm(1500);
+            // SetTargetRpm(frc::SmartDashboard::GetNumber("ShooterSetRPM", 0));
         } else {
             SetTargetRpm(0);
         }
@@ -49,7 +55,7 @@ void SubShooter::SetShooterTracking(bool enableTracking) {
     _shouldTrackTarget = enableTracking;
 }
 
-void SubShooter::SetTargetRpm(int rpm){
+void SubShooter::SetTargetRpm(double rpm){
     _controllerF = (1.0f/5800.0f)* rpm;
     _controller.SetSetpoint(rpm);
 }
