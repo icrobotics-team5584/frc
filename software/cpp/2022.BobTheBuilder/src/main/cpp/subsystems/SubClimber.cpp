@@ -17,7 +17,7 @@ SubClimber::SubClimber() {
   _pidLeftMotorController.SetIZone(KIz);
   _pidLeftMotorController.SetFF(kFF);
   _pidLeftMotorController.SetOutputRange(kMinOutput, kMaxOutPut);
-  _pidLeftMotorController.SetSmartMotionMaxVelocity(kMaxVel);
+  _pidLeftMotorController.SetSmartMotionMaxVelocity(kFastMaxVel);
   _pidLeftMotorController.SetSmartMotionMinOutputVelocity(kMinVel);
   _pidLeftMotorController.SetSmartMotionMaxAccel(kMaxAcc);
   _pidLeftMotorController.SetSmartMotionAllowedClosedLoopError(kAllErr);
@@ -27,14 +27,12 @@ SubClimber::SubClimber() {
   _pidRightMotorController.SetIZone(KIz);
   _pidRightMotorController.SetFF(kFF);
   _pidRightMotorController.SetOutputRange(kMinOutput, kMaxOutPut);
-  _pidRightMotorController.SetSmartMotionMaxVelocity(kMaxVel);
+  _pidRightMotorController.SetSmartMotionMaxVelocity(kFastMaxVel);
   _pidRightMotorController.SetSmartMotionMinOutputVelocity(kMinVel);
   _pidRightMotorController.SetSmartMotionMaxAccel(kMaxAcc);
   _pidRightMotorController.SetSmartMotionAllowedClosedLoopError(kAllErr);
 
   SetEncoders(MIN_POSITION);  // Assume we turn the robot on with the arms down
-
-  Lock(); // Extend the locking pistons
 }
 
 void SubClimber::SetEncoders(double value) {
@@ -48,8 +46,6 @@ void SubClimber::Periodic() {
   frc::SmartDashboard::PutNumber("Right Climber Position", _encRightElevator.GetPosition());
   frc::SmartDashboard::PutBoolean("Left climber limit", AtLeftLimit());
   frc::SmartDashboard::PutBoolean("Right climber limit", AtRightLimit());
-  frc::SmartDashboard::PutNumber("climber state", *currentStep);
-  frc::SmartDashboard::PutBoolean("climber Locked", IsLocked());
   frc::SmartDashboard::PutBoolean("climber Going Down", GoingDown());
   frc::SmartDashboard::PutBoolean("climber in smart motion control", _inSmartMotionMode);
   frc::SmartDashboard::PutNumber("climber target position", _targetPosition);
@@ -65,13 +61,13 @@ void SubClimber::Periodic() {
   }
 
   // Don't let the climber kill itself
-  if ((AtLeftLimit() && GoingDown()) || IsLocked()) {
+  if ((AtLeftLimit() && GoingDown())) {
     frc::SmartDashboard::PutBoolean("Climber Left Safety", true);
     _spmLeftElevator.Set(0);
   } else {
     frc::SmartDashboard::PutBoolean("Climber Left Safety", false);
   }
-  if ((AtRightLimit() && GoingDown()) || IsLocked()) {
+  if ((AtRightLimit() && GoingDown())) {
     _spmRightElevator.Set(0);
     frc::SmartDashboard::PutBoolean("Climber Right Safety", true);
   } else {
@@ -80,7 +76,6 @@ void SubClimber::Periodic() {
 }
 
 void SubClimber::ManualDrive(double speed) {
-  if (IsLocked()) return;
   _inSmartMotionMode = false;
   double leftSpeed = speed;
   double rightSpeed = speed;
@@ -105,17 +100,9 @@ void SubClimber::Rotate() { _solTilter.Set(frc::DoubleSolenoid::kForward); }
 
 void SubClimber::Stow() { _solTilter.Set(frc::DoubleSolenoid::kReverse); }
 
-void SubClimber::Lock() { _solLock.Set(frc::DoubleSolenoid::kForward); }
-
-void SubClimber::Unlock() { _solLock.Set(frc::DoubleSolenoid::kReverse); }
-
 bool SubClimber::AtLeftLimit() { return !_lmtLeft.Get(); }
 
 bool SubClimber::AtRightLimit() { return !_lmtRight.Get(); }
-
-bool SubClimber::IsLocked() {
-  return _solLock.Get() == frc::DoubleSolenoid::kForward;
-}
 
 bool SubClimber::GoingDown() {
   if (_inSmartMotionMode) {
@@ -126,42 +113,43 @@ bool SubClimber::GoingDown() {
   }
 }
 
-void SubClimber::SetDesiredState(State state) {
-  // Dont try to move if the lock is out
-  if (IsLocked()) return;
+void SubClimber::SetDesiredState(ClimberState state) {
+  SpeedState desiredSpeed = state.speed;
+  TiltState desiredTilt = state.tilt;
+  ElevatorState desiredElevatorPos = state.elevator;
 
-  switch (state) {
-    case STOWED_FULL_RETRACTED:
-      Stow();
-      Retract();
+  switch (desiredSpeed) {
+    case FAST:
+      _pidRightMotorController.SetSmartMotionMaxVelocity(kFastMaxVel);
+      _pidLeftMotorController.SetSmartMotionMaxVelocity(kFastMaxVel);
       break;
-    case STOWED_NEAR_RETRACTED:
-      Stow();
-      DriveTo(NEAR_MIN_POS);
+    case SLOW:
+      _pidRightMotorController.SetSmartMotionMaxVelocity(kSlowMaxVel);
+      _pidLeftMotorController.SetSmartMotionMaxVelocity(kSlowMaxVel);
       break;
-    case STOWED_FULL_EXTENDED:
+  }
+
+  switch (desiredTilt) {
+    case ROTATED:
+      Rotate();
+      break;
+    case STOWED:
       Stow();
+      break;
+  }
+
+  switch (desiredElevatorPos) {
+    case FULL_EXTENDED:
       Extend();
       break;
-    case STOWED_NEAR_EXTENDED:
-      Stow();
-      DriveTo(NEAR_MAX_POS);
-      break;
-    case ROTATED_FULL_RETRACTED:
-      Rotate();
+    case FULL_RETRACTED:
       Retract();
       break;
-    case ROTATED_NEAR_RETRACTED:
-      Rotate();
-      DriveTo(NEAR_MIN_POS);
-      break;
-    case ROTATED_FULL_EXTENDED:
-      Rotate();
-      Extend();
-      break;
-    case ROTATED_NEAR_EXTENDED:
-      Rotate();
+    case NEAR_EXTENDED:
       DriveTo(NEAR_MAX_POS);
+      break;
+    case NEAR_RETRACTED:
+      DriveTo(NEAR_MIN_POS);
       break;
   }
 }

@@ -43,8 +43,6 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton{&_joystick0, Btn::kX}.WhenHeld(
       frc2::InstantCommand([&] { _subClimber.StepClimbSequence(); }));
 
-  frc::SmartDashboard::PutData("Lock Climber",&_cmdLockClimber);
-  frc::SmartDashboard::PutData("Unlock Climber",&_cmdUnlockClimber);
   frc::SmartDashboard::PutData("Rotate Climber",&_cmdRotateClimber);
   frc::SmartDashboard::PutData("Stow Climber",&_cmdStowClimber);
   frc::SmartDashboard::PutData("Near Extend Climber",&_cmdNearExtend);

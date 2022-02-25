@@ -63,8 +63,6 @@ class RobotContainer {
   CmdExtendClimber _cmdExtendClimber {&_subClimber};
   CmdRetractClimber _cmdRetractClimber {&_subClimber};
 
-  frc2::InstantCommand _cmdLockClimber{[&]{_subClimber.Lock();}};
-  frc2::InstantCommand _cmdUnlockClimber{[&]{_subClimber.Unlock();}};
   frc2::InstantCommand _cmdRotateClimber{[&]{_subClimber.Rotate();}};
   frc2::InstantCommand _cmdStowClimber{[&]{_subClimber.Stow();}};
   frc2::InstantCommand _cmdNearExtend{[&]{_subClimber.DriveTo(90);}};
