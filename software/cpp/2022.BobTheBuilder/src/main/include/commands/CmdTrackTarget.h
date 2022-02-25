@@ -40,7 +40,7 @@ class CmdTrackTarget
   SubDriveBase* _subDriveBase;
   SubShooter* _subShooter;
 
-  frc2::PIDController _controller{0.1,0,0};
+  frc2::PIDController _controller{0.05,0,0.05};
   double _controllerF = 0;
   bool isFinished = false;
 };
