@@ -16,6 +16,8 @@ SubShooter::SubShooter(){
      _table = _inst.GetTable("limelight");
 
     _controller.SetTolerance(100);
+
+    frc::SmartDashboard::PutBoolean("ShooterTarget", _shootingLow);
 }
 
 // This method will be called once per scheduler run
@@ -29,10 +31,16 @@ void SubShooter::Periodic() {
     _tvert = _table->GetEntry("tvert");
     UpdatePidController();
 
-    if (frc::DriverStation::IsTeleopEnabled() && _shouldTrackTarget && _table->GetEntry("tv").GetDouble(0.0) == 1.0) {
-        // TODO: Here is where we need to implement limelight target calculation.
-        // SetTargetRpm(GetLimelight().ty*100);
-        SetTargetRpm(2000);
+    if (_shootingLow && _shouldTrackTarget) {
+        SetTargetRpm(500);
+    } else {
+        if (frc::DriverStation::IsTeleopEnabled() && _shouldTrackTarget && _table->GetEntry("tv").GetDouble(0.0) == 1.0) {
+            // TODO: Here is where we need to implement limelight target calculation.
+            // SetTargetRpm(GetLimelight().ty*100);
+            SetTargetRpm(1500);
+        } else {
+            SetTargetRpm(0);
+        }
     }
 
 }
@@ -77,4 +85,19 @@ bool SubShooter::IsAtTargetSpeed() {
 
 double SubShooter::GetVisionVelocityError() {
     return _visionVelocityOutput - _encShooter1.GetVelocity();
+}
+
+void SubShooter::TogglePosition() {
+    
+    if (_shootingLow) {
+        _shootingLow = false;
+
+    } else {
+        _shootingLow = true;
+    }
+
+}
+
+bool SubShooter::GetLowMode() {
+    return _shootingLow;
 }

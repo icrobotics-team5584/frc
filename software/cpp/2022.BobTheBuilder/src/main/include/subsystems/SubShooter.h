@@ -47,6 +47,8 @@ class SubShooter : public frc2::SubsystemBase {
   LimelightData GetLimelight();
   void UpdatePidController();
   void SetShooterTracking(bool enableTracking);
+  void TogglePosition();
+  bool GetLowMode();
   
   /**
   * Returns error of shooter velocity relative to the
@@ -72,4 +74,6 @@ class SubShooter : public frc2::SubsystemBase {
   nt::NetworkTableEntry _tvert;
   bool _shouldTrackTarget = false;
   double _visionVelocityOutput = 0;
+
+  bool _shootingLow = false;
 };

@@ -18,6 +18,7 @@ RobotContainer::RobotContainer() {
 }
 
 void RobotContainer::ConfigureButtonBindings() {
+  
   frc2::JoystickButton btnShoot{&_joystick0, frc::XboxController::Button::kLeftBumper };
   btnShoot.WhileHeld(&_cmdShootSequence);
   btnShoot.WhenReleased(&_cmdEndShoot);
@@ -36,17 +37,20 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton StorageButton{ &_joystick0,frc::XboxController::Button::kStart};
   //StorageButton.WhenHeld( _cmdStorageIn );
 
+  frc2::JoystickButton ShooterLowGoal{&_joystick0, frc::XboxController::Button::kBack};
+  ShooterLowGoal.WhileHeld(_cmdToggleShootingPosition);
+
   // wrapping shootSequence in an instant command because it doesnt have a copy constructor,
   // which is needed for binding to a button
   StorageButton.WhenHeld(frc2::InstantCommand{[this]{_cmdShootSequence.Schedule();}});
 
-   frc2::JoystickButton StorageOuttakeButton{ &_joystick0,frc::XboxController::Button::kBack};
-  StorageOuttakeButton.WhenHeld(
-    frc2::StartEndCommand(
-      [this]{_subStorage.Out();},
-      [this]{_subStorage.Stop();}
-    )
-  );
+  //  frc2::JoystickButton StorageOuttakeButton{ &_joystick0,frc::XboxController::Button::kBack};
+  // StorageOuttakeButton.WhenHeld(
+  //   frc2::StartEndCommand(
+  //     [this]{_subStorage.Out();},
+  //     [this]{_subStorage.Stop();}
+  //   )
+  // );
   frc::SmartDashboard::PutData("SpinUpCommand", &_cmdSpinUpShooter);
 }
 
