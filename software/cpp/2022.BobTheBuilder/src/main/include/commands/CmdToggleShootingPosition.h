@@ -7,11 +7,6 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 
-#include <frc/controller/PIDController.h>
-
-#include <networktables/NetworkTable.h>
-
-#include "subsystems/SubDriveBase.h"
 #include "subsystems/SubShooter.h"
 
 /**
@@ -21,10 +16,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class CmdTrackTarget
-    : public frc2::CommandHelper<frc2::CommandBase, CmdTrackTarget> {
+class CmdToggleShootingPosition
+    : public frc2::CommandHelper<frc2::CommandBase, CmdToggleShootingPosition> {
  public:
-  CmdTrackTarget(SubDriveBase* subDriveBase, SubShooter* subShooter);
+  CmdToggleShootingPosition(SubShooter* subShooter);
 
   void Initialize() override;
 
@@ -35,12 +30,5 @@ class CmdTrackTarget
   bool IsFinished() override;
 
  private:
-  int VisionToleranceLevel = 1;
-
-  SubDriveBase* _subDriveBase;
   SubShooter* _subShooter;
-
-  frc2::PIDController _controller{0.05,0,0.05};
-  double _controllerF = 0;
-  bool isFinished = false;
 };

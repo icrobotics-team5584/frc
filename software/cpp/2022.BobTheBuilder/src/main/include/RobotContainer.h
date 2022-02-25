@@ -10,7 +10,7 @@
 #include "subsystems/SubShooter.h"
 #include "subsystems/SubStorage.h"
 #include "commands/CmdShooter.h"
-
+#include "commands/CmdVisionShoot.h"
 
 #include "commands/CmdJoystickDrive.h"
 #include "commands/Cmd2BallAuto.h"
@@ -18,7 +18,7 @@
 #include "commands/Cmd1BallAuto.h"
 
 #include "subsystems/SubIntake.h"
-#include "commands/CmdIntake.h"
+#include "commands/CmdIntakeSequence.h"
 #include "commands/CmdOuttake.h"
 #include "commands/CmdDeployIntake.h"
 #include "commands/CmdRetractIntake.h"
@@ -26,6 +26,10 @@
 #include "commands/CmdTrackTarget.h"
 #include "commands/CmdSpinUpShooter.h"
 #include "commands/CmdStorageIn.h"
+#include "commands/CmdStorageOut.h"
+#include "commands/CmdShootSequence.h"
+#include "commands/CmdToggleShootingPosition.h"
+#include "commands/CmdEndShoot.h"
 #include "Utilities/Autonomous.h"
 
 /**
@@ -57,13 +61,18 @@ class RobotContainer {
   void ConfigureButtonBindings();
 
   CmdShooter _cmdShooter {&_subShooter};
-  CmdIntake _cmdIntake {&_subIntake};
+  CmdIntakeSequence _cmdIntake {&_subIntake, &_subStorage};
   CmdOuttake _cmdOuttake {&_subIntake};
   CmdDeployIntake _cmdDeployIntake {&_subIntake};
   CmdRetractIntake _cmdRetractIntake {&_subIntake};
   CmdTrackTarget _cmdTrackTarget {&_subDriveBase, &_subShooter};
   CmdSpinUpShooter _cmdSpinUpShooter {&_subShooter,500};
   CmdStorageIn _cmdStorageIn {&_subStorage};
+  CmdVisionShoot _cmdVisionShoot {&_subShooter};
+  CmdStorageOut _cmdStorageOut {&_subStorage};
+  CmdShootSequence _cmdShootSequence{&_subStorage, &_subShooter, &_subIntake, &_subDriveBase};
+  CmdEndShoot _cmdEndShoot{&_subStorage, &_subIntake, &_subShooter};
+  CmdToggleShootingPosition _cmdToggleShootingPosition {&_subShooter};
   frc::SendableChooser<frc2::Command*> _autoChooser;
   
 };
