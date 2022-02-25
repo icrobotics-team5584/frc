@@ -26,7 +26,6 @@ void CmdIntakeSequence::End(bool interrupted) {
   _subIntake->Retract();
   _subIntake->Stop();
   _subStorage->Stop();
-  _subStorage->RetractStopper();
 }
 
 // Returns true when the command should end.

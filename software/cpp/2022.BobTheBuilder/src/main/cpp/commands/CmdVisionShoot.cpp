@@ -4,7 +4,8 @@ CmdVisionShoot::CmdVisionShoot(SubShooter* subShooter) {
   _subShooter = subShooter;
 }
 
-void CmdVisionShoot::Initialize() {}
+void CmdVisionShoot::Initialize() {
+}
 
 void CmdVisionShoot::Execute() {
   double _e = _subShooter->GetVisionVelocityError();

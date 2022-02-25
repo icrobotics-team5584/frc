@@ -40,13 +40,15 @@ class SubShooter : public frc2::SubsystemBase {
    * Will be called periodically whenever the CommandScheduler runs.
    */
   void Periodic() override;
-  void SetTargetRpm(int rpm);
+  void SetTargetRpm(double rpm);
   void RunAtIdle();
   void Stop();
   bool IsAtTargetSpeed();
   LimelightData GetLimelight();
   void UpdatePidController();
   void SetShooterTracking(bool enableTracking);
+  void TogglePosition();
+  bool GetLowMode();
   
   /**
   * Returns error of shooter velocity relative to the
@@ -72,4 +74,6 @@ class SubShooter : public frc2::SubsystemBase {
   nt::NetworkTableEntry _tvert;
   bool _shouldTrackTarget = false;
   double _visionVelocityOutput = 0;
+
+  bool _shootingLow = false;
 };
