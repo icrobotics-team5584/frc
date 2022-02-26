@@ -30,8 +30,6 @@ class SubDriveBase : public frc2::SubsystemBase {
   rev::CANSparkMax _spmDolly{can::spmDolly, rev::CANSparkMax::MotorType::kBrushless};
   frc::DifferentialDrive _diffDrive{_spmFrontLeft, _spmFrontRight};
 
-  static constexpr double RAMP_RATE = 0.5;
-
   void Periodic() override;
 
   double getYaw();
@@ -43,7 +41,6 @@ class SubDriveBase : public frc2::SubsystemBase {
   void resetYaw();
   void SetCoastMode(); 
   void SetBreakMode();
-  void SetRampRate(double rampRate);
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be

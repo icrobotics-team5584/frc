@@ -6,6 +6,8 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include <frc/filter/SlewRateLimiter.h>
+#include <units/voltage.h>
 
 #include "subsystems/SubDriveBase.h"
 #include "Utilities/JoystickScaler.h"
@@ -26,4 +28,5 @@ class CmdJoystickDrive
  private:
   SubDriveBase* _subDriveBase;
   JoystickScaler* _joystick;
+  frc::SlewRateLimiter<units::volts> _stickYLimiter{2_V / 1_s};
 };

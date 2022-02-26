@@ -19,5 +19,5 @@ void CmdJoystickDrive::Execute() {
     speed = speed / 2;
     turning = turning / 2;
   }
-  _subDriveBase->drive(speed, turning, false);
+  _subDriveBase->drive(_stickYLimiter.Calculate(units::volt_t(speed)).value(), turning, false);
 }
