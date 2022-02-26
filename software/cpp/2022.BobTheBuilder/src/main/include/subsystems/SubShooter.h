@@ -64,7 +64,7 @@ class SubShooter : public frc2::SubsystemBase {
   rev::CANSparkMax _spmShooter1{can::spmShooter1, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::CANSparkMax _spmShooter2{can::spmShooter2, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::SparkMaxRelativeEncoder _encShooter1{_spmShooter1.GetEncoder()};
-  frc2::PIDController _controller{0.001,0,0.00008};
+  frc2::PIDController _controller{0.001,0.000002, 0.00003};
   double _controllerF = 0;
   nt::NetworkTableInstance _inst;
   std::shared_ptr<nt::NetworkTable> _table;  

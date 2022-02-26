@@ -23,10 +23,10 @@ void CmdTrackTarget::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CmdTrackTarget::Execute() {
-
  
 
-  double _output = _controller.Calculate(_subShooter->GetLimelight().tx, 0.0);
+  double _output = _controller.Calculate(_subShooter->GetLimelight().tx, _setpoint);
+  _controllerF = _output<0 ? -_controllerF : _controllerF;
   _subDriveBase->drive(0.0, _output, false);
   
   
@@ -40,5 +40,5 @@ void CmdTrackTarget::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool CmdTrackTarget::IsFinished() {
-  return (abs(_subShooter->GetLimelight().tx) < VisionToleranceLevel);
+  return (abs(_subShooter->GetLimelight().tx-_setpoint) < VisionToleranceLevel);
 }
