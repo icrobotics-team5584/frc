@@ -43,7 +43,7 @@ void SubShooter::Periodic() {
             SetTargetRpm(out);
             // SetTargetRpm(frc::SmartDashboard::GetNumber("ShooterSetRPM", 0));
         } else {
-            SetTargetRpm(0);
+            //SetTargetRpm(0);
         }
     }
 

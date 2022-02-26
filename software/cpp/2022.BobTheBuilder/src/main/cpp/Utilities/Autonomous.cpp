@@ -168,11 +168,15 @@ bool Autonomous::end(double endx, double endy, double startx, double starty, dou
   if(!isLinear){
     double vecPosX = dollyPosX-_cenX;
     double vecPosY = dollyPosY-_cenY;
-    vecPosX /= sqrt(pow(vecPosX, 2)+pow(vecPosY, 2)) * sqrt(pow(_cenX-endx, 2) + pow(_cenY-endy, 2));
-    vecPosY /= sqrt(pow(vecPosX, 2)+pow(vecPosY, 2)) * sqrt(pow(_cenX-endx, 2) + pow(_cenY-endy, 2));
-    double lineDistance = sqrt(pow(vecPosX - (endx-_cenX), 2)+pow(vecPosY-(endy-_cenY),2));
-    frc::SmartDashboard::PutNumber("lineDistance", lineDistance);
-    if(lineDistance < 0.05){
+    double vecPosMag = sqrt(pow(vecPosX, 2)+pow(vecPosY, 2));
+    double endVecX = (endx-_cenX);
+    double endVecY = (endy-_cenY);
+    double endVecMag = sqrt(pow(endVecX, 2) + pow(endVecY, 2));
+    vecPosX = (vecPosX/vecPosMag) * endVecMag;
+    vecPosY = (vecPosY/vecPosMag) * endVecMag;
+    double lineDistance = sqrt(pow(vecPosX - endVecX, 2)+pow(vecPosY-endVecY,2));
+
+    if(lineDistance < 0.1){
       frc::SmartDashboard::PutNumber("TIME", timer.GetMatchTime().value());
       return true;
     }

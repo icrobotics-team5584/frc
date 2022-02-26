@@ -27,4 +27,6 @@ extern PIDAutoConfig auto5BallP1;
 extern PIDAutoConfig auto5BallP2;
 extern PIDAutoConfig auto5BallP3;
 extern PIDAutoConfig auto5BallP4;
+extern PIDAutoConfig auto5BallP5;
+
 
