@@ -24,11 +24,11 @@ CmdShootSequence::CmdShootSequence(SubStorage* subStorage,
     frc2::ConditionalCommand(frc2::WaitCommand(0_s), frc2::WaitUntilCommand([subShooter] {return subShooter->IsAtTargetSpeed();}), [subShooter] {return subShooter->GetLowMode();}),
 
     frc2::InstantCommand([subStorage] { subStorage->RetractStopper(); }),
-    frc2::WaitCommand(0.5_s),
+    frc2::WaitCommand(0.3_s),
     frc2::InstantCommand([subStorage] { subStorage->ExtendStopper(); }),
     frc2::WaitUntilCommand([subShooter] { return subShooter->IsAtTargetSpeed(); }),
     frc2::InstantCommand([subStorage] { subStorage->RetractStopper(); }),
-    frc2::WaitCommand(0.5_s),
+    frc2::WaitCommand(0.3_s),
     
     frc2::InstantCommand([subStorage] { subStorage->Stop(); }),
     frc2::InstantCommand([subStorage] { subStorage->ExtendStopper(); }),
