@@ -16,7 +16,7 @@ SubShooter::SubShooter(){
      _inst = nt::NetworkTableInstance::GetDefault();
      _table = _inst.GetTable("limelight");
 
-    _controller.SetTolerance(100);
+    _controller.SetTolerance(50);
 
     frc::SmartDashboard::PutBoolean("ShooterTarget", _shootingLow);
     frc::SmartDashboard::PutNumber("ShooterSetRPM", 0);
@@ -39,10 +39,8 @@ void SubShooter::Periodic() {
         if (frc::DriverStation::IsTeleopEnabled() && _shouldTrackTarget && _table->GetEntry("tv").GetDouble(0.0) == 1.0) {
             // https://mycurvefit.com/
             double x = GetLimelight().ty;
-            // double out = 1658.681 - 32.44681*x - 0.5100554*x^2;
-            double out = 1658.681 - 32.44681*x - 0.5100554*pow(x, 2);
+            double out = 2106.346 - 42.59286*x + 1.897089*pow(x,2) + 0.1338984*pow(x,3);
             SetTargetRpm(out);
-            // SetTargetRpm(1500);
             // SetTargetRpm(frc::SmartDashboard::GetNumber("ShooterSetRPM", 0));
         } else {
             SetTargetRpm(0);
@@ -56,15 +54,14 @@ void SubShooter::SetShooterTracking(bool enableTracking) {
 }
 
 void SubShooter::SetTargetRpm(double rpm){
-    _controllerF = (1.0f/5800.0f)* rpm;
+    _controllerF = (1.0f/5300.0f)* rpm;
     _controller.SetSetpoint(rpm);
 }
 
 void SubShooter::UpdatePidController() {
     double _output = _controller.Calculate(_encShooter1.GetVelocity()) + _controllerF;
-
     if (_output >= 0) {
-        _spmShooter1.Set(_output);
+        _spmShooter1.SetVoltage(units::volt_t(_output*12));
         _visionVelocityOutput = _output;
     } else {
         _spmShooter1.Set(0);
