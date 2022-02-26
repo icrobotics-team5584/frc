@@ -18,6 +18,7 @@ CmdTrackTarget::CmdTrackTarget(SubDriveBase* subDriveBase, SubShooter* subShoote
 
 // Called when the command is initially scheduled.
 void CmdTrackTarget::Initialize() {
+  _subDriveBase->SetRampRate(0);
   _subDriveBase->drive(0.0, 0.0, false);
 }
 
@@ -36,6 +37,7 @@ void CmdTrackTarget::Execute() {
 // Called once the command ends or is interrupted.
 void CmdTrackTarget::End(bool interrupted) {
   _subDriveBase->drive(0.0, 0.0, false);
+  _subDriveBase->SetRampRate(SubDriveBase::RAMP_RATE);
 }
 
 // Returns true when the command should end.

@@ -28,6 +28,7 @@ SubDriveBase::SubDriveBase(){
   _spmFrontRight.SetInverted(true);
 
   SetBreakMode();
+  SetRampRate(RAMP_RATE);
 
   frc::SmartDashboard::PutNumber("LimelightP", 0.005);
   frc::SmartDashboard::PutNumber("LimelightI", 0.0);
@@ -95,4 +96,12 @@ void SubDriveBase::SetBreakMode() {
   _spmFrontRight.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
   _spmBackLeft.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
   _spmBackRight.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+}
+
+
+void SubDriveBase::SetRampRate(double rampRate) {
+  _spmFrontLeft.SetOpenLoopRampRate(rampRate);
+  _spmFrontRight.SetOpenLoopRampRate(rampRate);
+  _spmBackLeft.SetOpenLoopRampRate(rampRate);
+  _spmBackRight.SetOpenLoopRampRate(rampRate);
 }
