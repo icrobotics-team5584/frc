@@ -12,6 +12,7 @@
 #include "Utilities/PIDk.h"
 #include "CmdAutoSetPose.h"
 #include "commands/CmdAutoTurn.h"
+#include "commands/CmdSpinUpShooter.h"
 #include "subsystems/SubIntake.h"
 #include "subsystems/SubShooter.h"
 #include "subsystems/SubStorage.h"
