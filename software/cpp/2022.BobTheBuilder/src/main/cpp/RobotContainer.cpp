@@ -19,6 +19,7 @@ RobotContainer::RobotContainer() {
   _autoChooser.AddOption("2 Ball", &_cmd2BallAuto);
   _autoChooser.AddOption("5 Ball", &_cmd5BallAuto);
   _autoChooser.AddOption("1 Ball", &_cmd1BallAuto);
+  _autoChooser.AddOption("3 Ball", &_cmd3BallAuto);
 
   frc::SmartDashboard::PutData("Auto chooser", &_autoChooser);
 }

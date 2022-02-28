@@ -31,6 +31,7 @@
 #include "commands/CmdToggleShootingPosition.h"
 #include "commands/CmdEndShoot.h"
 #include "Utilities/Autonomous.h"
+#include "commands/Cmd3BallAuto.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -53,6 +54,7 @@ class RobotContainer {
   Cmd2BallAuto _cmd2BallAuto{&_subDriveBase, &_subIntake, &_subShooter, &_subStorage, &_autonomous};
   Cmd5BallAuto _cmd5BallAuto{&_subDriveBase, &_subIntake, &_subShooter, &_subStorage, &_autonomous};
   Cmd1BallAuto _cmd1BallAuto{&_subDriveBase, &_subIntake, &_subShooter, &_subStorage, &_autonomous};
+  Cmd3BallAuto _cmd3BallAuto{&_subDriveBase, &_subIntake, &_subShooter, &_subStorage, &_autonomous};
 
  private:
   // Create new joystick to control the robot
