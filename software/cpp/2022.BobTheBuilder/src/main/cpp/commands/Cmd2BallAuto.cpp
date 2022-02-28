@@ -14,6 +14,7 @@
 #include "commands/CmdRetractIntake.h"
 #include "commands/CmdStorageIn.h"
 #include "commands/CmdSpinUpShooter.h"
+#include "commands/CmdTrackTarget.h"
 #include <frc2/command/WaitUntilCommand.h>
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.
@@ -21,27 +22,31 @@
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 Cmd2BallAuto::Cmd2BallAuto(SubDriveBase* subDriveBase, SubIntake* subIntake, SubShooter* subShooter, SubStorage* subStorage, Autonomous* autonomous){
   AddCommands(
-    frc2::SequentialCommandGroup{
       CmdAutoSetPose{autonomous, subDriveBase, 0, 0, 0},
+      frc2::InstantCommand([subIntake] {subIntake->Extend(); }),
+      frc2::InstantCommand([subStorage] { subStorage->In(); }), 
+      frc2::InstantCommand([subIntake] {subIntake->Intake();}),
       CmdAutoDrive{subDriveBase, autonomous, autoRoutineOneLegOne},
-      frc2::WaitCommand(0.5_s),
-
-      CmdAutoTurn{subDriveBase, autonomous, PIDk{0.1, 0, 0.6 }, 180, 5},
+      frc2::WaitCommand(0.2_s),
       CmdAutoDrive{subDriveBase, autonomous, autoRoutineOneLegTwo},
+      CmdAutoTurn{subDriveBase, autonomous, PIDk{0.1, 0, 0.6 }, 180, 5},
+      frc2::InstantCommand([subShooter] { subShooter->SetShooterTracking(true); }),
+      CmdTrackTarget(subDriveBase, subShooter),
       frc2::WaitUntilCommand([subShooter]{return subShooter->IsAtTargetSpeed();}),
-      // Acuate Storage Pistons
-      frc2::WaitCommand(3_s),
+      frc2::InstantCommand([subStorage] { subStorage->RetractStopper(); }),
+      frc2::WaitCommand(0.3_s),
+      frc2::InstantCommand([subStorage] { subStorage->ExtendStopper(); }),
+      frc2::WaitUntilCommand([subShooter]{return subShooter->IsAtTargetSpeed();}),
+      frc2::InstantCommand([subStorage] { subStorage->RetractStopper(); }),
+      frc2::WaitCommand(0.3_s),
+      frc2::InstantCommand([subStorage] { subStorage->ExtendStopper(); }),
+      frc2::InstantCommand([subIntake] {subIntake->Retract(); }),
+      frc2::InstantCommand([subStorage] { subStorage->Stop(); }),
+      frc2::InstantCommand([subIntake] { subIntake->Stop();}),
+      frc2::InstantCommand([subShooter] { subShooter->SetShooterTracking(false); }),
+      frc2::InstantCommand([subShooter] {subShooter->Stop();}),
+      CmdAutoDrive{subDriveBase, autonomous, autoRoutineOneLegThree}
       
-      CmdAutoDrive{subDriveBase, autonomous, autoRoutineOneLegThree},
-      CmdSpinUpShooter{subShooter, 0},
-      
-
-
-    },
-    CmdIntake{subIntake}.WithTimeout(5_s),
-    CmdDeployIntake{subIntake}.WithTimeout(15_s),
-    CmdStorageIn{subStorage}.WithTimeout(15_s),
-    CmdSpinUpShooter{subShooter, 2100}
   );
 
 }
