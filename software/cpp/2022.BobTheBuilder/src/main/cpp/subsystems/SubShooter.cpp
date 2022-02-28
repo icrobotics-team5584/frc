@@ -36,7 +36,7 @@ void SubShooter::Periodic() {
     if (_shootingLow && _shouldTrackTarget) {
         SetTargetRpm(500);
     } else {
-        if (frc::DriverStation::IsTeleopEnabled() && _shouldTrackTarget && _table->GetEntry("tv").GetDouble(0.0) == 1.0) {
+        if (/*frc::DriverStation::IsTeleopEnabled() &&*/ _shouldTrackTarget && _table->GetEntry("tv").GetDouble(0.0) == 1.0) {
             // In telep, tracking target and target is visible
             // https://mycurvefit.com/
             double x = GetLimelight().ty;
