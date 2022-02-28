@@ -34,7 +34,7 @@ void SubShooter::Periodic() {
     UpdatePidController();
 
     if (_shootingLow && _shouldTrackTarget) {
-        SetTargetRpm(500);
+        SetTargetRpm(1200);
     } else {
         if (frc::DriverStation::IsTeleopEnabled() && _shouldTrackTarget && _table->GetEntry("tv").GetDouble(0.0) == 1.0) {
             // In telep, tracking target and target is visible
@@ -50,6 +50,8 @@ void SubShooter::Periodic() {
             SetTargetRpm(0);
         }
     }
+
+    frc::SmartDashboard::PutBoolean("Low Mode",_shootingLow);
 
 }
 
@@ -108,3 +110,8 @@ void SubShooter::TogglePosition() {
 bool SubShooter::GetLowMode() {
     return _shootingLow;
 }
+
+void SubShooter::SetLowMode(bool lowMode) {
+    _shootingLow = lowMode;
+}
+

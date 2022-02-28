@@ -49,6 +49,7 @@ class SubShooter : public frc2::SubsystemBase {
   void SetShooterTracking(bool enableTracking);
   void TogglePosition();
   bool GetLowMode();
+  void SetLowMode(bool lowMode);
   
   /**
   * Returns error of shooter velocity relative to the

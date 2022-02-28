@@ -18,10 +18,10 @@ CmdShootSequence::CmdShootSequence(SubStorage* subStorage,
     frc2::InstantCommand([subShooter] { subShooter->SetShooterTracking(true); }),
     frc2::InstantCommand([subIntake] {subIntake->Extend(); }),
     frc2::InstantCommand([subStorage] { subStorage->In(); }),
-    CmdTrackTarget(subDriveBase, subShooter),
+    frc2::ConditionalCommand(frc2::WaitCommand(0_s), CmdTrackTarget(subDriveBase, subShooter), [subShooter] {return subShooter->GetLowMode();}),
     // frc2::WaitUntilCommand([subShooter] { return subShooter->IsAtTargetSpeed(); }),
 
-    frc2::ConditionalCommand(frc2::WaitCommand(0_s), frc2::WaitUntilCommand([subShooter] {return subShooter->IsAtTargetSpeed();}), [subShooter] {return subShooter->GetLowMode();}),
+    frc2::WaitUntilCommand([subShooter] {return subShooter->IsAtTargetSpeed();}),
 
     frc2::InstantCommand([subStorage] { subStorage->RetractStopper(); }),
     frc2::WaitCommand(0.3_s),
