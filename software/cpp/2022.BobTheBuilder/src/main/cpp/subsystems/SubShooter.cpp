@@ -52,6 +52,7 @@ void SubShooter::Periodic() {
     }
 
     frc::SmartDashboard::PutBoolean("Low Mode",_shootingLow);
+    frc::SmartDashboard::PutBoolean("Should Track Target",_shouldTrackTarget);
 
 }
 
@@ -76,6 +77,7 @@ void SubShooter::UpdatePidController() {
 }
 void SubShooter::Stop() {
     SetTargetRpm(0);
+    _shouldTrackTarget = false;
 }
  
 LimelightData SubShooter::GetLimelight() {

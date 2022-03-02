@@ -45,6 +45,9 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::POVButton HighGoalMode{&_joystick0, 0,0};
   HighGoalMode.WhenPressed(frc2::InstantCommand{[this]{_subShooter.SetLowMode(false);}});
 
+  frc2::JoystickButton ShooterStop{&_joystick0, frc::XboxController::Button::kStart};
+  ShooterStop.WhenPressed(_cmdStopShooter);
+  
 
   
 }

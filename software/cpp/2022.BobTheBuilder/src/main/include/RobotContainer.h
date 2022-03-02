@@ -27,6 +27,7 @@
 #include "commands/CmdShootSequence.h"
 #include "commands/CmdToggleShootingPosition.h"
 #include "commands/CmdEndShoot.h"
+#include "commands/CmdStopShooter.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -66,4 +67,5 @@ class RobotContainer {
   CmdShootSequence _cmdShootSequence{&_subStorage, &_subShooter, &_subIntake, &_subDriveBase};
   CmdEndShoot _cmdEndShoot{&_subStorage, &_subIntake, &_subShooter};
   CmdToggleShootingPosition _cmdToggleShootingPosition {&_subShooter};
+  CmdStopShooter _cmdStopShooter {&_subShooter};
 };
