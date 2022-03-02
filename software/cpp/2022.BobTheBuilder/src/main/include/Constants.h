@@ -28,12 +28,12 @@ namespace can {
 }
 
 namespace pcm {
-  constexpr int solDollyDeploy = 0;
-  constexpr int solDollyRetract = 1;
+  constexpr int solDollyDeploy = 1;
+  constexpr int solDollyRetract = 0;
   constexpr int solClimberForward = 4;
   constexpr int solClimberReverse = 5;
-  constexpr int solStorageStopperForward = 2;
-  constexpr int solStorageStopperReverse = 3;
-  constexpr int solIntakeOut = 6;
-  constexpr int solIntakeIn = 7;
+  constexpr int solStorageStopperForward = 3;
+  constexpr int solStorageStopperReverse = 2;
+  constexpr int solIntakeOut = 7;
+  constexpr int solIntakeIn = 6;
 }
