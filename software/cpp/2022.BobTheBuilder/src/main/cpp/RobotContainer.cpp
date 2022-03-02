@@ -9,6 +9,7 @@
 #include <frc2/command/ParallelCommandGroup.h>
 #include <frc2/command/StartEndCommand.h>
 #include <frc2/command/InstantCommand.h>
+#include <frc2/command/button/POVButton.h>
 
 
 RobotContainer::RobotContainer() {
@@ -47,6 +48,11 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton ShooterLowGoal{&_joystick0, frc::XboxController::Button::kBack};
   ShooterLowGoal.WhileHeld(_cmdToggleShootingPosition);
 
+  frc2::POVButton LowGoalMode{&_joystick0, 180, 0};
+  LowGoalMode.WhenPressed(frc2::InstantCommand{[this]{_subShooter.SetLowMode(true);}});
+
+  frc2::POVButton HighGoalMode{&_joystick0, 0,0};
+  HighGoalMode.WhenPressed(frc2::InstantCommand{[this]{_subShooter.SetLowMode(false);}});
   // wrapping shootSequence in an instant command because it doesnt have a copy constructor,
   // which is needed for binding to a button
   StorageButton.WhenHeld(frc2::InstantCommand{[this]{_cmdShootSequence.Schedule();}});
