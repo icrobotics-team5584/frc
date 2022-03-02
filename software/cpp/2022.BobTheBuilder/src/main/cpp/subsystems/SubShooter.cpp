@@ -61,18 +61,16 @@ void SubShooter::SetShooterTracking(bool enableTracking) {
 }
 
 void SubShooter::SetTargetRpm(double rpm){
-    _controllerF = (1.0f/5300.0f)* rpm;
     _controller.SetSetpoint(rpm);
 }
 
 void SubShooter::UpdatePidController() {
-    double _output = _controller.Calculate(_encShooter1.GetVelocity()) + _controllerF;
+    double feedForward = (1.0f/5300.0f)* _controller.GetSetpoint();
+    double _output = _controller.Calculate(_encShooter1.GetVelocity()) + feedForward;
     if (_output >= 0) {
         _spmShooter1.SetVoltage(units::volt_t(_output*12));
-        _visionVelocityOutput = _output;
     } else {
         _spmShooter1.Set(0);
-        _visionVelocityOutput = 0;
     }
 }
 void SubShooter::Stop() {
@@ -92,10 +90,6 @@ LimelightData SubShooter::GetLimelight() {
 bool SubShooter::IsAtTargetSpeed() {
     return _controller.AtSetpoint();
     
-}
-
-double SubShooter::GetVisionVelocityError() {
-    return _visionVelocityOutput - _encShooter1.GetVelocity();
 }
 
 void SubShooter::TogglePosition() {

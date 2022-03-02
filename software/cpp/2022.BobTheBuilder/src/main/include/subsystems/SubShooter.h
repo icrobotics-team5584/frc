@@ -51,14 +51,6 @@ class SubShooter : public frc2::SubsystemBase {
   bool GetLowMode();
   void SetLowMode(bool lowMode);
   
-  /**
-  * Returns error of shooter velocity relative to the
-  * intended target speed calculated from the limelight.
-  *
-  * @return [double] error
-  */
-  double GetVisionVelocityError();
-
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
@@ -66,7 +58,6 @@ class SubShooter : public frc2::SubsystemBase {
   rev::CANSparkMax _spmShooter2{can::spmShooter2, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::SparkMaxRelativeEncoder _encShooter1{_spmShooter1.GetEncoder()};
   frc2::PIDController _controller{0.001,0.000002, 0.00003};
-  double _controllerF = 0;
   nt::NetworkTableInstance _inst;
   std::shared_ptr<nt::NetworkTable> _table;  
   nt::NetworkTableEntry _tx;
@@ -74,7 +65,5 @@ class SubShooter : public frc2::SubsystemBase {
   nt::NetworkTableEntry _thor;
   nt::NetworkTableEntry _tvert;
   bool _shouldTrackTarget = false;
-  double _visionVelocityOutput = 0;
-
   bool _shootingLow = false;
 };

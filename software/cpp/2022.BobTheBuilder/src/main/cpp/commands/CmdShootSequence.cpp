@@ -3,7 +3,6 @@
 #include "commands/CmdSpinUpShooter.h"
 #include "commands/CmdStorageIn.h"
 #include "commands/CmdTrackTarget.h"
-#include "commands/CmdVisionShoot.h"
 #include <frc2/command/InstantCommand.h>
 #include <frc2/command/ConditionalCommand.h>
 #include <frc2/command/waitCommand.h>
