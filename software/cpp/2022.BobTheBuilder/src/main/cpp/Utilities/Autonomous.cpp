@@ -69,7 +69,7 @@ void Autonomous::setPosition(double x, double y){
 DriveInput Autonomous::autoDrive(double startX, double startY, double endX, double endY, double endHeading, double cenX, double cenY, PIDk pidSpeed, PIDk PIDk, double maxSpeed, double endSpeed){
   maxSpeed = maxSpeed*autoop;
   endSpeed = endSpeed*autoop;
-  if(speed >= 0){
+  if(maxSpeed >= 0){
     posX = frontPosX;
     posY = frontPosY;
   }else{
@@ -134,7 +134,19 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
 
 
   //speed pid
-  error = sqrt(pow((posX - endX), 2) + pow((posY - endY), 2));
+  if(isLinear){
+    error = sqrt(pow((posX - endX), 2) + pow((posY - endY), 2));
+  }else{
+    double vecPosX = dollyPosX-_cenX;
+    double vecPosY = dollyPosY-_cenY;
+    double vecPosMag = sqrt(pow(vecPosX, 2)+pow(vecPosY, 2));
+    double endVecX = (endX-_cenX);
+    double endVecY = (endY-_cenY);
+    double endVecMag = sqrt(pow(endVecX, 2) + pow(endVecY, 2));
+    vecPosX = (vecPosX/vecPosMag) * endVecMag;
+    vecPosY = (vecPosY/vecPosMag) * endVecMag;
+    error = sqrt(pow(vecPosX - endVecX, 2)+pow(vecPosY-endVecY,2));  
+  }
   intergral = intergral + error;
   //output = kP*Error + kI*Intergral + kD*Derivative
   speed = pidSpeed.p*error + pidSpeed.i*intergral + pidSpeed.d*(error - previousDistError);
