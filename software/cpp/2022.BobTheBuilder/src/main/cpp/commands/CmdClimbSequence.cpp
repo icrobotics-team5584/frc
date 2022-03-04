@@ -48,7 +48,7 @@ CmdClimbSequence::CmdClimbSequence(SubClimber* subClimber, frc::XboxController* 
   frc2::WaitUntilCommand([&] {return xboxController->GetXButton(); }),
   frc2::PrintCommand("pressed x"),
   frc2::InstantCommand([&] {subClimber->Rotate(); }),
-  frc2::WaitUntilCommand(1_s),
+  frc2::WaitCommand(1_s),
   frc2::PrintCommand("Rotated"),
   //extand arms
   frc2::WaitUntilCommand([&] {return xboxController->GetXButton(); }),
@@ -60,7 +60,7 @@ CmdClimbSequence::CmdClimbSequence(SubClimber* subClimber, frc::XboxController* 
   frc2::WaitUntilCommand([&] {return xboxController->GetXButton(); }),
   frc2::PrintCommand("pressed x"),
   frc2::InstantCommand([&] { subClimber->Stow(); }),
-  frc2::WaitUntilCommand(1_s),
+  frc2::WaitCommand(1_s),
   frc2::PrintCommand("Stowed"),
   //retact amrs
   frc2::WaitUntilCommand([&] {return xboxController->GetXButton(); }),
@@ -78,7 +78,7 @@ CmdClimbSequence::CmdClimbSequence(SubClimber* subClimber, frc::XboxController* 
   frc2::WaitUntilCommand([&] {return xboxController->GetXButton(); }),
   frc2::PrintCommand("pressed x"),
   frc2::InstantCommand([&] {subClimber->Rotate(); }),
-  frc2::WaitUntilCommand(1_s),
+  frc2::WaitCommand(1_s),
   frc2::PrintCommand("Rotate"),
   //extend arms
   frc2::WaitUntilCommand([&] {return xboxController->GetXButton(); }),
@@ -91,7 +91,7 @@ CmdClimbSequence::CmdClimbSequence(SubClimber* subClimber, frc::XboxController* 
   frc2::WaitUntilCommand([&] {return xboxController->GetXButton(); }),
   frc2::PrintCommand("pressed x"),
   frc2::InstantCommand([&] { subClimber->Stow(); }),
-  frc2::WaitUntilCommand(1_s),
+  frc2::WaitCommand(1_s),
   frc2::PrintCommand("Stowed"),
   //retract arms
   frc2::WaitUntilCommand([&] {return xboxController->GetXButton(); }),
