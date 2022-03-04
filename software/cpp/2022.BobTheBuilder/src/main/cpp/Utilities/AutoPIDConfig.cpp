@@ -72,7 +72,7 @@ PIDAutoConfig auto5BallP2 = {
     0.878, //   double cenY;
     PIDk{3, 0, 3}, //   PIDk PIDconstants;
     -0.2, //   double speed;
-    0, //   double endSpeed;
+    -0.2, //   double endSpeed;
     PIDk{2, 0, 0} //   PIDk pidSpeed;
 };
 
@@ -105,14 +105,56 @@ PIDAutoConfig auto5BallP4 = {
 };
 //end 3 ball
 PIDAutoConfig auto5BallP5 = {
-    0, //   double startX;
-    0.698, //   double startY;
-    5.465, //   double endX;
-    2.951, //   double endY;
-    67-180, //   double endHeading;
+    4.632, //   double startX;
+    1.584, //   double startY;
+    1.902, //   double endX;
+    1.603, //   double endY;
+    -89.6, //   double endHeading;
     0, //   double cenX;
     0, //   double cenY;
     PIDk{3, 0, 3}, //   PIDk PIDconstants;
+    0.2, //   double speed;
+    0.2, //   double endSpeed;
+    PIDk{3, 0, 9} //   PIDk pidSpeed;
+};
+
+PIDAutoConfig auto5BallP6 = {
+    1.902, //   double startX;
+    1.603, //   double startY;
+    1.379, //   double endX;
+    1.395, //   double endY;
+    -134, //   double endHeading;
+    1.897, //   double cenX;
+    0.853, //   double cenY;
+    PIDk{3, 0, 3}, //   PIDk PIDconstants;
+    0.2, //   double speed;
+    0, //   double endSpeed;
+    PIDk{3, 0, 9} //   PIDk pidSpeed;
+};
+
+PIDAutoConfig auto5BallP7 = {
+    1.379, //   double startX;
+    1.395, //   double startY;
+    2.209, //   double endX;
+    1.912, //   double endY;
+    -110, //   double endHeading;
+    3.03, //   double cenX;
+    -0.33, //   double cenY;
+    PIDk{-3, 0, -3}, //   PIDk PIDconstants;
+    -0.2, //   double speed;
+    -0.2, //   double endSpeed;
+    PIDk{3, 0, 9} //   PIDk pidSpeed;
+};
+
+PIDAutoConfig auto5BallP8 = {
+    2.209, //   double startX;
+    1.912, //   double startY;
+    4.569, //   double endX;
+    2.775, //   double endY;
+    -110, //   double endHeading;
+    0, //   double cenX;
+    0, //   double cenY;
+    PIDk{-3, 0, -3}, //   PIDk PIDconstants;
     -0.2, //   double speed;
     0, //   double endSpeed;
     PIDk{3, 0, 9} //   PIDk pidSpeed;
