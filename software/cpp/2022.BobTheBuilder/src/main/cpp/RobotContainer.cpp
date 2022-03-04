@@ -43,13 +43,9 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton{&_joystick0, Btn::kA}.WhenHeld(
       frc2::StartEndCommand([&] { _subClimber.ManualDrive(-0.2); }, [&] { _subClimber.ManualDrive(0); }));
 
-  frc2::JoystickButton{&_joystick0, Btn::kX}.WhenHeld(
-      frc2::InstantCommand([&] { _subClimber.StepClimbSequence(); }));
-
   frc::SmartDashboard::PutData("Rotate Climber",&_cmdRotateClimber);
   frc::SmartDashboard::PutData("Stow Climber",&_cmdStowClimber);
   frc::SmartDashboard::PutData("Near Extend Climber",&_cmdNearExtend);
-  frc::SmartDashboard::PutData("Reset Climber seq",&_cmdResetClimbSeq);
 
   frc2::POVButton LowGoalMode{&_joystick0, 180, 0};
   LowGoalMode.WhenPressed(frc2::InstantCommand{[this]{_subShooter.SetLowMode(true);}});
@@ -59,6 +55,9 @@ void RobotContainer::ConfigureButtonBindings() {
 
   frc2::JoystickButton ShooterStop{&_joystick0, frc::XboxController::Button::kStart};
   ShooterStop.WhenPressed(_cmdStopShooter);
+
+  frc2::JoystickButton ClimbUnlock{&_joystick0, Btn::kBack };
+  ClimbUnlock.WhenPressed(frc2::InstantCommand([&] {_cmdClimbSequence.Schedule();} ));
   
   
   

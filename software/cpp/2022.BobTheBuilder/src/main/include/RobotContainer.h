@@ -30,6 +30,7 @@
 #include "commands/CmdToggleShootingPosition.h"
 #include "commands/CmdEndShoot.h"
 #include "commands/CmdStopShooter.h"
+#include "commands/CmdClimbSequence.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -67,14 +68,13 @@ class RobotContainer {
   CmdStorageIn _cmdStorageIn {&_subStorage};
   CmdExtendClimber _cmdExtendClimber {&_subClimber};
   CmdRetractClimber _cmdRetractClimber {&_subClimber};
-
   frc2::InstantCommand _cmdRotateClimber{[&]{_subClimber.Rotate();}};
   frc2::InstantCommand _cmdStowClimber{[&]{_subClimber.Stow();}};
   frc2::InstantCommand _cmdNearExtend{[&]{_subClimber.DriveTo(90);}};
-  frc2::InstantCommand _cmdResetClimbSeq{[&]{_subClimber.ResetClimbSequence();}};
   CmdStorageOut _cmdStorageOut {&_subStorage};
   CmdShootSequence _cmdShootSequence{&_subStorage, &_subShooter, &_subIntake, &_subDriveBase};
   CmdEndShoot _cmdEndShoot{&_subStorage, &_subIntake, &_subShooter};
   CmdToggleShootingPosition _cmdToggleShootingPosition {&_subShooter};
   CmdStopShooter _cmdStopShooter {&_subShooter};
+  CmdClimbSequence _cmdClimbSequence {&_subClimber, &_joystick0};
 };

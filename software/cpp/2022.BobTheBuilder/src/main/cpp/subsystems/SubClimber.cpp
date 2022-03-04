@@ -34,7 +34,10 @@ SubClimber::SubClimber() {
 
   SetEncoders(MIN_POSITION);  // Assume we turn the robot on with the arms down
 }
-
+bool SubClimber::IsAtTargetPosition() {
+  double error = abs(_targetPosition - _encLeftElevator.GetPosition() );
+  return (error < kAllErr);
+}
 void SubClimber::SetEncoders(double value) {
   _encLeftElevator.SetPosition(value);
   _encRightElevator.SetPosition(value);
@@ -113,55 +116,3 @@ bool SubClimber::GoingDown() {
   }
 }
 
-void SubClimber::SetDesiredState(ClimberState state) {
-  SpeedState desiredSpeed = state.speed;
-  TiltState desiredTilt = state.tilt;
-  ElevatorState desiredElevatorPos = state.elevator;
-
-  switch (desiredSpeed) {
-    case FAST:
-      _pidRightMotorController.SetSmartMotionMaxVelocity(kFastMaxVel);
-      _pidLeftMotorController.SetSmartMotionMaxVelocity(kFastMaxVel);
-      break;
-    case SLOW:
-      _pidRightMotorController.SetSmartMotionMaxVelocity(kSlowMaxVel);
-      _pidLeftMotorController.SetSmartMotionMaxVelocity(kSlowMaxVel);
-      break;
-  }
-
-  switch (desiredTilt) {
-    case ROTATED:
-      Rotate();
-      break;
-    case STOWED:
-      Stow();
-      break;
-  }
-
-  switch (desiredElevatorPos) {
-    case FULL_EXTENDED:
-      Extend();
-      break;
-    case FULL_RETRACTED:
-      Retract();
-      break;
-    case NEAR_EXTENDED:
-      DriveTo(NEAR_MAX_POS);
-      break;
-    case NEAR_RETRACTED:
-      DriveTo(NEAR_MIN_POS);
-      break;
-  }
-}
-
-void SubClimber::StepClimbSequence() {
-  // Dont try to transition if we are at the end of the seuqence
-  if (currentStep == climbSequence.end()) return;
-  currentStep = std::next(currentStep);
-  SetDesiredState(*currentStep);
-}
-
-void SubClimber::ResetClimbSequence() {
-  currentStep = climbSequence.begin();
-  SetDesiredState(*currentStep);
-}
