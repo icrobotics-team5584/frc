@@ -13,6 +13,7 @@
 #include <networktables/NetworkTable.h>
 #include <networktables/NetworkTableEntry.h>
 #include <networktables/NetworkTableInstance.h>
+#include <frc/DriverStation.h>
 
 #include "Constants.h"
 
@@ -39,25 +40,30 @@ class SubShooter : public frc2::SubsystemBase {
    * Will be called periodically whenever the CommandScheduler runs.
    */
   void Periodic() override;
-  void SetTargetRpm(int rpm);
+  void SetTargetRpm(double rpm);
+  void RunAtIdle();
   void Stop();
   bool IsAtTargetSpeed();
   LimelightData GetLimelight();
   void UpdatePidController();
-
+  void SetShooterTracking(bool enableTracking);
+  void TogglePosition();
+  bool GetLowMode();
+  void SetLowMode(bool lowMode);
+  
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
   rev::CANSparkMax _spmShooter1{can::spmShooter1, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::CANSparkMax _spmShooter2{can::spmShooter2, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::SparkMaxRelativeEncoder _encShooter1{_spmShooter1.GetEncoder()};
-  frc2::PIDController _controller{0.1,0,0};
-  double _controllerF = 0;
+  frc2::PIDController _controller{0.001,0.000002, 0.00003};
   nt::NetworkTableInstance _inst;
   std::shared_ptr<nt::NetworkTable> _table;  
   nt::NetworkTableEntry _tx;
   nt::NetworkTableEntry _ty;
   nt::NetworkTableEntry _thor;
   nt::NetworkTableEntry _tvert;
-
+  bool _shouldTrackTarget = false;
+  bool _shootingLow = false;
 };

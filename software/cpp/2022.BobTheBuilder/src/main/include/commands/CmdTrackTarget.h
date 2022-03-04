@@ -35,12 +35,13 @@ class CmdTrackTarget
   bool IsFinished() override;
 
  private:
-  int VisionToleranceLevel = 0.04;
+  double VisionToleranceLevel = 0.5;
+  double _setpoint = 3.5;
 
   SubDriveBase* _subDriveBase;
   SubShooter* _subShooter;
 
-  frc2::PIDController _controller{0.1,0,0};
-  double _controllerF = 0;
-
+  frc2::PIDController _controller{0.05,0,0.05};
+  double _controllerF = 0.1;
+  bool isFinished = false;
 };

@@ -51,6 +51,7 @@ void Robot::AutonomousPeriodic() {}
 
 void Robot::TeleopInit() {
   m_container._subDriveBase.SetCoastMode();
+  m_container._subShooter.SetShooterTracking(true);
 
   // This makes sure that the autonomous stops running when
   // teleop starts running. If you want the autonomous to

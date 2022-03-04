@@ -10,10 +10,11 @@
 #include "subsystems/SubShooter.h"
 #include "subsystems/SubStorage.h"
 #include "commands/CmdShooter.h"
+
 #include "commands/CmdJoystickDrive.h"
 #include "commands/Cmd2BallAuto.h"
 #include "subsystems/SubIntake.h"
-#include "commands/CmdIntake.h"
+#include "commands/CmdIntakeSequence.h"
 #include "commands/CmdOuttake.h"
 #include "commands/CmdDeployIntake.h"
 #include "commands/CmdRetractIntake.h"
@@ -24,7 +25,11 @@
 #include "commands/CmdExtendClimber.h"
 #include "commands/CmdRetractClimber.h"
 #include <frc2/command/InstantCommand.h>
-
+#include "commands/CmdStorageOut.h"
+#include "commands/CmdShootSequence.h"
+#include "commands/CmdToggleShootingPosition.h"
+#include "commands/CmdEndShoot.h"
+#include "commands/CmdStopShooter.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -53,7 +58,7 @@ class RobotContainer {
   void ConfigureButtonBindings();
 
   CmdShooter _cmdShooter {&_subShooter};
-  CmdIntake _cmdIntake {&_subIntake};
+  CmdIntakeSequence _cmdIntake {&_subIntake, &_subStorage};
   CmdOuttake _cmdOuttake {&_subIntake};
   CmdDeployIntake _cmdDeployIntake {&_subIntake};
   CmdRetractIntake _cmdRetractIntake {&_subIntake};
@@ -67,4 +72,9 @@ class RobotContainer {
   frc2::InstantCommand _cmdStowClimber{[&]{_subClimber.Stow();}};
   frc2::InstantCommand _cmdNearExtend{[&]{_subClimber.DriveTo(90);}};
   frc2::InstantCommand _cmdResetClimbSeq{[&]{_subClimber.ResetClimbSequence();}};
+  CmdStorageOut _cmdStorageOut {&_subStorage};
+  CmdShootSequence _cmdShootSequence{&_subStorage, &_subShooter, &_subIntake, &_subDriveBase};
+  CmdEndShoot _cmdEndShoot{&_subStorage, &_subIntake, &_subShooter};
+  CmdToggleShootingPosition _cmdToggleShootingPosition {&_subShooter};
+  CmdStopShooter _cmdStopShooter {&_subShooter};
 };
