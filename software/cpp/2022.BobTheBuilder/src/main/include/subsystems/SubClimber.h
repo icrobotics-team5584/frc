@@ -78,8 +78,8 @@ class SubClimber : public frc2::SubsystemBase {
                                      rev::CANSparkMax::MotorType::kBrushless};
 
   frc::DoubleSolenoid _solTilter{1, frc::PneumaticsModuleType::CTREPCM,
-                                 pcm::solClimbTilterForward,
-                                 pcm::solClimbTilterReverse};
+                                 pcm::solClimberForward,
+                                 pcm::solClimberReverse};
 
   frc::DigitalInput _lmtLeft{dio::lmtClimberLeft};
   frc::DigitalInput _lmtRight{dio::lmtClimberRight};
