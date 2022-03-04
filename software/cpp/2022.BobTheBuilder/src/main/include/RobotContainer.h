@@ -10,7 +10,6 @@
 #include "subsystems/SubShooter.h"
 #include "subsystems/SubStorage.h"
 #include "commands/CmdShooter.h"
-#include "commands/CmdVisionShoot.h"
 
 #include "commands/CmdJoystickDrive.h"
 #include "commands/Cmd2BallAuto.h"
@@ -30,6 +29,7 @@
 #include "commands/CmdShootSequence.h"
 #include "commands/CmdToggleShootingPosition.h"
 #include "commands/CmdEndShoot.h"
+#include "commands/CmdStopShooter.h"
 #include "Utilities/Autonomous.h"
 #include "commands/Cmd3BallAuto.h"
 
@@ -70,11 +70,11 @@ class RobotContainer {
   CmdTrackTarget _cmdTrackTarget {&_subDriveBase, &_subShooter};
   CmdSpinUpShooter _cmdSpinUpShooter {&_subShooter,500};
   CmdStorageIn _cmdStorageIn {&_subStorage};
-  CmdVisionShoot _cmdVisionShoot {&_subShooter};
   CmdStorageOut _cmdStorageOut {&_subStorage};
   CmdShootSequence _cmdShootSequence{&_subStorage, &_subShooter, &_subIntake, &_subDriveBase};
   CmdEndShoot _cmdEndShoot{&_subStorage, &_subIntake, &_subShooter};
   CmdToggleShootingPosition _cmdToggleShootingPosition {&_subShooter};
+  CmdStopShooter _cmdStopShooter {&_subShooter};
   frc::SendableChooser<frc2::Command*> _autoChooser;
   
 };
