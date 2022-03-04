@@ -25,11 +25,16 @@
 #include "commands/CmdTrackTarget.h"
 #include "commands/CmdSpinUpShooter.h"
 #include "commands/CmdStorageIn.h"
+#include "subsystems/SubClimber.h"
+#include "commands/CmdExtendClimber.h"
+#include "commands/CmdRetractClimber.h"
+#include <frc2/command/InstantCommand.h>
 #include "commands/CmdStorageOut.h"
 #include "commands/CmdShootSequence.h"
 #include "commands/CmdToggleShootingPosition.h"
 #include "commands/CmdEndShoot.h"
 #include "commands/CmdStopShooter.h"
+#include "commands/CmdClimbSequence.h"
 #include "Utilities/Autonomous.h"
 #include "commands/Cmd3BallAuto.h"
 
@@ -49,6 +54,7 @@ class RobotContainer {
   SubShooter _subShooter;
   SubIntake _subIntake;
   SubStorage _subStorage;
+  SubClimber _subClimber;
   Autonomous _autonomous{[this]{return _subDriveBase.getYaw();}, [this]{return _subDriveBase.getDistanceTravelled();}};
 
   Cmd2BallAuto _cmd2BallAuto{&_subDriveBase, &_subIntake, &_subShooter, &_subStorage, &_autonomous};
@@ -70,11 +76,17 @@ class RobotContainer {
   CmdTrackTarget _cmdTrackTarget {&_subDriveBase, &_subShooter};
   CmdSpinUpShooter _cmdSpinUpShooter {&_subShooter,500};
   CmdStorageIn _cmdStorageIn {&_subStorage};
+  CmdExtendClimber _cmdExtendClimber {&_subClimber};
+  CmdRetractClimber _cmdRetractClimber {&_subClimber};
+  frc2::InstantCommand _cmdRotateClimber{[&]{_subClimber.Rotate();}};
+  frc2::InstantCommand _cmdStowClimber{[&]{_subClimber.Stow();}};
+  frc2::InstantCommand _cmdNearExtend{[&]{_subClimber.DriveTo(90);}};
   CmdStorageOut _cmdStorageOut {&_subStorage};
   CmdShootSequence _cmdShootSequence{&_subStorage, &_subShooter, &_subIntake, &_subDriveBase};
   CmdEndShoot _cmdEndShoot{&_subStorage, &_subIntake, &_subShooter};
   CmdToggleShootingPosition _cmdToggleShootingPosition {&_subShooter};
   CmdStopShooter _cmdStopShooter {&_subShooter};
+  CmdClimbSequence _cmdClimbSequence {&_subClimber, &_joystick0};
   frc::SendableChooser<frc2::Command*> _autoChooser;
   
 };

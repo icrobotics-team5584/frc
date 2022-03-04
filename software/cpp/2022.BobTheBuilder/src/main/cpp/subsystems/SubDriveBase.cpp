@@ -83,8 +83,6 @@ double SubDriveBase::GetTalonDistanceTravelled() {
 
 // This method will be called once per scheduler run
 void SubDriveBase::Periodic() {
-  frc::SmartDashboard::PutNumber("Encoder Position", GetTalonDistanceTravelled());
-  frc::SmartDashboard::PutNumber("Encoder Velocity", _dollyWheel.GetVelocity());
 }
 
 void SubDriveBase::SetCoastMode() {

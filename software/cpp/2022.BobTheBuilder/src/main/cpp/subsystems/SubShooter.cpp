@@ -18,8 +18,6 @@ SubShooter::SubShooter(){
 
     _controller.SetTolerance(50);
 
-    frc::SmartDashboard::PutBoolean("ShooterTarget", _shootingLow);
-    frc::SmartDashboard::PutNumber("ShooterSetRPM", 0);
 }
 
 // This method will be called once per scheduler run
