@@ -42,7 +42,7 @@ class SubClimber : public frc2::SubsystemBase {
   static constexpr double kP = 5e-5, kI = 1e-6, kD = 0, KIz = 0, kFF = 0,
                           kMaxOutPut = 1, kMinOutput = -1, kFastMaxVel = 6000,
                           kSlowMaxVel = 3000, kMinVel = 0, kMaxAcc = 6000,
-                          kAllErr = 0;
+                          kAllErr = 0.5;
 
   int _targetPosition = 0;
   bool _inSmartMotionMode = false;

@@ -7,6 +7,7 @@
 #include <frc2/command/WaitUntilCommand.h>
 #include <subsystems/SubClimber.h>
 #include <frc2/command/PrintCommand.h>
+#include <frc2/command/WaitCommand.h>
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
@@ -17,7 +18,7 @@ CmdClimbSequence::CmdClimbSequence(SubClimber* subClimber, frc::XboxController* 
   AddCommands(
   //stow arms
   frc2::InstantCommand([&] { subClimber->Stow(); }),
-  frc2::WaitUntilCommand(1_s),
+  frc2::WaitCommand(1_s),
   frc2::PrintCommand("Stowed"),
 
   //retract arms
