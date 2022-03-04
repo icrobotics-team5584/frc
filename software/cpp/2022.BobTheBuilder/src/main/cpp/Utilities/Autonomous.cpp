@@ -38,8 +38,6 @@ void Autonomous::updatePosition(){//calculates position, gets called in a period
   // Get relevant values
   double currentAngle = (_getYaw()) * 0.01745329251;  // Convert to radians with * 0.01745329251
   double currentDistance = _getDistance();//total distance
-  frc::SmartDashboard::PutNumber("distance", currentDistance);
-  frc::SmartDashboard::PutNumber("Current Angle", _getYaw());
   double distanceDelta = -(currentDistance - prevDistance);//distance since last 10 milliseconds
   // Determine current position
   dollyPosX += distanceDelta * sin(currentAngle);

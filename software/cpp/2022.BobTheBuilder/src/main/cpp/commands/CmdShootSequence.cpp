@@ -15,6 +15,7 @@ CmdShootSequence::CmdShootSequence(SubStorage* subStorage,
   AddCommands(
     //replace with vision shoot
     frc2::InstantCommand([subShooter] { subShooter->SetShooterTracking(true); }),
+    
     frc2::InstantCommand([subIntake] {subIntake->Extend(); }),
     frc2::InstantCommand([subStorage] { subStorage->In(); }),
     frc2::ConditionalCommand(frc2::WaitCommand(0_s), CmdTrackTarget(subDriveBase, subShooter), [subShooter] {return subShooter->GetLowMode();}),
