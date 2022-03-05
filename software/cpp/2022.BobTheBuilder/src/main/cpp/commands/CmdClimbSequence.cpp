@@ -17,6 +17,7 @@ CmdClimbSequence::CmdClimbSequence(SubClimber* subClimber, frc::XboxController* 
   // AddCommands(FooCommand(), BarCommand());
   AddCommands(
   //stow arms
+  frc2::PrintCommand("starting climb"),
   frc2::InstantCommand([&] { subClimber->Stow(); }),
   frc2::PrintCommand("Stowed"),
 
