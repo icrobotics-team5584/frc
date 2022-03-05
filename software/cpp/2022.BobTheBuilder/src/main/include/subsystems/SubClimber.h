@@ -27,6 +27,8 @@ class SubClimber : public frc2::SubsystemBase {
   void Rotate();                   // Rotate arms out
   void Stow();                     // Rotate arms in
   void SetEncoders(double value);  // Set encoder values
+  void SetMaxSpeed();              // Set Climber max speed
+  void SetMinSpeed();              // Set Climber min speed
   bool AtLeftLimit();              // Check if left limit is hit
   bool AtRightLimit();             // Check if right limit is hit
   bool GoingDown();                // Check if arms target is below current pos

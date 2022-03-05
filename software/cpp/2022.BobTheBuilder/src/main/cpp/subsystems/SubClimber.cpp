@@ -1,6 +1,7 @@
 #include "subsystems/SubClimber.h"
 #include "frc/smartdashboard/SmartDashboard.h"
 
+
 SubClimber::SubClimber() {
   _spmLeftElevator.RestoreFactoryDefaults();
   _spmLeftElevator.SetSmartCurrentLimit(40);
@@ -34,6 +35,17 @@ SubClimber::SubClimber() {
 
   SetEncoders(MIN_POSITION);  // Assume we turn the robot on with the arms down
 }
+
+void SubClimber::SetMaxSpeed(){
+  _pidRightMotorController.SetSmartMotionMaxVelocity(kFastMaxVel);
+  _pidLeftMotorController.SetSmartMotionMaxVelocity(kFastMaxVel);
+}
+
+void SubClimber::SetMinSpeed(){
+  _pidRightMotorController.SetSmartMotionMaxVelocity(kSlowMaxVel);
+  _pidLeftMotorController.SetSmartMotionMaxVelocity(kSlowMaxVel);
+}
+
 bool SubClimber::IsAtTargetPosition() {
   double error = abs(_targetPosition - _encLeftElevator.GetPosition() );
   return (error < kAllErr);
@@ -114,5 +126,7 @@ bool SubClimber::GoingDown() {
   } else {
     return _spmRightElevator.Get() < 0 || _spmRightElevator.Get() < 0;
   }
+  
 }
+
 

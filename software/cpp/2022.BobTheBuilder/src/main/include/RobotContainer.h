@@ -31,6 +31,7 @@
 #include "commands/CmdEndShoot.h"
 #include "commands/CmdStopShooter.h"
 #include "commands/CmdClimbSequence.h"
+#include "commands/CmdRotateElevators.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -77,4 +78,5 @@ class RobotContainer {
   CmdToggleShootingPosition _cmdToggleShootingPosition {&_subShooter};
   CmdStopShooter _cmdStopShooter {&_subShooter};
   CmdClimbSequence _cmdClimbSequence {&_subClimber, &_joystick0};
+  CmdRotateElevators _cmdRotateElevators {&_subClimber};
 };

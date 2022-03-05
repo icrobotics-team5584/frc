@@ -84,7 +84,7 @@ CmdClimbSequence::CmdClimbSequence(SubClimber* subClimber, frc::XboxController* 
   frc2::WaitUntilCommand([&] {return xboxController->GetXButton(); }),
   frc2::PrintCommand("pressed x"),
   frc2::InstantCommand([&] { subClimber->Extend(); }),
-   frc2::WaitUntilCommand([&] {return subClimber->IsAtTargetPosition(); }),
+  frc2::WaitUntilCommand([&] {return subClimber->IsAtTargetPosition(); }),
   frc2::PrintCommand("Extended"),
 
   //stow arms
@@ -94,6 +94,8 @@ CmdClimbSequence::CmdClimbSequence(SubClimber* subClimber, frc::XboxController* 
   frc2::WaitCommand(1_s),
   frc2::PrintCommand("Stowed"),
   //retract arms
+  frc2::InstantCommand([&] { subClimber->SetMinSpeed(); }),
+  frc2::PrintCommand("Set Min Value"),
   frc2::WaitUntilCommand([&] {return xboxController->GetXButton(); }),
   frc2::PrintCommand("pressed x"),
   frc2::InstantCommand([&] { subClimber->Retract(); }),

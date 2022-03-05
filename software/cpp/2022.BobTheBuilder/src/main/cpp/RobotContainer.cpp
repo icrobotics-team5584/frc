@@ -58,6 +58,9 @@ void RobotContainer::ConfigureButtonBindings() {
 
   frc2::JoystickButton ClimbUnlock{&_joystick0, Btn::kBack };
   ClimbUnlock.WhenPressed(frc2::InstantCommand([&] {_cmdClimbSequence.Schedule();} ));
+
+  frc2::JoystickButton ClimbPistons{&_joystick0,Btn::kB};
+  ClimbPistons.ToggleWhenPressed(_cmdRotateElevators);
   
   
   
