@@ -35,6 +35,7 @@
 #include "commands/CmdEndShoot.h"
 #include "commands/CmdStopShooter.h"
 #include "commands/CmdClimbSequence.h"
+#include "commands/CmdRotateElevators.h"
 #include "Utilities/Autonomous.h"
 #include "commands/Cmd3BallAuto.h"
 
@@ -88,5 +89,10 @@ class RobotContainer {
   CmdStopShooter _cmdStopShooter {&_subShooter};
   CmdClimbSequence _cmdClimbSequence {&_subClimber, &_joystick0};
   frc::SendableChooser<frc2::Command*> _autoChooser;
-  
+  CmdRotateElevators _cmdRotateElevators {&_subClimber};
+  frc2::InstantCommand _cmdResetClimb {[&] {
+    _cmdClimbSequence.Cancel();
+    _cmdClimbSequence.Schedule();
+  }
+  };
 };
