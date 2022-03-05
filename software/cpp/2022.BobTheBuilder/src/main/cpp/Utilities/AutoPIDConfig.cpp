@@ -212,10 +212,10 @@ PIDAutoConfig auto3BallP4 = {
     55, //   double endHeading;
     0, //   double cenX;
     0, //   double cenY;
-    PIDk{3, 0, 3}, //   PIDk PIDconstants;
-    0.5, //   double speed;
+    PIDk{-3, 0, -3}, //   PIDk PIDconstants;
+    0.2, //   double speed;
     0, //   double endSpeed;
-    PIDk{2, 0, 2} //   PIDk pidSpeed;
+    PIDk{2, 0, 0} //   PIDk pidSpeed;
 };
 
 

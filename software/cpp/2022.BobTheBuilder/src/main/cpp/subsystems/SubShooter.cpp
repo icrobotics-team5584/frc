@@ -39,11 +39,16 @@ void SubShooter::Periodic() {
             // https://mycurvefit.com/
             double x = GetLimelight().ty;
             double out = 2106.346 - 42.59286*x + 1.897089*pow(x,2) + 0.1338984*pow(x,3);
+            if(out > 3000){
+                out = 3000;
+            }
+            _lastspeed = out;
             SetTargetRpm(out);
             // SetTargetRpm(frc::SmartDashboard::GetNumber("ShooterSetRPM", 0));
         } else if (frc::DriverStation::IsTeleopEnabled() && _shouldTrackTarget) {
             // in teleop, tracking target and target is not visible
-            SetTargetRpm(1800);
+            
+            SetTargetRpm(_lastspeed);    
         } else {
             //SetTargetRpm(0);
         }

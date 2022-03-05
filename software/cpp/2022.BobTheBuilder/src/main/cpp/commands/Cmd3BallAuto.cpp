@@ -26,9 +26,9 @@ Cmd3BallAuto::Cmd3BallAuto(SubDriveBase* subDriveBase, SubIntake* subIntake, Sub
 
   AddCommands(
     CmdAutoSetPose{autonomous, subDriveBase, 7.46, 1.86, 178.5},
-frc2::InstantCommand([subShooter] {subShooter->SetShooterTracking(false);}),
+    //frc2::InstantCommand([subShooter] {subShooter->SetShooterTracking(true);}),
     //first ball speed
-    frc2::InstantCommand([subShooter] {subShooter->SetTargetRpm(2500);}),
+    frc2::InstantCommand([subShooter] {subShooter->SetTargetRpm(2600);}),
     frc2::InstantCommand([subIntake] {subIntake->Intake(); }),
     frc2::InstantCommand([subStorage] {subStorage->ExtendStopper(); subStorage->In();}),
     frc2::InstantCommand([subIntake] {subIntake->Extend();}),
@@ -47,7 +47,7 @@ frc2::InstantCommand([subShooter] {subShooter->SetShooterTracking(false);}),
     frc2::InstantCommand([subStorage] {subStorage->ExtendStopper();}),
     
       
-    CmdAutoDrive(subDriveBase, autonomous, auto3BallP4),
+    CmdAutoDrive(subDriveBase, autonomous, auto5BallP4),
     //second ball speed
     frc2::InstantCommand([subShooter] {subShooter->SetTargetRpm(2370);}),
     frc2::WaitUntilCommand([subShooter] { return subShooter->IsAtTargetSpeed(); }),
