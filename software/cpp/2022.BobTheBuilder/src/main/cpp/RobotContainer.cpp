@@ -43,9 +43,7 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton{&_joystick0, Btn::kA}.WhenHeld(
       frc2::StartEndCommand([&] { _subClimber.ManualDrive(-0.2); }, [&] { _subClimber.ManualDrive(0); }));
 
-  frc::SmartDashboard::PutData("Rotate Climber",&_cmdRotateClimber);
-  frc::SmartDashboard::PutData("Stow Climber",&_cmdStowClimber);
-  frc::SmartDashboard::PutData("Near Extend Climber",&_cmdNearExtend);
+  frc::SmartDashboard::PutData("Reset Climber", &_cmdResetClimb);
 
   frc2::POVButton LowGoalMode{&_joystick0, 180, 0};
   LowGoalMode.WhenPressed(frc2::InstantCommand{[this]{_subShooter.SetLowMode(true);}});
