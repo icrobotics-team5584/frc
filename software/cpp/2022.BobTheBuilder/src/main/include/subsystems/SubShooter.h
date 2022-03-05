@@ -66,4 +66,5 @@ class SubShooter : public frc2::SubsystemBase {
   nt::NetworkTableEntry _tvert;
   bool _shouldTrackTarget = false;
   bool _shootingLow = false;
+  double _lastspeed = 1800;
 };

@@ -7,6 +7,7 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 #include "Utilities/Autonomous.h"
+#include "subsystems/SubDriveBase.h"
 /**
  * An example command.
  *
@@ -17,7 +18,7 @@
 class CmdAutoSetPose
     : public frc2::CommandHelper<frc2::CommandBase, CmdAutoSetPose> {
  public:
-  CmdAutoSetPose(Autonomous* autonomous, double x, double y, double angle);
+  CmdAutoSetPose(Autonomous* autonomous, SubDriveBase *subDriveBase, double x, double y, double angle);
 
   void Initialize() override;
 
@@ -30,4 +31,5 @@ class CmdAutoSetPose
   double _x;
   double _y;
   double _angle;
+  SubDriveBase* _subDriveBase;
 };

@@ -12,17 +12,17 @@
 #include "Utilities/PIDk.h"
 #include "CmdAutoSetPose.h"
 #include "commands/CmdAutoTurn.h"
+#include "commands/CmdSpinUpShooter.h"
 #include "subsystems/SubIntake.h"
 #include "subsystems/SubShooter.h"
 #include "subsystems/SubStorage.h"
 
-class Cmd2BallAuto
+class Cmd5BallAuto
     : public frc2::CommandHelper<frc2::SequentialCommandGroup,
-                                 Cmd2BallAuto> {
+                                 Cmd5BallAuto> {
  public:
-  Cmd2BallAuto(SubDriveBase* subDriveBase, SubIntake* subIntake, SubShooter* subShooter, SubStorage* subStorage, Autonomous* autonomous);
-
+  Cmd5BallAuto(SubDriveBase* subDriveBase, SubIntake* subIntake, SubShooter* subShooter, SubStorage* subStorage, Autonomous* autonomous);
+  
  private:
   // Autonomous _autonomous;
-
 };
