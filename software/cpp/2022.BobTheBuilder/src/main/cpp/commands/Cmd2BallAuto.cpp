@@ -23,6 +23,8 @@
 Cmd2BallAuto::Cmd2BallAuto(SubDriveBase* subDriveBase, SubIntake* subIntake, SubShooter* subShooter, SubStorage* subStorage, Autonomous* autonomous){
   AddCommands(
       CmdAutoSetPose{autonomous, subDriveBase, 0, 0, 0},
+frc2::InstantCommand([subShooter] {subShooter->SetShooterTracking(true);}),
+
       frc2::InstantCommand([subIntake] {subIntake->Extend(); }),
       frc2::InstantCommand([subStorage] { subStorage->In(); }), 
       frc2::InstantCommand([subIntake] {subIntake->Intake();}),
@@ -30,7 +32,7 @@ Cmd2BallAuto::Cmd2BallAuto(SubDriveBase* subDriveBase, SubIntake* subIntake, Sub
       frc2::WaitCommand(0.2_s),
       CmdAutoDrive{subDriveBase, autonomous, autoRoutineOneLegTwo},
       CmdAutoTurn{subDriveBase, autonomous, PIDk{0.1, 0, 0.6 }, 180, 5},
-      frc2::InstantCommand([subShooter] { subShooter->SetShooterTracking(true); }),
+      CmdAutoDrive{subDriveBase, autonomous, autoRoutineOneLegThree},
       CmdTrackTarget(subDriveBase, subShooter),
       frc2::WaitUntilCommand([subShooter]{return subShooter->IsAtTargetSpeed();}),
       frc2::InstantCommand([subStorage] { subStorage->RetractStopper(); }),
@@ -40,12 +42,22 @@ Cmd2BallAuto::Cmd2BallAuto(SubDriveBase* subDriveBase, SubIntake* subIntake, Sub
       frc2::InstantCommand([subStorage] { subStorage->RetractStopper(); }),
       frc2::WaitCommand(0.3_s),
       frc2::InstantCommand([subStorage] { subStorage->ExtendStopper(); }),
+      frc2::WaitUntilCommand([subShooter]{return subShooter->IsAtTargetSpeed();}),
+      frc2::InstantCommand([subStorage] { subStorage->RetractStopper(); }),
+      frc2::WaitCommand(0.3_s),
+      frc2::InstantCommand([subStorage] { subStorage->ExtendStopper(); }),
+      frc2::WaitUntilCommand([subShooter]{return subShooter->IsAtTargetSpeed();}),
+      frc2::InstantCommand([subStorage] { subStorage->RetractStopper(); }),
+      frc2::WaitCommand(0.3_s),
+      frc2::InstantCommand([subStorage] { subStorage->ExtendStopper(); }),
+
+
       frc2::InstantCommand([subIntake] {subIntake->Retract(); }),
       frc2::InstantCommand([subStorage] { subStorage->Stop(); }),
       frc2::InstantCommand([subIntake] { subIntake->Stop();}),
       frc2::InstantCommand([subShooter] { subShooter->SetShooterTracking(false); }),
-      frc2::InstantCommand([subShooter] {subShooter->Stop();}),
-      CmdAutoDrive{subDriveBase, autonomous, autoRoutineOneLegThree}
+      frc2::InstantCommand([subShooter] {subShooter->Stop();})
+      
       
   );
 
