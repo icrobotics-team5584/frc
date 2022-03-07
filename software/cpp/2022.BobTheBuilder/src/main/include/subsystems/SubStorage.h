@@ -7,6 +7,7 @@
 #include <frc/DoubleSolenoid.h>
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
+#include <frc/Timer.h>
 
 #include "Constants.h"
 
@@ -20,9 +21,11 @@ class SubStorage : public frc2::SubsystemBase {
   void Periodic() override;
   void In();
   void Stop();
+  void DelayStop();
   void Out();
   void ExtendStopper();
   void RetractStopper();
+  frc::Timer timer;
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
