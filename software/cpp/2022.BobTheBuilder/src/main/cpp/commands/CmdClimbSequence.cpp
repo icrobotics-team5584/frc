@@ -21,20 +21,20 @@ CmdClimbSequence::CmdClimbSequence(SubClimber* subClimber, frc::XboxController* 
   frc2::PrintCommand("Stowed"),
 
   //retract arms
-  frc2::InstantCommand([=] { subClimber->Retract(); }),
+  frc2::InstantCommand([=] { subClimber->DriveTo(SubClimber::MIN_POSITION); }),
   frc2::WaitUntilCommand([=] {return subClimber->IsAtTargetPosition(); }),
   frc2::PrintCommand("Retract"),
   //wait 
   frc2::WaitUntilCommand([=] {return xboxController->GetXButton(); }),
   frc2::PrintCommand("Pressed x"),
   //extend
-  frc2::InstantCommand([=] { subClimber->Extend(); }),
+  frc2::InstantCommand([=] { subClimber->DriveTo(SubClimber::NEAR_MAX_POS); }),
    frc2::WaitUntilCommand([=] {return subClimber->IsAtTargetPosition(); }),
   frc2::PrintCommand("Extended"),
   //retract 
   frc2::WaitUntilCommand([=] {return xboxController->GetXButton(); }),
   frc2::PrintCommand("pressed x"),
-  frc2::InstantCommand([=] { subClimber->Retract(); }),
+  frc2::InstantCommand([=] { subClimber->DriveTo(SubClimber::BELOW_MIN); }),
    frc2::WaitUntilCommand([=] {return subClimber->IsAtTargetPosition(); }),
   frc2::PrintCommand("Retract"),
   //slightly extend
@@ -59,7 +59,7 @@ CmdClimbSequence::CmdClimbSequence(SubClimber* subClimber, frc::XboxController* 
   //retact amrs
   frc2::WaitUntilCommand([=] {return xboxController->GetXButton(); }),
   frc2::PrintCommand("pressed x"),
-  frc2::InstantCommand([=] { subClimber->Retract(); }),
+  frc2::InstantCommand([=] { subClimber->DriveTo(SubClimber::BELOW_MIN); }),
    frc2::WaitUntilCommand([=] {return subClimber->IsAtTargetPosition(); }),
   frc2::PrintCommand("Retract"),
   //slighty extend
@@ -86,7 +86,7 @@ CmdClimbSequence::CmdClimbSequence(SubClimber* subClimber, frc::XboxController* 
   frc2::InstantCommand([=] { subClimber->SetMinSpeed(); }),
   frc2::PrintCommand("Set Min Value"),
   //retract arms
-  frc2::InstantCommand([=] { subClimber->Retract(); }),
+  frc2::InstantCommand([=] { subClimber->DriveTo(SubClimber::BELOW_MIN); }),
    frc2::WaitUntilCommand([=] {return subClimber->IsAtTargetPosition(); }),
   frc2::PrintCommand("Retract"),
   //slightly extend
