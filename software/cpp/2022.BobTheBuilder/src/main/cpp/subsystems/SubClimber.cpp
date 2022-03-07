@@ -113,7 +113,11 @@ void SubClimber::Retract() { DriveTo(MIN_POSITION + SAFETY_FACTOR); }
 
 void SubClimber::Rotate() { _solTilter.Set(frc::DoubleSolenoid::kForward); }
 
-void SubClimber::Stow() { _solTilter.Set(frc::DoubleSolenoid::kReverse); }
+void SubClimber::Stow() {
+  frc::SmartDashboard::PutBoolean("stow running", true); 
+  _solTilter.Set(frc::DoubleSolenoid::kReverse);
+  frc::SmartDashboard::PutBoolean("stow ran", true); 
+}
 
 bool SubClimber::AtLeftLimit() { return !_lmtLeft.Get(); }
 

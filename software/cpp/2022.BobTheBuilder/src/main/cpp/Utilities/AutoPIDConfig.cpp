@@ -107,27 +107,27 @@ PIDAutoConfig auto5BallP4 = {
 PIDAutoConfig auto5BallP5 = {
     4.632, //   double startX;
     1.584, //   double startY;
-    1.902, //   double endX;
-    1.603, //   double endY;
-    -89.6, //   double endHeading;
+    1.272, //   double endX;
+    1.13, //   double endY;
+    -98, //   double endHeading;
     0, //   double cenX;
     0, //   double cenY;
     PIDk{3, 0, 12}, //   PIDk PIDconstants;
     0.9, //   double speed;
-    0.3, //   double endSpeed;
+    0, //   double endSpeed;
     PIDk{1.5, 0, 8} //   PIDk pidSpeed;
 };
 
 PIDAutoConfig auto5BallP6 = {
-    1.902, //   double startX;
-    1.603, //   double startY;
-    1.379, //   double endX;
-    1.395, //   double endY;
-    -134, //   double endHeading;
-    1.897, //   double cenX;
-    0.853, //   double cenY;
+    1.569, //   double startX;
+    1.17, //   double startY;
+    4.664, //   double endX;
+    1.479, //   double endY;
+    66, //   double endHeading;
+    0, //   double cenX;
+    0, //   double cenY;
     PIDk{3, 0, 12}, //   PIDk PIDconstants;
-    0.3, //   double speed;
+    0.9, //   double speed;
     0, //   double endSpeed;
     PIDk{1.5, 0, 8} //   PIDk pidSpeed;
 };
