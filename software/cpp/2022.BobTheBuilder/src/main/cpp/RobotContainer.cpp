@@ -17,6 +17,13 @@ RobotContainer::RobotContainer() {
   _subDriveBase.SetDefaultCommand(CmdJoystickDrive(&_subDriveBase, &_joystick0));
   // Configure the button bindings
   ConfigureButtonBindings();
+
+  _autoChooser.AddOption("2 Ball", &_cmd2BallAuto);
+  _autoChooser.AddOption("5 Ball", &_cmd5BallAuto);
+  _autoChooser.AddOption("1 Ball", &_cmd1BallAuto);
+  _autoChooser.AddOption("3 Ball", &_cmd3BallAuto);
+
+  frc::SmartDashboard::PutData("Auto chooser", &_autoChooser);
 }
 
 void RobotContainer::ConfigureButtonBindings() {
@@ -66,5 +73,6 @@ void RobotContainer::ConfigureButtonBindings() {
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous
-  return &_cmd2BallAuto;
+  frc2::Command* selected = _autoChooser.GetSelected();
+  return selected;
 }

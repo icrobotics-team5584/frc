@@ -5,7 +5,7 @@
 #pragma once
 
 #include <frc2/command/CommandHelper.h>
-#include <frc2/command/SequentialCommandGroup.h>
+#include <frc2/command/ParallelCommandGroup.h>
 
 #include "subsystems/SubDriveBase.h"
 #include "commands/CmdAutoDrive.h"
@@ -16,13 +16,10 @@
 #include "subsystems/SubShooter.h"
 #include "subsystems/SubStorage.h"
 
-class Cmd2BallAuto
-    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
-                                 Cmd2BallAuto> {
+class Cmd1BallAuto
+    : public frc2::CommandHelper<frc2::ParallelCommandGroup,
+                                 Cmd1BallAuto> {
  public:
-  Cmd2BallAuto(SubDriveBase* subDriveBase, SubIntake* subIntake, SubShooter* subShooter, SubStorage* subStorage, Autonomous* autonomous);
-
+  Cmd1BallAuto(SubDriveBase* subDriveBase, SubIntake* subIntake, SubShooter* subShooter, SubStorage* subStorage, Autonomous* autonomous);
  private:
-  // Autonomous _autonomous;
-
 };

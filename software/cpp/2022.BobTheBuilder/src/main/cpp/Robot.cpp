@@ -27,7 +27,7 @@ void Robot::RobotPeriodic() {
  * This function is called once each time the robot enters Disabled mode. You
  * can use it to reset any subsystem information you want to clear when the
  * robot is disabled.
- */
+ */ 
 void Robot::DisabledInit() {}
 
 void Robot::DisabledPeriodic() {}
@@ -37,6 +37,9 @@ void Robot::DisabledPeriodic() {}
  * RobotContainer} class.
  */
 void Robot::AutonomousInit() {
+  m_container._subDriveBase.resetYaw();
+  m_container._subDriveBase.deployDolly();
+
   m_container._subDriveBase.SetBreakMode();
 
   m_autonomousCommand = m_container.GetAutonomousCommand();
@@ -44,8 +47,7 @@ void Robot::AutonomousInit() {
   if (m_autonomousCommand != nullptr) {
     m_autonomousCommand->Schedule();
   }
-  m_container._subDriveBase.resetYaw();
-  m_container._subDriveBase.deployDolly();
+
 }
 
 void Robot::AutonomousPeriodic() {}

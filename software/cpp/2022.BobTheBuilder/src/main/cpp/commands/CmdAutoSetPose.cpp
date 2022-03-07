@@ -3,8 +3,9 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "commands/CmdAutoSetPose.h"
-CmdAutoSetPose::CmdAutoSetPose(Autonomous* autonomous, double x, double y, double angle) {
+CmdAutoSetPose::CmdAutoSetPose(Autonomous* autonomous, SubDriveBase *subDriveBase, double x, double y, double angle) {
   // Use addRequirements() here to declare subsystem dependencies.
+  _subDriveBase = subDriveBase;
   _autonomous = autonomous;
   _x = x;
   _y = y;
@@ -15,7 +16,7 @@ CmdAutoSetPose::CmdAutoSetPose(Autonomous* autonomous, double x, double y, doubl
 void CmdAutoSetPose::Initialize() 
 {
   _autonomous->setPosition(_x, _y);
-  _autonomous->setAngle(_angle);
+  _subDriveBase->setYaw(_angle);
 }
 
 // Called repeatedly when this Command is scheduled to run

@@ -16,13 +16,9 @@
 #include "subsystems/SubShooter.h"
 #include "subsystems/SubStorage.h"
 
-class Cmd2BallAuto
+class Cmd3BallAuto
     : public frc2::CommandHelper<frc2::SequentialCommandGroup,
-                                 Cmd2BallAuto> {
+                                 Cmd3BallAuto> {
  public:
-  Cmd2BallAuto(SubDriveBase* subDriveBase, SubIntake* subIntake, SubShooter* subShooter, SubStorage* subStorage, Autonomous* autonomous);
-
- private:
-  // Autonomous _autonomous;
-
+  Cmd3BallAuto(SubDriveBase* subDriveBase, SubIntake* subIntake, SubShooter* subShooter, SubStorage* subStorage, Autonomous* autonomous);
 };
