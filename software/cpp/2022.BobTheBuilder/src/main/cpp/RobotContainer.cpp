@@ -55,6 +55,9 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::POVButton LowGoalMode{&_joystick0, 180, 0};
   LowGoalMode.WhenPressed(frc2::InstantCommand{[this]{_subShooter.SetLowMode(true);}});
 
+  frc2::POVButton ManualStorageIn{&_joystick0, 90, 0};
+  ManualStorageIn.WhileHeld(_cmdStorageIn);
+
   frc2::POVButton HighGoalMode{&_joystick0, 0,0};
   HighGoalMode.WhenPressed(frc2::InstantCommand{[this]{_subShooter.SetLowMode(false);}});
 
