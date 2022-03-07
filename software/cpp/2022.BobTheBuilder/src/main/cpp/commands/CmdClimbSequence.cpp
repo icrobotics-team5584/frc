@@ -17,80 +17,80 @@ CmdClimbSequence::CmdClimbSequence(SubClimber* subClimber, frc::XboxController* 
   // AddCommands(FooCommand(), BarCommand());
   AddCommands(
   //stow arms
-  frc2::InstantCommand([&] { subClimber->Stow(); }),
+  frc2::InstantCommand([=] { subClimber->Stow(); }),
   frc2::PrintCommand("Stowed"),
 
   //retract arms
-  frc2::InstantCommand([&] { subClimber->Retract(); }),
-  frc2::WaitUntilCommand([&] {return subClimber->IsAtTargetPosition(); }),
+  frc2::InstantCommand([=] { subClimber->Retract(); }),
+  frc2::WaitUntilCommand([=] {return subClimber->IsAtTargetPosition(); }),
   frc2::PrintCommand("Retract"),
   //wait 
-  frc2::WaitUntilCommand([&] {return xboxController->GetXButton(); }),
+  frc2::WaitUntilCommand([=] {return xboxController->GetXButton(); }),
   frc2::PrintCommand("Pressed x"),
   //extend
-  frc2::InstantCommand([&] { subClimber->Extend(); }),
-   frc2::WaitUntilCommand([&] {return subClimber->IsAtTargetPosition(); }),
+  frc2::InstantCommand([=] { subClimber->Extend(); }),
+   frc2::WaitUntilCommand([=] {return subClimber->IsAtTargetPosition(); }),
   frc2::PrintCommand("Extended"),
   //retract 
-  frc2::WaitUntilCommand([&] {return xboxController->GetXButton(); }),
+  frc2::WaitUntilCommand([=] {return xboxController->GetXButton(); }),
   frc2::PrintCommand("pressed x"),
-  frc2::InstantCommand([&] { subClimber->Retract(); }),
-   frc2::WaitUntilCommand([&] {return subClimber->IsAtTargetPosition(); }),
+  frc2::InstantCommand([=] { subClimber->Retract(); }),
+   frc2::WaitUntilCommand([=] {return subClimber->IsAtTargetPosition(); }),
   frc2::PrintCommand("Retract"),
   //slightly extend
   
-  frc2::InstantCommand([&] { subClimber->DriveTo(SubClimber::NEAR_MIN_POS); }),
-   frc2::WaitUntilCommand([&] {return subClimber->IsAtTargetPosition(); }),
+  frc2::InstantCommand([=] { subClimber->DriveTo(SubClimber::NEAR_MIN_POS); }),
+   frc2::WaitUntilCommand([=] {return subClimber->IsAtTargetPosition(); }),
   frc2::PrintCommand("near min pos"),
   //rotate arms
-  frc2::WaitUntilCommand([&] {return xboxController->GetXButton(); }),
+  frc2::WaitUntilCommand([=] {return xboxController->GetXButton(); }),
   frc2::PrintCommand("pressed x"),
-  frc2::InstantCommand([&] {subClimber->Rotate(); }),
+  frc2::InstantCommand([=] {subClimber->Rotate(); }),
   frc2::WaitCommand(1.5_s),
   frc2::PrintCommand("Rotated"),
   //extand arms
-  frc2::InstantCommand([&] { subClimber->Extend(); }),
-   frc2::WaitUntilCommand([&] {return subClimber->IsAtTargetPosition(); }),
+  frc2::InstantCommand([=] { subClimber->Extend(); }),
+   frc2::WaitUntilCommand([=] {return subClimber->IsAtTargetPosition(); }),
   frc2::PrintCommand("extended"),
   //stow arms
-  frc2::InstantCommand([&] { subClimber->Stow(); }),
+  frc2::InstantCommand([=] { subClimber->Stow(); }),
   frc2::WaitCommand(1.5_s),
   frc2::PrintCommand("Stowed"),
   //retact amrs
-  frc2::WaitUntilCommand([&] {return xboxController->GetXButton(); }),
+  frc2::WaitUntilCommand([=] {return xboxController->GetXButton(); }),
   frc2::PrintCommand("pressed x"),
-  frc2::InstantCommand([&] { subClimber->Retract(); }),
-   frc2::WaitUntilCommand([&] {return subClimber->IsAtTargetPosition(); }),
+  frc2::InstantCommand([=] { subClimber->Retract(); }),
+   frc2::WaitUntilCommand([=] {return subClimber->IsAtTargetPosition(); }),
   frc2::PrintCommand("Retract"),
   //slighty extend
-  frc2::InstantCommand([&] { subClimber->DriveTo(SubClimber::NEAR_MIN_POS); }),
-   frc2::WaitUntilCommand([&] {return subClimber->IsAtTargetPosition(); }),
+  frc2::InstantCommand([=] { subClimber->DriveTo(SubClimber::NEAR_MIN_POS); }),
+   frc2::WaitUntilCommand([=] {return subClimber->IsAtTargetPosition(); }),
   frc2::PrintCommand("Near min pos"),
   //rotate arms
-  frc2::WaitUntilCommand([&] {return xboxController->GetXButton(); }),
+  frc2::WaitUntilCommand([=] {return xboxController->GetXButton(); }),
   frc2::PrintCommand("pressed x"),
-  frc2::InstantCommand([&] {subClimber->Rotate(); }),
+  frc2::InstantCommand([=] {subClimber->Rotate(); }),
   frc2::WaitCommand(1.5_s),
   frc2::PrintCommand("Rotate"),
   //extend arms
-  frc2::InstantCommand([&] { subClimber->Extend(); }),
-  frc2::WaitUntilCommand([&] {return subClimber->IsAtTargetPosition(); }),
+  frc2::InstantCommand([=] { subClimber->Extend(); }),
+  frc2::WaitUntilCommand([=] {return subClimber->IsAtTargetPosition(); }),
   frc2::PrintCommand("Extended"),
   //stow arms
-  frc2::InstantCommand([&] { subClimber->Stow(); }),
+  frc2::InstantCommand([=] { subClimber->Stow(); }),
   frc2::WaitCommand(1.5_s),
   frc2::PrintCommand("Stowed"),
-  frc2::WaitUntilCommand([&] {return xboxController->GetXButton(); }),
+  frc2::WaitUntilCommand([=] {return xboxController->GetXButton(); }),
   frc2::PrintCommand("pressed x"),
   //set min speed
-  frc2::InstantCommand([&] { subClimber->SetMinSpeed(); }),
+  frc2::InstantCommand([=] { subClimber->SetMinSpeed(); }),
   frc2::PrintCommand("Set Min Value"),
   //retract arms
-  frc2::InstantCommand([&] { subClimber->Retract(); }),
-   frc2::WaitUntilCommand([&] {return subClimber->IsAtTargetPosition(); }),
+  frc2::InstantCommand([=] { subClimber->Retract(); }),
+   frc2::WaitUntilCommand([=] {return subClimber->IsAtTargetPosition(); }),
   frc2::PrintCommand("Retract"),
   //slightly extend
-  frc2::InstantCommand([&] { subClimber->DriveTo(SubClimber::NEAR_MIN_POS); }),
+  frc2::InstantCommand([=] { subClimber->DriveTo(SubClimber::NEAR_MIN_POS); }),
   frc2::PrintCommand("near min pos")
   );
   }
