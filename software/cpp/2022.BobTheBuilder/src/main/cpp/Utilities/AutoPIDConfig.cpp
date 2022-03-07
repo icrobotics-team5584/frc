@@ -112,8 +112,8 @@ PIDAutoConfig auto5BallP5 = {
     -98, //   double endHeading;
     0, //   double cenX;
     0, //   double cenY;
-    PIDk{3, 0, 12}, //   PIDk PIDconstants;
-    0.9, //   double speed;
+    PIDk{-3, 0, -12}, //   PIDk PIDconstants;
+    0.3, //   double speed;
     0, //   double endSpeed;
     PIDk{1.5, 0, 8} //   PIDk pidSpeed;
 };
@@ -126,39 +126,12 @@ PIDAutoConfig auto5BallP6 = {
     66, //   double endHeading;
     0, //   double cenX;
     0, //   double cenY;
-    PIDk{3, 0, 12}, //   PIDk PIDconstants;
-    0.9, //   double speed;
+    PIDk{-3, 0, -12}, //   PIDk PIDconstants;
+    0.3, //   double speed;
     0, //   double endSpeed;
     PIDk{1.5, 0, 8} //   PIDk pidSpeed;
 };
 
-PIDAutoConfig auto5BallP7 = {
-    1.379, //   double startX;
-    1.395, //   double startY;
-    2.209, //   double endX;
-    1.912, //   double endY;
-    -110, //   double endHeading;
-    3.03, //   double cenX;
-    -0.33, //   double cenY;
-    PIDk{-3, 0, -12}, //   PIDk PIDconstants;
-    -0.9, //   double speed;
-    -0.9, //   double endSpeed;
-    PIDk{-1.5, 0, -8} //   PIDk pidSpeed;
-};
-
-PIDAutoConfig auto5BallP8 = {
-    2.209, //   double startX;
-    1.912, //   double startY;
-    4.569, //   double endX;
-    2.775, //   double endY;
-    -110, //   double endHeading;
-    0, //   double cenX;
-    0, //   double cenY;
-    PIDk{3, 0, 12}, //   PIDk PIDconstants;
-    -0.9, //   double speed;
-    0, //   double endSpeed;
-    PIDk{-1.5, 0, -8} //   PIDk pidSpeed;
-};
 
 
 PIDAutoConfig auto3BallP1 = {

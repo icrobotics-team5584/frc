@@ -10,6 +10,7 @@
 #include <frc2/command/WaitUntilCommand.h>
 #include <frc2/command/ParallelRaceGroup.h>
 #include "Utilities/AutoPIDConfig.h"
+#include "commands/CmdTrackTarget.h"
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
@@ -17,21 +18,22 @@
 Cmd5BallAuto::Cmd5BallAuto(SubDriveBase* subDriveBase, SubIntake* subIntake, SubShooter* subShooter, SubStorage* subStorage, Autonomous* autonomous)
 {
   AddCommands(
-    
+    /*
     CmdAutoSetPose{autonomous, subDriveBase, 7.46, 1.86, 178.5},
-    //frc2::InstantCommand([subShooter] {subShooter->SetShooterTracking(true);}),
+    frc2::InstantCommand([subShooter] {subShooter->SetShooterTracking(true);}),
     //first ball speed
-    frc2::InstantCommand([subShooter] {subShooter->SetTargetRpm(2600);}),
+    //frc2::InstantCommand([subShooter] {subShooter->SetTargetRpm(700);}),
     frc2::InstantCommand([subIntake] {subIntake->Intake(); }),
     frc2::InstantCommand([subStorage] {subStorage->ExtendStopper(); subStorage->In();}),
     frc2::InstantCommand([subIntake] {subIntake->Extend();}),
-    CmdAutoDrive(subDriveBase, autonomous, auto5BallP1),
+    CmdAutoDrive(subDriveBase, autonomous, auto3BallP1),
     frc2::WaitCommand(0.2_s),
-    CmdAutoDrive(subDriveBase, autonomous, auto5BallP2),   
+    CmdAutoDrive(subDriveBase, autonomous, auto3BallP2),   
     frc2::InstantCommand([subStorage] {subStorage->Stop();}),
     frc2::InstantCommand([subIntake] {subIntake->Retract(); subIntake->Stop(); }),
-    CmdAutoDrive(subDriveBase, autonomous, auto5BallP3),
+    CmdAutoDrive(subDriveBase, autonomous, auto3BallP3),
     CmdAutoTurn{subDriveBase, autonomous, PIDk{0.1, 0, 0.5 }, 55, 2},
+    CmdTrackTarget{subDriveBase, subShooter},
     frc2::InstantCommand([subIntake] {subIntake->Extend();}),
     frc2::InstantCommand([subIntake] {subIntake->Intake(); }),
     frc2::InstantCommand([subStorage] {subStorage->In();}),
@@ -43,8 +45,10 @@ Cmd5BallAuto::Cmd5BallAuto(SubDriveBase* subDriveBase, SubIntake* subIntake, Sub
     
       
     CmdAutoDrive(subDriveBase, autonomous, auto5BallP4),
+    CmdTrackTarget{subDriveBase, subShooter},
+
     //second ball speed
-    frc2::InstantCommand([subShooter] {subShooter->SetTargetRpm(2350);}),
+    //frc2::InstantCommand([subShooter] {subShooter->SetTargetRpm(2350);}),
     frc2::WaitUntilCommand([subShooter] { return subShooter->IsAtTargetSpeed(); }),
     frc2::InstantCommand([subStorage] {subStorage->RetractStopper();}),
     frc2::WaitCommand(0.25_s),
@@ -55,14 +59,16 @@ Cmd5BallAuto::Cmd5BallAuto(SubDriveBase* subDriveBase, SubIntake* subIntake, Sub
     frc2::InstantCommand([subStorage] {subStorage->RetractStopper();}),
     frc2::WaitCommand(1_s),
     //end 3 ball
-    //CmdAutoSetPose{autonomous, subDriveBase, 5.041, 1.872, 55},
+    */
+    CmdAutoSetPose{autonomous, subDriveBase, 5.041, 1.872, 55},
     frc2::InstantCommand([subStorage] {subStorage->ExtendStopper();}),
-    CmdAutoTurn{subDriveBase, autonomous, PIDk{0.1, 0, 0.6 }, -92, 5},
+    CmdAutoTurn{subDriveBase, autonomous, PIDk{0.1, 0, 0.6 }, -98, 5},
     CmdAutoDrive(subDriveBase, autonomous, auto5BallP5),
     frc2::WaitCommand(0.5_s),
+    CmdAutoTurn{subDriveBase, autonomous, PIDk{0.1, 0, 0.6 }, 66, 1},
     
     CmdAutoDrive(subDriveBase, autonomous, auto5BallP6),
-    CmdAutoTurn{subDriveBase, autonomous, PIDk{0.1, 0, 0.6 }, 66, 1},
+    CmdTrackTarget{subDriveBase, subShooter},
     frc2::WaitUntilCommand([subShooter] { return subShooter->IsAtTargetSpeed(); }),
     frc2::InstantCommand([subStorage] {subStorage->RetractStopper();}),
     frc2::WaitCommand(0.4_s),
