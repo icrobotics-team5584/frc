@@ -207,9 +207,9 @@ PIDAutoConfig auto3BallP3 = {
 PIDAutoConfig auto3BallP4 = {
     4.223, //   double startX;
     1.297, //   double startY;
-    5.041, //   double endX;
-    1.872, //   double endY;
-    55, //   double endHeading;
+    5.141, //   double endX;
+    1.672, //   double endY;
+    68, //   double endHeading;
     0, //   double cenX;
     0, //   double cenY;
     PIDk{-3, 0, -3}, //   PIDk PIDconstants;
