@@ -165,7 +165,7 @@ PIDAutoConfig auto3BallP1 = {
     7.46, //   double startX;
     1.86, //   double startY;
     7.557, //   double endX;
-    0.379, //   double endY;
+    0.479, //   double endY;
     176, //   double endHeading;
     0, //   double cenX;
     0, //   double cenY;

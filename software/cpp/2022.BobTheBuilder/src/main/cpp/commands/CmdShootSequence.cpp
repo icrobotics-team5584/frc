@@ -14,6 +14,7 @@ CmdShootSequence::CmdShootSequence(SubStorage* subStorage,
                                    SubDriveBase* subDriveBase) {
   AddCommands(
     //replace with vision shoot
+    frc2::InstantCommand([subDriveBase] { subDriveBase->SetBreakMode(); }),
     frc2::InstantCommand([subShooter] { subShooter->SetShooterTracking(true); }),
     
     frc2::InstantCommand([subIntake] {subIntake->Extend(); }),
@@ -32,7 +33,8 @@ CmdShootSequence::CmdShootSequence(SubStorage* subStorage,
     
     frc2::InstantCommand([subStorage] { subStorage->Stop(); }),
     frc2::InstantCommand([subStorage] { subStorage->ExtendStopper(); }),
-    frc2::InstantCommand([subIntake] {subIntake->Retract(); })
+    frc2::InstantCommand([subIntake] {subIntake->Retract(); }),
+    frc2::InstantCommand([subDriveBase] { subDriveBase->SetCoastMode(); })
       
       // frc2::ConditionalCommand(frc2::WaitCommand(0_s), CmdShooter(subShooter), [subShooter] {return subShooter->GetLowMode();}),
 
