@@ -45,10 +45,10 @@ void RobotContainer::ConfigureButtonBindings() {
   // TrackTargetButton.WhileHeld(frc2::ParallelCommandGroup(_cmdTrackTarget, _cmdShooter));
 
   frc2::JoystickButton{&_joystick0, Btn::kY}.WhenHeld(
-      frc2::StartEndCommand([&] { _subClimber.ManualDrive(0.2); }, [&] { _subClimber.ManualDrive(0); }));
+      frc2::StartEndCommand([&] { _subClimber.ManualDrive(0.5); }, [&] { _subClimber.ManualDrive(0); }));
 
   frc2::JoystickButton{&_joystick0, Btn::kA}.WhenHeld(
-      frc2::StartEndCommand([&] { _subClimber.ManualDrive(-0.2); }, [&] { _subClimber.ManualDrive(0); }));
+      frc2::StartEndCommand([&] { _subClimber.ManualDrive(-0.5); }, [&] { _subClimber.ManualDrive(0); }));
 
   frc::SmartDashboard::PutData("Reset Climber", &_cmdResetClimb);
 

@@ -83,8 +83,8 @@ CmdClimbSequence::CmdClimbSequence(SubClimber* subClimber, frc::XboxController* 
   frc2::WaitUntilCommand([=] {return xboxController->GetXButton(); }),
   frc2::PrintCommand("pressed x"),
   //set min speed
-  frc2::InstantCommand([=] { subClimber->SetMinSpeed(); }),
-  frc2::PrintCommand("Set Min Value"),
+  //frc2::InstantCommand([=] { subClimber->SetMinSpeed(); }),
+  //frc2::PrintCommand("Set Min Value"),
   //retract arms
   frc2::InstantCommand([=] { subClimber->DriveTo(SubClimber::BELOW_MIN); }),
    frc2::WaitUntilCommand([=] {return subClimber->IsAtTargetPosition(); }),
