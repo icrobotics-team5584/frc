@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "subsystems/SubShooter.h"
+#include "math.h"
 
  // to make shooter 2 follow shooter 1
 SubShooter::SubShooter(){
@@ -15,24 +16,13 @@ SubShooter::SubShooter(){
      _inst = nt::NetworkTableInstance::GetDefault();
      _table = _inst.GetTable("limelight");
 
-    frc::SmartDashboard::PutNumber("ShooterP", 0.001);
-    frc::SmartDashboard::PutNumber("ShooterI", 0);
-    frc::SmartDashboard::PutNumber("ShooterD", 0.00008);
-
-    frc::SmartDashboard::PutNumber("ShooterF", _controllerF);
-    _controller.SetTolerance(100);
+    _controller.SetTolerance(50);
+    frc::SmartDashboard::PutNumber("LIME_LIGHT_angleAdjust",0); //Used to adjust the limelight 'ty' vertical off target angle.
 }
 
 // This method will be called once per scheduler run
 void SubShooter::Periodic() {
-    _controller.SetPID(
-        frc::SmartDashboard::GetNumber("ShooterP", 0),
-        frc::SmartDashboard::GetNumber("ShooterI", 0),
-        frc::SmartDashboard::GetNumber("ShooterD", 0)
-    );
-     
     frc::SmartDashboard::PutNumber("Shooter Velocity", _encShooter1.GetVelocity());
-    frc::SmartDashboard::PutNumber("ControllerF",_controllerF);
     frc::SmartDashboard::PutNumber("ShooterTargetSpeed",_controller.GetSetpoint());
 
     _tx = _table->GetEntry("tx");
@@ -40,27 +30,55 @@ void SubShooter::Periodic() {
     _thor = _table->GetEntry("thor");
     _tvert = _table->GetEntry("tvert");
     UpdatePidController();
+
+    if (_shootingLow && _shouldTrackTarget) {
+        SetTargetRpm(1200);
+    } else {
+        if (/*frc::DriverStation::IsTeleopEnabled() &&*/ _shouldTrackTarget && _table->GetEntry("tv").GetDouble(0.0) == 1.0) {
+            // In telep, tracking target and target is visible
+            // https://mycurvefit.com/
+            double x = GetLimelight().ty + (frc::SmartDashboard::GetNumber("LIME_LIGHT_angleAdjust",0)); //Gets the vertical off target angle from limelight ‘ty’ and adds adjustment.
+            double out = 2106.346 - 42.59286*x + 1.897089*pow(x,2) + 0.1338984*pow(x,3);
+            if(out > 3000){
+                out = 3000;
+            }
+            _lastspeed = out;
+            SetTargetRpm(out);
+            // SetTargetRpm(frc::SmartDashboard::GetNumber("ShooterSetRPM", 0));
+        } else if (frc::DriverStation::IsTeleopEnabled() && _shouldTrackTarget) {
+            // in teleop, tracking target and target is not visible
+            
+            SetTargetRpm(_lastspeed);    
+        } else {
+            //SetTargetRpm(0);
+        }
+    }
+
+    frc::SmartDashboard::PutBoolean("Low Mode",_shootingLow);
+    frc::SmartDashboard::PutBoolean("Should Track Target",_shouldTrackTarget);
+
 }
 
-void SubShooter::SetTargetRpm(int rpm){
-    _controllerF = (1.0f/5800.0f)* rpm;
+void SubShooter::SetShooterTracking(bool enableTracking) {
+    _shouldTrackTarget = enableTracking;
+}
+
+void SubShooter::SetTargetRpm(double rpm){
     _controller.SetSetpoint(rpm);
 }
 
-void SubShooter::RunAtIdle() {
-    SetTargetRpm(idleRPM);
-}
-
 void SubShooter::UpdatePidController() {
-      double _output = _controller.Calculate(_encShooter1.GetVelocity()) + _controllerF;
+    double feedForward = (1.0f/5300.0f)* _controller.GetSetpoint();
+    double _output = _controller.Calculate(_encShooter1.GetVelocity()) + feedForward;
     if (_output >= 0) {
-        _spmShooter1.Set(_output);
+        _spmShooter1.SetVoltage(units::volt_t(_output*12));
     } else {
         _spmShooter1.Set(0);
     }
 }
 void SubShooter::Stop() {
     SetTargetRpm(0);
+    _shouldTrackTarget = false;
 }
  
 LimelightData SubShooter::GetLimelight() {
@@ -75,5 +93,24 @@ LimelightData SubShooter::GetLimelight() {
 bool SubShooter::IsAtTargetSpeed() {
     return _controller.AtSetpoint();
     
+}
+
+void SubShooter::TogglePosition() {
+    
+    if (_shootingLow) {
+        _shootingLow = false;
+
+    } else {
+        _shootingLow = true;
+    }
+
+}
+
+bool SubShooter::GetLowMode() {
+    return _shootingLow;
+}
+
+void SubShooter::SetLowMode(bool lowMode) {
+    _shootingLow = lowMode;
 }
 

@@ -19,20 +19,32 @@ namespace can {
   constexpr int spmDriveBaseBackRight = 1;
   constexpr int spmDriveBaseFrontLeft = 4;
   constexpr int spmDriveBaseBackLeft = 2;
+  constexpr int spmLeftClimber = 5;
+  constexpr int spmRightClimber = 6;
   constexpr int spmStorage = 11;
-  constexpr int spmDolly = 5;
+  constexpr int spmDolly = 9;
   constexpr int spmIntake = 7;
   constexpr int spmShooter1 = 8;
   constexpr int spmShooter2 = 12;
 }
 
 namespace pcm {
-  constexpr int solDollyDeploy = 0;
-  constexpr int solDollyRetract = 1;
-  constexpr int solClimberForward = 2;
-  constexpr int solClimberReverse = 3;
-  constexpr int solStorageStopperForward = 5;
-  constexpr int solStorageStopperReverse = 4;
-  constexpr int solIntakeOut = 6;
-  constexpr int solIntakeIn = 7;
+  constexpr int solDollyDeploy = 1;
+  constexpr int solDollyRetract = 0;
+  constexpr int solClimberForward = 5;
+  constexpr int solClimberReverse = 4;
+  constexpr int solStorageStopperForward = 3;
+  constexpr int solStorageStopperReverse = 2;
+  constexpr int solIntakeOut = 7;
+  constexpr int solIntakeIn = 6;
+}
+
+namespace pcm2 {
+  constexpr int solClimbLockForward = 0;
+  constexpr int solClimbLockReverse = 1;
+}
+
+namespace dio {
+  constexpr int lmtClimberLeft = 1;
+  constexpr int lmtClimberRight = 2;
 }

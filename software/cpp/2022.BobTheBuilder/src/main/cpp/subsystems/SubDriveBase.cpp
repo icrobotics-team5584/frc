@@ -45,11 +45,15 @@ bool SubDriveBase::isNavxCal(){
 }
 
 double SubDriveBase::getYaw(){
-  return ahrsNavXGyro.GetYaw();
+  return ahrsNavXGyro.GetAngle();
 }
 
 void SubDriveBase::resetYaw(){
   ahrsNavXGyro.ZeroYaw();
+}
+
+void SubDriveBase::setYaw(double angle){
+  ahrsNavXGyro.SetAngleAdjustment(angle-ahrsNavXGyro.GetYaw());
 }
 
 void SubDriveBase::deployDolly(){
@@ -63,9 +67,10 @@ void SubDriveBase::retractDolly(){
 double SubDriveBase::getDistanceTravelled(){
   // double wheelRotations = _talonDolly.GetSelectedSensorPosition() / 2;
 
-  double wheelRotations = _dollyWheel.GetPosition()/2;
-  frc::SmartDashboard::PutNumber("dolly rotations", wheelRotations);
+  double wheelRotations = _dollyWheel.GetPosition();
+  // frc::SmartDashboard::PutNumber("dolly rotations", wheelRotations);
   double distance = wheelRotations * metersPerRotation;
+  frc::SmartDashboard::PutNumber("Distance in meters", distance);
   return distance;  
 }
 
@@ -78,8 +83,6 @@ double SubDriveBase::GetTalonDistanceTravelled() {
 
 // This method will be called once per scheduler run
 void SubDriveBase::Periodic() {
-  frc::SmartDashboard::PutNumber("Encoder Position", GetTalonDistanceTravelled());
-  frc::SmartDashboard::PutNumber("Encoder Velocity", _dollyWheel.GetVelocity());
 }
 
 void SubDriveBase::SetCoastMode() {

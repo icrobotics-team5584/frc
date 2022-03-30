@@ -9,6 +9,7 @@
 #include <rev/CANSparkMax.h>
 #include <frc/DoubleSolenoid.h>
 #include "Constants.h"
+#include <frc/Timer.h>
 
 class SubStorage : public frc2::SubsystemBase {
  public:
@@ -20,16 +21,17 @@ class SubStorage : public frc2::SubsystemBase {
   void Periodic() override;
   void In();
   void Stop();
+  void DelayStop();
   void Out();
   void ExtendStopper();
   void RetractStopper();
+  frc::Timer timer;
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
   rev::CANSparkMax _spmStorage{can::spmStorage,
                                rev::CANSparkMaxLowLevel::MotorType::kBrushless};
-  frc::DoubleSolenoid _solStopper{1, frc::PneumaticsModuleType::CTREPCM,
-                                  pcm::solStorageStopperForward,
-                                  pcm::solStorageStopperReverse};
+  frc::DoubleSolenoid _solStopper{1, frc::PneumaticsModuleType::CTREPCM, pcm::solStorageStopperForward, pcm::solStorageStopperReverse};
+
 };

@@ -6,48 +6,53 @@
 #include "RobotContainer.h"
 #include <math.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/Timer.h>
+
 Autonomous::Autonomous(std::function<double()> getYaw, std::function<double()> getDistance){
   _getYaw = getYaw;
   _getDistance = getDistance;
   prevDistance = _getDistance();
   notifier.StartPeriodic(fasterPeriod);
   frc::SmartDashboard::PutNumber("back y", backPosY);
-  frc::SmartDashboard::PutNumber("back ", backPosX);
+  frc::SmartDashboard::PutNumber("back x", backPosX);
   frc::SmartDashboard::PutNumber("error", error);
   frc::SmartDashboard::PutNumber("steering error", error);
   frc::SmartDashboard::PutNumber("speed", speed);
   frc::SmartDashboard::PutNumber("steering", steering);
   frc::SmartDashboard::PutNumber("turreterror", error);
   frc::SmartDashboard::PutNumber("turretAngle", 0);
-  frc::SmartDashboard::PutNumber("auto angle", _getYaw());
   frc::SmartDashboard::PutNumber("front y", frontPosY);
-  frc::SmartDashboard::PutNumber("back y", backPosY);
+  frc::SmartDashboard::PutNumber("front x", frontPosX);
   frc::SmartDashboard::PutNumber("AUTO OPTIONS", autoop);
   frc::SmartDashboard::PutNumber("lineDistance", 0);
   //frc::SmartDashboard::GetNumber("AUTO OPTIONS", autoop);
-
+  timer.Start();
+  frc::SmartDashboard::PutNumber("TIME", timer.GetMatchTime().value());
 }
 
 void Autonomous::Periodic(){
   updatePosition();
   frc::SmartDashboard::PutNumber("Auto - x", dollyPosX);
   frc::SmartDashboard::PutNumber("Auto - y", dollyPosY);
+  frc::SmartDashboard::PutNumber("front y", frontPosY);
+  frc::SmartDashboard::PutNumber("front x", frontPosX);
+  frc::SmartDashboard::PutNumber("back y", backPosY);
+  frc::SmartDashboard::PutNumber("back x", backPosX);
+  frc::SmartDashboard::PutNumber("auto angle", _getYaw());
 }
 
 void Autonomous::updatePosition(){//calculates position, gets called in a periodic
   // Get relevant values
   double currentAngle = (_getYaw()) * 0.01745329251;  // Convert to radians with * 0.01745329251
   double currentDistance = _getDistance();//total distance
-  frc::SmartDashboard::PutNumber("distance", currentDistance);
-  frc::SmartDashboard::PutNumber("Current Angle", _getYaw());
   double distanceDelta = -(currentDistance - prevDistance);//distance since last 10 milliseconds
   // Determine current position
   dollyPosX += distanceDelta * sin(currentAngle);
   dollyPosY += distanceDelta * cos(currentAngle);
-  backPosX = dollyPosX + (metersToFront * sin(currentAngle));
-  backPosY = dollyPosY + (metersToFront * cos(currentAngle));
-  frontPosX = dollyPosX - (metersToBack * sin(currentAngle));
-  frontPosY = dollyPosY - (metersToBack * cos(currentAngle));
+  backPosX = dollyPosX - (metersToFront * sin(currentAngle));
+  backPosY = dollyPosY - (metersToFront * cos(currentAngle));
+  frontPosX = dollyPosX + (metersToBack * sin(currentAngle));
+  frontPosY = dollyPosY + (metersToBack * cos(currentAngle));
   
   // Save values for next iteration
   prevDistance = currentDistance;
@@ -58,15 +63,11 @@ void Autonomous::setPosition(double x, double y){
   dollyPosY = y;
 }
 
-void Autonomous::setAngle(double theta){
-  angleOffset = theta - _getYaw();
-  
-}
 
 DriveInput Autonomous::autoDrive(double startX, double startY, double endX, double endY, double endHeading, double cenX, double cenY, PIDk pidSpeed, PIDk PIDk, double maxSpeed, double endSpeed){
   maxSpeed = maxSpeed*autoop;
   endSpeed = endSpeed*autoop;
-  if(speed >= 0){
+  if(maxSpeed >= 0){
     posX = frontPosX;
     posY = frontPosY;
   }else{
@@ -131,7 +132,19 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
 
 
   //speed pid
-  error = sqrt(pow((posX - endX), 2) + pow((posY - endY), 2));
+  if(isLinear){
+    error = sqrt(pow((posX - endX), 2) + pow((posY - endY), 2));
+  }else{
+    double vecPosX = dollyPosX-_cenX;
+    double vecPosY = dollyPosY-_cenY;
+    double vecPosMag = sqrt(pow(vecPosX, 2)+pow(vecPosY, 2));
+    double endVecX = (endX-_cenX);
+    double endVecY = (endY-_cenY);
+    double endVecMag = sqrt(pow(endVecX, 2) + pow(endVecY, 2));
+    vecPosX = (vecPosX/vecPosMag) * endVecMag;
+    vecPosY = (vecPosY/vecPosMag) * endVecMag;
+    error = sqrt(pow(vecPosX - endVecX, 2)+pow(vecPosY-endVecY,2));  
+  }
   intergral = intergral + error;
   //output = kP*Error + kI*Intergral + kD*Derivative
   speed = pidSpeed.p*error + pidSpeed.i*intergral + pidSpeed.d*(error - previousDistError);
@@ -155,11 +168,7 @@ DriveInput Autonomous::autoDrive(double startX, double startY, double endX, doub
   frc::SmartDashboard::PutBoolean("linear", isLinear);
   frc::SmartDashboard::PutNumber("midx", dollyPosX);
   frc::SmartDashboard::PutNumber("midy", dollyPosY);
-  frc::SmartDashboard::PutNumber("front y", frontPosY);
-  frc::SmartDashboard::PutNumber("frontx", frontPosX);
-  frc::SmartDashboard::PutNumber("back y", backPosY);
-  frc::SmartDashboard::PutNumber("back ", backPosX);
-  frc::SmartDashboard::PutNumber("auto angle", _getYaw());
+  
   return autoOutput;
 }
 
@@ -169,11 +178,16 @@ bool Autonomous::end(double endx, double endy, double startx, double starty, dou
   if(!isLinear){
     double vecPosX = dollyPosX-_cenX;
     double vecPosY = dollyPosY-_cenY;
-    vecPosX /= sqrt(pow(vecPosX, 2)+pow(vecPosY, 2)) * sqrt(pow(_cenX-endx, 2) + pow(_cenY-endy, 2));
-    vecPosY /= sqrt(pow(vecPosX, 2)+pow(vecPosY, 2)) * sqrt(pow(_cenX-endx, 2) + pow(_cenY-endy, 2));
-    double lineDistance = sqrt(pow(vecPosX - (endx-_cenX), 2)+pow(vecPosY-(endy-_cenY),2));
-    frc::SmartDashboard::PutNumber("lineDistance", lineDistance);
-    if(lineDistance < 0.05){
+    double vecPosMag = sqrt(pow(vecPosX, 2)+pow(vecPosY, 2));
+    double endVecX = (endx-_cenX);
+    double endVecY = (endy-_cenY);
+    double endVecMag = sqrt(pow(endVecX, 2) + pow(endVecY, 2));
+    vecPosX = (vecPosX/vecPosMag) * endVecMag;
+    vecPosY = (vecPosY/vecPosMag) * endVecMag;
+    double lineDistance = sqrt(pow(vecPosX - endVecX, 2)+pow(vecPosY-endVecY,2));
+
+    if(lineDistance < 0.1){
+      frc::SmartDashboard::PutNumber("TIME", timer.GetMatchTime().value());
       return true;
     }
     else{
@@ -183,6 +197,7 @@ bool Autonomous::end(double endx, double endy, double startx, double starty, dou
   if(power > 0){
     
       if(sqrt(pow((frontPosX - startx), 2) + pow((frontPosY - starty), 2)) > (sqrt(pow((startx - endx), 2) + pow((starty - endy), 2)))-0.1 ){
+        frc::SmartDashboard::PutNumber("TIME", timer.GetMatchTime().value());
         return true;
       }else{
         return false;
@@ -190,6 +205,7 @@ bool Autonomous::end(double endx, double endy, double startx, double starty, dou
   }else{
     std::cout << sqrt(pow((backPosX - startx), 2) + pow((backPosY - starty), 2)) << " robot \n line: "  << (sqrt(pow((startx - endx), 2) + pow((starty - endy), 2)))-0.1 << std::endl;
     if(sqrt(pow((backPosX - startx), 2) + pow((backPosY - starty), 2)) > (sqrt(pow((startx - endx), 2) + pow((starty - endy), 2)))-0.1 ){
+        frc::SmartDashboard::PutNumber("TIME", timer.GetMatchTime().value());
         return true;
       }else{
         return false;
@@ -204,7 +220,7 @@ DriveInput Autonomous::turnTo(double angle, PIDk PIDk){
   //autoop = frc::SmartDashboard::GetNumber("AUTO OPTIONS", autoop);
   steering = PIDk.p*error + PIDk.i*intergral + PIDk.d*(error - previousError);
   // Limit speed to 0.2 while turning (DELETE FOR FINAL TESTING)
-  if(abs(steering) > 0.2) steering=0.2*steering/abs(steering);
+  // if(abs(steering) > 0.2) steering=0.2*steering/abs(steering);
   
   frc::SmartDashboard::PutNumber("Steering", steering);
   frc::SmartDashboard::PutNumber("auto angle", _getYaw());

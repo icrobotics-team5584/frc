@@ -6,8 +6,10 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
-
-void Robot::RobotInit() {}
+#include <cameraserver/CameraServer.h>
+void Robot::RobotInit() {
+  frc::CameraServer::StartAutomaticCapture();
+}
 
 /**
  * This function is called every robot packet, no matter the mode. Use
@@ -25,7 +27,7 @@ void Robot::RobotPeriodic() {
  * This function is called once each time the robot enters Disabled mode. You
  * can use it to reset any subsystem information you want to clear when the
  * robot is disabled.
- */
+ */ 
 void Robot::DisabledInit() {}
 
 void Robot::DisabledPeriodic() {}
@@ -35,6 +37,9 @@ void Robot::DisabledPeriodic() {}
  * RobotContainer} class.
  */
 void Robot::AutonomousInit() {
+  m_container._subDriveBase.resetYaw();
+  m_container._subDriveBase.deployDolly();
+
   m_container._subDriveBase.SetBreakMode();
 
   m_autonomousCommand = m_container.GetAutonomousCommand();
@@ -42,14 +47,14 @@ void Robot::AutonomousInit() {
   if (m_autonomousCommand != nullptr) {
     m_autonomousCommand->Schedule();
   }
-  m_container._subDriveBase.resetYaw();
-  m_container._subDriveBase.deployDolly();
+
 }
 
 void Robot::AutonomousPeriodic() {}
 
 void Robot::TeleopInit() {
   m_container._subDriveBase.SetCoastMode();
+  m_container._subShooter.SetShooterTracking(true);
 
   // This makes sure that the autonomous stops running when
   // teleop starts running. If you want the autonomous to

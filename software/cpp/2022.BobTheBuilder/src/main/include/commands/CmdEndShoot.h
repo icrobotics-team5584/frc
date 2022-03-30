@@ -6,12 +6,9 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <frc/filter/SlewRateLimiter.h>
-#include <units/voltage.h>
-
-#include "subsystems/SubDriveBase.h"
-#include "Utilities/JoystickScaler.h"
-
+#include "subsystems/SubStorage.h"
+#include "subsystems/SubIntake.h"
+#include "subsystems/SubShooter.h"
 /**
  * An example command.
  *
@@ -19,14 +16,20 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class CmdJoystickDrive
-    : public frc2::CommandHelper<frc2::CommandBase, CmdJoystickDrive> {
+class CmdEndShoot
+    : public frc2::CommandHelper<frc2::CommandBase, CmdEndShoot> {
  public:
-  CmdJoystickDrive(SubDriveBase* subDriveBase, JoystickScaler* joystick);
+  CmdEndShoot(SubStorage* subStorage, SubIntake* subIntake, SubShooter* subShooter);
+
+  void Initialize() override;
+
   void Execute() override;
 
+  void End(bool interrupted) override;
+
+  bool IsFinished() override;
  private:
-  SubDriveBase* _subDriveBase;
-  JoystickScaler* _joystick;
-  frc::SlewRateLimiter<units::volts> _stickYLimiter{2_V / 1_s};
+  SubStorage* _subStorage;
+  SubIntake* _subIntake;
+  SubShooter* _subShooter;
 };
