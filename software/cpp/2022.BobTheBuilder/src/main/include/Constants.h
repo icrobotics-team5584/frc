@@ -19,6 +19,7 @@ namespace can {
   constexpr int spmDriveBaseBackRight = 1;
   constexpr int spmDriveBaseFrontLeft = 4;
   constexpr int spmDriveBaseBackLeft = 2;
+  constexpr int spmStorage = 11;
   constexpr int spmDolly = 5;
   constexpr int spmIntake = 7;
   constexpr int spmShooter1 = 8;
@@ -28,6 +29,10 @@ namespace can {
 namespace pcm {
   constexpr int solDollyDeploy = 0;
   constexpr int solDollyRetract = 1;
-  constexpr int solIntakeOut = 4;
-  constexpr int solIntakeIn = 5;
+  constexpr int solClimberForward = 2;
+  constexpr int solClimberReverse = 3;
+  constexpr int solStorageStopperForward = 5;
+  constexpr int solStorageStopperReverse = 4;
+  constexpr int solIntakeOut = 6;
+  constexpr int solIntakeIn = 7;
 }

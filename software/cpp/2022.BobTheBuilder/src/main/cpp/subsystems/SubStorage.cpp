@@ -4,7 +4,30 @@
 
 #include "subsystems/SubStorage.h"
 
-SubStorage::SubStorage() = default;
+SubStorage::SubStorage() {
+    _spmStorage.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+    _spmStorage.SetSmartCurrentLimit(20);
+}
 
 // This method will be called once per scheduler run
 void SubStorage::Periodic() {}
+
+void SubStorage::In() {
+    _spmStorage.Set(0.8);
+}
+
+void SubStorage::Stop() {
+    _spmStorage.Set(0);
+}
+
+void SubStorage::Out() {
+    _spmStorage.Set(-0.4);
+}
+
+void SubStorage::ExtendStopper() {
+    _solStopper.Set(frc::DoubleSolenoid::Value::kForward);
+}
+
+void SubStorage::RetractStopper() {
+    _solStopper.Set(frc::DoubleSolenoid::Value::kReverse);
+}

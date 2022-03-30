@@ -4,32 +4,28 @@
 
 #pragma once
 
-#include <frc/DoubleSolenoid.h>
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
 #include <frc/DoubleSolenoid.h>
 #include "Constants.h"
 
-class SubStorage : public frc2::SubsystemBase {
+class SubIntake : public frc2::SubsystemBase {
  public:
-  SubStorage();
+  SubIntake();
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
   void Periodic() override;
-  void In();
+  void Intake();
+  void Outtake();
+  void Extend();
+  void Retract();
   void Stop();
-  void Out();
-  void ExtendStopper();
-  void RetractStopper();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-  rev::CANSparkMax _spmStorage{can::spmStorage,
-                               rev::CANSparkMaxLowLevel::MotorType::kBrushless};
-  frc::DoubleSolenoid _solStopper{1, frc::PneumaticsModuleType::CTREPCM,
-                                  pcm::solStorageStopperForward,
-                                  pcm::solStorageStopperReverse};
+  rev::CANSparkMax _spmIntake{can::spmIntake, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+   frc::DoubleSolenoid _solPnuematics{1,frc::PneumaticsModuleType::CTREPCM,pcm::solIntakeOut,pcm::solIntakeIn};
 };
