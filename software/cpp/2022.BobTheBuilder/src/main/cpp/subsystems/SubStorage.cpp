@@ -16,6 +16,21 @@ void SubStorage::Periodic() {
         timer.Stop();
         timer.Reset();
     }
+    frc::Color detectedColorFront = m_colorSensorFront.GetColor();
+    frc::SmartDashboard::PutNumber("RedFront", detectedColorFront.red);
+    frc::SmartDashboard::PutNumber("GreenFront", detectedColorFront.green);
+    frc::SmartDashboard::PutNumber("BlueFront", detectedColorFront.blue);
+    
+    uint32_t proximityFront = m_colorSensorFront.GetProximity();
+    frc::SmartDashboard::PutNumber("ProximityFront", proximityFront);
+
+    frc::Color detectedColorBack = m_colorSensorBack.GetColor();
+    frc::SmartDashboard::PutNumber("RedBack", detectedColorBack.red);
+    frc::SmartDashboard::PutNumber("GreenBack", detectedColorBack.green);
+    frc::SmartDashboard::PutNumber("BlueBack", detectedColorBack.blue);
+    
+    uint32_t proximityBack = m_colorSensorBack.GetProximity();
+    frc::SmartDashboard::PutNumber("ProximityBack", proximityBack);
 }
 
 void SubStorage::In() {
@@ -46,3 +61,4 @@ void SubStorage::ExtendStopper() {
 void SubStorage::RetractStopper() {
     _solStopper.Set(frc::DoubleSolenoid::Value::kReverse);
 }
+

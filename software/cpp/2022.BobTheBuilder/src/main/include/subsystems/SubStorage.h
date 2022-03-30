@@ -10,6 +10,8 @@
 #include <frc/DoubleSolenoid.h>
 #include "Constants.h"
 #include <frc/Timer.h>
+#include <rev/ColorSensorV3.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 
 class SubStorage : public frc2::SubsystemBase {
  public:
@@ -34,4 +36,9 @@ class SubStorage : public frc2::SubsystemBase {
                                rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   frc::DoubleSolenoid _solStopper{1, frc::PneumaticsModuleType::CTREPCM, pcm::solStorageStopperForward, pcm::solStorageStopperReverse};
 
+  static constexpr auto i2cPortOnBoard = frc::I2C::Port::kOnboard;
+  rev::ColorSensorV3 m_colorSensorFront{i2cPortOnBoard};
+
+  static constexpr auto i2cPortMXP = frc::I2C::Port::kMXP;
+  rev::ColorSensorV3 m_colorSensorBack{i2cPortMXP};
 };
