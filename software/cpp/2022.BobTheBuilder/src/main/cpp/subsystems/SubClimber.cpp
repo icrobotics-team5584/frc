@@ -1,6 +1,8 @@
 #include "subsystems/SubClimber.h"
 #include "frc/smartdashboard/SmartDashboard.h"
-
+#include <frc/RobotController.h>
+#include <frc/simulation/RoboRioSim.h>
+#include <frc/simulation/BatterySim.h>
 
 SubClimber::SubClimber() {
   _spmLeftElevator.RestoreFactoryDefaults();
@@ -34,6 +36,9 @@ SubClimber::SubClimber() {
   _pidRightMotorController.SetSmartMotionAllowedClosedLoopError(kAllErr);
 
   SetEncoders(MIN_POSITION);  // Assume we turn the robot on with the arms down
+
+  frc::SmartDashboard::PutData("Left Elevator Sim", &_leftMech);
+  frc::SmartDashboard::PutData("Right Elevator Sim", &_rightMech);
 }
 
 void SubClimber::SetMaxSpeed(){
@@ -138,4 +143,42 @@ bool SubClimber::GoingDown() {
   
 }
 
+void SubClimber::SimulationPeriodic() {
+  // In this method, we update our simulation of what our elevator is doing
+  // First, we set our "inputs" (voltages)
+  if (_inSmartMotionMode) {
+    if (GoingDown()) {
+      _leftElevatorSim.SetInputVoltage(-12_V);
+      _rightElevatorSim.SetInputVoltage(-12_V);
+    } else {
+      _leftElevatorSim.SetInputVoltage(12_V);
+      _rightElevatorSim.SetInputVoltage(12_V);
+    }
+  } else {
+    _leftElevatorSim.SetInputVoltage(
+        units::volt_t(_spmLeftElevator.Get() * 12));
+    _rightElevatorSim.SetInputVoltage(
+        units::volt_t(_spmRightElevator.Get() * 12));
+  }
 
+  // Next, we update it. The standard loop time is 20ms.
+  _leftElevatorSim.Update(20_ms);
+  _rightElevatorSim.Update(20_ms);
+
+  // Update the simulated limit switches based on the simulated elevators
+  _leftLimitSim.SetValue(_leftElevatorSim.GetPosition() > 0_m);
+  _rightLimitSim.SetValue(_leftElevatorSim.GetPosition() > 0_m);
+
+  _encLeftElevator.SetPosition(_leftElevatorSim.GetPosition() /
+                               kMaxElevatorHeight * MAX_POSITION);
+  _encRightElevator.SetPosition(_leftElevatorSim.GetPosition() /
+                                kMaxElevatorHeight * MAX_POSITION);
+
+  // Update the displays based on the simulated elevators
+  _leftLigament->SetLength(_leftElevatorSim.GetPosition().value());
+  _rightLigament->SetLength(_rightElevatorSim.GetPosition().value());
+
+  bool rotated = _solTilter.Get() == frc::DoubleSolenoid::Value::kForward;
+  _leftLigament->SetAngle(rotated ? 100_deg : 90_deg);
+  _rightLigament->SetAngle(rotated ? 100_deg : 90_deg);
+}
