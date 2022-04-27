@@ -1,0 +1,34 @@
+{
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
+      "/LiveWindow/Ungrouped/DigitalInput[1]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[2]": "Digital Input",
+      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/LiveWindow/Ungrouped/class frc2::SubsystemBase": "Subsystem",
+      "/LiveWindow/Ungrouped/navX-Sensor[4]": "Gyro",
+      "/SmartDashboard/Auto chooser": "String Chooser",
+      "/SmartDashboard/Left Elevator Sim": "Mechanism2d",
+      "/SmartDashboard/Reset Climber": "Command",
+      "/SmartDashboard/Right Elevator Sim": "Mechanism2d"
+    },
+    "windows": {
+      "/SmartDashboard/Left Elevator Sim": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Reset Climber": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Right Elevator Sim": {
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  }
+}
