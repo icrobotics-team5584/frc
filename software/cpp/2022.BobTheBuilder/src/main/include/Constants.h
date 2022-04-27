@@ -46,6 +46,8 @@ namespace pcm2 {
 }
 
 namespace dio {
-  constexpr int lmtClimberLeft = 1;
-  constexpr int lmtClimberRight = 2;
+  constexpr int lmtLowerClimberLeft = 1;
+  constexpr int lmtLowerClimberRight = 2;
+  constexpr int lmtUpperClimberLeft = 6;
+  constexpr int lmtUpperClimberRight = 7;
 }

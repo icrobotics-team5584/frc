@@ -37,10 +37,13 @@ class SubClimber : public frc2::SubsystemBase {
   void SetEncoders(double value);  // Set encoder values
   void SetMaxSpeed();              // Set Climber max speed
   void SetMinSpeed();              // Set Climber min speed
-  bool AtLeftLimit();              // Check if left limit is hit
-  bool AtRightLimit();             // Check if right limit is hit
+  bool AtLowerLeftLimit();         // Check if left limit is hit
+  bool AtLowerRightLimit();        // Check if right limit is hit
   bool GoingDown();                // Check if arms target is below current pos
   bool IsAtTargetPosition();       // check if both elevators have reached the target
+  bool AtUpperLeftLimit();         // check is left upper limit is hit
+  bool AtUpperRightLimit();        // check is right upper limit is hit
+  bool GoingUp();                  // Check if arms target is above current position
 
   static constexpr double MIN_POSITION = 0;
   static constexpr double MAX_POSITION = 165;
@@ -70,8 +73,10 @@ class SubClimber : public frc2::SubsystemBase {
                                  pcm::solClimberForward,
                                  pcm::solClimberReverse};
 
-  frc::DigitalInput _lmtLeft{dio::lmtClimberLeft};
-  frc::DigitalInput _lmtRight{dio::lmtClimberRight};
+  frc::DigitalInput _LowerlmtLeft{dio::lmtLowerClimberLeft};
+  frc::DigitalInput _LowerlmtRight{dio::lmtLowerClimberRight};
+  frc::DigitalInput _UpperLmtLeft{dio::lmtUpperClimberLeft};
+  frc::DigitalInput _UpperLmtRight{dio::lmtUpperClimberRight};
 
   rev::SparkMaxRelativeEncoder _encLeftElevator{_spmLeftElevator.GetEncoder()};
   rev::SparkMaxRelativeEncoder _encRightElevator{
@@ -91,8 +96,10 @@ class SubClimber : public frc2::SubsystemBase {
     static constexpr units::meter_t kMaxElevatorHeight = 2_m;
     frc::DCMotor m_elevatorGearbox = frc::DCMotor::NEO();
     
-    frc::sim::DIOSim _leftLimitSim{_lmtLeft};   
-    frc::sim::DIOSim _rightLimitSim{_lmtRight};
+    frc::sim::DIOSim _LowerleftLimitSim{_LowerlmtLeft};   
+    frc::sim::DIOSim _LowerrightLimitSim{_LowerlmtRight};
+    frc::sim::DIOSim _UpperleftLimitSim{_UpperLmtLeft};   
+    frc::sim::DIOSim _UpperrightLimitSim{_UpperLmtRight};
 
     frc::sim::ElevatorSim _leftElevatorSim{m_elevatorGearbox,
                                       kElevatorGearing,

@@ -65,24 +65,24 @@ void SubClimber::Periodic() {
   // Dashboard Logging
   frc::SmartDashboard::PutNumber("Left Climber Position", _encLeftElevator.GetPosition());
   frc::SmartDashboard::PutNumber("Right Climber Position", _encRightElevator.GetPosition());
-  frc::SmartDashboard::PutBoolean("Left climber limit", AtLeftLimit());
-  frc::SmartDashboard::PutBoolean("Right climber limit", AtRightLimit());
+  frc::SmartDashboard::PutBoolean("Left climber limit", AtLowerLeftLimit());
+  frc::SmartDashboard::PutBoolean("Right climber limit", AtLowerRightLimit());
   frc::SmartDashboard::PutBoolean("climber Going Down", GoingDown());
   frc::SmartDashboard::PutBoolean("climber in smart motion control", _inSmartMotionMode);
   frc::SmartDashboard::PutNumber("climber target position", _targetPosition);
   frc::SmartDashboard::PutNumber("climber left duty cycle", _spmLeftElevator.GetAppliedOutput());
   frc::SmartDashboard::PutNumber("climber right duty cycle", _spmRightElevator.GetAppliedOutput());
 
-  // Reset encoders when limit switch is pressed
-  if (AtLeftLimit()) {
+  // Reset Lower encoders when limit switch is pressed
+  if (AtLowerLeftLimit()) {
     _encLeftElevator.SetPosition(MIN_POSITION);
   }
-  if (AtRightLimit()) {
+  if (AtLowerRightLimit()) {
     _encRightElevator.SetPosition(MIN_POSITION);
   }
 
   // Don't let the climber kill itself
-  if ((AtLeftLimit() && GoingDown())) {
+  if ((AtLowerLeftLimit() && GoingDown())) {
     frc::SmartDashboard::PutBoolean("Climber Left Safety", true);
     _targetPosition = 0;
     _pidLeftMotorController.SetReference(_targetPosition, rev::CANSparkMax::ControlType::kSmartMotion);
@@ -90,8 +90,34 @@ void SubClimber::Periodic() {
   } else {
     frc::SmartDashboard::PutBoolean("Climber Left Safety", false);
   }
-  if ((AtRightLimit() && GoingDown())) {
+  if ((AtLowerRightLimit() && GoingDown())) {
     _targetPosition = 0;
+    _pidRightMotorController.SetReference(_targetPosition, rev::CANSparkMax::ControlType::kSmartMotion);
+    _spmRightElevator.Set(0);
+    frc::SmartDashboard::PutBoolean("Climber Right Safety", true);
+  } else {
+    frc::SmartDashboard::PutBoolean("Climber Right Safety", false);
+  }
+
+    // Reset Upper encoders when limit switch is pressed
+  if (AtUpperLeftLimit()) {
+    _encLeftElevator.SetPosition(MAX_POSITION);
+  }
+  if (AtUpperRightLimit()) {
+    _encRightElevator.SetPosition(MAX_POSITION);
+  }
+
+  // Don't let the climber kill itself
+  if ((AtUpperLeftLimit() && GoingUp())) {
+    frc::SmartDashboard::PutBoolean("Climber Left Safety", true);
+    _targetPosition = MAX_POSITION;
+    _pidLeftMotorController.SetReference(_targetPosition, rev::CANSparkMax::ControlType::kSmartMotion);
+    _spmLeftElevator.Set(0);
+  } else {
+    frc::SmartDashboard::PutBoolean("Climber Left Safety", false);
+  }
+  if ((AtUpperRightLimit() && GoingUp())) {
+    _targetPosition = MAX_POSITION;
     _pidRightMotorController.SetReference(_targetPosition, rev::CANSparkMax::ControlType::kSmartMotion);
     _spmRightElevator.Set(0);
     frc::SmartDashboard::PutBoolean("Climber Right Safety", true);
@@ -104,8 +130,8 @@ void SubClimber::ManualDrive(double speed) {
   _inSmartMotionMode = false;
   double leftSpeed = speed;
   double rightSpeed = speed;
-  if (AtLeftLimit() && leftSpeed < 0) leftSpeed = 0;
-  if (AtRightLimit() && rightSpeed < 0) rightSpeed = 0;
+  if (AtLowerLeftLimit() && leftSpeed < 0) leftSpeed = 0;
+  if (AtLowerRightLimit() && rightSpeed < 0) rightSpeed = 0;
   _spmLeftElevator.Set(leftSpeed);
   _spmRightElevator.Set(rightSpeed);
 }
@@ -129,9 +155,14 @@ void SubClimber::Stow() {
   frc::SmartDashboard::PutBoolean("stow ran", true); 
 }
 
-bool SubClimber::AtLeftLimit() { return !_lmtLeft.Get(); }
+bool SubClimber::AtLowerLeftLimit() { return !_LowerlmtLeft.Get(); }
 
-bool SubClimber::AtRightLimit() { return !_lmtRight.Get(); }
+bool SubClimber::AtLowerRightLimit() { return !_LowerlmtRight.Get(); }
+
+bool SubClimber::AtUpperLeftLimit() { return !_UpperLmtLeft.Get(); }
+
+bool SubClimber::AtUpperRightLimit() { return !_UpperLmtRight.Get(); }
+
 
 bool SubClimber::GoingDown() {
   if (_inSmartMotionMode) {
@@ -139,6 +170,16 @@ bool SubClimber::GoingDown() {
            _encRightElevator.GetPosition() > _targetPosition;
   } else {
     return _spmRightElevator.Get() < 0 || _spmRightElevator.Get() < 0;
+  }
+  
+}
+
+bool SubClimber::GoingUp() {
+  if (_inSmartMotionMode) {
+    return _encLeftElevator.GetPosition() < _targetPosition ||
+           _encRightElevator.GetPosition() < _targetPosition;
+  } else {
+    return _spmRightElevator.Get() > 0 || _spmRightElevator.Get() > 0;
   }
   
 }
@@ -166,8 +207,10 @@ void SubClimber::SimulationPeriodic() {
   _rightElevatorSim.Update(20_ms);
 
   // Update the simulated limit switches based on the simulated elevators
-  _leftLimitSim.SetValue(_leftElevatorSim.GetPosition() > 0_m);
-  _rightLimitSim.SetValue(_leftElevatorSim.GetPosition() > 0_m);
+  _LowerleftLimitSim.SetValue(_leftElevatorSim.GetPosition() > 0_m);
+  _LowerrightLimitSim.SetValue(_leftElevatorSim.GetPosition() > 0_m);
+  _LowerleftLimitSim.SetValue(_leftElevatorSim.GetPosition() < units::meter_t(MAX_POSITION));
+  _LowerrightLimitSim.SetValue(_leftElevatorSim.GetPosition() < units::meter_t(MAX_POSITION));
 
   _encLeftElevator.SetPosition(_leftElevatorSim.GetPosition() /
                                kMaxElevatorHeight * MAX_POSITION);
