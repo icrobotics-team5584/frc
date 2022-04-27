@@ -143,7 +143,7 @@ void SubClimber::DriveTo(double position) {
   _pidRightMotorController.SetReference(_targetPosition, rev::CANSparkMax::ControlType::kSmartMotion);
 }
 
-void SubClimber::Extend() { DriveTo(MAX_POSITION); }
+void SubClimber::Extend() { DriveTo(MAX_POSITION+10); }
 
 void SubClimber::Retract() { DriveTo(MIN_POSITION + SAFETY_FACTOR); }
 
@@ -207,10 +207,11 @@ void SubClimber::SimulationPeriodic() {
   _rightElevatorSim.Update(20_ms);
 
   // Update the simulated limit switches based on the simulated elevators
-  _LowerleftLimitSim.SetValue(_leftElevatorSim.GetPosition() > 0_m);
+  units::meter_t Test = _leftElevatorSim.GetPosition();
+  _LowerleftLimitSim.SetValue(Test > 0_m);
   _LowerrightLimitSim.SetValue(_leftElevatorSim.GetPosition() > 0_m);
-  _LowerleftLimitSim.SetValue(_leftElevatorSim.GetPosition() < units::meter_t(MAX_POSITION));
-  _LowerrightLimitSim.SetValue(_leftElevatorSim.GetPosition() < units::meter_t(MAX_POSITION));
+  _UpperleftLimitSim.SetValue(_leftElevatorSim.GetPosition() < kMaxElevatorHeight);
+  _UpperrightLimitSim.SetValue(_leftElevatorSim.GetPosition() < kMaxElevatorHeight);
 
   _encLeftElevator.SetPosition(_leftElevatorSim.GetPosition() /
                                kMaxElevatorHeight * MAX_POSITION);
