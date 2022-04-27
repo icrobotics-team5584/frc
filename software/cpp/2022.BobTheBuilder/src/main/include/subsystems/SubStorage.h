@@ -27,6 +27,8 @@ class SubStorage : public frc2::SubsystemBase {
   void Out();
   void ExtendStopper();
   void RetractStopper();
+  frc::Color DetectFrontBall();
+  frc::Color DetectBackBall();
   frc::Timer timer;
 
  private:
