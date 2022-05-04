@@ -12,6 +12,9 @@
 #include <frc/Timer.h>
 #include <rev/ColorSensorV3.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include "frc/shuffleboard/Shuffleboard.h"
+#include <frc/shuffleboard/SuppliedValueWidget.h>
+#include <networktables/NetworkTableEntry.h>
 
 class SubStorage : public frc2::SubsystemBase {
  public:
@@ -43,4 +46,8 @@ class SubStorage : public frc2::SubsystemBase {
 
   static constexpr auto i2cPortMXP = frc::I2C::Port::kMXP;
   rev::ColorSensorV3 m_colorSensorBack{i2cPortMXP};
-};
+
+  frc::SuppliedValueWidget<bool>* _frontSensorWidget;
+  
+  frc::SuppliedValueWidget<bool> _backSensorWidget;
+  };
