@@ -93,6 +93,12 @@ void SubClimber::Periodic() {
   } else {
     frc::SmartDashboard::PutBoolean("Climber Right Safety", false);
   }
+
+  // Make sure the two arms never get out of sync with the target position
+  if (_inSmartMotionMode) {
+    _pidRightMotorController.SetReference(_targetPosition, rev::CANSparkMax::ControlType::kSmartMotion);
+    _pidLeftMotorController.SetReference(_targetPosition, rev::CANSparkMax::ControlType::kSmartMotion);
+  }
 }
 
 void SubClimber::ManualDrive(double speed) {
