@@ -65,8 +65,10 @@ void SubClimber::Periodic() {
   // Dashboard Logging
   frc::SmartDashboard::PutNumber("Left Climber Position", _encLeftElevator.GetPosition());
   frc::SmartDashboard::PutNumber("Right Climber Position", _encRightElevator.GetPosition());
-  frc::SmartDashboard::PutBoolean("Left climber limit", AtLowerLeftLimit());
-  frc::SmartDashboard::PutBoolean("Right climber limit", AtLowerRightLimit());
+  frc::SmartDashboard::PutBoolean("Left Lower climber limit", AtLowerLeftLimit());
+  frc::SmartDashboard::PutBoolean("Right Lower climber limit", AtLowerRightLimit());
+  frc::SmartDashboard::PutBoolean("Left Upper climber limit", AtUpperLeftLimit());
+  frc::SmartDashboard::PutBoolean("Right Upper climber limit", AtUpperRightLimit());
   frc::SmartDashboard::PutBoolean("climber Going Down", GoingDown());
   frc::SmartDashboard::PutBoolean("climber in smart motion control", _inSmartMotionMode);
   frc::SmartDashboard::PutNumber("climber target position", _targetPosition);
