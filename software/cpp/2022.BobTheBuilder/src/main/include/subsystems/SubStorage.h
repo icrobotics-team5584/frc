@@ -31,8 +31,8 @@ class SubStorage : public frc2::SubsystemBase {
   void Out();
   void ExtendStopper();
   void RetractStopper();
-  frc::Color DetectFrontBall();
-  frc::Color DetectBackBall();
+  std::shared_ptr<nt::Value> DetectFrontBall();
+  std::shared_ptr<nt::Value> DetectBackBall();
   frc::Timer timer;
 
  private:
@@ -49,10 +49,10 @@ class SubStorage : public frc2::SubsystemBase {
   rev::ColorSensorV3 m_colorSensorBack{i2cPortMXP};
 
   frc::SuppliedValueWidget<bool>* _frontSensorWidget =
-      &frc::Shuffleboard::GetTab("Sensors").AddBoolean("frontColorSensor",
+      &frc::Shuffleboard::GetTab("Driver").AddBoolean("frontColorSensor",
                                                        [] { return true; });
   frc::SuppliedValueWidget<bool>* _backSensorWidget =
-      &frc::Shuffleboard::GetTab("Sensors").AddBoolean("backColorSensor",
+      &frc::Shuffleboard::GetTab("Driver").AddBoolean("backColorSensor",
                                                        [] { return true; });
 
   wpi::StringMap<std::shared_ptr<nt::Value>> _frontColorDisplayProperties;

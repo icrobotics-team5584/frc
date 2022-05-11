@@ -19,16 +19,7 @@ void SubStorage::Periodic()
         timer.Stop();
         timer.Reset();
     }
-    frc::Color detectedColorFront = DetectFrontBall();
-    frc::SmartDashboard::PutNumber("DectectedRedFront", detectedColorFront.red);
-    frc::SmartDashboard::PutNumber("DectectedGreenFront", detectedColorFront.green);
-    frc::SmartDashboard::PutNumber("DectectedBlueFront", detectedColorFront.blue);
-
-    frc::Color detectedColorBack = DetectBackBall();
-    frc::SmartDashboard::PutNumber("DectectedRedBack", detectedColorBack.red);
-    frc::SmartDashboard::PutNumber("DectectedGreenBack", detectedColorBack.green);
-    frc::SmartDashboard::PutNumber("DectectedBlueBack", detectedColorBack.blue);
-
+    
     frc::Color rawColorFront = m_colorSensorFront.GetColor();
     frc::SmartDashboard::PutNumber("RawRedFront", rawColorFront.red);
     frc::SmartDashboard::PutNumber("RawGreenFront", rawColorFront.green);
@@ -39,16 +30,12 @@ void SubStorage::Periodic()
     frc::SmartDashboard::PutNumber("RawGreenBack", rawColorBack.green);
     frc::SmartDashboard::PutNumber("RawBlueBack", rawColorBack.blue);
 
-
-    if (detectedColorFront == frc::Color::kRed) {
-        _frontColorDisplayProperties["colorWhenTrue"] = _redName;
-    } else if (detectedColorFront == frc::Color::kBlue) {
-        _frontColorDisplayProperties["colorWhenTrue"] = _blueName;
-    } else {
-        _frontColorDisplayProperties["colorWhenTrue"] = _greyName;
-    }
+    _frontColorDisplayProperties ["colorWhenTrue"] = DetectFrontBall();
+    _backColorDisplayProperties ["colorWhenTrue"] = DetectBackBall();
+    
 
     _frontSensorWidget->WithProperties(_frontColorDisplayProperties);
+    _backSensorWidget->WithProperties(_backColorDisplayProperties);
 }
 
 void SubStorage::In()
@@ -86,31 +73,31 @@ void SubStorage::RetractStopper()
     _solStopper.Set(frc::DoubleSolenoid::Value::kReverse);
 }
 
-frc::Color SubStorage::DetectFrontBall()
+std::shared_ptr<nt::Value> SubStorage::DetectFrontBall()
 {
     frc::Color detectedColorFront = m_colorSensorFront.GetColor();
     if (detectedColorFront.red > 0.4)
     {
-        return frc::Color::kRed;
+        return _redName;
     }
     if (detectedColorFront.blue > 0.4)
     {
-        return frc::Color::kBlue;
+        return _blueName;
     }
     else
-        return frc::Color::kBlack; 
+        return _greyName; 
 }
-frc::Color SubStorage::DetectBackBall()
+std::shared_ptr<nt::Value> SubStorage::DetectBackBall()
 {
     frc::Color detectedColorBack = m_colorSensorBack.GetColor();
     if (detectedColorBack.red > 0.4)
     {
-        return frc::Color::kRed;
+        return _redName;
     }
     if (detectedColorBack.blue > 0.4)
     {
-        return frc::Color::kBlue;
+        return _blueName;
     }
     else
-        return frc::Color::kBlack; 
+        return _greyName; 
 }
