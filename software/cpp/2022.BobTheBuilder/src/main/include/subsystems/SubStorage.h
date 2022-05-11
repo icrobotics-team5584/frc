@@ -15,6 +15,7 @@
 #include "frc/shuffleboard/Shuffleboard.h"
 #include <frc/shuffleboard/SuppliedValueWidget.h>
 #include <networktables/NetworkTableEntry.h>
+#include "wpi/StringMap.h"
 
 class SubStorage : public frc2::SubsystemBase {
  public:
@@ -47,7 +48,17 @@ class SubStorage : public frc2::SubsystemBase {
   static constexpr auto i2cPortMXP = frc::I2C::Port::kMXP;
   rev::ColorSensorV3 m_colorSensorBack{i2cPortMXP};
 
-  frc::SuppliedValueWidget<bool>* _frontSensorWidget;
-  
-  frc::SuppliedValueWidget<bool> _backSensorWidget;
+  frc::SuppliedValueWidget<bool>* _frontSensorWidget =
+      &frc::Shuffleboard::GetTab("Sensors").AddBoolean("frontColorSensor",
+                                                       [] { return true; });
+  frc::SuppliedValueWidget<bool>* _backSensorWidget =
+      &frc::Shuffleboard::GetTab("Sensors").AddBoolean("backColorSensor",
+                                                       [] { return true; });
+
+  wpi::StringMap<std::shared_ptr<nt::Value>> _frontColorDisplayProperties;
+  wpi::StringMap<std::shared_ptr<nt::Value>> _backColorDisplayProperties;
+
+  const std::shared_ptr<nt::Value> _blueName = nt::Value::MakeString("Blue");
+  const std::shared_ptr<nt::Value> _redName = nt::Value::MakeString("Red");
+  const std::shared_ptr<nt::Value> _greyName = nt::Value::MakeString("Grey");
   };

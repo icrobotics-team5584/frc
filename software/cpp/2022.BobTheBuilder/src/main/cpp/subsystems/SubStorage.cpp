@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "subsystems/SubStorage.h"
+
 SubStorage::SubStorage()
 {
     _spmStorage.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
@@ -38,16 +39,16 @@ void SubStorage::Periodic()
     frc::SmartDashboard::PutNumber("RawGreenBack", rawColorBack.green);
     frc::SmartDashboard::PutNumber("RawBlueBack", rawColorBack.blue);
 
-    _frontSensorWidget = &frc::Shuffleboard::GetTab("Sensors").AddBoolean("sens", []{return true;});
-    _frontSensorWidget ->WithProperties()
 
+    if (detectedColorFront == frc::Color::kRed) {
+        _frontColorDisplayProperties["colorWhenTrue"] = _redName;
+    } else if (detectedColorFront == frc::Color::kBlue) {
+        _frontColorDisplayProperties["colorWhenTrue"] = _blueName;
+    } else {
+        _frontColorDisplayProperties["colorWhenTrue"] = _greyName;
+    }
 
-    // .Add("Front Sensor", true)
-    // .WithWidget("Boolen Box Widget")
-    // .GetEntry();
-
-    
-
+    _frontSensorWidget->WithProperties(_frontColorDisplayProperties);
 }
 
 void SubStorage::In()
