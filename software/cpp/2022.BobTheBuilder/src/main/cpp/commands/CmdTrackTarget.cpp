@@ -14,6 +14,8 @@ CmdTrackTarget::CmdTrackTarget(SubDriveBase* subDriveBase, SubShooter* subShoote
   _subShooter = subShooter;
   AddRequirements(_subDriveBase);
   AddRequirements(_subShooter);
+
+  frc::SmartDashboard::PutNumber("Limelight L+R Adjustment", _setpoint);
 }
 
 // Called when the command is initially scheduled.
@@ -24,6 +26,7 @@ void CmdTrackTarget::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void CmdTrackTarget::Execute() {
  
+  _setpoint = frc::SmartDashboard::GetNumber("Limelight L/R Adjustment", _setpoint);
 
   double _output = _controller.Calculate(_subShooter->GetLimelight().tx, _setpoint);
   _controllerF = _output<0 ? -_controllerF : _controllerF;

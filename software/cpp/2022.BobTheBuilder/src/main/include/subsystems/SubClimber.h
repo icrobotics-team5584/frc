@@ -11,6 +11,13 @@
 
 #include "Constants.h"
 
+#include <frc/simulation/ElevatorSim.h>
+#include <frc/smartdashboard/Mechanism2d.h>
+#include <frc/smartdashboard/MechanismLigament2d.h>
+#include <frc/smartdashboard/MechanismRoot2d.h>
+#include <frc/simulation/DIOSim.h>
+
+
 class SubClimber : public frc2::SubsystemBase {
  public:
   
@@ -20,6 +27,7 @@ class SubClimber : public frc2::SubsystemBase {
 
   SubClimber();
   void Periodic() override;        // Called every 20ms
+  void SimulationPeriodic() override;
   void ManualDrive(double speed);  // Move arms with percentage control
   void DriveTo(double position);   // Move arms to a position (rotations)
   void Extend();                   // Extend arms to top
@@ -29,10 +37,13 @@ class SubClimber : public frc2::SubsystemBase {
   void SetEncoders(double value);  // Set encoder values
   void SetMaxSpeed();              // Set Climber max speed
   void SetMinSpeed();              // Set Climber min speed
-  bool AtLeftLimit();              // Check if left limit is hit
-  bool AtRightLimit();             // Check if right limit is hit
+  bool AtLowerLeftLimit();         // Check if left limit is hit
+  bool AtLowerRightLimit();        // Check if right limit is hit
   bool GoingDown();                // Check if arms target is below current pos
   bool IsAtTargetPosition();       // check if both elevators have reached the target
+  bool AtUpperLeftLimit();         // check is left upper limit is hit
+  bool AtUpperRightLimit();        // check is right upper limit is hit
+  bool GoingUp();                  // Check if arms target is above current position
 
   static constexpr double MIN_POSITION = 0;
   static constexpr double MAX_POSITION = 165;
@@ -62,8 +73,10 @@ class SubClimber : public frc2::SubsystemBase {
                                  pcm::solClimberForward,
                                  pcm::solClimberReverse};
 
-  frc::DigitalInput _lmtLeft{dio::lmtClimberLeft};
-  frc::DigitalInput _lmtRight{dio::lmtClimberRight};
+  frc::DigitalInput _LowerlmtLeft{dio::lmtLowerClimberLeft};
+  frc::DigitalInput _LowerlmtRight{dio::lmtLowerClimberRight};
+  frc::DigitalInput _UpperLmtLeft{dio::lmtUpperClimberLeft};
+  frc::DigitalInput _UpperLmtRight{dio::lmtUpperClimberRight};
 
   rev::SparkMaxRelativeEncoder _encLeftElevator{_spmLeftElevator.GetEncoder()};
   rev::SparkMaxRelativeEncoder _encRightElevator{
@@ -74,6 +87,46 @@ class SubClimber : public frc2::SubsystemBase {
   rev::SparkMaxPIDController _pidRightMotorController =
       _spmRightElevator.GetPIDController();
 
+    //simulation
+    static constexpr double kElevatorGearing = 30.0;
+    static constexpr units::meter_t kElevatorDrumRadius = 2_in;
+    static constexpr units::kilogram_t kCarriageMass = 0.1_kg;
 
-  
+    static constexpr units::meter_t kMinElevatorHeight = 0_m;
+    static constexpr units::meter_t kMaxElevatorHeight = 2_m;
+    frc::DCMotor m_elevatorGearbox = frc::DCMotor::NEO();
+    
+    frc::sim::DIOSim _LowerleftLimitSim{_LowerlmtLeft};   
+    frc::sim::DIOSim _LowerrightLimitSim{_LowerlmtRight};
+    frc::sim::DIOSim _UpperleftLimitSim{_UpperLmtLeft};   
+    frc::sim::DIOSim _UpperrightLimitSim{_UpperLmtRight};
+
+    frc::sim::ElevatorSim _leftElevatorSim{m_elevatorGearbox,
+                                      kElevatorGearing,
+                                      kCarriageMass,
+                                      kElevatorDrumRadius,
+                                      kMinElevatorHeight,
+                                      kMaxElevatorHeight};
+    frc::sim::ElevatorSim _rightElevatorSim{m_elevatorGearbox,
+                                      kElevatorGearing,
+                                      kCarriageMass,
+                                      kElevatorDrumRadius,
+                                      kMinElevatorHeight,
+                                      kMaxElevatorHeight};
+
+
+    // Create a Mechanism2d display of an elevator
+    frc::Mechanism2d _leftMech{0.1, kMaxElevatorHeight.value()};
+    frc::MechanismRoot2d* _leftRoot =
+        _leftMech.GetRoot("Left Elevator Root", 0.05, 0);
+    frc::MechanismLigament2d* _leftLigament =
+        _leftRoot->Append<frc::MechanismLigament2d>(
+            "Left Elevator", _leftElevatorSim.GetPosition().value(), 90_deg);
+
+    frc::Mechanism2d _rightMech{0.1, kMaxElevatorHeight.value()};
+    frc::MechanismRoot2d* _rightRoot =
+        _rightMech.GetRoot("Right Elevator Root", 0.05, 0);
+    frc::MechanismLigament2d* _rightLigament =
+        _rightRoot->Append<frc::MechanismLigament2d>(
+            "Right Elevator", _rightElevatorSim.GetPosition().value(), 90_deg);
 };
