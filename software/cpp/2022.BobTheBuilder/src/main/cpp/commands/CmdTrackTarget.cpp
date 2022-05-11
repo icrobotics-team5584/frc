@@ -15,7 +15,7 @@ CmdTrackTarget::CmdTrackTarget(SubDriveBase* subDriveBase, SubShooter* subShoote
   AddRequirements(_subDriveBase);
   AddRequirements(_subShooter);
 
-  frc::SmartDashboard::PutNumber("Limelight L/R Adjustment", _setpoint);
+  frc::SmartDashboard::PutNumber("Limelight L+R Adjustment", _setpoint);
 }
 
 // Called when the command is initially scheduled.
