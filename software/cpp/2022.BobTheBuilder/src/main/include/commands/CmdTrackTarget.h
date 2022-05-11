@@ -36,7 +36,7 @@ class CmdTrackTarget
 
  private:
   double VisionToleranceLevel = 0.5;
-  double _setpoint = 3.5;
+  double _setpoint = 2;
 
   SubDriveBase* _subDriveBase;
   SubShooter* _subShooter;
