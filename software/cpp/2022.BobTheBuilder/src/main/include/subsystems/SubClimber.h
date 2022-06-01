@@ -35,10 +35,12 @@ class SubClimber : public frc2::SubsystemBase {
   bool IsAtTargetPosition();       // check if both elevators have reached the target
 
   static constexpr double MIN_POSITION = 0;
-  static constexpr double MAX_POSITION = 160;
-  static constexpr double NEAR_MAX_POS = 107;
-  static constexpr double NEAR_MIN_POS = 20;
+  static constexpr double MAX_POSITION = 165;
+  static constexpr double NEAR_MAX_POS = 130;
+  static constexpr double NEAR_MIN_POS = 40;
   static constexpr double SAFETY_FACTOR = 0;
+  static constexpr double BELOW_MIN = -10;
+  
 
  private:
   static constexpr double kP = 5e-5, kI = 1e-6, kD = 0, KIz = 0, kFF = 0,

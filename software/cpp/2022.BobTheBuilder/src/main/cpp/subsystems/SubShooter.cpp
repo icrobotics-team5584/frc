@@ -17,7 +17,7 @@ SubShooter::SubShooter(){
      _table = _inst.GetTable("limelight");
 
     _controller.SetTolerance(50);
-
+    frc::SmartDashboard::PutNumber("LIME_LIGHT_angleAdjust",0); //Used to adjust the limelight 'ty' vertical off target angle.
 }
 
 // This method will be called once per scheduler run
@@ -37,7 +37,7 @@ void SubShooter::Periodic() {
         if (/*frc::DriverStation::IsTeleopEnabled() &&*/ _shouldTrackTarget && _table->GetEntry("tv").GetDouble(0.0) == 1.0) {
             // In telep, tracking target and target is visible
             // https://mycurvefit.com/
-            double x = GetLimelight().ty;
+            double x = GetLimelight().ty + (frc::SmartDashboard::GetNumber("LIME_LIGHT_angleAdjust",0)); //Gets the vertical off target angle from limelight ‘ty’ and adds adjustment.
             double out = 2106.346 - 42.59286*x + 1.897089*pow(x,2) + 0.1338984*pow(x,3);
             if(out > 3000){
                 out = 3000;

@@ -45,15 +45,18 @@ void RobotContainer::ConfigureButtonBindings() {
   // TrackTargetButton.WhileHeld(frc2::ParallelCommandGroup(_cmdTrackTarget, _cmdShooter));
 
   frc2::JoystickButton{&_joystick0, Btn::kY}.WhenHeld(
-      frc2::StartEndCommand([&] { _subClimber.ManualDrive(0.2); }, [&] { _subClimber.ManualDrive(0); }));
+      frc2::StartEndCommand([&] { _subClimber.ManualDrive(0.5); }, [&] { _subClimber.ManualDrive(0); }));
 
   frc2::JoystickButton{&_joystick0, Btn::kA}.WhenHeld(
-      frc2::StartEndCommand([&] { _subClimber.ManualDrive(-0.2); }, [&] { _subClimber.ManualDrive(0); }));
+      frc2::StartEndCommand([&] { _subClimber.ManualDrive(-0.5); }, [&] { _subClimber.ManualDrive(0); }));
 
   frc::SmartDashboard::PutData("Reset Climber", &_cmdResetClimb);
 
   frc2::POVButton LowGoalMode{&_joystick0, 180, 0};
   LowGoalMode.WhenPressed(frc2::InstantCommand{[this]{_subShooter.SetLowMode(true);}});
+
+  frc2::POVButton ManualStorageIn{&_joystick0, 90, 0};
+  ManualStorageIn.WhileHeld(_cmdStorageIn);
 
   frc2::POVButton HighGoalMode{&_joystick0, 0,0};
   HighGoalMode.WhenPressed(frc2::InstantCommand{[this]{_subShooter.SetLowMode(false);}});

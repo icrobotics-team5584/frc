@@ -47,8 +47,9 @@ void SubClimber::SetMinSpeed(){
 }
 
 bool SubClimber::IsAtTargetPosition() {
-  double error = abs(_targetPosition - _encLeftElevator.GetPosition() );
-  return (error < kAllErr);
+  double lefterror = abs(_targetPosition - _encLeftElevator.GetPosition() );
+  double righterror = abs(_targetPosition - _encRightElevator.GetPosition() );
+  return (lefterror < kAllErr) &&(righterror < kAllErr);
 }
 void SubClimber::SetEncoders(double value) {
   _encLeftElevator.SetPosition(value);
@@ -78,15 +79,25 @@ void SubClimber::Periodic() {
   // Don't let the climber kill itself
   if ((AtLeftLimit() && GoingDown())) {
     frc::SmartDashboard::PutBoolean("Climber Left Safety", true);
+    _targetPosition = 0;
+    _pidLeftMotorController.SetReference(_targetPosition, rev::CANSparkMax::ControlType::kSmartMotion);
     _spmLeftElevator.Set(0);
   } else {
     frc::SmartDashboard::PutBoolean("Climber Left Safety", false);
   }
   if ((AtRightLimit() && GoingDown())) {
+    _targetPosition = 0;
+    _pidRightMotorController.SetReference(_targetPosition, rev::CANSparkMax::ControlType::kSmartMotion);
     _spmRightElevator.Set(0);
     frc::SmartDashboard::PutBoolean("Climber Right Safety", true);
   } else {
     frc::SmartDashboard::PutBoolean("Climber Right Safety", false);
+  }
+
+  // Make sure the two arms never get out of sync with the target position
+  if (_inSmartMotionMode) {
+    _pidRightMotorController.SetReference(_targetPosition, rev::CANSparkMax::ControlType::kSmartMotion);
+    _pidLeftMotorController.SetReference(_targetPosition, rev::CANSparkMax::ControlType::kSmartMotion);
   }
 }
 
