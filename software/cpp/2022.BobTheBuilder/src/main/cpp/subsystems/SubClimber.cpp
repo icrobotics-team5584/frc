@@ -150,7 +150,7 @@ void SubClimber::DriveTo(double position) {
   _pidRightMotorController.SetReference(_targetPosition, rev::CANSparkMax::ControlType::kSmartMotion);
 }
 
-void SubClimber::Extend() { DriveTo(MAX_POSITION+10); }
+void SubClimber::Extend() { DriveTo(MAX_POSITION+20); }
 
 void SubClimber::Retract() { DriveTo(MIN_POSITION + SAFETY_FACTOR); }
 
