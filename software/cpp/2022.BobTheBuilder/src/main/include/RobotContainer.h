@@ -68,7 +68,8 @@ class RobotContainer {
   JoystickScaler _joystick0{0, 2.0, 2.0};
 
   void ConfigureButtonBindings();
-
+  
+  bool _lowmode = false;
   CmdShooter _cmdShooter {&_subShooter};
   CmdIntakeSequence _cmdIntake {&_subIntake, &_subStorage};
   CmdOuttake _cmdOuttake {&_subIntake};
@@ -93,6 +94,8 @@ class RobotContainer {
   frc2::InstantCommand _cmdResetClimb {[&] {
     _cmdClimbSequence.Cancel();
     _cmdClimbSequence.Schedule();
+
+  
   }
   };
 };

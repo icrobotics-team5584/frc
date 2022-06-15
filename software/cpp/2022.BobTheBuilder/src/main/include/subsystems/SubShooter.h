@@ -67,4 +67,5 @@ class SubShooter : public frc2::SubsystemBase {
   bool _shouldTrackTarget = false;
   bool _shootingLow = false;
   double _lastspeed = 1800;
+  double _limelightverticaladj = 0;
 };

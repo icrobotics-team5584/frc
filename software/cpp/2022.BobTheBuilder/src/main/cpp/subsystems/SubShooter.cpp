@@ -15,13 +15,13 @@ SubShooter::SubShooter(){
     _spmShooter2.Follow(_spmShooter1, true);
      _inst = nt::NetworkTableInstance::GetDefault();
      _table = _inst.GetTable("limelight");
-
+    frc::Shuffleboard::GetTab("Driver").AddPersistent("LimeLight Verticle Adjust",0.00); //Used to adjust the limelight 'ty' vertical off target angle.
     _controller.SetTolerance(50);
-    frc::SmartDashboard::PutNumber("LIME_LIGHT_angleAdjust",0); //Used to adjust the limelight 'ty' vertical off target angle.
 }
 
 // This method will be called once per scheduler run
 void SubShooter::Periodic() {
+    
     frc::SmartDashboard::PutNumber("Shooter Velocity", _encShooter1.GetVelocity());
     frc::SmartDashboard::PutNumber("ShooterTargetSpeed",_controller.GetSetpoint());
 
@@ -54,7 +54,8 @@ void SubShooter::Periodic() {
         }
     }
 
-    frc::SmartDashboard::PutBoolean("Low Mode",_shootingLow);
+    //frc::SmartDashboard::PutBoolean("Low Mode",_shootingLow);
+    frc::Shuffleboard::GetTab("Driver").AddBoolean("Low Mode",[=] { return _shootingLow; });                                                  
     frc::SmartDashboard::PutBoolean("Should Track Target",_shouldTrackTarget);
 
 }
