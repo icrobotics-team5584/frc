@@ -85,20 +85,20 @@ void SubClimber::Periodic() {
 
   // Don't let the climber kill itself
   if ((AtLowerLeftLimit() && GoingDown())) {
-    frc::SmartDashboard::PutBoolean("Climber Left Safety", true);
+    frc::SmartDashboard::PutBoolean("Climber LowerLeft Safety", true);
     _targetPosition = 0;
     _pidLeftMotorController.SetReference(_targetPosition, rev::CANSparkMax::ControlType::kSmartMotion);
     _spmLeftElevator.Set(0);
   } else {
-    frc::SmartDashboard::PutBoolean("Climber Left Safety", false);
+    frc::SmartDashboard::PutBoolean("Climber LowerLeft Safety", false);
   }
   if ((AtLowerRightLimit() && GoingDown())) {
     _targetPosition = 0;
     _pidRightMotorController.SetReference(_targetPosition, rev::CANSparkMax::ControlType::kSmartMotion);
     _spmRightElevator.Set(0);
-    frc::SmartDashboard::PutBoolean("Climber Right Safety", true);
+    frc::SmartDashboard::PutBoolean("Climber LowerRight Safety", true);
   } else {
-    frc::SmartDashboard::PutBoolean("Climber Right Safety", false);
+    frc::SmartDashboard::PutBoolean("Climber LowerRight Safety", false);
   }
 
     // Reset Upper encoders when limit switch is pressed
@@ -111,20 +111,20 @@ void SubClimber::Periodic() {
 
   // Don't let the climber kill itself
   if ((AtUpperLeftLimit() && GoingUp())) {
-    frc::SmartDashboard::PutBoolean("Climber Left Safety", true);
+    frc::SmartDashboard::PutBoolean("Climber UpperLeft Safety", true);
     _targetPosition = MAX_POSITION;
     _pidLeftMotorController.SetReference(_targetPosition, rev::CANSparkMax::ControlType::kSmartMotion);
     _spmLeftElevator.Set(0);
   } else {
-    frc::SmartDashboard::PutBoolean("Climber Left Safety", false);
+    frc::SmartDashboard::PutBoolean("Climber UpperLeft Safety", false);
   }
   if ((AtUpperRightLimit() && GoingUp())) {
     _targetPosition = MAX_POSITION;
     _pidRightMotorController.SetReference(_targetPosition, rev::CANSparkMax::ControlType::kSmartMotion);
     _spmRightElevator.Set(0);
-    frc::SmartDashboard::PutBoolean("Climber Right Safety", true);
+    frc::SmartDashboard::PutBoolean("Climber UpperRight Safety", true);
   } else {
-    frc::SmartDashboard::PutBoolean("Climber Right Safety", false);
+    frc::SmartDashboard::PutBoolean("Climber UpperRight Safety", false);
   }
   // Make sure the two arms never get out of sync with the target position
   if (_inSmartMotionMode) {
