@@ -50,10 +50,10 @@ class SubStorage : public frc2::SubsystemBase {
 
   frc::SuppliedValueWidget<bool>* _frontSensorWidget =
       &frc::Shuffleboard::GetTab("Driver").AddBoolean("frontColorSensor",
-                                                       [] { return true; });
+                                                       [] { return true; }).WithSize(2,1).WithPosition(9,4);
   frc::SuppliedValueWidget<bool>* _backSensorWidget =
       &frc::Shuffleboard::GetTab("Driver").AddBoolean("backColorSensor",
-                                                       [] { return true; });
+                                                       [] { return true; }).WithSize(2,1).WithPosition(11,4);
 
   wpi::StringMap<std::shared_ptr<nt::Value>> _frontColorDisplayProperties;
   wpi::StringMap<std::shared_ptr<nt::Value>> _backColorDisplayProperties;

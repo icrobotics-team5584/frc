@@ -23,7 +23,7 @@ RobotContainer::RobotContainer() {
   _autoChooser.AddOption("1 Ball", &_cmd1BallAuto);
   _autoChooser.AddOption("3 Ball", &_cmd3BallAuto);
 
-  frc::SmartDashboard::PutData("Auto chooser", &_autoChooser);
+  frc::Shuffleboard::GetTab("Driver").Add("autonamious chooser", _autoChooser).WithSize(4,1).WithPosition(9,3);
 }
 
 void RobotContainer::ConfigureButtonBindings() {
@@ -51,7 +51,7 @@ void RobotContainer::ConfigureButtonBindings() {
       frc2::StartEndCommand([&] { _subClimber.ManualDrive(-0.5); }, [&] { _subClimber.ManualDrive(0); }));
 
 
-  frc::Shuffleboard::GetTab("Driver").AddRaw("reset climber",[=] { return _lowmode; });
+  frc::Shuffleboard::GetTab("Driver").Add("reset climber",_cmdResetClimb).WithSize(2,1).WithPosition(9,2);
 
   frc2::POVButton LowGoalMode{&_joystick0, 180, 0};
   LowGoalMode.WhenPressed(frc2::InstantCommand{[this]{_subShooter.SetLowMode(true);}});

@@ -8,6 +8,7 @@
 #include <frc2/command/Command.h>
 
 #include "RobotContainer.h"
+#include <cameraserver/CameraServer.h>
 
 class Robot : public frc::TimedRobot {
  public:
@@ -27,5 +28,5 @@ class Robot : public frc::TimedRobot {
   frc2::Command* m_autonomousCommand = nullptr;
 
   RobotContainer m_container;
-  
+  cs::VideoSink _camera; 
 };

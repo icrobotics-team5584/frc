@@ -6,9 +6,11 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
-#include <cameraserver/CameraServer.h>
 void Robot::RobotInit() {
   frc::CameraServer::StartAutomaticCapture();
+  _camera =  frc::CameraServer::GetServer();
+  frc::Shuffleboard::GetTab("Driver").Add("cam", _camera.GetSource());
+ //frc::Shuffleboard::GetTab("Camera").AddCamera("USB Camera 0","USB Camera 0",wpi::span{"http://roboRIO-5584-FRC.local:1181",});
 }
 
 /**

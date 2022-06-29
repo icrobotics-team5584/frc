@@ -15,7 +15,7 @@ SubShooter::SubShooter(){
     _spmShooter2.Follow(_spmShooter1, true);
      _inst = nt::NetworkTableInstance::GetDefault();
      _table = _inst.GetTable("limelight");
-    frc::Shuffleboard::GetTab("Driver").AddPersistent("LimeLight Verticle Adjust",0.00); //Used to adjust the limelight 'ty' vertical off target angle.
+    _limelightAdjustment = frc::Shuffleboard::GetTab("Driver").AddPersistent("LimeLight Verticle Adjust",0.00).WithSize(2,1).WithPosition(11,2).GetEntry(); //Used to adjust the limelight 'ty' vertical off target angle.
     _controller.SetTolerance(50);
 }
 
@@ -24,6 +24,7 @@ void SubShooter::Periodic() {
     
     frc::SmartDashboard::PutNumber("Shooter Velocity", _encShooter1.GetVelocity());
     frc::SmartDashboard::PutNumber("ShooterTargetSpeed",_controller.GetSetpoint());
+
 
     _tx = _table->GetEntry("tx");
     _ty = _table->GetEntry("ty");
@@ -37,7 +38,7 @@ void SubShooter::Periodic() {
         if (/*frc::DriverStation::IsTeleopEnabled() &&*/ _shouldTrackTarget && _table->GetEntry("tv").GetDouble(0.0) == 1.0) {
             // In telep, tracking target and target is visible
             // https://mycurvefit.com/
-            double x = GetLimelight().ty + (frc::SmartDashboard::GetNumber("LIME_LIGHT_angleAdjust",0)); //Gets the vertical off target angle from limelight ‘ty’ and adds adjustment.
+            double x = GetLimelight().ty + (_limelightAdjustment.GetDouble(0)); //Gets the vertical off target angle from limelight ‘ty’ and adds adjustment.
             double out = 2106.346 - 42.59286*x + 1.897089*pow(x,2) + 0.1338984*pow(x,3);
             if(out > 3000){
                 out = 3000;
@@ -55,7 +56,7 @@ void SubShooter::Periodic() {
     }
 
     //frc::SmartDashboard::PutBoolean("Low Mode",_shootingLow);
-    frc::Shuffleboard::GetTab("Driver").AddBoolean("Low Mode",[=] { return _shootingLow; });                                                  
+    frc::Shuffleboard::GetTab("Driver").AddBoolean("Low Mode",[=] { return _shootingLow;}).WithSize(4,2).WithPosition(9,0);                                                  
     frc::SmartDashboard::PutBoolean("Should Track Target",_shouldTrackTarget);
 
 }
