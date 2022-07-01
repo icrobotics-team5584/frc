@@ -22,7 +22,8 @@ RobotContainer::RobotContainer() {
   _autoChooser.AddOption("5 Ball", &_cmd5BallAuto);
   _autoChooser.AddOption("1 Ball", &_cmd1BallAuto);
   _autoChooser.AddOption("3 Ball", &_cmd3BallAuto);
-
+  _autoChooser.AddOption("Stop", &_cmdDeployIntake);
+  _autoChooser.AddOption("2 Ball No Dolly", &_cmd2BallAutoNoDolly);
   frc::Shuffleboard::GetTab("Driver").Add("autonamious chooser", _autoChooser).WithSize(4,1).WithPosition(9,3);
 }
 
