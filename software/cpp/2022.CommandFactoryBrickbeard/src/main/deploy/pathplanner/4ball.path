@@ -1,0 +1,121 @@
+{
+  "waypoints": [
+    {
+      "anchorPoint": {
+        "x": 7.506744743219216,
+        "y": 1.8164468761369952
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.525279915424696,
+        "y": 1.3716027432054854
+      },
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 7.580885432041135,
+        "y": 0.7414068882191824
+      },
+      "prevControl": {
+        "x": 7.5438150876301755,
+        "y": 1.1862510211506911
+      },
+      "nextControl": {
+        "x": 7.5438150876301755,
+        "y": 1.1862510211506911
+      },
+      "holonomicAngle": 0,
+      "isReversal": true,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 4.040667540794542,
+        "y": 1.3437999848972675
+      },
+      "prevControl": {
+        "x": 4.466976501520571,
+        "y": 1.4179406737191855
+      },
+      "nextControl": {
+        "x": 4.466976501520571,
+        "y": 1.4179406737191855
+      },
+      "holonomicAngle": 0,
+      "isReversal": true,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
+        "names": [
+          "AimAndShootTwice"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 5.060102012095916,
+        "y": 1.8257144622397352
+      },
+      "prevControl": {
+        "x": 4.680130981883586,
+        "y": 1.4735461903356248
+      },
+      "nextControl": null,
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [
+          "AimAndShootTwice"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    }
+  ],
+  "maxVelocity": null,
+  "maxAcceleration": null,
+  "isReversed": false,
+  "markers": [
+    {
+      "position": 0.02727272727272723,
+      "names": [
+        "AccelerateFlyweelToTarget",
+        "Intake3Sec"
+      ]
+    },
+    {
+      "position": 2.0454545454545436,
+      "names": [
+        "AccelerateFlyweelToTarget",
+        "Intake3Sec"
+      ]
+    }
+  ]
+}
