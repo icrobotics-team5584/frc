@@ -17,9 +17,10 @@ void SubIntake::Intake(){
   _spmIntake.Set(-1);
 }
 
-void SubIntake::Outtake() {
+void SubIntake::Outtake(){
   _spmIntake.Set(1);
 }
+
 
 
 void SubIntake::Extend() {
