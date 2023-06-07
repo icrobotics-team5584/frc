@@ -5,7 +5,10 @@
 #include "RobotContainer.h"
 #include "commands/CmdDriveRobot.h"
 #include <frc2/command/button/Trigger.h>
+#include <frc2/command/button/POVButton.h>
 #include "subsystems/SubDriveBase.h"
+#include "commands/GamePieceCommands.h"
+#include "utilities/POVHelper.h"
 
 RobotContainer::RobotContainer() {
   SubDriveBase::GetInstance().SetDefaultCommand(CmdDriveRobot(&_driverController));
@@ -13,7 +16,13 @@ RobotContainer::RobotContainer() {
 }
 
 void RobotContainer::ConfigureBindings() {  
-
+_driverController.A().WhileTrue(cmd::ShootBall());
+_driverController.B().WhileTrue(cmd::StartShooting());
+_driverController.X().WhileTrue(cmd::StopShooting());
+POVHelper::Up(&_driverController).WhileTrue(cmd::StartFlyWheel());
+POVHelper::Left(&_driverController).WhileTrue(cmd::StartIndexer());
+POVHelper::Right(&_driverController).WhileTrue(cmd::StopIndexer());
+POVHelper::Down(&_driverController).WhileTrue(cmd::StopFlyWheel());
 }
 
 /*frc2::CommandPtr RobotContainer::GetAutonomousCommand() {

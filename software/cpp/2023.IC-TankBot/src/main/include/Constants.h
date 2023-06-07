@@ -20,5 +20,6 @@ constexpr int LeftDriveMain = 1;
 constexpr int LeftDriveFollower = 3;
 constexpr int RightDriveMain = 2;
 constexpr int RightDriveFollower = 4;
-
+constexpr int IndexerMotor = 14;
+constexpr int FlyWheelMotor = 12;
 }  // namespace OperatorConstants
