@@ -31,7 +31,7 @@ namespace cmd {
   }
 
   frc2::CommandPtr StartShooting() {
-   return Sequence(StartFlyWheel(), Wait(0.5_s), StartIndexer(), Wait(0.2_s));
+   return Sequence(StartFlyWheel(), StartIndexer(), Wait(0.2_s));
   }
 
   frc2::CommandPtr ShootBall() {

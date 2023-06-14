@@ -6,6 +6,7 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 SubIndexer::SubIndexer() {
+    _IndexMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
     frc::SmartDashboard::PutNumber("Indexer", -0.1);
 };
 
