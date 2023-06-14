@@ -11,31 +11,31 @@ namespace cmd {
 
 
   frc2::CommandPtr StartFlyWheel() {
-    Run([] {SubFlyWheel::GetInstance().StartFlyWheel();});
+   return Run([] {SubFlyWheel::GetInstance().StartFlyWheel();});
   }
 
   frc2::CommandPtr StopFlyWheel() {
-    Run([] {SubFlyWheel::GetInstance().StopFlyWheel();});
+   return Run([] {SubFlyWheel::GetInstance().StopFlyWheel();});
   }
 
   frc2::CommandPtr StartIndexer() {
-    Run([] {SubIndexer::GetInstance().StartIndex();});
+   return Run([] {SubIndexer::GetInstance().StartIndex();});
   }
 
   frc2::CommandPtr StopIndexer() {
-    Run([] {SubIndexer::GetInstance().StopIndex();});
+   return Run([] {SubIndexer::GetInstance().StopIndex();});
   }
 
   frc2::CommandPtr StopShooting() {
-    Sequence(StopFlyWheel(), StopIndexer());
+   return Sequence(StopFlyWheel(), StopIndexer());
   }
 
   frc2::CommandPtr StartShooting() {
-    Sequence(StartFlyWheel(), Wait(2_s), StartIndexer(), Wait(0.2_s));
+   return Sequence(StartFlyWheel(), Wait(0.5_s), StartIndexer(), Wait(0.2_s));
   }
 
   frc2::CommandPtr ShootBall() {
-    StartEnd(
+   return StartEnd(
     [] {StartShooting();},
     [] {StopShooting();}
     );

@@ -6,7 +6,9 @@
 
 #include <frc2/command/CommandScheduler.h>
 
-void Robot::RobotInit() {}
+void Robot::RobotInit() {
+  std::printf("Robot init 1");
+}
 
 /**
  * This function is called every 20 ms, no matter the mode. Use

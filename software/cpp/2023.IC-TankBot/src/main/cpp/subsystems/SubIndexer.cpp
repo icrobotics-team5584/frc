@@ -3,12 +3,14 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "subsystems/SubIndexer.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 
 SubIndexer::SubIndexer() {
+    frc::SmartDashboard::PutNumber("Indexer", -0.1);
 };
 
 void SubIndexer::StartIndex() {
-    _IndexMotor.Set(0.3);
+    _IndexMotor.Set(frc::SmartDashboard::GetNumber("Indexer", 0));
 }
 
 void SubIndexer::StopIndex() {
