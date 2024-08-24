@@ -10,7 +10,10 @@ void ICSparkMax::SetVoltage(units::volt_t output) {
   ICSpark::SetVoltage(output);
 }
 
-void ICSparkMax::StopMotor() { ICSpark::Stop(); }
+void ICSparkMax::StopMotor() {
+  ICSpark::Stop();
+  CANSparkMax::StopMotor();
+}
 
 void ICSparkMax::UseAlternateEncoder(int countsPerRev) {
     ICSpark::UseRelativeEncoder(CANSparkMax::GetAlternateEncoder(countsPerRev));

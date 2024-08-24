@@ -37,10 +37,10 @@ class Robot : public frc::TimedRobot {
 
   void FastPeriodic();
 
-  frc::DigitalInput dio0{0};
-  frc::DigitalInput dio1{1};
-  frc::DigitalInput dio2{2};
-  frc::DigitalInput dio3{3};
+  frc::DigitalInput limitSwitch{0};
+  frc::DigitalInput reflector{1};
+  frc::DigitalInput lineBreak{2};
+  frc::DigitalInput reedSwitch{3};
 
   rev::ColorSensorV3 colourSesnor{frc::I2C::Port::kOnboard};
 

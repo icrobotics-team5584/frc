@@ -104,7 +104,6 @@ void ICSpark::SetDutyCycle(double speed) {
   _positionTarget = units::turn_t{0};
   _voltageTarget = 0_V;
   SetInternalControlType(ControlType::kDutyCycle);
-  _spark->Set(speed);
 }
 
 void ICSpark::SetVoltage(units::volt_t output) {
@@ -162,7 +161,6 @@ void ICSpark::Stop() {
   _positionTarget = units::turn_t{0};
   _voltageTarget = 0_V;
   SetInternalControlType(ControlType::kDutyCycle);
-  _spark->StopMotor();
 }
 
 void ICSpark::SetInternalControlType(ControlType controlType) {

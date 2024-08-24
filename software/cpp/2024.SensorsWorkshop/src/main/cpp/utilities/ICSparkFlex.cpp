@@ -10,7 +10,10 @@ void ICSparkFlex::SetVoltage(units::volt_t output) {
   ICSpark::SetVoltage(output);
 }
 
-void ICSparkFlex::StopMotor() { ICSpark::Stop(); }
+void ICSparkFlex::StopMotor() {
+  ICSpark::Stop();
+  CANSparkFlex::StopMotor();
+}
 
 void ICSparkFlex::UseExternalEncoder(int countsPerRev) {
     ICSpark::UseRelativeEncoder(CANSparkFlex::GetExternalEncoder(countsPerRev));

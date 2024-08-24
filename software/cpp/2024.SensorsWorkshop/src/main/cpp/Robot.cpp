@@ -7,14 +7,17 @@
 
 void Robot::RobotInit() {
   AddPeriodic([this]{FastPeriodic();}, 5_ms);
+  sparkMax.SetPeriodicFramePeriod(rev::CANSparkLowLevel::PeriodicFrame::kStatus4, 5); // Speed up readings of alternate encoder pos and velocity
+  sparkMax.SetPeriodicFramePeriod(rev::CANSparkLowLevel::PeriodicFrame::kStatus3, 5); // Speed up readings of alternate encoder pos and velocity
+  sparkAlternateEncoder.SetMeasurementPeriod(5);
 }
 
 void Robot::FastPeriodic() {
   // Digital Inputs
-  frc::SmartDashboard::PutBoolean("digital/0", dio0.Get());
-  frc::SmartDashboard::PutBoolean("digital/1", dio1.Get());
-  frc::SmartDashboard::PutBoolean("digital/2", dio2.Get());
-  frc::SmartDashboard::PutBoolean("digital/3", dio3.Get());
+  frc::SmartDashboard::PutBoolean("digital/0", limitSwitch.Get());
+  frc::SmartDashboard::PutBoolean("digital/1", reflector.Get());
+  frc::SmartDashboard::PutBoolean("digital/2", lineBreak.Get());
+  frc::SmartDashboard::PutBoolean("digital/3", reedSwitch.Get());
 
   // Colour Sensor
   auto sensedColour = colourSesnor.GetColor();
@@ -40,19 +43,40 @@ void Robot::FastPeriodic() {
   frc::SmartDashboard::PutNumber("analog/potentiometer", potentiometer.GetValue());
 }
 
-void Robot::RobotPeriodic() {
-
-}
+void Robot::RobotPeriodic() {}
 
 void Robot::AutonomousInit() {}
 void Robot::AutonomousPeriodic() {}
 
 void Robot::TeleopInit() {}
-void Robot::TeleopPeriodic() {}
+void Robot::TeleopPeriodic() {
+  if (!reedSwitch.Get()){
+    if (!lineBreak.Get()) {
+      sparkFlex.SetVoltage(potentiometer.GetVoltage()*2_V); // Faster
+    } else {
+      sparkFlex.SetVoltage(potentiometer.GetVoltage()*1_V); // Slower
+    }
+  } else {
+    sparkFlex.SetVoltage(0_V);
+  }
 
-void Robot::DisabledInit() {}
-void Robot::DisabledPeriodic() {
+  if (!limitSwitch.Get()) {
+    if (!reflector.Get()) {
+      talon.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, sparkMax.GetVelocity().value() / 5.0); // inbuilt
+    } else {
+      talon.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, sparkAlternateEncoder.GetVelocity()/60.0 / 5.0); // alternate
+    }
+  } else {
+    talon.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, 0);
+  }
 }
+
+void Robot::DisabledInit() {
+  sparkMax.SetVoltage(0_V);
+  sparkFlex.SetVoltage(0_V);
+  talon.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, 0);
+}
+void Robot::DisabledPeriodic() {}
 
 void Robot::TestInit() {}
 void Robot::TestPeriodic() {}
