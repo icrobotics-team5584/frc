@@ -2,10 +2,7 @@
 
 ICSparkMax::ICSparkMax(int deviceID, units::ampere_t currentLimit)
     : rev::CANSparkMax(deviceID, rev::CANSparkLowLevel::MotorType::kBrushless),
-      ICSpark(this,
-                  GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor,
-                             NEO_ENCODER_RESOLUTION),
-                  currentLimit) {}
+      ICSpark(this, GetEncoder(), currentLimit) {}
 
 void ICSparkMax::Set(double speed) { ICSpark::SetDutyCycle(speed); }
 

@@ -5,8 +5,11 @@
 #include "Robot.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 
-void Robot::RobotInit() {}
-void Robot::RobotPeriodic() {
+void Robot::RobotInit() {
+  AddPeriodic([this]{FastPeriodic();}, 5_ms);
+}
+
+void Robot::FastPeriodic() {
   // Digital Inputs
   frc::SmartDashboard::PutBoolean("digital/0", dio0.Get());
   frc::SmartDashboard::PutBoolean("digital/1", dio1.Get());
@@ -28,12 +31,17 @@ void Robot::RobotPeriodic() {
   frc::SmartDashboard::PutNumber("gyro/accel", navx.GetAccelFullScaleRangeG());
 
   // Encoders
-  frc::SmartDashboard::PutNumber("motors/SparkMax Encoder", sparkMax.GetPosition().value());
-  frc::SmartDashboard::PutNumber("motors/SparkFlex Encoder", sparkFlex.GetPosition().value());
+  // frc::SmartDashboard::PutNumber("motors/SparkMax Encoder", sparkMax.GetPosition().value());
+  frc::SmartDashboard::PutNumber("encoders/SparkMax Internal Encoder", sparkMax.GetPosition().value());
+  frc::SmartDashboard::PutNumber("encoders/SparkFlex Internal Encoder", sparkFlex.GetPosition().value());
   frc::SmartDashboard::PutNumber("encoders/SparkMax Alternate Encoder", sparkAlternateEncoder.GetPosition());
 
   // Analog Input
   frc::SmartDashboard::PutNumber("analog/potentiometer", potentiometer.GetValue());
+}
+
+void Robot::RobotPeriodic() {
+
 }
 
 void Robot::AutonomousInit() {}

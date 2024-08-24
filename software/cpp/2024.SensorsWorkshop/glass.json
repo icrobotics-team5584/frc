@@ -1,0 +1,400 @@
+{
+  "NetworkTables": {
+    "Shuffleboard": {
+      "Driver": {
+        "open": false
+      },
+      "open": false
+    },
+    "SmartDashboard": {
+      "CTT": {
+        "open": false
+      },
+      "Left Elevator Motor": {
+        "open": false
+      },
+      "Rot Controller": {
+        "open": false
+      },
+      "field": {
+        "open": false
+      },
+      "open": false,
+      "spark": {
+        "open": false
+      },
+      "swerve": {
+        "open": false
+      }
+    },
+    "photonvision": {
+      "limelight": {
+        "open": false
+      },
+      "open": false
+    },
+    "transitory": {
+      "SmartDashboard": {
+        "Arm": {
+          "Arm Follower Bottom: ": {
+            "open": false
+          },
+          "Arm Motor 1: ": {
+            "open": false
+          },
+          "Arm Motor 2: ": {
+            "open": false
+          },
+          "Bottom main: ": {
+            "open": false
+          },
+          "Top main: ": {
+            "open": false
+          },
+          "open": false
+        },
+        "Claw": {
+          "Claw Motor 1: ": {
+            "open": false
+          }
+        },
+        "Colour": {
+          "open": true
+        },
+        "Drivebase": {
+          "Config": {
+            "open": false
+          },
+          "Vision": {
+            "open": false
+          }
+        },
+        "Intake": {
+          "Deploy Motor 1: ": {
+            "open": false
+          },
+          "Deploy Motor: ": {
+            "open": false
+          }
+        },
+        "Shooter": {
+          "Bottom PID": {
+            "open": false
+          },
+          "Feeder": {
+            "open": false
+          },
+          "Main Motor": {
+            "open": false
+          },
+          "Second Motor": {
+            "open": false
+          },
+          "Top PID": {
+            "open": false
+          }
+        },
+        "amp": {
+          "Arm motor: ": {
+            "open": false
+          },
+          "Dizzy Arm tilt motor: ": {
+            "open": false
+          }
+        },
+        "analog": {
+          "open": true
+        },
+        "arm": {
+          "Arm tilt motor: ": {
+            "open": false
+          }
+        },
+        "auto": {
+          "open": false
+        },
+        "botVars": {
+          "open": false
+        },
+        "digital": {
+          "open": true
+        },
+        "drivebase": {
+          "double[]##v_/SmartDashboard/drivebase/true swerve states": {
+            "open": false
+          },
+          "swerve": {
+            "open": false,
+            "turn motor 2": {
+              "open": false
+            }
+          }
+        },
+        "gyro": {
+          "open": true
+        },
+        "motors": {
+          "open": true
+        },
+        "open": true
+      }
+    },
+    "types": {
+      "/FMSInfo": "FMSInfo"
+    },
+    "windows": {
+      "/SmartDashboard/PPSwerveControllerCommand_field": {
+        "traj": {
+          "arrows": false,
+          "style": ""
+        }
+      },
+      "/SmartDashboard/field": {
+        "EstimatedPose": {
+          "arrowColor": [],
+          "color": []
+        },
+        "auto path 0": {
+          "arrows": false,
+          "style": ""
+        },
+        "in front of target": {
+          "arrowColor": []
+        },
+        "measuredVisionTarget": {
+          "color": []
+        },
+        "target": {
+          "arrowColor": []
+        },
+        "vision measurement": {
+          "arrowColor": [],
+          "color": []
+        },
+        "vision measurement early": {
+          "arrowColor": [],
+          "color": []
+        },
+        "visionTarget": {
+          "color": []
+        }
+      }
+    }
+  },
+  "Plots": {
+    "Plot <0>": {
+      "plots": [
+        {
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 1001,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/digital/3"
+            },
+            {
+              "color": [
+                0.8666667342185974,
+                0.5176470875740051,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/digital/2"
+            },
+            {
+              "color": [
+                0.3333333432674408,
+                0.658823549747467,
+                0.4078431725502014,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/digital/1"
+            },
+            {
+              "color": [
+                0.7686275243759155,
+                0.30588236451148987,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/digital/0"
+            }
+          ]
+        }
+      ],
+      "window": {
+        "name": "DIO"
+      }
+    },
+    "Plot <1>": {
+      "plots": [
+        {
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 903,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/Colour/blue"
+            },
+            {
+              "color": [
+                0.8666667342185974,
+                0.5176470875740051,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/Colour/green"
+            },
+            {
+              "color": [
+                0.9333333373069763,
+                0.04493827745318413,
+                0.04493827745318413,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/Colour/red"
+            }
+          ]
+        }
+      ],
+      "window": {
+        "name": "RGB"
+      }
+    },
+    "Plot <2>": {
+      "plots": [
+        {
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 903,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/Colour/proximity"
+            },
+            {
+              "color": [
+                0.8666667342185974,
+                0.5176470875740051,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/Colour/IR",
+              "yAxis": 1
+            }
+          ],
+          "yaxis2": true
+        }
+      ],
+      "window": {
+        "name": "Proximity"
+      }
+    },
+    "Plot <3>": {
+      "plots": [
+        {
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 903,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/gyro/pitch"
+            },
+            {
+              "color": [
+                0.8666667342185974,
+                0.5176470875740051,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/gyro/roll"
+            },
+            {
+              "color": [
+                0.3333333432674408,
+                0.658823549747467,
+                0.4078431725502014,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/gyro/yaw"
+            }
+          ]
+        }
+      ],
+      "window": {
+        "name": "Gyro"
+      }
+    },
+    "Plot <4>": {
+      "plots": [
+        {
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 1001,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/analog/potentiometer"
+            }
+          ]
+        }
+      ],
+      "window": {
+        "name": "Potentiometer"
+      }
+    },
+    "Plot <5>": {
+      "window": {
+        "name": "Mot"
+      }
+    }
+  }
+}

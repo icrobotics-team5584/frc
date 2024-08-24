@@ -9,10 +9,11 @@
 #include <rev/ColorSensorV3.h>
 #include <AHRS.h>
 #include <utilities/ICSparkMax.h>
-#include <utilities/ICSparkFlex.h>
 #include <ctre/phoenix/motorcontrol/can/TalonSRX.h>
 #include <rev/SparkMaxAlternateEncoder.h>
 #include <frc/AnalogInput.h>
+#include <utilities/ICSparkMax.h>
+#include <utilities/ICSparkFlex.h>
 
 class Robot : public frc::TimedRobot {
  public:
@@ -34,6 +35,8 @@ class Robot : public frc::TimedRobot {
   void SimulationInit() override;
   void SimulationPeriodic() override;
 
+  void FastPeriodic();
+
   frc::DigitalInput dio0{0};
   frc::DigitalInput dio1{1};
   frc::DigitalInput dio2{2};
@@ -47,7 +50,7 @@ class Robot : public frc::TimedRobot {
   ICSparkFlex sparkFlex{2, 20_A};
   ctre::phoenix::motorcontrol::can::TalonSRX talon{3};
 
-  rev::SparkMaxAlternateEncoder sparkAlternateEncoder{sparkMax.GetAlternateEncoder(8192)};
+  rev::SparkMaxAlternateEncoder sparkAlternateEncoder{sparkMax.GetAlternateEncoder(rev::SparkMaxAlternateEncoder::Type::kQuadrature, 8192)};
 
   frc::AnalogInput potentiometer{0};
 };
